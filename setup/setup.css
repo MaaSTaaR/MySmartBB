@@ -1,0 +1,87 @@
+body
+{
+	background: #e7e7e7;
+}
+
+td.header_logo_side
+{
+	background: #656B9A;
+}
+
+table.t_style_b
+{
+	border-width: thin;
+	border-style: solid;
+	border-collapse: collapse;
+	border-color: #ccc;
+}
+
+.main1
+{
+	background-image: url(gradient_thead.gif);
+	color: #545A83;
+}
+
+.main1 a:link
+{
+	color: #5B618F;
+	text-decoration: none;
+}
+
+.main1 a:visited
+{
+	color: #5B618F;
+	text-decoration: none;
+}
+
+.main1 a:hover, .main1 a:active
+{
+	color: #FF0000;
+	text-decoration: none;
+}
+
+.row1
+{ 
+	background: #F8F8F8; 
+}
+
+.row2
+{ 
+	background: #F4F4F4; 
+}
+
+th,td,p 
+{	font-family: Tahoma;    font-size: 9.5pt;    color: #000000;
+}
+a:link,a:active,a:visited 
+{	text-decoration: none;    color: #003366;
+    font-size: 9.5pt;}a:hover	
+{	text-decoration: none;    color: #0066FF;}
+
+
+textarea 
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
+
+input 
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
+
+select 
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
