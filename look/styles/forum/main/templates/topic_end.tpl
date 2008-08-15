@@ -5,5 +5,5 @@
 {$pager}
 
 {if {{$_CONF['info_row']['fastreply_allow']}}}
-{template}topic_end::fast_reply{/template}
+{template}topic_end--fast_reply{/template}
 {/if}

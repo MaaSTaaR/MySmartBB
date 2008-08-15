@@ -6,16 +6,16 @@
 {template}sections_list{/template}
 {/if}
 
-{template}forum::online_table{/template}
+{template}forum--online_table{/template}
 
 {if !{{$STOP_ANNOUNCEMENT_TEMPLATE}}}
-{template}forum::announcement_table{/template}
+{template}forum--announcement_table{/template}
 {/if}
 
 {if !{{$STOP_MODERATOR_TEMPLATE}}}
-{template}forum::moderator_table{/template}
+{template}forum--moderator_table{/template}
 {/if}
 
 
 {template}add_subject_link{/template}
-{template}forum::subject_table{/template}
+{template}forum--subject_table{/template}

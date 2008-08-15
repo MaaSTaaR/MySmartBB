@@ -12,10 +12,10 @@
 <br /><br />
 
 {if {{$Mod}}}
-{template}show_subject::subject_control{/template}
+{template}show_subject--subject_control{/template}
 {/if}
 
-{template}show_subject::subject_information{/template}
+{template}show_subject--subject_information{/template}
 
 {if {{$SHOW_POLL}}}
 {template}show_poll{/template}

@@ -102,14 +102,12 @@
 				{if {{$forum['use_section_picture']}} == 1}
 					{if {{$forum['sectionpicture_type']}} == 1}
 						<img src="{$forum['section_picture']}" alt="" />
-					{/comif}
 					{else}
 						<img src="{$image_path}/icon-67_new.gif" alt="" />
-					{/else}
-				{/comif}
+					{/if}
 				{else}
 					<img src="{$image_path}/icon-67_new.gif" alt="" />
-				{/else}
+				{/if}
 			</td>
 			<td width="40%" align="right" class="row1">
 				<a href="index.php?page=forum&amp;show=1&amp;id={$forum['id']}">{$forum['title']}</a>
