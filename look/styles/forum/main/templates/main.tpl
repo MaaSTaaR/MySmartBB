@@ -3,4 +3,4 @@
 {template}address_bar_part2{/template}
 
 {template}sections_list{/template}
-{template}main::static_table{/template}
+{template}main--static_table{/template}
