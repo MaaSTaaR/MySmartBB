@@ -13,14 +13,13 @@
 		<td class="row1">امكانية استخدام الرد السريع</td>
 		<td class="row1">
 <select name="fastreply_allow" id="select_fastreply_allow">
-	{if}{{$_CONF['info_row']['fastreply_allow']}}{if}
+	{if {{$_CONF['info_row']['fastreply_allow']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -28,14 +27,13 @@
 		<td class="row2">تفعيل صندوق الأدوات</td>
 		<td class="row2">
 <select name="toolbox_show" id="select_toolbox_show">
-	{if}{{$_CONF['info_row']['toolbox_show']}}{if}
+	{if {{$_CONF['info_row']['toolbox_show']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 
 </select>
 </td>
@@ -44,14 +42,13 @@
 		<td class="row1">تفعيل الابتسامات</td>
 		<td class="row1">
 <select name="smiles_show" id="select_smiles_show">
-	{if}{{$_CONF['info_row']['smiles_show']}}{if}
+	{if {{$_CONF['info_row']['smiles_show']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 
 </td>
@@ -60,14 +57,13 @@
 		<td class="row2">تفعيل الأيقونات</td>
 		<td class="row2">
 <select name="icons_show" id="select_icons_show">
-	{if}{{$_CONF['info_row']['icons_show']}}{if}
+	{if {{$_CONF['info_row']['icons_show']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 
@@ -76,14 +72,13 @@
 		<td class="row1">اقتباس عنوان الموضوع تلقائياً في عنوان الرد</td>
 		<td class="row1">
 <select name="title_quote" id="select_title_quote">
-	{if}{{$_CONF['info_row']['title_quote']}}{if}
+	{if {{$_CONF['info_row']['title_quote']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -92,14 +87,13 @@
 		<td class="row2">تفعيل (إغلاق/تثبيت الموضوع) في الرد السريع</td>
 		<td class="row2">
 <select name="activate_closestick" id="select_activate_closestick">
-	{if}{{$_CONF['info_row']['activate_closestick']}}{if}
+	{if {{$_CONF['info_row']['activate_closestick']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>

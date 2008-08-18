@@ -24,7 +24,7 @@
 			الوصله
 			</td>
 			<td class="row2">
-				<input type="text" name="link" value="{$Inf['link']}" size="30" />
+				<input type="text" name="link" value="{$Inf['site']}" size="30" />
 			</td>
 		</tr>
 		<tr>

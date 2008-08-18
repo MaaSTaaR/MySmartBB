@@ -35,16 +35,15 @@
 </tr>
 {Des::while}{groups}
 <tr valign="top" align="center">
-	<td class="row1">{#groups['title']#}</td>
-	<td class="row2">امكانية عرض الاقسام : <select name="groups[{#groups['id']#}][view_section]" id="select_view_section">
-	{if}{}groups['view_section']{}{if}
+	<td class="row1">{$groups['title']}</td>
+	<td class="row2">امكانية عرض الاقسام : <select name="groups[{$groups['id']}][view_section]" id="select_view_section">
+	{if {{$groups['view_section']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select></td>
 </tr>
 {/Des::while}

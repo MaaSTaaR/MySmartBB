@@ -26,13 +26,12 @@
 			</td>
 			<td class="row2">
 				<select size="1" name="section" id="section_id">
-				{Des::foreach}{forums}
-        		{if}{}from_main_section{} == ''{if}
-				<option value="{#id#}" class="main_section">- {#cat_title#}</option>
-				{/comif}
+				{Des::foreach}{forums_list}{forum}
+    			{if {{$forum['parent']}} == 0}
+				<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 				{else}
-				<option value="{#id#}">-- {#title#}</option>
-				{/else}
+				<option value="{$forum['id']}">-- {$forum['title']}</option>
+				{/if}
 				{/Des::foreach}
 				</select>
 			</td>
@@ -44,7 +43,7 @@
 			<td class="row2">
 				<select size="1" name="group" id="group_id">
 				{Des::while}{GroupList}
-				<option value="{#GroupList['id']#}">{#GroupList['title']#}</option>
+				<option value="{$GroupList['id']}">{$GroupList['title']}</option>
 				{/Des::while}
 				</select>
 			</td>

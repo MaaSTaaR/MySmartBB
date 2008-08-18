@@ -300,7 +300,7 @@ class MySmartCommon
 		
 		// Can't find last visit cookie , so register it
 		if (!$MySmartBB->functions->IsCookie('MySmartBB_lastvisit'))
-		{			
+		{
 			$CookieArr 					= 	array();		
 			$CookieArr['last_visit'] 	= 	(empty($MySmartBB->_CONF['member_row']['lastvisit'])) ? $MySmartBB->_CONF['date'] : $MySmartBB->_CONF['member_row']['lastvisit'];
 			$CookieArr['date'] 			= 	$MySmartBB->_CONF['date'];

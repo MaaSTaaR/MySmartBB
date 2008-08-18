@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	5/4/2006 , 6:07 PM
  * @end   		: 	5/4/2006 , 6:11 PM
- * @updated 	: 	03/08/2008 03:07:51 AM 
+ * @updated 	: 	18/08/2008 09:37:01 PM 
  */
 
 class MySmartGroup
@@ -184,9 +184,10 @@ class MySmartGroup
  		
  		$cache = $this->CreateSectionGroupCache($param);
  		
- 		$UpdateArr 							= 	array();
- 		$UpdateArr['sectiongroup_cache'] 	= 	$cache;
- 		$UpdateArr['where'] 				= 	array('id',$param['id']);
+ 		$UpdateArr 									= 	array();
+ 		$UpdateArr['field']							=	array();
+ 		$UpdateArr['field']['sectiongroup_cache'] 	= 	$cache;
+ 		$UpdateArr['where'] 						= 	array('id',$param['id']);
  		
  		$update = $this->Engine->section->UpdateSection($UpdateArr);
  		

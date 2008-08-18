@@ -85,7 +85,7 @@ class MySmartAnnouncementMOD extends _functions
 		
 		$AnnArr['field']['title'] 	= 	$MySmartBB->_POST['title'];
 		$AnnArr['field']['text'] 	= 	$MySmartBB->_POST['text'];
-		$AnnArr['field']['writer'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+		$AnnArr['field']['writer'] 	= 	$MySmartBB->_CONF['rows']['member_row']['username'];
 		$AnnArr['field']['date'] 	= 	$MySmartBB->_CONF['now'];
 		
 		$insert = $MySmartBB->announcement->InsertAnnouncement($AnnArr);
@@ -109,7 +109,7 @@ class MySmartAnnouncementMOD extends _functions
 		$AnnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
 		$AnnArr['proc']['date'] 	= 	array('method'=>'date','store'=>'date');
 		
-		$MySmartBB->_CONF['template']['AnnList'] = $MySmartBB->announcement->GetAnnouncementList($AnnArr);
+		$MySmartBB->_CONF['template']['while']['AnnList'] = $MySmartBB->announcement->GetAnnouncementList($AnnArr);
 		
 		$MySmartBB->template->display('announcements_main');
 	}

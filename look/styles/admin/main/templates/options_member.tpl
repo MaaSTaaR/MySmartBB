@@ -13,14 +13,13 @@
 		<td class="row1">إرسال رسالة تأكيد إذا قام العضو بتغيير بريده</td>
 		<td class="row1">
 <select name="confirm_on_change_mail" id="select_confirm_on_change_mail">
-	{if}{{$_CONF['info_row']['confirm_on_change_mail']}}{if}
+	{if {{$_CONF['info_row']['confirm_on_change_mail']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -28,14 +27,13 @@
 		<td class="row2">إرسال رسالة تأكيد إذا قام العضو بتغيير كلمة مروره</td>
 		<td class="row2">
 <select name="confirm_on_change_pass" id="select_confirm_on_change_pass">
-	{if}{{$_CONF['info_row']['confirm_on_change_pass']}}{if}
+	{if {{$_CONF['info_row']['confirm_on_change_pass']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -43,14 +41,13 @@
 		<td class="row1">تفعيل خاصية الغياب</td>
 		<td class="row1">
 <select name="allow_apsent" id="select_allow_apsent">
-	{if}{{$_CONF['info_row']['allow_apsent']}}{if}
+	{if {{$_CONF['info_row']['allow_apsent']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 
 </td>

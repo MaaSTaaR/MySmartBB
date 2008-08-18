@@ -13,14 +13,13 @@
 		<td class="row1">تفعيل الصور الشخصية</td>
 		<td class="row1">
 <select name="allow_avatar" id="select_allow_avatar">
-	{if}{{$_CONF['info_row']['allow_avatar']}}{if}
+	{if {{$_CONF['info_row']['allow_avatar']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -28,14 +27,13 @@
 		<td class="row2">السماح بتحميل الصور من حاسوب المستخدم</td>
 		<td class="row2">
 <select name="upload_avatar" id="select_upload_avatar">
-	{if}{{$_CONF['info_row']['upload_avatar']}}{if}
+	{if {{$_CONF['info_row']['upload_avatar']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>

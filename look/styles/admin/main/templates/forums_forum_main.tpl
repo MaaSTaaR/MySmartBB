@@ -18,7 +18,6 @@
 <tr valign="top" align="center">
 	{if {{$forum['parent']}} == 0}
 	<td class="main2" colspan="4">{$forum['title']}</td>
-	{/comif}
 	{else}
 	<td class="row1">
 		<a href="admin.php?page=forums&amp;forum=1&amp;index=1&amp;id={$forum['id']}">{$forum['title']}</a>
@@ -27,7 +26,7 @@
 	<td class="row1"><a href="./admin.php?page=forums&amp;edit=1&amp;main=1&amp;id={$forum['id']}">تحرير</a></td>
 	<td class="row1"><a href="./admin.php?page=forums&amp;del=1&amp;main=1&amp;id={$forum['id']}">حذف</a></td>
 	<td class="row1"><input type="text" name="order-{$forum['id']}" id="input_order-{$forum['id']}" value="1" size="5" /></td>
-	{/else}
+	{/if}
 </tr>
 {/Des::foreach}
 </table><br />

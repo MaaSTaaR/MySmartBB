@@ -1,8 +1,6 @@
 <?php
 
 /**
- * Hello my love php , This is MaaSTaaR :)
- *
  * @package : MySmartCode
  * @copyright : MaaSTaaR <MaaSTaaR@hotmail.com>
  * @version : 1.0 Special verion for MySmartBB

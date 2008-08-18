@@ -7,7 +7,7 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   16/07/2008 11:43:39 PM 
+ * @updated 	:   16/08/2008 09:45:53 PM 
 */
 
 
@@ -319,9 +319,12 @@ class MySmartMember
 		
 		// TODO :: store the name of cookie in a variable like username,password cookies.
 		$cookie = setcookie('MySmartBB_lastvisit',$param['last_visit'],time()+85200);
-				
+		
 		$UpdateArr 					= 	array();
-		$UpdateArr['lastvisit'] 	= 	$param['date'];
+		
+		$UpdateArr['field']					=	array();
+		$UpdateArr['field']['lastvisit'] 	= 	$param['date'];
+		
 		$UpdateArr['where']			=	array('id',$param['id']);
 								
 		$query = $this->UpdateMember($UpdateArr);

@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	9/3/2006 , 8:31 PM
  * @end   		: 	9/3/2006 , 8:33 PM
- * @updated 	: 	16/07/2008 11:51:01 PM 
+ * @updated 	: 	18/08/2008 10:45:11 PM 
  */
  
 class MySmartPages
@@ -30,7 +30,7 @@ class MySmartPages
  			$param = array();
  		}
 		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['pages'],$field);
+		$query = $this->Engine->records->Insert($this->Engine->table['pages'],$param['field']);
 		
 		if ($param['get_id'])
 		{

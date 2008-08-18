@@ -52,14 +52,13 @@
 		<td class="row1">تفعيل خاصية المواضيع المتطابقة</td>
 		<td class="row1">
 <select name="samesubject_show" id="select_samesubject_show">
-	{if}{{$_CONF['info_row']['floodctrl']}}{if}
+	{if {{$_CONF['info_row']['floodctrl']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -67,14 +66,13 @@
 		<td class="row2">عرض محتوى الموضوع في جميع الصفحات</td>
 		<td class="row2">
 <select name="show_subject_all" id="select_show_subject_all">
-	{if}{{$_CONF['info_row']['show_subject_all']}}{if}
+	{if {{$_CONF['info_row']['show_subject_all']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -82,14 +80,13 @@
 		<td class="row1">تفعيل خاصية تصغير الصور تلقائياً</td>
 		<td class="row1">
 <select name="resize_imagesAllow" id="select_resize_imagesAllow">
-	{if}{{$_CONF['info_row']['resize_imagesAllow']}}{if}
+	{if {{$_CONF['info_row']['resize_imagesAllow']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>

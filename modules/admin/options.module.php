@@ -163,9 +163,7 @@ class MySmartOptionsMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['send_email']) 
-			or empty($MySmartBB->_POST['admin_email']))
+		if (empty($MySmartBB->_POST['title']))
 		{
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
@@ -259,9 +257,7 @@ class MySmartOptionsMOD
 		$GroupArr['order']['field'] 		= 	'group_order';
 		$GroupArr['order']['type'] 			= 	'ASC';
 		
-		$GroupList = $MySmartBB->group->GetGroupList($GroupArr);
-		
-		$MySmartBB->template->while_array['GroupList'] = $GroupList;
+		$MySmartBB->_CONF['template']['while']['GroupList'] = $MySmartBB->group->GetGroupList($GroupArr);
 		
 		//////////
 		

@@ -23,7 +23,7 @@
 		<td class="row2">
 <select name="to" id="select_to">
 		{Des::while}{SecList}
-		<option value="{#SecList['id']#}">{#SecList['title']#}</option>
+		<option value="{$SecList['id']}">{$SecList['title']}</option>
 		{/Des::while}
 </select>
 </td>
@@ -33,7 +33,7 @@
 		<td class="row1">
 		<select name="subject_to" id="select_subject_to">
 		{Des::while}{ForumsList}
-		<option value="{#ForumsList['id']#}">{#ForumsList['title']#}</option>
+		<option value="{$ForumsList['id']}">{$ForumsList['title']}</option>
 		{/Des::while}
 </select>
 </td>

@@ -106,9 +106,7 @@ class MySmartPagesMOD extends _functions
 		$PageArr['proc'] 			= 	array();
 		$PageArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
 		
-		$PagesList = $MySmartBB->pages->GetPagesList($PageArr);
-		
-		$MySmartBB->template->while_array['PagesList'] = $PagesList;
+		$MySmartBB->_CONF['template']['while']['PagesList'] = $MySmartBB->pages->GetPagesList($PageArr);
 		
 		$MySmartBB->template->display('pages_main');
 	}

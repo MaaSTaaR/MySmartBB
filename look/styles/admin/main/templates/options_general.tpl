@@ -33,14 +33,13 @@
 		<td class="row2">إظهار اسماء الزوار في قائمة المتواجدين</td>
 		<td class="row2">
 			<select name="guest_online" id="select_guest_online">
-				{if}{{$_CONF['info_row']['show_onlineguest']}}{if}
+				{if {{$_CONF['info_row']['show_onlineguest']}}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
-				{/comif}
 				{else}
 					<option value="1">نعم</option>
 					<option value="0" selected="selected">لا</option>
-				{/else}
+				{/if}
 			</select>
 		</td>
 </tr>

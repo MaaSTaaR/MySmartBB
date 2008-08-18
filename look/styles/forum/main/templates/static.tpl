@@ -91,7 +91,7 @@
 	{Des::while}{TopTenList}
 	<tr align="center">
 		<td width="30%" class="row1">
-		<a href="index.php?page=profile&amp;show=1&amp;id={$TopTenList['id']}">{$TopTenList['username']$}</a>
+		<a href="index.php?page=profile&amp;show=1&amp;id={$TopTenList['id']}">{$TopTenList['username']}</a>
 		</td>
 		<td width="20%" class="row1">
 		{$TopTenList['posts']}

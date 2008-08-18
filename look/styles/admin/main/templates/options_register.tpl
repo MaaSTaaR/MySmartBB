@@ -13,14 +13,13 @@
 		<td class="row1">اغلاق التسجيل</td>
 		<td class="row1">
 <select name="reg_close" id="select_reg_close">
-	{if}{{$_CONF['info_row']['reg_close']}}{if}
+	{if {{$_CONF['info_row']['reg_close']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-	{/comif}
 	{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>
@@ -29,7 +28,7 @@
 		<td class="row2">
 <select name="def_group" id="select_def_group">
 	{Des::while}{GroupList}
-	<option value="{#GroupList['id']#}" {if}{{$_CONF['info_row']['def_group']}} == {#}GroupList['id']{#}{if}selected="selected"{/if}>{#GroupList['title']#}</option>
+	<option value="{$GroupList['id']}" {if {{$_CONF['info_row']['def_group']}} == {{$GroupList['id']}}}selected="selected"{/if}>{$GroupList['title']}</option>
 	{/Des::while}
 </select>
 </td>
@@ -39,7 +38,7 @@
 		<td class="row1">
 <select name="adef_group" id="select_adef_group">
 	{Des::while}{GroupList}
-	<option value="{#GroupList['id']#}" {if}{{$_CONF['info_row']['adef_group']}} == {#}GroupList['id']{#}{if}selected="selected"{/if}>{#GroupList['title']#}</option>
+	<option value="{$GroupList['id']}" {if {{$_CONF['info_row']['adef_group']}} == {{$GroupList['id']}}}selected="selected"{/if}>{$GroupList['title']}</option>
 	{/Des::while}
 </select>
 </td>
@@ -49,14 +48,13 @@
 		<td class="row2">تفعيل شروط التسجيل</td>
 		<td class="row2">
 <select name="reg_o" id="select_reg_o">
-	{if}{{$_CONF['info_row']['reg_o']}}{if}
+	{if {{$_CONF['info_row']['reg_o']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>

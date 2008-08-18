@@ -127,9 +127,9 @@ class MySmartAdsMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AdsInfo'] = false;
+		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AdsInfo']);
+		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('ads_edit');
 	}
@@ -138,9 +138,9 @@ class MySmartAdsMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AdsInfo'] = false;
+		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AdsInfo']);
+		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 				
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['link']) 
@@ -152,13 +152,13 @@ class MySmartAdsMOD extends _functions
 		$AdsArr 			= 	array();
 		$AdsArr['field']	=	array();
 		
-		$AdsArr['field']['name'] 		= 	$MySmartBB->_POST['name'];
+		$AdsArr['field']['sitename'] 	= 	$MySmartBB->_POST['name'];
 		$AdsArr['field']['site'] 		= 	$MySmartBB->_POST['link'];
 		$AdsArr['field']['picture'] 	= 	$MySmartBB->_POST['picture'];
 		$AdsArr['field']['width'] 		= 	$MySmartBB->_POST['width'];
 		$AdsArr['field']['height'] 		= 	$MySmartBB->_POST['height'];
-		$AdsArr['field']['clicks'] 		= 	$AdsInfo['clicks'];
-		$AdsArr['where'] 				= 	array('id',$MySmartBB->_CONF['template']['AdsInfo']['id']);
+		$AdsArr['field']['clicks'] 		= 	$MySmartBB->_CONF['template']['Inf']['clicks'];
+		$AdsArr['where'] 				= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
 				
 		$update = $MySmartBB->ads->UpdateAds($AdsArr);
 		
@@ -173,24 +173,26 @@ class MySmartAdsMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AdsInfo'] = false;
+		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AdsInfo']);
+		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		
+		$MySmartBB->template->display('ads_del');
 	}
 	
 	function _DelStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AdsInfo'] = false;
+		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AdsInfo']);
+		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
 		$del = $MySmartBB->ads->DeleteAds(array('id'	=>	$MySmartBB->_GET['id']));
 		
 		if ($del)
 		{
-			$ads_num = $MySmartBB->ads->GetAdsNumber();
+			$ads_num = $MySmartBB->ads->GetAdsNumber(null);
 			
 			$update = $MySmartBB->info->UpdateInfo(array('value'	=>	$ads_num,'var_name'	=>	'ads_num'));
 			

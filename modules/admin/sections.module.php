@@ -259,8 +259,6 @@ class MySmartSectionMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
-		
 		//////////
 		
 		$SecArr 						= 	array();

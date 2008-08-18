@@ -9,20 +9,19 @@
 {Des::while}{SecGroupList}
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="row1" colspan="2"><strong>{#SecGroupList['group_name']#}</strong></td>
+	<td class="row1" colspan="2"><strong>{$SecGroupList['group_name']}</strong></td>
 </tr>
 <tr valign="top">
 		<td class="row1">إمكانية عرض القسم</td>
 		<td class="row1">
 <select name="groups[{#SecGroupList['group_id']#}][view_section]" id="select_view_section">
-	{if}{}SecGroupList['view_section']{}{if}
+	{if {{$SecGroupList['view_section']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
-	{/comif}
 	{else}
 	<option value="1">نعم</option>
 	<option value="0" selected="selected">لا</option>
-	{/else}
+	{/if}
 </select>
 </td>
 </tr>

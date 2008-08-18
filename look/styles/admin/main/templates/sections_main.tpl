@@ -53,11 +53,11 @@ $(document).ready(Ready);
 </tr>
 {Des::while}{SecList}
 <tr valign="top" align="center">
-	<td class="row1" id="title-{#SecList['id']#}"><input type="hidden" name="section" class="section_id" value="{#SecList['id']#}" />{#SecList['title']#}</td>
-	<td class="row1"><a href="./admin.php?page=sections&amp;groups=1&amp;control_group=1&amp;index=1&amp;id={#SecList['id']#}">الصلاحيات</a></td>
-	<td class="row1"><a href="./admin.php?page=sections&amp;edit=1&amp;main=1&amp;id={#SecList['id']#}">تحرير</a></td>
-	<td class="row1"><a href="./admin.php?page=sections&amp;del=1&amp;main=1&amp;id={#SecList['id']#}">حذف</a></td>
-	<td class="row1"><input type="text" name="order-{#SecList['id']#}" id="input_order-{#SecList['id']#}" value="{#SecList['sort']#}" size="5" /></td>
+	<td class="row1" id="title-{#SecList['id']#}"><input type="hidden" name="section" class="section_id" value="{$SecList['id']}" />{$SecList['title']}</td>
+	<td class="row1"><a href="./admin.php?page=sections&amp;groups=1&amp;control_group=1&amp;index=1&amp;id={$SecList['id']}">الصلاحيات</a></td>
+	<td class="row1"><a href="./admin.php?page=sections&amp;edit=1&amp;main=1&amp;id={$SecList['id']}">تحرير</a></td>
+	<td class="row1"><a href="./admin.php?page=sections&amp;del=1&amp;main=1&amp;id={$SecList['id']}">حذف</a></td>
+	<td class="row1"><input type="text" name="order-{$SecList['id']}" id="input_order-{$SecList['id']}" value="{$SecList['sort']}" size="5" /></td>
 </tr>
 {/Des::while}
 </table>

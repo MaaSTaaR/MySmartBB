@@ -13,10 +13,10 @@
 </tr>
 {Des::while}{UTList}
 <tr valign="top" align="center">
-	<td class="row1">{#UTList['usertitle']#}</td>
-	<td class="row1">{#UTList['posts']#}</td>
-	<td class="row1"><a href="admin.php?page=usertitle&amp;edit=1&amp;main=1&amp;id={#UTList['id']#}">تحرير</a></td>
-	<td class="row1"><a href="admin.php?page=usertitle&amp;del=1&amp;main=1&amp;id={#UTList['id']#}">حذف</a></td>
+	<td class="row1">{$UTList['usertitle']}</td>
+	<td class="row1">{$UTList['posts']}</td>
+	<td class="row1"><a href="admin.php?page=usertitle&amp;edit=1&amp;main=1&amp;id={$UTList['id']}">تحرير</a></td>
+	<td class="row1"><a href="admin.php?page=usertitle&amp;del=1&amp;main=1&amp;id={$UTList['id']}">حذف</a></td>
 </tr>
 {/Des::while}
 </table>

@@ -53,9 +53,9 @@ class MySmartStaticMOD
 		$SecArr 						= 	array();
 		$SecArr['where'] 				= 	array();
 		$SecArr['where'][0] 			= 	array();
-		$SecArr['where'][0]['name'] 	= 	'main_section';
+		$SecArr['where'][0]['name'] 	= 	'parent';
 		$SecArr['where'][0]['oper'] 	= 	'<>';
-		$SecArr['where'][0]['value'] 	= 	'1';
+		$SecArr['where'][0]['value'] 	= 	'0';
 		
 		$StaticInfo['GetMemberNumber']	= $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'cache'));
 		$StaticInfo['GetSubjectNumber'] = $MySmartBB->subject->GetSubjectNumber(array('get_from'	=>	'cache'));

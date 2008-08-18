@@ -83,7 +83,7 @@ class MySmartFunctions
     {
     	global $MySmartBB;
     	
-    	if (!$no_header)
+    	if ($no_header)
     	{
     		$this->ShowHeader('خطأ');
     	}
