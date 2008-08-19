@@ -17,8 +17,6 @@ class MySmartFixMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->html->space();
-		
 		$MySmartBB->template->display('header');
 		
 		if ($MySmartBB->_GET['repair'])

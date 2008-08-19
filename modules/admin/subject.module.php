@@ -173,9 +173,9 @@ class MySmartSubjectMOD extends _functions
 		
 		$SecArr['where']				=	array();
 		$SecArr['where'][0]				=	array();
-		$SecArr['where'][0]['name']		=	'main_section';
+		$SecArr['where'][0]['name']		=	'parent';
 		$SecArr['where'][0]['oper']		=	'<>';
-		$SecArr['where'][0]['value']	=	1;
+		$SecArr['where'][0]['value']	=	'0';
 		
 		$SecArr['order']				=	array();
 		$SecArr['order']['field']		=	'id';

@@ -83,8 +83,8 @@ class MySmartUsertitleMOD extends _functions
 		$UTArr 			= 	array();
 		$UTArr['field']	=	array();
 		
-		$UTArr['field']['title'] = $MySmartBB->_POST['title'];
-		$UTArr['field']['posts'] = $MySmartBB->_POST['posts'];
+		$UTArr['field']['usertitle'] 	= 	$MySmartBB->_POST['title'];
+		$UTArr['field']['posts'] 		= 	$MySmartBB->_POST['posts'];
 		
 		$insert = $MySmartBB->usertitle->InsertUsertitle($UTArr);
 		
@@ -136,9 +136,9 @@ class MySmartUsertitleMOD extends _functions
 		$UTArr 			= 	array();
 		$UTArr['field']	=	array();
 		
-		$UTArr['field']['title'] 	= 	$MySmartBB->_POST['title'];
-		$UTArr['field']['posts'] 	= 	$MySmartBB->_POST['posts'];
-		$UTArr['where']				=	array('id',$UTInfo['id']);
+		$UTArr['field']['usertitle'] 	= 	$MySmartBB->_POST['title'];
+		$UTArr['field']['posts'] 		= 	$MySmartBB->_POST['posts'];
+		$UTArr['where']					=	array('id',$UTInfo['id']);
 		
 		$update = $MySmartBB->usertitle->UpdateUsertitle($UTArr);
 		

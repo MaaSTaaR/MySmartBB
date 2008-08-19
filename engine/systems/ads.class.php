@@ -123,12 +123,14 @@ class MySmartAds
  	 */
 	function NewVisit($param)
 	{
-		if (!isset($param['clicks']))
+		if (empty($param['clicks'])
+			and $param['clicks'] != 0)
 		{
 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
 		}
 		
-		$param['clicks'] = $param['clicks'] + 1;
+		$param['field'] = array();
+		$param['field']['clicks'] = $param['clicks'] + 1;
 		
 		$update = $this->UpdateAds($param);
 		

@@ -14,7 +14,7 @@
 <tr valign="top" align="center">
 	<td class="row1"><div style="color : {$ClrList['name']}">{$ClrList['name']}</div></td>
 	<td class="row1"><a href="./admin.php?page=toolbox&amp;colors=1&amp;edit=1&amp;main=1&amp;id={$ClrList['id']}">تحرير</a></td>
-	<td class="row1"><a href="./admin.php?page=toolbox&amp;colors=1&amp;del=1&amp;main=1&amp;id={ClrList['id']}">حذف</a></td>
+	<td class="row1"><a href="./admin.php?page=toolbox&amp;colors=1&amp;del=1&amp;main=1&amp;id={$ClrList['id']}">حذف</a></td>
 </tr>
 {/Des::while}
 </table>

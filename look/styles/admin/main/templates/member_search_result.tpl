@@ -12,9 +12,9 @@
 	<td class="main1">حذف</td>
 </tr>
 <tr valign="top" align="center">
-	<td class="row1"><a href="./index.php?page=profile&amp;show=1&amp;id={$Inf['id']}" target="_blank">{$Inf['username']}</a></td>
-	<td class="row1"><a href="./admin.php?page=member&amp;edit=1&amp;main=1&amp;id={$Inf['id']}"">تحرير</a></td>
-	<td class="row1"><a href="./admin.php?page=member&amp;del=1&amp;main=1&amp;id={$Inf['id']}"">حذف</a></td>
+	<td class="row1"><a href="./index.php?page=profile&amp;show=1&amp;id={$MemInfo['id']}" target="_blank">{$MemInfo['username']}</a></td>
+	<td class="row1"><a href="./admin.php?page=member&amp;edit=1&amp;main=1&amp;id={$MemInfo['id']}"">تحرير</a></td>
+	<td class="row1"><a href="./admin.php?page=member&amp;del=1&amp;main=1&amp;id={$MemInfo['id']}"">حذف</a></td>
 </tr>
 
 </table>

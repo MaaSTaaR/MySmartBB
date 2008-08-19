@@ -20,14 +20,13 @@
 		<td class="row2">هل تود تنشيط النمط؟</td>
 		<td class="row2">
 		<select name="style_on" id="select_style_on">
-		{if}{{$Inf['style_on']}}{if}
+		{if {{$Inf['style_on']}}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
-		{/comif}
 		{else}
 		<option value="1">نعم</option>
 		<option value="0" selected="selected">لا</option>
-		{/else}
+		{/if}
 </select>
 </td>
 </tr>

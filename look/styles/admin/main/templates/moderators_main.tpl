@@ -11,10 +11,10 @@
 		اسم المنتدى
 		</td>
 	</tr>
-	{Des::foreach}{forums_list}
+	{Des::foreach}{forums_list}{forum}
 	<tr align="center">
 		<td class="row1">
-			<a href="admin.php?page=moderators&amp;control=1&amp;section=1&amp;id={#id#}">{#title#}</a>
+			<a href="admin.php?page=moderators&amp;control=1&amp;section=1&amp;id={$forum['id']}">{$forum['title']}</a>
 		</td>
 	</tr>
 	{/Des::foreach}

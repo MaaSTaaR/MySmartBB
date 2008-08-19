@@ -186,7 +186,7 @@ class MySmartTemplateMOD extends _functions
 			}
 		}
 		
-		$MySmartBB->template->foreach_array['TemplatesList'] = $TemplatesList;
+		$MySmartBB->_CONF['template']['foreach']['TemplatesList'] = $TemplatesList;
 		
 		$MySmartBB->template->assign('StyleInfo',$StyleInfo);
 		

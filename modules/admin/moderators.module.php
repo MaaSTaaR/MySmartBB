@@ -218,7 +218,7 @@ class MySmartModeratorsMOD extends _functions
 				if (isset($forum['moderators'])
 					and $forum['moderators'] != 'a:0:{}')
 				{
-					$$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_m'] = $forum;
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_m'] = $forum;
 				}
 			}
 			
@@ -229,7 +229,7 @@ class MySmartModeratorsMOD extends _functions
 				if (isset($forum['moderators'])
 					and $forum['moderators'] != 'a:0:{}')
 				{
-					$$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
 				}
 			}
 			

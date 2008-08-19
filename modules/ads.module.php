@@ -62,7 +62,7 @@ class MySmartAdsPageMOD
 		{
 			$MySmartBB->functions->error('الاعلان المطلوب غير موجود !');
 		}
-			
+		
 		// New visitor
 		$NewClickArr 			= 	array();
 		$NewClickArr['clicks'] 	= 	$AdsRows['clicks'];

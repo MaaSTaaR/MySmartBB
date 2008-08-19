@@ -194,21 +194,21 @@ class DatabaseStruct extends MySmartInstall
 		
 		$ExtensionsArray = array();
 		
-		$ExtensionsArray[] 					= 	array();
-		$ExtensionsArray[]['extension'] 	= 	'.zip';
-		$ExtensionsArray[]['max_size'] 		= 	'500';
+		$ExtensionsArray[0] 					= 	array();
+		$ExtensionsArray[0]['extension'] 		= 	'.zip';
+		$ExtensionsArray[0]['max_size'] 		= 	'500';
 		
-		$ExtensionsArray[] 					= 	array();
-		$ExtensionsArray[]['extension'] 	= 	'.txt';
-		$ExtensionsArray[]['max_size'] 		= 	'500';
+		$ExtensionsArray[1] 					= 	array();
+		$ExtensionsArray[1]['extension'] 		= 	'.txt';
+		$ExtensionsArray[1]['max_size'] 		= 	'500';
 		
-		$ExtensionsArray[] 					= 	array();
-		$ExtensionsArray[]['extension'] 	= 	'.jpg';
-		$ExtensionsArray[]['max_size'] 		= 	'500';
+		$ExtensionsArray[2] 					= 	array();
+		$ExtensionsArray[2]['extension'] 		= 	'.jpg';
+		$ExtensionsArray[2]['max_size'] 		= 	'500';
 		
-		$ExtensionsArray[] 					= 	array();
-		$ExtensionsArray[]['extension'] 	= 	'.gif';
-		$ExtensionsArray[]['max_size'] 		= 	'500';
+		$ExtensionsArray[3] 					= 	array();
+		$ExtensionsArray[3]['extension'] 		= 	'.gif';
+		$ExtensionsArray[3]['max_size'] 		= 	'500';
 				
 		$x = 0;
 		$i = array();
@@ -1591,7 +1591,7 @@ class DatabaseStruct extends MySmartInstall
 		$x = 0;
 		$i = array();
 		
-		while ($x <= sizeof($SmilesArray))
+		while ($x < sizeof($SmilesArray))
 		{
 			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['smiles'] . " SET 
 														smile_short='" . $SmilesArray[$x]['smile_short'] . "',

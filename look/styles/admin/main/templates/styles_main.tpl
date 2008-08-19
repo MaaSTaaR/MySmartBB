@@ -12,9 +12,9 @@
 </tr>
 {Des::while}{StlList}
 <tr valign="top" align="center">
-	<td class="row1">{#StlList['style_title']#}</td>
-	<td class="row1"><a href="./admin.php?page=style&amp;edit=1&amp;main=1&amp;id={#StlList['id']#}">تحرير</a></td>
-	<td class="row1"><a href="./admin.php?page=style&amp;del=1&amp;main=1&amp;id={#StlList['id']#}">حذف</a></td>
+	<td class="row1">{$StlList['style_title']}</td>
+	<td class="row1"><a href="./admin.php?page=style&amp;edit=1&amp;main=1&amp;id={$StlList['id']}">تحرير</a></td>
+	<td class="row1"><a href="./admin.php?page=style&amp;del=1&amp;main=1&amp;id={$StlList['id']}">حذف</a></td>
 
 </tr>
 {/Des::while}

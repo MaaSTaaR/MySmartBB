@@ -12,8 +12,8 @@
 </tr>
 {Des::while}{StyleList}
 <tr valign="top" align="center">
-	<td class="row1">{#StyleList['style_title']#}</td>
-	<td class="row1"><a href="./admin.php?page=template&amp;control=1&amp;show=1&amp;id={#StyleList['id']#}">عرض</a></td>
+	<td class="row1">{$StyleList['style_title']}</td>
+	<td class="row1"><a href="./admin.php?page=template&amp;control=1&amp;show=1&amp;id={$StyleList['id']}">عرض</a></td>
 </tr>
 {/Des::while}
 </table>

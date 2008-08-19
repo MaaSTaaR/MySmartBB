@@ -21,7 +21,7 @@
 		<td class="row2">
 <select name="style" id="select_style">
 {Des::while}{StyleList}
-	<option value="{#StyleList['id']#}">{#StyleList['style_title']#}</option>
+	<option value="{$StyleList['id']}">{$StyleList['style_title']}</option>
 {/Des::while}
 </select>
 
