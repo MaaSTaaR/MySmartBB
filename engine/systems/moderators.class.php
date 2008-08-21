@@ -157,16 +157,20 @@ class MySmartModerators
  		
  		$InfoArr = array();
  		
+ 		$InfoArr['where'] = array();
+ 		
  		if (isset($param['username']))
  		{
  			$InfoArr['where'][0] 			= 	array();
  			$InfoArr['where'][0]['name'] 	= 	'username';
+ 			$InfoArr['where'][0]['oper']	=	'=';
  			$InfoArr['where'][0]['value'] 	= 	$param['username'];
  		}
  		elseif (isset($param['member_id']))
  		{
  			$InfoArr['where'][0] 			= 	array();
  			$InfoArr['where'][0]['name'] 	= 	'member_id';
+ 			$InfoArr['where'][0]['oper']	=	'=';
  			$InfoArr['where'][0]['value'] 	= 	$param['member_id'];
  		}
  		
@@ -176,7 +180,7 @@ class MySmartModerators
  		$InfoArr['where'][1]['name'] 	= 	'section_id';
  		$InfoArr['where'][1]['value'] 	= 	$param['section_id'];
  		
- 		$Info = $this->GetModeratorInfo($param);
+ 		$Info = $this->GetModeratorInfo($InfoArr);
  		
  		return is_array($Info) ? true : false;
  	}

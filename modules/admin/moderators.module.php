@@ -74,11 +74,42 @@ class MySmartModeratorsMOD extends _functions
 		
 		//////////
 		
-		$ForumArr 				= 	array();
-		$ForumArr['get_from'] 	=	'cache';
-		$ForumArr['type'] 		= 	'normal';
+		$SecArr 						= 	array();
+		$SecArr['get_from']				=	'db';
 		
-		$MySmartBB->_CONF['template']['foreach']['forums'] = $MySmartBB->section->GetSectionsList($ForumArr);
+		$SecArr['proc'] 				= 	array();
+		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		
+		$SecArr['order']				=	array();
+		$SecArr['order']['field']		=	'sort';
+		$SecArr['order']['type']		=	'ASC';
+		
+		$SecArr['where']				=	array();
+		$SecArr['where'][0]['name']		= 	'parent';
+		$SecArr['where'][0]['oper']		= 	'=';
+		$SecArr['where'][0]['value']	= 	'0';
+		
+		// Get main sections
+		$cats = $MySmartBB->section->GetSectionsList($SecArr);
+		
+		// We will use forums_list to store list of forums which will view in main page
+		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+		
+		// Loop to read the information of main sections
+		foreach ($cats as $cat)
+		{
+			$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
+			
+			if (!empty($cat['forums_cache']))
+			{
+				$forums = unserialize(base64_decode($cat['forums_cache']));
+				
+				foreach ($forums as $forum)
+				{
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+				}
+			}
+		}
 		
 		//////////
 		
@@ -109,6 +140,17 @@ class MySmartModeratorsMOD extends _functions
 			or empty($MySmartBB->_POST['section']))
 		{
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+		}
+		
+		$CheckArr 					= 	array();
+		$CheckArr['username'] 		= 	$MySmartBB->_POST['username'];
+		$CheckArr['section_id'] 	= 	$MySmartBB->_POST['section'];
+		
+		$IsModerator = $MySmartBB->moderator->IsModerator($CheckArr);
+		
+		if ($IsModerator)
+		{
+			$MySmartBB->functions->error('المعذره .. لا يمكنك اضافة نفس العضو مشرفاً على القسم مرتين');
 		}
 		
  		$MemberArr 			= 	array();
@@ -167,7 +209,9 @@ class MySmartModeratorsMOD extends _functions
 				//////////
 				
 				$SecArr 				= 	array();
-				$SecArr['moderators'] 	= 	$cache;
+				$SecArr['field']		=	array();
+				
+				$SecArr['field']['moderators'] 	= 	$cache;
 			
 				$update = $MySmartBB->section->UpdateSection($SecArr);
 			

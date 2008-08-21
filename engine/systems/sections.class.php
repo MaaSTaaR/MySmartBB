@@ -7,7 +7,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
- * @updated 	: 	17/07/2008 12:16:51 AM 
+ * @updated 	: 	21/08/2008 02:50:55 AM 
  */
  
 class MySmartSection
@@ -280,8 +280,10 @@ class MySmartSection
  		}
  		
  		$UpdateArr 					= 	array();
- 		$UpdateArr['forums_cache'] 	= 	$this->CreateSectionsCache($param);
- 		$UpdateArr['where']			=	array('id',$param['parent']);
+ 		$UpdateArr['field']			=	array();
+ 		
+ 		$UpdateArr['field']['forums_cache'] 	= 	$this->CreateSectionsCache($param);
+ 		$UpdateArr['where']						=	array('id',$param['parent']);
  		
  		$update = $this->UpdateSection($UpdateArr);
  		

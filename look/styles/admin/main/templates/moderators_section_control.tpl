@@ -19,13 +19,13 @@
 	{Des::while}{ModeratorsList}
 	<tr align="center">
 		<td class="row1" width="40%">
-			<a href="index.php?page=profile&show=1&id={#ModeratorsList['member_id']#}" target="_blank">{#ModeratorsList['username']#}</a>
+			<a href="index.php?page=profile&show=1&id={$ModeratorsList['member_id']}" target="_blank">{$ModeratorsList['username']}</a>
 		</td>
 		<td class="row1" width="20%">
-			<a href="admin.php?page=moderators&amp;edit=1&amp;main=1&amp;id={#ModeratorsList['id']#}">تحرير</a>
+			<a href="admin.php?page=moderators&amp;edit=1&amp;main=1&amp;id={$ModeratorsList['id']}">تحرير</a>
 		</td>
 		<td class="row1" width="20%">
-			<a href="admin.php?page=moderators&amp;del=1&amp;main=1&amp;id={#ModeratorsList['id']#}">إلغاء الاشراف</a>
+			<a href="admin.php?page=moderators&amp;del=1&amp;main=1&amp;id={$ModeratorsList['id']}">إلغاء الاشراف</a>
 		</td>
 	</tr>
 	{/Des::while}

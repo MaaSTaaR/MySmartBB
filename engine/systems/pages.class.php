@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	9/3/2006 , 8:31 PM
  * @end   		: 	9/3/2006 , 8:33 PM
- * @updated 	: 	18/08/2008 10:45:11 PM 
+ * @updated 	: 	21/08/2008 03:26:18 AM 
  */
  
 class MySmartPages
@@ -48,7 +48,7 @@ class MySmartPages
  			$param = array();
  		}
  		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['pages'],$field,$param['where']);
+		$query = $this->Engine->records->Update($this->Engine->table['pages'],$param['field'],$param['where']);
 		
 		return ($query) ? true : false;
 	}

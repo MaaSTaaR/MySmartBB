@@ -17,7 +17,7 @@
 {Des::foreach}{forums_list}{forum}
 <tr valign="top" align="center">
 	{if {{$forum['parent']}} == 0}
-	<td class="main2" colspan="5">{$title}</td>
+	<td class="main2" colspan="5">{$forum['title']}</td>
 	{else}
 	<td class="row1">
 		<a href="admin.php?page=forums&amp;forum=1&amp;index=1&amp;id={$forum['id']}">{$forum['title']}</a>

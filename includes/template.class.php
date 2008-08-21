@@ -3,9 +3,9 @@
 /*
  * @package : MySmartTemplate
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @version : 0.25 (Special Version For MySmartBB)
+ * @version : 0.26 (Special Version For MySmartBB)
  * @start : 20/4/2006 , 7:00 PM (GMT+3)
- * @last update : 05/07/2008 05:50:33 AM
+ * @last update : 21/08/2008 02:30:34 AM 
  * @under : GNU LGPL
 */
 
@@ -16,12 +16,26 @@ class MySmartTemplate
 	var $templates_ex;
 	var $template;
 	var $while_num;
-	var $while_array	=	array();
-	var $foreach_array	=	array();
-	var $_vars 			= 	array();
-	var $method			=	'file';
-	var $x_loop			=	0; // Private
-	var $size_loop		=	0; // Private
+	var $while_array		=	null;
+	var $foreach_array		=	null;
+	var $_vars 				= 	null;
+	var $method				=	'file';
+	var $x_loop				=	0; // Private
+	var $size_loop			=	0; // Private
+	var $_while_var			=	null;
+	var $_while_var_num		=	0;
+	var $_foreach_var		=	null;
+	var $_foreach_var_num	=	0;
+	
+	
+	function MySmartTemplate()
+	{
+		$this->while_array 		= 	array();
+		$this->foreach_array 	= 	array();
+		$this->_vars 			= 	array();
+		$this->_while_var 		= 	array();
+		$this->_foreach_var 	= 	array();
+	}
 	
 	/**
 	 * Set the information
@@ -283,22 +297,38 @@ class MySmartTemplate
 		$search_array 		= 	array();
 		$replace_array 		= 	array();
 		
-		$search_array[] 	=	'~\{Des::while}{([^[<].*?)}~';
-		$replace_array[] 	=	'<?php $this->x_loop = 0; $this->size_loop = sizeof($MySmartBB->_CONF[\'template\'][\'while\'][\'\\1\']); while ($this->x_loop < $this->size_loop) { ?>';
+		// I am sorry, but we _must_ do that
+		$string = preg_replace('~\{Des::while}{([^[<].*?)}~ise','$this->_StoreWhileVarName(\'\\1\');',$string);
 		
-		$search_array[] 	=	'~\{\{\$([^[<].*?)\[([^[<].*?)\]\}\}~';
-		$replace_array[] 	=	'$MySmartBB->_CONF[\'template\'][\'while\'][\'\\1\'][$this->x_loop][\\2]';
+		foreach ($this->_while_var as $var_name)
+		{
+			$search_array[] 	=	'~\{\{\$' . $var_name . '\[([^[<].*?)\]\}\}~';
+			$replace_array[] 	=	'$MySmartBB->_CONF[\'template\'][\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1]';
 		
-		$search_array[] 	=	'~\{\$([^[<].*?)\[([^[<].*?)\]\}~';
-		$replace_array[] 	=	'<?php echo $MySmartBB->_CONF[\'template\'][\'while\'][\'\\1\'][$this->x_loop][\\2]; ?>';
+			$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
+			$replace_array[] 	=	'<?php echo $MySmartBB->_CONF[\'template\'][\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1]; ?>';
+		}
 		
-		$string 			= 	preg_replace($search_array,$replace_array,$string);
+		$string 	= 	preg_replace($search_array,$replace_array,$string);
 		
-		$string 			= 	str_replace('{/Des::while}','<?php $this->x_loop = $this->x_loop + 1; } ?>',$string);
-		$string 			= 	str_replace('{Des::while::complete}','',$string);
-		$string 			= 	str_replace('{/Des::while::complete}','',$string);
+		$string 	= 	str_replace('{/Des::while}','<?php $this->x_loop = $this->x_loop + 1; } ?>',$string);
+		$string 	= 	str_replace('{Des::while::complete}','',$string);
+		$string 	= 	str_replace('{/Des::while::complete}','',$string);
+		
+		$this->_while_var 		= 	null;
+		$this->_while_var_num 	= 	0;
 		
 		return $string;	
+	}
+	
+	
+	function _StoreWhileVarName($varname)
+	{
+		$this->_while_var[$this->_while_var_num] = $varname;
+		
+		$this->_while_var_num += 1;
+		
+		return '<?php $this->x_loop = 0; $this->size_loop = sizeof($MySmartBB->_CONF[\'template\'][\'while\'][\'' . $varname . '\']); while ($this->x_loop < $this->size_loop) { ?>';
 	}
 	
 	function _ProccessForeach($string)
@@ -306,24 +336,26 @@ class MySmartTemplate
 		$search_array 		= 	array();
 		$replace_array 		= 	array();
 		
-		$search_array[] 	=	'~\{Des::foreach}{([^[<].*?)}{([^[<].*?)}~';
-		$replace_array[] 	=	'<?php foreach ($MySmartBB->_CONF[\'template\'][\'foreach\'][\'\\1\'] as $\\2) { ?>';
+		$string = preg_replace('~\{Des::foreach}{([^[<].*?)}{([^[<].*?)}~ise','$this->_StoreForeachVarName(\'\\2\',\'\\1\');',$string);
 		
-		// Variable (Without print) :
-		//				{$var} -> $var
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\}}~';
-		$replace_array[] 	= 	'$\\1';
+		foreach ($this->_foreach_var as $var_name)
+		{		
+			// Variable (Without print) :
+			//				{$var} -> $var
+			$search_array[] 	= 	'~\{{\$' . $var_name . '\}}~';
+			$replace_array[] 	= 	'$' . $var_name;
 
-		// Variable :
-		//				{$var} -> $var
-		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
-		$replace_array[] 	= 	'<?php echo $\\1 ?>';
-		
-		$search_array[] 	=	'~\{\$([^[<].*?)\[([^[<].*?)\]\}~';
-		$replace_array[] 	=	'<?php echo $\\1[\\2]; ?>';
-		
-		$search_array[] 	=	'~\{{\$([^[<].*?)\[([^[<].*?)\]}}~';
-		$replace_array[] 	=	'$\\1[\\2]';
+			$search_array[] 	=	'~\{{\$' . $var_name . '\[([^[<].*?)\]}}~';
+			$replace_array[] 	=	'$' . $var_name . '[\\1]';
+			
+			// Variable :
+			//				{$var} -> $var
+			$search_array[] 	= 	'~\{\$' . $var_name . '\}~';
+			$replace_array[] 	= 	'<?php echo $' . $var_name . ' ?>';
+			
+			$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
+			$replace_array[] 	=	'<?php echo $' . $var_name . '[\\1]; ?>';
+		}
 		
 		$search_array[] 	=	'~\{counter}~';
 		$replace_array[] 	=	'<?php echo $this->x_loop ?>';
@@ -336,6 +368,15 @@ class MySmartTemplate
 		$string 			= 	str_replace('{/Des::foreach}','<?php $this->x_loop += 1; } ?>',$string);
 		
 		return $string;	
+	}
+	
+	function _StoreForeachVarName($varname,$oldname)
+	{
+		$this->_foreach_var[$this->_foreach_var_num] = $varname;
+		
+		$this->_foreach_var_num += 1;
+		
+		return '<?php foreach ($MySmartBB->_CONF[\'template\'][\'foreach\'][\'' . $oldname . '\'] as $' . $varname . ') { ?>';
 	}
 	
 	/**

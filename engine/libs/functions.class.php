@@ -407,7 +407,8 @@ class MySmartSystemFunctions
 	}
 	
 	function BackHTML($text)
-	{
+	{	
+		$text = str_replace('&amp;','&',$text);
 		$text = str_replace('&lt;','<',$text);
 		$text = str_replace('&quot;','"',$text);
 		$text = str_replace('&gt;','>',$text);

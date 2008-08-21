@@ -2,7 +2,7 @@
 /*
 Started : 19-4-2007 11:55 AM
 End : 19-4-2007 12:03 PM
-Update : 19/11/2007 04:44:08 PM 
+Update : 21/08/2008 02:47:54 AM 
 */
 
 class MySmartRecords
@@ -19,7 +19,7 @@ class MySmartRecords
 	{
 		if (empty($param['from']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- FROM',E_USER_ERROR);
 		}
 		
 		$statement 	= 	'SELECT ';
@@ -42,7 +42,7 @@ class MySmartRecords
 			}
 			else
 			{
-				trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+				trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- JOIN TYPE',E_USER_ERROR);
 			}
 			
 			$statement .= ' JOIN ' . $param['join']['from'] . ' ON ' . $param['join']['where'];
@@ -64,7 +64,7 @@ class MySmartRecords
 				
 				if (empty($param[$k][$key[0]]['name']))
 				{
-					trigger_error('ERROR::NEED_PARAMETER');
+					trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- WHERE NAME');
 				}
 							
 				$oper = (!empty($param[$k][$key[0]]['oper'])) ? $param[$k][$key[0]]['oper'] : '=';
@@ -91,7 +91,7 @@ class MySmartRecords
 				{
 					if (!isset($param[$k][$x]['name']))
 					{
-						trigger_error('ERROR::NEED_PARAMETER');
+						trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- WHERE NAME');
 					}
 										
 					$oper = (!empty($param[$k][$x]['oper'])) ? $param[$k][$x]['oper'] : '=';
@@ -115,7 +115,7 @@ class MySmartRecords
 			}
 			else
 			{
-				trigger_error('ERROR::EMPTY_ARRAY',E_USER_ERROR);
+				trigger_error('ERROR::EMPTY_ARRAY -- FROM Select()',E_USER_ERROR);
 			}
 		}
 				
@@ -125,7 +125,7 @@ class MySmartRecords
 			{
 				if (empty($param['order']['field']))
 				{
-					trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+					trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- ORDER FIELD',E_USER_ERROR);
 				}
 			}
 			
@@ -141,7 +141,7 @@ class MySmartRecords
 				or empty($param['pager']['location'])
 				or empty($param['pager']['var']))
 			{
-				trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+				trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- PAGER',E_USER_ERROR);
 			}
 				
 			$param['pager']['perpage'] 	= ($param['pager']['perpage'] < 0) ? 10 : $param['pager']['perpage'];
@@ -178,7 +178,7 @@ class MySmartRecords
 		if (empty($table)
 			or empty($field))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM Insert() -- TABLE OR FIELD',E_USER_ERROR);
 		}
 		
 		$query_string = "INSERT INTO " . $table . " SET ";
@@ -209,7 +209,7 @@ class MySmartRecords
 		if (empty($table) 
 			or !isset($field))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- TABLE OR FIELD',E_USER_ERROR);
 		}
 				
 		$statement = "UPDATE " . $table . " SET ";
@@ -251,7 +251,7 @@ class MySmartRecords
 				{	
 					if (empty($complete[$key[0]]['name']))
 					{
-						trigger_error('ERROR::NEED_PARAMETER');
+						trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- WHERE NAME');
 					}
 							
 					$oper = (!empty($complete[$key[0]]['oper'])) ? $complete[$key[0]]['oper'] : '=';
@@ -278,7 +278,7 @@ class MySmartRecords
 					{
 						if (empty($complete[$x]['name']))
 						{
-							trigger_error('ERROR::NEED_PARAMETER');
+							trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- WHERE NAME');
 						}
 										
 						$oper = (!empty($complete[$x]['oper'])) ? $complete[$x]['oper'] : '=';
@@ -447,7 +447,7 @@ class MySmartRecords
 				{	
 					if (empty($param['where'][$key[0]]['name']))
 					{
-						trigger_error('ERROR::NEED_PARAMETER');
+						trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- WHERE NAME');
 					}
 							
 					$oper = (!empty($param['where'][$key[0]]['oper'])) ? $param['where'][$key[0]]['oper'] : '=';
@@ -474,7 +474,7 @@ class MySmartRecords
 					{
 						if (empty($param['where'][$x]['name']))
 						{
-							trigger_error('ERROR::NEED_PARAMETER');
+							trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- WHERE NAME');
 						}
 										
 						$oper = (!empty($param['where'][$x]['oper'])) ? $param['where'][$x]['oper'] : '=';
@@ -498,7 +498,7 @@ class MySmartRecords
 				}
 				else
 				{
-					trigger_error('ERROR::EMPTY_ARRAY',E_USER_ERROR);
+					trigger_error('ERROR::EMPTY_ARRAY -- FROM Delete()',E_USER_ERROR);
 				}
 			}
 		}
@@ -507,7 +507,7 @@ class MySmartRecords
 		{
 			if (empty($param['order']['field']))
 			{
-				trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+				trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- ORDER FIELD',E_USER_ERROR);
 			}
 			
 			$statement .= ' ORDER BY ' . $param['order']['field'] . ' ';

@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=announcement&amp;control=1&amp;main=1">الاعلانات الاداريه</a> &raquo; حذف : {$Inf['title']}</div>
+<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=announcement&amp;control=1&amp;main=1">الاعلانات الاداريه</a> &raquo; حذف : {$AnnInfo['title']}</div>
 
 <br />
 
@@ -17,7 +17,7 @@
 	</tr>
 	<tr align="center">
 		<td class="row1">
-			<a href="admin.php?page=announcement&amp;del=1&amp;start=1&amp;id={$Inf['id']}">نعم</a>
+			<a href="admin.php?page=announcement&amp;del=1&amp;start=1&amp;id={$AnnInfo['id']}">نعم</a>
 		</td>
 		<td class="row1">
 			<a href="admin.php?page=announcement&amp;control=1&amp;main=1">لا</a>

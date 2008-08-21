@@ -225,6 +225,21 @@ class MySmartMemberMOD extends _functions
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
+		{
+			$MySmartBB->functions->error('يرجى كتابة بريد إلكتروني صحيح');
+		}
+		
+		if ($MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['new_username']))))
+		{
+			$MySmartBB->functions->error('اسم المستخدم موجود مسبقاً');
+		}
+		
+		if ($MySmartBB->_POST['username'] == 'Guest')
+		{
+			$MySmartBB->functions->error('لا يمكن التسجيل بهذا الاسم');
+		}
+		
 		$UpdateArr 				= 	array();
 		$UpdateArr['field'] 	= 	array();
 		

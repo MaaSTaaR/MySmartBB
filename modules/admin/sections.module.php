@@ -261,6 +261,10 @@ class MySmartSectionMOD extends _functions
 		
 		//////////
 		
+		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		
+		//////////
+		
 		$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
@@ -275,6 +279,12 @@ class MySmartSectionMOD extends _functions
 		$SecArr['where'][0]['name']		= 	'parent';
 		$SecArr['where'][0]['oper']		= 	'=';
 		$SecArr['where'][0]['value']	= 	'0';
+		
+		$SecArr['where']				=	array();
+		$SecArr['where'][0]['con']		= 	'AND';
+		$SecArr['where'][0]['name']		= 	'id';
+		$SecArr['where'][0]['oper']		= 	'<>';
+		$SecArr['where'][0]['value']	= 	$MySmartBB->_CONF['template']['Inf']['id'];
 		
 		$MySmartBB->_CONF['template']['while']['SecList'] = $MySmartBB->section->GetSectionsList($SecArr);
 		

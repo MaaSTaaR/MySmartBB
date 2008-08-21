@@ -41,7 +41,7 @@
 		<td class="row2">
 <select name="style" id="select_style">
 {Des::while}{StyleList}
-	{if {{$Inf['style']}} == {{$StyleList['id']}}}
+	{if {{$Inf['style']}} == {{$StyleList['id']}} }
 	<option value="{$StyleList['id']}" selected="selected">{$StyleList['style_title']}</option>
 	{else}
 	<option value="{$StyleList['id']}">{$StyleList['style_title']}</option>
@@ -93,7 +93,7 @@
 		<td class="row1">
 <select name="usergroup" id="select_usergroup">
 {Des::while}{GroupList}
-	{if {{$Inf['usergroup']}} == {{$GroupList['id']}}}
+	{if {{$Inf['usergroup']}} == {{$GroupList['id']}} }
 	<option value="{$GroupList['id']}" selected="selected">{$GroupList['title']}</option>
 	{else}
 	<option value="{$GroupList['id']}">{$GroupList['title']}</option>

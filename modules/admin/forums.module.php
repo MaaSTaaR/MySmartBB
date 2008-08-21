@@ -176,7 +176,7 @@ class MySmartForumsMOD extends _functions
 		
 		$SecArr['field']['title'] 					= 	$MySmartBB->_POST['name'];
 		$SecArr['field']['sort'] 					= 	$MySmartBB->_POST['sort'];
-		$SecArr['field']['describe']				=	$MySmartBB->_POST['describe'];
+		$SecArr['field']['section_describe']		=	$MySmartBB->_POST['describe'];
 		$SecArr['field']['section_password']		=	$MySmartBB->_POST['section_password'];
 		$SecArr['field']['show_sig']				=	$MySmartBB->_POST['show_sig'];
 		$SecArr['field']['usesmartcode_allow']		=	$MySmartBB->_POST['usesmartcode_allow'];
@@ -352,7 +352,10 @@ class MySmartForumsMOD extends _functions
 				
 				foreach ($forums as $forum)
 				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+					if ($forum['id'] != $MySmartBB->_CONF['template']['Inf']['id'])
+					{
+						$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+					}
 				}
 			}
 		}
@@ -399,7 +402,7 @@ class MySmartForumsMOD extends _functions
 		
 		$SecArr['field']['title'] 					= 	$MySmartBB->_POST['name'];
 		$SecArr['field']['sort'] 					= 	$MySmartBB->_POST['sort'];
-		$SecArr['field']['describe']				=	$MySmartBB->_POST['describe'];
+		$SecArr['field']['section_describe']		=	$MySmartBB->_POST['describe'];
 		$SecArr['field']['section_password']		=	$MySmartBB->_POST['section_password'];
 		$SecArr['field']['show_sig']				=	$MySmartBB->_POST['show_sig'];
 		$SecArr['field']['usesmartcode_allow']		=	$MySmartBB->_POST['usesmartcode_allow'];
@@ -446,7 +449,7 @@ class MySmartForumsMOD extends _functions
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
-				
+		
 		$SecArr 					= 	array();
 		$SecArr['get_from']			=	'db';
 		$SecArr['proc'] 			= 	array();
@@ -457,6 +460,7 @@ class MySmartForumsMOD extends _functions
 		
 		$SecArr['where']			=	array();
 		$SecArr['where'][0]			=	array('name'=>'parent','oper'=>'<>','value'=>'0');
+		$SecArr['where'][1]			=	array('con'=>'AND','name'=>'id','oper'=>'<>','value'=>$MySmartBB->_CONF['template']['Inf']['id']);
 		
 		$MySmartBB->_CONF['template']['while']['SecList'] = $MySmartBB->section->GetSectionsList($SecArr);
 		
@@ -732,11 +736,22 @@ class MySmartForumsMOD extends _functions
 		
 		//////////
 		
-		$forums_list = unserialize(base64_decode($MySmartBB->_CONF['template']['Inf']['forums_cache']));
+		if (!empty($MySmartBB->_CONF['template']['Inf']['forums_cache']))
+		{
+			$MySmartBB->_CONF['template']['foreach']['forums_list'] = unserialize(base64_decode($MySmartBB->_CONF['template']['Inf']['forums_cache']));
 		
-		//////////
-
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = $forums_list;
+			$size = sizeof($MySmartBB->_CONF['template']['foreach']['forums_list']);
+		
+			// No information!
+			if ($size <= 0)
+			{
+				$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+			}
+		}
+		else
+		{
+			$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+		}
 		
 		//////////
 		

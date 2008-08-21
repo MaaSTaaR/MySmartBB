@@ -117,10 +117,6 @@ class MySmartPagesMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['Inf'],'html');
-		
-		$PageInfo['html_code'] = $MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['Inf']['html_code'],'unhtml');
-		
 		$MySmartBB->template->assign('Inf',$MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('page_edit');		
@@ -142,7 +138,7 @@ class MySmartPagesMOD extends _functions
 		$PageArr['field']		=	array();
 		
 		$PageArr['field']['title'] 		= 	$MySmartBB->_POST['name'];
-		$PageArr['field']['html_code'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'unhtml');
+		$PageArr['field']['html_code'] 	= 	$MySmartBB->_POST['text'];
 		$PageArr['where']				=	array('id',$PageInfo['id']);
 		
 		$insert = $MySmartBB->pages->UpdatePage($PageArr);

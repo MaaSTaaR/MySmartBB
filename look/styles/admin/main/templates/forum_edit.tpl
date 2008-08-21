@@ -76,7 +76,7 @@
 	<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 	{/if}
 	{else}
-	{if}{{$forum['id']}} == {{$Inf['parent']}}{if}
+	{if {{$forum['id']}} == {{$Inf['parent']}}}
 	<option value="{$forum['id']}" selected="selected">-- {$forum['title']}</option>
 	{else}
 	<option value="{$forum['id']}">-- {$forum['title']}</option>

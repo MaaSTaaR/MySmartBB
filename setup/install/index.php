@@ -2,6 +2,9 @@
 
 define('NO_INFO',true);
 
+$CALL_SYSTEM = array();
+$CALL_SYSTEM['ICONS'] = true;
+
 require_once('database_struct.php');
 
 class Install extends DatabaseStruct
@@ -297,6 +300,17 @@ elseif ($MySmartBB->_GET['step'] == 5)
 	else
 	{
 		$MySmartBB->html->msg('لم يتم وضع عنوان المنتدى');
+	}
+	
+	$cache = $MySmartBB->icon->UpdateSmilesCache(null);
+	
+	if ($cache)
+	{
+		$MySmartBB->html->msg('تم وضع المعلومات المخبأه للابتسامات');
+	}
+	else
+	{
+		$MySmartBB->html->msg('لم يتم وضع المعلومات المخبأه للابتسامات');
 	}
 	
 	$MySmartBB->html->msg('تهانينا! تم تثبيت المنتدى بنجاح. يرجى التأكد من حذفك لهذا المجلد','center');
