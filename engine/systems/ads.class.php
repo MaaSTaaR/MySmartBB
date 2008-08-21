@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	4/3/2006 , 8:28 PM
  * @end   		: 	4/3/2006 , 8:38 PM
- * @updated 	: 	17/07/2008 12:33:41 AM 
+ * @updated 	: 	21/08/2008 08:42:34 PM 
  */
 
 class MySmartAds
@@ -126,7 +126,7 @@ class MySmartAds
 		if (empty($param['clicks'])
 			and $param['clicks'] != 0)
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM NewVisit() -- EMPTY clicks',E_USER_ERROR);
 		}
 		
 		$param['field'] = array();

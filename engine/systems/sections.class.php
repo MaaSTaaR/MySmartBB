@@ -7,7 +7,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
- * @updated 	: 	21/08/2008 02:50:55 AM 
+ * @updated 	: 	21/08/2008 08:53:44 PM 
  */
  
 class MySmartSection
@@ -157,7 +157,7 @@ class MySmartSection
  		if (empty($param['id'])
  			or empty($param['password']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM CheckPassword() -- EMPTY id OR password',E_USER_ERROR);
  		}
  		
  		$param['select'] 				= 	'*';

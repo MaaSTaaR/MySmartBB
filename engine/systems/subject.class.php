@@ -10,7 +10,7 @@
  * @author 		: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	11/3/2006 , 8:18 PM
  * @end   		: 	11/3/2006 , 8:47 PM
- * @updated 	: 	16/07/2008 08:12:26 PM 
+ * @updated 	: 	21/08/2008 08:55:46 PM 
  */
  
 class MySmartSubject
@@ -44,7 +44,7 @@ class MySmartSubject
 		}
  		else
  		{
- 			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE',E_USER_ERROR);
+ 			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetSubjectNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
  		}
 		
 		return $num;
@@ -182,7 +182,7 @@ class MySmartSubject
  		if (empty($param['to'])
  			or empty($param['from']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM MassMoveSubject() -- EMPTY to OR from',E_USER_ERROR);
  		}
  		
 		$field 				= 	array();
@@ -202,7 +202,7 @@ class MySmartSubject
 	{
 		if (empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER');
+			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSubjectWriterInfo() -- EMPTY id');
 		}
 		
  		$arr							=	array();
@@ -231,7 +231,7 @@ class MySmartSubject
 	{
 		if (empty($param['visitor']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateSubjectVisitor() -- EMPTY visitor',E_USER_ERROR);
 		}
 		
 		$field = array('visitor'	=> 	$param['visitor']+1);
@@ -246,7 +246,7 @@ class MySmartSubject
 	{
 		if (empty($param['last_time']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM IsFlood() -- EMPTY last_time',E_USER_ERROR);
 		}
 		
 		return (($this->Engine->_CONF['now'] - $this->Engine->_CONF['info_row']['floodctrl']) <= $param['last_time']) ? true : false;

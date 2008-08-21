@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	20/1/2007 , 9:29 PM
  * @end   		: 	20/1/2007 , 9:33 PM
- * @updated		: 	16/07/2008 11:41:43 PM 
+ * @updated		: 	21/08/2008 08:47:19 PM 
  */
 
 class MySmartInfo
@@ -41,7 +41,7 @@ class MySmartInfo
  	{
  		if (!isset($param['var_name']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateInfo() -- EMPTY var_name',E_USER_ERROR);
  		}
  		
  		$field = array('value'		=>	$param['value']);

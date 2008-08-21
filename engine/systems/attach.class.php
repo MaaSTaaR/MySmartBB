@@ -8,7 +8,7 @@
  * @package 	: 	MySmartAttach
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	2/8/2006 , 1:14 PM
- * @updated 	: 	03/12/2007 12:02:01 AM 
+ * @updated 	: 	21/08/2008 08:43:14 PM 
  */
 
 class MySmartAttach
@@ -37,7 +37,7 @@ class MySmartAttach
 	{
 		if (empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM GetAttachInfo() -- EMPTY id',E_USER_ERROR);
 		}
 		
 		$param['select'] 	= 	'*';

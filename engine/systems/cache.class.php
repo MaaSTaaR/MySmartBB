@@ -8,7 +8,7 @@
  * @package 	: 	MySmartCache
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	15/6/2006 , 10:46 PM
- * @updated 	: 	01/15/2008 06:04:39 PM 
+ * @updated 	: 	21/08/2008 08:45:16 PM 
  */
 
 class MySmartCache
@@ -36,7 +36,7 @@ class MySmartCache
 		if (!isset($param['member_num'])
 			or empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateLastMember() -- EMPTY member_num or id',E_USER_ERROR);
 		}
 		
 		$updates = array();
@@ -65,9 +65,10 @@ class MySmartCache
 	 */
 	function UpdateSubjectNumber($param)
 	{
-		if (empty($param['subject_num']))
+		if (empty($param['subject_num'])
+			and $param['subject_num'] != 0)
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateSubjectNumber() -- EMPTY subject_num',E_USER_ERROR);
 		}
 		
 		$val = $param['subject_num'] + 1;
@@ -91,7 +92,7 @@ class MySmartCache
 	{
 		if (!isset($param['reply_num']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateReplyNumber() -- EMPTY reply_num',E_USER_ERROR);
 		}
 		
 		$val = $param['reply_num'] + 1;

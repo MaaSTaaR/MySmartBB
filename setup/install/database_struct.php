@@ -213,7 +213,7 @@ class DatabaseStruct extends MySmartInstall
 		$x = 0;
 		$i = array();
 		
-		while ($x <= sizeof($ExtensionsArray))
+		while ($x < sizeof($ExtensionsArray))
 		{
 			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['extension'] . " SET 
 														id='NULL',
@@ -1194,6 +1194,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'] 		= 	array();
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'title varchar(200) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'text text NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'user_from varchar(200) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'user_to varchar(200) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'user_read char(1) NOT NULL';
@@ -1664,6 +1665,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'reply_number int(9) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'visitor int(9) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'write_time varchar(25) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'native_write_time int(15) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'icon varchar(50) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_describe varchar(200) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'action_by varchar(200) NOT NULL';

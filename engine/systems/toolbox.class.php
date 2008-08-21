@@ -8,7 +8,7 @@
  * @package 	: 	MySmartToolbox
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	21/09/2007 10:30:28 PM 
- * @updated 	:	06/08/2008 02:35:17 AM 
+ * @updated 	:	21/08/2008 08:57:03 PM 
  */
 
 class MySmartToolbox
@@ -87,7 +87,7 @@ class MySmartToolbox
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetFontInfo() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['select'] 				= 	'*';
@@ -114,7 +114,7 @@ class MySmartToolbox
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteFont() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['table'] 				= 	$this->Engine->table['toolbox'];
@@ -204,7 +204,7 @@ class MySmartToolbox
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetColorInfo() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['select'] 				= 	'*';
@@ -231,7 +231,7 @@ class MySmartToolbox
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteColor() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['table'] 				= 	$this->Engine->table['toolbox'];

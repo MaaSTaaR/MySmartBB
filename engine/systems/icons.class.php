@@ -8,7 +8,7 @@
  * @package 	: 	MySmartIcons
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	21/09/2007 10:28:43 PM 
- * @updated 	:	03/08/2008 03:30:59 AM 
+ * @updated 	:	21/08/2008 08:46:50 PM 
  */
 
 class MySmartIcons
@@ -60,7 +60,7 @@ class MySmartIcons
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteSmile() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['table'] 				= 	$this->Engine->table['smiles'];
@@ -116,7 +116,7 @@ class MySmartIcons
 	{
 		if (empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSmileInfo() -- EMPTY id',E_USER_ERROR);
 		}
 		
 		$param['select'] 				= 	'*';
@@ -246,7 +246,7 @@ class MySmartIcons
 	{
  		if (empty($param['id']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteIcon() -- EMPTY id',E_USER_ERROR);
  		}
  		
 		$param['table'] 				= 	$this->Engine->table['smiles'];
@@ -293,7 +293,7 @@ class MySmartIcons
 	{
 		if (empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM GetIconInfo() -- EMPTY id',E_USER_ERROR);
 		}
 		
 		$param['select'] 				= 	'*';

@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	4/4/2006 , 11:26 PM
  * @end   		: 	4/4/2006 , 11:38 PM
- * @updated 	: 	03/12/2007 11:30:11 PM 
+ * @updated 	: 	21/08/2008 08:51:31 PM 
  */
 
 class MySmartOnline
@@ -183,7 +183,7 @@ class MySmartOnline
  	{
  		if (empty($param['timeout']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER');
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM IsOnline() -- EMPTY timeout');
  		}
  		
  		$arr 						= 	array();

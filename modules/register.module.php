@@ -91,7 +91,6 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->functions->ShowHeader('تنفيذ عملية التسجيل');
 		
-		print_r($MySmartBB->_POST);
 		// Clean the username and email from white spaces
 		$MySmartBB->_POST['username'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
 		$MySmartBB->_POST['email'] 		= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['email'],'trim');

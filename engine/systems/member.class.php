@@ -7,7 +7,7 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   16/08/2008 09:45:53 PM 
+ * @updated 	:   21/08/2008 08:49:48 PM 
 */
 
 
@@ -119,7 +119,7 @@ class MySmartMember
 		}
 		else
 		{
-			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE',E_USER_ERROR);
+			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetMemberNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
 		}
 		
 		return $num;
@@ -196,7 +196,7 @@ class MySmartMember
 		if (empty($param['username'])
 			or empty($param['password']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM LoginMember() -- EMPTY username or password',E_USER_ERROR);
 		}
 		
 		$CheckMember = $this->CheckMember(array('username'	=>	$param['username'],
@@ -289,7 +289,7 @@ class MySmartMember
 		if (empty($param['group_style'])
 			or empty($param['username']))
 		{
-			trigger_error('ERROR::NEED_PARAMATER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMATER -- FROM GetUsernameByStyle() -- EMPTY group_style or username',E_USER_ERROR);
 		}
 		
 		$general_style = $param['group_style'];
@@ -314,7 +314,7 @@ class MySmartMember
 			or empty($param['date'])
 			or empty($param['id']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM LastVisitCookie() -- EMPTY last_visit OR date OR id',E_USER_ERROR);
 		}
 		
 		// TODO :: store the name of cookie in a variable like username,password cookies.
@@ -409,7 +409,7 @@ class MySmartMember
  		if (!isset($param['username'])
  			or !isset($param['password']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM CheckAdmin() -- EMPTY username OR password',E_USER_ERROR);
  		}
  		
  		$MemberArr 					= 	array();
@@ -446,7 +446,7 @@ class MySmartMember
  		if (empty($param['username'])
  			or empty($param['password']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM LoginAdmin() -- EMPTY username OR password',E_USER_ERROR);
  		}
  		
 		$Check = $this->CheckAdmin($param);

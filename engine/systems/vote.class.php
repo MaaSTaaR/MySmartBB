@@ -8,7 +8,7 @@
  * @package 	: 	MySmartVote
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	09/06/2008 07:28:04 AM 
- * @updated 	:	17/07/2008 12:33:03 AM 
+ * @updated 	:	21/08/2008 08:57:59 PM 
  */
 
 class MySmartVote
@@ -158,7 +158,7 @@ class MySmartVote
  		}
  		else
  		{
-			trigger_error('ERROR::CANT_FIND_THE_ANSWER_IN_ARRAY',E_USER_ERROR);
+			trigger_error('ERROR::CANT_FIND_THE_ANSWER_IN_ARRAY -- FROM DoVote()',E_USER_ERROR);
  		}
  	}
 }

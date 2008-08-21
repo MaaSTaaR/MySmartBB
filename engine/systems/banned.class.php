@@ -9,7 +9,7 @@
  * @copyright 	: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	17/3/2006 , 7:13 PM
  * @end   		: 	17/3/2006 , 7:19 PM
- * @updated 	: 	13/11/2007 12:28:45 PM 
+ * @updated 	: 	21/08/2008 08:44:44 PM 
  */
  
 class MySmartBanned
@@ -35,7 +35,7 @@ class MySmartBanned
 	{
 		if (empty($param['username']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM IsUsernameBanned() -- EMPTY username',E_USER_ERROR);
 		}
 		
 		$query_array 			= 	array();
@@ -61,7 +61,7 @@ class MySmartBanned
  	{
 		if (empty($param['email']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM IsEmailBanned() -- EMPTY email',E_USER_ERROR);
 		}
 		
  		$query_array 			= 	array();
@@ -87,7 +87,7 @@ class MySmartBanned
  	{
 		if (empty($param['provider']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM IsProviderBanned() -- EMPTY provider',E_USER_ERROR);
 		}
 		
  		$query_array 			= 	array();
@@ -109,7 +109,7 @@ class MySmartBanned
 		if (empty($param['text'])
 			or empty($param['type']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM _BaseQueryNum() -- EMPTY text or type',E_USER_ERROR);
 		}
 		
  		$arr 						= 	array();

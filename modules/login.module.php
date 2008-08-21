@@ -3,6 +3,7 @@
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('STOP_STYLE',true);
+define('LOGIN',true);
 
 include('common.php');
 

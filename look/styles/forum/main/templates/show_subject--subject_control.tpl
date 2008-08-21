@@ -1,5 +1,4 @@
 <form method="get" action="index.php">
-
 <input type="hidden" name="page" value="management" />
 <input type="hidden" name="subject" value="1" />
 <input type="hidden" name="section" value="{$Info['section']}" />

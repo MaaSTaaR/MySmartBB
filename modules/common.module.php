@@ -18,11 +18,11 @@ class MySmartCommon
 		$this->_SetInformation();
 			
 		$this->_ShowAds();
-			
-		$this->_CheckClose();
-			
+		
 		$this->_GetStylePath();
 			
+		$this->_CheckClose();
+		
 		$this->_TemplateAssign();
 	}
 					
@@ -481,24 +481,8 @@ class MySmartCommon
 			$MySmartBB->_CONF['temp']['ads_show'] = true;
 		}
 	}
-		
-	/**
-	 * Close the forums
-	 */
-	function _CheckClose()
-	{
-		global $MySmartBB;
-			
-		// if the forum close by admin , stop the page
-		if ($MySmartBB->_CONF['info_row']['board_close'])
-    	{
-  			if ($MySmartBB->_CONF['group_info']['admincp_allow'] != 1)
-        	{
-    			$MySmartBB->functions->error($MySmartBB->_CONF['info_row']['board_msg']);
-  			}
- 		}
-	}
-		
+
+
 	/**
 	 * Get the style path
 	 */
@@ -517,6 +501,25 @@ class MySmartCommon
 		{
 			$MySmartBB->functions->error('');
 		}
+	}
+	
+	/**
+	 * Close the forums
+	 */
+	function _CheckClose()
+	{
+		global $MySmartBB;
+			
+		// if the forum close by admin , stop the page
+		if ($MySmartBB->_CONF['info_row']['board_close'])
+    	{
+  			if ($MySmartBB->_CONF['group_info']['admincp_allow'] != 1
+  				and !defined('LOGIN'))
+        	{
+        		$MySmartBB->functions->ShowHeader('مغلق');
+    			$MySmartBB->functions->error($MySmartBB->_CONF['info_row']['board_msg']);
+  			}
+ 		}
 	}
 		
 	/**

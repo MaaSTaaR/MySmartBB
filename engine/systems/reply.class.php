@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	12/3/2006 , 11:57 PM (kuwait : GMT+3)
  * @end   		: 	13/3/2006 , 12:01 AM (kuwait : GMT+3)
- * @updated 	: 	17/07/2008 12:13:03 AM 
+ * @updated 	: 	21/08/2008 08:52:56 PM 
  */
 
 
@@ -82,7 +82,7 @@ class MySmartReply
 		}
 		else
 		{
-			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE',E_USER_ERROR);
+			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetReplyNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
 		}
 		
 		return $num;
@@ -211,7 +211,7 @@ class MySmartReply
  		if (empty($param['to'])
  			or empty($param['from']))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM MassMoveReply() -- EMPTY to OR from',E_USER_ERROR);
  		}
  		
  		$field 					= 	array();

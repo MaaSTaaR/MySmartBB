@@ -113,7 +113,7 @@ class MySmartTopicMOD
 		}
 		
 		// The ID of subject
-		$this->Info['id'] = $this->Info[0];
+		$this->Info['id'] = $MySmartBB->_GET['id'];
 		
 		//////////
 		
@@ -155,7 +155,7 @@ class MySmartTopicMOD
 		$MySmartBB->functions->CleanVariable($this->SectionInfo,'sql');
 		/** **/
 		
-		$MySmartBB->template->assign('section_id',$this->SectionInfo['id']);
+		$MySmartBB->template->assign('section_info',$this->SectionInfo);
 	}
 	
 	function __ModeratorCheck()
@@ -331,7 +331,7 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// The visitor come from search engine , i don't mean Google :/ i mean the local search engine
+		// The visitor come from search engine , I don't mean Google :/ I mean the local search engine
 		// so highlight the key word
 		if (!empty($MySmartBB->_GET['highlight']))
 		{

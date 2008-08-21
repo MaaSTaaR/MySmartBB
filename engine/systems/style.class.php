@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	27/2/2006 , 8:38 PM
  * @end   		: 	27/2/2006 , 8:47 PM
- * @updated 	: 	06/08/2008 03:18:48 AM 
+ * @updated 	: 	21/08/2008 08:54:11 PM 
  */
 
 class MySmartStyle
@@ -141,7 +141,7 @@ class MySmartStyle
 	{
 		if (empty($param['style']))
 		{
-			trigger_error('ERROR::NEED_PARAMETER',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM ChangeStyle() -- EMPTY style',E_USER_ERROR);
 		}
 		
 		$update = setcookie($this->Engine->_CONF['style_cookie'],$param['style'],$param['expire']);

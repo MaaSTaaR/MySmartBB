@@ -353,7 +353,7 @@ class MySmartPM
 		$arr['where'][2]['oper'] 		= 	'<>';
 		$arr['where'][2]['value'] 		= 	'1';
 		
-		return $this->PrivateMassegeNumber($arr);
+		return $this->GetPrivateMassegeNumber($arr);
 	}
 	
 	/** High-Level functions **/
