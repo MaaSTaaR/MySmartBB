@@ -191,6 +191,17 @@ class MySmartForumMOD
      			}
      		}
      	}
+     	
+     	if ($MySmartBB->_CONF['member_permission'])
+     	{
+     		$UpdateOnline 			= 	array();
+			$UpdateOnline['field']	=	array();
+			
+			$UpdateOnline['field']['user_location']		=	'يطلع على : ' . $this->Section['title'];
+			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
+			
+			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+     	}
 	}
 		
 	/**

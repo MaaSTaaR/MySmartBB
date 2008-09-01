@@ -3,8 +3,14 @@
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
+
+$CALL_SYSTEM = array();
+$CALL_SYSTEM['SECTION'] = true;
+$CALL_SYSTEM['SUBJECT'] = true;
+$CALL_SYSTEM['REPLY'] = true;
+
 include('common.php');
-	
+
 define('CLASS_NAME','MySmartMainMOD');
 	
 class MySmartMainMOD
@@ -60,6 +66,24 @@ class MySmartMainMOD
 	function _DisplayBodyPage()
 	{
 		global $MySmartBB;
+		
+		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'db'));
+		
+		$MySmartBB->_CONF['template']['ActiveMember'] = $MySmartBB->member->GetActiveMemberNumber();
+		
+		$SecArr 						= 	array();
+		$SecArr['where'] 				= 	array();
+		$SecArr['where'][0] 			= 	array();
+		$SecArr['where'][0]['name'] 	= 	'parent';
+		$SecArr['where'][0]['oper'] 	= 	'<>';
+		$SecArr['where'][0]['value'] 	= 	'0';
+		
+		$MySmartBB->_CONF['template']['ForumsNumber'] = $MySmartBB->section->GetSectionNumber($SecArr);
+		
+		$MySmartBB->_CONF['template']['SubjectNumber'] = $MySmartBB->subject->GetSubjectNumber(array('get_from'	=>	'db'));
+		
+		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->reply->GetReplyNumber(array('get_from'	=>	'db'));
+		
 		
 		$MySmartBB->template->display('header');
 		$MySmartBB->template->display('main_body');

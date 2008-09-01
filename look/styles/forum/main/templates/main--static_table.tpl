@@ -7,7 +7,7 @@
 					</tr>
 					<tr align="right">
 						<td class="main2 rows_space small_text">
-							<strong>المتواجدين الآن : </strong> ({$MemberNumber}) عضو و ({$GuestNumber}) زائر
+							<strong><a href="index.php?page=online&amp;show=1">المتواجدين الآن</a> : </strong> ({$MemberNumber}) عضو و ({$GuestNumber}) زائر
 						</td>
 					</tr>
 					<tr align="right">

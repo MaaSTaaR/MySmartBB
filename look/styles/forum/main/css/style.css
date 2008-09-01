@@ -140,8 +140,6 @@ body
     font-size: 8pt;
     color: #545A83;
     text-align: center;
-    
-    clear: both;
 }
 
 #login_box
@@ -170,13 +168,15 @@ body
 
 .usercp_menu
 {
-	float: right;
 	clear: right;
+	float: right;
 }
 
 .usercp_context
 {
-	height: 100%;
+	width: 87.5%;
+	clear: left;
+	float: left;
 }
 
 .box

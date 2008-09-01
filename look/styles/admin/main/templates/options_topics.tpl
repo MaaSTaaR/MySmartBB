@@ -49,10 +49,10 @@
 </td>
 </tr>
 <tr valign="top">
-		<td class="row1">تفعيل خاصية المواضيع المتطابقة</td>
+		<td class="row1">تفعيل خاصية المواضيع المتشابهه</td>
 		<td class="row1">
 <select name="samesubject_show" id="select_samesubject_show">
-	{if {{$_CONF['info_row']['floodctrl']}}}
+	{if {{$_CONF['info_row']['samesubject_show']}}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
 	{else}

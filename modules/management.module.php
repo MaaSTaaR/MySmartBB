@@ -26,7 +26,7 @@ class MySmartManagementMOD
 		$MySmartBB->functions->ShowHeader('ادارة المواضيع');
 		
 		if ($this->_ModeratorCheck())
-		{
+		{	
 			if ($MySmartBB->_GET['subject'])
 			{
 				$this->_Subject();
@@ -69,8 +69,7 @@ class MySmartManagementMOD
 		global $MySmartBB;
 		
 		if (!isset($MySmartBB->_GET['operator'])
-			or !isset($MySmartBB->_GET['section'])
-			or !isset($MySmartBB->_GET['subject_id']))
+			or !isset($MySmartBB->_GET['section']))
 		{
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
@@ -230,79 +229,59 @@ class MySmartManagementMOD
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
 		
-		$ForumArr 				= 	array();
-		$ForumArr['get_from'] 	=	'cache';
-		$ForumArr['type'] 		= 	'normal';
+		$SecArr 						= 	array();
+		$SecArr['get_from']				=	'db';
 		
-		$forums = $MySmartBB->section->GetSectionsList($ForumArr);
+		$SecArr['proc'] 				= 	array();
+		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
 		
-		//////////
+		$SecArr['order']				=	array();
+		$SecArr['order']['field']		=	'sort';
+		$SecArr['order']['type']		=	'ASC';
 		
-		$GroupArr 				= 	array();
-		$GroupArr['get_from'] 	=	'cache';
+		$SecArr['where']				=	array();
+		$SecArr['where'][0]['name']		= 	'parent';
+		$SecArr['where'][0]['oper']		= 	'=';
+		$SecArr['where'][0]['value']	= 	'0';
 		
-		$groups = $MySmartBB->group->GetSectionGroupList($GroupArr);
+		// Get main sections
+		$cats = $MySmartBB->section->GetSectionsList($SecArr);
 		
-		//////////
-				
+		// We will use forums_list to store list of forums which will view in main page
 		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
 		
-		//////////
-		
-		foreach ($forums as $forum)
+		// Loop to read the information of main sections
+		foreach ($cats as $cat)
 		{
-			//////////
+			// Get the groups information to know view this section or not
+			$groups = unserialize(base64_decode($cat['sectiongroup_cache']));
 			
-			$MySmartBB->functions->CleanVariable($forum,'html');
-			
-			//////////
-			
-			foreach ($groups as $group)
-			{	
-				//////////
-				
-				$MySmartBB->functions->CleanVariable($group,'html');
-				
-				//////////
-				
-				if ($group['section_id'] == $forum['cat_id'] 
-					and $group['main_section'] == 1)
+			if (is_array($groups[$MySmartBB->_CONF['group_info']['id']]))
+			{
+				if ($groups[$MySmartBB->_CONF['group_info']['id']]['view_section'])
 				{
-					if ($group['group_id'] == $MySmartBB->_CONF['group_info']['id'])
-					{
-						if ($group['view_section'])
-						{
-							if (empty($forum['from_main_section']))
-							{
-								$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_m'] = $forum;
-							}
-						}
-					}
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
 				}
-				
-				//////////
-				
-				elseif ($group['section_id'] == $forum['id'] 
-						and $group['main_section'] != 1)
-				{
-					if ($group['group_id'] == $MySmartBB->_CONF['group_info']['id'])
-					{	
-						if ($group['view_section'])
-						{
-							if (!empty($forum['from_main_section']))
-							{
-								$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-							}
-						}
-					}
-				}
-				
-				//////////
-				
 			}
 			
-			//////////
-		}
+			unset($groups);
+			
+			if (!empty($cat['forums_cache']))
+			{
+				$forums = unserialize(base64_decode($cat['forums_cache']));
+				
+				foreach ($forums as $forum)
+				{
+					if (is_array($forum['groups'][$MySmartBB->_CONF['group_info']['id']]))
+					{
+						if ($forum['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+						{
+							$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+						}
+					} // end if is_array
+				} // end foreach ($forums)
+			} // end !empty($forums_cache)
+		} // end foreach ($cats)
 				
 		//////////
 		
@@ -323,9 +302,9 @@ class MySmartManagementMOD
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['section'] 	= 	$MySmartBB->_POST['section'];
-		$UpdateArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
+		$UpdateArr 					= 	array();
+		$UpdateArr['section_id']	=	$MySmartBB->_POST['section'];
+		$UpdateArr['where'] 		= 	array('id',$MySmartBB->_GET['subject_id']);
 		
 		$update = $MySmartBB->subject->MoveSubject($UpdateArr);
 		
@@ -371,7 +350,7 @@ class MySmartManagementMOD
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
 		
-		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
+		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
 		
 		$MySmartBB->functions->GetEditorTools();
 		

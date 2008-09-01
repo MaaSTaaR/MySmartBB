@@ -112,6 +112,16 @@
 		 {/if}
 		</td>
 	</tr>
+	{if {{$MemberInfo['IsOnline']}}}
+	<tr align="center">
+		<td class="row1" width="20%">
+		مكان تواجده
+		</td>
+		<td class="row1" width="30%">
+		{$Location['user_location']}
+		</td>
+	</tr>
+	{/if}
 </table>
 <br />
 <table align="center" class="t_style_b" border="1" width="80%">

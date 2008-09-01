@@ -16,7 +16,7 @@
 			مسار الصوره
 			</td>
 			<td class="row1">
-				<input type="text" name="path" value="{$Inf['avatar_path']}" size="30" />
+				<input type="text" name="path" value="{$Inf['avatar_path']}" />
 			</td>
 		</tr>
 	</table>

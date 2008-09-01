@@ -16,7 +16,7 @@
 			العنوان
 			</td>
 			<td class="row1">
-				<input type="text" name="title" value="{$AnnInfo['title']}" size="30" />
+				<input type="text" name="title" value="{$AnnInfo['title']}" />
 			</td>
 		</tr>
 		<tr>

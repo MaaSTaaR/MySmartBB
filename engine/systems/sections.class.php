@@ -7,7 +7,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
- * @updated 	: 	21/08/2008 08:53:44 PM 
+ * @updated 	: 	31/08/2008 04:54:23 AM 
  */
  
 class MySmartSection
@@ -261,11 +261,12 @@ class MySmartSection
 					$cache[$x]['groups'][$group['group_id']]['view_section'] 	= 	$group['view_section'];
 					$cache[$x]['groups'][$group['group_id']]['main_section'] 	= 	$group['main_section'];
 				}
-			
+				
 				$x += 1;
  			}
- 		
- 			$cache = base64_encode(serialize($cache));
+ 			
+ 			$cache = serialize($cache);
+ 			$cache = base64_encode($cache);
  		}
  		
 		return $cache;
@@ -297,15 +298,16 @@ class MySmartSection
  		$fail = false;
  		
  		foreach ($Sections as $Section)
- 		{ 			
+ 		{
  			if (!empty($Section['forums_cache']))
  			{
  				$CacheArr 				= 	array();
  				$CacheArr['parent'] 	= 	$Section['id'];
  			
- 				$UpdateArr 					= 	array();
- 				$UpdateArr['forums_cache'] 	= 	$this->CreateSectionsCache($CacheArr);
- 				$UpdateArr['where']			=	array('id',$Section['parent']);
+ 				$UpdateArr 								= 	array();
+ 				$UpdateArr['field']						=	array();
+ 				$UpdateArr['field']['forums_cache'] 	= 	$this->CreateSectionsCache($CacheArr);
+ 				$UpdateArr['where']						=	array('id',$Section['id']);
  			
  				$update = $this->UpdateSection($UpdateArr);
  				

@@ -124,7 +124,7 @@ class MySmartTopicAddMOD
      			
      			// Section id
      			$PassArr['id'] 	= $this->SectionInfo['id'];
-     			     			
+     			
      			// The password to check
      			$PassArr['password'] = base64_decode($MySmartBB->_GET['password']);
      			
@@ -142,7 +142,7 @@ class MySmartTopicAddMOD
      	
      	//////////
      	
-     	$MySmartBB->template->assign('section_info',$this->Section);
+     	$MySmartBB->template->assign('section_info',$this->SectionInfo);
      	
      	//////////
 	}
@@ -222,9 +222,8 @@ class MySmartTopicAddMOD
      	$SubjectArr['field']['attach_subject'] 		= 	0;
      	$SubjectArr['field']['tags_cache']			=	$MySmartBB->_POST['tags'];
      	
-     	
      	$Insert = $MySmartBB->subject->InsertSubject($SubjectArr);
-     	
+     				
      	if ($Insert)
      	{
      		//////////
@@ -284,9 +283,10 @@ class MySmartTopicAddMOD
      				
      				if (!$Tag)
      				{
-     					$InsertArr 				=	array();
-     					$InsertArr['tag']		=	$tag;
-     					$InsertArr['get_id']	=	true;
+     					$InsertArr 					=	array();
+     					$InsertArr['field']			=	array();
+     					$InsertArr['field']['tag']	=	$tag;
+     					$InsertArr['get_id']		=	true;
      					
      					$insert = $MySmartBB->tag->InsertTag($InsertArr);
      					
@@ -308,10 +308,12 @@ class MySmartTopicAddMOD
      				}
      				
      				$InsertArr 						= 	array();
-     				$InsertArr['tag_id'] 			= 	$tag_id;
-     				$InsertArr['subject_id'] 		=	$MySmartBB->subject->id;
-     				$InsertArr['tag'] 				= 	$tag;
-     				$InsertArr['subject_title'] 	= 	$MySmartBB->_POST['title'];
+     				$InsertArr['field']				=	array();
+     				
+     				$InsertArr['field']['tag_id'] 			= 	$tag_id;
+     				$InsertArr['field']['subject_id'] 		=	$MySmartBB->subject->id;
+     				$InsertArr['field']['tag'] 				= 	$tag;
+     				$InsertArr['field']['subject_title'] 	= 	$MySmartBB->_POST['title'];
      				
      				// Note, this function is from tag system not subject system
      				$insert = $MySmartBB->tag->InsertSubject($InsertArr);
@@ -380,6 +382,16 @@ class MySmartTopicAddMOD
      		$UpdateSubjectNumber = $MySmartBB->section->UpdateSection($UpdateArr);
      		
      		// Free memory
+     		unset($UpdateArr);
+     		
+     		//////////
+     		
+     		// Update section's cache
+     		$UpdateArr 				= 	array();
+     		$UpdateArr['parent'] 	= 	$this->SectionInfo['parent'];
+     		
+     		$update_cache = $MySmartBB->section->UpdateSectionsCache($UpdateArr);
+     		
      		unset($UpdateArr);
      		
      		//////////

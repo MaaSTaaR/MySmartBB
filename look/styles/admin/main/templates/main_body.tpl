@@ -2,39 +2,39 @@
 	<tr align="center">
 		<td class="main1" colspan="2">احصائيات سريعه</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">رقم إصدار MySmartBB</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%" dir="ltr"><strong>{$_CONF['info_row']['MySBB_version']}</strong></td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد الأعضاء</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$MemberNumber}</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد الأعضاء النشيطين</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$ActiveMember}</td>
 	</tr>
-	<tr>
-		<td class="row1" width="40%">عدد الأقسام</td>
-		<td class="row2" width="40%"></td>
+	<tr align="center">
+		<td class="row1" width="40%">عدد المنتديات</td>
+		<td class="row2" width="40%">{$ForumsNumber}</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد المواضيع</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$SubjectNumber}</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد الردود</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$ReplyNumber}</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد الأعضاء الذين اشتركوا اليوم</td>
 		<td class="row2" width="40%"></td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد المواضيع التي كتبت اليوم</td>
 		<td class="row2" width="40%"></td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">عدد الردود التي كتبت اليوم</td>
 		<td class="row2" width="40%"></td>
 	</tr>
@@ -46,17 +46,17 @@
 	<tr align="center">
 		<td class="main1" colspan="2">معلومات عن MySmartBB</td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">مطوري MySmartBB</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%"><strong><a traget="_blank" href="">هنا</a></strong></td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">الموقع الرسمي</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%"><strong><a traget="_blank" href="http://www.mysmartbb.com">هنا</a></strong></td>
 	</tr>
-	<tr>
+	<tr align="center">
 		<td class="row1" width="40%">المستندات الرسمية</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%"><strong><a traget="_blank" href="">هنا</a></strong></td>
 	</tr>
 </table>
 

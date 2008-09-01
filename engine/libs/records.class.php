@@ -69,7 +69,25 @@ class MySmartRecords
 							
 				$oper = (!empty($param[$k][$key[0]]['oper'])) ? $param[$k][$key[0]]['oper'] : '=';
 				
-				$statement .= $param[$k][$key[0]]['name'] . $oper;
+				$statement .= $param[$k][$key[0]]['name'];
+				
+				$oper_is_like = false;
+				
+				$oper_to_check = strtolower($oper);
+				
+				if ($oper_to_check == 'like')
+				{
+					$oper_is_like = true;
+					
+					$statement .= ' ';
+				}
+				
+				$statement .= $oper;
+				
+				if ($oper_is_like)
+				{
+					$statement .= ' ';
+				}
 				
 				if ($param[$k][$key[0]]['del_quote'] != true)
 				{
@@ -96,20 +114,38 @@ class MySmartRecords
 										
 					$oper = (!empty($param[$k][$x]['oper'])) ? $param[$k][$x]['oper'] : '=';
 					
-					$statement .= ' ' . $param[$k][$x]['con'] . ' ' . $param[$k][$x]['name'] . $oper;
+					$statement .= ' ' . $param[$k][$x]['con'] . ' ' . $param[$k][$x]['name'];
 					
+					$oper_is_like = false;
+				
+					$oper_to_check = strtolower($oper);
+				
+					if ($oper_to_check == 'like')
+					{
+						$oper_is_like = true;
+					
+						$statement .= ' ';
+					}
+				
+					$statement .= $oper;
+				
+					if ($oper_is_like)
+					{
+						$statement .= ' ';
+					}
+				
 					if ($param[$k][$x]['del_quote'] != true)
 					{
 						$statement .= "'";
 					}
-					
+				
 					$statement .= $param[$k][$x]['value'];
 					
 					if ($param[$k][$x]['del_quote'] != true)
 					{
 						$statement .= "'";
 					}
-					
+										
 					$x += 1;
 				}
 			}

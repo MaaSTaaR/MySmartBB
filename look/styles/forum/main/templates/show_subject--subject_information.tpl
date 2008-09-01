@@ -20,7 +20,7 @@
 		</td>
 	</tr>
 	{/if}
-	{if {{$Info['close_reason']}} != ''}
+	{if {{$Info['close_reason']}} != '' and {{$Info['close']}} }
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			سبب الاغلاق : <strong>{$Info['close_reason']}</strong>

@@ -47,7 +47,7 @@ class MySmartFooterMOD
 				$x++;
 			}
 		}
-				
+		
 		// Kill everything , Hey MySmartBB you should be lovely with server because it's Powered by Linux ;)
 		unset($MySmartBB->_CONF);
  		unset($MySmartBB->template->_vars);

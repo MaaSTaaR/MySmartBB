@@ -16,7 +16,7 @@
 			اسم الموقع
 			</td>
 			<td class="row1">
-				<input type="text" name="name" value="{$Inf['sitename']}" size="30" />
+				<input type="text" name="name" value="{$Inf['sitename']}" />
 			</td>
 		</tr>
 		<tr>
@@ -24,7 +24,7 @@
 			الوصله
 			</td>
 			<td class="row2">
-				<input type="text" name="link" value="{$Inf['site']}" size="30" />
+				<input type="text" name="link" value="{$Inf['site']}" />
 			</td>
 		</tr>
 		<tr>
@@ -32,7 +32,7 @@
 			وصلة الصوره
 			</td>
 			<td class="row1">
-				<input type="text" name="picture" value="{$Inf['picture']}" size="30" />
+				<input type="text" name="picture" value="{$Inf['picture']}" />
 			</td>
 		</tr>
 		<tr>
@@ -40,7 +40,7 @@
 			طول الصوره - غير ضروري
 			</td>
 			<td class="row2">
-				<input type="text" name="width" value="{$Inf['width']}" size="30" />
+				<input type="text" name="width" value="{$Inf['width']}" />
 			</td>
 		</tr>
 		<tr>
@@ -48,7 +48,7 @@
 			عرض الصوره - غير ضروري
 			</td>
 			<td class="row1">
-				<input type="text" name="height" value="{$Inf['height']}" size="30" />
+				<input type="text" name="height" value="{$Inf['height']}" />
 			</td>
 		</tr>
 	</table>
@@ -59,6 +59,6 @@
 		<input type="submit" value="موافق" name="submit" />
 	</div>
 	
-<br />
+	<br />
 
 </form>

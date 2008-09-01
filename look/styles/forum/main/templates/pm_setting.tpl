@@ -71,10 +71,9 @@
 				الرد الآلي الآن : 
 			{if {{$_CONF['member_row']['autoreply']}}}
 			<strong>يعمل</strong>
-			{/comif}
 			{else}
 			<strong>لا يعمل</strong>
-			{/else}
+			{/if}
 			</td>
 		</tr>
 	</table>

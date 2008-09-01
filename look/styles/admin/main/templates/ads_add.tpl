@@ -5,7 +5,6 @@
 <br />
 
 <form action="admin.php?page=ads&amp;add=1&amp;start=1" method="post">
-
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
@@ -17,7 +16,7 @@
 			اسم الموقع
 			</td>
 			<td class="row1">
-				<input type="text" name="name" id="input_name" value="" size="30" />
+				<input type="text" name="name" />
 			</td>
 		</tr>
 		<tr>
@@ -25,7 +24,7 @@
 			الوصله
 			</td>
 			<td class="row2">
-				<input type="text" name="link" id="input_link" value="" size="30" />
+				<input type="text" name="link" />
 			</td>
 		</tr>
 		<tr>
@@ -33,7 +32,7 @@
 			وصلة الصوره
 			</td>
 			<td class="row1">
-				<input type="text" name="picture" id="input_picture" value="" size="30" />
+				<input type="text" name="picture" />
 			</td>
 		</tr>
 		<tr>
@@ -41,7 +40,7 @@
 			طول الصوره - غير ضروري
 			</td>
 			<td class="row2">
-				<input type="text" name="width" id="input_width" value="" size="30" />
+				<input type="text" name="width" />
 			</td>
 		</tr>
 		<tr>
@@ -49,7 +48,7 @@
 			عرض الصوره - غير ضروري
 			</td>
 			<td class="row1">
-				<input type="text" name="height" id="input_height" value="" size="30" />
+				<input type="text" name="height" />
 			</td>
 		</tr>
 	</table>
@@ -57,12 +56,9 @@
 	<br />
 	
 	<div align="center">
-		<tr>
-			<td colspan="2" align="center">
-				<input type="submit" value="موافق" name="submit" />
-			</td>
-		</tr>
-	</table>
+		<input type="submit" value="موافق" name="submit" />
+	</div>
+
 	
 	<br />
 

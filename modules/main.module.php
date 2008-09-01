@@ -233,7 +233,7 @@ class MySmartIndexMOD
 		
 		if (!empty($MySmartBB->_CONF['info_row']['today_number_cache']))
 		{
-			$TodayNumber = $MySmartBB->_CONF['info_row']['today_number_cache'];
+			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->_CONF['info_row']['today_number_cache'];
 		}
 		else
 		{

@@ -28,7 +28,7 @@ class MySmartTag
  		{
  			$param = array();
  		}
- 		           			           
+ 		
 		$query = $this->Engine->records->Insert($this->Engine->table['tag'],$param['field']);
 		
 		if ($param['get_id'])
@@ -46,7 +46,7 @@ class MySmartTag
  		{
  			$param = array();
  		}
-		           				 
+		
 		$query = $this->Engine->records->Update($this->Engine->table['tag'],$param['field'],$param['where']);
 		           
 		return ($query) ? true : false;

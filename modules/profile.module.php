@@ -35,7 +35,13 @@ class MySmartProfileMOD
 	{
 		global $MySmartBB;
 		
+		//////////
+		// Show the header
+
 		$MySmartBB->functions->ShowHeader('عرض معلومات العضو');
+		
+		//////////
+		// Get the member information
 		
 		$MemArr = array();
 		
@@ -54,7 +60,7 @@ class MySmartProfileMOD
 			$do_query = ($MySmartBB->_CONF['member_row']['id'] == $MySmartBB->_GET['id']) ? false : true;
 		}
 		elseif (!empty($MySmartBB->_GET['username']))
-		{			
+		{
 			$MemArr['where'] 	= 	array('username',$MySmartBB->_GET['username']);
 			
 			$do_query = ($MySmartBB->_CONF['member_row']['username'] == $MySmartBB->_GET['username']) ? false : true;
@@ -65,7 +71,9 @@ class MySmartProfileMOD
 		}
 		
 		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->member->GetMemberInfo($MemArr) : $MySmartBB->_CONF['member_row'];
-	
+		
+		//////////
+		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
 			$MySmartBB->functions->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
@@ -76,6 +84,22 @@ class MySmartProfileMOD
 		// Second Kill SQL Injections
 		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
+		//////////
+		
+		// Where is the member now?
+		if ($MySmartBB->_CONF['member_permission'])
+     	{
+     		$UpdateOnline 			= 	array();
+			$UpdateOnline['field']	=	array();
+			
+			$UpdateOnline['field']['user_location']		=	'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username'];
+			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
+			
+			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+     	}
+     	
+     	//////////
+     	
 		$MySmartBB->_CONF['template']['MemberInfo']['user_gender'] 	= 	($MySmartBB->_CONF['template']['MemberInfo']['user_gender'] == 'm') ? 'ذكر' : 'انثى';
 		//$MemberInfo['user_time']		=	$MySmartBB->member->GetMemberTime($MemberInfo['user_time']);
 		
@@ -102,7 +126,7 @@ class MySmartProfileMOD
 		$IsOnline = $MySmartBB->online->IsOnline(array(		'way'		=>	'username',
 															'username'	=>	$MySmartBB->_CONF['template']['MemberInfo']['username'],
 															'timeout'	=>	$MySmartBB->_CONF['timeout']));
-															
+		
 		$MySmartBB->_CONF['template']['MemberInfo']['IsOnline'] = $IsOnline; 
 		
 		if ($MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0)
@@ -171,7 +195,12 @@ class MySmartProfileMOD
 				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['GetSubject'],'html');
 			}
 		}
-				
+		
+		$OnlineArr 				= 	array();
+		$OnlineArr['username'] 	= 	$MySmartBB->_CONF['template']['MemberInfo']['username'];
+		
+		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->online->GetOnlineInfo($OnlineArr);
+		
 		$MySmartBB->template->display('profile');
 	}
 }

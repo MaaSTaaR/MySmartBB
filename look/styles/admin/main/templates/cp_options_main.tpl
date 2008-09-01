@@ -4,9 +4,10 @@
 
 <br />
 
-<table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
-<tr valign="top" align="center">
-	<td class="row2" colspan="2"><a href="admin.php?page=cp_options&amp;ajax=1&amp;main=1">إعدادات تقنية AJAX</a></td>
-
-</tr>
+<table width="60%" class="t_style_b" border="1" align="center">
+	<tr align="center">
+		<td class="row2" colspan="2">
+			<a href="admin.php?page=cp_options&amp;ajax=1&amp;main=1">إعدادات تقنية AJAX</a>
+		</td>
+	</tr>
 </table>

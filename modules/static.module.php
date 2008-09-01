@@ -41,12 +41,9 @@ class MySmartStaticMOD
 		/**
 		 * Get the age of forums and install date
 		 */
-		/*$GetAge = $MySmartBB->misc->GetForumAge();
-		$GetAge = explode('|',$GetAge);
+		$StaticInfo['Age'] 			= 	$MySmartBB->misc->GetForumAge(array('date'=>$MySmartBB->_CONF['info_row']['create_date']));
+		$StaticInfo['InstallDate']	=	$MySmartBB->functions->date($MySmartBB->_CONF['info_row']['create_date']);
 		
-		$StaticInfo['Age'] 			= $GetAge[0];
-		$StaticInfo['InstallDate'] 	= $GetAge[1];
-		*/
 		/**
 		 * Get the number of members , subjects , replies , active members and sections
 		 */

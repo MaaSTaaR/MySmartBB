@@ -1,5 +1,11 @@
 {template}address_bar_part1{/template}
-<a href="index.php?page=forum&amp;show=1&amp;id={$id}{$password}">{$section_info['title']}</a> {$_CONF['info_row']['adress_bar_separate']} <a href="index.php?page=topic&amp;show=1&amp;id={$id}{$password}">{$subject_info['title']}</a> {$_CONF['info_row']['adress_bar_separate']} اضافة رد جديد
+<a href="index.php?page=forum&amp;show=1&amp;id={$id}
+{$password} "> {$section_info['title']} </a> 
+{$_CONF['info_row']['adress_bar_separate']} 
+<a href="index.php?page=topic&amp;show=1&amp;id={$id}
+{$password} ">
+{$subject_info['title']}
+</a> {$_CONF['info_row']['adress_bar_separate']} اضافة رد جديد
 {template}address_bar_part2{/template}
 
 <br />

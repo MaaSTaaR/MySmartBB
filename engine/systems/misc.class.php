@@ -8,7 +8,7 @@
  * @package 	: 	MySmartMisc
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	16/6/2006 
- * @updated 	: 	13/11/2007 12:45:01 PM 
+ * @updated 	: 	31/08/2008 06:32:02 AM 
  */
 
 class MySmartMisc
@@ -20,12 +20,12 @@ class MySmartMisc
 		$this->Engine = $Engine;
 	}
 	
-	function GetForumAge()
+	function GetForumAge($param)
 	{
-     	$age = strtotime('now') - strtotime($this->Engine->_CONF['info_row']['create_date']);
-     	$age = ceil ($age / (60*60*24));
+     	$age = time() - $param['date'];
+     	$age = ceil($age/(60*60*24));
      	
-     	return $age . '|' . $install_date;
+     	return $age;
 	}
 }
 

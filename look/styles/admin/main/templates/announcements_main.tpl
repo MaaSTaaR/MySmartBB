@@ -23,7 +23,7 @@
 		</td>
 	</tr>
 	{Des::while}{AnnList}
-	<tr valign="top" align="center">
+	<tr align="center">
 		<td class="row1">
 			<a href="index.php?page=announcement&amp;show=1&amp;id={$AnnList['id']}" target="_blank">{$AnnList['title']}</a>
 		</td>

@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	4/4/2006 , 11:26 PM
  * @end   		: 	4/4/2006 , 11:38 PM
- * @updated 	: 	21/08/2008 08:51:31 PM 
+ * @updated 	: 	31/08/2008 05:30:29 AM 
  */
 
 class MySmartOnline
@@ -52,29 +52,6 @@ class MySmartOnline
 		           
 		return ($query) ? true : false;
  	}
- 	
- 	
-
- 	
- 	/*function MemberLocation($param)
- 	{
- 		// Should complete this array;
- 		$LocationArray = array(
- 								'index'	=>	'ÇáÕÝÍå ÇáÑÆíÓíå',
- 							  );
- 		
- 		foreach ($LocationArray as $key	=>	$value)
- 		{
- 			if ($param['page']	==	$key)
- 			{
- 				$Location = $value;
- 				
- 				break;
- 			}
- 		}
- 		
- 		return $Location;
- 	}*/
  	
  	function CleanOnlineTable($param)
  	{

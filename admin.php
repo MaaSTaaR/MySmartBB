@@ -32,6 +32,7 @@ $modules['cp_options'] 		= 	'cp_options.module.php';
 $modules['ajax'] 			= 	'ajax.module.php';
 $modules['moderators']		=	'moderators.module.php';
 $modules['groups']			=	'groups.module.php';
+$modules['logout']			=	'logout.module.php';
 
 //////////
 
@@ -54,7 +55,7 @@ if ($req_file != false)
 	
 	if (!file_exists('./modules/admin/' . $req_file))
 	{
-		die('╟су┌╨╤х .. э╚╧ц ╟ф хф╟▀ ╬╪├ ▌э ╟сф┘╟уб ╟сус▌ ╟су╪сц╚ █э╤ уц╠ц╧');
+		die('╪з┘Д┘Е╪╣╪░╪▒┘З .. ┘К╪и╪п┘И ╪з┘Ж ┘З┘Ж╪з┘Г ╪о╪╖╪г ┘Б┘К ╪з┘Д┘Ж╪╕╪з┘Е╪М ╪з┘Д┘Е┘Д┘Б ╪з┘Д┘Е╪╖┘Д┘И╪и ╪║┘К╪▒ ┘Е┘И╪м┘И╪п');
 	}
 	
 	//////////
@@ -73,7 +74,7 @@ if ($req_file != false)
 }
 else
 {
-	die('<div align="center">╟су┌╨╤х .. ╟с╒▌═х ╟су╪сц╚х █э╤ уц╠ц╧х</div>');
+	die('<div align="center">╪з┘Д┘Е╪╣╪░╪▒┘З .. ╪з┘Д╪╡┘Б╪н┘З ╪з┘Д┘Е╪╖┘Д┘И╪и┘З ╪║┘К╪▒ ┘Е┘И╪м┘И╪п┘З</div>');
 }
 
 //////////

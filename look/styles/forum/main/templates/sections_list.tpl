@@ -59,8 +59,8 @@
 							<br />
 						{/if}
 					{/if}
-					{if {{$forum['describe']}} != ''}
-					{$forum['describe']}
+					{if {{$forum['section_describe']}} != ''}
+					{$forum['section_describe']}
 					<br />
 					{/if}
 							المواضيع : {$forum['subject_num']}

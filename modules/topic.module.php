@@ -52,6 +52,8 @@ class MySmartTopicMOD
 	
 	function _ShowTopic()
 	{
+		global $MySmartBB;
+		
 		// Get subject information
 		$this->__GetSubject();
 		
@@ -81,6 +83,11 @@ class MySmartTopicMOD
 		
 		// Get the replies
 		$this->__GetReply();
+		
+		if ($MySmartBB->_CONF['info_row']['samesubject_show'])
+		{
+			$this->__SameTopics();
+		}
 		
 		// The End of page
 		$this->__PageEnd();
@@ -135,8 +142,23 @@ class MySmartTopicMOD
 		
 		// Send subject id to template engine
 		$MySmartBB->template->assign('subject_id',$MySmartBB->_GET['id']);
+		$MySmartBB->template->assign('section_id',$this->Info['section']);
 		
 		//////////
+		
+		// Where is the member now?
+		if ($MySmartBB->_CONF['member_permission'])
+     	{
+     		$UpdateOnline 			= 	array();
+			$UpdateOnline['field']	=	array();
+			
+			$UpdateOnline['field']['user_location']		=	'يطلع على الموضوع : ' . $this->Info['title'];
+			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
+			
+			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+     	}
+     	
+     	//////////
 	}
 		
 	function __GetSection()
@@ -517,7 +539,52 @@ class MySmartTopicMOD
 		
 		// Show the reply :)
 		$MySmartBB->template->display('show_reply');
-	}			
+	}
+	
+	function __SameTopics()
+	{
+		global $MySmartBB;
+		
+		$SubjectArr = array();
+		
+		$SubjectArr['where'] 				= 	array();
+		
+		$SubjectArr['where'][0] 			= 	array();
+		$SubjectArr['where'][0]['name'] 	= 	'title';
+		$SubjectArr['where'][0]['oper'] 	= 	'LIKE';
+		$SubjectArr['where'][0]['value'] 	= 	'%' . $this->Info['title'] . '%';
+				
+		$SubjectArr['where'][1] 			= 	array();
+		$SubjectArr['where'][1]['con']		=	'AND';
+		$SubjectArr['where'][1]['name'] 	= 	'delete_topic';
+		$SubjectArr['where'][1]['oper'] 	= 	'<>';
+		$SubjectArr['where'][1]['value'] 	= 	'1';
+		
+		$SubjectArr['where'][2] 			= 	array();
+		$SubjectArr['where'][2]['con']		=	'AND';
+		$SubjectArr['where'][2]['name'] 	= 	'id';
+		$SubjectArr['where'][2]['oper'] 	= 	'<>';
+		$SubjectArr['where'][2]['value'] 	= 	$this->Info['id'];
+		
+				
+		$SubjectArr['order'] = array();
+		$SubjectArr['order']['field'] 	= 	'write_time';
+		$SubjectArr['order']['type'] 	= 	'DESC';
+
+		$SubjectArr['proc'] 						= 	array();
+		$SubjectArr['proc']['*'] 					= 	array('method'=>'clean','param'=>'html'); 
+		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		
+		$SubjectArr['limit'] = '5';
+		
+		$MySmartBB->_CONF['template']['while']['SameSubject'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
+		
+		if (!$MySmartBB->_CONF['template']['while']['SameSubject'])
+		{
+			$MySmartBB->_CONF['template']['NO_SAME'] = true;
+		}
+	}
 	
 	function __PageEnd()
 	{

@@ -16,7 +16,7 @@
 			مسار الصوره
 			</td>
 			<td class="row1">
-				<input type="text" name="path" value="" size="30" />
+				<input type="text" name="path" />
 			</td>
 		</tr>
 	</table>

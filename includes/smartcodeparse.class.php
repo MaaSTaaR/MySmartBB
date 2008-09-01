@@ -6,7 +6,7 @@
  * @version : 1.0 Special verion for MySmartBB
  * @start : 23/2/2006 , 3:46 PM (kuwait : GMT+3)
  * @end   : 23/2/2006 , 6:30 PM (kuwait : GMT+3)
- * @last update : 21/09/2007 08:26:56 AM 
+ * @last update : 01/09/2008 04:54:55 AM 
  */
  
 class MySmartCodeParse
@@ -19,10 +19,14 @@ class MySmartCodeParse
  	 */
  	function replace($string)
  	{
+ 		global $MySmartBB;
+ 		
  		$brackets = (strpos($string,'[') !== false) and (strpos($string,']') !== false);
   
  		if ($brackets)
  		{
+ 			$string = htmlspecialchars($string);
+ 			
  			$first_search = array();
  			$first_search[] = '~\[code](.*?)\[/code]~ise';
  			$first_search[] = '~\[php](.*?)\[/php]~ise';
@@ -31,19 +35,28 @@ class MySmartCodeParse
  			$first_replace[] = '\'[code]\' . base64_encode(\'\\1\') . \'[/code]\'';
  			$first_replace[] = '\'[php]\' . base64_encode(\'\\1\') . \'[/php]\'';
  			
+ 			if ($MySmartBB->_CONF['info_row']['resize_imagesAllow'])
+ 			{
+ 				$first_search[] = '~\[img](.*?)\[/img]~ise';
+ 				$first_search[] = '~\[IMG](.*?)\[/IMG]~ise';
+ 				
+ 				$first_replace[] = '$this->ResizeImage(\'\\1\')';
+ 				$first_replace[] = '$this->ResizeImage(\'\\1\')';
+ 			}
  									
  			$string = preg_replace($first_search,$first_replace,$string);
- 			
- 			$string = htmlspecialchars($string);
- 									
+ 			 									
  			$search_array = array();
  			$replace_array = array();
  			
- 			$search_array[] = '~\[img](.*?)\[/img]~';
- 			$replace_array[] = '<img src="\\1" border="0" />';
+ 			if (!$MySmartBB->_CONF['info_row']['resize_imagesAllow'])
+ 			{
+ 				$search_array[] = '~\[img](.*?)\[/img]~';
+ 				$replace_array[] = '<img src="\\1" border="0" />';
  			
- 			$search_array[] = '~\[IMG](.*?)\[/IMG]~';
- 			$replace_array[] = '<img src="\\1" border="0" />';
+ 				$search_array[] = '~\[IMG](.*?)\[/IMG]~';
+ 				$replace_array[] = '<img src="\\1" border="0" />';
+ 			}
  			
  			$search_array[] = '~\[b](.*?)\[/b]~';
  			$replace_array[] = '<b>\\1</b>';
@@ -118,7 +131,7 @@ class MySmartCodeParse
  	 *
  	 * @author : Jason Warner <jason@mercuryboard.com>
  	 *
- 	 * @edited by : MaaSTaaR <MaaSTaaR@hotmail.com>
+ 	 * @edited by : MaaSTaaR <MaaSTaaR@gmail.com>
  	 *
  	 * @param :
  	 * 	 			code 	-> the code
@@ -215,6 +228,13 @@ class MySmartCodeParse
 			
 			$text = str_replace('<img src="' . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$smile['smile_short'],$text);
 		}
+    }
+    
+    function ResizeImage($path)
+    {
+    	global $MySmartBB;
+    	
+    	return '<a target="_blank" href="' . $path . '"><img src="' . $path . '" border="0" alt="' . $path . '" width="' . $MySmartBB->_CONF['info_row']['default_imagesW'] . '" height="' . $MySmartBB->_CONF['info_row']['default_imagesH'] . '" /></a>';
     }
 }
 

@@ -6,10 +6,12 @@ function AddMoreResiver(x)
 	x += 1;
 	
 	$(".more_tr").hide();	
-	$("#resivers").append('<tr><td class="row1 rows_space">المُستقبل # ' + x + '</td><td class="row2 rows_space"><input name="to[]" value="" type="text" /></td></tr>');
+	$("#resivers").append('<tr><td class="row1 rows_space">المُستقبل # ' + x + '</td><td class="row2 rows_space"><input name="to[]" class="to' + x + '" value="" type="text" /></td></tr>');
 	$("#resivers").append('<tr class="more_tr"><td class="row1 rows_space" colspan="2" align="center"><button name="more_resiver" class="more_resiver_id" type="button">اضف المزيد من المُستقبلين</button></td></tr>');
 	
 	$(".more_resiver_id").click(function() { AddMoreResiver(x) });
+	
+	$(".to" + x).focus();
 }
 
 function Ready()

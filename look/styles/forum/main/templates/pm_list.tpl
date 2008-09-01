@@ -1,9 +1,5 @@
 {template}usercp_menu{/template}
 
-{template}address_bar_part1{/template}
-<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} قائمة الرسائل
-{template}address_bar_part2{/template}
-
 <div class="usercp_context">
 <table border="1" class="t_style_b" width="%85" align="center">
 	<tr align="center">

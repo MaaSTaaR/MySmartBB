@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	12/3/2006 , 11:57 PM (kuwait : GMT+3)
  * @end   		: 	13/3/2006 , 12:01 AM (kuwait : GMT+3)
- * @updated 	: 	21/08/2008 08:52:56 PM 
+ * @updated 	: 	31/08/2008 05:03:08 AM 
  */
 
 
@@ -131,9 +131,9 @@ class MySmartReply
  		{
  			$param = array();
  		}
-		           	   		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['reply'],$field);
-				
+ 		
+		$query = $this->Engine->records->Insert($this->Engine->table['reply'],$param['field']);
+		
 		if ($param['get_id'])
 		{
 			$this->id = $this->Engine->DB->sql_insert_id();

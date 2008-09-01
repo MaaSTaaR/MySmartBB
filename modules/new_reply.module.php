@@ -172,6 +172,22 @@ class MySmartReplyAddMOD
      		}
      	}
      	
+		//////////
+		
+		// Where is the member now?
+		if ($MySmartBB->_CONF['member_permission'])
+     	{
+     		$UpdateOnline 			= 	array();
+			$UpdateOnline['field']	=	array();
+			
+			$UpdateOnline['field']['user_location']		=	'يكتب رد على : ' . $this->SubjectInfo['title'];
+			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
+			
+			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+     	}
+     	
+     	//////////
+     	
      	$MySmartBB->template->assign('section_info',$this->SectionInfo);
      	$MySmartBB->template->assign('subject_info',$this->SubjectInfo);
 	}
@@ -326,6 +342,18 @@ class MySmartReplyAddMOD
      		
      		// Free memory
      		unset($UpdateArr);
+     		
+     		//////////
+     		
+     		// Update section's cache
+     		$UpdateArr 				= 	array();
+     		$UpdateArr['parent'] 	= 	$this->SectionInfo['parent'];
+     		
+     		$update_cache = $MySmartBB->section->UpdateSectionsCache($UpdateArr);
+     		
+     		unset($UpdateArr);
+     		
+     		//////////
      		
      		if (!isset($MySmartBB->_POST['ajax']))
      		{

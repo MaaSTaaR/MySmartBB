@@ -4,29 +4,37 @@
 
 <br />
 
-<form action="admin.php?page=usertitle&amp;add=1&amp;start=1"  name="myform" method="post">
-<table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
-<tr valign="top" align="center">
-	<td class="main1" colspan="2">اضافة مسمى جديد</td>
-</tr>
-<tr valign="top">
-		<td class="row1">المسمى</td>
-		<td class="row1">
-<input type="text" name="title" id="input_title" value="" size="30" />&nbsp;
-</td>
-</tr>
-<tr valign="top">
-
-		<td class="row2">عدد المشاركات</td>
-		<td class="row2">
-<input type="text" name="posts" id="input_posts" value="" size="30" />&nbsp;
-</td>
-</tr>
-</table><br />
-<div align="center"><tr>
-	<td class="submit-buttons" colspan="2" align="center">
-	<input class="submit" type="submit" value="موافق" name="submit" accesskey="s" /></td>
-</tr>
-</table><br />
+<form action="admin.php?page=usertitle&amp;add=1&amp;start=1" method="post">
+	<table width="60%" class="t_style_b" border="1" align="center">
+		<tr align="center">
+			<td class="main1" colspan="2">
+			اضافة مسمى جديد
+			</td>
+		</tr>
+		<tr>
+			<td class="row1">
+			المسمى
+			</td>
+			<td class="row1">
+				<input type="text" name="title" size="30" />
+			</td>
+		</tr>
+		<tr>
+			<td class="row2">
+			عدد المشاركات
+			</td>
+			<td class="row2">
+				<input type="text" name="posts" size="30" />
+			</td>
+		</tr>
+	</table>
+	
+	<br />
+	
+	<div align="center">
+		<input type="submit" value="موافق" name="submit" />
+	</div>
+	
+	<br />
 </form>
 

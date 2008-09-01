@@ -16,7 +16,7 @@
 			رمز اللون
 			</td>
 			<td class="row1">
-				<input type="text" name="name" id="input_name" value="" size="30" />
+				<input type="text" name="name" />
 			</td>
 		</tr>
 	</table>

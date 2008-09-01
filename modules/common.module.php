@@ -175,12 +175,36 @@ class MySmartCommon
 		$IsOnline = $MySmartBB->online->GetOnlineInfo($OnlineArr);
 		
 		////////////
-					
-		// Where is member now ?
-		//$Location 			= 	array();
-		//$Location['page'] 	= 	$MySmartBB->_GET['page'];
-														   
-		//$MemberLocation = $MySmartBB->online->MemberLocation($Location);
+		
+		// Where is the member now ?
+		$MemberLocation = 'الصفحه الرئيسيه';
+		
+		$page = empty($MySmartBB->_GET['page']) ? 'index' : $MySmartBB->_GET['page'];
+		
+		$locations 					= 	array();
+		$locations['index'] 		= 	'الصفحه الرئيسيه';
+		$locations['forum'] 		= 	'يطلع على منتدى';
+		$locations['profile'] 		= 	'يطلع على ملف عضو';
+		$locations['static'] 		= 	'يطلع على صفحة الاحصائيات';
+		$locations['member_list'] 	= 	'يطلع على قائمة الاعضاء';
+		$locations['search'] 		= 	'يطلع على صفحة البحث';
+		$locations['announcement'] 	= 	'يطلع على إعلان اداري';
+		$locations['team'] 			= 	'يطلع على صفحة المسؤولين';
+		$locations['login'] 		= 	'يسجل دخوله';
+		$locations['logout'] 		= 	'يسجل خروجه';
+		$locations['usercp'] 		= 	'يطلع على لوحة تحكمه';
+		$locations['pm'] 			= 	'يطلع على الرسائل الخاصه';
+		$locations['topic'] 		= 	'يطّلع على موضوع';
+		$locations['new_topic'] 	= 	'يكتب موضوع جديد';
+		$locations['new_reply'] 	= 	'يكتب رد جديد';
+		$locations['vote'] 			= 	'يضع تصويت';
+		$locations['tags'] 			= 	'يطلع على العلامات';
+		$locations['online'] 		= 	'يطلع على المتواجدين حالياً';
+		
+		if (array_key_exists($page,$locations))
+		{
+			$MemberLocation = $locations[$page];
+		}
 		
 		// Get username with group style
 		$UStyleArr	 				= 	array();
@@ -201,7 +225,7 @@ class MySmartCommon
 			$InsertOnline['field']['username'] 			= 	$MySmartBB->_CONF['member_row']['username'];
 			$InsertOnline['field']['username_style'] 	= 	$username_style;
 			$InsertOnline['field']['logged'] 			= 	$MySmartBB->_CONF['now'];
-			$InsertOnline['field']['path'] 				= 	$MySmartBB->_SERVER['PHP_SELF'];
+			$InsertOnline['field']['path'] 				= 	$MySmartBB->_SERVER['QUERY_STRING'];
 			$InsertOnline['field']['user_ip'] 			= 	$MySmartBB->_CONF['ip'];
 			$InsertOnline['field']['hide_browse'] 		= 	$MySmartBB->_CONF['member_row']['hide_online'];
 			$InsertOnline['field']['user_location'] 	= 	$MemberLocation;
@@ -402,7 +426,7 @@ class MySmartCommon
 													  			
 			$UpdateOnlineArr['field']['username'] 	= 	'Guest';
 			$UpdateOnlineArr['field']['logged'] 	= 	$MySmartBB->_CONF['now'];
-			$UpdateOnlineArr['field']['path'] 		= 	$MySmartBB->_SERVER['PHP_SELF'];
+			$UpdateOnlineArr['field']['path'] 		= 	$MySmartBB->_SERVER['QUERY_STRING'];
 			$UpdateOnlineArr['field']['user_ip'] 	= 	$MySmartBB->_CONF['ip'];
 			$UpdateOnlineArr['where']				=	array('username','Guest');
 													  		   
@@ -417,7 +441,7 @@ class MySmartCommon
 			$InsertOnlineArr['field']['username'] 			= 	'Guest';
 			$InsertOnlineArr['field']['username_style'] 	= 	'Guest';
 			$InsertOnlineArr['field']['logged'] 			= 	$MySmartBB->_CONF['now'];
-			$InsertOnlineArr['field']['path'] 				= 	$MySmartBB->_SERVER['PHP_SELF'];
+			$InsertOnlineArr['field']['path'] 				= 	$MySmartBB->_SERVER['QUERY_STRING'];
 			$InsertOnlineArr['field']['user_ip'] 			= 	$MySmartBB->_CONF['ip'];
 			$InsertOnlineArr['field']['user_id']			=	-1;
 			
