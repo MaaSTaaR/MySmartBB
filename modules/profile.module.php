@@ -179,20 +179,20 @@ class MySmartProfileMOD
 			$LastReplyArr['order']['field'] 	= 	'id';
 			$LastReplyArr['order']['type']	 	= 	'DESC';
 		
-			$LastReplyArr['limit'] 				= 	'0,1';
+			$LastReplyArr['limit'] 				= 	'1';
 		
 			$GetLastReplyInfo = $MySmartBB->reply->GetReplyInfo($LastReplyArr);
 		
 			$MySmartBB->functions->CleanVariable($GetLastReplyInfo,'sql');
-		
+			
 			if ($GetLastReplyInfo != false)
 			{
 				$SubjectArr 			= 	array();
 				$SubjectArr['where'] 	= 	array('id',$GetLastReplyInfo['subject_id']);
 		
-				$MySmartBB->_CONF['template']['GetSubject'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
-		
-				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['GetSubject'],'html');
+				$MySmartBB->_CONF['template']['LastReply'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+				
+				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['LastReply'],'html');
 			}
 		}
 		

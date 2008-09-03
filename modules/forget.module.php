@@ -54,7 +54,7 @@ class MySmartForgetMOD
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		if (!$MySmartBB->functions->IsEmail($MySmartBB->_POST['email']))
+		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
 		{
 			$MySmartBB->functions->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}

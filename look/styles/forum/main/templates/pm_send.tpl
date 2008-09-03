@@ -42,6 +42,15 @@ $(document).ready(Ready);
 
 <br />
 
+{if {{$SHOW_MSG1}}}
+<div align="center">
+<strong>{$to} غائب حاليا
+<br />
+سبب الغياب: {$MSG1}</strong>
+</div>
+<br />
+{/if}
+
 <table id="resivers" border="1" width="50%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">

@@ -229,9 +229,9 @@ class MySmartUserCPMOD
 		$GetStyleArr['order']['field'] 		= 	'style_order';
 		$GetStyleArr['order']['type'] 		= 	'ASC';
 		
-		$MySmartBB->_CONF['template']['while']['StylesList'] = $MySmartBB->style->GetStyleList($GetStyleArr);
+		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($GetStyleArr);
 		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['StylesList'],'html');
+		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['StyleList'],'html');
 		
 		$MySmartBB->template->display('usercp_control_setting');
 	}

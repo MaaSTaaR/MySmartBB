@@ -1,7 +1,7 @@
 {template}address_bar_part1{/template}
 <a href="index.php?page=forum&amp;show=1&amp;id={$section_info['id']}{$password}">
 	{$section_info['title']}
-</a> {$_CONF['info_row']['adress_bar_separate']} {$Info['title']}
+</a> {$_CONF['info_row']['adress_bar_separate']} <img src="{$Info['icon']}" alt="" /> {$Info['title']}
 {template}address_bar_part2{/template}
 
 <br />

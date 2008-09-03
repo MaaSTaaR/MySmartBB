@@ -111,7 +111,7 @@ class MySmartPrivateMassegeMOD
 		if (isset($MySmartBB->_GET['username']))
 		{
 			$ToArr 				= 	array();
-			$ToArr['get'] 		= 	'usergroup,username,pm_senders,pm_senders_msg';		
+			$ToArr['get'] 		= 	'usergroup,username,pm_senders,pm_senders_msg,away,away_msg';		
 			$ToArr['where']		=	array('username',$MySmartBB->_GET['username']);
 		
 			$GetToInfo = $MySmartBB->member->GetMemberInfo($ToArr);
@@ -122,7 +122,9 @@ class MySmartPrivateMassegeMOD
 			}
 			
 			$MySmartBB->template->assign('SHOW_MSG',$GetToInfo['pm_senders']);
+			$MySmartBB->template->assign('SHOW_MSG1',$GetToInfo['away']);
 			$MySmartBB->template->assign('MSG',$GetToInfo['pm_senders_msg']);
+			$MySmartBB->template->assign('MSG1',$GetToInfo['away_msg']);
 			$MySmartBB->template->assign('to',$GetToInfo['username']);
 		}
 		

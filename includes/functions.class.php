@@ -232,7 +232,7 @@ class MySmartFunctions
  	 */
  	function IsSite($adress)
  	{
- 		return preg_match('~\http:\/\/(.*?)~',$adress) ? true : false;
+ 		return preg_match('~http:\/\/(.*?)~',$adress) ? true : false;
  	}
 
  	function GetURLExtension($path)

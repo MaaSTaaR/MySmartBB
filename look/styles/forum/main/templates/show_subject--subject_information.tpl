@@ -11,9 +11,11 @@
 			<strong>
 			{if {{$Info['stick']}}}
 			مُثبّت
-			{elseif {{$Info['close']}}}
+			{/if}
+			{if {{$Info['close']}}}
 			مُغلق
-			{elseif {{$Info['delete_topic']}}}
+			{/if}
+			{if {{$Info['delete_topic']}}}
 			محذوف
 			{/if}
 			</strong>
@@ -42,8 +44,14 @@
 			{Des::while}{tags}
 			<a href="index.php?page=tags&amp;show=1&amp;id={$tags['tag_id']}">{$tags['tag']}</a>،
 			{/Des::while}
+		</td>
 	</tr>
 	{/if}
+	<tr align="center">
+		<td class="row1 rows_space" width="50%" colspan="2">
+			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['id']}">تحميل محتوى الموضوع</a>
+		</td>
+	</tr>
 </table>
 
 <br />

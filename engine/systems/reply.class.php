@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	12/3/2006 , 11:57 PM (kuwait : GMT+3)
  * @end   		: 	13/3/2006 , 12:01 AM (kuwait : GMT+3)
- * @updated 	: 	31/08/2008 05:03:08 AM 
+ * @updated 	: 	03/09/2008 09:34:08 AM 
  */
 
 
@@ -150,7 +150,7 @@ class MySmartReply
  			$param = array();
  		}
 		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$field,$param['where']);
+		$query = $this->Engine->records->Update($this->Engine->table['reply'],$param['field'],$param['where']);
 				
 		return ($query) ? true : false;
  	}

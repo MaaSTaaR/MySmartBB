@@ -6,7 +6,7 @@
 			معلومات الكاتب
 		</td>
 		<td class="main1 rows_space" width="80%">
-			محتوى الرد
+			<img src="{$Info['icon']}" alt="" /> {$Info['title']}
 		</td>
 	</tr>
 	<tr align="center">

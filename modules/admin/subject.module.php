@@ -166,11 +166,7 @@ class MySmartSubjectMOD extends _functions
 		
 		$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
-		$SecArr['type']					=	'forums';
-		$SecArr['proc'] 				= 	array();
-		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		$SecArr['proc']['title'] 		= 	array('method'=>'list','id'=>'id','store'=>'title');
-		
+				
 		$SecArr['where']				=	array();
 		$SecArr['where'][0]				=	array();
 		$SecArr['where'][0]['name']		=	'parent';

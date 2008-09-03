@@ -37,6 +37,7 @@ $modules['vote'] 				= 	'vote.module.php';
 $modules['tags'] 				= 	'tags.module.php';
 $modules['rss'] 				= 	'rss.module.php';
 $modules['online'] 				= 	'online.module.php';
+$modules['download'] 			= 	'download.module.php';
 
 //////////
 

@@ -29,6 +29,8 @@
 				<option value="move">نقل الموضوع</option>
 				<option value="edit">تحرير الموضوع</option>
 				<option value="repeated">موضوع مكرر</option>
+				<option value="up">رفع الموضوع</option>
+				<option value="down">تنزيل الموضوع</option>
 			</select>
 			<input type="submit" value="موافق" />
 		</td>

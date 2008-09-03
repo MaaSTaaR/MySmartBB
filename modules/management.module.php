@@ -106,6 +106,14 @@ class MySmartManagementMOD
 		{
 			$this->__SubjectRepeat();
 		}
+		elseif ($MySmartBB->_GET['operator'] == 'up')
+		{
+			$this->__UpStart();
+		}
+		elseif ($MySmartBB->_GET['operator'] == 'down')
+		{
+			$this->__DownStart();
+		}
 	}
 	
 	function __Stick()
@@ -630,6 +638,57 @@ class MySmartManagementMOD
 		}
 	}
 	
+	function __UpStart()
+	{
+		global $MySmartBB;
+	  	
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		$SubjectArr = array();
+		$SubjectArr['field'] = array();
+		$SubjectArr['field']['write_time'] = time() - ( intval('-42') );
+		
+		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+		
+		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
+		
+		if ($Update)
+		{
+			$MySmartBB->functions->msg('تم رفع الموضوع بنجاح');
+			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+		}
+	}
+		
+	function __DownStart()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		$SubjectArr = array();
+		$SubjectArr['field'] = array();
+		$SubjectArr['field']['write_time'] = time() - ( intval('420000000000000000000') );
+		
+		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+		
+		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
+	
+		if ($Update)
+		{
+	    	$MySmartBB->functions->msg('تم إنزال الموضوع');
+			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+		}
+	}
 	function _ModeratorCheck()
 	{
 		global $MySmartBB;

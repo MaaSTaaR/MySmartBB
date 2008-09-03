@@ -49,6 +49,12 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
+		if (empty($MySmartBB->_POST['username'])
+			or empty($MySmartBB->_POST['password']))
+		{
+			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات',true);
+		}
+			
 		if (!$register_login)
 		{
 			$username = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
