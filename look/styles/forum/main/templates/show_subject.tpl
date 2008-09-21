@@ -11,13 +11,13 @@
 
 <br /><br />
 
-{if {{$Mod}}}
+{if {$Mod}}
 {template}show_subject--subject_control{/template}
 {/if}
 
 {template}show_subject--subject_information{/template}
 
-{if {{$SHOW_POLL}}}
+{if {$SHOW_POLL}}
 {template}show_poll{/template}
 {/if}
 
@@ -37,11 +37,11 @@
 		<td class="row2" width="70%" align="right">
 			{$Info['text']}
 			
-			{if {{$AttachInfo}} != ''}
+			{if {$AttachInfo} != ''}
 				{template}attach_show{/template}
 			{/if}
 			
-			{if {{$Info['user_sig']}} != ''}
+			{if {$Info['user_sig']} != ''}
 				{template}signature_show{/template}
 			{/if}
 		</td>

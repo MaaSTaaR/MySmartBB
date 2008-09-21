@@ -397,7 +397,7 @@ class MySmartSystemFunctions
 	}
 	
 	function time($time,$format='h:i:s A')
-	{		
+	{
 		$x = date($format,$time);
 		$x = strtolower($x);
 		$x = str_replace('pm','مساء',$x);

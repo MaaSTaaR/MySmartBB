@@ -1,4 +1,4 @@
-{if {{$_CONF['info_row']['ajax_freply']}}}
+{if {$_CONF['info_row']['ajax_freply']}}
 
 <script src="includes/js/jquery.js"></script>
 
@@ -23,9 +23,7 @@ function Wait()
 
 function Success(xml)
 {
-	$("#status").hide();
-	$("#result").hide();
-	$("#result").html(xml);
+	$("#result").append(xml);
 	$("#result").fadeIn("slow");
 }
 
@@ -44,13 +42,13 @@ $(document).ready(Ready);
 
 <form name="topic" method="post" action="index.php?page=new_reply&amp;start=1&amp;id={$id}{$password}">
 
-{if {{$_CONF['info_row']['icons_show']}}}
+{if {$_CONF['info_row']['icons_show']}}
 {template}iconbox{/template}
 {/if}
 
 <br />
 
-{if {{$_CONF['info_row']['toolbox_show']}}}
+{if {$_CONF['info_row']['toolbox_show']}}
 {template}toolbox{/template}
 {/if}
 
@@ -65,7 +63,8 @@ $(document).ready(Ready);
 	<tr align="center">
 		<td class="row1 rows_space">
 			عنوان الرد :
-			<input name="title" id="title_id" type="text" {if {{$_CONF['info_row']['title_quote']}}}value="رد : {$Info['title']}"{/if} />
+			<input name="title" id="title_id" type="text" {if {$_CONF['info_row']['title_quote']}} 
+			value="رد : {$Info['title']}" {/if} />
 		</td>
 	</tr>
 	<tr align="center">
@@ -74,7 +73,7 @@ $(document).ready(Ready);
 			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
-			{if {{$_CONF['info_row']['ajax_freply']}}}
+			{if {$_CONF['info_row']['ajax_freply']}}
 			<input name="insert" type="button" id="reply_id" value="موافق" />
 			{else}
 			<input name="insert" type="submit" value="موافق" />
@@ -85,7 +84,7 @@ $(document).ready(Ready);
 
 <br />
 
-{if {{$_CONF['info_row']['smiles_show']}}}
+{if {$_CONF['info_row']['smiles_show']}}
 {template}smilebox{/template}
 {/if}
 

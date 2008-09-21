@@ -48,7 +48,7 @@
 		 {$MemberInfo['visitor']}
 		</td>
 	</tr>
-	{if !empty({{$MemberInfo['user_country']}})}
+	{if !empty({$MemberInfo['user_country']})}
 	<tr align="center">
 		<td class="row1" width="20%">
 		الدوله
@@ -66,7 +66,7 @@
 		 {$MemberInfo['user_gender']}
 		</td>
 	</tr>
-	{if !empty({{$MemberInfo['user_website']}}) and {{$MemberInfo['user_website']}} != 'http://'}
+	{if !empty({$MemberInfo['user_website']}) and {$MemberInfo['user_website']} != 'http://'}
 	<tr align="center">
 		<td class="row1" width="20%">
 		الموقع الشخصي
@@ -105,14 +105,14 @@
 		الحاله
 		</td>
 		<td class="row1" width="30%">
-		 {if {{$MemberInfo['IsOnline']}}}
+		 {if {$MemberInfo['IsOnline']}}
 		 متصل
 		 {else}
 		 غير متصل
 		 {/if}
 		</td>
 	</tr>
-	{if {{$MemberInfo['IsOnline']}}}
+	{if {$MemberInfo['IsOnline']}}
 	<tr align="center">
 		<td class="row1" width="20%">
 		مكان تواجده
@@ -155,7 +155,7 @@
 		<a href="index.php?page=pm&amp;send=1&amp;index=1&amp;username={$MemberInfo['username']}">رساله خاصه</a>
 		</td>
 		<td width="20%" class="row1">
-		<a href="index.php?page=send&amp;email=1&amp;index=1&amp;username={$MemberInfo['username']}">رساله بريديه</a> 
+		<a href="index.php?page=send&amp;member=1&amp;index=1&amp;id={$MemberInfo['id']}">رساله بريديه</a> 
 		</td>
 	</tr>
 </table>

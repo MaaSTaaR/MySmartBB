@@ -249,7 +249,7 @@ class MySmartRegisterMOD
 				
 					$MsgArr['text'] 		= 	$MassegeInfo['text'];
 					$MsgArr['active_url'] 	= 	$ActiveAdress;
-					$MsgArr['username']	=	$MySmartBB->_CONF['member_row']['username'];
+					$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
 					$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
 				
 					$MassegeInfo['text'] = $MySmartBB->message->MessageProccess($MsgArr);

@@ -14,25 +14,28 @@ class MySmartCPOptionsMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['index'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			$this->_IndexPage();
-		}
-		elseif ($MySmartBB->_GET['ajax'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_AjaxMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_AjaxUpdate();
-			}
-		}
+			$MySmartBB->template->display('header');
 		
-		$MySmartBB->template->display('footer');
+			if ($MySmartBB->_GET['index'])
+			{
+				$this->_IndexPage();
+			}
+			elseif ($MySmartBB->_GET['ajax'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AjaxMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_AjaxUpdate();
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
+		}
 	}
 	
 	function _IndexPage()

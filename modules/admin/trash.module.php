@@ -18,54 +18,57 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['subject'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['subject'])
 			{
-				$this->_SubjectTrashMain();
-			}
-			elseif ($MySmartBB->_GET['untrash'])
-			{
-				$this->_SubjectUnTrash();
-			}
-			elseif ($MySmartBB->_GET['del'])
-			{
-				if ($MySmartBB->_GET['confirm'])
+				if ($MySmartBB->_GET['main'])
 				{
-					$this->_SubjectDelMain();
+					$this->_SubjectTrashMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ($MySmartBB->_GET['untrash'])
 				{
-					$this->_SubjectDelete();
+					$this->_SubjectUnTrash();
+				}
+				elseif ($MySmartBB->_GET['del'])
+				{
+					if ($MySmartBB->_GET['confirm'])
+					{
+						$this->_SubjectDelMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_SubjectDelete();
+					}
 				}
 			}
+			elseif ($MySmartBB->_GET['reply'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_ReplyTrashMain();
+				}
+				elseif ($MySmartBB->_GET['untrash'])
+				{
+					$this->_ReplyUnTrash();
+				}
+				elseif ($MySmartBB->_GET['del'])
+				{
+					if ($MySmartBB->_GET['confirm'])
+					{
+						$this->_ReplyDelMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_ReplyDelete();
+					}
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		elseif ($MySmartBB->_GET['reply'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_ReplyTrashMain();
-			}
-			elseif ($MySmartBB->_GET['untrash'])
-			{
-				$this->_ReplyUnTrash();
-			}
-			elseif ($MySmartBB->_GET['del'])
-			{
-				if ($MySmartBB->_GET['confirm'])
-				{
-					$this->_ReplyDelMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_ReplyDelete();
-				}
-			}
-		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	function _SubjectTrashMain()

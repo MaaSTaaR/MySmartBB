@@ -17,52 +17,55 @@ class MySmartExtensionMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');;
-		
-		if ($MySmartBB->_GET['add'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['add'])
 			{
-				$this->_AddExtensionMain();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AddExtensionMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_AddExtensionStart();
+				}
 			}
-			elseif ($MySmartBB->_GET['start'])
+			elseif ($MySmartBB->_GET['control'])
 			{
-				$this->_AddExtensionStart();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_ControlExtensionMain();
+				}
 			}
+			elseif ($MySmartBB->_GET['edit'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_EditExtensionMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_EditExtensionStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['del'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_DelExtensionMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_DelExtensionStart();
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		elseif ($MySmartBB->_GET['control'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_ControlExtensionMain();
-			}
-		}
-		elseif ($MySmartBB->_GET['edit'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_EditExtensionMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_EditExtensionStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['del'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_DelExtensionMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_DelExtensionStart();
-			}
-		}
-		
-		$MySmartBB->template->display('footer');
 	}
-	
+		
 	function _AddExtensionMain()
 	{
 		global $MySmartBB;

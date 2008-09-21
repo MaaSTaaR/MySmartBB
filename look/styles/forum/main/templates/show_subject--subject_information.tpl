@@ -4,25 +4,25 @@
 			معلومات عن الموضوع
 		</td>
 	</tr>
-	{if {{$Info['stick']}} or {{$Info['close']}} or {{$Info['delete_topic']}}}
+	{if {$Info['stick']} or {$Info['close']} or {$Info['delete_topic']}}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			حالة الموضوع : 
 			<strong>
-			{if {{$Info['stick']}}}
+			{if {$Info['stick']}}
 			مُثبّت
 			{/if}
-			{if {{$Info['close']}}}
+			{if {$Info['close']}}
 			مُغلق
 			{/if}
-			{if {{$Info['delete_topic']}}}
+			{if {$Info['delete_topic']}}
 			محذوف
 			{/if}
 			</strong>
 		</td>
 	</tr>
 	{/if}
-	{if {{$Info['close_reason']}} != '' and {{$Info['close']}} }
+	{if {$Info['close_reason']} != '' and {$Info['close']} }
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			سبب الاغلاق : <strong>{$Info['close_reason']}</strong>
@@ -37,7 +37,7 @@
 			عدد الزوار : {$Info['visitor']}
 		</td>
 	</tr>
-	{if {{$SHOW_TAGS}}}
+	{if {$SHOW_TAGS}}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			علامات الموضوع : 

@@ -71,32 +71,35 @@ class MySmartRecords
 				
 				$statement .= $param[$k][$key[0]]['name'];
 				
-				$oper_is_like = false;
+				$oper_need_space = false;
 				
 				$oper_to_check = strtolower($oper);
 				
-				if ($oper_to_check == 'like')
+				if ($oper_to_check == 'like'
+					or $oper_to_check == 'between')
 				{
-					$oper_is_like = true;
+					$oper_need_space = true;
 					
 					$statement .= ' ';
 				}
 				
 				$statement .= $oper;
 				
-				if ($oper_is_like)
+				if ($oper_need_space)
 				{
 					$statement .= ' ';
 				}
 				
-				if ($param[$k][$key[0]]['del_quote'] != true)
+				if ($param[$k][$key[0]]['del_quote'] != true
+					and $oper_to_check != 'between')
 				{
 					$statement .= "'";
 				}
 				
 				$statement .= $param[$k][$key[0]]['value'];
 				
-				if ($param[$k][$key[0]]['del_quote'] != true)
+				if ($param[$k][$key[0]]['del_quote'] != true
+					and $oper_to_check != 'between')
 				{
 					$statement .= "'";
 				}
@@ -120,28 +123,31 @@ class MySmartRecords
 				
 					$oper_to_check = strtolower($oper);
 				
-					if ($oper_to_check == 'like')
+					if ($oper_to_check == 'like'
+						or $oper_to_check == 'between')
 					{
-						$oper_is_like = true;
+						$oper_need_space = true;
 					
 						$statement .= ' ';
 					}
 				
 					$statement .= $oper;
 				
-					if ($oper_is_like)
+					if ($oper_need_space)
 					{
 						$statement .= ' ';
 					}
 				
-					if ($param[$k][$x]['del_quote'] != true)
+					if ($param[$k][$x]['del_quote'] != true
+						and $oper_to_check != 'between')
 					{
 						$statement .= "'";
 					}
 				
 					$statement .= $param[$k][$x]['value'];
 					
-					if ($param[$k][$x]['del_quote'] != true)
+					if ($param[$k][$x]['del_quote'] != true
+						and $oper_to_check != 'between')
 					{
 						$statement .= "'";
 					}

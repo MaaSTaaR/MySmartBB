@@ -84,6 +84,45 @@ class MySmartMainMOD
 		
 		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->reply->GetReplyNumber(array('get_from'	=>	'db'));
 		
+		$day 	= 	date('j');
+		$month 	= 	date('n');
+		$year 	= 	date('Y');
+		
+		$from 	= 	mktime(0,0,0,$month,$day,$year);
+		$to 	= 	mktime(23,59,59,$month,$day,$year);
+		
+		$TodayMemberArr 				= 	array();
+		$TodayMemberArr['get_from'] 	= 	'db';
+		$TodayMemberArr['where'] 		= 	array();
+		
+		$TodayMemberArr['where'][0] 			= 	array();
+		$TodayMemberArr['where'][0]['name'] 	= 	'register_time';
+		$TodayMemberArr['where'][0]['oper'] 	= 	'BETWEEN';
+		$TodayMemberArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
+		
+		$MySmartBB->_CONF['template']['TodayMemberNumber'] = $MySmartBB->member->GetMemberNumber($TodayMemberArr);
+		
+		$TodaySubjectArr 				= 	array();
+		$TodaySubjectArr['get_from'] 	= 	'db';
+		$TodaySubjectArr['where'] 		= 	array();
+		
+		$TodaySubjectArr['where'][0] 			= 	array();
+		$TodaySubjectArr['where'][0]['name'] 	= 	'native_write_time';
+		$TodaySubjectArr['where'][0]['oper'] 	= 	'BETWEEN';
+		$TodaySubjectArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
+		
+		$MySmartBB->_CONF['template']['TodaySubjectNumber'] = $MySmartBB->subject->GetSubjectNumber($TodaySubjectArr);
+		
+		$TodayReplyArr 				= 	array();
+		$TodayReplyArr['get_from'] 	= 	'db';
+		$TodayReplyArr['where'] 	= 	array();
+		
+		$TodayReplyArr['where'][0] 				= 	array();
+		$TodayReplyArr['where'][0]['name'] 		= 	'write_time';
+		$TodayReplyArr['where'][0]['oper'] 		= 	'BETWEEN';
+		$TodayReplyArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
+		
+		$MySmartBB->_CONF['template']['TodayReplyNumber'] = $MySmartBB->reply->GetReplyNumber($TodayReplyArr);
 		
 		$MySmartBB->template->display('header');
 		$MySmartBB->template->display('main_body');

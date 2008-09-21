@@ -19,68 +19,71 @@ class MySmartSectionMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['add'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['add'])
 			{
-				$this->_AddMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_AddStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['control'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_ControlMain();
-			}
-		}
-		elseif ($MySmartBB->_GET['edit'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_EditMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_EditStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['del'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_DelMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_DelStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['change_sort'])
-		{
-			$this->_ChangeSort();
-		}
-		elseif ($MySmartBB->_GET['groups'])
-		{
-			if ($MySmartBB->_GET['control_group'])
-			{
-				if ($MySmartBB->_GET['index'])
+				if ($MySmartBB->_GET['main'])
 				{
-					$this->_GroupControlMain();
+					$this->_AddMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_GroupControlStart();
+					$this->_AddStart();
 				}
 			}
+			elseif ($MySmartBB->_GET['control'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_ControlMain();
+				}
+			}
+			elseif ($MySmartBB->_GET['edit'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_EditMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_EditStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['del'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_DelMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_DelStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['change_sort'])
+			{
+				$this->_ChangeSort();
+			}
+			elseif ($MySmartBB->_GET['groups'])
+			{
+				if ($MySmartBB->_GET['control_group'])
+				{
+					if ($MySmartBB->_GET['index'])
+					{
+						$this->_GroupControlMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_GroupControlStart();
+					}
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	function _AddMain()
@@ -108,16 +111,48 @@ class MySmartSectionMOD extends _functions
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['name']) 
-			or empty($MySmartBB->_POST['sort']))
+			or ($MySmartBB->_POST['order_type'] == 'manual' and empty($MySmartBB->_POST['sort'])))
 		{
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
+		
+		//////////
+		
+		$sort = 0;
+		
+		if ($MySmartBB->_POST['order_type'] == 'auto')
+		{
+			$SortArr = array();
+			$SortArr['where'] = array('parent','0');
+			$SortArr['order'] = array();
+			$SortArr['order']['field'] = 'sort';
+			$SortArr['order']['type'] = 'DESC';
+			
+			$SortSection = $MySmartBB->section->GetSectionInfo($SortArr);
+			
+			// No section
+			if (!$SortSection)
+			{
+				$sort = 1;
+			}
+			// There is a section
+			else
+			{
+				$sort = $SortSection['sort'] + 1;
+			}
+		}
+		else
+		{
+			$sort = $MySmartBB->_POST['sort'];
+		}
+		
+		//////////
 		
 		$SecArr 			= 	array();
 		$SecArr['field']	=	array();
 		
 		$SecArr['field']['title'] 		= 	$MySmartBB->_POST['name'];
-		$SecArr['field']['sort'] 		= 	$MySmartBB->_POST['sort'];
+		$SecArr['field']['sort'] 		= 	$sort;
 		$SecArr['field']['parent'] 		= 	'0';
 		$SecArr['get_id']				=	true;
 		

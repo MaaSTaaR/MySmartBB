@@ -13,7 +13,7 @@
 		<td class="row1">تنشيطها في صفحة البحث</td>
 		<td class="row1">
 <select name="ajax_search" id="select_ajax_search">
-	{if {{$_CONF['info_row']['ajax_search']}}}
+	{if {$_CONF['info_row']['ajax_search']}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
 	{else}
@@ -27,7 +27,7 @@
 		<td class="row2">تنشيطها في صفحة التسجيل</td>
 		<td class="row2">
 <select name="ajax_register" id="select_ajax_register">
-	{if {{$_CONF['info_row']['ajax_register']}}}
+	{if {$_CONF['info_row']['ajax_register']}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
 	{else}
@@ -41,7 +41,7 @@
 		<td class="row1">تنشيطها في الرد السريع</td>
 		<td class="row1">
 <select name="ajax_freply" id="select_ajax_freply">
-	{if {{$_CONF['info_row']['ajax_freply']}}}
+	{if {$_CONF['info_row']['ajax_freply']}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
 	{else}

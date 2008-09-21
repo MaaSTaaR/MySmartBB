@@ -15,10 +15,13 @@ class MySmartLogoutMOD
 	{
 		global $MySmartBB;
 		
-		setcookie($MySmartBB->_CONF['admin_username_cookie'],'');
-		setcookie($MySmartBB->_CONF['admin_password_cookie'],'');
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			setcookie($MySmartBB->_CONF['admin_username_cookie'],'');
+			setcookie($MySmartBB->_CONF['admin_password_cookie'],'');
 		
-		$MySmartBB->functions->goto('admin.php',0);
+			$MySmartBB->functions->goto('admin.php',0);
+		}
 	}
 }
 

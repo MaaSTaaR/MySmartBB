@@ -1,3 +1,41 @@
+<script src="includes/js/jquery.js"></script>
+
+<script language="javascript">
+
+function OrderChange()
+{
+	value = $("#order_type_id").val();
+	
+	if (value == 'manual')
+	{
+		$("#sort_id").show();
+	}
+	else
+	{
+		$("#sort_id").hide();
+	}
+}
+
+function Ready()
+{
+	value = $("#order_type_id").val();
+	
+	if (value == 'manual')
+	{
+		$("#sort_id").show();
+	}
+	else
+	{
+		$("#sort_id").hide();
+	}
+	
+	$("#order_type_id").change(OrderChange);
+}
+
+$(document).ready(Ready);
+
+</script>
+
 <br />
 
 <div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">المنتديات</a> &raquo; اضافه</div>
@@ -24,7 +62,11 @@
 			ترتيبه
 			</td>
 			<td class="row2">
-				<input type="text" name="sort" id="input_sort" value="" size="5" />
+				<select name="order_type" id="order_type_id">
+					<option value="auto" selected="selected">ترتيب آلي</option>
+					<option value="manual">ترتيب يدوي</option>
+				</select>
+				<input type="text" name="sort" id="sort_id" value="" size="5" />
 			</td>
 		</tr>
 		<tr align="center">
@@ -79,7 +121,7 @@
 			<td class="row2">
 				<select name="parent" id="select_parent">
 				{Des::foreach}{forums_list}{forum}
-    			{if {{$forum['parent']}} == 0}
+    			{if {$forum['parent']} == 0}
 					<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 				{else}
 					<option value="{$forum['id']}">-- {$forum['title']}</option>
@@ -246,7 +288,7 @@
 			<td class="row2">
 				امكانية عرض الاقسام : 
 				<select name="groups[{$groups['id']}][view_section]" id="select_view_section">
-					{if {{$groups['view_section']}}}
+					{if {$groups['view_section']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -258,7 +300,7 @@
 			<td class="row1">
 				كتابة موضوع : 
 				<select name="groups[{$groups['id']}][write_subject]" id="select_write_subject">
-				{if {{$groups['write_subject']}}}
+				{if {$groups['write_subject']}}
 				<option value="1" selected="selected">نعم</option>
 				<option value="0">لا</option>
 				{else}
@@ -270,7 +312,7 @@
 			<td class="row2">
 				كتابة رد : 
 				<select name="groups[{$groups['id']}][write_reply]" id="select_write_reply">
-				{if {{$groups['write_reply']}}}
+				{if {$groups['write_reply']}}
 				<option value="1" selected="selected">نعم</option>
 				<option value="0">لا</option>
 				{else}

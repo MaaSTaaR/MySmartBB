@@ -19,97 +19,100 @@ class MySmartToolboxMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['fonts'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['add'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['fonts'])
 			{
-				if ($MySmartBB->_GET['main'])
+				if ($MySmartBB->_GET['add'])
 				{
-					$this->_AddFontsMain();
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_AddFontsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_AddFontsStart();
+					}
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ($MySmartBB->_GET['control'])
 				{
-					$this->_AddFontsStart();
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_ControlFontsMain();
+					}
+				}
+				elseif ($MySmartBB->_GET['edit'])
+				{
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_EditFontsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_EditFontsStart();
+					}
+				}
+				elseif ($MySmartBB->_GET['del'])
+				{
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_DelFontsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_DelFontsStart();
+					}
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			
+			if ($MySmartBB->_GET['colors'])
 			{
-				if ($MySmartBB->_GET['main'])
+				if ($MySmartBB->_GET['add'])
 				{
-					$this->_ControlFontsMain();
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_AddColorsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_AddColorsStart();
+					}
+				}
+				elseif ($MySmartBB->_GET['control'])
+				{
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_ControlColorsMain();
+					}
+				}
+				elseif ($MySmartBB->_GET['edit'])
+				{
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_EditColorsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_EditColorsStart();
+					}
+				}
+				elseif ($MySmartBB->_GET['del'])
+				{
+					if ($MySmartBB->_GET['main'])
+					{
+						$this->_DelColorsMain();
+					}
+					elseif ($MySmartBB->_GET['start'])
+					{
+						$this->_DelColorsStart();
+					}
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_EditFontsMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_EditFontsStart();
-				}
-			}
-			elseif ($MySmartBB->_GET['del'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_DelFontsMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_DelFontsStart();
-				}
-			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		
-		if ($MySmartBB->_GET['colors'])
-		{
-			if ($MySmartBB->_GET['add'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_AddColorsMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_AddColorsStart();
-				}
-			}
-			elseif ($MySmartBB->_GET['control'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_ControlColorsMain();
-				}
-			}
-			elseif ($MySmartBB->_GET['edit'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_EditColorsMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_EditColorsStart();
-				}
-			}
-			elseif ($MySmartBB->_GET['del'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_DelColorsMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_DelColorsStart();
-				}
-			}
-		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	/**

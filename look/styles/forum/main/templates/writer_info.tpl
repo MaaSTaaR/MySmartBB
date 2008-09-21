@@ -2,7 +2,7 @@
 <br />
 {$Info['user_title']}
 <br />
-{if {{$Info['avater_path']}} != ''}
+{if {$Info['avater_path']} != ''}
 	<br />
 	<img src="{$Info['avater_path']}" border="0" align="center" alt="صوره {$Info['username']} الشخصيه" />
 {/if}
@@ -72,7 +72,7 @@
 	</table>
 </fieldset>
 
-{if {{$Info['away']}}}
+{if {$Info['away']}}
 	<br />
 	<fieldset>
 		<legend>العضو غائب</legend>

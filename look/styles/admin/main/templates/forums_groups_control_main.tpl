@@ -19,7 +19,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][view_section]" id="select_view_section">
-					{if {{$SecGroupList['view_section']}}}
+					{if {$SecGroupList['view_section']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -35,7 +35,7 @@
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][download_attach]" id="select_download_attach">
-					{if {{$SecGroupList['download_attach']}}}
+					{if {$SecGroupList['download_attach']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -51,7 +51,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][upload_attach]" id="select_upload_attach">
-					{if {{$SecGroupList['upload_attach']}}}
+					{if {$SecGroupList['upload_attach']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -67,7 +67,7 @@
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][write_subject]" id="select_write_subject">
-					{if {{$SecGroupList['write_subject']}}}
+					{if {$SecGroupList['write_subject']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -83,7 +83,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][write_reply]" id="select_write_reply">
-					{if {{$SecGroupList['write_reply']}}}
+					{if {$SecGroupList['write_reply']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -99,7 +99,7 @@
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][edit_own_subject]" id="select_edit_own_subject">
-					{if {{$SecGroupList['edit_own_subject']}}}
+					{if {$SecGroupList['edit_own_subject']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -115,7 +115,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][edit_own_reply]" id="select_edit_own_reply">
-					{if {{$SecGroupList['edit_own_reply']}}}
+					{if {$SecGroupList['edit_own_reply']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -131,7 +131,7 @@
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][del_own_subject]" id="select_del_own_subject">
-					{if {{$SecGroupList['del_own_subject']}}}
+					{if {$SecGroupList['del_own_subject']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -147,7 +147,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][del_own_reply]" id="select_del_own_reply">
-					{if {{$SecGroupList['del_own_reply']}}}
+					{if {$SecGroupList['del_own_reply']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -163,7 +163,7 @@
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][write_poll]" id="select_write_poll">
-					{if {{$SecGroupList['write_poll']}}}
+					{if {$SecGroupList['write_poll']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -179,7 +179,7 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][vote_poll]" id="select_vote_poll">
-					{if {{$SecGroupList['vote_poll']}}}
+					{if {$SecGroupList['vote_poll']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 					{else}

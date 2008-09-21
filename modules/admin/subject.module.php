@@ -19,50 +19,53 @@ class MySmartSubjectMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['close'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['close'])
 			{
-				$this->_CloseSubject();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_CloseSubject();
+				}
 			}
+			elseif ($MySmartBB->_GET['attach'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AttachSubject();
+				}
+			}
+			elseif ($MySmartBB->_GET['mass_del'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_MassDelMain();
+				}
+				elseif ($MySmartBB->_GET['confirm'])
+				{
+					$this->_MassDelConfirm();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_MassDelStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['mass_move'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_MassMoveMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_MassMoveStart();
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		elseif ($MySmartBB->_GET['attach'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_AttachSubject();
-			}
-		}
-		elseif ($MySmartBB->_GET['mass_del'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_MassDelMain();
-			}
-			elseif ($MySmartBB->_GET['confirm'])
-			{
-				$this->_MassDelConfirm();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_MassDelStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['mass_move'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_MassMoveMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_MassMoveStart();
-			}
-		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	function _CloseSubject()

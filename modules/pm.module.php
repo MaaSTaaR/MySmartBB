@@ -504,8 +504,8 @@ class MySmartPrivateMassegeMOD
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
-		if (!$MySmartBB->_CONF['template']['MassegeRow']['user_read'])
-		{
+		/*if (!$MySmartBB->_CONF['template']['MassegeRow']['user_read'])
+		{*/
 			$ReadArr 						= 	array();
 			$ReadArr['where'] 				= 	array();
 			
@@ -517,9 +517,28 @@ class MySmartPrivateMassegeMOD
 			$Read = $MySmartBB->pm->MakeMassegeRead($ReadArr);
 			
 			if ($Read)
-			{				
-				$Number = $MySmartBB->pm->GetPrivateMassegeNumber(array(	'way'		=>	'new', 
-		      															'username'	=>	$MySmartBB->_CONF['member_row']['username']));
+			{
+				$NumArr 						= 	array();
+				$NumArr['where'] 				= 	array();
+		
+				$NumArr['where'][0] 			= 	array();
+				$NumArr['where'][0]['name'] 	= 	'user_to';
+				$NumArr['where'][0]['oper'] 	= 	'=';
+				$NumArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+		
+				$NumArr['where'][1] 			= 	array();
+				$NumArr['where'][1]['con'] 		= 	'AND';
+				$NumArr['where'][1]['name'] 	= 	'folder';
+				$NumArr['where'][1]['oper'] 	= 	'=';
+				$NumArr['where'][1]['value'] 	= 	'inbox';
+		
+				$NumArr['where'][2] 			= 	array();
+				$NumArr['where'][2]['con'] 		= 	'AND';
+				$NumArr['where'][2]['name'] 	= 	'user_read';
+				$NumArr['where'][2]['oper'] 	= 	'=';
+				$NumArr['where'][2]['value'] 	= 	'1';
+		
+				$Number = $MySmartBB->pm->GetPrivateMassegeNumber($NumArr);
 		      															
 				$CacheArr 					= 	array();
 				$CacheArr['field']			=	array();
@@ -529,7 +548,7 @@ class MySmartPrivateMassegeMOD
 				
 				$Cache = $MySmartBB->member->UpdateMember($CacheArr);
 			}
-		}
+		//}
 				
 		$MySmartBB->template->display('usercp_menu');
 		$MySmartBB->template->display('pm_show');

@@ -997,7 +997,7 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['send_email'] 				= '';
 		$InfoArray['avatar_perpage'] 			= 5;
 		$InfoArray['admin_email'] 				= '';
-		$InfoArray['MySBB_version'] 			= '2.0 OMEGA 5';
+		$InfoArray['MySBB_version'] 			= '2.0 THETA 1';
 		$InfoArray['Sat'] 						= 1;
 		$InfoArray['Sun'] 						= 1;
 		$InfoArray['Mon'] 						= 1;
@@ -1061,6 +1061,7 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['default_imagesW'] 			= 0;
 		$InfoArray['default_imagesH'] 			= 0;
 		$InfoArray['create_date'] 				= '';
+		$InfoArray['icon_path'] 				= 'look/images/icons/';
 		// Since OMEGA 5
 		$InfoArray['sectiongroup_number']		= 0;
 		$InfoArray['subsections_number']		= 0;

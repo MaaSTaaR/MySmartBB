@@ -15,7 +15,7 @@
 		<td class="row1">إمكانية عرض القسم</td>
 		<td class="row1">
 <select name="groups[{#SecGroupList['group_id']#}][view_section]" id="select_view_section">
-	{if {{$SecGroupList['view_section']}}}
+	{if {$SecGroupList['view_section']}}
 	<option value="1" selected="selected">نعم</option>
 	<option value="0">لا</option>
 	{else}

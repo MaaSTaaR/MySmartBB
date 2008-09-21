@@ -25,7 +25,7 @@
 		</tr>
 		{Des::foreach}{forums_list}{forum}
 		<tr valign="top" align="center">
-		{if {{$forum['parent']}} == 0}
+		{if {$forum['parent']} == 0}
 			<td class="main2" colspan="4">{$forum['title']}</td>
 		{else}
 			<td class="row1">
@@ -41,7 +41,7 @@
 				<a href="./admin.php?page=forums&amp;del=1&amp;main=1&amp;id={$forum['id']}">حذف</a>
 			</td>
 			<td class="row1">
-				<input type="text" name="order-{$forum['id']}" id="input_order-{$forum['id']}" value="1" size="5" />
+				<input type="text" name="order-{$forum['id']}" id="input_order-{$forum['id']}" value="{$forum['sort']}" size="5" />
 			</td>
 		{/if}
 		</tr>

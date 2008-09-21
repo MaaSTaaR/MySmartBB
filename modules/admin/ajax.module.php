@@ -17,11 +17,14 @@ class MySmartAjaxMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_GET['sections'])
-		{	
-			if ($MySmartBB->_GET['rename'])
-			{
-				$this->_SectionRename();
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			if ($MySmartBB->_GET['sections'])
+			{	
+				if ($MySmartBB->_GET['rename'])
+				{
+					$this->_SectionRename();
+				}
 			}
 		}
 	}

@@ -195,21 +195,15 @@ class MySmartFunctions
  	 */
  	function RandomCode()
     {
-    	global $MySmartBB;
-    	
-  		$date_ = str_replace('/','',$MySmartBB->_CONF['date']);
-  		$s = time() . $date_ . rand(1,10000) . microtime();
-  		$s = str_replace(',','',$s);
-  		$s = str_replace(' ','',$s);
-
-  		$s2 = time()*85200 . $date_*1000 . rand(1,10000) . microtime();
-  		$s2 = str_replace(',','',$s2);
-  		$s2 = str_replace(' ','',$s2);
-
-  		$s = md5($s).md5($s2);
-  		$s = substr($s,0,26);
-
-  		return $s;
+  		$code = rand(1,500) . rand(1,1000) . microtime();
+  		$code = ceil($code);
+  		
+  		$code = base64_encode($code);
+  		$code = substr($code,0,15);
+  		
+  		$code = str_replace('=',rand(1,100),$code);
+  		
+  		return $code;
  	}
 
 	/**

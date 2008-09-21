@@ -427,13 +427,13 @@ class MySmartTopicMOD
 		$ReplyNumArr['get_from'] 		= 	'db';
 		
 		$ReplyNumArr['where'] 		= 	array('subject_id',$this->Info['id']);
-		/*
+		
 		$ReplyNumArr['where'][1] 			= 	array();
 		$ReplyNumArr['where'][1]['con']		=	'AND';
 		$ReplyNumArr['where'][1]['name']	=	'delete_topic';
 		$ReplyNumArr['where'][1]['oper']	=	'<>';
 		$ReplyNumArr['where'][1]['value']	=	'1';
-		*/
+		
 		$ReplyArr = array();
 		
 		$ReplyArr['proc'] 				= 	array();
@@ -447,11 +447,12 @@ class MySmartTopicMOD
 		$ReplyArr['pager']['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['id'];
 		$ReplyArr['pager']['var'] 		= 	'count';
 		
-		/*$ReplyArr['where'][0] 			= 	array();
+		$ReplyArr['where']				=	array();
+		$ReplyArr['where'][0] 			= 	array();
 		$ReplyArr['where'][0]['name']	=	'delete_topic';
 		$ReplyArr['where'][0]['oper']	=	'<>';
 		$ReplyArr['where'][0]['value']	=	'1';
-		*/
+		
 		$ReplyArr['subject_id'] 		= 	$this->Info['id'];
 
 		$this->RInfo = $MySmartBB->reply->GetReplyWriterInfo($ReplyArr);
@@ -531,7 +532,7 @@ class MySmartTopicMOD
 		$this->RInfo[$this->x]['write_time'] = $reply_date . ' ; ' . $reply_time;
 		
 		// $RInfo to templates
-		$MySmartBB->template->assign('Info',$this->RInfo[$this->x]);
+		$MySmartBB->template->assign('Reply_Info',$this->RInfo[$this->x]);
 		$MySmartBB->template->assign('section',$this->Info['section']);
 		
 		// $x = $x + 1

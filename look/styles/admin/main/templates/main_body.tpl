@@ -28,15 +28,15 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="40%">عدد الأعضاء الذين اشتركوا اليوم</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$TodayMemberNumber}</td>
 	</tr>
 	<tr align="center">
 		<td class="row1" width="40%">عدد المواضيع التي كتبت اليوم</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$TodaySubjectNumber}</td>
 	</tr>
 	<tr align="center">
 		<td class="row1" width="40%">عدد الردود التي كتبت اليوم</td>
-		<td class="row2" width="40%"></td>
+		<td class="row2" width="40%">{$TodayReplyNumber}</td>
 	</tr>
 </table>
 

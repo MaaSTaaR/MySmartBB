@@ -9,7 +9,7 @@
 		<td class="row1" width="50%">
         	<select size="1" name="section" id="section_id">
         		{Des::foreach}{forums_list}{forum}
-        		{if {{$forum['parent']}} == 0}
+        		{if {$forum['parent']} == 0}
 				<option value="{$forum['id']}" disabled="disabled">- {$forum['title']}</option>
 				{else}
 				<option value="{$forum['id']}" selected="selected">-- {$forum['title']}</option>

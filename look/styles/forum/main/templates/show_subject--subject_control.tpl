@@ -13,16 +13,16 @@
 	<tr align="center">
 		<td class="row1" width="50%">
 			<select name="operator">
-				{if !{{$Info['stick']}}}
+				{if !{$Info['stick']}}
 				<option value="stick">تثبيت الموضوع</option>
 				{/if}
-				{if {{$Info['stick']}}}
+				{if {$Info['stick']}}
 				<option value="unstick">إلغاء تثبيت الموضوع</option>
 				{/if}
-				{if !{{$Info['close']}}}
+				{if !{$Info['close']}}
 				<option value="close">إغلاق الموضوع</option>
 				{/if}
-				{if {{$Info['close']}}}
+				{if {$Info['close']}}
 				<option value="open">فتح الموضوع</option>
 				{/if}
 				<option value="delete">حذف الموضوع</option>

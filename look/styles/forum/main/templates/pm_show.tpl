@@ -25,7 +25,7 @@
 		<td class="row1" width="50%">
 			{$MassegeRow['text']}
 			
-			{if {{$Info['user_sig']}} != ''}
+			{if {$Info['user_sig']} != ''}
 				{template}signature_show{/template}
 			{/if}
 		</td>

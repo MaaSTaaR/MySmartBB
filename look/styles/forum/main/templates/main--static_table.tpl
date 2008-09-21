@@ -23,12 +23,12 @@
 							<a href="index.php?page=profile&show=1&id={$OnlineList['user_id']}">{$OnlineList['username_style']}</a>،
 						{/Des::while}
 			
-						{if {{$_CONF['info_row']['show_onlineguest']}} == 1}
-							{if {{$MemberNumber}}+{{$GuestNumber}} <= 0}
+						{if {$_CONF['info_row']['show_onlineguest']} == 1}
+							{if {$MemberNumber} + {$GuestNumber} <= 0}
 			لا يوجد شخص قام بتسجيل دخوله
 							{/if}
 						{else}
-							{if {{$MemberNumber}} <= 0}
+							{if {$MemberNumber} <= 0}
 			لا يوجد شخص قام بتسجيل دخوله
 							{/if}
 						{/if}
@@ -41,11 +41,11 @@
 					</tr>
 					<tr align="right">
 						<td class="row1">
-						{if {{$TodayNumber}} > 0}
+						{if {$TodayNumber} > 0}
 							{Des::while}{TodayList}
 							<a href="index.php?page=profile&amp;show=1&amp;id={$TodayList['user_id']}">{$TodayList['username_style']}</a>،
 							{/Des::while}
-						{elseif {{$TodayNumber}} <= 0}
+						{elseif {$TodayNumber} <= 0}
 						لا يوجد عضو قام بزيارة المنتديات اليوم
 						{/if}
 						</td>

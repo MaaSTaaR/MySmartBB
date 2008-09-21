@@ -45,7 +45,7 @@ $(document).ready(Ready);
 <a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} الصوره الشخصيه
 {template}address_bar_part2{/template}
 
-{if {{$_CONF['rows']['member_row']['avater_path']}} != ''}
+{if {$_CONF['rows']['member_row']['avater_path']} != ''}
 	<table align="center" border="1" width="50%" class="t_style_b">
 		<tr align="center">
 			<td width="50%" class="thead">
@@ -83,7 +83,7 @@ $(document).ready(Ready);
 				</label>
 			</td>
 		</tr>
-		{if {{$_CONF['info_row']['upload_avatar']}}}
+		{if {$_CONF['info_row']['upload_avatar']}}
 		<tr align="center">
 			<td width="80%" class="row1">
 				<input name="options" type="radio" value="upload" id="option3" />

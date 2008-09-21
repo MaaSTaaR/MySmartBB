@@ -38,6 +38,8 @@ $modules['tags'] 				= 	'tags.module.php';
 $modules['rss'] 				= 	'rss.module.php';
 $modules['online'] 				= 	'online.module.php';
 $modules['download'] 			= 	'download.module.php';
+$modules['latest'] 				= 	'latest.module.php';
+$modules['send'] 				= 	'send.module.php';
 
 //////////
 

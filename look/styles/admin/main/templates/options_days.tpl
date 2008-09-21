@@ -13,7 +13,7 @@
 		<td class="row1">السبت</td>
 		<td class="row1">
 <select name="Sat" id="select_Sat">
-	{if {{$_CONF['info_row']['Sat']}}}
+	{if {$_CONF['info_row']['Sat']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -27,7 +27,7 @@
 		<td class="row2">الاحد</td>
 		<td class="row2">
 <select name="Sun" id="select_Sun">
-	{if {{$_CONF['info_row']['Sun']}}}
+	{if {$_CONF['info_row']['Sun']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -42,7 +42,7 @@
 		<td class="row1">الاثنين</td>
 		<td class="row1">
 <select name="Mon" id="select_Mon">
-	{if {{$_CONF['info_row']['Mon']}}}
+	{if {$_CONF['info_row']['Mon']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -57,7 +57,7 @@
 		<td class="row2">الثلاثاء</td>
 		<td class="row2">
 <select name="Tue" id="select_Tue">
-	{if {{$_CONF['info_row']['Tue']}}}
+	{if {$_CONF['info_row']['Tue']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -72,7 +72,7 @@
 		<td class="row1">الاربعاء</td>
 		<td class="row1">
 <select name="Wed" id="select_Wed">
-	{if {{$_CONF['info_row']['Wed']}}}
+	{if {$_CONF['info_row']['Wed']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -87,7 +87,7 @@
 		<td class="row2">الخميس</td>
 		<td class="row2">
 <select name="Thu" id="select_Thu">
-	{if {{$_CONF['info_row']['Thu']}}}
+	{if {$_CONF['info_row']['Thu']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}
@@ -102,7 +102,7 @@
 		<td class="row1">الجمعه</td>
 		<td class="row1">
 <select name="Fri" id="select_Fri">
-	{if {{$_CONF['info_row']['Fri']}}}
+	{if {$_CONF['info_row']['Fri']}}
 		<option value="1" selected="selected">مسموح</option>
 		<option value="0">غير مسموح</option>
 	{else}

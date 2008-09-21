@@ -13,136 +13,139 @@ class MySmartOptionsMOD
 	function run()
 	{
 		global $MySmartBB;
-
-		$MySmartBB->template->display('header');
 		
-		if ($MySmartBB->_GET['index'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			$this->_IndexPage();
-		}
-		elseif ($MySmartBB->_GET['general'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_GeneralMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_GeneralUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['time'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_TimeMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_TimeUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['pages'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_PagesMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_PagesUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['register'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_RegisterMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_RegisterUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['topics'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_TopicsMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_TopicsUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['fast_reply'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_FastReplyMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_FastReplyUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['member'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_MemberMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_MemberUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['avatar'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_AvatarMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_AvatarUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['close_days'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_CloseDaysMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_CloseDaysUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['close'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_CloseMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_CloseUpdate();
-			}
-		}
-		elseif ($MySmartBB->_GET['ajax'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_AjaxMain();
-			}
-			elseif ($MySmartBB->_GET['update'])
-			{
-				$this->_AjaxUpdate();
-			}
-		}
+			$MySmartBB->template->display('header');
 		
-		$MySmartBB->template->display('footer');
+			if ($MySmartBB->_GET['index'])
+			{
+				$this->_IndexPage();
+			}
+			elseif ($MySmartBB->_GET['general'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_GeneralMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_GeneralUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['time'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_TimeMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_TimeUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['pages'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_PagesMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_PagesUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['register'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_RegisterMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_RegisterUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['topics'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_TopicsMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_TopicsUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['fast_reply'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_FastReplyMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_FastReplyUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['member'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_MemberMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_MemberUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['avatar'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AvatarMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_AvatarUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['close_days'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_CloseDaysMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_CloseDaysUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['close'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_CloseMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_CloseUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['ajax'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AjaxMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_AjaxUpdate();
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
+		}
 	}
 	
 	function _IndexPage()

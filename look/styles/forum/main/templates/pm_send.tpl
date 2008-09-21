@@ -36,13 +36,13 @@ $(document).ready(Ready);
 
 <br />
 
-{if {{$SHOW_MSG}}}
+{if {$SHOW_MSG}}
 <div align="center"><strong>{$MSG}</strong></div>
 {/if}
 
 <br />
 
-{if {{$SHOW_MSG1}}}
+{if {$SHOW_MSG1}}
 <div align="center">
 <strong>{$to} غائب حاليا
 <br />

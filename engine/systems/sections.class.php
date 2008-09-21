@@ -6,8 +6,8 @@
  
 /**
  * @package 	: 	MySmartSection
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
- * @updated 	: 	31/08/2008 04:54:23 AM 
+ * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @updated 	: 	16/09/2008 03:43:15 AM 
  */
  
 class MySmartSection
@@ -208,10 +208,13 @@ class MySmartSection
  			$param = array();
  		}
  		
- 		$arr 				= 	array();
- 		$arr['get_from'] 	= 	'db';
- 		$arr['type'] 		= 	'forum';
- 		$arr['where'] 		= 	array('parent',$param['parent']);
+ 		$arr 					= 	array();
+ 		$arr['get_from'] 		= 	'db';
+ 		$arr['type'] 			= 	'forum';
+		$arr['order']			=	array();
+		$arr['order']['field']	=	'sort';
+		$arr['order']['type']	=	'ASC';
+ 		$arr['where'] 			= 	array('parent',$param['parent']);
  		
  		$forums = $this->GetSectionsList($arr);
  		
@@ -268,6 +271,10 @@ class MySmartSection
  			$cache = serialize($cache);
  			$cache = base64_encode($cache);
  		}
+ 		else
+ 		{
+ 			return false;
+ 		}
  		
 		return $cache;
 	}
@@ -280,10 +287,17 @@ class MySmartSection
  			$param = array();
  		}
  		
+ 		$cache = $this->CreateSectionsCache($param);
+ 		
+ 		if ($cache == false)
+ 		{
+ 			$cache = '';
+ 		}
+ 		
  		$UpdateArr 					= 	array();
  		$UpdateArr['field']			=	array();
  		
- 		$UpdateArr['field']['forums_cache'] 	= 	$this->CreateSectionsCache($param);
+ 		$UpdateArr['field']['forums_cache'] 	= 	$cache;
  		$UpdateArr['where']						=	array('id',$param['parent']);
  		
  		$update = $this->UpdateSection($UpdateArr);

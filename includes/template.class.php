@@ -3,9 +3,9 @@
 /*
  * @package : MySmartTemplate
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @version : 0.26 (Special Version For MySmartBB)
+ * @version : 0.30 (Special Version For MySmartBB)
  * @start : 20/4/2006 , 7:00 PM (GMT+3)
- * @last update : 21/08/2008 02:30:34 AM 
+ * @last update : 16/09/2008 05:55:24 AM 
  * @under : GNU LGPL
 */
 
@@ -164,6 +164,11 @@ class MySmartTemplate
 			$string = $this->_ProccessForeach($string);
 		}
 		
+		if (preg_match('~\{if (.*)\}~',$string))
+		{
+			$string = $this->_ProccessIfStatement($string);
+		}
+		
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
 		
@@ -175,43 +180,43 @@ class MySmartTemplate
 		 
 		// 2D Array (Without print) :
 		// 			{$array['0']} -> $array['0']
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}}~';
-		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';
+		/*$search_array[] 	= 	'~\{{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';*/
 		
 		// 2D Array :
 		// 			{$array['0']} -> $array['0']
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~';
-		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\'] ?>';
+		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']; ?>';
 				
 		// 2D Array (Without print) :
 		//			{$array[0]} -> $array[0]
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\[([^[<].*?)\]\[([^[<].*?)\]\}}~';
-		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';
+		/*$search_array[] 	= 	'~\{{\$([^[<].*?)\[([^[<].*?)\]\[([^[<].*?)\]\}}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';*/
 	
 		// 2D Array :
 		//			{$array[0]} -> $array[0]
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\[([^[<].*?)\]\}~';
-		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\'] ?>';
+		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']; ?>';
 				
 		// Array (Without print) :
 		// 			{$array['0']} -> $array['0']
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\[\'([^[<].*?)\'\]\}}~';
-		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';
+		/*$search_array[] 	= 	'~\{{\$([^[<].*?)\[\'([^[<].*?)\'\]\}}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';*/
 		
 		// Array :
 		// 			{$array['0']} -> $array['0']
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\}~';
-		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'] ?>';
+		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']; ?>';
 		
 		// Array (Without print) :
 		//			{$array[0]} -> $array[0]
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\[([^[<].*?)\]\}}~';
-		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';
+		/*$search_array[] 	= 	'~\{{\$([^[<].*?)\[([^[<].*?)\]\}}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';*/
 			
 		// Array :
 		//			{$array[0]} -> $array[0]
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\}~';
-		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'] ?>';
+		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']; ?>';
 		
 		//////////
 		
@@ -221,39 +226,16 @@ class MySmartTemplate
 		 
 		// Variable (Without print) :
 		//				{$var} -> $var
-		$search_array[] 	= 	'~\{{\$([^[<].*?)\}}~';
-		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\']';
+		/*$search_array[] 	= 	'~\{{\$([^[<].*?)\}}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\']';*/
 
 		// Variable :
 		//				{$var} -> $var
 		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
-		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\'] ?>';
+		$replace_array[] 	= 	'<?php echo $MySmartBB->_CONF[\'template\'][\'\\1\']; ?>';
 
 		//////////
-		
-		/**
-		 * If statement
-		 */
-		 
-		// If statement :
-		//					{if $i == 1} Hi {/if}
-		//					if ($i == 1) { echo 'Hi'; }
-		$search_array[] 	= 	'~\{if ([^[<].*?)}~';
-		$replace_array[] 	= 	'<?php if (\\1) { ?>';
-		
-		$search_array[] 	= 	'~\{/if}~';
-		$replace_array[] 	= 	'<?php } ?>';
-		
-		// Elseif statement
-		$search_array[] 	= 	'~\{elseif ([^[<].*?)}~';
-		$replace_array[] 	= 	'<?php } elseif (\\1) { ?>';
-		
-		// Else statement
-		$search_array[] 	= 	'~\{else}~';
-		$replace_array[] 	= 	'<?php } else { ?>';
-		
-		//////////
-		
+				
 		/**
 		 * Misc
 		 */
@@ -300,6 +282,13 @@ class MySmartTemplate
 		// I am sorry, but we _must_ do that
 		$string = preg_replace('~\{Des::while}{([^[<].*?)}~ise','$this->_StoreWhileVarName(\'\\1\');',$string);
 		
+		// If statement _must_ be first
+		if (preg_match('~\{if (.*)\}~',$string)
+			or preg_match('~if (.*) {~',$string))
+		{
+			$string = $this->_ProccessIfStatement($string,'while');
+		}
+		
 		foreach ($this->_while_var as $var_name)
 		{
 			$search_array[] 	=	'~\{\{\$' . $var_name . '\[([^[<].*?)\]\}\}~';
@@ -338,6 +327,12 @@ class MySmartTemplate
 		
 		$string = preg_replace('~\{Des::foreach}{([^[<].*?)}{([^[<].*?)}~ise','$this->_StoreForeachVarName(\'\\2\',\'\\1\');',$string);
 		
+		if (preg_match('~\{if (.*)\}~',$string)
+			or preg_match('~if (.*) {~',$string))
+		{
+			$string = $this->_ProccessIfStatement($string,'foreach');
+		}
+		
 		foreach ($this->_foreach_var as $var_name)
 		{		
 			// Variable (Without print) :
@@ -351,7 +346,7 @@ class MySmartTemplate
 			// Variable :
 			//				{$var} -> $var
 			$search_array[] 	= 	'~\{\$' . $var_name . '\}~';
-			$replace_array[] 	= 	'<?php echo $' . $var_name . ' ?>';
+			$replace_array[] 	= 	'<?php echo $' . $var_name . '; ?>';
 			
 			$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
 			$replace_array[] 	=	'<?php echo $' . $var_name . '[\\1]; ?>';
@@ -377,6 +372,105 @@ class MySmartTemplate
 		$this->_foreach_var_num += 1;
 		
 		return '<?php foreach ($MySmartBB->_CONF[\'template\'][\'foreach\'][\'' . $oldname . '\'] as $' . $varname . ') { ?>';
+	}
+	
+	
+	function _ProccessIfStatement($string,$type = null)
+	{	
+		$search_array = array();
+		$replace_array = array();
+		
+		// If statement :
+		//					{if $i == 1} Hi {/if}
+		//					if ($i == 1) { echo 'Hi'; }
+		
+		$search_array[] 	= 	'~\{if (.*)}(.*){/if}~'; // SEE : We have a problem here, \\2 may contain "else" or "elseif"
+		$replace_array[] 	= 	'<?php if (\\1) { ?> \\2 <?php } ?>';
+		
+		$search_array[] 	= 	'~\{if (.*)}~';
+		$replace_array[] 	= 	'<?php if (\\1) { ?>';
+		
+		$search_array[] 	= 	'~\{/if}~';
+		$replace_array[] 	= 	'<?php } ?>';
+		
+		// Elseif statement
+		$search_array[] 	= 	'~\{elseif (.*)}(.*){/if}~';
+		$replace_array[] 	= 	'<?php elseif (\\1) { ?> \\2 <?php } ?>';
+		
+		$search_array[] 	= 	'~\{elseif (.*)}~';
+		$replace_array[] 	= 	'<?php } elseif (\\1) { ?>';
+		
+		// Else statement
+		$search_array[] 	= 	'~\{else}~';
+		$replace_array[] 	= 	'<?php } else { ?>';
+		
+		$string = preg_replace($search_array,$replace_array,$string);
+		
+		$string = preg_replace('~\if (.*) \{~ie','$this->_ProccessIfStatementVariables(\'\\1\',\'' . $type . '\');',$string);
+		
+		return $string;	
+	}
+	
+	function _ProccessIfStatementVariables($input,$type = null)
+	{
+		$string = 'if ' . $input . ' { ';
+		
+		if ($type == 'while')
+		{
+			foreach ($this->_while_var as $var_name)
+			{
+				$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
+				$replace_array[] 	=	'$MySmartBB->_CONF[\'template\'][\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1]';
+			}
+		}
+		elseif ($type == 'foreach')
+		{
+			foreach ($this->_foreach_var as $var_name)
+			{
+				// Variable (Without print) :
+				//				{$var} -> $var
+				$search_array[] 	= 	'~\{\$' . $var_name . '\}~';
+				$replace_array[] 	= 	'$' . $var_name;
+
+				$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]}~';
+				$replace_array[] 	=	'$' . $var_name . '[\\1]';
+			}
+		}
+		
+		// 2D Array (Without print) :
+		// 			{$array['0']} -> $array['0']
+		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';
+						
+		// 2D Array (Without print) :
+		//			{$array[0]} -> $array[0]
+		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\[([^[<].*?)\]\}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\'][\'\\3\']';
+		
+		// Array (Without print) :
+		// 			{$array['0']} -> $array['0']
+		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';
+		
+		// Array (Without print) :
+		//			{$array[0]} -> $array[0]
+		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\'][\'\\2\']';
+		
+		//////////
+		
+		/**	
+		 * Variable
+		 */
+		 
+		// Variable (Without print) :
+		//				{$var} -> $var
+		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
+		$replace_array[] 	= 	'$MySmartBB->_CONF[\'template\'][\'\\1\']';
+		
+		$string = preg_replace($search_array,$replace_array,$string);
+		
+		return $string;
 	}
 	
 	/**

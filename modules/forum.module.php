@@ -323,9 +323,9 @@ class MySmartForumMOD
 		
 		$AnnArr['limit']			=	'1';
 		
-		$MySmartBB->_CONF['template']['AnnouncementList'] = $MySmartBB->announcement->GetAnnouncementList($AnnArr); 
-		  
-		if ($MySmartBB->_CONF['template']['AnnouncementList'] != false)
+		$MySmartBB->_CONF['template']['while']['AnnouncementList'] = $MySmartBB->announcement->GetAnnouncementList($AnnArr); 
+		
+		if ($MySmartBB->_CONF['template']['while']['AnnouncementList'] != false)
 		{
 			$MySmartBB->template->assign('STOP_ANNOUNCEMENT_TEMPLATE',false);
 		}

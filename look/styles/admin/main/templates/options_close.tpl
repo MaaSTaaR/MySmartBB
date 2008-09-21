@@ -13,7 +13,7 @@
 		<td class="row1">اغلاق المنتدى</td>
 		<td class="row1">
 <select name="board_close" id="select_board_close">
-	{if {{$_CONF['info_row']['board_close']}}}
+	{if {$_CONF['info_row']['board_close']}}
 		<option value="1" selected="selected">نعم</option>
 		<option value="0">لا</option>
 	{else}

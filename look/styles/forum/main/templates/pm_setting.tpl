@@ -18,7 +18,7 @@
 			</td>
 			<td class="row1" width="20%">
 				<select name="pm_senders" size="1">
-					{if {{$_CONF['member_row']['pm_senders']}}}
+					{if {$_CONF['member_row']['pm_senders']}}
 					<option selected="selected" value="1">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -49,7 +49,7 @@
 			</td>
 			<td class="row1" width="30%">
 				<select name="autoreply" size="1">
-					{if {{$_CONF['member_row']['autoreply']}}}
+					{if {$_CONF['member_row']['autoreply']}}
 					<option selected="selected" value="1">نعم</option>
 					<option value="0">لا</option>
 					{else}
@@ -69,7 +69,7 @@
 		<tr align="center">
 			<td class="row1" width="60%" colspan="2">
 				الرد الآلي الآن : 
-			{if {{$_CONF['member_row']['autoreply']}}}
+			{if {$_CONF['member_row']['autoreply']}}
 			<strong>يعمل</strong>
 			{else}
 			<strong>لا يعمل</strong>

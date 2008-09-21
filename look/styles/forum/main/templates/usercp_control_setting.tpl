@@ -18,7 +18,7 @@
 			<td class="row1" width="30%">
 				<select name="style">
    					{Des::while}{StyleList}
-						<option value="{$StyleList['id']}" {if {{$StyleList['id']}} == {{$_CONF['rows']['style']['id']}}}selected="selected" style="background : #EEEEEE"{/if}>{$StyleList['style_title']}</option>
+						<option value="{$StyleList['id']}" {if {$StyleList['id']} == {$_CONF['rows']['style']['id']}}selected="selected" style="background : #EEEEEE"{/if}>{$StyleList['style_title']}</option>
 				{/Des::while}
 				</select>
 			</td>
@@ -29,7 +29,7 @@
 			</td>
 			<td class="row2" width="30%">
 				<select name="hide_online" size="1">
-				{if {{$_CONF['rows']['member_row']['hide_online']}} == 0}
+				{if {$_CONF['rows']['member_row']['hide_online']} == 0}
 					<option value="1">نعم</option>
 					<option selected="selected" value="0">لا</option>
 				{else}
@@ -81,7 +81,7 @@
 			</td>
 			<td class="row2" width="30%">
 				<select name="send_allow" size="1">
-				{if {{$_CONF['rows']['member_row']['send_allow']}} == 0}
+				{if {$_CONF['rows']['member_row']['send_allow']} == 0}
 					<option value="1">نعم</option>
 					<option selected="selected" value="0">لا</option>
 				{else}

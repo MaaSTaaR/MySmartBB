@@ -2,17 +2,17 @@
 {$section_info['title']}
 {template}address_bar_part2{/template}
 
-{if {{$SHOW_SUB_SECTIONS}}}
+{if {$SHOW_SUB_SECTIONS}}
 {template}sections_list{/template}
 {/if}
 
 {template}forum--online_table{/template}
 
-{if !{{$STOP_ANNOUNCEMENT_TEMPLATE}}}
+{if !{$STOP_ANNOUNCEMENT_TEMPLATE}}
 {template}forum--announcement_table{/template}
 {/if}
 
-{if !{{$STOP_MODERATOR_TEMPLATE}}}
+{if !{$STOP_MODERATOR_TEMPLATE}}
 {template}forum--moderator_table{/template}
 {/if}
 

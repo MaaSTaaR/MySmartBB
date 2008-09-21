@@ -193,7 +193,7 @@ class MySmartReplyAddMOD
 	}
 	
 	function _Index()
-	{			
+	{
 		global $MySmartBB;
 		
 		$MySmartBB->functions->GetEditorTools();
@@ -209,7 +209,10 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية اضافة الرد');
+		if (!isset($MySmartBB->_POST['ajax']))
+		{
+			$MySmartBB->functions->ShowHeader('تنفيذ عملية اضافة الرد');
+		}
 		
 		$MySmartBB->_POST['title'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['title'],'trim');
 		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
@@ -364,50 +367,50 @@ class MySmartReplyAddMOD
      			$GetArr = array();
      			$GetArr['where'] = array('id',$MySmartBB->reply->id);
      			
-     			$MySmartBB->_CONF['template']['Info'] = $MySmartBB->reply->GetReplyInfo($GetArr);
+     			$MySmartBB->_CONF['template']['Reply_Info'] = $MySmartBB->reply->GetReplyInfo($GetArr);
      			
-     			$MySmartBB->_CONF['template']['Info']['id'] 			= 	$MySmartBB->_CONF['member_row']['id'];
+     			$MySmartBB->_CONF['template']['Info']['id'] 				= 	$MySmartBB->_CONF['member_row']['id'];
      			$MySmartBB->_CONF['template']['Info']['username'] 		= 	$MySmartBB->_CONF['member_row']['username'];
-     			$MySmartBB->_CONF['template']['Info']['avater_path'] 	= 	$MySmartBB->_CONF['member_row']['avater_path'];
+     			$MySmartBB->_CONF['template']['Info']['avater_path'] 		= 	$MySmartBB->_CONF['member_row']['avater_path'];
      			$MySmartBB->_CONF['template']['Info']['posts'] 			= 	$MySmartBB->_CONF['member_row']['posts'];
      			$MySmartBB->_CONF['template']['Info']['user_country'] 	= 	$MySmartBB->_CONF['member_row']['user_country'];
-     			$MySmartBB->_CONF['template']['Info']['visitor'] 		= 	$MySmartBB->_CONF['member_row']['visitor'];
+     			$MySmartBB->_CONF['template']['Info']['visitor'] 			= 	$MySmartBB->_CONF['member_row']['visitor'];
      			$MySmartBB->_CONF['template']['Info']['away'] 			= 	$MySmartBB->_CONF['member_row']['away'];
      			$MySmartBB->_CONF['template']['Info']['away_msg'] 		= 	$MySmartBB->_CONF['member_row']['away_msg'];
      			$MySmartBB->_CONF['template']['Info']['register_date'] 	= 	$MySmartBB->_CONF['member_row']['register_date'];
-     			$MySmartBB->_CONF['template']['Info']['user_title'] 	= 	$MySmartBB->_CONF['member_row']['user_title'];
+     			$MySmartBB->_CONF['template']['Info']['user_title'] 		= 	$MySmartBB->_CONF['member_row']['user_title'];
      			
      			// Make register date in nice format to show it
-				if (is_numeric($MySmartBB->_CONF['template']['Info']['register_date']))
+				if (is_numeric($MySmartBB->_CONF['template']['Reply_Info']['register_date']))
 				{
-					$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Info']['register_date']);
+					$MySmartBB->_CONF['template']['Reply_Info']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Reply_Info']['register_date']);
 				}
 		
 				// Make member gender as a readable text
-				$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['member_row']['user_gender']);
-				$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Info']['user_gender']);
+				$MySmartBB->_CONF['template']['Reply_Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['member_row']['user_gender']);
+				$MySmartBB->_CONF['template']['Reply_Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Reply_Info']['user_gender']);
 				
 				$CheckOnline = ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
 											
 				($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
-				$MySmartBB->_CONF['template']['Info']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['Info']['text']);
+				$MySmartBB->_CONF['template']['Reply_Info']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['Reply_Info']['text']);
 				
 				// Convert the smiles to image
-				$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Info']['text']);
+				$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Reply_Info']['text']);
 			
 				// Member signture is not empty , show make it nice with SmartCode
 				if (!empty($MySmartBB->_CONF['member_row']['user_sig']))
 				{
-					$MySmartBB->_CONF['template']['Info']['user_sig'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['member_row']['user_sig']);
+					$MySmartBB->_CONF['template']['Reply_Info']['user_sig'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['member_row']['user_sig']);
 					
-					$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Info']['user_sig']);
+					$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Reply_Info']['user_sig']);
 				}
 				
-				$reply_date = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Info']['write_time']);
-				$reply_time = $MySmartBB->functions->time($MySmartBB->_CONF['template']['Info']['write_time']);
+				$reply_date = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Reply_Info']['write_time']);
+				$reply_time = $MySmartBB->functions->time($MySmartBB->_CONF['template']['Reply_Info']['write_time']);
 		
-				$MySmartBB->_CONF['template']['Info']['write_time'] = $reply_date . ' ; ' . $reply_time;
+				$MySmartBB->_CONF['template']['Reply_Info']['write_time'] = $reply_date . ' ; ' . $reply_time;
 				
      			$MySmartBB->template->display('show_reply');
      		}

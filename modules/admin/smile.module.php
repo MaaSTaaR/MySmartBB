@@ -17,50 +17,53 @@ class MySmartSmileMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['add'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['add'])
 			{
-				$this->_AddMain();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_AddMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_AddStart();
+				}
 			}
-			elseif ($MySmartBB->_GET['start'])
+			elseif ($MySmartBB->_GET['control'])
 			{
-				$this->_AddStart();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_ControlMain();
+				}
 			}
+			elseif ($MySmartBB->_GET['edit'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_EditMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_EditStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['del'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_DelMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_DelStart();
+				}
+			}
+			
+			$MySmartBB->template->display('footer');
 		}
-		elseif ($MySmartBB->_GET['control'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_ControlMain();
-			}
-		}
-		elseif ($MySmartBB->_GET['edit'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_EditMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_EditStart();
-			}
-		}
-		elseif ($MySmartBB->_GET['del'])
-		{
-			if ($MySmartBB->_GET['main'])
-			{
-				$this->_DelMain();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_DelStart();
-			}
-		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	function _AddMain()

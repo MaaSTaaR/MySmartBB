@@ -17,17 +17,20 @@ class MySmartFixMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		
-		if ($MySmartBB->_GET['repair'])
+		if ($MySmartBB->_CONF['member_permission'])
 		{
-			if ($MySmartBB->_GET['main'])
+			$MySmartBB->template->display('header');
+			
+			if ($MySmartBB->_GET['repair'])
 			{
-				$this->_RepairMain();
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_RepairMain();
+				}
 			}
+				
+			$MySmartBB->template->display('footer');
 		}
-		
-		$MySmartBB->template->display('footer');
 	}
 	
 	function _RepairMain()

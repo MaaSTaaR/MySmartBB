@@ -1,4 +1,4 @@
-{if {{$_CONF['info_row']['ajax_register']}}}
+{if {$_CONF['info_row']['ajax_register']}}
 <script src="includes/js/jquery.js"></script>
 
 <script language="javascript">
@@ -113,7 +113,7 @@ $(document).ready(Ready);
 </table>
 <br />
 <div align="center">
-{if {{$_CONF['info_row']['ajax_register']}}}
+{if {$_CONF['info_row']['ajax_register']}}
 <input name="register_button" id="register_id" type="button" value="موافق" />
 {else}
 <input name="register_button" type="submit" value="موافق" />

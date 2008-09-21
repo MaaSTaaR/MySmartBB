@@ -7,7 +7,7 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   21/08/2008 08:49:48 PM 
+ * @updated 	:   16/09/2008 12:23:49 AM  
 */
 
 
@@ -115,7 +115,10 @@ class MySmartMember
 		}
 		elseif ($param['get_from'] == 'db')
 		{
-			$num = $this->Engine->records->GetNumber(array('select'=>'*','from'=>$this->Engine->table['member']));
+			$param['select'] 	= 	'*';
+			$param['from'] 		= 	$this->Engine->table['member'];
+			
+			$num = $this->Engine->records->GetNumber($param);
 		}
 		else
 		{

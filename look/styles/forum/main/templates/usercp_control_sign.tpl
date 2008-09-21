@@ -4,7 +4,7 @@
 <a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} توقيعك الخاص
 {template}address_bar_part2{/template}
 
-{if !empty({{$Sign}})}
+{if !empty({$Sign})}
    <table align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="65%">
    	<tr align="center">
    		<td class="thead" width="65%">

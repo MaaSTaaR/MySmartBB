@@ -534,7 +534,7 @@ class MySmartManagementMOD
 		}
 		
 		$SubjectArr 			= 	array();
-		$SubjectArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$SubjectArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
 		
 		$Subject = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
 		

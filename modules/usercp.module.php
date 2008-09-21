@@ -160,6 +160,33 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->functions->ShowHeader('لوحة تحكم العضو');
 		
+		//////////
+		
+		$ReplyArr 								= 	array();
+		$ReplyArr['where'] 						= 	array();
+		
+		$ReplyArr['select']						=	'DISTINCT subject_id';
+		
+		$ReplyArr['where'][0] 					= 	array();
+		$ReplyArr['where'][0]['name'] 			= 	'writer';
+		$ReplyArr['where'][0]['oper'] 			= 	'=';
+		$ReplyArr['where'][0]['value'] 			= 	$MySmartBB->_CONF['rows']['member_row']['username'];
+		
+		$ReplyArr['order'] 						=	 array();
+		$ReplyArr['order']['field'] 			= 	'id';
+		$ReplyArr['order']['type'] 				= 	'DESC';
+		
+		$ReplyArr['limit'] 						= 	'5';
+		
+		$ReplyArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		
+		$MySmartBB->_CONF['template']['while']['MemberReplys'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
+			
+		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberReplys'],'html');
+		
+		//////////
+		
 		$SubjectArr 							= 	array();
 		$SubjectArr['where'] 					= 	array();
 		
@@ -173,6 +200,9 @@ class MySmartUserCPMOD
 		$SubjectArr['order']['type'] 			= 	'DESC';
 		
 		$SubjectArr['limit'] 					= 	'5';
+		
+		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		
 		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
 			
@@ -654,24 +684,25 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->functions->ShowHeader('مواضيعك');
 		
-		$GetMemArr = array();
+		$SubjectArr 							= 	array();
+		$SubjectArr['where'] 					= 	array();
 		
-		// Clean data
-		$GetMemArr['proc'] 				= 	array();
-		$GetMemArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$SubjectArr['where'][0] 				= 	array();
+		$SubjectArr['where'][0]['name'] 		= 	'writer';
+		$SubjectArr['where'][0]['oper'] 		= 	'=';
+		$SubjectArr['where'][0]['value'] 		= 	$MySmartBB->_CONF['rows']['member_row']['username'];
 		
-		$GetMemArr['where'] 				= 	array();
-		$GetMemArr['where'][0] 				= 	array();
-		$GetMemArr['where'][0]['name'] 		= 	'writer';
-		$GetMemArr['where'][0]['oper'] 		= 	'=';
-		$GetMemArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+		$SubjectArr['order'] 					=	 array();
+		$SubjectArr['order']['field'] 			= 	'id';
+		$SubjectArr['order']['type'] 			= 	'DESC';
 		
-		$GetMemArr['order'] 				= 	array();
-		$GetMemArr['order']['field'] 		= 	'id';
-		$GetMemArr['order']['type'] 		= 	'DESC';
+		$SubjectArr['limit'] 					= 	'5';
 		
-		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->subject->GetSubjectList($GetMemArr);
+		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		
+		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
+			
 		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
 		
 		$MySmartBB->template->display('usercp_options_subjects');

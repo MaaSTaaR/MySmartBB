@@ -96,22 +96,35 @@ class MySmartReply
  			$param = array();
  		}
  		
-		$param['select'] 					= 	'*,r.id AS reply_id';
-		$param['from'] 						= 	$this->Engine->table['reply'] . ' AS r,' . $this->Engine->table['member'] . ' AS m';
+		$param['select'] 	= 	'*,r.id AS reply_id';
+		$param['from'] 		= 	$this->Engine->table['reply'] . ' AS r,' . $this->Engine->table['member'] . ' AS m';
 		
-		$param['where'] 					= 	array();
+		$z = 0;
 		
-		$param['where'][0] 					= 	array();
-		$param['where'][0]['name'] 			= 	'r.subject_id';
-		$param['where'][0]['oper'] 			= 	'=';
-		$param['where'][0]['value'] 		= 	$param['subject_id'];
+		if (is_array($param['where']))
+		{
+			$z = sizeof($param['where']);
+			
+			$param['where'][$z] 		= 	array();
+			$param['where'][$z]['con'] 	= 	'AND';
+		}
+		else
+		{
+			$param['where'] = array();
+		}
 		
-		$param['where'][1] 					= 	array();
-		$param['where'][1]['con'] 			= 	'AND';
-		$param['where'][1]['name'] 			= 	'm.username';
-		$param['where'][1]['oper'] 			= 	'=';
-		$param['where'][1]['value'] 		= 	'r.writer';
-		$param['where'][1]['del_quote'] 	= 	true;
+		$param['where'][$z]['name'] 	= 	'r.subject_id';
+		$param['where'][$z]['oper'] 	= 	'=';
+		$param['where'][$z]['value'] 	= 	$param['subject_id'];
+		
+		$z += 1;
+		
+		$param['where'][$z] 				= 	array();
+		$param['where'][$z]['con'] 			= 	'AND';
+		$param['where'][$z]['name'] 		= 	'm.username';
+		$param['where'][$z]['oper'] 		= 	'=';
+		$param['where'][$z]['value'] 		= 	'r.writer';
+		$param['where'][$z]['del_quote'] 	= 	true;
 		
 		$rows = $this->Engine->records->GetList($param);
 		

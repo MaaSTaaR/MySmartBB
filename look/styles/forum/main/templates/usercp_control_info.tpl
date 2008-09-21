@@ -39,7 +39,7 @@
 	
 	<br />
 	
-	{if {{$_CONF['info_row']['allow_apsent']}}}
+	{if {$_CONF['info_row']['allow_apsent']}}
 	<table align="center" border="1" cellpadding="2" cellspacing="2" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
@@ -52,7 +52,7 @@
 			</td>
 			<td class="row1" width="30%">
 				<select name="away" size="1">	
-					{if {{$_CONF['rows']['member_row']['away']}} == 0}
+					{if {$_CONF['rows']['member_row']['away']} == 0}
 						<option value="1">نعم</option>
 						<option selected="selected" value="0">لا</option>
 					{else}
@@ -70,7 +70,7 @@
 		<tr align="center">
 			<td class="row1" width="60%" colspan="2">
 				انت الآن : 
-				{if {{$_CONF['rows']['member_row']['away']}} == 0}
+				{if {$_CONF['rows']['member_row']['away']} == 0}
 					<strong>غير غائب</strong>
 				{else}
 					<strong>غائب</strong>

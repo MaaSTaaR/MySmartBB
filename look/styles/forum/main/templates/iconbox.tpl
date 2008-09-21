@@ -6,7 +6,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-			<input type="radio" value="i1.gif" checked="checked" name="icon" id="fp1" />
+			<input type="radio" value="{$_CONF['info_row']['icon_path']}i1.gif" checked="checked" name="icon" id="fp1" />
 			<label for="fp1">بدون أيقونه</label>
         			{Des::while}{IconRows}
 				<input type="radio" value="{$IconRows['smile_path']}" name="icon" id="fp{$IconRows['id']}" />

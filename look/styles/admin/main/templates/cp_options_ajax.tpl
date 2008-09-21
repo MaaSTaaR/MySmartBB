@@ -17,7 +17,7 @@
 			</td>
 			<td class="row1">
 				<select name="admin_ajax_main_rename" id="select_admin_ajax_main_rename">
-				{if {{$_CONF['info_row']['admin_ajax_main_rename']}}}
+				{if {$_CONF['info_row']['admin_ajax_main_rename']}}
 					<option value="1" selected="selected">نعم</option>
 					<option value="0">لا</option>
 				{else}

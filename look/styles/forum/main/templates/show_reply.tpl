@@ -6,7 +6,7 @@
 			معلومات الكاتب
 		</td>
 		<td class="main1 rows_space" width="80%">
-			<img src="{$Info['icon']}" alt="" /> {$Info['title']}
+			<img src="{$Reply_Info['icon']}" alt="" /> {$Info['title']}
 		</td>
 	</tr>
 	<tr align="center">
@@ -14,29 +14,29 @@
 			{template}writer_info{/template}
 		</td>
 		<td class="row2" width="70%" align="right">
-			{$Info['text']}
+			{$Reply_Info['text']}
 			
-			{if {{$AttachInfo}} != ''}
+			{if {$AttachInfo} != ''}
 				{template}attach_show{/template}
 			{/if}
 			
-			{if {{$Info['user_sig']}} != ''}
+			{if {$Reply_Info['user_sig']} != ''}
 				{template}signature_show{/template}
 			{/if}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row2" width="15%">
-			{$Info['write_time']}
+			{$Reply_Info['write_time']}
 		</td>
 		<td class="row2" width="80%">
-		{if {{$Mod}}}
+		{if {$Mod}}
 		<form method="get" action="index.php">
 		<input type="hidden" name="page" value="management" />
 		<input type="hidden" name="reply" value="1" />
 		<input type="hidden" name="section" value="{$section}" />
-		<input type="hidden" name="subject_id" value="{$Info['subject_id']}" />
-		<input type="hidden" name="reply_id" value="{$Info['reply_id']}" />
+		<input type="hidden" name="subject_id" value="{$Reply_Info['subject_id']}" />
+		<input type="hidden" name="reply_id" value="{$Reply_Info['reply_id']}" />
 		
 		<select name="operator">
 			<option value="edit">تحرير الرد</option>

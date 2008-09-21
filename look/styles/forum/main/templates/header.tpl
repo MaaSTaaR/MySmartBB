@@ -11,7 +11,7 @@
 	
 	<link rel="alternate" type="application/rss+xml" title="خلاصة آخر المواضيع النشيطه" href="index.php?page=rss&amp;subject=1" />
 	
-	{if {{$SECTION_RSS}}}
+	{if {$SECTION_RSS}}
 	<link rel="alternate" type="application/rss+xml" title="خلاصة آخر المواضيع في هذا القسم" href="index.php?page=rss&amp;section=1&amp;id={$SECTION_ID}" />
 	{/if}
 	
@@ -24,7 +24,7 @@
 	{if JAVASCRIPT_SMARTCODE}
 	<script src="includes/js/SmartCode.js"></script>
 	{/if}
-	{if {{$JQUERY}}}
+	{if {$JQUERY}}
 	<script src="includes/js/jquery.js"></script>
 	{/if}
 
@@ -45,7 +45,7 @@
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
-					{if {{$_CONF['member_permission']}}}
+					{if {$_CONF['member_permission']}}
 						<a href="index.php?page=usercp&amp;index=1">لوحة التحكم</a>
 					{else}
 						<a href="index.php?page=register&amp;index=1">التسجيل</a>
@@ -70,7 +70,7 @@
 					<a href="index.php?page=search&amp;index=1">بحث</a>
 				</div>
 				
-				{if {{$_CONF['member_permission']}}}
+				{if {$_CONF['member_permission']}}
 					<div class="menu_space"></div>
 					
 					<div class="menu_box main2">
@@ -83,7 +83,7 @@
 		<!-- -->
 		
 		<div id="info_bar" align="center">
-			{if !{{$_CONF['member_permission']}}}
+			{if !{$_CONF['member_permission']}}
 			<form method="post" action="index.php?page=login&amp;login=1">
 			اسم المستخدم 
 			<input type="text" name="username" />
@@ -99,10 +99,10 @@
           	</form>
           	{else}
           		مرحباً بك يا <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | آخر زياره لك بتاريخ  {$_COOKIE['MySmartBB_lastvisit']} |
-          		{if {{$_CONF['rows']['member_row']['unread_pm']}} == 0}
+          		{if {$_CONF['rows']['member_row']['unread_pm']} == 0}
          			<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">لا يوجد لديك رسالة خاصة جديدة !</a>
          		{/if}
-         		{if {{$_CONF['rows']['member_row']['unread_pm']}} > 0}
+         		{if {$_CONF['rows']['member_row']['unread_pm']} > 0}
          			<a class="new_pm" href="index.php?page=pm&amp;list=1&amp;folder=inbox">يوجد لديك {$_CONF['rows']['member_row']['unread_pm']} رساله جديده</a>
          		{/if}
           	{/if}
@@ -110,10 +110,17 @@
 		
 		<!-- -->
 		
-		{if {{$_CONF['temp']['ads_show']}}}	
+		{if {$_CONF['temp']['ads_show']}}	
 		<div class="box" align="center">
 			<a href="index.php?page=ads&amp;goto=1&amp;id={$_CONF['rows']['AdsInfo']['id']}" target="_blank">
-				<img src="{$_CONF['rows']['AdsInfo']['picture']}" {if {{$_CONF['rows']['AdsInfo']['width']}} != 0 and {{$_CONF['rows']['AdsInfo']['width']}} != ''}width="{$_CONF['rows']['AdsInfo']['width']}"{/if} {if {{$_CONF['rows']['AdsInfo']['height']}} != 0 and {{$_CONF['rows']['AdsInfo']['height']}} != ''}height="{$_CONF['rows']['AdsInfo']['height']}"{/if} alt="{$_CONF['rows']['AdsInfo']['sitename']}" border="0" />
+				<img src="{$_CONF['rows']['AdsInfo']['picture']}" 
+					{if {$_CONF['rows']['AdsInfo']['width']} != 0 and {$_CONF['rows']['AdsInfo']['width']} != ''}
+					width="{$_CONF['rows']['AdsInfo']['width']}"
+					{/if}
+					{if {$_CONF['rows']['AdsInfo']['height']} != 0 and {$_CONF['rows']['AdsInfo']['height']} != ''}
+					height="{$_CONF['rows']['AdsInfo']['height']}"
+					{/if} 
+					alt="{$_CONF['rows']['AdsInfo']['sitename']}" border="0" />
 			</a>
 		</div>
 		{/if}

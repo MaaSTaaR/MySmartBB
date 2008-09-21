@@ -58,6 +58,8 @@ class MySmartTopicAddMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
+			$MySmartBB->functions->ShowHeader('خطأ');
+			
 			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
 		}
 		
@@ -70,6 +72,8 @@ class MySmartTopicAddMOD
 		
 		if (!$this->SectionInfo)
 		{
+			$MySmartBB->functions->ShowHeader('خطأ');
+		
 			$MySmartBB->functions->error('المعذره .. القسم المطلوب غير موجود');
 		}
 		
@@ -104,7 +108,8 @@ class MySmartTopicAddMOD
 		if (!$this->SectionGroup['view_section'] 
 			or !$this->SectionGroup['write_subject'])
 		{
-			//echo $this->SectionInfo['id'];
+			$MySmartBB->functions->ShowHeader('خطأ');
+
 			$MySmartBB->functions->error('المعذره لا يمكنك الكتابه في هذا القسم');
 		}
 		
@@ -133,6 +138,8 @@ class MySmartTopicAddMOD
      			// Stop ! it's don't true password															
      			if (!$IsTruePassword)
      			{
+     				$MySmartBB->functions->ShowHeader('خطأ');
+
      				$MySmartBB->functions->error('المعذره .. كلمة المرور غير صحيحه');
      			}
      			

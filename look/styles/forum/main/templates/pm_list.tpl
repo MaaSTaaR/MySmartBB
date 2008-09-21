@@ -29,7 +29,7 @@
 		<td class="row1" width="20%">
 			<a href="index.php?page=pm&amp;show=1&amp;id={$MassegeList['id']}">{$MassegeList['title']}</a>
 			<br />
-			{if {{$MassegeList['user_read']}} == 1}
+			{if {$MassegeList['user_read']} == 1}
 			<font class="readpm">رسالة مقروءه</font>
 			{else}
 			<font class="unreadpm">رساله جديده</font>

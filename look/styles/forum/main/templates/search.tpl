@@ -1,6 +1,6 @@
 <br />
 
-{if {{$_CONF['info_row']['ajax_search']}}}
+{if {$_CONF['info_row']['ajax_search']}}
 <script src="includes/js/jquery.js"></script>
 
 <script language="javascript">
@@ -77,7 +77,7 @@ $(document).ready(Ready);
         	<select size="1" name="section" id="section_id">
         		<option selected="selected" value="all">[جميع المنتديات]</option>
         		{Des::foreach}{forums_list}{forum}
-        		{if {{$from_main_section}} == ''}
+        		{if {$from_main_section} == ''}
 				<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 				{else}
 				<option value="{$forum['id']}">-- {$forum['title']}</option>
@@ -91,7 +91,7 @@ $(document).ready(Ready);
 <br />
 
 <div align="center">
-{if {{$_CONF['info_row']['ajax_search']}}}
+{if {$_CONF['info_row']['ajax_search']}}
 	<input type="button" value="بحث" name="search" id="search_id">
 {else}
 	<input type="submit" value="بحث" name="search">
@@ -100,7 +100,7 @@ $(document).ready(Ready);
 
 </form>
 
-{if {{$_CONF['info_row']['ajax_search']}}}
+{if {$_CONF['info_row']['ajax_search']}}
 <br />
 <div id="result">
 </div>
