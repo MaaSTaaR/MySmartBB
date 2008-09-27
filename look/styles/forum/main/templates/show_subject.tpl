@@ -36,8 +36,8 @@
 		</td>
 		<td class="row2" width="70%" align="right">
 			{$Info['text']}
-			
-			{if {$AttachInfo} != ''}
+			{$ATTACH_SHOW}
+			{if {$ATTACH_SHOW}}
 				{template}attach_show{/template}
 			{/if}
 			

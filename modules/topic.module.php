@@ -382,17 +382,17 @@ class MySmartTopicMOD
 		// We have attachment in this subject
 		if ($this->Info['attach_subject'])
 		{
-			$AttachInfoArr = array();
-			
-			$AttachInfoArr['way'] 	= 	'subject';
-			$AttachInfoArr['id']	= 	$MySmartBB->_GET['id'];
+			$AttachArr 				= 	array();
+			$AttachArr['where']		= 	array('subject_id',$MySmartBB->_GET['id']);
 			
 			// Get the attachment information
-			$MySmartBB->_CONF['template']['AttachInfo'] = $MySmartBB->attach->GetAttachInfo($AttachInfoArr);
+			$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
 			
-			if ($MySmartBB->_CONF['template']['AttachInfo'] != false)
+			if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
 			{
-				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['AttachInfo'],'html');
+				$MySmartBB->template->assign('ATTACH_SHOW',true);
+				
+				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
 			}
 		}
 			
@@ -530,6 +530,21 @@ class MySmartTopicMOD
 		$reply_time = $MySmartBB->functions->time($this->RInfo[$this->x]['write_time']);
 		
 		$this->RInfo[$this->x]['write_time'] = $reply_date . ' ; ' . $reply_time;
+		
+		// We have attachment in this reply
+		if ($this->RInfo[$this->x]['attach_reply'])
+		{
+			$AttachArr 				= 	array();
+			$AttachArr['where']		= 	array('subject_id',$this->RInfo[$this->x]['id']);
+			
+			// Get the attachment information
+			$this->RInfo[$this->x]['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
+			
+			if ($this->RInfo[$this->x]['AttachList'] != false)
+			{				
+				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
+			}
+		}
 		
 		// $RInfo to templates
 		$MySmartBB->template->assign('Reply_Info',$this->RInfo[$this->x]);

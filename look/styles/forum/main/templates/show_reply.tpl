@@ -16,7 +16,7 @@
 		<td class="row2" width="70%" align="right">
 			{$Reply_Info['text']}
 			
-			{if {$AttachInfo} != ''}
+			{if {$Reply_Info['attach_reply']}}
 				{template}attach_show{/template}
 			{/if}
 			

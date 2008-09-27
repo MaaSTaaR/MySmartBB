@@ -1,19 +1,22 @@
 <br />
+
 <table border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="50%" align="center">
 	<tr align="center">
-		<td width="30%" class="tcat1">
+		<td width="30%" class="main1">
 			اسم الملف
 		</td>
-		<td width="20%" class="tcat1">
+		<td width="20%" class="main1">
 			مرات التحميل
 		</td>
 	</tr>
+	{Des::while}{AttachList}
 	<tr align="center">
 		<td width="30%" class="row1">
-			<a href="index.php?page=download&amp;attach=1&amp;id={$AttachInfo['id']}">{$AttachInfo['filename']}</a>
+			<a href="index.php?page=download&amp;attach=1&amp;id={$AttachList['id']}">{$AttachList['filename']}</a>
 		</td>
-		<td width="20%" class="row1">
-			{$AttachInfo['visitor']}
+		<td width="20%" class="row2">
+			{$AttachList['visitor']}
 		</td>
 	</tr>
+	{/Des::while}
 </table>

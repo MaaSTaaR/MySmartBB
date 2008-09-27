@@ -40,12 +40,40 @@ function AddMoreTags(x)
 	$(".more_tags_class").click(function() { AddMoreTags(x) });
 }
 
+function AddMoreAttach(x)
+{
+	x += 1;
+	
+	$(".more_attach_tr").hide();	
+	$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+	$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
+		
+	$(".more_attach_class").click(function() { AddMoreAttach(x) });
+}
+
+function ShowAttachTable()
+{
+	if ($("#attach_id").is(":checked"))
+	{
+		$("#attach_table").fadeIn();
+	}
+	else
+	{
+		$("#attach_table").fadeOut();
+	}
+}
+
 function Ready()
 {
 	$("#poll_table").hide();
 	$("#poll_id").click(ShowPollTable);
 	$(".more_answers_class").click(function() { AddMoreAnswers(4) });
+	
 	$(".more_tags_class").click(function() { AddMoreTags(1) });
+	
+	$("#attach_table").hide();
+	$("#attach_id").click(ShowAttachTable);
+	$(".more_attach_class").click(function() { AddMoreAttach(1) });
 }
 
 $(document).ready(Ready);
@@ -59,7 +87,7 @@ $(document).ready(Ready);
 
 <br />
 
-<form name="topic" method="post" action="index.php?page=new_topic&amp;start=1&amp;id={$id}{$password}">
+<form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=new_topic&amp;start=1&amp;id={$id}{$password}">
 
 <input name="poll_answers_count" id="poll_answers_count_id" type="hidden" value="4">
 
@@ -98,6 +126,11 @@ $(document).ready(Ready);
 			<input name="poll" id="poll_id" type="checkbox" /> <label for="poll_id">اضافة تصويت</a>
 		</td>
 	</tr>
+	<tr>
+		<td class="row2 rows_space" colspan="2">
+			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">اضافة مرفقات</a>
+		</td>
+	</tr>
 </table>
 
 <br />
@@ -108,6 +141,10 @@ $(document).ready(Ready);
 
 <div id="poll_table">
 {template}add_poll_table{/template}
+</div>
+
+<div id="attach_table">
+{template}add_attach_table{/template}
 </div>
 
 <br />
