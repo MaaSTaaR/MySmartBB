@@ -154,7 +154,7 @@ class MySmartDownloadMOD
 		
 		// We can't stop the admin :)
 		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{		
+		{
 			$SecGroupArr 						= 	array();
 			$SecGroupArr['where'] 				= 	array();
 			$SecGroupArr['where'][0]			=	array();
@@ -181,8 +181,18 @@ class MySmartDownloadMOD
 			{
 				$MySmartBB->functions->error('المعذره لا يمكنك تحميل هذا المرفق');
 			}
+			
+			// These checks are special for members	
+			if ($MySmartBB->_CONF['member_permission'])
+			{
+				// No enough posts
+				if ($MySmartBB->_CONF['group_info']['download_attach_number'] > $MySmartBB->_CONF['member_row']['posts'])
+				{
+					$MySmartBB->functions->error('يجب ان تكون عدد مشاركاتك ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
+				}
+			}
 		}
-		
+
 		//////////
 		
 		// Send headers

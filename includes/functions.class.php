@@ -111,12 +111,22 @@ class MySmartFunctions
  	 */
  	function GetFileExtension($filename)
     {
-  		$L  = strlen($filename)-4;
-  		$E  = strtolower(substr($filename,$L,4));
-
-        $E  = addslashes($E);
-
-  		return $E;
+  		$ex = explode('.',$filename);
+  		
+  		$size = sizeof($ex);
+  		
+  		if ($size == 2)
+  		{
+  			return '.' . $ex[1];
+  		}
+  		elseif ($size > 2)
+  		{
+  			return 'MULTIEXTENSION';
+  		}
+  		else
+  		{
+  			return false;
+  		}
  	}
  	
  	/**

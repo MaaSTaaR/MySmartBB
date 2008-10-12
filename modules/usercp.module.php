@@ -611,12 +611,14 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
+		$allowed_array = array('.jpg','.gif','.png');
+		
 		$UpdateArr 					= 	array();
 		$UpdateArr['field']			=	array();
 		
 		$UpdateArr['where']					= 	array('id',$MySmartBB->_CONF['member_row']['id']);
 		$UpdateArr['field']['avater_path'] 	= 	'';
-			
+		
 		if ($MySmartBB->_POST['options'] == 'no')
 		{
 			$MySmartBB->_CONF['param']['UpdateArr']['path'] = '';
@@ -641,8 +643,6 @@ class MySmartUserCPMOD
 			{
 				$MySmartBB->functions->error('الموقع الذي قمت بكتابته غير صحيح !');
 			}
-			
-			$allowed_array = array('.jpg','.gif','.png');
 				
 			$extension = $MySmartBB->functions->GetURLExtension($MySmartBB->_POST['avatar']);
 				
@@ -654,9 +654,58 @@ class MySmartUserCPMOD
 			$UpdateArr['field']['avater_path'] = $MySmartBB->_POST['avatar'];
 		}
 		elseif ($MySmartBB->_POST['options'] == 'upload')
-		{
-			// TODO later ...
-		}
+		{     			
+     		if (!empty($MySmartBB->_FILES['upload']['name']))
+     		{
+     			//////////
+     				
+     			// Get the extension of the file
+     			$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['upload']['name']);
+     			
+     			// Bad try!
+     			if ($ext == 'MULTIEXTENSION'
+     				or !$ext)
+     			{
+     			}
+     			else
+     			{
+	     			// Convert the extension to small case
+    	 			$ext = strtolower($ext);
+     			
+    	 			// The extension is not allowed
+    	 			if (!in_array($ext,$allowed_array))
+					{
+						$MySmartBB->functions->error('امتداد الصوره غير مسموح به !');
+					}
+    	 			else
+    	 			{
+    	 				// Set the name of the file
+    	 				
+    	 				$filename = $MySmartBB->_FILES['upload']['name'];
+    	 					
+    	 				// There is a file which has same name, so change the name of the new file
+    	 				if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename))
+    	 				{
+    	 					$filename = $MySmartBB->_FILES['files']['upload'] . '-' . $MySmartBB->functions->RandomCode();
+    	 				}
+    	 					
+    	 				//////////
+    	 				
+    	 				// Copy the file to download dirctory
+    	 				$copy = copy($MySmartBB->_FILES['upload']['tmp_name'],$MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename);	
+    	 						
+    	 				// Success
+    	 				if ($copy)
+    	 				{
+    	 					// Change avatar to the new one
+    	 					$UpdateArr['field']['avater_path'] = $MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename;
+    	 				}
+    	 							
+    	 				//////////
+    	 			}				
+    	 		}
+    	 	}
+    	}
 		else
 		{
 			$MySmartBB->functions->msg('يرجى الانتظار');

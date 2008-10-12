@@ -458,6 +458,7 @@ class MySmartTopicMOD
 		$this->RInfo = $MySmartBB->reply->GetReplyWriterInfo($ReplyArr);
 		
 		// Kill XSS
+		// TODO :: it's better to kill XSS inside the loop
 		$MySmartBB->functions->CleanVariable($this->RInfo,'html');
 		
 		$n = sizeof($this->RInfo);
@@ -534,16 +535,27 @@ class MySmartTopicMOD
 		// We have attachment in this reply
 		if ($this->RInfo[$this->x]['attach_reply'])
 		{
-			$AttachArr 				= 	array();
-			$AttachArr['where']		= 	array('subject_id',$this->RInfo[$this->x]['id']);
+			$AttachArr 							= 	array();
+			$AttachArr['where']					= 	array();
+			$AttachArr['where'][0] 				=	array();
+			$AttachArr['where'][0]['name'] 		=	'subject_id';
+			$AttachArr['where'][0]['oper'] 		=	'=';
+			$AttachArr['where'][0]['value'] 	=	$this->RInfo[$this->x]['reply_id'];
+			$AttachArr['where'][1] 				=	array();
+			$AttachArr['where'][1]['con']		=	'AND';
+			$AttachArr['where'][1]['name'] 		=	'reply';
+			$AttachArr['where'][1]['oper'] 		=	'=';
+			$AttachArr['where'][1]['value'] 	=	'1';
 			
 			// Get the attachment information
-			$this->RInfo[$this->x]['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
+			$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
 			
-			if ($this->RInfo[$this->x]['AttachList'] != false)
+			if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
 			{				
 				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
 			}
+			
+			$MySmartBB->template->assign('AttachList',$MySmartBB->_CONF['template']['while']['AttachList']);
 		}
 		
 		// $RInfo to templates

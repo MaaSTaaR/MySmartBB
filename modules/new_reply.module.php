@@ -363,119 +363,139 @@ class MySmartReplyAddMOD
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
      		{
-     			$files_error	=	array();
-     			$files_success	=	array();
-     			$files_number 	= 	sizeof($MySmartBB->_FILES['files']['name']);
-     			$stop			=	false;
-     			
-     			if ($files_number > 0)
+     			if (!$this->SectionGroup['upload_attach'])
      			{
-     				// All of these variables use for loop and arrays
-     				$x = 0; // For the main loop
-     				$y = 0; // For error array
-     				$z = 0; // For success array
-     				
-     				while ($files_number > $x)
-     				{
-     					if (!empty($MySmartBB->_FILES['files']['name'][$x]))
+	     			$files_error	=	array();
+    	 			$files_success	=	array();
+    	 			$files_number 	= 	sizeof($MySmartBB->_FILES['files']['name']);
+    	 			$stop			=	false;
+    	 			
+    	 			if ($files_number > 0)
+    	 			{
+     					if ($files_number > $this->SectionGroup['upload_attach_num']
+     						and !$MySmartBB->_CONF['group_info']['admincp_allow'])
      					{
-     						//////////
+     						$MySmartBB->functions->error('المعذره لا يمكنك رفع اكثر من ' . $this->SectionGroup['upload_attach_num'] . 'ملف');
+     					}
+     					
+    	 				// All of these variables use for loop and arrays
+    	 				$x = 0; // For the main loop
+    	 				$y = 0; // For error array
+    	 				$z = 0; // For success array
+    	 				
+    	 				while ($files_number > $x)
+   		 				{
+    	 					if (!empty($MySmartBB->_FILES['files']['name'][$x]))
+   	  						{
+   		  						//////////
      						
-     						// Get the extension of the file
-     						$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['files']['name'][$x]);
-     						
-     						// Convert the extension to small case
-     						$ext = strtolower($ext);
-     						
-     						//////////
-     						
-     						// Check if the extenstion is allowed or not (TODO : cache me please)
-     						$ExtArr 			= 	array();
-     						$ExtArr['where'] 	= 	array('Ex',$ext);
-     						
-     						$extension = $MySmartBB->extension->GetExtensionInfo($ExtArr);
-     						
-     						// The extension is not allowed
-     						if (!$extension)
-     						{
-     							$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     							// Get the extension of the file
+     							$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['files']['name'][$x]);
      							
-     							$y += 1;
-     						}
-     						else
-     						{
-     							//////////
-     							
-     							// Check the size
-     							
-     							// Change the size from bytes to KB
-     							$size = ceil(($MySmartBB->_FILES['files']['size'][$x] / 1024));
-     							
-     							// oooh! the file is very large
-     							if ($size > $extension['max_size'])
+     							// Bad try!
+     							if ($ext == 'MULTIEXTENSION'
+     								or !$ext)
      							{
      								$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
      								
-     								$stop = true;
-     								
      								$y += 1;
      							}
-     							
-     							//////////
-     							
-     							if (!$stop)
+     							else
      							{
-     								// Set the name of the file
+     								// Convert the extension to small case
+     								$ext = strtolower($ext);
      							
-     								$filename = $MySmartBB->_FILES['files']['name'][$x];
-     							
-     								// There is a file which has same name, so change the name of the new file
-     								if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
-     								{
-     									$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
-     								}
-     								
      								//////////
-     								
-     								// Copy the file to download dirctory
-     								$copy = copy($MySmartBB->_FILES['files']['tmp_name'][$x],$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename);	
      							
-     								// Success
-     								if ($copy)
+     								// Check if the extenstion is allowed or not (TODO : cache me please)
+     								$ExtArr 			= 	array();
+     								$ExtArr['where'] 	= 	array('Ex',$ext);
+     							
+     								$extension = $MySmartBB->extension->GetExtensionInfo($ExtArr);
+     							
+     								// The extension is not allowed
+     								if (!$extension)
      								{
-     									// Add the file to the success array 
-     									$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
-     									
-     									// Insert attachment to the database
-     									$AttachArr 							= 	array();
-     									$AttachArr['field'] 				= 	array();
-     									$AttachArr['field']['filename'] 	= 	$MySmartBB->_FILES['files']['name'][$x];
-     									$AttachArr['field']['filepath'] 	= 	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename;
-     									$AttachArr['field']['filesize'] 	= 	$MySmartBB->_FILES['files']['size'][$x];
-     									$AttachArr['field']['subject_id'] 	= 	$MySmartBB->reply->id;
-     									$AttachArr['field']['reply']		=	'1';
-     									
-     									$InsertAttach = $MySmartBB->attach->InsertAttach($AttachArr);
-     									
-     									if ($InsertAttach)
+     									$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     								
+     									$y += 1;
+     								}
+     								else
+     								{
+     									//////////
+     								
+     									// Check the size
+     								
+     									// Change the size from bytes to KB
+     									$size = ceil(($MySmartBB->_FILES['files']['size'][$x] / 1024));
+     								
+     									// oooh! the file is very large
+     									if ($size > $extension['max_size'])
      									{
-     										$ReplyArr 							= 	array();
-     										$ReplyArr['field'] 					= 	array();
-     										$ReplyArr['field']['attach_reply'] 	= 	'1';
-     										$ReplyArr['where'] 					= 	array('id',$MySmartBB->reply->id);
-     										
-     										$update = $MySmartBB->reply->UpdateReply($ReplyArr);
-     									}
+     										$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
      									
-     									$z += 1;
-     								}
+     										$stop = true;
+     									
+     										$y += 1;
+     									}
+     								
+     									//////////
+     								
+     									if (!$stop)
+     									{
+     										// Set the name of the file
+     								
+     										$filename = $MySmartBB->_FILES['files']['name'][$x];
+     								
+     										// There is a file which has same name, so change the name of the new file
+     										if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
+     										{
+     											$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
+     										}
+     									
+     										//////////
+     									
+     										// Copy the file to download dirctory
+     										$copy = copy($MySmartBB->_FILES['files']['tmp_name'][$x],$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename);
+     								
+     										// Success
+     										if ($copy)
+     										{
+     											// Add the file to the success array 
+     											$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
+     										
+     											// Insert attachment to the database
+     											$AttachArr 							= 	array();
+     											$AttachArr['field'] 				= 	array();
+     											$AttachArr['field']['filename'] 	= 	$MySmartBB->_FILES['files']['name'][$x];
+     											$AttachArr['field']['filepath'] 	= 	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename;
+     											$AttachArr['field']['filesize'] 	= 	$MySmartBB->_FILES['files']['size'][$x];
+     											$AttachArr['field']['subject_id'] 	= 	$MySmartBB->reply->id;
+     											$AttachArr['field']['reply']		=	'1';
+     											
+     											$InsertAttach = $MySmartBB->attach->InsertAttach($AttachArr);
+     											
+     											if ($InsertAttach)
+     											{
+     												$ReplyArr 							= 	array();
+     												$ReplyArr['field'] 					= 	array();
+     												$ReplyArr['field']['attach_reply'] 	= 	'1';
+     												$ReplyArr['where'] 					= 	array('id',$MySmartBB->reply->id);
+     												
+     												$update = $MySmartBB->reply->UpdateReply($ReplyArr);
+     											}
+     											
+     											$z += 1;
+     										}
+     								
+     										//////////
+     									}
      							
-     								//////////
+     									//////////
+     							
+     									$x += 1;
+     								}
      							}
-     						
-     							//////////
-     						
-     							$x += 1;
      						}
      					}
      				}
