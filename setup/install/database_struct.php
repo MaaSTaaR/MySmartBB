@@ -182,6 +182,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'Ex VARCHAR( 5 ) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'max_size VARCHAR( 20 ) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'mime_type VARCHAR( 255 ) NOT NULL';
 			
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -197,18 +198,22 @@ class DatabaseStruct extends MySmartInstall
 		$ExtensionsArray[0] 					= 	array();
 		$ExtensionsArray[0]['extension'] 		= 	'.zip';
 		$ExtensionsArray[0]['max_size'] 		= 	'500';
+		$ExtensionsArray[0]['mime_type'] 		= 	'application/zip';
 		
 		$ExtensionsArray[1] 					= 	array();
 		$ExtensionsArray[1]['extension'] 		= 	'.txt';
 		$ExtensionsArray[1]['max_size'] 		= 	'500';
+		$ExtensionsArray[1]['mime_type'] 		= 	'text/plain';
 		
 		$ExtensionsArray[2] 					= 	array();
 		$ExtensionsArray[2]['extension'] 		= 	'.jpg';
 		$ExtensionsArray[2]['max_size'] 		= 	'500';
+		$ExtensionsArray[2]['mime_type'] 		= 	'image/jpeg';
 		
 		$ExtensionsArray[3] 					= 	array();
 		$ExtensionsArray[3]['extension'] 		= 	'.gif';
 		$ExtensionsArray[3]['max_size'] 		= 	'500';
+		$ExtensionsArray[3]['mime_type'] 		= 	'image/gif';
 				
 		$x = 0;
 		$i = array();

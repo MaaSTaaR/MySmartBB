@@ -813,7 +813,7 @@
         <td class="row1" width="50%">
 
          <select size="1" name="search_allow">
-         {if {$Inf['search_allow']}}}
+         {if {$Inf['search_allow']}}
           <option selected="selected" value="1">نعم</option>
           <option value="0">لا</option>
          {else}

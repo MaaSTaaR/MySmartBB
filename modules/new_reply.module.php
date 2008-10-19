@@ -203,7 +203,11 @@ class MySmartReplyAddMOD
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
      	
      	$MySmartBB->functions->ShowHeader('اضافة رد');
-     			
+
+     	// Instead of send a whole version of $this->SectionGroup to template engine
+     	// We just send options which we really need, we use this way to save memory
+     	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
+     	
      	$MySmartBB->template->display('new_reply');
 	}
 		
@@ -363,7 +367,7 @@ class MySmartReplyAddMOD
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
      		{
-     			if (!$this->SectionGroup['upload_attach'])
+     			if ($this->SectionGroup['upload_attach'])
      			{
 	     			$files_error	=	array();
     	 			$files_success	=	array();
@@ -422,6 +426,19 @@ class MySmartReplyAddMOD
      								}
      								else
      								{
+     									
+     									if (!empty($extension['mime_type']))
+     									{
+     										if ($MySmartBB->_FILES['files']['type'][$x] != $extension['mime_type'])
+     										{
+     											$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     											
+     											$stop = true;
+     											
+     											$y += 1;
+     										}
+     									}
+     									
      									//////////
      								
      									// Check the size

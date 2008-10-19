@@ -44,11 +44,21 @@ function AddMoreAttach(x)
 {
 	x += 1;
 	
-	$(".more_attach_tr").hide();	
-	$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
-	$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
+	var up_max = {$_CONF['group_info']['upload_attach_num']};
+	
+	if (x <= up_max)
+	{
+		$(".more_attach_tr").hide();	
+		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
 		
-	$(".more_attach_class").click(function() { AddMoreAttach(x) });
+		$(".more_attach_class").click(function() { AddMoreAttach(x) });
+		
+		if (x == up_max)
+		{
+			$(".more_attach_tr").hide();
+		}
+	}
 }
 
 function ShowAttachTable()
@@ -126,11 +136,13 @@ $(document).ready(Ready);
 			<input name="poll" id="poll_id" type="checkbox" /> <label for="poll_id">اضافة تصويت</a>
 		</td>
 	</tr>
+	{if {$upload_attach}}
 	<tr>
 		<td class="row2 rows_space" colspan="2">
 			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">اضافة مرفقات</a>
 		</td>
 	</tr>
+	{/if}
 </table>
 
 <br />

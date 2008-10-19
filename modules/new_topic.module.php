@@ -165,6 +165,10 @@ class MySmartTopicAddMOD
 		$MySmartBB->functions->GetEditorTools();
 			     		
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
+     	
+     	// Instead of send a whole version of $this->SectionGroup to template engine
+     	// We just send options which we really need, we use this way to save memory
+     	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
      			
      	$MySmartBB->template->display('new_topic');
 	}
@@ -334,8 +338,8 @@ class MySmartTopicAddMOD
      		
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
-     		{
-     			if (!$this->SectionGroup['upload_attach'])
+     		{	
+     			if ($this->SectionGroup['upload_attach'])
      			{
      				$files_error	=	array();
      				$files_success	=	array();
@@ -343,7 +347,7 @@ class MySmartTopicAddMOD
      				$stop			=	false;
      				
      				if ($files_number > 0)
-     				{
+     				{     					
      					if ($files_number > $this->SectionGroup['upload_attach_num']
      						and !$MySmartBB->_CONF['group_info']['admincp_allow'])
      					{
@@ -394,13 +398,25 @@ class MySmartTopicAddMOD
      								}
      								else
      								{
+     									if (!empty($extension['mime_type']))
+     									{
+     										if ($MySmartBB->_FILES['files']['type'][$x] != $extension['mime_type'])
+     										{
+     											$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     											
+     											$stop = true;
+     											
+     											$y += 1;
+     										}
+     									}
+     									
      									//////////
-     									
+     								
      									// Check the size
-     									
+     								
      									// Change the size from bytes to KB
      									$size = ceil(($MySmartBB->_FILES['files']['size'][$x] / 1024));
-     									
+     								
      									// oooh! the file is very large
      									if ($size > $extension['max_size'])
      									{
@@ -410,23 +426,23 @@ class MySmartTopicAddMOD
      										
      										$y += 1;
      									}
-     									
+     								
      									//////////
      									
      									if (!$stop)
      									{
      										// Set the name of the file
-     									
+     								
      										$filename = $MySmartBB->_FILES['files']['name'][$x];
-     									
+     								
      										// There is a file which has same name, so change the name of the new file
      										if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
      										{
      											$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
      										}
-     										
+     									
      										//////////
-     										
+     									
      										// Copy the file to download dirctory
      										$copy = copy($MySmartBB->_FILES['files']['tmp_name'][$x],$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename);		
      									
@@ -435,7 +451,7 @@ class MySmartTopicAddMOD
      										{
      											// Add the file to the success array 
      											$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
-     											
+     										
      											// Insert attachment to the database
      											$AttachArr 							= 	array();
      											$AttachArr['field'] 				= 	array();
@@ -455,16 +471,16 @@ class MySmartTopicAddMOD
      												
      												$update = $MySmartBB->subject->UpdateSubject($SubjectArr);
      											}
-     											
+     										
      											$z += 1;
-     										}
+     										} // End of if ($copy)
      									
      										//////////
-     										
-     									}
+     									
+     									} // End of if (!$stop)
      								
      									//////////
-     								}
+     								} // End of else
      							}
      							
      							$x += 1;	

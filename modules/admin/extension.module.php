@@ -87,7 +87,7 @@ class MySmartExtensionMOD extends _functions
 		{
 			$MySmartBB->_POST['extension'] = '.' . $MySmartBB->_POST['extension'];
 		}
-			
+		
 		$MySmartBB->_POST['extension'] = strtolower($MySmartBB->_POST['extension']);
 		
 		$ExArr 					= 	array();
@@ -95,6 +95,7 @@ class MySmartExtensionMOD extends _functions
 		
 		$ExArr['field']['Ex'] 			= 	$MySmartBB->_POST['extension'];
 		$ExArr['field']['max_size'] 	= 	$MySmartBB->_POST['max_size'];
+		$ExArr['field']['mime_type'] 	= 	$MySmartBB->_POST['mime_type'];
 		
 		$insert = $MySmartBB->extension->InsertExtension($ExArr);
 			
@@ -152,6 +153,7 @@ class MySmartExtensionMOD extends _functions
 		
 		$ExArr['field']['Ex'] 			= 	$MySmartBB->_POST['extension'];
 		$ExArr['field']['max_size'] 	= 	$MySmartBB->_POST['max_size'];
+		$ExArr['field']['mime_type'] 	= 	$MySmartBB->_POST['mime_type'];
 		$ExArr['where']					=	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
 				
 		$update = $MySmartBB->extension->UpdateExtension($ExArr);

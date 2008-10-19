@@ -261,6 +261,22 @@ class MySmartTHETA extends MySmartInstall
 		return ($add) ? true : false;
 	}
 	
+	function AddMIMEType()
+	{
+		global $MySmartBB;
+		
+		$this->_TempArr['AddArr'] 			= 	array();
+		$this->_TempArr['AddArr']['table'] 		= 	$MySmartBB->table['extension'];
+		$this->_TempArr['AddArr']['field_name'] 	= 	'mime_type';
+		$this->_TempArr['AddArr']['field_des'] 		= 	'VARCHAR(255) NOT NULL';
+		
+		$add = $this->add_field($this->_TempArr['AddArr']);
+		
+		unset($this->_TempArr['AddArr']);
+		
+		return ($add) ? true : false;
+	}
+	
 	// Rename operation(s)
 	function RenameModeratorTable()
 	{
@@ -670,6 +686,9 @@ if ($MySmartBB->_GET['step'] == 1)
 	
 	$p[14] 		= 	$MySmartBB->install->AddGroupName();
 	$msgs[14] 	= 	($p[14]) ? 'تم اضافة حقل اسم المجموعه' : 'لم يتم اضافة حقل اسم المجموعه';
+	
+	$p[15] 		= 	$MySmartBB->install->AddMIMEType();
+	$msgs[15] 	= 	($p[15]) ? 'تم اضافة حقل نوع MIME' : 'لم يتم اضافة حقل  نوع MIME';
 	
 	$MySmartBB->html->open_p();
 	

@@ -7,6 +7,11 @@
 		</td>
 	</tr>
 	<tr align="center">
+		<td class="row1 rows_space" colspan="2">
+			<strong>عدد الملفات المرفقه التي يمكنك اضافتها : {$_CONF['group_info']['upload_attach_num']}</strong>
+		</td>
+	</tr>
+	<tr align="center">
 		<td class="row1 rows_space">
 			ملف #1
 		</td>
@@ -18,5 +23,5 @@
 		<td class="row1 rows_space" colspan="2">
 			<input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" />
 		</td>
-	</tr>	
+	</tr>
 </table>

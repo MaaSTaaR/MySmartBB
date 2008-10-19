@@ -27,6 +27,14 @@
 				<input type="text" name="max_size" value="{$Inf['max_size']}" />
 			</td>
 		</tr>
+		<tr>
+			<td class="row2">
+			نوع MIME
+			</td>
+			<td class="row2">
+				<input type="text" name="mime_type" value="{$Inf['mime_type']}" />
+			</td>
+		</tr>
 	</table>
 	
 	<br />
