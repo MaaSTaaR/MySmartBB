@@ -49,6 +49,7 @@
 	<tr align="center">
 		<td class="row2" width="15%">
 			{$Info['native_write_time']}
+			<a title="ابلاغ عن مشاركة مخالفة" href="index.php?page=report&amp;index=1"><img alt="ابلاغ عن مشاركة مخالفة" border="0" src="{$image_path}/report.gif"></a>
 		</td>
 		<td class="row2" width="80%">
 			

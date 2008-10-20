@@ -6,6 +6,7 @@ define('IN_ADMIN',true);
 
 $CALL_SYSTEM						=	array();
 $CALL_SYSTEM['FILESEXTENSION'] 		= 	true;
+$CALL_SYSTEM['ATTACH'] 				= 	true;
 
 include('common.php');
 	
@@ -61,6 +62,17 @@ class MySmartExtensionMOD extends _functions
 					$this->_DelExtensionStart();
 				}
 			}
+			elseif ($MySmartBB->_GET['search'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_SearchAttachMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_SearchAttachStart();
+				}
+		   }
 			
 			$MySmartBB->template->display('footer');
 		}
@@ -194,6 +206,61 @@ class MySmartExtensionMOD extends _functions
 			$MySmartBB->functions->msg('تم حذف الامتداد بنجاح !');
 			$MySmartBB->functions->goto('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
+	}
+	
+	function _SearchAttachMain()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->template->display('extension_search_main');
+	}
+	
+	
+	function _SearchAttachStart()
+	{
+		global $MySmartBB;
+		
+		if (empty($MySmartBB->_POST['keyword']))
+		{
+			$MySmartBB->functions->error('يرجى كتابة كلمة البحث المطلوبه');
+		}
+		
+		$field = 'filename';
+		
+		if ($MySmartBB->_POST['search_by'] == 'filename')
+		{
+			$field = 'filename';
+		}
+		elseif ($MySmartBB->_POST['search_by'] == 'filesize')
+		{
+			$field = 'filesize';
+		}
+		elseif ($MySmartBB->_POST['search_by'] == 'visitor')
+		{
+			$field = 'visitor';
+		}
+		else
+		{
+			$field = 'filename';
+		}
+		
+		$GetArr							=	array();
+		$GetArr['where'] 				= 	array();
+		$GetArr['where'][0]				=	array();
+		$GetArr['where'][0]['name']		=	$field;
+		$GetArr['where'][0]['oper']		=	($field == 'filename') ? 'LIKE' : '=';
+		$GetArr['where'][0]['value']	=	($field == 'filename') ? '%' . $MySmartBB->_POST['keyword'] . '%' : $MySmartBB->_POST['keyword'];
+		
+		$MySmartBB->_CONF['template']['Inf'] = $MySmartBB->attach->GetAttachInfo($GetArr);
+		
+		if ($MySmartBB->_CONF['template']['Inf'] == false)
+		{
+			$MySmartBB->functions->error('لا يوجد نتائج');
+		}
+		
+		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['Inf'],'html');
+				
+		$MySmartBB->template->display('extension_search_result');
 	}
 }
 

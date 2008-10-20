@@ -40,6 +40,7 @@ $modules['online'] 				= 	'online.module.php';
 $modules['download'] 			= 	'download.module.php';
 $modules['latest'] 				= 	'latest.module.php';
 $modules['send'] 				= 	'send.module.php';
+$modules['report'] 				= 	'report.module.php';
 
 //////////
 

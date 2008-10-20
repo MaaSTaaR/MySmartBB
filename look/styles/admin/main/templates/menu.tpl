@@ -173,6 +173,9 @@
 <tr valign="top" align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;control=1&amp;main=1" target="main">التحكم بالامتدادات</a></td>
 </tr>
+<tr valign="top" align="center">
+	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;search=1&amp;main=1" target="main">البحث</a></td>
+</tr>
 </table><br />
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
