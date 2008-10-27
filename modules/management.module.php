@@ -460,7 +460,7 @@ class MySmartManagementMOD
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
 		
-		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply'] . '&amp;section=' . $MySmartBB->_GET['section'] . '&amp;subject_id=' . $MySmartBB->_GET['subject_id']);
+		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply_id'] . '&amp;section=' . $MySmartBB->_GET['section'] . '&amp;subject_id=' . $MySmartBB->_GET['subject_id']);
 		
 		$MySmartBB->functions->GetEditorTools();
 		

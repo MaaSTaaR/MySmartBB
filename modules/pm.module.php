@@ -2,10 +2,12 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['PM'] 			= 	true;
-$CALL_SYSTEM['ICONS'] 		= 	true;
-$CALL_SYSTEM['TOOLBOX'] 	= 	true;
+$CALL_SYSTEM					=	array();
+$CALL_SYSTEM['PM'] 				= 	true;
+$CALL_SYSTEM['ICONS'] 			= 	true;
+$CALL_SYSTEM['TOOLBOX'] 		= 	true;
+$CALL_SYSTEM['FILESEXTENSION'] 	= 	true;
+$CALL_SYSTEM['ATTACH'] 			= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
@@ -250,6 +252,7 @@ class MySmartPrivateMassegeMOD
 				}
 		     	
 				$MsgArr 				= 	array();
+				$MsgArr['get_id']		=	true;
 				$MsgArr['field']		=	array();
 				
 				$MsgArr['field']['user_from'] 	= 	$MySmartBB->_CONF['member_row']['username'];
@@ -264,6 +267,143 @@ class MySmartPrivateMassegeMOD
 														
 				if ($Send)
 				{
+     				if ($MySmartBB->_POST['attach'])
+     				{	
+     					$files_error	=	array();
+     					$files_success	=	array();
+     					$files_number 	= 	sizeof($MySmartBB->_FILES['files']['name']);
+     					$stop			=	false;
+     				
+     					if ($files_number > 0)
+     					{
+     						// All of these variables use for loop and arrays
+     						$x = 0; // For the main loop
+     						$y = 0; // For error array
+     						$z = 0; // For success array
+     					
+     						while ($files_number > $x)
+     						{
+     							if (!empty($MySmartBB->_FILES['files']['name'][$x]))
+     							{
+     								//////////
+     							
+     								// Get the extension of the file
+     								$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['files']['name'][$x]);
+     							
+     								// Bad try!
+     								if ($ext == 'MULTIEXTENSION'
+     									or !$ext)
+     								{
+     									$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     									
+     									$y += 1;
+     								}
+     								else
+     								{
+     									// Convert the extension to small case
+     									$ext = strtolower($ext);
+     									
+     									//////////
+     									
+     									// Check if the extenstion is allowed or not (TODO : cache me please)
+     									$ExtArr 			= 	array();
+     									$ExtArr['where'] 	= 	array('Ex',$ext);
+     									
+     									$extension = $MySmartBB->extension->GetExtensionInfo($ExtArr);
+     								
+     									// The extension is not allowed
+     									if (!$extension)
+     									{
+     										$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     										
+     										$y += 1;
+     									}
+     									else
+     									{
+     										if (!empty($extension['mime_type']))
+     										{
+     											if ($MySmartBB->_FILES['files']['type'][$x] != $extension['mime_type'])
+     											{
+     												$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     												
+     												$stop = true;
+     												
+     												$y += 1;
+     											}
+     										}
+     										
+     										//////////
+     									
+     										// Check the size
+     									
+     										// Change the size from bytes to KB
+     										$filesize = ceil(($MySmartBB->_FILES['files']['size'][$x] / 1024));
+     									
+     										// oooh! the file is very large
+     										if ($filesize > $extension['max_size'])
+     										{
+     											$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
+     											
+     											$stop = true;
+     											
+     											$y += 1;
+     										}
+     									
+     										//////////
+     										
+     										if (!$stop)
+     										{
+     											// Set the name of the file
+     									
+     											$filename = $MySmartBB->_FILES['files']['name'][$x];
+     									
+     											// There is a file which has same name, so change the name of the new file
+     											if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
+     											{
+     												$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
+     											}
+     										
+     											//////////
+     										
+     											// Copy the file to download dirctory
+     											$copy = copy($MySmartBB->_FILES['files']['tmp_name'][$x],$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename);		
+     										
+     											// Success
+     											if ($copy)
+     											{
+     												// Add the file to the success array 
+     												$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
+     											
+     												// Insert attachment to the database
+     												$AttachArr 							= 	array();
+     												$AttachArr['field'] 				= 	array();
+     												$AttachArr['field']['filename'] 	= 	$MySmartBB->_FILES['files']['name'][$x];
+     												$AttachArr['field']['filepath'] 	= 	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename;
+     												$AttachArr['field']['filesize'] 	= 	$MySmartBB->_FILES['files']['size'][$x];
+     												$AttachArr['field']['pm_id'] 		= 	$MySmartBB->pm->id;
+     												
+     												$InsertAttach = $MySmartBB->attach->InsertAttach($AttachArr);
+     											
+    										
+     												$z += 1;
+     											} // End of if ($copy)
+     									
+     											//////////
+     										
+     										} // End of if (!$stop)
+     									
+     										//////////
+     									} // End of else
+     								}
+     							
+     								$x += 1;	
+     							}
+     						}
+     					}
+     				}
+     				
+     				//////////
+					
 					$MsgArr 				= 	array();
 					$MsgArr['field']		=	array();
 					
@@ -307,7 +447,7 @@ class MySmartPrivateMassegeMOD
 						$CacheArr['where'] 					= 	array('username',$GetToInfo['username']);
 				
 						$Cache = $MySmartBB->member->UpdateMember($CacheArr);
-				
+						
 						if ($Cache)
 						{
 							$success[] = $MySmartBB->_POST['to'][$x];
@@ -327,7 +467,7 @@ class MySmartPrivateMassegeMOD
      	
      	$sucess_number 	= 	sizeof($success);
      	$fail_numer		=	sizeof($fail);
-     	
+
      	if ($sucess_number == $size)
      	{
      		$MySmartBB->functions->msg('تم إرسال الرساله الخاصه بنجاح');	
@@ -479,6 +619,19 @@ class MySmartPrivateMassegeMOD
 			$MassegeTime = $MySmartBB->functions->time($MySmartBB->_CONF['template']['MassegeRow']['date']);
 			
 			$MySmartBB->_CONF['template']['MassegeRow']['date'] = $MassegeDate . ' ; ' . $MassegeTime;
+		}
+		
+		$AttachArr 				= 	array();
+		$AttachArr['where'] 	= 	array('pm_id',$MySmartBB->_GET['id']);
+		
+		// Get the attachment information
+		$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
+		
+		if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
+		{
+			$MySmartBB->template->assign('ATTACH_SHOW',true);
+
+			$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
 		}
 		
 		// The writer signture isn't empty 

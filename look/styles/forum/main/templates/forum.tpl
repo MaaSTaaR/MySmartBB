@@ -1,3 +1,5 @@
+{$section_info['header']}
+
 {template}address_bar_part1{/template}
 {$section_info['title']}
 {template}address_bar_part2{/template}
@@ -19,3 +21,5 @@
 
 {template}add_subject_link{/template}
 {template}forum--subject_table{/template}
+
+{$section_info['footer']}

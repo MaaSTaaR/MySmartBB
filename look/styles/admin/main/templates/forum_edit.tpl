@@ -4,7 +4,7 @@
 
 <br />
 
-<form action="admin.php?page=forums&amp;edit=1&amp;start=1&amp;id=2"  name="myform" method="post">
+<form action="admin.php?page=forums&amp;edit=1&amp;start=1&amp;id={$Inf['id']}"  name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
 	<td class="main1" colspan="2">تحرير المنتدى : {$Inf['title']}</td>
@@ -211,6 +211,22 @@
 <tr valign="top" align="center">
 	<td class="row1" colspan="2">
 <textarea name="describe" id="textarea_describe" rows="10" cols="40" wrap="virtual" dir="rtl">{$Inf['section_describe']}</textarea>&nbsp;
+</td>
+</tr>
+<tr valign="top" align="center">
+<td class="main1" colspan="2">نص يظهر اعلى المنتدى (يمكنك استخدام HTML)</td>
+</tr>
+<tr valign="top" align="center">
+<td class="row1" colspan="2">
+<textarea name="head" rows="10" cols="40" wrap="virtual" dir="rtl">{$Inf['header']}</textarea> 
+</td>
+</tr>
+<tr valign="top" align="center">
+<td class="main1" colspan="2">نص يظهر اسفل المنتدى(يمكنك استخدام HTML)</td>
+</tr>
+<tr valign="top" align="center">
+<td class="row1" colspan="2">
+<textarea name="foot" rows="10" cols="40" wrap="virtual" dir="rtl">{$Inf['footer']}</textarea> 
 </td>
 </tr>
 </table><br />

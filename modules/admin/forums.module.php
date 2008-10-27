@@ -224,6 +224,8 @@ class MySmartForumsMOD extends _functions
 		$SecArr['field']['sec_section']				=	$MySmartBB->_POST['sec_section'];
 		$SecArr['field']['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$SecArr['field']['parent']					=	$MySmartBB->_POST['parent'];
+		$SecArr['field']['header'] 					= 	$MySmartBB->_POST['head'];
+		$SecArr['field']['footer'] 					= 	$MySmartBB->_POST['foot'];
 		$SecArr['get_id']							=	true;
 		
 		$insert = $MySmartBB->section->InsertSection($SecArr);
@@ -448,6 +450,8 @@ class MySmartForumsMOD extends _functions
 		$SecArr['field']['subject_order']			=	$MySmartBB->_POST['subject_order'];
 		$SecArr['field']['hide_subject']			=	$MySmartBB->_POST['hide_subject'];
 		$SecArr['field']['sec_section']				=	$MySmartBB->_POST['sec_section'];
+		$SecArr['field']['header'] 					= 	$MySmartBB->_POST['head'];
+		$SecArr['field']['footer'] 					= 	$MySmartBB->_POST['foot'];
 		$SecArr['field']['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$SecArr['field']['parent']					=	$MySmartBB->_POST['parent'];
 		$SecArr['where']							= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);

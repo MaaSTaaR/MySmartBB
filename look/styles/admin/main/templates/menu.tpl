@@ -88,6 +88,9 @@
 
 </tr>
 <tr valign="top" align="center">
+	<td class="row1" colspan="2"><a href="admin.php?page=member&amp;merge=1&amp;main=1" target="main">دمج الاعضاء</a></td>
+</tr>
+<tr valign="top" align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=member&amp;search=1&amp;main=1" target="main">بحث</a></td>
 </tr>
 <tr valign="top" align="center">

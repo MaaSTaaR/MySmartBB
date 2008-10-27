@@ -28,6 +28,9 @@
 			{if {$Info['user_sig']} != ''}
 				{template}signature_show{/template}
 			{/if}
+			{if {$ATTACH_SHOW}}
+				{template}attach_show{/template}
+			{/if}
 		</td>
 		</tr>
       	<tr align="center">

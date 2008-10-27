@@ -256,6 +256,26 @@ $(document).ready(Ready);
 				<textarea name="describe" id="textarea_describe" rows="10" cols="40" wrap="virtual" dir="rtl"></textarea>
 			</td>
 		</tr>
+		<tr align="center">
+			<td class="main1" colspan="2">
+		نص يظهر اعلى المنتدى (يمكنك استخدام HTML)
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row1" colspan="2">
+				<textarea name="head" rows="10" cols="40" wrap="virtual" dir="rtl"></textarea>
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="main1" colspan="2">
+		نص يظهر اسفل المنتدى(يمكنك استخدام HTML)
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row1" colspan="2">
+				<textarea name="foot" rows="10" cols="40" wrap="virtual" dir="rtl"></textarea>
+			</td>
+		</tr>
 	</table>
 	
 	<br />

@@ -59,7 +59,8 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_id int( 9 ) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'visitor int( 9 ) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'reply int( 1 ) NOT NULL';
-			
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'pm_id int( 9 ) NOT NULL';
+		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
 		return ($create) ? true : false;
@@ -1344,6 +1345,9 @@ class DatabaseStruct extends MySmartInstall
 		// Since THETA 1
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'moderators text NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'sectiongroup_cache text NOT NULL';
+		// Since ALPHA 1
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'footer text NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'header text NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		

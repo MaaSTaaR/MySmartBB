@@ -8,9 +8,11 @@
 
 define('IN_ADMIN',true);
 
-$CALL_SYSTEM			=	array();
-$CALL_SYSTEM['CACHE'] 	= 	true;
-$CALL_SYSTEM['STYLE'] 	= 	true;
+$CALL_SYSTEM				=	array();
+$CALL_SYSTEM['CACHE'] 		= 	true;
+$CALL_SYSTEM['STYLE'] 		= 	true;
+$CALL_SYSTEM['SUBJECT'] 	= 	true;
+$CALL_SYSTEM['REPLY'] 		= 	true;
 
 include('common.php');
 	
@@ -43,6 +45,18 @@ class MySmartMemberMOD extends _functions
 				{
 					$this->_ControlMain();
 				}
+			}
+			elseif ($MySmartBB->_GET['merge'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_MergeMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_MergeStart();
+				}
+
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
@@ -169,6 +183,95 @@ class MySmartMemberMOD extends _functions
 		$MySmartBB->template->display('members_main');
 	}
 	
+	function _MergeMain()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->template->display('merge_users');
+	}
+
+	function _MergeStart()
+	{
+		global $MySmartBB;
+		
+		//////////
+		
+		$MySmartBB->_POST['user_get'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['user_get'],'trim');
+		$MySmartBB->_POST['user_to'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['user_to'],'trim');
+
+		//////////
+		
+		if (empty($MySmartBB->_POST['user_get'])
+			or empty($MySmartBB->_POST['user_to']))
+		{
+			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+		}
+
+		if (!$MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['user_get']))))
+		{
+			$MySmartBB->functions->error('اسم العضو المراد اخذ بياناته غير موجود في قاعدة البيانات');
+		}
+		
+		if (!$MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['user_to']))))
+		{
+			$MySmartBB->functions->error('اسم العضو المراد نقل البيانات له غير موجود في قاعدة البيانات');
+		}
+		
+		//////////
+		
+		$MemArr 			= 	array();
+		$MemArr['get'] 		= 	'*';
+		$MemArr['where'] 	= 	array('username',$MySmartBB->_POST['user_get']);
+
+		$GetMemInfo = $MySmartBB->member->GetMemberInfo($MemArr);
+		
+		unset($MemArr);
+		
+		$MemArr 			= 	array();
+		$MemArr['get'] 		= 	'*';
+		$MemArr['where'] 	= 	array('username',$MySmartBB->_POST['user_to']);
+
+		$ToMemInfo = $MySmartBB->member->GetMemberInfo($MemArr);
+		
+		//////////
+		
+		$UpdateSubjectArr 						= 	array();
+		$UpdateSubjectArr['field'] 				= 	array();
+		$UpdateSubjectArr['field']['writer'] 	= 	$ToMemInfo['username'];
+		$UpdateSubjectArr['where'] 				= 	array('writer',$GetMemInfo['username']);
+
+		$u_subject = $MySmartBB->subject->UpdateSubject($UpdateSubjectArr);
+		
+		$UpdateReplyArr 					= 	array();
+		$UpdateReplyArr['field'] 			= 	array();
+		$UpdateReplyArr['field']['writer'] 	= 	$ToMemInfo['username'];
+		$UpdateReplyArr['where'] 			= 	array('writer',$GetMemInfo['username']);
+
+		$u_reply = $MySmartBB->reply->UpdateReply($UpdateReplyArr);
+
+		$UpdateMemberArr 						= 	array();
+		$UpdateMemberArr['field'] 				= 	array();
+		$UpdateMemberArr['field']['posts'] 		= 	$ToMemInfo['posts']+$GetMemInfo['posts'];
+		$UpdateMemberArr['field']['visitor'] 	= 	$ToMemInfo['visitor']+$GetMemInfo['visitor'];
+		$UpdateMemberArr['where'] 				= 	array('username',$ToMemInfo['username']);
+
+		$u_member = $MySmartBB->member->UpdateMember($UpdateMemberArr);
+
+		$DelArr 			= 	array();
+		$DelArr['where'] 	= 	array('id',$GetMemInfo['id']);
+
+		$del = $MySmartBB->member->DeleteMember($DelArr);
+
+		if ($u_subject
+			and $u_reply
+			and $u_member
+			and $del)
+		{
+			$MySmartBB->functions->msg('تم دمج بيانات العضو بنجاح');
+			$MySmartBB->functions->goto('admin.php?page=member&control=1&main=1');
+		}
+	}
+	 
 	function _EditMain()
 	{
 		global $MySmartBB;

@@ -22,7 +22,7 @@ class MySmartRegisterMOD
 		{
 			$MySmartBB->functions->error('المعذره .. التسجيل مغلق');
 		}
-		
+   		
 		/** Show register form **/
 		if ($MySmartBB->_GET['index'])
 		{

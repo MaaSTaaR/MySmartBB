@@ -106,7 +106,10 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		
 		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
 		
-		$UnTrash = $MySmartBB->subject->UnTrashSubject(array('id'	=>	$MySmartBB->_GET['id']));
+		$Trash				=	array();
+		$Trash['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+
+		$UnTrash = $MySmartBB->subject->UnTrashSubject($Trash);
 		
 		if ($UnTrash)
 		{
@@ -173,7 +176,10 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		
 		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
 		
-		$UnTrash = $MySmartBB->reply->UnTrashReply(array('id'	=>	$MySmartBB->_GET['id']));
+		$Trash				= 	array();
+		$Trash['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		
+		$UnTrash = $MySmartBB->reply->UnTrashReply($Trash);
 		
 		if ($UnTrash)
 		{
@@ -197,7 +203,10 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		
 		$this->check_reply_by_id($ReplyInf);
 		
-		$del = $MySmartBB->reply->DeleteReply(array('id'	=>	$ReplyInf['id']));
+		$DelArr				=	array();
+		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		
+		$del = $MySmartBB->reply->DeleteReply($DelArr);
 		
 		if ($del)
 		{
