@@ -309,6 +309,22 @@ class MySmartTHETA extends MySmartInstall
 		return ($add) ? true : false;
 	}
 	
+	function AddDelReason()
+	{
+		global $MySmartBB;
+		
+		$this->_TempArr['AddArr'] 			= 	array();
+		$this->_TempArr['AddArr']['table'] 		= 	$MySmartBB->table['subject'];
+		$this->_TempArr['AddArr']['field_name'] 	= 	'delete_reason';
+		$this->_TempArr['AddArr']['field_des'] 		= 	'varchar(255)';
+		
+		$add = $this->add_field($this->_TempArr['AddArr']);
+		
+		unset($this->_TempArr['AddArr']);
+		
+		return ($add) ? true : false;
+	}
+	
 	// Rename operation(s)
 	function RenameModeratorTable()
 	{
@@ -721,6 +737,9 @@ if ($MySmartBB->_GET['step'] == 1)
 	
 	$p[15] 		= 	$MySmartBB->install->AddMIMEType();
 	$msgs[15] 	= 	($p[15]) ? 'تم اضافة حقل نوع MIME' : 'لم يتم اضافة حقل  نوع MIME';
+
+	$p[15] 		= 	$MySmartBB->install->AddDelReason();
+	$msgs[15] 	= 	($p[15]) ? 'تم اضافة حقل سبب حذف الموضوع' : 'لم يتم اضافة حقل  حذف الموضوع';
 	
 	$MySmartBB->html->open_p();
 	

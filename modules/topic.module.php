@@ -404,6 +404,22 @@ class MySmartTopicMOD
 			$MySmartBB->smartparse->replace_smiles($this->Info['user_sig']);
 		}
 		
+		if (!empty($this->Info['subject_sig']))
+		{
+			// So , use the SmartCode in it
+			$this->Info['subject_sig'] = $MySmartBB->smartparse->replace($this->Info['subject_sig']);
+			$MySmartBB->smartparse->replace_smiles($this->Info['subject_sig']);
+		}
+		
+		/** TODO:: Why??? **/
+		if (!empty($this->Info['reply_sig']))
+		{
+			// So , use the SmartCode in it
+			$this->Info['reply_sig'] = $MySmartBB->smartparse->replace($this->Info['reply_sig']);
+			$MySmartBB->smartparse->replace_smiles($this->Info['reply_sig']);
+		}
+		/////
+		
 		$topic_date = $MySmartBB->functions->date($this->Info['native_write_time']);
 		$topic_time = $MySmartBB->functions->time($this->Info['native_write_time']);
 		

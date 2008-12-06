@@ -12,4 +12,7 @@
 				<input name="avatar" value="http://" />
 			</td>
 		</tr>
+		<tr align="center">
+			<td colspan="2" class="rowl">ملاحظة : الحد الأقصى لحجم الصورة الرمزية هو {$width} في {$height} بيكسل</td>
+		</tr>
 	</table>

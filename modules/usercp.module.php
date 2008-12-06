@@ -80,6 +80,22 @@ class MySmartUserCPMOD
 				{
 					$this->_SignChange();
 				}
+				elseif ($MySmartBB->_GET['subject'])
+				{
+					$this->_SignSubjectMain();
+				}
+				elseif ($MySmartBB->_GET['subject_start'])
+				{
+					$this->_SignSubjectChange();
+				}
+				elseif ($MySmartBB->_GET['reply'])
+				{
+					$this->_SignReplyMain();
+				}
+				elseif ($MySmartBB->_GET['reply_start'])
+				{
+					$this->_SignReplyChange();
+				}
 			}
 			/** **/
 			
@@ -328,6 +344,84 @@ class MySmartUserCPMOD
 		{
 			$MySmartBB->functions->msg('تم تحديث التوقيع بنجاح !');
 			$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
+		}
+	}
+	
+	function _SignSubjectMain()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('تحرير توقيعك الإفتراضي للمواضيع');
+
+		$MySmartBB->functions->GetEditorTools();
+
+		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['subject_sig']);
+		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
+
+		$MySmartBB->template->display('usercp_control_signsubject');
+	}
+	
+	function _SignSubjectChange()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+
+		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+
+		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+
+		$SignArr = array();
+		$SignArr['field'] = array();
+
+		$SignArr['field']['subject_sig'] = $MySmartBB->_POST['text'];
+		$SignArr['where'] = array('id',$MySmartBB->_CONF['member_row']['id']);
+
+		$UpdateSign = $MySmartBB->member->UpdateMember($SignArr);
+
+		if ($UpdateSign)
+		{
+			$MySmartBB->functions->msg('تم تحديث التوقيع الإفتراضي للمواضيع بنجاح !');
+			$MySmartBB->functions->goto('index.php?page=usercp&control=1&subjects=1&main=1');
+		}
+	}
+	
+	function _SignReplyMain()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('تحرير توقيعك الإفتراضي الخاص بالردود');
+
+		$MySmartBB->functions->GetEditorTools();
+
+		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['reply_sig']);
+		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
+
+		$MySmartBB->template->display('usercp_control_signreply');
+	}
+	
+	function _SignReplyChange()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+
+		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+
+		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+
+		$SignArr = array();
+		$SignArr['field'] = array();
+
+		$SignArr['field']['reply_sig'] = $MySmartBB->_POST['text'];
+		$SignArr['where'] = array('id',$MySmartBB->_CONF['member_row']['id']);
+
+		$UpdateSign = $MySmartBB->member->UpdateMember($SignArr);
+
+		if ($UpdateSign)
+		{
+			$MySmartBB->functions->msg('تم تحديث التوقيع الإفتراضي للردود بنجاح !');
+			$MySmartBB->functions->goto('index.php?page=usercp&control=1&replays=1&main=1');
 		}
 	}
 		
@@ -651,10 +745,36 @@ class MySmartUserCPMOD
 				$MySmartBB->functions->error('امتداد الصوره غير مسموح به !');
 			}
 			
+			$size = @getimagesize($MySmartBB->_POST['avatar']);
+
+			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
+			{
+				$MySmartBB->functions->error('عرض الصورة غير مقبول');
+			}
+			
+			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
+			{
+				$MySmartBB->functions->error('طول الصورة غير مقبول');
+			}
+			
 			$UpdateArr['field']['avater_path'] = $MySmartBB->_POST['avatar'];
 		}
 		elseif ($MySmartBB->_POST['options'] == 'upload')
-		{     			
+		{
+			$pic = $MySmartBB->_FILES['upload']['tmp_name'];
+
+			$size = @getimagesize($pic);
+
+			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
+			{
+				$MySmartBB->functions->error('عرض الصورة غير مقبول');
+			}
+
+			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
+			{
+				$MySmartBB->functions->error('طول الصورة غير مقبول');
+			}
+			
      		if (!empty($MySmartBB->_FILES['upload']['name']))
      		{
      			//////////
@@ -682,7 +802,7 @@ class MySmartUserCPMOD
     	 				// Set the name of the file
     	 				
     	 				$filename = $MySmartBB->_FILES['upload']['name'];
-    	 					
+    	 				
     	 				// There is a file which has same name, so change the name of the new file
     	 				if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename))
     	 				{

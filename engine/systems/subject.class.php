@@ -10,7 +10,7 @@
  * @author 		: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	11/3/2006 , 8:18 PM
  * @end   		: 	11/3/2006 , 8:47 PM
- * @updated 	: 	21/08/2008 08:55:46 PM 
+ * @updated 	: 	05/11/2008 12:58:48 AM 
  */
  
 class MySmartSubject
@@ -392,7 +392,8 @@ class MySmartSubject
  			$param = array();
  		}
  		
- 		$field = array('delete_topic'	=> 	1);
+ 		$field = array(	'delete_topic'	=> 	1,
+ 						'delete_reason' => $param['reason']);
 		           	   
 		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
 		

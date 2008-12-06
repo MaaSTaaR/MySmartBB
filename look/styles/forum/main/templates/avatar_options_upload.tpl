@@ -12,4 +12,7 @@
 				<input type="file" name="upload" />
 			</td>
 		</tr>
+		<tr align="center">
+			<td colspan="2" class="rowl">ملاحظة : الحد الأقصى لحجم الصورة الرمزية هو {$_CONF['info_row']['max_avatar_width']} في {$_CONF['info_row']['max_avatar_height']} بيكسل</td>
+		</tr>
 	</table>

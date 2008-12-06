@@ -1145,7 +1145,9 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'autoreply_msg text NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'pm_senders int( 1 ) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'pm_senders_msg varchar( 255 ) NOT NULL';
-		$this->_TempArr['CreateArr']['fields'][] 	= 	'member_ip varchar( 20 ) NOT NULL';		
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'member_ip varchar( 20 ) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_sig mediumtext NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'reply_sig mediumtext NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -1688,7 +1690,9 @@ class DatabaseStruct extends MySmartInstall
 		// Since THETA 1
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'tags_cache text NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'close_reason varchar(255) NOT NULL';
-					
+		// Since ALPHA 2 (THETA 2)
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'delete_reason varchar(255) NOT NULL';
+		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
 		return ($create) ? true : false;		

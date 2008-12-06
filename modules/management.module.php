@@ -10,6 +10,7 @@ $CALL_SYSTEM['ICONS'] 		= 	true;
 $CALL_SYSTEM['TOOLBOX'] 	= 	true;
 $CALL_SYSTEM['REPLY'] 		= 	true;
 $CALL_SYSTEM['CACHE'] 		= 	true;
+$CALL_SYSTEM['PM'] 			= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
@@ -46,6 +47,10 @@ class MySmartManagementMOD
 			elseif ($MySmartBB->_GET['close'])
 			{
 				$this->_CloseStart();
+			}
+			elseif ($MySmartBB->_GET['delete'])
+			{
+				$this->_DeleteStart();
 			}
 			elseif ($MySmartBB->_GET['reply'])
 			{
@@ -204,24 +209,16 @@ class MySmartManagementMOD
 	function __SubjectDelete()
 	{
 		global $MySmartBB;
-		
+
 		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
-		
+
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
-		
-		$UpdateArr 			= array();
-		$UpdateArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->MoveSubjectToTrash($UpdateArr);
-		
-		if ($update)
-		{
-			$MySmartBB->functions->msg('تم حذف الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
-		}
+
+		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
+		$MySmartBB->template->display('subject_delete_reason');
 	}
 	
 	function __MoveIndex()
@@ -347,6 +344,61 @@ class MySmartManagementMOD
 		}
 	}
 	
+	function _DeleteStart()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		$UpdateArr 						= 	array();
+		$UpdateArr['reason'] 	= 	$MySmartBB->_POST['reason'];
+		$UpdateArr['where'] 			= 	array('id',$MySmartBB->_GET['subject_id']);
+
+		$update = $MySmartBB->subject->MoveSubjectToTrash($UpdateArr);
+
+		if ($update)
+		{
+			$SubjectArr 			= 	array();
+			$SubjectArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
+			
+			$Subject = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+			
+			$MySmartBB->functions->CleanVariable($Subject,'sql');
+			
+			$MsgArr 						= 	array();
+			$MsgArr['field'] 				= 	array();
+			$MsgArr['field']['user_from'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+			$MsgArr['field']['user_to'] 	= 	$Subject['writer'];
+			$MsgArr['field']['title'] 		= 	'تم حذف موضوعك ' . $Subject['title'];
+			$MsgArr['field']['text'] 		= 	$MySmartBB->_POST['reason'];
+			$MsgArr['field']['date'] 		= 	$MySmartBB->_CONF['now'];
+			$MsgArr['field']['icon'] 		= 	$Subject['icon'];
+			$MsgArr['field']['folder'] 		= 	'inbox';
+			
+			$Send = $MySmartBB->pm->InsertMassege($MsgArr);
+
+			$NumberArr 				= 	array();
+			$NumberArr['username'] 	= 	$Subject['writer'];
+			
+			$Number = $MySmartBB->pm->NewMessageNumber($NumberArr);
+
+			$CacheArr 							= 	array();
+			$CacheArr['field'] 					= 	array();
+			$CacheArr['field']['unread_pm'] 	= 	$Number;
+			$CacheArr['where'] 					= 	array('username',$Subject['writer']);
+			
+			$Cache = $MySmartBB->member->UpdateMember($CacheArr);
+
+			$MySmartBB->functions->msg('تم حذف الموضوع');
+			$MySmartBB->functions->goto('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
+		}
+	}
+
 	function __SubjectEdit()
 	{
 		global $MySmartBB;

@@ -263,6 +263,9 @@ class MySmartGroupsMOD extends _functions
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		// Enable HTML and (only) HTML
+		$MySmartBB->_POST['style'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['style'],'unhtml');
+		
 		$GroupArr 			= 	array();
 		$GroupArr['field']	=	array();
 		

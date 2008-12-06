@@ -29,6 +29,13 @@
 		</td>
 	</tr>
 	{/if}
+	{if {$Info['delete_reason']} != '' and {$Info['delete_topic']} }
+	<tr align="center">
+		<td class="row1 rows_space" width="50%" colspan="2">
+			سبب الحذف : <strong>{$Info['delete_reason']}</strong>
+		</td>
+	</tr>
+	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="25%">
 			عدد الردود : {$Info['reply_number']}
