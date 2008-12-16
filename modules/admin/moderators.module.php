@@ -156,6 +156,22 @@ class MySmartModeratorsMOD extends _functions
 			$MySmartBB->functions->error('المعذره .. لا يمكنك اضافة نفس العضو مشرفاً على القسم مرتين');
 		}
 		
+		//////////
+		
+		$SecArr 			= 	array();
+		$SecArr['where'] 	= 	array('id',$MySmartBB->_POST['section']);
+		
+		$SectionInfo = $MySmartBB->section->GetSectionInfo($SecArr);
+		
+		if ($SectionInfo == false)
+		{
+			$MySmartBB->functions->error('القسم المطلوب غير موجود');
+		}
+		
+		$MySmartBB->functions->CleanVariable($SectionInfo,'html');
+		
+		//////////
+		
  		$MemberArr 			= 	array();
 		$MemberArr['get']	= 	'*';
 		
@@ -197,6 +213,16 @@ class MySmartModeratorsMOD extends _functions
 					$ChangeArr['field']			=	array();
 					
 					$ChangeArr['field']['usergroup']	=	$MySmartBB->_POST['group'];
+					
+					if (!empty($MySmartBB->_POST['usertitle']))
+					{
+						$ChangeArr['field']['user_title'] = $MySmartBB->_POST['usertitle'];
+					}
+					else
+					{
+						$ChangeArr['field']['user_title'] = 'مشرف على ' . $SectionInfo['title'];
+					}
+					
 					$ChangeArr['where'] 				= 	array('id',$Member['id']);
 					
 					$change = $MySmartBB->member->UpdateMember($ChangeArr);

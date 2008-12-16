@@ -30,7 +30,6 @@
     			{if {$forum['parent']} == 0}
 				<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 				{else}
-				{if !{$forum['sub']}}
 				<option value="{$forum['id']}">-- {$forum['title']}</option>
 				{/if}
 				{/Des::foreach}
@@ -47,6 +46,14 @@
 				<option value="{$GroupList['id']}">{$GroupList['title']}</option>
 				{/Des::while}
 				</select>
+			</td>
+		</tr>
+		<tr>
+			<td class="row1">
+			المسمى الجديد (يمكن تركه فارغاً)
+			</td>
+			<td class="row1">
+				<input type="text" name="usertitle" value="" size="30" />
 			</td>
 		</tr>
 	</table>

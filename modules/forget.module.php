@@ -107,7 +107,7 @@ class MySmartForgetMOD
 				$MsgArr 			= 	array();
 				$MsgArr['where'] 	= 	array('id','1');
 				
-				$MassegeInfo = $MySmartBB->massege->GetMessageInfo($MsgArr);
+				$MassegeInfo = $MySmartBB->message->GetMessageInfo($MsgArr);
 			
 				$MsgArr 				= 	array();
 				$MsgArr['text'] 		= 	$MassegeInfo['text'];
@@ -116,7 +116,7 @@ class MySmartForgetMOD
 				$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
 				$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
 				
-				$MassegeInfo['text'] = $MySmartBB->massege->MessageProccess($MsgArr);
+				$MassegeInfo['text'] = $MySmartBB->message->MessageProccess($MsgArr);
 				
 				$Send = $MySmartBB->functions->mail($ForgetMemberInfo['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
 				
@@ -124,6 +124,10 @@ class MySmartForgetMOD
 				{
 					$MySmartBB->functions->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني، يرجى مراجعته');
 					$MySmartBB->functions->goto('index.php',2);
+				}
+				else
+				{
+					$MySmartBB->functions->error('لم يتم الارسال');
 				}
 			}
 		}

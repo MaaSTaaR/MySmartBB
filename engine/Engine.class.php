@@ -219,7 +219,7 @@ class Engine
   		// Well, the table "MySBB_info" isn't exists, so return an error message
   		if (!$check
   			and !defined('INSTALL'))
-  		{	
+  		{
   			return 'ERROR::THE_TABLES_ARE_NOT_INSTALLED';
   		}
   		

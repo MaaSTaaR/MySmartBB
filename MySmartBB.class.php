@@ -49,7 +49,7 @@ class MySmartBB extends Engine
   		
   		////////////
   		
-  		if ($e != true
+  		if (!is_bool($e)
   			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
   			and !defined('INSTALL'))
   		{
