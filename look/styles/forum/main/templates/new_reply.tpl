@@ -94,6 +94,23 @@ $(document).ready(Ready);
 
 <br />
 
+{if {$Admin}}
+<table border="1" width="98%" class="t_style_b" align="center">
+	<tr>
+		<td class="main1 rows_space" colspan="2">
+		خيارات إدارة الموضوع
+		</td>
+	</tr>
+	<tr>
+		<td class="row2 rows_space" colspan="2">
+			<input name="stick" id="stick_id" type="checkbox" {if {$subject_info['stick']}}checked="checked"{/if} /> <label for="stick_id">تثبيت الموضوع</label>
+			<br />
+			<input name="close" id="close_id" type="checkbox" {if {$subject_info['close']}}checked="checked"{/if} /> <label for="close_id">إغلاق الموضوع</label>
+		</td>
+	</tr>
+</table>
+{/if}
+
 <div id="attach_table">
 {template}add_attach_table{/template}
 </div>

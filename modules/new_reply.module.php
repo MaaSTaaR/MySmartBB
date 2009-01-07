@@ -182,7 +182,7 @@ class MySmartReplyAddMOD
      		$UpdateOnline 			= 	array();
 			$UpdateOnline['field']	=	array();
 			
-			$UpdateOnline['field']['user_location']		=	'يكتب رد على : ' . $this->SubjectInfo['title'];
+			$UpdateOnline['field']['user_location']		=	'يكتب رداً على : ' . $this->SubjectInfo['title'];
 			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
 			
 			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
@@ -199,14 +199,38 @@ class MySmartReplyAddMOD
 		global $MySmartBB;
 		
 		$MySmartBB->functions->GetEditorTools();
-			     		
-     	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
-     	
-     	$MySmartBB->functions->ShowHeader('اضافة رد');
+		
+		$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
+		
+		$MySmartBB->functions->ShowHeader('اضافة رد');
+		
+		$Admin = false;
 
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			if ($MySmartBB->_CONF['group_info']['admincp_allow']
+				or $MySmartBB->_CONF['group_info']['vice'])
+			{
+				$Admin = true;
+			}
+			else
+			{
+				if (isset($this->SectionInfo))
+				{
+					$AdminArr = array();
+					$AdminArr['username'] = $MySmartBB->_CONF['member_row']['username'];
+					$AdminArr['section_id'] = $this->SectionInfo['id'];
+
+					$Admin = $MySmartBB->moderator->IsModerator($AdminArr);
+				}
+			}
+		}
+     	
      	// Instead of send a whole version of $this->SectionGroup to template engine
      	// We just send options which we really need, we use this way to save memory
      	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
+     	
+     	$MySmartBB->template->assign('Admin',$Admin);
      	
      	$MySmartBB->template->display('new_reply');
 	}
@@ -257,6 +281,23 @@ class MySmartReplyAddMOD
      			$MySmartBB->functions->error('عدد حروف الرد أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
      		}
      	}
+
+		if ($MySmartBB->_POST['stick'])
+		{
+			$UpdateArr = array();
+			$UpdateArr['where'] = array('id',$this->SubjectInfo['id']);
+			
+			$update = $MySmartBB->subject->StickSubject($UpdateArr);
+		}
+		
+		if ($MySmartBB->_POST['close'])
+		{
+			$UpdateArr = array();
+			$UpdateArr['reason'] = $MySmartBB->_POST['reason'];
+			$UpdateArr['where'] = array('id',$this->SubjectInfo['id']);
+			
+			$update = $MySmartBB->subject->CloseSubject($UpdateArr);
+		}
      	
      	$ReplyArr 			= 	array();
      	$ReplyArr['field'] 	= 	array();
@@ -527,31 +568,31 @@ class MySmartReplyAddMOD
      		}
      		else
      		{
-     			$GetArr = array();
-     			$GetArr['where'] = array('id',$MySmartBB->reply->id);
+     			$GetArr 			= 	array();
+     			$GetArr['where'] 	= 	array('id',$MySmartBB->reply->id);
      			
      			$MySmartBB->_CONF['template']['Reply_Info'] = $MySmartBB->reply->GetReplyInfo($GetArr);
      			
      			$MySmartBB->_CONF['template']['Info']['id'] 				= 	$MySmartBB->_CONF['member_row']['id'];
-     			$MySmartBB->_CONF['template']['Info']['username'] 		= 	$MySmartBB->_CONF['member_row']['username'];
+     			$MySmartBB->_CONF['template']['Info']['username'] 			= 	$MySmartBB->_CONF['member_row']['username'];
      			$MySmartBB->_CONF['template']['Info']['avater_path'] 		= 	$MySmartBB->_CONF['member_row']['avater_path'];
-     			$MySmartBB->_CONF['template']['Info']['posts'] 			= 	$MySmartBB->_CONF['member_row']['posts'];
-     			$MySmartBB->_CONF['template']['Info']['user_country'] 	= 	$MySmartBB->_CONF['member_row']['user_country'];
+     			$MySmartBB->_CONF['template']['Info']['posts'] 				= 	$MySmartBB->_CONF['member_row']['posts'];
+     			$MySmartBB->_CONF['template']['Info']['user_country'] 		= 	$MySmartBB->_CONF['member_row']['user_country'];
      			$MySmartBB->_CONF['template']['Info']['visitor'] 			= 	$MySmartBB->_CONF['member_row']['visitor'];
-     			$MySmartBB->_CONF['template']['Info']['away'] 			= 	$MySmartBB->_CONF['member_row']['away'];
-     			$MySmartBB->_CONF['template']['Info']['away_msg'] 		= 	$MySmartBB->_CONF['member_row']['away_msg'];
-     			$MySmartBB->_CONF['template']['Info']['register_date'] 	= 	$MySmartBB->_CONF['member_row']['register_date'];
+     			$MySmartBB->_CONF['template']['Info']['away'] 				= 	$MySmartBB->_CONF['member_row']['away'];
+     			$MySmartBB->_CONF['template']['Info']['away_msg'] 			= 	$MySmartBB->_CONF['member_row']['away_msg'];
+     			$MySmartBB->_CONF['template']['Info']['register_date'] 		= 	$MySmartBB->_CONF['member_row']['register_date'];
      			$MySmartBB->_CONF['template']['Info']['user_title'] 		= 	$MySmartBB->_CONF['member_row']['user_title'];
      			
      			// Make register date in nice format to show it
-				if (is_numeric($MySmartBB->_CONF['template']['Reply_Info']['register_date']))
+				if (is_numeric($MySmartBB->_CONF['template']['Info']['register_date']))
 				{
-					$MySmartBB->_CONF['template']['Reply_Info']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Reply_Info']['register_date']);
+					$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Info']['register_date']);
 				}
 		
 				// Make member gender as a readable text
-				$MySmartBB->_CONF['template']['Reply_Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['member_row']['user_gender']);
-				$MySmartBB->_CONF['template']['Reply_Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Reply_Info']['user_gender']);
+				$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['member_row']['user_gender']);
+				$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Info']['user_gender']);
 				
 				$CheckOnline = ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
 											

@@ -1082,6 +1082,8 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['ajax_register']				= 0;
 		$InfoArray['ajax_freply']				= 0;
 		$InfoArray['admin_ajax_main_rename']	= 0;
+		// Since THETA 2 (ALPHA 3)
+		$InfoArray['ajax_moderator_options']	= 0;
 		
 		$x = 0;
 		$i = array();

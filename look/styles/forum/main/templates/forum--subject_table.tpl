@@ -30,7 +30,7 @@
 	{Des::while}{stick_subject_list}
 	<tr>
 		<td width="3%" class="row1" align="center">
-			<img src="{$_CONF['info_row']['icon_path']}{$stick_subject_list['icon']}" alt="" />
+			<img src="{$stick_subject_list['icon']}" alt="" />
 		</td>
 		<td width="30%" class="row2">
 			<a href="index.php?page=topic&show=1&id={$stick_subject_list['id']}{$password}">

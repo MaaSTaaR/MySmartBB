@@ -53,7 +53,7 @@ class MySmartTopicMOD
 	function _ShowTopic()
 	{
 		global $MySmartBB;
-		
+				
 		// Get subject information
 		$this->__GetSubject();
 		
@@ -120,7 +120,7 @@ class MySmartTopicMOD
 		}
 		
 		// The ID of subject
-		$this->Info['id'] = $MySmartBB->_GET['id'];
+		$this->Info['subject_id'] = $MySmartBB->_GET['id'];
 		
 		//////////
 		
@@ -442,7 +442,7 @@ class MySmartTopicMOD
 		$ReplyNumArr 					= 	array();
 		$ReplyNumArr['get_from'] 		= 	'db';
 		
-		$ReplyNumArr['where'] 		= 	array('subject_id',$this->Info['id']);
+		$ReplyNumArr['where'] 		= 	array('subject_id',$this->Info['subject_id']);
 		
 		$ReplyNumArr['where'][1] 			= 	array();
 		$ReplyNumArr['where'][1]['con']		=	'AND';
@@ -460,7 +460,7 @@ class MySmartTopicMOD
 		$ReplyArr['pager']['total']		= 	$MySmartBB->reply->GetReplyNumber($ReplyNumArr);
 		$ReplyArr['pager']['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
 		$ReplyArr['pager']['count'] 	= 	$MySmartBB->_GET['count'];
-		$ReplyArr['pager']['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['id'];
+		$ReplyArr['pager']['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['subject_id'];
 		$ReplyArr['pager']['var'] 		= 	'count';
 		
 		$ReplyArr['where']				=	array();
@@ -469,7 +469,7 @@ class MySmartTopicMOD
 		$ReplyArr['where'][0]['oper']	=	'<>';
 		$ReplyArr['where'][0]['value']	=	'1';
 		
-		$ReplyArr['subject_id'] 		= 	$this->Info['id'];
+		$ReplyArr['subject_id'] 		= 	$this->Info['subject_id'];
 
 		$this->RInfo = $MySmartBB->reply->GetReplyWriterInfo($ReplyArr);
 		
@@ -608,7 +608,7 @@ class MySmartTopicMOD
 		$SubjectArr['where'][2]['con']		=	'AND';
 		$SubjectArr['where'][2]['name'] 	= 	'id';
 		$SubjectArr['where'][2]['oper'] 	= 	'<>';
-		$SubjectArr['where'][2]['value'] 	= 	$this->Info['id'];
+		$SubjectArr['where'][2]['value'] 	= 	$this->Info['subject_id'];
 		
 				
 		$SubjectArr['order'] = array();
@@ -634,11 +634,42 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
+		////////
+		
+		$Admin = false;
+		
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			if ($MySmartBB->_CONF['group_info']['admincp_allow']
+				or $MySmartBB->_CONF['group_info']['vice'])
+			{
+				$Admin = true;
+			}
+			else
+			{
+				if (isset($this->SectionInfo))
+				{
+					$AdminArr = array();
+					$AdminArr['username'] = $MySmartBB->_CONF['member_row']['username'];
+					$AdminArr['section_id'] = $this->SectionInfo['id'];
+
+					$Admin = $MySmartBB->moderator->IsModerator($AdminArr);
+				}
+			}
+		}
+		
+		////////
+		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
 		$MySmartBB->functions->GetEditorTools();
 		
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
+     	
+     	$MySmartBB->template->assign('Admin',$Admin);
+     	
+     	$MySmartBB->template->assign('stick',$this->Info['stick']);
+     	$MySmartBB->template->assign('close',$this->Info['close']);
      	
      	$MySmartBB->template->display('topic_end');
 	}

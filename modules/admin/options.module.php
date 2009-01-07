@@ -552,10 +552,13 @@ class MySmartOptionsMOD
 		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_register'],'var_name'=>'ajax_register'));
 		
 		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_freply'],'var_name'=>'ajax_freply'));
+		
+		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_moderator_options'],'var_name'=>'ajax_moderator_options'));
 				
 		if ($update[0]
 			and $update[1]
-			and $update[2])
+			and $update[2]
+			and $update[3])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;ajax=1&amp;main=1');

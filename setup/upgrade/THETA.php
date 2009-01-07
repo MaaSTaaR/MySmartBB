@@ -325,6 +325,15 @@ class MySmartTHETA extends MySmartInstall
 		return ($add) ? true : false;
 	}
 	
+	function AddAjaxModeratorOptions()
+	{
+		global $MySmartBB;
+		
+		$insert = $MySmartBB->DB->sql_query('INSERT INTO ' . $MySmartBB->table['info'] . " SET var_name='ajax_moderator_options',value='0'");
+		
+		return ($insert) ? true : false;
+	}
+	
 	// Rename operation(s)
 	function RenameModeratorTable()
 	{
@@ -740,6 +749,9 @@ if ($MySmartBB->_GET['step'] == 1)
 
 	$p[15] 		= 	$MySmartBB->install->AddDelReason();
 	$msgs[15] 	= 	($p[15]) ? 'تم اضافة حقل سبب حذف الموضوع' : 'لم يتم اضافة حقل  حذف الموضوع';
+	
+	$p[16] 		= 	$MySmartBB->install->AddAjaxModeratorOptions();
+	$msgs[16] 	= 	($p[16]) ? 'تم اضافة حقل التحكم بالمواضيع عن طريق اجاكس' : 'لم يتم اضافة حقل التحكم بالمواضيع عن طريق اجاكس';
 	
 	$MySmartBB->html->open_p();
 	

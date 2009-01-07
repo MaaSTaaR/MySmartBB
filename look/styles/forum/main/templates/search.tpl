@@ -10,9 +10,10 @@ function AjaxSearch()
 	
 	var data = {};
 	
-	data['keyword'] 	= 	$("keyword_id").val();
-	data['username'] 	= 	$("username_id").val();
-	data['section'] 	= 	$("section_id").val();
+	data['keyword'] 	= 	$("#keyword_id").val();
+	data['username'] 	= 	$("#username_id").val();
+	data['section'] 	= 	$("#section_id").val();
+	data['ajax']		=	1;
 	
 	$.post("index.php?page=search&start=1",data,Success);
 }
@@ -77,7 +78,7 @@ $(document).ready(Ready);
         	<select size="1" name="section" id="section_id">
         		<option selected="selected" value="all">[جميع المنتديات]</option>
         		{Des::foreach}{forums_list}{forum}
-        		{if {$from_main_section} == ''}
+        		{if {$forum['parent']} == 0}
 				<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
 				{else}
 				<option value="{$forum['id']}">-- {$forum['title']}</option>

@@ -83,7 +83,7 @@ class MySmartFunctions
     {
     	global $MySmartBB;
     	
-    	if ($no_header)
+    	if (!$no_header)
     	{
     		$this->ShowHeader('خطأ');
     	}
@@ -305,6 +305,32 @@ class MySmartFunctions
 		$FntArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
 		
 		$MySmartBB->_CONF['template']['while']['FontRows'] = $MySmartBB->toolbox->GetFontsList($FntArr);
+	}
+	
+	function ModeratorCheck()
+	{
+		global $MySmartBB;
+		
+		$Mod = false;
+		
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
+				or $MySmartBB->_CONF['group_info']['vice'])
+			{
+				$Mod = true;
+			}
+			else
+			{
+				$ModArr = array();
+				$ModArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+				$ModArr['section_id']	=	$MySmartBB->_POST['section'];
+				
+				$Mod = $MySmartBB->moderator->IsModerator($ModArr);
+			}
+		}
+				
+		return $Mod;
 	}
 }
 

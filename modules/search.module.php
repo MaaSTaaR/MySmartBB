@@ -33,18 +33,6 @@ class MySmartSearchEngineMOD
 		{
 			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
 		}
-		
-		if (!$MySmartBB->_CONF['info_row']['ajax_search'])
-		{
-			if (!isset($MySmartBB->_POST['ajax']))
-			{
-				$MySmartBB->functions->GetFooter();
-			}
-		}
-		else
-		{
-			$MySmartBB->functions->GetFooter();
-		}
 	}
 	
 	/**
@@ -57,86 +45,68 @@ class MySmartSearchEngineMOD
 		$MySmartBB->functions->ShowHeader('البحث');
 		
 		//////////
-		
-		$ForumArr 				= 	array();
-		$ForumArr['get_from'] 	=	'cache';
-		$ForumArr['type'] 		= 	'normal';
-		
-		$forums = $MySmartBB->section->GetSectionsList($ForumArr);
-		
-		//////////
-		
-		$GroupArr 				= 	array();
-		$GroupArr['get_from'] 	=	'cache';
-		
-		$groups = $MySmartBB->group->GetSectionGroupList($GroupArr);
-		
-		//////////
 				
+		$SecArr 						= 	array();
+		$SecArr['get_from']				=	'db';
+		
+		$SecArr['proc'] 				= 	array();
+		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		
+		$SecArr['order']				=	array();
+		$SecArr['order']['field']		=	'sort';
+		$SecArr['order']['type']		=	'ASC';
+		
+		$SecArr['where']				=	array();
+		$SecArr['where'][0]['name']		= 	'parent';
+		$SecArr['where'][0]['oper']		= 	'=';
+		$SecArr['where'][0]['value']	= 	'0';
+		
+		// Get main sections
+		$cats = $MySmartBB->section->GetSectionsList($SecArr);
+		
+		// We will use forums_list to store list of forums which will view in main page
 		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
 		
-		//////////
-		
-		foreach ($forums as $forum)
+		// Loop to read the information of main sections
+		foreach ($cats as $cat)
 		{
-			//////////
+			// Get the groups information to know view this section or not
+			$groups = unserialize(base64_decode($cat['sectiongroup_cache']));
 			
-			$MySmartBB->functions->CleanVariable($forum,'html');
-			
-			//////////
-			
-			foreach ($groups as $group)
-			{	
-				//////////
-				
-				$MySmartBB->functions->CleanVariable($group,'html');
-				
-				//////////
-				
-				if ($group['section_id'] == $forum['cat_id'] 
-					and $group['main_section'] == 1)
+			if (is_array($groups[$MySmartBB->_CONF['group_info']['id']]))
+			{
+				if ($groups[$MySmartBB->_CONF['group_info']['id']]['view_section'])
 				{
-					if ($group['group_id'] == $MySmartBB->_CONF['group_info']['id'])
-					{
-						if ($group['view_section'])
-						{
-							if (empty($forum['from_main_section']))
-							{
-								$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_m'] = $forum;
-							}
-						}
-					}
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
 				}
-				
-				//////////
-				
-				elseif ($group['section_id'] == $forum['id'] 
-						and $group['main_section'] != 1)
-				{
-					if ($group['group_id'] == $MySmartBB->_CONF['group_info']['id'])
-					{	
-						if ($group['view_section'])
-						{
-							if (!empty($forum['from_main_section']))
-							{
-								$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-							}
-						}
-					}
-				}
-				
-				//////////
-				
 			}
 			
-			//////////
-		}
+			unset($groups);
+			
+			if (!empty($cat['forums_cache']))
+			{
+				$forums = unserialize(base64_decode($cat['forums_cache']));
+				
+				foreach ($forums as $forum)
+				{
+					if (is_array($forum['groups'][$MySmartBB->_CONF['group_info']['id']]))
+					{
+						if ($forum['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+						{
+							$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+						}
+					} // end if is_array
+				} // end foreach ($forums)
+			} // end !empty($forums_cache)
+		} // end foreach ($cats)
 		
 		//////////
 				
 		$MySmartBB->template->display('search');
 		
 		//////////
+		
+		$MySmartBB->functions->GetFooter();
 	}
 		
 	/**
@@ -146,7 +116,10 @@ class MySmartSearchEngineMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('نتائج البحث');
+		if (!$MySmartBB->_POST['ajax'])
+		{
+			$MySmartBB->functions->ShowHeader('نتائج البحث');
+		}
 		
 		//////////
 		
@@ -170,7 +143,9 @@ class MySmartSearchEngineMOD
 		
 		if (!$MySmartBB->_CONF['template']['while']['SearchResult'])
 		{
-			$MySmartBB->functions->error('لا يوجد نتائج');
+			$stop = ($MySmartBB->_CONF['info_row']['ajax_search'] and !$MySmartBB->_POST['ajax']) ? false : true;
+			
+			$MySmartBB->functions->error('لا يوجد نتائج',$stop,$stop);
 		}
 		
 		//////////
@@ -180,6 +155,18 @@ class MySmartSearchEngineMOD
 		$MySmartBB->template->assign('highlight',$keyword);
 		
 		$MySmartBB->template->display('search_results');
+		
+		if ($MySmartBB->_CONF['info_row']['ajax_search'])
+		{
+			if (!$MySmartBB->_POST['ajax'])
+			{
+				$MySmartBB->functions->GetFooter();
+			}
+		}
+		else
+		{
+			$MySmartBB->functions->GetFooter();
+		}
 	}
 }
 	

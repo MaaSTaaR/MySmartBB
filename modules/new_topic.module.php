@@ -169,7 +169,35 @@ class MySmartTopicAddMOD
      	// Instead of send a whole version of $this->SectionGroup to template engine
      	// We just send options which we really need, we use this way to save memory
      	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
-     			
+     	
+		////////
+		
+		$Admin = false;
+
+		if ($MySmartBB->_CONF['member_permission'])
+		{
+			if ($MySmartBB->_CONF['group_info']['admincp_allow']
+				or $MySmartBB->_CONF['group_info']['vice'])
+			{
+				$Admin = true;
+			}
+			else
+			{
+				if (isset($this->SectionInfo))
+				{
+					$AdminArr = array();
+					$AdminArr['username'] = $MySmartBB->_CONF['member_row']['username'];
+					$AdminArr['section_id'] = $this->SectionInfo['id'];
+
+					$Admin = $MySmartBB->moderator->IsModerator($AdminArr);
+				}
+			}
+		}
+		
+		////////
+		
+		$MySmartBB->template->assign('Admin',$Admin);
+		
      	$MySmartBB->template->display('new_topic');
 	}
 	
@@ -218,7 +246,7 @@ class MySmartTopicAddMOD
       			$MySmartBB->functions->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
      		}
      	}
-     		
+     	
      	$SubjectArr 								= 	array();
      	$SubjectArr['get_id']						=	true;
      	$SubjectArr['field']						=	array();
@@ -234,6 +262,16 @@ class MySmartTopicAddMOD
      	$SubjectArr['field']['poll_subject'] 		= 	0;
      	$SubjectArr['field']['attach_subject'] 		= 	0;
      	$SubjectArr['field']['tags_cache']			=	$MySmartBB->_POST['tags'];
+     	
+     	if ($MySmartBB->_POST['stick'])
+     	{
+     		$SubjectArr['field']['stick'] = 1;
+     	}
+     	
+     	if ($MySmartBB->_POST['close'])
+     	{
+     		$SubjectArr['field']['close'] = 1;
+     	}
      	
      	$Insert = $MySmartBB->subject->InsertSubject($SubjectArr);
      				

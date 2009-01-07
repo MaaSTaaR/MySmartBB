@@ -26,8 +26,8 @@ class MySmartManagementMOD
 		
 		$MySmartBB->functions->ShowHeader('ادارة المواضيع');
 		
-		if ($this->_ModeratorCheck())
-		{	
+		if ($MySmartBB->functions->ModeratorCheck())
+		{
 			if ($MySmartBB->_GET['subject'])
 			{
 				$this->_Subject();
@@ -355,9 +355,9 @@ class MySmartManagementMOD
 			$MySmartBB->functions->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 						= 	array();
-		$UpdateArr['reason'] 	= 	$MySmartBB->_POST['reason'];
-		$UpdateArr['where'] 			= 	array('id',$MySmartBB->_GET['subject_id']);
+		$UpdateArr 					= 	array();
+		$UpdateArr['reason'] 		= 	$MySmartBB->_POST['reason'];
+		$UpdateArr['where'] 		= 	array('id',$MySmartBB->_GET['subject_id']);
 
 		$update = $MySmartBB->subject->MoveSubjectToTrash($UpdateArr);
 
