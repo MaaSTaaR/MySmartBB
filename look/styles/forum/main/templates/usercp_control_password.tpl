@@ -1,5 +1,7 @@
 {template}usercp_menu{/template}
 
+<div class="usercp_context">
+
 {template}address_bar_part1{/template}
 <a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} تغيير الكلمه السريه
 {template}address_bar_part2{/template}
@@ -35,3 +37,5 @@
 <div align="center"><input type="submit" value="موافق" /></div>
 
 </form>
+
+</div>

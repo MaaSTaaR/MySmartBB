@@ -493,8 +493,6 @@ class MySmartPrivateMassegeMOD
 		
 		$MySmartBB->functions->ShowHeader('قائمة الرسائل');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' قائمة الرسائل');
-		
 		if (empty($MySmartBB->_GET['folder']))
 		{
 			$MySmartBB->functions->error('المعذره .. المسار المتبع غير صحيح');

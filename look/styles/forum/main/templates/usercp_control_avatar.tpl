@@ -41,6 +41,8 @@ $(document).ready(Ready);
 
 {template}usercp_menu{/template}
 
+<div class="usercp_context">
+
 {template}address_bar_part1{/template}
 <a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} الصوره الشخصيه
 {template}address_bar_part2{/template}
@@ -122,7 +124,6 @@ $(document).ready(Ready);
 	</div>
 </form>
 
-</td>
-</tr>
-</table>
+</div>
+
 <br />

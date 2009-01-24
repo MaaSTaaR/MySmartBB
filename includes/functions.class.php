@@ -332,6 +332,123 @@ class MySmartFunctions
 				
 		return $Mod;
 	}
+	
+	function GetForumsList()
+	{
+		global $MySmartBB;
+		
+		$SecArr 						= 	array();
+		$SecArr['get_from']				=	'db';
+		
+		$SecArr['proc'] 				= 	array();
+		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		
+		$SecArr['order']				=	array();
+		$SecArr['order']['field']		=	'sort';
+		$SecArr['order']['type']		=	'ASC';
+		
+		$SecArr['where']				=	array();
+		$SecArr['where'][0]['name']		= 	'parent';
+		$SecArr['where'][0]['oper']		= 	'=';
+		$SecArr['where'][0]['value']	= 	'0';
+		
+		// Get main sections
+		$cats = $MySmartBB->section->GetSectionsList($SecArr);
+		
+		// We will use forums_list to store list of forums which will view in main page
+		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+		
+		// Loop to read the information of main sections
+		foreach ($cats as $cat)
+		{
+			// Get the groups information to know view this section or not
+			$groups = unserialize(base64_decode($cat['sectiongroup_cache']));
+			
+			if (is_array($groups[$MySmartBB->_CONF['group_info']['id']]))
+			{
+				if ($groups[$MySmartBB->_CONF['group_info']['id']]['view_section'])
+				{
+					$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
+				}
+			}
+			
+			unset($groups);
+			
+			if (!empty($cat['forums_cache']))
+			{
+				$forums = unserialize(base64_decode($cat['forums_cache']));
+				
+				foreach ($forums as $forum)
+				{
+					if (is_array($forum['groups'][$MySmartBB->_CONF['group_info']['id']]))
+					{
+						if ($forum['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+						{
+							//////////
+							
+							// Get the first-level sub forums as a _link_ and store it in $forum['sub']
+							
+							$forum['is_sub'] 	= 	0;
+							$forum['sub']		=	'';
+							
+							if (!empty($forum['forums_cache']))
+							{
+								$subs = unserialize(base64_decode($forum['forums_cache']));
+								
+								if (is_array($subs))
+								{
+									foreach ($subs as $sub)
+									{
+										if (is_array($sub['groups'][$MySmartBB->_CONF['group_info']['id']]))
+										{
+											if ($sub['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+											{
+												if (!$forum['is_sub'])
+												{
+													$forum['is_sub'] = 1;
+												}
+												
+												$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub['id'] . '">' . $sub['title'] . '</a> ، ';
+											}
+										}
+									}
+								}
+							}
+							
+							//////////
+							
+							// Get the moderators list as a _link_ and store it in $forum['moderators_list']
+							
+							$forum['is_moderators'] 		= 	0;
+							$forum['moderators_list']		=	'';
+							
+							if (!empty($forum['moderators']))
+							{
+								$moderators = unserialize($forum['moderators']);
+								
+								if (is_array($moderators))
+								{
+									foreach ($moderators as $moderator)
+									{
+										if (!$forum['is_moderators'])
+										{
+											$forum['is_moderators'] = 1;
+										}
+										
+										$forum['moderators_list'] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
+									}
+								}
+							}
+							
+							//////////
+							
+							$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+						}
+					} // end if is_array
+				} // end foreach ($forums)
+			} // end !empty($forums_cache)
+		} // end foreach ($cats)
+	}
 }
 
 class MySmartAdminFunctions extends MySmartFunctions

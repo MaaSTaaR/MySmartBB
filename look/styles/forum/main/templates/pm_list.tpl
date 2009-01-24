@@ -1,6 +1,11 @@
 {template}usercp_menu{/template}
 
 <div class="usercp_context">
+
+{template}address_bar_part1{/template}
+<a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} الرسائل الخاصه
+{template}address_bar_part2{/template}
+
 <table border="1" class="t_style_b" width="%85" align="center">
 	<tr align="center">
 		<td width="95%" class="main1 rows_space" colspan="4">

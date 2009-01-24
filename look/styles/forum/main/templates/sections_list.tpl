@@ -1,7 +1,6 @@
 <div align="center" dir="rtl">
-{Des::foreach}{forums_list}{forum}	
-	{if {$SHOW_SUB_SECTIONS}}
-		<table width="98%" border="1" width="98%" class="t_style_b" align="center">
+{if {$SHOW_SUB_SECTIONS}}
+	<table width="98%" border="1" width="98%" class="t_style_b" align="center">
 		<tr align="right">
 			<td class="main1 rows_space" colspan="3" align="center">
 				المنتديات الفرعيه
@@ -15,7 +14,8 @@
 				التفاصيل
 			</td>
 		</tr>
-	{/if}
+{/if}
+{Des::foreach}{forums_list}{forum}
 	{if {$forum['parent']} == 0}
 		{if {$forum['sort']} != 1}
 		</table>
@@ -89,9 +89,19 @@
 				</tr>
 				<tr>
 					<td class="row1 rows_space" colspan="2">
-						<strong>منتديات فرعيه :</strong> لا يوجد
+						<strong>منتديات فرعيه :</strong>
+						{if {$forum['is_sub']}}
+							<strong>{$forum['sub']}</strong>
+						{else}
+							لا يوجد
+						{/if}
 						<br />
-						<strong>المشرفين :</strong> لا يوجد
+						<strong>المشرفون :</strong>
+						{if {$forum['is_moderators']}}
+							<strong>{$forum['moderators_list']}</strong>
+						{else}
+							لا يوجد
+						{/if}
 					</td>
 				</tr>
 		{else}

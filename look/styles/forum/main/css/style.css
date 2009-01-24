@@ -84,7 +84,7 @@ body
 	font-family: Tahoma;
     font-size: 9pt;
     
-    clear: both;
+    float: right;
 }
 
 #info_bar
@@ -174,7 +174,7 @@ body
 
 .usercp_context
 {
-	width: 87.5%;
+	width: 87%;
 	clear: left;
 	float: left;
 }

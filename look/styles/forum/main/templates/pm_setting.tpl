@@ -1,5 +1,6 @@
 {template}usercp_menu{/template}
 
+<div class="usercp_context">
 {template}address_bar_part1{/template}
 <a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إعدادات الرسائل الخاصه
 {template}address_bar_part2{/template}
@@ -84,4 +85,5 @@
 		<input name="send" type="submit" value="موافق" />
 	</div>
 
+</div>
 <br />
