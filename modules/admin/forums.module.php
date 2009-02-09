@@ -265,6 +265,7 @@ class MySmartForumsMOD extends _functions
 				$SecArr['field']['del_own_subject'] 	= 	$groups[$x]['del_own_subject'];
 				$SecArr['field']['del_own_reply'] 		= 	$groups[$x]['del_own_reply'];
 				$SecArr['field']['write_poll'] 			= 	$groups[$x]['write_poll'];
+				$SecArr['field']['no_posts'] 			= 	$groups[$x]['no_posts'];
 				$SecArr['field']['vote_poll'] 			= 	$groups[$x]['vote_poll'];
 				$SecArr['field']['main_section'] 		= 	0;
 				$SecArr['field']['group_name'] 			= 	$groups[$x]['title'];
@@ -756,6 +757,7 @@ class MySmartForumsMOD extends _functions
 			$UpdateArr['field']['del_own_subject'] 		= 	$val['del_own_subject'];
 			$UpdateArr['field']['del_own_reply'] 		= 	$val['del_own_reply'];
 			$UpdateArr['field']['write_poll'] 			= 	$val['write_poll'];
+			$UpdateArr['field']['no_posts'] 			= 	$val['no_posts'];
 			$UpdateArr['field']['vote_poll'] 			= 	$val['vote_poll'];
 			$UpdateArr['where'][0] 						= 	array('name'=>'group_id','oper'=>'=','value'=>$id);
 			$UpdateArr['where'][1] 						= 	array('con'=>'AND','name'=>'section_id','oper'=>'=','value'=>$MySmartBB->_CONF['template']['Inf']['id']);

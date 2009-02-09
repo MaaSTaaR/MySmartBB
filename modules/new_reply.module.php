@@ -268,7 +268,7 @@ class MySmartReplyAddMOD
 							
 			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']+1}))
 			{
-				$MySmartBB->functions->error('عدد حروف عنوان الموضوع أكبر من (' . $info_row['post_text_max'] . ')');
+				$MySmartBB->functions->error('عدد حروف عنوان الرد أكبر من (' . $info_row['post_text_max'] . ')');
      		}
      		
      		if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']+1}))
@@ -317,7 +317,14 @@ class MySmartReplyAddMOD
      	{
      		//////////
      		
-     		$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
+     		if ($this->SectionGroup['no_posts'])
+     		{
+     			$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
+     		}
+     		else
+     		{
+     			$posts = $MySmartBB->_CONF['member_row']['posts'];
+     		}
      		
      		if ($MySmartBB->_CONF['group_info']['usertitle_change'])
      		{
@@ -571,7 +578,7 @@ class MySmartReplyAddMOD
      			$GetArr 			= 	array();
      			$GetArr['where'] 	= 	array('id',$MySmartBB->reply->id);
      			
-     			$MySmartBB->_CONF['template']['Reply_Info'] = $MySmartBB->reply->GetReplyInfo($GetArr);
+     			$MySmartBB->_CONF['template']['Info'] = $MySmartBB->reply->GetReplyInfo($GetArr);
      			
      			$MySmartBB->_CONF['template']['Info']['id'] 				= 	$MySmartBB->_CONF['member_row']['id'];
      			$MySmartBB->_CONF['template']['Info']['username'] 			= 	$MySmartBB->_CONF['member_row']['username'];
@@ -597,24 +604,35 @@ class MySmartReplyAddMOD
 				$CheckOnline = ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
 											
 				($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
+				
+				if (empty($MySmartBB->_CONF['member_row']['username_style_cache']))
+				{
+					$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->_CONF['member_row']['username'];
+				}
+				else
+				{
+					$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->_CONF['member_row']['username_style_cache'];
+			
+					$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['Info']['display_username'],'unhtml');
+				}
 		
-				$MySmartBB->_CONF['template']['Reply_Info']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['Reply_Info']['text']);
+				$MySmartBB->_CONF['template']['Info']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['Info']['text']);
 				
 				// Convert the smiles to image
-				$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Reply_Info']['text']);
+				$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Info']['text']);
 			
 				// Member signture is not empty , show make it nice with SmartCode
 				if (!empty($MySmartBB->_CONF['member_row']['user_sig']))
 				{
-					$MySmartBB->_CONF['template']['Reply_Info']['user_sig'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['member_row']['user_sig']);
+					$MySmartBB->_CONF['template']['Info']['user_sig'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['member_row']['user_sig']);
 					
-					$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Reply_Info']['user_sig']);
+					$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Info']['user_sig']);
 				}
 				
-				$reply_date = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Reply_Info']['write_time']);
-				$reply_time = $MySmartBB->functions->time($MySmartBB->_CONF['template']['Reply_Info']['write_time']);
+				$reply_date = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Info']['write_time']);
+				$reply_time = $MySmartBB->functions->time($MySmartBB->_CONF['template']['Info']['write_time']);
 		
-				$MySmartBB->_CONF['template']['Reply_Info']['write_time'] = $reply_date . ' ; ' . $reply_time;
+				$MySmartBB->_CONF['template']['Info']['write_time'] = $reply_date . ' ; ' . $reply_time;
 				
      			$MySmartBB->template->display('show_reply');
      		}

@@ -6,7 +6,7 @@
 			معلومات الكاتب
 		</td>
 		<td class="main1 rows_space" width="80%">
-			<img src="{$Reply_Info['icon']}" alt="" /> {$Reply_Info['title']}
+			<img src="{$Info['icon']}" alt="" /> {$Info['title']}
 		</td>
 	</tr>
 	<tr align="center">
@@ -14,20 +14,20 @@
 			{template}writer_info{/template}
 		</td>
 		<td class="row2" width="70%" align="right">
-			{$Reply_Info['text']}
+			{$Info['text']}
 			
-			{if {$Reply_Info['attach_reply']}}
+			{if {$Info['attach_reply']}}
 				{template}attach_show{/template}
 			{/if}
 			
-			{if {$Reply_Info['user_sig']} != ''}
+			{if {$Info['user_sig']} != ''}
 				{template}signature_show{/template}
 			{/if}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row2" width="15%">
-			{$Reply_Info['write_time']}
+			{$Info['write_time']}
 			<a title="ابلاغ عن مشاركة مخالفة" href="index.php?page=report&amp;index=1"><img alt="ابلاغ عن مشاركة مخالفة" border="0" src="{$image_path}/report.gif"></a>
 		</td>
 		<td class="row2" width="80%">
@@ -36,8 +36,8 @@
 		<input type="hidden" name="page" value="management" />
 		<input type="hidden" name="reply" value="1" />
 		<input type="hidden" name="section" value="{$section}" />
-		<input type="hidden" name="subject_id" value="{$Reply_Info['subject_id']}" />
-		<input type="hidden" name="reply_id" value="{$Reply_Info['reply_id']}" />
+		<input type="hidden" name="subject_id" value="{$Info['subject_id']}" />
+		<input type="hidden" name="reply_id" value="{$Info['reply_id']}" />
 		
 		<select name="operator">
 			<option value="edit">تحرير الرد</option>

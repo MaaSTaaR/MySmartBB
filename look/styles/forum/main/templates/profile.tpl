@@ -152,7 +152,7 @@
 		<a href="index.php?page=topic&amp;show=1&amp;id={$LastReply['id']}">{$LastReply['title']}</a>
 		</td>
 		<td width="20%" class="row1">
-		<a href="index.php?page=pm&amp;send=1&amp;index=1&amp;username={$MemberInfo['username']}">رساله خاصه</a>
+		<a href="index.php?page=pm_send&amp;send=1&amp;index=1&amp;username={$MemberInfo['username']}">رساله خاصه</a>
 		</td>
 		<td width="20%" class="row1">
 		<a href="index.php?page=send&amp;member=1&amp;index=1&amp;id={$MemberInfo['id']}">رساله بريديه</a> 

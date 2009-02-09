@@ -14,30 +14,30 @@
      	
      	<tr align="center">
      		<td class="row1">
-     			<a href="index.php?page=pm&amp;send=1&amp;index=1">إرسال رسالة</a>
+     			<a href="index.php?page=pm_send&amp;send=1&amp;index=1">إرسال رسالة</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">صندوق الرسائل</a>
+     			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">صندوق الرسائل</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm&amp;list=1&amp;folder=sent">الرسائل الصادرة</a>
+     			<a href="index.php?page=pm_list&amp;list=1&amp;folder=sent">الرسائل الصادرة</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm&amp;send_list=1&amp;index=1">قائمة المراسلات</a>
+     			<a href="index.php?page=pm_list&amp;send_list=1&amp;index=1">قائمة المراسلات</a>
      		</td>
      	</tr>
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm&amp;setting=1&amp;index=1">اعدادات الرسائل الخاصه</a>
+     			<a href="index.php?page=pm_setting&amp;setting=1&amp;index=1">اعدادات الرسائل الخاصه</a>
      		</td>
      	</tr>
      	

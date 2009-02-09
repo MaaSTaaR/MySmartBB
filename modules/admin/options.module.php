@@ -296,6 +296,20 @@ class MySmartOptionsMOD
 		
 		$update[7] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_pass_max_num'],'var_name'=>'reg_pass_max_num'));
 		
+		$update[8] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sat'],'var_name'=>'reg_Sat'));
+		
+		$update[9] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sun'],'var_name'=>'reg_Sun'));
+		
+		$update[10] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Mon'],'var_name'=>'reg_Mon'));
+		
+		$update[11] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Tue'],'var_name'=>'reg_Tue'));
+		
+		$update[12] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Wed'],'var_name'=>'reg_Wed'));
+		
+		$update[13] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Thu'],'var_name'=>'reg_Thu'));
+		
+		$update[14] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Fri'],'var_name'=>'reg_Fri'));
+		
 		if ($update[0] 
 			and $update[1] 
 			and $update[2] 
@@ -303,7 +317,14 @@ class MySmartOptionsMOD
 			and $update[4] 
 			and $update[5] 
 			and $update[6] 
-			and $update[7])
+			and $update[7]
+			and $update[8]
+			and $update[9]
+			and $update[10]
+			and $update[11]
+			and $update[12]
+			and $update[13]
+			and $update[14])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;register=1&amp;main=1');

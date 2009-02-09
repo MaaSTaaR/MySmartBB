@@ -530,7 +530,14 @@ class MySmartTopicAddMOD
      		
      		//////////
      		
-     		$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
+     		if ($this->SectionGroup['no_posts'])
+     		{
+     			$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
+     		}
+     		else
+     		{
+     			$posts = $MySmartBB->_CONF['member_row']['posts'];
+     		}
      		
      		if ($MySmartBB->_CONF['group_info']['usertitle_change'])
      		{

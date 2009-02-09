@@ -108,6 +108,7 @@ class MySmartGroupsMOD extends _functions
 		$GroupArr['field']['del_own_subject'] 			= 	$MySmartBB->_POST['del_own_subject'];
 		$GroupArr['field']['del_own_reply']			 	= 	$MySmartBB->_POST['del_own_reply'];
 		$GroupArr['field']['write_poll'] 				= 	$MySmartBB->_POST['write_poll'];
+		$GroupArr['field']['no_posts'] 		    		= 	$MySmartBB->_POST['no_posts'];
 		$GroupArr['field']['vote_poll'] 				= 	$MySmartBB->_POST['vote_poll'];
 		$GroupArr['field']['use_pm'] 					= 	$MySmartBB->_POST['use_pm'];
 		$GroupArr['field']['send_pm'] 					= 	$MySmartBB->_POST['send_pm'];
@@ -195,6 +196,7 @@ class MySmartGroupsMOD extends _functions
 				$GrpArr['field']['del_own_subject'] 	= 	$MySmartBB->_POST['del_own_subject'];
 				$GrpArr['field']['del_own_reply'] 		= 	$MySmartBB->_POST['del_own_reply'];
 				$GrpArr['field']['write_poll'] 			= 	$MySmartBB->_POST['write_poll'];
+				$GrpArr['field']['no_posts'] 			= 	$MySmartBB->_POST['no_posts'];
 				$GrpArr['field']['vote_poll'] 			= 	$MySmartBB->_POST['vote_poll'];
 				$GrpArr['field']['main_section'] 		= 	($sections['parent'] == 0) ? 1 : 0;
 				$GrpArr['field']['group_name'] 			= 	$MySmartBB->_POST['title'];
@@ -336,6 +338,7 @@ class MySmartGroupsMOD extends _functions
 		$GroupArr['field']['admincp_avater'] 			= 	$MySmartBB->_POST['admincp_avater'];
 		$GroupArr['field']['group_order'] 				= 	$MySmartBB->_POST['group_order'];
 		$GroupArr['field']['admincp_contactus'] 		= 	$MySmartBB->_POST['admincp_contactus'];
+		$GroupArr['field']['no_posts'] 		    		= 	$MySmartBB->_POST['no_posts'];
 		$GroupArr['where']								=	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
 				
 		$update = $MySmartBB->group->UpdateGroup($GroupArr);

@@ -202,7 +202,7 @@ $(document).ready(Ready);
 			</td>
 			<td class="row2">
 				<select name="usesmartcode_allow" id="select_usesmartcode_allow">
-					<option value="1"  selected="selected">نعم</option>
+					<option value="1" selected="selected">نعم</option>
 					<option value="0" >لا</option>
 				</select>
 			</td>
@@ -214,7 +214,7 @@ $(document).ready(Ready);
 			</td>
 			<td class="row1">
 				<select name="subject_order" id="select_subject_order">
-					<option value="1"  selected="selected">صاحب الردود الجديده في الاعلى</option>
+					<option value="1" selected="selected">صاحب الردود الجديده في الاعلى</option>
 					<option value="2" >الموضوع الجديد في الاعلى</option>
 					<option value="3" >الموضوع القديم في الاعلى</option>
 				</select>
@@ -346,7 +346,7 @@ $(document).ready(Ready);
 	</table>
 
 	<div align="center">
-		<input class="submit" type="submit" value="موافق" name="submit" accesskey="s" />
+		<input type="submit" value="موافق" name="submit" />
 	</div>
 
 </form>

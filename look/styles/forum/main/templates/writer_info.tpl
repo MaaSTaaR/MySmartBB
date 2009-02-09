@@ -1,4 +1,4 @@
-<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$Info['username']}</a>
+<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$Info['display_username']}</a>
 <br />
 {$Info['user_title']}
 <br />

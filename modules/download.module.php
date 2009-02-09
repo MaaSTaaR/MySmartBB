@@ -4,6 +4,7 @@ $CALL_SYSTEM 			= 	array();
 $CALL_SYSTEM['SUBJECT'] = 	true;
 $CALL_SYSTEM['SECTION'] = 	true;
 $CALL_SYSTEM['ATTACH'] 	= 	true;
+$CALL_SYSTEM['PM'] 		= 	true;
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
@@ -24,6 +25,10 @@ class MySmartDownloadMOD
 		elseif ($MySmartBB->_GET['attach'])
 		{
 			$this->_DownloadAttach();
+		}
+		elseif ($MySmartBB->_GET['pm'])
+		{
+			$this->_DownloadPM();
 		}
 	}
 	
@@ -86,10 +91,16 @@ class MySmartDownloadMOD
 			$MySmartBB->functions->error('المعذره لا يمكنك عرض هذا الموضوع');
 		}
 		
-		header('Content-Disposition: attachment;filename=' . $SubjectInfo['title'] . '.txt');
-		header('Content-type: application/download');
+		$filename = str_replace(' ','_',$SubjectInfo['title']);
+		$filename .= '.txt';
 		
-		echo $SubjectInfo['text'];
+		header('Content-Disposition: attachment;filename=' . $filename);
+		header('Content-type: text/plain');
+		
+		echo 'موضوع بعنوان : ' . $SubjectInfo['title'] . '
+الكاتب : ' . $SubjectInfo['writer'] . '
+
+' . $SubjectInfo['text'];
 	}
 	
 	function _DownloadAttach()
@@ -222,6 +233,52 @@ class MySmartDownloadMOD
 		file('./' . $AttachInfo['filepath']);
 		
 		//////////
+	}
+	
+	function _DownloadPM()
+	{
+		global $MySmartBB;
+		
+		if (empty($MySmartBB->_GET['id']))		
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		
+		$MsgArr 			= 	array();
+		$MsgArr['id'] 		= 	$MySmartBB->_GET['id'];
+		$MsgArr['username'] = 	$MySmartBB->_CONF['member_row']['username'];
+		
+		$MsgInfo = $MySmartBB->pm->GetPrivateMassegeInfo($MsgArr);
+																		
+		if (!$MsgInfo)
+		{
+			$MySmartBB->functions->error('الرساله المطلوبه غير موجوده');
+		}
+		
+		$MsgInfo['title'] = $MySmartBB->functions->CleanVariable($MsgInfo['title'],'html');
+		
+		$filename = str_replace(' ','_',$MsgInfo['title']);
+		$filename .= '.txt';
+		
+		//////////
+		
+		// Send headers
+		
+		// File name
+		header('Content-Disposition: attachment;filename=' . $filename);
+		
+		// MIME
+		header('Content-type: text/plain');
+		
+		//////////
+		
+		echo 'عنوان الرساله : ' . $MsgInfo['title'] . '
+المرسل : ' . $MsgInfo['user_from'] . '
+
+';
+		echo $MsgInfo['text'];
 	}
 }
 

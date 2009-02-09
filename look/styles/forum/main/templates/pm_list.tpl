@@ -29,10 +29,10 @@
 	{Des::while}{MassegeList}
 	<tr align="center">
 		<td class="row1" width="5%">
-			<a href="index.php?page=pm&amp;cp=1&amp;del=1&amp;id={$MassegeList['id']}"><img alt="حذف" src="{$image_path}/trash.gif" border="0" />
+			<a href="index.php?page=pm_cp&amp;cp=1&amp;del=1&amp;id={$MassegeList['id']}"><img alt="حذف" src="{$image_path}/trash.gif" border="0" />
 		</td>
 		<td class="row1" width="20%">
-			<a href="index.php?page=pm&amp;show=1&amp;id={$MassegeList['id']}">{$MassegeList['title']}</a>
+			<a href="index.php?page=pm_show&amp;show=1&amp;id={$MassegeList['id']}">{$MassegeList['title']}</a>
 			<br />
 			{if {$MassegeList['user_read']} == 1}
 			<font class="readpm">رسالة مقروءه</font>

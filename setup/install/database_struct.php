@@ -1084,6 +1084,13 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['admin_ajax_main_rename']	= 0;
 		// Since THETA 2 (ALPHA 3)
 		$InfoArray['ajax_moderator_options']	= 0;
+		$InfoArray['reg_Sat'] 					= 1;
+		$InfoArray['reg_Sun'] 					= 1;
+		$InfoArray['reg_Mon'] 					= 1;
+		$InfoArray['reg_Tue'] 					= 1;
+		$InfoArray['reg_Wed'] 					= 1;
+		$InfoArray['reg_Thu'] 					= 1;
+		$InfoArray['reg_Fri'] 					= 1;
 		
 		$x = 0;
 		$i = array();
@@ -1150,6 +1157,8 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'member_ip varchar( 20 ) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_sig mediumtext NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'reply_sig mediumtext NOT NULL';
+		// Since ALPHA 3 (THETA 3)
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'username_style_cache varchar( 255 ) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -1352,6 +1361,8 @@ class DatabaseStruct extends MySmartInstall
 		// Since ALPHA 1
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'footer text NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'header text NOT NULL';
+		// Since ALPHA 3
+		//$this->_TempArr['CreateArr']['fields'][] 	= 	'no_posts int(1) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -1398,6 +1409,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'vote_poll int(1) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'main_section int(1) NOT NULL';
 		// Since THETA 1
+		$this->_TempArr['CreateArr']['fields'][] 	= 	"no_posts int(1) NOT NULL DEFAULT '1'";
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'group_name varchar(255) NOT NULL';
 					
 		$create = $this->create_table($this->_TempArr['CreateArr']);

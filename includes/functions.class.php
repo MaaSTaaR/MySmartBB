@@ -307,7 +307,7 @@ class MySmartFunctions
 		$MySmartBB->_CONF['template']['while']['FontRows'] = $MySmartBB->toolbox->GetFontsList($FntArr);
 	}
 	
-	function ModeratorCheck()
+	function ModeratorCheck($section_id,$username = null)
 	{
 		global $MySmartBB;
 		
@@ -323,8 +323,17 @@ class MySmartFunctions
 			else
 			{
 				$ModArr = array();
-				$ModArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-				$ModArr['section_id']	=	$MySmartBB->_POST['section'];
+				
+				if ($username == null)
+				{
+					$ModArr['username'] = $MySmartBB->_CONF['member_row']['username'];
+				}
+				else
+				{
+					$ModArr['username'] = $username;
+				}
+				
+				$ModArr['section_id']	=	$section_id;
 				
 				$Mod = $MySmartBB->moderator->IsModerator($ModArr);
 			}

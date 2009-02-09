@@ -22,7 +22,6 @@ $modules['team'] 				= 	'team.module.php';
 $modules['login'] 				= 	'login.module.php';
 $modules['logout'] 				= 	'logout.module.php';
 $modules['usercp'] 				= 	'usercp.module.php';
-$modules['pm'] 					= 	'pm.module.php';
 $modules['new_password'] 		= 	'new_password.module.php';
 $modules['new_email'] 			= 	'new_email.module.php';
 $modules['active_member'] 		= 	'active_member.module.php';
@@ -42,6 +41,11 @@ $modules['latest'] 				= 	'latest.module.php';
 $modules['send'] 				= 	'send.module.php';
 $modules['report'] 				= 	'report.module.php';
 $modules['ajax'] 				= 	'ajax.module.php';
+$modules['pm_send'] 			= 	'pm_send.module.php';
+$modules['pm_list'] 			= 	'pm_list.module.php';
+$modules['pm_show'] 			= 	'pm_show.module.php';
+$modules['pm_cp'] 				= 	'pm_cp.module.php';
+$modules['pm_setting'] 			= 	'pm_setting.module.php';
 
 //////////
 

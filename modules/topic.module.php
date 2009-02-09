@@ -184,27 +184,7 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$Mod = false;
-		
-		if ($MySmartBB->_CONF['member_permission'])
-		{
-			if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
-				or $MySmartBB->_CONF['group_info']['vice'])
-			{
-				$Mod = true;
-			}
-			else
-			{
-				if (isset($this->SectionInfo))
-				{
-					$ModArr = array();
-					$ModArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-					$ModArr['section_id']	=	$this->SectionInfo['id'];
-				
-					$Mod = $MySmartBB->moderator->IsModerator($ModArr);
-				}
-			}
-		}
+		$Mod = $MySmartBB->functions->ModeratorCheck($MySmartBB->_GET['id']);
 		
 		$MySmartBB->template->assign('Mod',$Mod);
 	}
@@ -302,6 +282,17 @@ class MySmartTopicMOD
 		
 		// If the member is online , so store that in status variable					
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
+		
+		if (empty($this->Info['username_style_cache']))
+		{
+			$this->Info['display_username'] = $this->Info['username'];
+		}
+		else
+		{
+			$this->Info['display_username'] = $this->Info['username_style_cache'];
+			
+			$this->Info['display_username'] = $MySmartBB->functions->CleanVariable($this->Info['display_username'],'unhtml');
+		}
 	}
 	
 	function __CheckTags()
@@ -511,6 +502,17 @@ class MySmartTopicMOD
 		$CheckOnline = ($this->RInfo[$this->x]['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
+		
+		if (empty($this->RInfo[$this->x]['username_style_cache']))
+		{
+			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username'];
+		}
+		else
+		{
+			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username_style_cache'];
+			
+			$this->RInfo[$this->x]['display_username'] = $MySmartBB->functions->CleanVariable($this->RInfo[$this->x]['display_username'],'unhtml');
+		}
 	}
 		
 	function ___ReplyFormat()
@@ -575,7 +577,7 @@ class MySmartTopicMOD
 		}
 		
 		// $RInfo to templates
-		$MySmartBB->template->assign('Reply_Info',$this->RInfo[$this->x]);
+		$MySmartBB->template->assign('Info',$this->RInfo[$this->x]);
 		$MySmartBB->template->assign('section',$this->Info['section']);
 		
 		// $x = $x + 1

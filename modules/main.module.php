@@ -155,7 +155,7 @@ class MySmartIndexMOD
 		$TodayArr['where'][0] 			= 	array();
 		
 		$TodayArr['where'][0]['name'] 	= 	'username';
-		$TodayArr['where'][0]['oper'] 	= 	'<>';
+		$TodayArr['where'][0]['oper'] 	= 	'!=';
 		$TodayArr['where'][0]['value'] 	= 	'Guest';
 		
 		$TodayArr['where'][1]			=	array();
@@ -173,7 +173,7 @@ class MySmartIndexMOD
 			$TodayArr['where'][2]			=	array();
 			$TodayArr['where'][2]['con']	=	'AND';
 			$TodayArr['where'][2]['name'] 	= 	'hide_browse';
-			$TodayArr['where'][2]['oper'] 	= 	'<>';
+			$TodayArr['where'][2]['oper'] 	= 	'!=';
 			$TodayArr['where'][2]['value'] 	= 	'1';
 		}
 		

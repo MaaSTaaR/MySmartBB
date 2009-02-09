@@ -56,7 +56,7 @@
 	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['id']}">تحميل محتوى الموضوع</a>
+			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['subject_id']}">تحميل محتوى الموضوع</a>
 		</td>
 	</tr>
 </table>

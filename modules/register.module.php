@@ -22,6 +22,11 @@ class MySmartRegisterMOD
 		{
 			$MySmartBB->functions->error('المعذره .. التسجيل مغلق');
 		}
+		
+		if (!$MySmartBB->_CONF['info_row']['reg_' . $MySmartBB->_CONF['day']])
+   		{
+   			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل اليوم');
+   		}
    		
 		/** Show register form **/
 		if ($MySmartBB->_GET['index'])
@@ -189,19 +194,34 @@ class MySmartRegisterMOD
       	}
       		
       	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
-      		
+      	
+      	//////////
+      	
+      	// Get the information of default group to set username style cache
+      	
+		$GrpArr 			= 	array();
+		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['def_group']);
+		
+		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		
+		$style = $GroupInfo['username_style'];
+		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
+		
+      	//////////
+      	
       	$InsertArr 					= 	array();
       	$InsertArr['field']			=	array();
       	
-      	$InsertArr['field']['username'] 		= 	$MySmartBB->_POST['username'];
-      	$InsertArr['field']['password'] 		= 	$MySmartBB->_POST['password'];
-      	$InsertArr['field']['email'] 			= 	$MySmartBB->_POST['email'];
-      	$InsertArr['field']['usergroup'] 		= 	$MySmartBB->_CONF['info_row']['def_group'];
-      	$InsertArr['field']['user_gender'] 		= 	$MySmartBB->_POST['gender'];
-      	$InsertArr['field']['register_date'] 	= 	$MySmartBB->_CONF['now'];
-      	$InsertArr['field']['user_title'] 		= 	'عضو';
-      	$InsertArr['field']['style'] 			= 	$MySmartBB->_CONF['info_row']['def_style'];
-      	$InsertArr['get_id']					=	true;
+      	$InsertArr['field']['username'] 			= 	$MySmartBB->_POST['username'];
+      	$InsertArr['field']['password'] 			= 	$MySmartBB->_POST['password'];
+      	$InsertArr['field']['email'] 				= 	$MySmartBB->_POST['email'];
+      	$InsertArr['field']['usergroup'] 			= 	$MySmartBB->_CONF['info_row']['def_group'];
+      	$InsertArr['field']['user_gender'] 			= 	$MySmartBB->_POST['gender'];
+      	$InsertArr['field']['register_date'] 		= 	$MySmartBB->_CONF['now'];
+      	$InsertArr['field']['user_title'] 			= 	'عضو';
+      	$InsertArr['field']['style'] 				= 	$MySmartBB->_CONF['info_row']['def_style'];
+      	$InsertArr['field']['username_style_cache']	=	$username_style_cache;
+      	$InsertArr['get_id']						=	true;
       	
       	$insert = $MySmartBB->member->InsertMember($InsertArr);
       	
@@ -258,15 +278,15 @@ class MySmartRegisterMOD
 					
 					if ($Send)
 					{
-							$MySmartBB->functions->msg('تم التسجيل بنجاح، و تم ارسال بريد التفعيل إلى بريدك الالكتروني');
-							
-							if (!$MySmartBB->_CONF['info_row']['ajax_register'])
+						$MySmartBB->functions->msg('تم التسجيل بنجاح، و تم ارسال بريد التفعيل إلى بريدك الالكتروني');
+						
+						if (!$MySmartBB->_CONF['info_row']['ajax_register'])
+						{
+							if (!isset($MySmartBB->_POST['ajax']))
 							{
-								if (!isset($MySmartBB->_POST['ajax']))
-								{
-									$MySmartBB->functions->goto('index.php');
-								}
+								$MySmartBB->functions->goto('index.php');
 							}
+						}
 					}
 				}
 			}

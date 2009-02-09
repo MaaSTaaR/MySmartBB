@@ -22,7 +22,9 @@ class MySmartAJAXtMOD
 		
 		if ($MySmartBB->_GET['management'])
 		{
-			if ($MySmartBB->functions->ModeratorCheck())
+			$MySmartBB->_POST['section'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['section'],'intval');
+			
+			if ($MySmartBB->functions->ModeratorCheck($MySmartBB->_POST['section']))
 			{
 				$MySmartBB->_POST['subject'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['subject'],'intval');
 				

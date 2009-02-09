@@ -61,19 +61,34 @@ class MySmartActiveMOD
 		{
 			$MySmartBB->functions->error('المعذره الطلب غير موجود !');
 		}
-			
+		
+      	//////////
+      	
+      	// Get the information of default group to set username style cache
+      	
+		$GrpArr 			= 	array();
+		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['adef_group']);
+		
+		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		
+		$style = $GroupInfo['username_style'];
+		$username_style_cache = str_replace('[username]',$MySmartBB->_CONF['member_row']['username'],$style);
+		
+      	//////////
+      	
 		$GroupArr 				= 	array();
 		$GroupArr['field'] 		= 	array();
 		
-		$GroupArr['field']['usergroup'] 	= 	$MySmartBB->_CONF['info_row']['adef_group'];
-		$GroupArr['where'] 					= 	array('id',$MySmartBB->_CONF['member_row']['id']);
+		$GroupArr['field']['usergroup'] 			= 	$MySmartBB->_CONF['info_row']['adef_group'];
+		$GroupArr['field']['username_style_cache']	=	$username_style_cache;
+		$GroupArr['where'] 							= 	array('id',$MySmartBB->_CONF['member_row']['id']);
 			
 		// We found the request , so active the member
 		$UpdateGroup = $MySmartBB->member->UpdateMember($GroupArr);
 		
 		// The active is success
 		if ($UpdateGroup)
-		{
+		{	
 			$MySmartBB->functions->msg('تم تفعيل عضويتك بنجاح , شكراً لك  !');
 			$MySmartBB->functions->goto('index.php');
 		}

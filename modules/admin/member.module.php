@@ -139,18 +139,33 @@ class MySmartMemberMOD extends _functions
 		
 		$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
 		
+      	//////////
+      	
+      	// Get the information of default group to set username style cache
+      	
+		$GrpArr 			= 	array();
+		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['def_group']);
+		
+		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		
+		$style = $GroupInfo['username_style'];
+		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
+		
+      	//////////
+      	
 		$InsertArr 					= 	array();
 		$InsertArr['field']			=	array();
 		
-		$InsertArr['field']['username']			= 	$MySmartBB->_POST['username'];
-		$InsertArr['field']['password']			= 	$MySmartBB->_POST['password'];
-		$InsertArr['field']['email']			= 	$MySmartBB->_POST['email'];
-		$InsertArr['field']['usergroup']		= 	4;
-		$InsertArr['field']['user_gender']		= 	$MySmartBB->_POST['gender'];
-		$InsertArr['field']['register_date']	= 	$MySmartBB->_CONF['now'];
-		$InsertArr['field']['user_title']		= 	'عضو';
-		$InsertArr['field']['style']			=	$MySmartBB->_CONF['info_row']['def_style'];
-		$InsertArr['get_id']					=	true;
+		$InsertArr['field']['username']				= 	$MySmartBB->_POST['username'];
+		$InsertArr['field']['password']				= 	$MySmartBB->_POST['password'];
+		$InsertArr['field']['email']				= 	$MySmartBB->_POST['email'];
+		$InsertArr['field']['usergroup']			= 	4;
+		$InsertArr['field']['user_gender']			= 	$MySmartBB->_POST['gender'];
+		$InsertArr['field']['register_date']		= 	$MySmartBB->_CONF['now'];
+		$InsertArr['field']['user_title']			= 	'عضو';
+		$InsertArr['field']['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
+		$InsertArr['field']['username_style_cache']	=	$username_style_cache;
+		$InsertArr['get_id']						=	true;
 		
 		$insert = $MySmartBB->member->InsertMember($InsertArr);
 		
@@ -320,9 +335,9 @@ class MySmartMemberMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MemInfo = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->check_by_id($MemInfo);
 		
 		if (empty($MySmartBB->_POST['email']) 
 			or empty($MySmartBB->_POST['user_title'])
@@ -346,28 +361,55 @@ class MySmartMemberMOD extends _functions
 			$MySmartBB->functions->error('لا يمكن التسجيل بهذا الاسم');
 		}
 		
+		//////////
+		
+		$username = (!empty($MySmartBB->_POST['new_username'])) ? $MySmartBB->_POST['new_username'] : $MemInfo['username'];
+		
+		//////////
+		
+		// If the admin change the group of this member, so we should change the cache of username style
+		
+		if ($MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'])
+		{
+			$GrpArr 			= 	array();
+			$GrpArr['where'] 	= 	array('id',$MySmartBB->_POST['usergroup']);
+			
+			$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+			
+			$style = $GroupInfo['username_style'];
+			$username_style_cache = str_replace('[username]',$username,$style);			
+		}
+		else
+		{
+			$username_style_cache = null;
+		}
+		
+		//////////
+		
 		$UpdateArr 				= 	array();
 		$UpdateArr['field'] 	= 	array();
 		
-		$UpdateArr['field']['username'] 		= 	(!empty($MySmartBB->_POST['new_username'])) ? $MySmartBB->_POST['new_username'] : $MemInfo['username'];
-		$UpdateArr['field']['password'] 		= 	(!empty($MySmartBB->_POST['new_password'])) ? md5($MySmartBB->_POST['new_password']) : $MemInfo['password'];
-		$UpdateArr['field']['email'] 			= 	$MySmartBB->_POST['email'];
-		$UpdateArr['field']['user_gender'] 		= 	$MySmartBB->_POST['gender'];
-		$UpdateArr['field']['style'] 			= 	$MySmartBB->_POST['style'];
-		$UpdateArr['field']['avater_path'] 		= 	$MySmartBB->_POST['avater_path'];
-		$UpdateArr['field']['user_info'] 		= 	$MySmartBB->_POST['user_info'];
-		$UpdateArr['field']['user_title'] 		= 	$MySmartBB->_POST['user_title'];
-		$UpdateArr['field']['posts'] 			= 	$MySmartBB->_POST['posts'];
-		$UpdateArr['field']['user_website'] 	= 	$MySmartBB->_POST['user_website'];
-		$UpdateArr['field']['user_country'] 	= 	$MySmartBB->_POST['user_country'];
-		$UpdateArr['field']['usergroup'] 		= 	$MySmartBB->_POST['usergroup'];
-		$UpdateArr['where']						=	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+		$UpdateArr['field']['username'] 			= 	$username;
+		$UpdateArr['field']['password'] 			= 	(!empty($MySmartBB->_POST['new_password'])) ? md5($MySmartBB->_POST['new_password']) : $MemInfo['password'];
+		$UpdateArr['field']['email'] 				= 	$MySmartBB->_POST['email'];
+		$UpdateArr['field']['user_gender'] 			= 	$MySmartBB->_POST['gender'];
+		$UpdateArr['field']['style'] 				= 	$MySmartBB->_POST['style'];
+		$UpdateArr['field']['avater_path'] 			= 	$MySmartBB->_POST['avater_path'];
+		$UpdateArr['field']['user_info'] 			= 	$MySmartBB->_POST['user_info'];
+		$UpdateArr['field']['user_title'] 			= 	$MySmartBB->_POST['user_title'];
+		$UpdateArr['field']['posts'] 				= 	$MySmartBB->_POST['posts'];
+		$UpdateArr['field']['user_website'] 		= 	$MySmartBB->_POST['user_website'];
+		$UpdateArr['field']['user_country'] 		= 	$MySmartBB->_POST['user_country'];
+		$UpdateArr['field']['usergroup'] 			= 	$MySmartBB->_POST['usergroup'];
+		$UpdateArr['field']['username_style_cache']	=	$username_style_cache;
+		$UpdateArr['where']							=	array('id',$MemInfo['id']);
 		
 		$update = $MySmartBB->member->UpdateMember($UpdateArr);
 		
 		if (!empty($MySmartBB->_POST['new_username']))
 		{
 			// TODO ;;;
+			// Don't forget the cache of username style here
 		}
 		
 		if ($update)

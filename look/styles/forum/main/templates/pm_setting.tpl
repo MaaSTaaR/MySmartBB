@@ -2,10 +2,10 @@
 
 <div class="usercp_context">
 {template}address_bar_part1{/template}
-<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إعدادات الرسائل الخاصه
+<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إعدادات الرسائل الخاصه
 {template}address_bar_part2{/template}
 
-<form name="info" method="post" action="index.php?page=pm&amp;setting=1&amp;start=1">
+<form name="info" method="post" action="index.php?page=pm_setting&amp;setting=1&amp;start=1">
 
 	<table align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">

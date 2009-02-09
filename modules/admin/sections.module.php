@@ -468,7 +468,7 @@ class MySmartSectionMOD extends _functions
 				$DelSubjectArr 						= 	array();
 				$DelSubjectArr['where']				=	array();
 				$DelSubjectArr['where'][0]			=	array();
-				$DelSubjectArr['where'][0]['name']	=	'section_id';
+				$DelSubjectArr['where'][0]['name']	=	'section';
 				$DelSubjectArr['where'][0]['oper']	=	'=';
 				$DelSubjectArr['where'][0]['value']	=	$SecList[$x]['id'];
 				

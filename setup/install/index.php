@@ -260,14 +260,15 @@ elseif ($MySmartBB->_GET['step'] == 5)
 	$InsertArr 					= 	array();
 	$InsertArr['field']			=	array();
 	
-	$InsertArr['field']['username']			= 	$MySmartBB->_POST['username'];
-	$InsertArr['field']['password']			= 	md5($MySmartBB->_POST['password']);
-	$InsertArr['field']['email']			= 	$MySmartBB->_POST['email'];
-	$InsertArr['field']['usergroup']		= 	1;
-	$InsertArr['field']['user_gender']		= 	$MySmartBB->_POST['gender'];
-	$InsertArr['field']['register_date']	= 	$MySmartBB->_CONF['now'];
-	$InsertArr['field']['user_title']		= 	'المشرف العام';
-	$InsertArr['field']['style']			=	1;
+	$InsertArr['field']['username']				= 	$MySmartBB->_POST['username'];
+	$InsertArr['field']['password']				= 	md5($MySmartBB->_POST['password']);
+	$InsertArr['field']['email']				= 	$MySmartBB->_POST['email'];
+	$InsertArr['field']['usergroup']			= 	1;
+	$InsertArr['field']['user_gender']			= 	$MySmartBB->_POST['gender'];
+	$InsertArr['field']['register_date']		= 	$MySmartBB->_CONF['now'];
+	$InsertArr['field']['user_title']			= 	'المشرف العام';
+	$InsertArr['field']['style']				=	1;
+	$InsertArr['field']['username_style_cache']	=	'<strong><em><span style="color: #800000;">' . $MySmartBB->_POST['username'] . '</span></em></strong>';
 	
 	$insert = $MySmartBB->member->InsertMember($InsertArr);
 	

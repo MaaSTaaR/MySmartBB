@@ -189,13 +189,29 @@
 				</select>
 			</td>
 		</tr>
+		<tr valign="top">
+			<td class="row1">
+			احتساب المشاركات
+			</td>
+			<td class="row1">
+				<select name="groups[{$SecGroupList['group_id']}][no_posts]" id="select_no_posts">
+					{if {$SecGroupList['no_posts']}}
+					<option value="1" selected="selected">نعم</option>
+					<option value="0">لا</option>
+					{else}
+					<option value="1">نعم</option>
+					<option value="0" selected="selected">لا</option>
+					{/if}
+				</select>
+			</td>
+		</tr>
 	</table>
 	
 	<br />
 	{/Des::while}
 
 	<div align="center">
-		<input class="submit" type="submit" value="موافق" name="submit" accesskey="s" />
+		<input type="submit" value="موافق" name="submit" />
 	</div>
 	
 	<br />

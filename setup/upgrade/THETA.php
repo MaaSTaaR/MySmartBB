@@ -334,6 +334,38 @@ class MySmartTHETA extends MySmartInstall
 		return ($insert) ? true : false;
 	}
 	
+	function AddNoPost()
+	{
+		global $MySmartBB;
+		
+		$this->_TempArr['AddArr'] 			= 	array();
+		$this->_TempArr['AddArr']['table'] 		= 	$MySmartBB->table['section_group'];
+		$this->_TempArr['AddArr']['field_name'] 	= 	'no_posts';
+		$this->_TempArr['AddArr']['field_des'] 		= 	'int(1)';
+		
+		$add = $this->add_field($this->_TempArr['AddArr']);
+		
+		unset($this->_TempArr['AddArr']);
+		
+		return ($add) ? true : false;
+	}
+	
+	function AddUsernameStyleCache()
+	{
+		global $MySmartBB;
+		
+		$this->_TempArr['AddArr'] 			= 	array();
+		$this->_TempArr['AddArr']['table'] 		= 	$MySmartBB->table['member'];
+		$this->_TempArr['AddArr']['field_name'] 	= 	'username_style_cache';
+		$this->_TempArr['AddArr']['field_des'] 		= 	'varchar(255)';
+		
+		$add = $this->add_field($this->_TempArr['AddArr']);
+		
+		unset($this->_TempArr['AddArr']);
+		
+		return ($add) ? true : false;
+	}
+	
 	// Rename operation(s)
 	function RenameModeratorTable()
 	{
@@ -670,6 +702,34 @@ class MySmartTHETA extends MySmartInstall
 		// Sorry! :/
 		return true;
 	}
+	
+	/** Username style cache **/
+	function GenerateUsernameStyleCache()
+	{
+		global $MySmartBB;
+		
+		$query = $MySmartBB->DB->sql_query('SELECT * FROM ' . $MySmartBB->table['group']);
+		
+		// TODO :: Pager is important here
+		while ($r = $MySmartBB->DB->sql_fetch_array($query))
+		{
+			$mem_query = $MySmartBB->DB->sql_query('SELECT * FROM ' . $MySmartBB->table['member'] . " WHERE usergroup='" . $r['id'] . "'");
+			
+			// Server will hate us :(
+			while ($mem_r = $MySmartBB->DB->sql_fetch_array($mem_query))
+			{
+				$style = $r['username_style'];
+				$username_style_cache = str_replace('[username]',$mem_r['username'],$style);
+				
+				$update = $MySmartBB->DB->sql_query('UPDATE ' . $MySmartBB->table['member'] . " SET username_style_cache='" . $username_style_cache . "' WHERE id='" . $mem_r['id'] . "'");
+				
+				if ($update)
+				{
+					$MySmartBB->functions->msg('تم توليد اسم مستخدم حسب المجموعه للمستخدم ' . $mem_r['id']);
+				}
+			}
+		}
+	}
 }
 
 $MySmartBB->install = new MySmartTHETA;
@@ -752,6 +812,12 @@ if ($MySmartBB->_GET['step'] == 1)
 	
 	$p[16] 		= 	$MySmartBB->install->AddAjaxModeratorOptions();
 	$msgs[16] 	= 	($p[16]) ? 'تم اضافة حقل التحكم بالمواضيع عن طريق اجاكس' : 'لم يتم اضافة حقل التحكم بالمواضيع عن طريق اجاكس';
+	
+	$p[17]		=	$MySmartBB->install->AddNoPost();
+	$msgs[17] 	= 	($p[17]) ? 'تم اضافة حقل التحكم بإحتساب المواضيع' : 'لم يتم اضافة حقل التحكم  بإحتساب المواضيع';
+	
+	$p[17]		=	$MySmartBB->install->AddUsernameStyleCache();
+	$msgs[17] 	= 	($p[17]) ? 'تم اضافة حقل اسم المستخدم حسب المجموعه' : 'لم يتم اضافة حقل اسم المستخدم حسب المجموعه';
 	
 	$MySmartBB->html->open_p();
 	
@@ -877,16 +943,26 @@ elseif ($MySmartBB->_GET['step'] == 5)
 		}
 	}
 		
-	$MySmartBB->html->make_link('الخطوه السادسه','?step=6');
+	$MySmartBB->html->make_link('الخطوه السادسه  -> توليد اسم مستخدم حسب المجموعه','?step=6');
 }
 elseif ($MySmartBB->_GET['step'] == 6)
 {
-	$MySmartBB->html->cells('الخطوه السادسه','main1');
+	$MySmartBB->html->cells('توليد اسم مستخدم حسب المجموعه','main1');
+	$MySmartBB->html->close_table();
+	
+	$MySmartBB->install->GenerateUsernameStyleCache();
+	
+	$MySmartBB->html->make_link('الخطوه السابعه','?step=6');
+}
+elseif ($MySmartBB->_GET['step'] == 7)
+{
+	$MySmartBB->html->cells('الخطوه السابعه','main1');
 	$MySmartBB->html->close_table();
 	
 	$Update = $MySmartBB->section->UpdateAllSectionsCache();
 	
 	$NewVersion = $MySmartBB->install->UpdateVersion();
 }
+
 
 ?>

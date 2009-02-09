@@ -195,7 +195,7 @@ class MySmartCodeParse
 		}
 
 		$return = "<table align='center' border='1' width='90%' cellpadding='0' cellspacing='0' class='t_style_a' dir='ltr'>";
-		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>ÔíÝÑå ÈÑãÌíå:</b></td></tr>";
+		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>شيفره برمجيه:</b></td></tr>";
 		$return .= "<tr><td width='1%'><br />$col1</td>";
 		$return .= "<td>" . $this->strip_smiles($col2) . "</td></tr></table>";
 

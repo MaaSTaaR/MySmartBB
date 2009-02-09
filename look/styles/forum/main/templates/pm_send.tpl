@@ -62,10 +62,10 @@ $(document).ready(Ready);
 
 <div class="usercp_context">
 {template}address_bar_part1{/template}
-<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إرسال رساله خاصه
+<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إرسال رساله خاصه
 {template}address_bar_part2{/template}
 
-<form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=pm&amp;send=1&amp;start=1">
+<form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=pm_send&amp;send=1&amp;start=1">
 
 {template}iconbox{/template}
 

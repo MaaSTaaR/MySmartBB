@@ -26,7 +26,9 @@ class MySmartManagementMOD
 		
 		$MySmartBB->functions->ShowHeader('ادارة المواضيع');
 		
-		if ($MySmartBB->functions->ModeratorCheck())
+		$MySmartBB->_GET['section'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['section'],'intval');
+		
+		if ($MySmartBB->functions->ModeratorCheck($MySmartBB->_GET['section']))
 		{
 			if ($MySmartBB->_GET['subject'])
 			{
@@ -740,31 +742,6 @@ class MySmartManagementMOD
 	    	$MySmartBB->functions->msg('تم إنزال الموضوع');
 			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
-	}
-	function _ModeratorCheck()
-	{
-		global $MySmartBB;
-		
-		$Mod = false;
-		
-		if ($MySmartBB->_CONF['member_permission'])
-		{
-			if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
-				or $MySmartBB->_CONF['group_info']['vice'])
-			{
-				$Mod = true;
-			}
-			else
-			{
-				$ModArr = array();
-				$ModArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-				$ModArr['section_id']	=	$MySmartBB->_POST['section'];
-				
-				$Mod = $MySmartBB->moderator->IsModerator($ModArr);
-			}
-		}
-				
-		return $Mod;
 	}
 }
 ?>
