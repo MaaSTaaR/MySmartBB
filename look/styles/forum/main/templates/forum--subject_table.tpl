@@ -20,6 +20,49 @@
 			آخر رد
 		</td>
 	</tr>
+	{if !{$NO_REVIEW_SUBJECTS}}
+	<tr>
+		<td width="98%" colspan="7" class="main2" align="center">
+			<strong>مواضيع بإنتظار الموافقة على النشر</strong>
+		</td>
+	</tr>
+	{Des::while}{review_subject_list}
+	<tr>
+		<td width="3%" class="review_subject1" align="center">
+			<img src="{$subject_list['icon']}" alt="" />
+		</td>
+
+		<td width="40%" class="review_subject2">
+			<a href="index.php?page=topic&show=1&id={$review_subject_list['id']}{$password}">
+				{$review_subject_list['title']} 
+			</a> 
+			{if {$review_subject_list['close']}}
+			<small>(مغلق)</small>
+			{/if}
+			<br />
+			<font class="small">{$review_subject_list['subject_describe']}</font>
+		</td>
+		<td width="20%" class="review_subject1" align="center">
+			<a href="index.php?page=profile&show=1&username={$review_subject_list['writer']}">{$review_subject_list['writer']}</a><br />
+			{$review_subject_list['write_date']}
+		</td>
+		<td width="5%" class="review_subject2" align="center">
+			{$review_subject_list['reply_number']}
+		</td>
+		<td width="5%" class="review_subject1" align="center">
+			{$review_subject_list['visitor']}
+		</td>
+		<td width="28%" class="review_subject2" align="center">
+			{if {$review_subject_list['reply_number']} <= 0}
+			لا يوجد ردود
+			{else}
+			<a href="index.php?page=profile&show=1&username={$review_subject_list['last_replier']}">{$review_subject_list['last_replier']}</a><br />
+			{$review_subject_list['reply_date']}
+			{/if}
+		</td>
+	</tr>
+	{/Des::while}
+	{/if}
 	{if !{$NO_STICK_SUBJECTS}}
 	<tr>
 		<td width="98%" colspan="6" class="main2" align="center">

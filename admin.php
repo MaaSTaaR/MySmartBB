@@ -33,6 +33,7 @@ $modules['ajax'] 			= 	'ajax.module.php';
 $modules['moderators']		=	'moderators.module.php';
 $modules['groups']			=	'groups.module.php';
 $modules['logout']			=	'logout.module.php';
+$modules['note'] 			= 	'notes.module.php';
 
 //////////
 

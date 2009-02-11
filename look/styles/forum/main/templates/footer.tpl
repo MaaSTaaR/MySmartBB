@@ -10,7 +10,8 @@
 				</select>
 			</div>
 			<div class="left_side">
-				<a href="index.php?page=latest&amp;today=1">مواضيع اليوم</a> ، <a href="">مراسلة الاداره</a>
+				
+				<a href="index.php?page=latest&amp;today=1">مواضيع اليوم</a> ، <a href="">مراسلة الاداره</a> {if {$_CONF['rows']['group_info']['admincp_allow']}} ، <a href="admin.php">لوحة الإدارة</a>{/if}
 			</div>
 		</div>
 		

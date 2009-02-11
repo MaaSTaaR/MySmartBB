@@ -43,6 +43,22 @@
 			</select>
 		</td>
 </tr>
+<tr>
+	<td class="row2">
+	تفعيل خاصية الرسائل الخاصة
+	</td>
+	<td class="row2">
+		<select name="pm_feature">
+		{if {$_CONF['info_row']['pm_feature']}}
+			<option value="1" selected="selected">نعم</option>
+			<option value="0">لا</option>
+		{else}
+			<option value="1">نعم</option>
+			<option value="0" selected="selected">لا</option>
+		{/if}
+		</select>
+	</td>
+</tr>
 </table><br />
 
 <div align="center"><tr>

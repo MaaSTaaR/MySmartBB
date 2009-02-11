@@ -21,6 +21,11 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
+		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
+		{
+			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+		}
+		
 		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
 		{
@@ -159,27 +164,10 @@ class MySmartPrivateMassegeShowMOD
 			
 			if ($Read)
 			{
-				$NumArr 						= 	array();
-				$NumArr['where'] 				= 	array();
+				$NumArr 				= 	array();
+				$NumArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
 		
-				$NumArr['where'][0] 			= 	array();
-				$NumArr['where'][0]['name'] 	= 	'user_to';
-				$NumArr['where'][0]['oper'] 	= 	'=';
-				$NumArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-				$NumArr['where'][1] 			= 	array();
-				$NumArr['where'][1]['con'] 		= 	'AND';
-				$NumArr['where'][1]['name'] 	= 	'folder';
-				$NumArr['where'][1]['oper'] 	= 	'=';
-				$NumArr['where'][1]['value'] 	= 	'inbox';
-		
-				$NumArr['where'][2] 			= 	array();
-				$NumArr['where'][2]['con'] 		= 	'AND';
-				$NumArr['where'][2]['name'] 	= 	'user_read';
-				$NumArr['where'][2]['oper'] 	= 	'=';
-				$NumArr['where'][2]['value'] 	= 	'0';
-		
-				$Number = $MySmartBB->pm->GetPrivateMassegeNumber($NumArr);
+				$Number = $MySmartBB->pm->NewMessageNumber($NumArr);
 						      															
 				$CacheArr 					= 	array();
 				$CacheArr['field']			=	array();

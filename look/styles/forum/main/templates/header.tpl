@@ -98,12 +98,15 @@
           		<a href="index.php?page=forget&amp;index=1">استرجاع كلمة المرور</a>
           	</form>
           	{else}
-          		مرحباً بك يا <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | آخر زياره لك بتاريخ  {$_COOKIE['MySmartBB_lastvisit']} |
+          		مرحباً بك يا <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | آخر زياره لك بتاريخ  {$_COOKIE['MySmartBB_lastvisit']} 
+          		{if {$_CONF['info_row']['pm_feature']}}
+          		|
           		{if {$_CONF['rows']['member_row']['unread_pm']} == 0}
          			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">لا يوجد لديك رسالة خاصة جديدة !</a>
          		{/if}
          		{if {$_CONF['rows']['member_row']['unread_pm']} > 0}
          			<a class="new_pm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">يوجد لديك {$_CONF['rows']['member_row']['unread_pm']} رساله جديده</a>
+         		{/if}
          		{/if}
           	{/if}
 		</div>

@@ -396,6 +396,12 @@ class MySmartForumMOD
 		$SubjectArr['where'][2]['oper'] 	= 	'<>';
 		$SubjectArr['where'][2]['value'] 	= 	'1';
 		
+		$SubjectArr['where'][2] 			= 	array();
+		$SubjectArr['where'][2]['con']		=	'AND';
+		$SubjectArr['where'][2]['name'] 	= 	'review_subject';
+		$SubjectArr['where'][2]['oper'] 	= 	'<>';
+		$SubjectArr['where'][2]['value'] 	= 	'1';
+		
 		if ($this->Section['hide_subject'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{			
@@ -477,13 +483,66 @@ class MySmartForumMOD
 		
 		$MySmartBB->_CONF['template']['while']['stick_subject_list'] = $MySmartBB->subject->GetSubjectList($StickSubjectArr);
 		
-		if (sizeof($StickSubjectList) <= 0)
+		if (sizeof($MySmartBB->_CONF['template']['while']['stick_subject_list']) <= 0)
 		{
 			$MySmartBB->template->assign('NO_STICK_SUBJECTS',true);
 		}
 		else
 		{
 			$MySmartBB->template->assign('NO_STICK_SUBJECTS',false);
+		}
+		
+		//////////
+		
+		// Get the list of subjects that need review
+		
+		if ($MySmartBB->functions->ModeratorCheck($this->Section['id']))
+		{
+			$ReviewSubjectArr = array();
+
+			$ReviewSubjectArr['where'] 				= 	array();
+
+			$ReviewSubjectArr['where'][0] 			= 	array();
+			$ReviewSubjectArr['where'][0]['name'] 	= 	'section';
+			$ReviewSubjectArr['where'][0]['oper'] 	= 	'=';
+			$ReviewSubjectArr['where'][0]['value'] 	= 	$this->Section['id'];
+
+			$ReviewSubjectArr['where'][1] 			= 	array();
+			$ReviewSubjectArr['where'][1]['con']	=	'AND';
+			$ReviewSubjectArr['where'][1]['name'] 	= 	'review_subject';
+			$ReviewSubjectArr['where'][1]['oper'] 	= 	'=';
+			$ReviewSubjectArr['where'][1]['value'] 	= 	'1';
+
+			$ReviewSubjectArr['where'][2] 			= 	array();
+			$ReviewSubjectArr['where'][2]['con']	=	'AND';
+			$ReviewSubjectArr['where'][2]['name'] 	= 	'delete_topic';
+			$ReviewSubjectArr['where'][2]['oper'] 	= 	'<>';
+			$ReviewSubjectArr['where'][2]['value'] 	= 	'1';
+
+			$ReviewSubjectArr['order'] 				= 	array();
+			$ReviewSubjectArr['order']['field'] 	= 	'write_time';
+			$ReviewSubjectArr['order']['type'] 		= 	'DESC';
+
+			$ReviewSubjectArr['proc'] 						= 	array();
+			// Ok Mr.XSS go to hell !
+			$ReviewSubjectArr['proc']['*'] 					= 	array('method'=>'clean','param'=>'html');
+			$ReviewSubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+			$ReviewSubjectArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+
+			$MySmartBB->_CONF['template']['while']['review_subject_list'] = $MySmartBB->subject->GetSubjectList($ReviewSubjectArr);
+
+			if (sizeof($MySmartBB->_CONF['template']['while']['review_subject_list']) <= 0)
+			{
+				$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',true);
+			}
+			else
+			{
+				$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',false);
+			}
+		}
+		else
+		{
+			$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',true);
 		}
 		
 		//////////

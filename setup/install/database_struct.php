@@ -1091,6 +1091,8 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['reg_Wed'] 					= 1;
 		$InfoArray['reg_Thu'] 					= 1;
 		$InfoArray['reg_Fri'] 					= 1;
+		$InfoArray['admin_notes']				= '';
+		$InfoArray['pm_feature']				= 1;
 		
 		$x = 0;
 		$i = array();
@@ -1363,6 +1365,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'header text NOT NULL';
 		// Since ALPHA 3
 		//$this->_TempArr['CreateArr']['fields'][] 	= 	'no_posts int(1) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'review_subject int(1) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -1706,6 +1709,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'close_reason varchar(255) NOT NULL';
 		// Since ALPHA 2 (THETA 2)
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'delete_reason varchar(255) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'review_subject int(1) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		

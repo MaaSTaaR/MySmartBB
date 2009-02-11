@@ -78,6 +78,9 @@ $(document).ready(Ready);
 				<option value="repeated">موضوع مكرر</option>
 				<option value="up">رفع الموضوع</option>
 				<option value="down">تنزيل الموضوع</option>
+				{if {$Info['review_subject']}}
+				<option value="unreview_subject">الموافقه على الموضوع</option>
+				{/if}
 			</select>
 			{if {$_CONF['info_row']['ajax_moderator_options']}}
 			<input type="button" name="control" id="control_id" value="موافق" />

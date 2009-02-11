@@ -5,7 +5,7 @@
      			<a href="index.php?page=usercp&amp;index=1">لوحة التحكم</a>
      		</td>
      	</tr>
-     	
+     	{if {$_CONF['info_row']['pm_feature']}}
      	<tr align="center">
      		<td class="main2 rows_space">
      		الرسائل الخاصة
@@ -40,7 +40,7 @@
      			<a href="index.php?page=pm_setting&amp;setting=1&amp;index=1">اعدادات الرسائل الخاصه</a>
      		</td>
      	</tr>
-     	
+     	{/if}
      	<tr>
      		<td class="main2 rows_space" align="center">
      		إدارة الملف الشخصي

@@ -68,7 +68,11 @@
 	</tr>
 	<tr align="center">
 		<td class="row1">
-			<textarea name="note" rows="9" cols="77"></textarea>
+			<form method="post" action="admin.php?page=note">
+				<textarea name="note" rows="9" cols="77">{$_CONF['info_row']['admin_notes']}</textarea>
+				<br />
+				<input type="submit" value="موافق" name="submit" />
+			</form>
 		</td>
 	</tr>
 </table>

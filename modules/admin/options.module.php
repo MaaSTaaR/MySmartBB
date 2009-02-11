@@ -176,11 +176,13 @@ class MySmartOptionsMOD
 		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['send_email'],'var_name'=>'send_email'));
 		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['admin_email'],'var_name'=>'admin_email'));
 		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['guest_online'],'var_name'=>'show_onlineguest'));
+		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['pm_feature'],'var_name'=>'pm_feature'));
 		
 		if ($update[0] 
 			and $update[1] 
 			and $update[2] 
-			and $update[3])
+			and $update[3]
+			and $update[4])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;general=1&amp;main=1');

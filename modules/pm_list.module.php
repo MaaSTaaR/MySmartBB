@@ -17,6 +17,11 @@ class MySmartPrivateMassegeListMOD
 	{
 		global $MySmartBB;
 		
+		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
+		{
+			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+		}
+		
 		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
 		{

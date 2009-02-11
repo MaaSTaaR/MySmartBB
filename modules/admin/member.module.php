@@ -144,7 +144,7 @@ class MySmartMemberMOD extends _functions
       	// Get the information of default group to set username style cache
       	
 		$GrpArr 			= 	array();
-		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['def_group']);
+		$GrpArr['where'] 	= 	array('id',4);
 		
 		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
 		

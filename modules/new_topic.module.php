@@ -16,6 +16,7 @@ $CALL_SYSTEM['POLL'] 			= 	true;
 $CALL_SYSTEM['TAG'] 			= 	true;
 $CALL_SYSTEM['FILESEXTENSION'] 	= 	true;
 $CALL_SYSTEM['ATTACH'] 			= 	true;
+$CALL_SYSTEM['MODERATORS'] 		= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
@@ -172,31 +173,11 @@ class MySmartTopicAddMOD
      	
 		////////
 		
-		$Admin = false;
-
-		if ($MySmartBB->_CONF['member_permission'])
-		{
-			if ($MySmartBB->_CONF['group_info']['admincp_allow']
-				or $MySmartBB->_CONF['group_info']['vice'])
-			{
-				$Admin = true;
-			}
-			else
-			{
-				if (isset($this->SectionInfo))
-				{
-					$AdminArr = array();
-					$AdminArr['username'] = $MySmartBB->_CONF['member_row']['username'];
-					$AdminArr['section_id'] = $this->SectionInfo['id'];
-
-					$Admin = $MySmartBB->moderator->IsModerator($AdminArr);
-				}
-			}
-		}
-		
-		////////
+		$Admin = $MySmartBB->functions->ModeratorCheck($MySmartBB->_GET['id']);
 		
 		$MySmartBB->template->assign('Admin',$Admin);
+				
+		////////
 		
      	$MySmartBB->template->display('new_topic');
 	}
@@ -263,6 +244,12 @@ class MySmartTopicAddMOD
      	$SubjectArr['field']['attach_subject'] 		= 	0;
      	$SubjectArr['field']['tags_cache']			=	$MySmartBB->_POST['tags'];
      	
+		if ($this->SectionInfo['review_subject']
+			and !$MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+		{
+			$SubjectArr['field']['review_subject'] = 1;
+		}
+		
      	if ($MySmartBB->_POST['stick'])
      	{
      		$SubjectArr['field']['stick'] = 1;
@@ -611,8 +598,17 @@ class MySmartTopicAddMOD
      		
      		//////////
      		
-     		$MySmartBB->functions->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-     		$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->subject->id . $MySmartBB->_CONF['template']['password']);
+     		if (!$this->SectionInfo['review_subject']
+     			or $MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+			{
+     			$MySmartBB->functions->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
+     			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->subject->id . $MySmartBB->_CONF['template']['password']);
+     		}
+     		else
+     		{
+     			$MySmartBB->functions->msg('نشكرك لمشاركتك! مشاركتك لن تضاف حتى تتم الموافقة عليها من قبل الإدارة. سيتم الآن إعادتك الى المنتدى.');
+     			$MySmartBB->functions->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
+     		}
      		
      		//////////
      	}

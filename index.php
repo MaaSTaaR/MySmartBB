@@ -46,6 +46,7 @@ $modules['pm_list'] 			= 	'pm_list.module.php';
 $modules['pm_show'] 			= 	'pm_show.module.php';
 $modules['pm_cp'] 				= 	'pm_cp.module.php';
 $modules['pm_setting'] 			= 	'pm_setting.module.php';
+$modules['review_subject'] 		= 	'review_subject.module.php';
 
 //////////
 

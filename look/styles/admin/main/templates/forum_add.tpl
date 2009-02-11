@@ -245,6 +245,18 @@ $(document).ready(Ready);
 			</td>
 		</tr>
 		
+		<tr>
+			<td class="row1">
+			المواضيع المنشوره لا يتم طرحها إلا بعد الموافقه عليها من خلال المشرف او المدير
+			</td>
+			<td class="row1">
+				<select name="review_subject">
+					<option value="1">نعم</option>
+					<option value="0" selected="selected">لا</option>
+				</select>
+			</td>
+		</tr>
+		
 		<tr align="center">
 			<td class="main1" colspan="2">
 			الوصف
