@@ -5,21 +5,21 @@
 <br />
 
 <form action="admin.php?page=forums&amp;edit=1&amp;start=1&amp;id={$Inf['id']}" method="post">
-	<table width="90%" class="t_style_b" border="1" align="center">
+	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			تحرير المنتدى : {$Inf['title']}
+			المعلومات الاساسيه
 			</td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<td class="row1">
 			اسم المنتدى
 			</td>
 			<td class="row1">
-				<input type="text" name="name" value="{$Inf['title']}" />
+				<input type="text" name="name" value="{$Inf['title']}" size="30" />
 			</td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<td class="row2">
 			ترتيبه
 			</td>
@@ -28,58 +28,8 @@
 			</td>
 		</tr>
 		<tr align="center">
-			<td class="main1" colspan="2">
-			صورة المنتدى
-			</td>
-		</tr>
-		<tr>
-			<td class="row1">
-			السماح بظهور صوره للمنتدى
-			</td>
-			<td class="row1">
-				<select name="use_section_picture">
-				{if {$Inf['use_section_picture']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
-				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
-				{/if}
-				</select>
-			</td>
-		</tr>
-		<tr>
 			<td class="row2">
-			صورة المنتدى
-			</td>
-			<td class="row2">
-				<input type="text" name="section_picture" value="{$Inf['section_picture']}" />
-			</td>
-		</tr>
-		<tr>
-			<td class="row1">
-			مكان صورة المنتدى
-			</td>
-			<td class="row1">
-				<select name="sectionpicture_type">
-				{if {$Inf['sectionpicture_type']} == 1}
-					<option value="1" selected="selected">مكان ايقونة المنتدى</option>
-					<option value="2">فوق الوصف الخاص بالمنتدى</option>
-				{elseif {$Inf['sectionpicture_type']} == 2}
-					<option value="1">مكان ايقونة المنتدى</option>
-					<option value="2" selected="selected">فوق الوصف الخاص بالمنتدى</option>
-				{/if}
-				</select>
-			</td>
-		</tr>
-		<tr align="center">
-			<td class="main1" colspan="2">
 			تواجد المنتدى
-			</td>
-		</tr>
-		<tr>
-			<td class="row2">
-			يقع تحت القسم الرئيسي
 			</td>
 			<td class="row2">
 				<select name="parent" id="select_parent">
@@ -101,12 +51,82 @@
 				</select>
 			</td>
 		</tr>
+	</table>
+	
+	<br />
+	
+	<table width="40%" class="t_style_b" border="1" align="center">
+		<tr align="center">
+			<td class="main1" colspan="2">
+			الوصف
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row1" colspan="2">
+				<textarea name="describe" rows="5" cols="40" wrap="virtual" dir="rtl">{$Inf['section_describe']}</textarea>
+			</td>
+		</tr>
+	</table>
+	
+	<br />
+	
+	<table width="40%" class="t_style_b" border="1" align="center">
+		<tr align="center">
+			<td class="main1" colspan="2">
+			صورة المنتدى
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row1">
+			السماح بظهور صوره للمنتدى
+			</td>
+			<td class="row1">
+				<select name="use_section_picture">
+				{if {$Inf['use_section_picture']}}
+					<option value="1" selected="selected">نعم</option>
+					<option value="0">لا</option>
+				{else}
+					<option value="1">نعم</option>
+					<option value="0" selected="selected">لا</option>
+				{/if}
+				</select>
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row2">
+			صورة المنتدى
+			</td>
+			<td class="row2">
+				<input type="text" name="section_picture" value="{$Inf['section_picture']}" />
+			</td>
+		</tr>
+		<tr align="center">
+			<td class="row1">
+			مكان صورة المنتدى
+			</td>
+			<td class="row1">
+				<select name="sectionpicture_type">
+				{if {$Inf['sectionpicture_type']} == 1}
+					<option value="1" selected="selected">مكان ايقونة المنتدى</option>
+					<option value="2">فوق الوصف الخاص بالمنتدى</option>
+				{elseif {$Inf['sectionpicture_type']} == 2}
+					<option value="1">مكان ايقونة المنتدى</option>
+					<option value="2" selected="selected">فوق الوصف الخاص بالمنتدى</option>
+				{/if}
+				</select>
+			</td>
+		</tr>
+	</table>
+	
+	<br />
+	
+	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
 			نوع المنتدى
 			</td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<td class="row1">
 			المنتدى عباره عن وصله
 			</td>
@@ -122,7 +142,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr>
+		<tr align="center">
 			<td class="row2">
 			الوصله
 			</td>
@@ -130,6 +150,11 @@
 				<input type="text" name="linksite" value="{$Inf['linksite']}" />
 			</td>
 		</tr>
+	</table>
+	
+	<br />
+	
+	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
 			خيارات
@@ -256,16 +281,11 @@
 				</select>
 			</td>
 		</tr>
-		<tr align="center">
-			<td class="main1" colspan="2">
-			الوصف
-			</td>
-		</tr>
-		<tr align="center">
-			<td class="row1" colspan="2">
-				<textarea name="describe" rows="10" cols="40" wrap="virtual" dir="rtl">{$Inf['section_describe']}</textarea>
-			</td>
-		</tr>
+	</table>
+	
+	<br />
+	
+	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
 			نص يظهر اعلى المنتدى (يمكنك استخدام HTML)

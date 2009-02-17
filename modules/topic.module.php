@@ -26,6 +26,7 @@ class MySmartTopicMOD
 	var $SectionGroup;
 	var $RInfo;
 	var $x = 0;
+	var $reply_number = 0;
 	
 	/**
 	 * The main function , will require from kernel file "index.php"
@@ -283,6 +284,8 @@ class MySmartTopicMOD
 		// If the member is online , so store that in status variable					
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
+		$MySmartBB->smartparse->replace_smiles($this->Info['away_msg']);
+		
 		if (empty($this->Info['username_style_cache']))
 		{
 			$this->Info['display_username'] = $this->Info['username'];
@@ -503,6 +506,8 @@ class MySmartTopicMOD
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
+		$MySmartBB->smartparse->replace_smiles($this->RInfo[$this->x]['away_msg']);
+		
 		if (empty($this->RInfo[$this->x]['username_style_cache']))
 		{
 			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username'];
@@ -513,6 +518,10 @@ class MySmartTopicMOD
 			
 			$this->RInfo[$this->x]['display_username'] = $MySmartBB->functions->CleanVariable($this->RInfo[$this->x]['display_username'],'unhtml');
 		}
+		
+		$this->RInfo[$this->x]['reply_number'] = $this->reply_number;
+		
+		$this->reply_number += 1;
 	}
 		
 	function ___ReplyFormat()

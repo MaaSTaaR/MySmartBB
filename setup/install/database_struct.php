@@ -1161,6 +1161,7 @@ class DatabaseStruct extends MySmartInstall
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'reply_sig mediumtext NOT NULL';
 		// Since ALPHA 3 (THETA 3)
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'username_style_cache varchar( 255 ) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'review_subject int( 1 ) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		

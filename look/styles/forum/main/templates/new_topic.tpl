@@ -87,6 +87,7 @@ function Ready()
 }
 
 $(document).ready(Ready);
+
 </script>
 
 {template}address_bar_part1{/template}
@@ -125,7 +126,7 @@ $(document).ready(Ready);
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" colspan="2">
-			<textarea rows="12" name="text" cols="69"></textarea>
+			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
 			<input name="insert" type="submit" value="موافق" />

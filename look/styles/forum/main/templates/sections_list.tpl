@@ -91,14 +91,14 @@
 					<td class="row1 rows_space" colspan="2">
 						<strong>منتديات فرعيه :</strong>
 						{if {$forum['is_sub']}}
-							<strong>{$forum['sub']}</strong>
+							{$forum['sub']}
 						{else}
 							لا يوجد
 						{/if}
 						<br />
 						<strong>المشرفون :</strong>
 						{if {$forum['is_moderators']}}
-							<strong>{$forum['moderators_list']}</strong>
+							{$forum['moderators_list']}
 						{else}
 							لا يوجد
 						{/if}

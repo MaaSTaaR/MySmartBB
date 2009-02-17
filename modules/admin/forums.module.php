@@ -161,16 +161,6 @@ class MySmartForumsMOD extends _functions
 		{
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
 		}
-		elseif ($MySmartBB->_POST['use_section_picture'] == 1 
-			and empty($MySmartBB->_POST['section_picture']))
-		{
-			$MySmartBB->functions->error('لا بد من وضع وصلة الصوره');
-		}
-		elseif ($MySmartBB->_POST['linksection'] == 1 
-			and empty($MySmartBB->_POST['linksite']))
-		{
-			$MySmartBB->functions->error('لا بد من كتابة الوصله المطلوبه');
-		}
 		
 		//////////
 		
@@ -211,22 +201,11 @@ class MySmartForumsMOD extends _functions
 		$SecArr['field']['title'] 					= 	$MySmartBB->_POST['name'];
 		$SecArr['field']['sort'] 					= 	$sort;
 		$SecArr['field']['section_describe']		=	$MySmartBB->_POST['describe'];
-		$SecArr['field']['section_password']		=	$MySmartBB->_POST['section_password'];
-		$SecArr['field']['show_sig']				=	$MySmartBB->_POST['show_sig'];
-		$SecArr['field']['usesmartcode_allow']		=	$MySmartBB->_POST['usesmartcode_allow'];
-		$SecArr['field']['section_picture']			=	$MySmartBB->_POST['section_picture'];
-		$SecArr['field']['sectionpicture_type']		=	$MySmartBB->_POST['sectionpicture_type'];
-		$SecArr['field']['use_section_picture']		=	$MySmartBB->_POST['use_section_picture'];
-		$SecArr['field']['linksection']				=	$MySmartBB->_POST['linksection'];
-		$SecArr['field']['linksite']				=	$MySmartBB->_POST['linksite'];
-		$SecArr['field']['subject_order']			=	$MySmartBB->_POST['subject_order'];
-		$SecArr['field']['hide_subject']			=	$MySmartBB->_POST['hide_subject'];
-		$SecArr['field']['sec_section']				=	$MySmartBB->_POST['sec_section'];
-		$SecArr['field']['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$SecArr['field']['parent']					=	$MySmartBB->_POST['parent'];
-		$SecArr['field']['header'] 					= 	$MySmartBB->_POST['head'];
-		$SecArr['field']['footer'] 					= 	$MySmartBB->_POST['foot'];
-		$SecArr['field']['review_subject']			=	$MySmartBB->_POST['review_subject'];
+		$SecArr['field']['show_sig']				=	1;
+		$SecArr['field']['usesmartcode_allow']		=	1;
+		$SecArr['field']['subject_order']			=	1;
+		$SecArr['field']['sectionpicture_type']		=	2;
 		$SecArr['get_id']							=	true;
 		
 		$insert = $MySmartBB->section->InsertSection($SecArr);
@@ -285,7 +264,7 @@ class MySmartForumsMOD extends _functions
 			if ($cache)
 			{
 				$MySmartBB->functions->msg('تم اضافة المنتدى بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+				$MySmartBB->functions->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
 			}
 			else
 			{
@@ -474,7 +453,7 @@ class MySmartForumsMOD extends _functions
 			if ($cache)
 			{
 				$MySmartBB->functions->msg('تم تحديث القسم بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+				$MySmartBB->functions->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 			}
 			else
 			{

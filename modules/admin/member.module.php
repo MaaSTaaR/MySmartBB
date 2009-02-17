@@ -401,6 +401,7 @@ class MySmartMemberMOD extends _functions
 		$UpdateArr['field']['user_website'] 		= 	$MySmartBB->_POST['user_website'];
 		$UpdateArr['field']['user_country'] 		= 	$MySmartBB->_POST['user_country'];
 		$UpdateArr['field']['usergroup'] 			= 	$MySmartBB->_POST['usergroup'];
+		$UpdateArr['field']['review_subject'] 		= 	$MySmartBB->_POST['review_subject'];
 		$UpdateArr['field']['username_style_cache']	=	$username_style_cache;
 		$UpdateArr['where']							=	array('id',$MemInfo['id']);
 		

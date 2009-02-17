@@ -244,7 +244,7 @@ class MySmartTopicAddMOD
      	$SubjectArr['field']['attach_subject'] 		= 	0;
      	$SubjectArr['field']['tags_cache']			=	$MySmartBB->_POST['tags'];
      	
-		if ($this->SectionInfo['review_subject']
+		if (($this->SectionInfo['review_subject'] or $MySmartBB->_CONF['member_row']['review_subject'])
 			and !$MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
 		{
 			$SubjectArr['field']['review_subject'] = 1;
@@ -598,7 +598,7 @@ class MySmartTopicAddMOD
      		
      		//////////
      		
-     		if (!$this->SectionInfo['review_subject']
+     		if ((!$this->SectionInfo['review_subject'] and !$MySmartBB->_CONF['member_row']['review_subject'])
      			or $MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
 			{
      			$MySmartBB->functions->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
