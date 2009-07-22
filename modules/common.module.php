@@ -513,13 +513,12 @@ class MySmartCommon
 	function _GetStylePath()
 	{
 		global $MySmartBB;
-		global $_VARS;
 		
 		if (!strstr($MySmartBB->_CONF['rows']['style']['style_path'],'http://www.'))
 		{
 			$filename = explode('/',$MySmartBB->_CONF['rows']['style']['style_path']);
 			
-			$MySmartBB->template->assign('style_path',$_VARS['path'] . $MySmartBB->_CONF['rows']['style']['style_path']);
+			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF['rows']['style']['style_path']);
 		}
 		else
 		{
@@ -553,7 +552,7 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign('image_path',$_VARS['path'] . $MySmartBB->_CONF['rows']['style']['image_path']);
+		$MySmartBB->template->assign('image_path',$MySmartBB->_CONF['rows']['style']['image_path']);
 		
 		$MySmartBB->template->assign('_CONF',$MySmartBB->_CONF);
 		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);	

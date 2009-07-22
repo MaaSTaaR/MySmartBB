@@ -54,11 +54,34 @@
 		</td>
 	</tr>
 	{/if}
+	{if {$Info['special']}}
+	<tr algin="center">
+		<td class="row1 rows_space" width="50%" colspan="2" align="center">
+			<strong>
+				<img alt="" src="{$image_path}/special.png" /> هذا الموضوع مصنّف ضمن المواضيع المميزه
+			</strong>
+		</td>
+	</tr>
+	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['subject_id']}">تحميل محتوى الموضوع</a>
 		</td>
 	</tr>
+	<tr align="center">
+		<td class="row1 rows_space" width="50%" colspan="2">
+			<a href="index.php?page=print&amp;show=1&amp;id={$Info['subject_id']}">عرض نسخة صالحة للطباعة</a>
+		</td>
+	</tr>
+	{if {$_CONF['member_permission']}}
+	{if {$_CONF['info_row']['bookmark_feature']}}
+	<tr align="center">
+		<td class="row1 rows_space" width="50%" colspan="2">
+			<a href="index.php?page=usercp&bookmark=1&amp;add=1&amp;main=1&amp;subject_id={$Info['subject_id']}">إضافة الموضوع الى المفضلة</a>
+		</td>
+	</tr>
+	{/if}
+	{/if}
 </table>
 
 <br />

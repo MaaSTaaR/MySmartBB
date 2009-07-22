@@ -81,6 +81,12 @@ $(document).ready(Ready);
 				{if {$Info['review_subject']}}
 				<option value="unreview_subject">الموافقه على الموضوع</option>
 				{/if}
+				{if !{$Info['special']}}
+				<option value="special">موضوع متميز</option>
+				{/if}
+				{if {$Info['special']}}
+				<option value="unspecial">إلغاء التميز</option>
+				{/if}
 			</select>
 			{if {$_CONF['info_row']['ajax_moderator_options']}}
 			<input type="button" name="control" id="control_id" value="موافق" />

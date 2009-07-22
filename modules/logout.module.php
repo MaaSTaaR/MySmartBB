@@ -4,6 +4,8 @@
 
 define('STOP_STYLE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartLogoutMOD');

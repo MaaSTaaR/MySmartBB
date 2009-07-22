@@ -14,6 +14,8 @@ $CALL_SYSTEM['PM'] 			= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartManagementMOD');
@@ -124,6 +126,14 @@ class MySmartManagementMOD
 		elseif ($MySmartBB->_GET['operator'] == 'unreview_subject')
 		{
 			$this->__UnReviewSubject();
+		}
+		elseif ($MySmartBB->_GET['operator'] == 'special')
+		{
+			$this->_SpecialStart();
+		}
+		elseif ($MySmartBB->_GET['operator'] == 'unspecial')
+		{
+			$this->_UnSpecialStart();
 		}
 	}
 	
@@ -770,6 +780,59 @@ class MySmartManagementMOD
 		if ($Update)
 		{
 			$MySmartBB->functions->msg('تمت الموافقه على الموضوع');
+			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+		}
+	}
+	
+	function _SpecialStart()
+	{
+		global $MySmartBB;
+
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+
+		$SubjectArr = array();
+		$SubjectArr['field'] = array();
+		$SubjectArr['field']['special'] = 1;
+
+		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+
+		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
+
+			if ($Update)
+		{
+	    	$MySmartBB->functions->msg('تم إضافة الموضوع إلى المواضيع المميزة');
+			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+		}
+	}
+
+	function _UnSpecialStart()
+	{
+		global $MySmartBB;
+
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+
+		$SubjectArr = array();
+		$SubjectArr['field'] = array();
+		$SubjectArr['field']['special'] = 0;
+
+		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+
+		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
+
+
+		if ($Update)
+		{
+	    	$MySmartBB->functions->msg('تم إلغاء التميز عن الموضوع');
 			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}

@@ -100,6 +100,14 @@
      			<a href="index.php?page=usercp&amp;options=1&amp;subject=1&amp;main=1">مواضيعك الخاصة</a>
      		</td>
      	</tr>
+     	
+     	{if {$_CONF['info_row']['bookmark_feature']}}
+		<tr>
+			<td class="row1" align="center">
+				<a href="index.php?page=usercp&amp;bookmark=1&amp;show=1">المواضيع المفضلة</a>
+			</td>
+		</tr>
+		{/if}
      </table>
 </div>
 <br />

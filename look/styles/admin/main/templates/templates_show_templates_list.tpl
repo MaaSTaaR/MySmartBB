@@ -14,7 +14,7 @@
 <tr valign="top" align="center">
 	<td class="row1">{$template['filename']}</td>
 	<td class="row1"><a href="./admin.php?page=template&amp;edit=1&amp;main=1&amp;filename={$template['filename']}&amp;id={$StyleInfo['id']}">تحرير</a></td>
-	<td class="row1"><a href="./admin.php?page=template&amp;control=1&amp;show=1&amp;filename={$template['filename']}&amp;id={$StyleInfo['id']}">حذف</a></td>
+	<td class="row1"><a href="./admin.php?page=template&amp;del=1&amp;main=1&amp;filename={$template['filename']}&amp;id={$StyleInfo['id']}">حذف</a></td>
 </tr>
 {/Des::foreach}
 </table>

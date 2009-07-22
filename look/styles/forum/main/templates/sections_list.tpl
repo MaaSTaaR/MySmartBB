@@ -59,9 +59,11 @@
 							<br />
 						{/if}
 					{/if}
+					{if {$_CONF['info_row']['describe_feature']}}
 					{if {$forum['section_describe']} != ''}
 					{$forum['section_describe']}
 					<br />
+					{/if}
 					{/if}
 							المواضيع : {$forum['subject_num']}
 							 ، الردود : {$forum['reply_num']}
@@ -126,7 +128,9 @@
 						<br />
 					{/if}
 				{/if}
+				{if {$_CONF['info_row']['describe_feature']}}
 				{$forum['describe']}
+				{/if}
 			</td>
 			<td width="50%" align="center" class="row1" colspan="3">
 				عدد الزيارات : {$forum['linkvisitor']}

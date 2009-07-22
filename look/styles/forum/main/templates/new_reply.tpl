@@ -1,4 +1,7 @@
 <script src="includes/js/jquery.js"></script>
+{if {$_CONF['info_row']['wysiwyg_reply']}}
+<script src="includes/js/jquery.wysiwyg.js"></script>
+{/if}
 
 <script language="javascript">
 function AddMoreAttach(x)
@@ -79,7 +82,7 @@ $(document).ready(Ready);
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" colspan="2">
-			<textarea rows="12" name="text" cols="69"></textarea>
+			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
 			<input name="insert" type="submit" value="موافق" />
@@ -122,3 +125,9 @@ $(document).ready(Ready);
 </form>
 
 <br />
+
+{if {$_CONF['info_row']['wysiwyg_reply']}}
+<script language="javascript">
+$("#text_id").wysiwyg();
+</script>
+{/if}

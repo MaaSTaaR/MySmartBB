@@ -39,6 +39,10 @@
 			{if {$review_subject_list['close']}}
 			<small>(مغلق)</small>
 			{/if}
+			{if {$subject_list['special']}}
+			<small>(<font color="#FF0000">موضوع مميز</font>)</small><span align="left">
+			<img border="0" src="{$image_path}/special.png" alt="موضوع مميز" /> </span>
+			{/if}
 			<br />
 			<font class="small">{$review_subject_list['subject_describe']}</font>
 		</td>
@@ -82,6 +86,10 @@
 			{if {$stick_subject_list['close']}}
 			<small>(مغلق)</small>
 			{/if}
+			{if {$stick_subject_list['special']}}
+			<small>(<font color="#FF0000">موضوع مميز</font>)</small><span align="left">
+			<img border="0" src="{$image_path}/special.png" alt="موضوع مميز" /> </span>
+			{/if}
 			<br />
 			<font class="small">{$stick_subject_list['subject_describe']}</font>
 		</td>
@@ -121,6 +129,10 @@
 			</a>
 			{if {$subject_list['close']}}
 			<small>(مغلق)</small>
+			{/if}
+			{if {$subject_list['special']}}
+			<small>(<font color="#FF0000">موضوع مميز</font>)</small><span align="left">
+			<img border="0" src="{$image_path}/special.png" alt="موضوع مميز" /> </span>
 			{/if}
 			<br />
 			<font class="small">{$subject_list['subject_describe']}</font>

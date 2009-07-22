@@ -9,6 +9,8 @@ define('CALL_TOOLBOX_SYSTEM',true);
 $CALL_SYSTEM				=	array();
 $CALL_SYSTEM['TOOLBOX'] 	= 	true;
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 	
 define('CLASS_NAME','MySmartToolboxMOD');

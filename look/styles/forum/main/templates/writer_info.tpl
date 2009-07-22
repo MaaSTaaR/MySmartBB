@@ -5,6 +5,10 @@
 {if {$Info['avater_path']} != ''}
 	<br />
 	<img src="{$Info['avater_path']}" border="0" align="center" alt="صوره {$Info['username']} الشخصيه" />
+{else}
+	{if {$_CONF['info_row']['default_avatar']} != '' and {$_CONF['info_row']['default_avatar']} != 'http://'}
+	<img src="{$_CONF['info_row']['default_avatar']}" border="0" align="center" alt="صوره {$Info['username']} الشخصيه" />
+	{/if}
 {/if}
 
 <br /><br />

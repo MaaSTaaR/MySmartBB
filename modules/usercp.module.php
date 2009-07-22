@@ -12,6 +12,9 @@ $CALL_SYSTEM['REQUEST'] 	= 	true;
 $CALL_SYSTEM['MASSEGE'] 	= 	true;
 $CALL_SYSTEM['AVATAR'] 		= 	true;
 $CALL_SYSTEM['SUBJECT'] 	= 	true;
+$CALL_SYSTEM['BOOKMARK'] 	= 	true;
+
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');
 
@@ -159,6 +162,36 @@ class MySmartUserCPMOD
 				{
 					$this->_SubjectListMain();
 				}
+			}
+		}
+		/** **/
+		
+		/** Bookmarks **/
+		elseif ($MySmartBB->_GET['bookmark'])
+		{
+			if (!$MySmartBB->_CONF['info_row']['bookmark_feature'])
+			{
+				$MySmartBB->functions->error('المعذره .. خاصية مفضلة المواضيع موقوفة حاليا');
+			}
+			
+			if ($MySmartBB->_GET['add'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_BookmarkAddMain();
+				}
+				elseif ($MySmartBB->_GET['start'])
+				{
+					$this->_BookmarkAddStart();
+				}
+			}
+			elseif ($MySmartBB->_GET['del'])
+			{
+				$this->_BookmarkDelStart();
+			}
+			elseif ($MySmartBB->_GET['show'])
+			{
+				$this->_BookmarkShow();
 			}
 		}
 		/** **/
@@ -875,6 +908,119 @@ class MySmartUserCPMOD
 		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
 		
 		$MySmartBB->template->display('usercp_options_subjects');
+	}
+	
+	function _BookmarkAddMain()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('لوحة تحكم العضو');
+
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+
+		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
+
+		$MySmartBB->template->display('subject_bookmark_add');
+	}
+
+	function _BookmarkAddStart()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader(' إضافة الموضوع الى المفضلة');
+
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+
+		if (empty($MySmartBB->_GET['subject_id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		/** Get the Subject information **/
+		$SubArr = array();
+		$SubArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+
+		$Subject = $MySmartBB->subject->GetSubjectInfo($SubArr);
+		
+		if (!$Subject)
+		{
+			$MySmartBB->functions->error('الموضوع المطلوب غير موجود');
+		}
+		
+		// TODO :: please check group information.
+		
+		$BookmarkArr 			= 	array();
+		$BookmarkArr['field'] 	= 	array();
+
+		$BookmarkArr['field']['member_id'] 		= 	$MySmartBB->_CONF['member_row']['id'];
+		$BookmarkArr['field']['subject_id'] 	= 	$MySmartBB->_GET['subject_id'];
+		$BookmarkArr['field']['subject_title'] 	= 	$Subject['title'];
+		$BookmarkArr['field']['reason'] 		= 	$MySmartBB->_POST['reason'];
+		$BookmarkArr['get_id'] 					= 	true;
+
+		$insert = $MySmartBB->bookmark->InsertSubject($BookmarkArr);
+
+		if ($insert)
+		{
+			$MySmartBB->functions->msg('تم إضافة الموضوع الى المفضلة');
+			$MySmartBB->functions->goto('index.php?page=usercp&bookmark=1&show=1');
+		}
+	}
+	
+	function _BookmarkDelStart()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('حذف الموضوع من قائمة المواضيع المفضلة');
+
+		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+
+		if (empty($MySmartBB->_GET['id']))
+		{
+			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+		}
+		
+		$DelArr = array();
+		$DelArr['where'] = array('subject_id',$MySmartBB->_GET['id']);
+
+		$del = $MySmartBB->bookmark->DeleteSubject($DelArr);
+
+
+		if ($del)
+		{
+			$MySmartBB->functions->msg('تم حذف الموضوع');
+			$MySmartBB->functions->goto('index.php?page=usercp&bookmark=1&show=1');
+		}
+	}
+	
+	function _BookmarkShow()
+	{
+		global $MySmartBB;
+
+		$MySmartBB->functions->ShowHeader('المواضيع المفضلة الخاصة بي');
+
+		$SubjectArr = array();
+		$SubjectArr['where'] = array();
+
+		$SubjectArr['where'][0] = array();
+		$SubjectArr['where'][0]['name'] = 'member_id';
+		$SubjectArr['where'][0]['oper'] = '=';
+		$SubjectArr['where'][0]['value'] = $MySmartBB->_CONF['rows']['member_row']['id'];
+
+		$SubjectArr['order'] = array();
+		$SubjectArr['order']['field'] = 'id';
+		$SubjectArr['order']['type'] = 'DESC';
+
+		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->bookmark->GetSubjectList($SubjectArr);
+
+		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
+
+		$MySmartBB->template->display('subject_bookmark_show');
 	}
 }
 

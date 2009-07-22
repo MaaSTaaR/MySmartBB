@@ -126,6 +126,9 @@ class Install extends DatabaseStruct
 	
 		$p[31] = $this->_CreateTagsSubject();
 		$msgs[31] = ($p[31]) ? $success . $MySmartBB->table['tag_subject'] : $fail . $MySmartBB->table['tag_subject'];
+		
+		$p[32] = $this->_CreateSubjectsBookmark();
+		$msgs[32] = ($p[32]) ? $success . $MySmartBB->table['subjects_bookmark'] : $fail . $MySmartBB->table['subjects_bookmark'];
 	}
 	
 	function InsertInformation(&$msgs)

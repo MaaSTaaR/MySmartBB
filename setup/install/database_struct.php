@@ -1093,6 +1093,9 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['reg_Fri'] 					= 1;
 		$InfoArray['admin_notes']				= '';
 		$InfoArray['pm_feature']				= 1;
+		$InfoArray['bookmark_feature']			= 0;
+		$InfoArray['describe_feature']			= 1;
+		$InfoArray['default_avatar'] 			= 'http://';
 		
 		$x = 0;
 		$i = array();
@@ -1711,6 +1714,8 @@ class DatabaseStruct extends MySmartInstall
 		// Since ALPHA 2 (THETA 2)
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'delete_reason varchar(255) NOT NULL';
 		$this->_TempArr['CreateArr']['fields'][] 	= 	'review_subject int(1) NOT NULL';
+		// Since ALPHA 3 (THETA 3)
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'special int(1) NOT NULL';
 		
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
@@ -1734,6 +1739,24 @@ class DatabaseStruct extends MySmartInstall
 		$create = $this->create_table($this->_TempArr['CreateArr']);
 		
 		return ($create) ? true : false;		
+	}
+	
+	function _CreateSubjectsBookmark()
+	{
+		global $MySmartBB;
+
+		$this->_TempArr['CreateArr'] 				= 	array();
+		$this->_TempArr['CreateArr']['table_name'] 	= 	$MySmartBB->table['subjects_bookmark'];
+		$this->_TempArr['CreateArr']['fields'] 		= 	array();
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'member_id int(9) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_id int(9) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'subject_title varchar(200) NOT NULL';
+		$this->_TempArr['CreateArr']['fields'][] 	= 	'reason varchar(255) NOT NULL';
+
+		$create = $this->create_table($this->_TempArr['CreateArr']);
+
+		return ($create) ? true : false;
 	}
 	
 	function _CreateToday()

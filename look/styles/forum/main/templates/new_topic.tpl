@@ -1,6 +1,9 @@
 <script src="includes/js/jquery.js"></script>
+{if {$_CONF['info_row']['wysiwyg_topic']}}
+<script src="includes/js/jquery.wysiwyg.js"></script>
+{/if}
 
-<script language="javascript">
+<script language="javascript">                
 function ShowPollTable()
 {
 	if ($("#poll_id").is(":checked"))
@@ -87,7 +90,6 @@ function Ready()
 }
 
 $(document).ready(Ready);
-
 </script>
 
 {template}address_bar_part1{/template}
@@ -185,3 +187,9 @@ $(document).ready(Ready);
 </form>
 
 <br />
+
+{if {$_CONF['info_row']['wysiwyg_topic']}}
+<script language="javascript">
+$("#text_id").wysiwyg();
+</script>
+{/if}

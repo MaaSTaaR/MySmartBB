@@ -93,6 +93,15 @@ class MySmartCodeParse
  			
  			$search_array[] = '~\[size=([0-9]+)](.*?)\[/size]~';
  			$replace_array[] = '<div style="font-size:\\1\pt">\\2</div>';
+ 			
+ 			$search_array[] = '~\[center](.*?)\[/center]~';
+ 			$replace_array[] = '<div style="text-align: center">\\1</div>';
+ 			
+  			$search_array[] = '~\[right](.*?)\[/right]~';
+ 			$replace_array[] = '<div style="text-align: right">\\1</div>';
+ 			
+ 			$search_array[] = '~\[left](.*?)\[/left]~';
+ 			$replace_array[] = '<div style="text-align: left">\\1</div>';
  									
  			$string = preg_replace($search_array,$replace_array,$string);
  			 			
@@ -220,13 +229,16 @@ class MySmartCodeParse
 	{   		
    		global $MySmartBB;
 
-		$smiles = $MySmartBB->smartcode->GetCachedSmiles();
+		$smiles = $MySmartBB->icon->GetCachedSmiles();
 		
 		foreach ($smiles as $smile)
 		{
 			$MySmartBB->functions->CleanVariable($smile,'html');
 			
 			$text = str_replace('<img src="' . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$smile['smile_short'],$text);
+			
+			// For WYSIWYG
+			$text = str_replace('&lt;img src=&quot;' . $smile['smile_path'] . '&quot;&gt;',$smile['smile_short'],$text);
 		}
     }
     

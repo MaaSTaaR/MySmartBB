@@ -67,6 +67,12 @@
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
+					<a href="index.php?page=special_topics&amp;index=1">مواضيع المنتدى المميزة</a>
+				</div>
+				
+				<div class="menu_space"></div>
+				
+				<div class="menu_box main2">
 					<a href="index.php?page=search&amp;index=1">بحث</a>
 				</div>
 				

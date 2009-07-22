@@ -16,6 +16,8 @@ $CALL_SYSTEM['ATTACH'] 			= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartReplyAddMOD');
@@ -298,6 +300,12 @@ class MySmartReplyAddMOD
 			
 			$update = $MySmartBB->subject->CloseSubject($UpdateArr);
 		}
+     	
+     	// Hello WYSIWYG :)
+     	if ($MySmartBB->_CONF['info_row']['wysiwyg_reply'])
+     	{
+     		$MySmartBB->_POST['text'] = $MySmartBB->functions->ReplaceWYSIWYG($MySmartBB->_POST['text']);
+     	}
      	
      	$ReplyArr 			= 	array();
      	$ReplyArr['field'] 	= 	array();

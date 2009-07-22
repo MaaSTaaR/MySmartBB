@@ -139,10 +139,12 @@ function Fonts()
 	}
 }
 
-function set_smile(X)
+function set_smile(smile)
 {
-	var form = document.topic.text;
+	//var form = document.topic.text;
 	
-	form.value = form.value + " " + X + " ";
-	form.focus();
+	$("#text_id").wysiwyg("insertImage",smile);
+	
+	//form.value = form.value + " " + X + " ";
+	//form.focus();
 }

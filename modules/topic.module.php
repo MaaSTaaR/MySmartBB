@@ -15,6 +15,8 @@ $CALL_SYSTEM['TAG'] 		= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartTopicMOD');
@@ -681,6 +683,7 @@ class MySmartTopicMOD
      	
      	$MySmartBB->template->assign('stick',$this->Info['stick']);
      	$MySmartBB->template->assign('close',$this->Info['close']);
+     	$MySmartBB->template->assign('special',$this->Info['special']);
      	
      	$MySmartBB->template->display('topic_end');
 	}

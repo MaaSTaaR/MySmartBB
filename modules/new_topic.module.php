@@ -20,6 +20,8 @@ $CALL_SYSTEM['MODERATORS'] 		= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartTopicAddMOD');
@@ -226,6 +228,12 @@ class MySmartTopicAddMOD
      		{
       			$MySmartBB->functions->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
      		}
+     	}
+     	
+     	// Hello WYSIWYG :)
+     	if ($MySmartBB->_CONF['info_row']['wysiwyg_topic'])
+     	{
+     		$MySmartBB->_POST['text'] = $MySmartBB->functions->ReplaceWYSIWYG($MySmartBB->_POST['text']);
      	}
      	
      	$SubjectArr 								= 	array();
@@ -548,7 +556,7 @@ class MySmartTopicAddMOD
      		$MemberArr['field']['lastpost_time'] 	=	$MySmartBB->_CONF['now'];
      		$MemberArr['field']['user_title']		=	(isset($usertitle)) ? $usertitle : null;
      		$MemberArr['where']						=	array('id',$MySmartBB->_CONF['member_row']['id']);
-     			
+     		
    			$UpdateMember = $MySmartBB->member->UpdateMember($MemberArr);
    			
    			//////////

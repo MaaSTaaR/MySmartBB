@@ -2,6 +2,10 @@
 
 <script src="includes/js/jquery.js"></script>
 
+{if {$_CONF['info_row']['wysiwyg_freply']}}
+<script src="includes/js/jquery.wysiwyg.js"></script>
+{/if}
+
 <script language="javascript">
 function AjaxReply()
 {
@@ -109,3 +113,9 @@ $(document).ready(Ready);
 </form>
 
 <br />
+
+{if {$_CONF['info_row']['wysiwyg_freply']}}
+<script language="javascript">
+$("#text_id").wysiwyg();
+</script>
+{/if}

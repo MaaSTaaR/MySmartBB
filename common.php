@@ -27,20 +27,20 @@ if (!defined('IN_ADMIN'))
 //////////
 
 // Can't live without this file :)
-include('./MySmartBB.class.php');
+include('MySmartBB.class.php');
 
 // The master object
 $MySmartBB = new MySmartBB;
 
 //////////
 
-if (defined('IN_ADMIN'))
+if (defined('COMMON_FILE_PATH'))
 {
-	require_once('modules/admin/common.module.php');
+	require_once(COMMON_FILE_PATH);
 }
 else
 {
-	require_once('modules/common.module.php');
+	die('ERROR::COMMON_FILE_PATH_HAS_NO_VALUE');
 }
 
 //////////

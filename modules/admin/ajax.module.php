@@ -7,6 +7,8 @@ define('IN_ADMIN',true);
 $CALL_SYSTEM				=	array();
 $CALL_SYSTEM['SECTION'] 	= 	true;
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 	
 define('CLASS_NAME','MySmartAjaxMOD');

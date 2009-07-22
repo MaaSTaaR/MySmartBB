@@ -4,6 +4,8 @@
 
 define('IN_ADMIN',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartOptionsMOD');
@@ -31,6 +33,17 @@ class MySmartOptionsMOD
 				elseif ($MySmartBB->_GET['update'])
 				{
 					$this->_GeneralUpdate();
+				}
+			}
+			elseif ($MySmartBB->_GET['features'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_FeaturesMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_FeaturesUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['time'])
@@ -143,6 +156,17 @@ class MySmartOptionsMOD
 					$this->_AjaxUpdate();
 				}
 			}
+			elseif ($MySmartBB->_GET['wysiwyg'])
+			{
+				if ($MySmartBB->_GET['main'])
+				{
+					$this->_WYSIWYGMain();
+				}
+				elseif ($MySmartBB->_GET['update'])
+				{
+					$this->_WYSIWYGUpdate();
+				}
+			}
 			
 			$MySmartBB->template->display('footer');
 		}
@@ -175,17 +199,40 @@ class MySmartOptionsMOD
 		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['title'],'var_name'=>'title'));
 		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['send_email'],'var_name'=>'send_email'));
 		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['admin_email'],'var_name'=>'admin_email'));
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['guest_online'],'var_name'=>'show_onlineguest'));
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['pm_feature'],'var_name'=>'pm_feature'));
 		
 		if ($update[0] 
 			and $update[1] 
-			and $update[2] 
-			and $update[3]
-			and $update[4])
+			and $update[2])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;general=1&amp;main=1');
+		}
+	}
+	
+	function _FeaturesMain()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->template->display('options_features');
+	}
+	
+	function _FeaturesUpdate()
+	{
+		global $MySmartBB;
+		
+		$update = array();
+		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['guest_online'],'var_name'=>'show_onlineguest'));
+		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['pm_feature'],'var_name'=>'pm_feature'));
+		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['bookmark_feature'],'var_name'=>'bookmark_feature'));
+		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['describe_feature'],'var_name'=>'describe_feature'));
+		
+		if ($update[0]
+			and $update[1]
+			and $update[2]
+			and $update[3])
+		{
+			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->functions->goto('admin.php?page=options&amp;features=1&amp;main=1');
 		}
 	}
 	
@@ -485,10 +532,13 @@ class MySmartOptionsMOD
 		
 		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['max_avatar_height'],'var_name'=>'max_avatar_height'));
 		
+		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['default_avatar'],'var_name'=>'default_avatar'));
+		
 		if ($update[0] 
 			and $update[1]
 			and $update[2]
-			and $update[3])
+			and $update[3]
+			and $update[4])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;avatar=1&amp;main=1');
@@ -585,6 +635,31 @@ class MySmartOptionsMOD
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->goto('admin.php?page=options&amp;ajax=1&amp;main=1');
+		}
+	}
+	
+	function _WYSIWYGMain()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->template->display('options_wysiwyg');
+	}
+	
+	function _WYSIWYGUpdate()
+	{
+		global $MySmartBB;
+		
+		$update = array();
+		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_topic'],'var_name'=>'wysiwyg_topic'));
+		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_reply'],'var_name'=>'wysiwyg_reply'));
+		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_freply'],'var_name'=>'wysiwyg_freply'));
+		
+		if ($update[0]
+			and $update[1]
+			and $update[2])
+		{
+			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->functions->goto('admin.php?page=options&amp;wysiwyg=1&amp;main=1');
 		}
 	}
 }

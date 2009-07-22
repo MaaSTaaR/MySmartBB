@@ -8,6 +8,8 @@ $CALL_SYSTEM['PM'] 		= 	true;
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartDownloadMOD');

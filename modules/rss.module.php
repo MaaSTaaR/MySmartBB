@@ -6,6 +6,8 @@ $CALL_SYSTEM					=	array();
 $CALL_SYSTEM['SECTION'] 		= 	true;
 $CALL_SYSTEM['SUBJECT'] 		= 	true;
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartRSSMOD');

@@ -7,7 +7,7 @@
 	<tr>
 		<td class="row1">
 			{Des::while}{SmileRows}
-				<img src="{$SmileRows['smile_path']}" OnClick="set_smile('{$SmileRows['smile_short']}');" alt="{$SmileRows['smile_path']}" border="0" />
+				<img src="{$SmileRows['smile_path']}" OnClick="set_smile('{$SmileRows['smile_path']}');" alt="{$SmileRows['smile_path']}" border="0" />
 			{/Des::while}
 			<br />
 			<a class="small_text" href="JavaScript:OpenWindow('new.php?smile=1');">[عرض كل الابتسامات]</a>

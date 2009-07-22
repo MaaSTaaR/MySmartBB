@@ -79,7 +79,7 @@ class MySmartFunctions
 	/**
 	 * Show error massege and stop script
 	 */
- 	function error($msg,$no_header = false,$no_style = false)
+ 	function error($msg,$no_header = true,$no_style = false)
     {
     	global $MySmartBB;
     	
@@ -342,7 +342,7 @@ class MySmartFunctions
 		return $Mod;
 	}
 	
-	function GetForumsList()
+	function GetForumsList(&$forums_list)
 	{
 		global $MySmartBB;
 		
@@ -364,9 +364,6 @@ class MySmartFunctions
 		// Get main sections
 		$cats = $MySmartBB->section->GetSectionsList($SecArr);
 		
-		// We will use forums_list to store list of forums which will view in main page
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
 		// Loop to read the information of main sections
 		foreach ($cats as $cat)
 		{
@@ -377,7 +374,7 @@ class MySmartFunctions
 			{
 				if ($groups[$MySmartBB->_CONF['group_info']['id']]['view_section'])
 				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
+					$forums_list[$cat['id'] . '_m'] = $cat;
 				}
 			}
 			
@@ -451,12 +448,112 @@ class MySmartFunctions
 							
 							//////////
 							
-							$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+							$forums_list[$forum['id'] . '_f'] = $forum;
 						}
 					} // end if is_array
 				} // end foreach ($forums)
 			} // end !empty($forums_cache)
 		} // end foreach ($cats)
+	}
+	
+	function ReplaceWYSIWYG($text)
+	{
+		global $MySmartBB;
+		
+		// &lt; = <
+		// &quot; = "
+		// &gt; = >
+		
+		//////////
+		
+		// Smiles
+ 		$MySmartBB->smartparse->strip_smiles($text);
+ 		
+ 		//////////
+ 		
+ 		$search_array 	= 	array();
+ 		$replace_array 	= 	array();
+ 		
+ 		//////////
+ 		
+ 		// Bold
+ 		$search_array[] = '~&lt;span style=&quot;font-weight: bold;&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[b]\\1[/b]';
+ 		
+ 		// Bold & Underline
+ 		$search_array[] = '~&lt;span style=&quot;(font-weight: bold;|text-decoration: underline;) (text-decoration: underline;|font-weight: bold;)&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[b][u]\\3[/u][/b]';
+ 		
+ 		// Bold & Italic
+ 		$search_array[] = '~&lt;span style=&quot;(font-weight: bold;|font-style: italic;) (font-style: italic;|font-weight: bold;)&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[b][i]\\3[/i][/b]';
+ 		
+		// Bold & Italic & Underline
+ 		$search_array[] = '~&lt;span style=&quot;(font-weight: bold;|text-decoration: underline;|font-style: italic;) (text-decoration: underline;|font-weight: bold;|font-style: italic;) (text-decoration: underline;|font-weight: bold;|font-style: italic;)&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[b][u][i]\\4[/i][/u][/b]';
+ 		
+ 		//////////
+ 		
+ 		// Italic
+ 		$search_array[] = '~&lt;span style=&quot;font-style: italic;&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[i]\\1[/i]';
+ 		
+ 		// Italic & Underline
+ 		$search_array[] = '~&lt;span style=&quot;(font-style: italic;|text-decoration: underline;) (font-style: italic;|text-decoration: underline;)&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[i][u]\\3[/u][/i]';
+ 		
+ 		//////////
+ 		
+ 		// Underline
+ 		$search_array[] = '~&lt;span style=&quot;text-decoration: underline;&quot;&gt;(.*?)&lt;/span&gt;~';
+ 		$replace_array[] = '[u]\\1[/u]';
+ 		
+ 		//////////
+ 		
+ 		// Links
+ 		$search_array[] = '~&lt;a href=&quot;(.*?)&quot;&gt;(.*?)&lt;/a&gt;~';
+ 		$replace_array[] = '[url=\\1]\\2[/url]';
+ 		
+ 		//////////
+ 		
+ 		// Images
+ 		$search_array[] = '~&lt;img src=&quot;(.*?)&quot; alt=&quot;(.*?)&quot; border=&quot;0&quot;&gt;~';
+ 		$replace_array[] = '[img]\\1[/img]';
+ 		
+ 		
+ 		$search_array[] = '~&lt;img src=&quot;(.*?)&quot;&gt;~';
+ 		$replace_array[] = '[img]\\1[/img]';
+ 		
+ 		//////////
+ 		
+ 		// Center
+ 		$search_array[] = '~&lt;div style=&quot;text-align: center;&quot;&gt;(.*?)&lt;/div&gt;~';
+ 		$replace_array[] = '[center]\\1[/center]';
+ 		
+ 		// Right
+ 		$search_array[] = '~&lt;div style=&quot;text-align: right;&quot;&gt;(.*?)&lt;/div&gt;~';
+ 		$replace_array[] = '[right]\\1[/right]';
+ 		
+ 		// Left
+ 		$search_array[] = '~&lt;div style=&quot;text-align: left;&quot;&gt;(.*?)&lt;/div&gt;~';
+ 		$replace_array[] = '[left]\\1[/left]';
+ 		
+ 		//////////
+ 		
+ 		// New line
+ 		$search_array[] = '~&lt;br&gt;~';
+ 		$replace_array[] = '\n';
+ 		
+ 		$search_array[] = '~<br />~';
+ 		$replace_array[] = '\n';
+ 		
+ 		//////////
+ 		
+		$string = preg_replace($search_array,$replace_array,$text);
+		
+		$string = nl2br($string);
+		
+		return $string;
 	}
 }
 

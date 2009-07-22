@@ -5,6 +5,8 @@
 $CALL_SYSTEM				=	array();
 $CALL_SYSTEM['SECTION'] 	= 	true;
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartIndexMOD');
@@ -15,8 +17,6 @@ class MySmartIndexMOD
 	{
 		// Who can live without $MySmartBB ? ;)
 		global $MySmartBB;
-		
-		//$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>1));
 		
 		/**
 		 * Show header
@@ -58,7 +58,9 @@ class MySmartIndexMOD
 		
 		//////////
 		
-		$MySmartBB->functions->GetForumsList();
+		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+		
+		$MySmartBB->functions->GetForumsList(&$MySmartBB->_CONF['template']['foreach']['forums_list']);
 		
 		//////////
 	}

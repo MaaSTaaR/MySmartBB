@@ -10,6 +10,8 @@ $CALL_SYSTEM['REPLY'] 		= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 
+define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+
 include('common.php');
 
 define('CLASS_NAME','MySmartAJAXtMOD');

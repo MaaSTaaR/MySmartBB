@@ -49,6 +49,7 @@ if (is_array($CALL_SYSTEM))
 	$files[] = ($CALL_SYSTEM['POLL']) 				? 'poll.class.php' : null;
 	$files[] = ($CALL_SYSTEM['VOTE']) 				? 'vote.class.php' : null;
 	$files[] = ($CALL_SYSTEM['TAG']) 				? 'tags.class.php' : null;
+	$files[] = ($CALL_SYSTEM['BOOKMARK']) 			? 'bookmark.class.php' : null;
 	
 	////////////
 
@@ -107,6 +108,7 @@ class Engine
 	var $toolbox;
 	var $fixup;
 	var $extension;
+	var $bookmark;
 	
 	////////////
  	// Other variables
@@ -128,7 +130,7 @@ class Engine
 	// Main system
 	function Engine()
 	{
-		global $config,$_VARS,$CALL_SYSTEM;
+		global $config,$CALL_SYSTEM;
 		
 		////////////
 		
@@ -154,39 +156,40 @@ class Engine
   		
   		////////////
   		
-  		$this->table['ads'] 			= 	$this->prefix . 'ads';
-  		$this->table['announcement'] 	= 	$this->prefix . 'announcement';
-  		$this->table['attach'] 			= 	$this->prefix . 'attach';
-  		$this->table['avatar'] 			= 	$this->prefix . 'avatar';
-  		$this->table['banned'] 			= 	$this->prefix . 'banned';
-  		$this->table['email_msg'] 		= 	$this->prefix . 'email_msg';
-  		$this->table['extension'] 		= 	$this->prefix . 'extension';
-  		$this->table['group'] 			= 	$this->prefix . 'group';
-  		$this->table['info'] 			= 	$this->prefix . 'info';
-  		$this->table['member']			= 	$this->prefix . 'member';
-  		$this->table['online'] 			= 	$this->prefix . 'online';
-  		$this->table['pages'] 			= 	$this->prefix . 'pages';
-  		$this->table['pm'] 				= 	$this->prefix . 'pm';
-  		$this->table['pm_folder'] 		= 	$this->prefix . 'pm_folder';
-  		$this->table['pm_lists'] 		= 	$this->prefix . 'pm_lists';
-  		$this->table['poll'] 			= 	$this->prefix . 'poll';
-  		$this->table['reply'] 			= 	$this->prefix . 'reply';
-  		$this->table['requests'] 		= 	$this->prefix . 'requests';
-  		$this->table['section'] 		= 	$this->prefix . 'section';
-  		$this->table['smiles'] 			= 	$this->prefix . 'smiles';
-  		$this->table['style'] 			= 	$this->prefix . 'style';
-  		$this->table['subject'] 		= 	$this->prefix . 'subject';
-  		$this->table['sm_logs'] 		= 	$this->prefix . 'supermemberlogs';
-  		$this->table['today'] 			= 	$this->prefix . 'today';
-  		$this->table['toolbox'] 		= 	$this->prefix . 'toolbox';
-  		$this->table['usertitle'] 		= 	$this->prefix . 'usertitle';
-  		$this->table['vote'] 			= 	$this->prefix . 'vote';
-  		$this->table['section_group']	=	$this->prefix . 'sectiongroup';
-  		$this->table['extension']		=	$this->prefix . 'ex';
-  		$this->table['moderators']		=	$this->prefix . 'moderators';
-  		$this->table['cats']			=	$this->prefix . 'cats';
-  		$this->table['tag']				=	$this->prefix . 'tags';
-  		$this->table['tag_subject']		=	$this->prefix . 'tags_subject';
+  		$this->table['ads'] 				= 	$this->prefix . 'ads';
+  		$this->table['announcement'] 		= 	$this->prefix . 'announcement';
+  		$this->table['attach'] 				= 	$this->prefix . 'attach';
+  		$this->table['avatar'] 				= 	$this->prefix . 'avatar';
+  		$this->table['banned'] 				= 	$this->prefix . 'banned';
+  		$this->table['email_msg'] 			= 	$this->prefix . 'email_msg';
+  		$this->table['extension'] 			= 	$this->prefix . 'extension';
+  		$this->table['group'] 				= 	$this->prefix . 'group';
+  		$this->table['info'] 				= 	$this->prefix . 'info';
+  		$this->table['member']				= 	$this->prefix . 'member';
+  		$this->table['online'] 				= 	$this->prefix . 'online';
+  		$this->table['pages'] 				= 	$this->prefix . 'pages';
+  		$this->table['pm'] 					= 	$this->prefix . 'pm';
+  		$this->table['pm_folder'] 			= 	$this->prefix . 'pm_folder';
+  		$this->table['pm_lists'] 			= 	$this->prefix . 'pm_lists';
+  		$this->table['poll'] 				= 	$this->prefix . 'poll';
+  		$this->table['reply'] 				= 	$this->prefix . 'reply';
+  		$this->table['requests'] 			= 	$this->prefix . 'requests';
+  		$this->table['section'] 			= 	$this->prefix . 'section';
+  		$this->table['smiles'] 				= 	$this->prefix . 'smiles';
+  		$this->table['style'] 				= 	$this->prefix . 'style';
+  		$this->table['subject'] 			= 	$this->prefix . 'subject';
+  		$this->table['sm_logs'] 			= 	$this->prefix . 'supermemberlogs';
+  		$this->table['today'] 				= 	$this->prefix . 'today';
+  		$this->table['toolbox'] 			= 	$this->prefix . 'toolbox';
+  		$this->table['usertitle'] 			= 	$this->prefix . 'usertitle';
+  		$this->table['vote'] 				= 	$this->prefix . 'vote';
+  		$this->table['section_group']		=	$this->prefix . 'sectiongroup';
+  		$this->table['extension']			=	$this->prefix . 'ex';
+  		$this->table['moderators']			=	$this->prefix . 'moderators';
+  		$this->table['cats']				=	$this->prefix . 'cats';
+  		$this->table['tag']					=	$this->prefix . 'tags';
+  		$this->table['tag_subject']			=	$this->prefix . 'tags_subject';
+  		$this->table['subjects_bookmark'] 	= 	$this->prefix . 'subjects_bookmark';
   		
   		////////////
   		
@@ -270,6 +273,7 @@ class Engine
 		$this->poll 			= 	($CALL_SYSTEM['POLL']) 				? new MySmartPoll($this) : null;
 		$this->vote 			= 	($CALL_SYSTEM['VOTE']) 				? new MySmartVote($this) : null;
 		$this->tag 				= 	($CALL_SYSTEM['TAG']) 				? new MySmartTag($this) : null;
+		$this->bookmark 		= 	($CALL_SYSTEM['BOOKMARK']) 			? new MySmartBookmark($this) : null;
 		
 		////////////
 		
