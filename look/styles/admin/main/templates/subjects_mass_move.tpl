@@ -5,14 +5,17 @@
 <br />
 
 <form action="admin.php?page=subject&amp;mass_move=1&amp;start=1" method="post">
-	<table width="70%" class="t_style_b" border="1" align="center">
+	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			من القسم
+			نقل جماعي
 			</td>
 		</tr>
 		<tr align="center">
-			<td class="row1" colspan="2">
+			<td class="row1">
+			من القسم
+			</td>
+			<td class="row2">
 				<select name="from" id="select_from">
 				{Des::while}{SectionList}
 					<option value="{$SectionList['id']}">{$SectionList['title']}</option>
@@ -20,18 +23,11 @@
 				</select>
 			</td>
 		</tr>
-	</table>
-	
-	<br />
-	
-	<table width="70%" class="t_style_b" border="1" align="center">
 		<tr align="center">
-			<td class="main1" colspan="2">
+			<td class="row1">
 			الى القسم
 			</td>
-		</tr>
-		<tr align="center">
-			<td class="row1" colspan="2">
+			<td class="row2">
 				<select name="to" id="select_to">
 				{Des::while}{SectionList}
 					<option value="{$SectionList['id']}">{$SectionList['title']}</option>
