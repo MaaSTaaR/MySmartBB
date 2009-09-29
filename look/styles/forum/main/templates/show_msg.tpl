@@ -1,1 +1,0 @@
-<font face="Tahoma" size="2"><div dir="rtl" align="center">{$msg}</div></font>
