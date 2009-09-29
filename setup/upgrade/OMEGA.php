@@ -252,10 +252,10 @@ class MySmartOMEGA extends MySmartInstall
 												style_title='النمط الافتراضي',
 												style_on='1',
 												style_order='0',
-												style_path='look/styles/forum/main/css/style.css',
-												image_path='look/styles/forum/main/images',
-												template_path='look/styles/forum/main/templates',
-												cache_path='look/styles/forum/main/compiler'
+												style_path='modules/styles/main/css/style.css',
+												image_path='modules/styles/main/images',
+												template_path='modules/styles/main/templates',
+												cache_path='modules/styles/main/compiler'
 												");
 												
 		if ($insert)
@@ -291,7 +291,7 @@ class MySmartOMEGA extends MySmartInstall
 		
 		while ($r = $MySmartBB->DB->sql_fetch_array($query))
 		{
-			$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['smiles']  . " SET smile_path='look/images/icons/" . $r['smile_path'] . "' WHERE id='" . $r['id'] . "'");
+			$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['smiles']  . " SET smile_path='modules/images/icons/" . $r['smile_path'] . "' WHERE id='" . $r['id'] . "'");
 	
 			if ($update)
 			{
@@ -318,7 +318,7 @@ class MySmartOMEGA extends MySmartInstall
 		{
 			$s = str_replace('image/smiles/','',$r['smile_path']);
 			
-			$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['smiles']  . " SET smile_path='look/images/smiles/" . $s . "' WHERE id='" . $r['id'] . "'");
+			$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['smiles']  . " SET smile_path='modules/images/smiles/" . $s . "' WHERE id='" . $r['id'] . "'");
 	
 			if ($update)
 			{

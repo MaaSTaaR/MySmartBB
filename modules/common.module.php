@@ -16,7 +16,7 @@ class MySmartCommon
 		$this->_CheckMember();
 		
 		$this->_SetInformation();
-			
+		
 		$this->_ShowAds();
 		
 		$this->_GetStylePath();
@@ -336,7 +336,8 @@ class MySmartCommon
 		////////////
 		
 		// Get member style
-		if ($MySmartBB->_CONF['member_row']['style_id_cache'] == $MySmartBB->_CONF['member_row']['style'])
+		if ($MySmartBB->_CONF['member_row']['style_id_cache'] == $MySmartBB->_CONF['member_row']['style']
+			and !$MySmartBB->_CONF['member_row']['should_update_style_cache'])
 		{
 			$cache = unserialize(base64_decode($MySmartBB->_CONF['member_row']['style_cache']));
 			
@@ -378,7 +379,7 @@ class MySmartCommon
 			
 			////////////
 		}
-		
+				
 		////////////
 		
 		if ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'])
@@ -476,7 +477,7 @@ class MySmartCommon
 		{
 			$MySmartBB->functions->error('لم يتم ايجاد معلومات النمط');
 		}
-		
+				
 		$MySmartBB->template->SetInformation(	$MySmartBB->_CONF['rows']['style']['template_path'] . '/',
 												$MySmartBB->_CONF['rows']['style']['cache_path'] . '/',
 												'.tpl',

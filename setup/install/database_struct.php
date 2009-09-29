@@ -1067,7 +1067,7 @@ class DatabaseStruct extends MySmartInstall
 		$InfoArray['default_imagesW'] 			= 0;
 		$InfoArray['default_imagesH'] 			= 0;
 		$InfoArray['create_date'] 				= '';
-		$InfoArray['icon_path'] 				= 'look/images/icons/';
+		$InfoArray['icon_path'] 				= 'modules/images/icons/';
 		// Since OMEGA 5
 		$InfoArray['sectiongroup_number']		= 0;
 		$InfoArray['subsections_number']		= 0;
@@ -1449,177 +1449,177 @@ class DatabaseStruct extends MySmartInstall
 		
 		$SmilesArray[0] 					= 	array();
 		$SmilesArray[0]['smile_short'] 		= 	':)';
-		$SmilesArray[0]['smile_path'] 		= 	'look/images/smiles/smile.gif';
+		$SmilesArray[0]['smile_path'] 		= 	'modules/images/smiles/smile.gif';
 		$SmilesArray[0]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[1] 					= 	array();
 		$SmilesArray[1]['smile_short'] 		= 	';)';
-		$SmilesArray[1]['smile_path'] 		= 	'look/images/smiles/wink_3.gif';
+		$SmilesArray[1]['smile_path'] 		= 	'modules/images/smiles/wink_3.gif';
 		$SmilesArray[1]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[2] 					= 	array();
 		$SmilesArray[2]['smile_short'] 		= 	':roll:';
-		$SmilesArray[2]['smile_path'] 		= 	'look/images/smiles/rolleyes.gif';
+		$SmilesArray[2]['smile_path'] 		= 	'modules/images/smiles/rolleyes.gif';
 		$SmilesArray[2]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[3] 					= 	array();
 		$SmilesArray[3]['smile_short'] 		= 	':D';
-		$SmilesArray[3]['smile_path'] 		= 	'look/images/smiles/biggrin2.gif';
+		$SmilesArray[3]['smile_path'] 		= 	'modules/images/smiles/biggrin2.gif';
 		$SmilesArray[3]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[4] 					= 	array();
 		$SmilesArray[4]['smile_short'] 		= 	':cool:';
-		$SmilesArray[4]['smile_path'] 		= 	'look/images/smiles/cool.gif';
+		$SmilesArray[4]['smile_path'] 		= 	'modules/images/smiles/cool.gif';
 		$SmilesArray[4]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[5] 					= 	array();
 		$SmilesArray[5]['smile_short'] 		= 	':lol:';
-		$SmilesArray[5]['smile_path'] 		= 	'look/images/smiles/laugh.gif';
+		$SmilesArray[5]['smile_path'] 		= 	'modules/images/smiles/laugh.gif';
 		$SmilesArray[5]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[6] 					= 	array();
 		$SmilesArray[6]['smile_short'] 		= 	':(';
-		$SmilesArray[6]['smile_path'] 		= 	'look/images/smiles/sad.gif';
+		$SmilesArray[6]['smile_path'] 		= 	'modules/images/smiles/sad.gif';
 		$SmilesArray[6]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[7] 					= 	array();
 		$SmilesArray[7]['smile_short'] 		= 	':mad:';
-		$SmilesArray[7]['smile_path'] 		= 	'look/images/smiles/mad_1.gif';
+		$SmilesArray[7]['smile_path'] 		= 	'modules/images/smiles/mad_1.gif';
 		$SmilesArray[7]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[8] 					= 	array();
 		$SmilesArray[8]['smile_short'] 		= 	':#';
-		$SmilesArray[8]['smile_path'] 		= 	'look/images/smiles/blushing.gif';
+		$SmilesArray[8]['smile_path'] 		= 	'modules/images/smiles/blushing.gif';
 		$SmilesArray[8]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[9] 					= 	array();
 		$SmilesArray[9]['smile_short'] 		= 	':@@:';
-		$SmilesArray[9]['smile_path'] 		= 	'look/images/smiles/blink.gif';
+		$SmilesArray[9]['smile_path'] 		= 	'modules/images/smiles/blink.gif';
 		$SmilesArray[9]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[10] 					= 	array();
 		$SmilesArray[10]['smile_short'] 	= 	':yes:';
-		$SmilesArray[10]['smile_path'] 		= 	'look/images/smiles/yes.gif';
+		$SmilesArray[10]['smile_path'] 		= 	'modules/images/smiles/yes.gif';
 		$SmilesArray[10]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[11] 					= 	array();
 		$SmilesArray[11]['smile_short'] 	= 	':no:';
-		$SmilesArray[11]['smile_path'] 		= 	'look/images/smiles/no_1.gif';
+		$SmilesArray[11]['smile_path'] 		= 	'modules/images/smiles/no_1.gif';
 		$SmilesArray[11]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[12] 					= 	array();
 		$SmilesArray[12]['smile_short'] 	= 	':hmm:';
-		$SmilesArray[12]['smile_path'] 		= 	'look/images/smiles/g.gif';
+		$SmilesArray[12]['smile_path'] 		= 	'modules/images/smiles/g.gif';
 		$SmilesArray[12]['smile_type'] 		= 	'0';
 		
 		$SmilesArray[13] 					= 	array();
 		$SmilesArray[13]['smile_short'] 	= 	'';
-		$SmilesArray[13]['smile_path'] 		= 	'look/images/icons/bomb.gif';
+		$SmilesArray[13]['smile_path'] 		= 	'modules/images/icons/bomb.gif';
 		$SmilesArray[13]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[14] 					= 	array();
 		$SmilesArray[14]['smile_short'] 	= 	'';
-		$SmilesArray[14]['smile_path'] 		= 	'look/images/icons/boxed.gif';
+		$SmilesArray[14]['smile_path'] 		= 	'modules/images/icons/boxed.gif';
 		$SmilesArray[14]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[15] 					= 	array();
 		$SmilesArray[15]['smile_short'] 	= 	'';
-		$SmilesArray[15]['smile_path'] 		= 	'look/images/icons/bye2.gif';
+		$SmilesArray[15]['smile_path'] 		= 	'modules/images/icons/bye2.gif';
 		$SmilesArray[15]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[16] 					= 	array();
 		$SmilesArray[16]['smile_short'] 	= 	'';
-		$SmilesArray[16]['smile_path'] 		= 	'look/images/icons/clap_1.gif';
+		$SmilesArray[16]['smile_path'] 		= 	'modules/images/icons/clap_1.gif';
 		$SmilesArray[16]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[17] 					= 	array();
 		$SmilesArray[17]['smile_short'] 	= 	'';
-		$SmilesArray[17]['smile_path'] 		= 	'look/images/icons/coffee.gif';
+		$SmilesArray[17]['smile_path'] 		= 	'modules/images/icons/coffee.gif';
 		$SmilesArray[17]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[18] 					= 	array();
 		$SmilesArray[18]['smile_short'] 	= 	'';
-		$SmilesArray[18]['smile_path'] 		= 	'look/images/icons/cry.gif';
+		$SmilesArray[18]['smile_path'] 		= 	'modules/images/icons/cry.gif';
 		$SmilesArray[18]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[19] 					= 	array();
 		$SmilesArray[19]['smile_short'] 	= 	'';
-		$SmilesArray[19]['smile_path'] 		= 	'look/images/icons/cupidarrow.gif';
+		$SmilesArray[19]['smile_path'] 		= 	'modules/images/icons/cupidarrow.gif';
 		$SmilesArray[19]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[20] 					= 	array();
 		$SmilesArray[20]['smile_short'] 	= 	'';
-		$SmilesArray[20]['smile_path'] 		= 	'look/images/icons/devil_2.gif';
+		$SmilesArray[20]['smile_path'] 		= 	'modules/images/icons/devil_2.gif';
 		$SmilesArray[20]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[21] 					= 	array();
 		$SmilesArray[21]['smile_short'] 	= 	'';
-		$SmilesArray[21]['smile_path'] 		= 	'look/images/icons/g.gif';
+		$SmilesArray[21]['smile_path'] 		= 	'modules/images/icons/g.gif';
 		$SmilesArray[21]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[22] 					= 	array();
 		$SmilesArray[22]['smile_short'] 	= 	'';
-		$SmilesArray[22]['smile_path'] 		= 	'look/images/icons/icecream.gif';
+		$SmilesArray[22]['smile_path'] 		= 	'modules/images/icons/icecream.gif';
 		$SmilesArray[22]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[23] 					= 	array();
 		$SmilesArray[23]['smile_short'] 	= 	'';
-		$SmilesArray[23]['smile_path'] 		= 	'look/images/icons/king.gif';
+		$SmilesArray[23]['smile_path'] 		= 	'modules/images/icons/king.gif';
 		$SmilesArray[23]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[24] 					= 	array();
 		$SmilesArray[24]['smile_short'] 	= 	'';
-		$SmilesArray[24]['smile_path'] 		= 	'look/images/icons/lock.gif';
+		$SmilesArray[24]['smile_path'] 		= 	'modules/images/icons/lock.gif';
 		$SmilesArray[24]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[25] 					= 	array();
 		$SmilesArray[25]['smile_short'] 	= 	'';
-		$SmilesArray[25]['smile_path'] 		= 	'look/images/icons/marsa117.gif';
+		$SmilesArray[25]['smile_path'] 		= 	'modules/images/icons/marsa117.gif';
 		$SmilesArray[25]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[26] 					= 	array();
 		$SmilesArray[26]['smile_short'] 	= 	'';
-		$SmilesArray[26]['smile_path'] 		= 	'look/images/icons/mf_bookread.gif';
+		$SmilesArray[26]['smile_path'] 		= 	'modules/images/icons/mf_bookread.gif';
 		$SmilesArray[26]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[27] 					= 	array();
 		$SmilesArray[27]['smile_short'] 	= 	'';
-		$SmilesArray[27]['smile_path'] 		= 	'look/images/icons/smoke.gif';
+		$SmilesArray[27]['smile_path'] 		= 	'modules/images/icons/smoke.gif';
 		$SmilesArray[27]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[28] 					= 	array();
 		$SmilesArray[28]['smile_short'] 	= 	'';
-		$SmilesArray[28]['smile_path'] 		= 	'look/images/icons/thumbup.gif';
+		$SmilesArray[28]['smile_path'] 		= 	'modules/images/icons/thumbup.gif';
 		$SmilesArray[28]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[29] 					= 	array();
 		$SmilesArray[29]['smile_short'] 	= 	'';
-		$SmilesArray[29]['smile_path'] 		= 	'look/images/icons/tooth.gif';
+		$SmilesArray[29]['smile_path'] 		= 	'modules/images/icons/tooth.gif';
 		$SmilesArray[29]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[30] 					= 	array();
 		$SmilesArray[30]['smile_short'] 	= 	'';
-		$SmilesArray[30]['smile_path'] 		= 	'look/images/icons/vertag.gif';
+		$SmilesArray[30]['smile_path'] 		= 	'modules/images/icons/vertag.gif';
 		$SmilesArray[30]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[31] 					= 	array();
 		$SmilesArray[31]['smile_short'] 	= 	'';
-		$SmilesArray[31]['smile_path'] 		= 	'look/images/icons/wub.gif';
+		$SmilesArray[31]['smile_path'] 		= 	'modules/images/icons/wub.gif';
 		$SmilesArray[31]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[32] 					= 	array();
 		$SmilesArray[32]['smile_short'] 	= 	'';
-		$SmilesArray[32]['smile_path'] 		= 	'look/images/icons/winner_first_h4h.gif';
+		$SmilesArray[32]['smile_path'] 		= 	'modules/images/icons/winner_first_h4h.gif';
 		$SmilesArray[32]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[33] 					= 	array();
 		$SmilesArray[33]['smile_short'] 	= 	'';
-		$SmilesArray[33]['smile_path'] 		= 	'look/images/icons/winner_second_h4h.gif';
+		$SmilesArray[33]['smile_path'] 		= 	'modules/images/icons/winner_second_h4h.gif';
 		$SmilesArray[33]['smile_type'] 		= 	'1';
 		
 		$SmilesArray[34] 					= 	array();
 		$SmilesArray[34]['smile_short'] 	= 	'';
-		$SmilesArray[34]['smile_path'] 		= 	'look/images/icons/winner_third_h4h.gif';
+		$SmilesArray[34]['smile_path'] 		= 	'modules/images/icons/winner_third_h4h.gif';
 		$SmilesArray[34]['smile_type'] 		= 	'1';
 		
 		$x = 0;
@@ -1670,10 +1670,10 @@ class DatabaseStruct extends MySmartInstall
 												style_title='النمط الافتراضي',
 												style_on='1',
 												style_order='0',
-												style_path='look/styles/forum/main/css/style.css',
-												image_path='look/styles/forum/main/images',
-												template_path='look/styles/forum/main/templates',
-												cache_path='look/styles/forum/main/compiler'
+												style_path='modules/styles/main/css/style.css',
+												image_path='modules/styles/main/images',
+												template_path='modules/styles/main/templates',
+												cache_path='modules/styles/main/compiler'
 												");
 												
 		return ($insert) ? true : false;

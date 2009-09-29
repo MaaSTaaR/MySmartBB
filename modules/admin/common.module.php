@@ -67,8 +67,8 @@ class MySmartCommon
 		//////////
 		
 		// Set information for template engine
-		$MySmartBB->template->SetInformation(	'look/styles/admin/main/templates/',
-												'look/styles/admin/main/compiler/',
+		$MySmartBB->template->SetInformation(	'modules/admin/styles/main/templates/',
+												'modules/admin/styles/main/compiler/',
 												'.tpl',
 												'file');
 		
