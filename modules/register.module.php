@@ -34,7 +34,7 @@ class MySmartRegisterMOD
 		if ($MySmartBB->_GET['index'])
 		{
 			if ($MySmartBB->_CONF['info_row']['reg_o'] 
-				and !$MySmartBB->_GET['agree'])
+				and ( !isset( $MySmartBB->_GET[ 'agree' ] ) or !$MySmartBB->_GET[ 'agree' ] ) )
 			{
 				$this->_RegisterRules();
 			}

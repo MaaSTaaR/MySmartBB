@@ -21,7 +21,7 @@ class MySmartFunctions
 	{
 		global $MySmartBB;
 		
-		return $MySmartBB->sys_functions->CleanVariable(&$variable, $type);
+		return $MySmartBB->sys_functions->CleanVariable($variable, $type);
 	}
 	
  	function AddressBar($title)
@@ -252,7 +252,12 @@ class MySmartFunctions
 	{
 		global $MySmartBB;
 		
-		return $MySmartBB->sys_functions->date($input,$MySmartBB->_CONF['info_row']['time_system'],$format);
+		if ( !isset( $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ] ) )
+		{
+			$MySmartBB->_CONF[ 'info_row' ][ 'time_system' ] = 'ty';
+		}
+		
+		return $MySmartBB->sys_functions->date( $input, $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ], $format );
 	}
 	
 	function time($time,$format='h:i:s A')

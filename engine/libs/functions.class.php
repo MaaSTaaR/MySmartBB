@@ -326,9 +326,9 @@ class MySmartSystemFunctions
  		unset($_POST,$_GET,$_COOKIE,$_FILES,$_SERVER);
 	}
 	
-	function date($input,$type = 'ty',$format = 'j/n/Y')
+	function date( $input, $type = 'ty', $format = 'j/n/Y' )
 	{
-		$input = date($format,$input);
+		$input = date( $format, $input );
 		
 		if ($type == 'n')
 		{

@@ -2,7 +2,7 @@
 /*
 Started : 19-4-2007 11:55 AM
 End : 19-4-2007 12:03 PM
-Update : 21/08/2008 02:47:54 AM 
+Update : 13/02/2010 10:20:44 AM 
 */
 
 class MySmartRecords
@@ -26,7 +26,8 @@ class MySmartRecords
 		$statement	.=	(!empty($param['select'])) ? $param['select'] : '*';
 		$statement	.=	' FROM ' . $param['from'];
 		
-		if (is_array($param['join']))
+		if ( isset( $param[ 'join' ] )
+			and is_array( $param[ 'join' ] ) )
 		{
 			if ($param['join']['type'] == 'inner')
 			{
@@ -48,13 +49,18 @@ class MySmartRecords
 			$statement .= ' JOIN ' . $param['join']['from'] . ' ON ' . $param['join']['where'];
 		}
 		
-		if (is_array($param['where']) 
-			or (is_array($param['field']) 
-			and $this->from == 'info'))
+		if ( ( isset( $param[ 'where' ] ) and is_array($param['where']) )
+			or ( ( isset( $param[ 'field' ] ) and is_array( $param['field'] ) ) and $this->from == 'info' ) )
 		{
 			$statement .= ' WHERE ';
 			
-			$k = is_array($param['field']) ? 'field' : 'where';
+			$k = 'where';
+			
+			if ( isset( $param[ 'field' ] ) 
+				and is_array( $param[ 'field' ] ) ) 
+			{
+				$k = 'field';
+			}
 			
 			$y = sizeof($param[$k]);
 			
@@ -90,15 +96,15 @@ class MySmartRecords
 					$statement .= ' ';
 				}
 				
-				if ($param[$k][$key[0]]['del_quote'] != true
-					and $oper_to_check != 'between')
+				if ( ( !isset( $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] ) or $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] != true )
+					and $oper_to_check != 'between' )
 				{
 					$statement .= "'";
 				}
 				
 				$statement .= $param[$k][$key[0]]['value'];
 				
-				if ($param[$k][$key[0]]['del_quote'] != true
+				if ( ( !isset( $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] ) or $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] != true )
 					and $oper_to_check != 'between')
 				{
 					$statement .= "'";
@@ -117,9 +123,15 @@ class MySmartRecords
 										
 					$oper = (!empty($param[$k][$x]['oper'])) ? $param[$k][$x]['oper'] : '=';
 					
+					if ( !isset( $param[ $k ][ $x ][ 'con' ] ) )
+					{
+						$param[$k][$x]['con'] = '';
+					}
+					
 					$statement .= ' ' . $param[$k][$x]['con'] . ' ' . $param[$k][$x]['name'];
 					
 					$oper_is_like = false;
+					$oper_need_space = false;
 				
 					$oper_to_check = strtolower($oper);
 				
@@ -137,17 +149,17 @@ class MySmartRecords
 					{
 						$statement .= ' ';
 					}
-				
-					if ($param[$k][$x]['del_quote'] != true
-						and $oper_to_check != 'between')
+					
+					if ( ( !isset( $param[ $k ][ $x ][ 'del_quote' ] ) or $param[ $k ][ $x ][ 'del_quote' ] != true )
+						and $oper_to_check != 'between' )
 					{
 						$statement .= "'";
 					}
 				
 					$statement .= $param[$k][$x]['value'];
 					
-					if ($param[$k][$x]['del_quote'] != true
-						and $oper_to_check != 'between')
+					if ( ( !isset( $param[ $k ][ $x ][ 'del_quote' ] ) or $param[ $k ][ $x ][ 'del_quote' ] != true )
+						and $oper_to_check != 'between' )
 					{
 						$statement .= "'";
 					}
@@ -161,7 +173,8 @@ class MySmartRecords
 			}
 		}
 				
-		if (is_array($param['order']))
+		if ( isset( $param[ 'order' ] )
+			and is_array( $param[ 'order' ] ) )
 		{
 			if ($param['order']['type'] != 'RAND()')
 			{
@@ -175,7 +188,8 @@ class MySmartRecords
 			$statement .= (!empty($param['order']['type'])) ? $param['order']['type'] : 'DESC';
 		}
 		
-		if (is_array($param['pager']))
+		if ( isset( $param[ 'pager' ] )
+			and is_array( $param[ 'pager' ] ) )
 		{
 			if (!isset($param['pager']['total'])
 				or !isset($param['pager']['perpage'])
@@ -358,7 +372,8 @@ class MySmartRecords
 	{
 		$this->from = 'list';
 		
-		if (is_array($param['where']))
+		if ( isset( $param[ 'where' ] )
+			and is_array( $param[ 'where' ] ) )
 		{
 			$key = array_keys($param['where']);
 			
@@ -405,7 +420,8 @@ class MySmartRecords
 	{
 		$this->from = 'info';
 		
-		if (is_array($param['where']))
+		if ( isset( $param[ 'where' ] ) 
+			and is_array( $param[ 'where' ] ) )
 		{
 			$key = array_keys($param['where']);
 			
@@ -439,7 +455,8 @@ class MySmartRecords
 	{
 		$this->from = 'number';
 		
-		if (is_array($param['where']))
+		if ( isset( $param[ 'where' ] ) 
+			and is_array( $param[ 'where' ] ) )
 		{
 			$key = array_keys($param['where']);
 			
@@ -495,15 +512,17 @@ class MySmartRecords
 					$oper = (!empty($param['where'][$key[0]]['oper'])) ? $param['where'][$key[0]]['oper'] : '=';
 				
 					$statement .= $param['where'][$key[0]]['name'] . $oper;
-				
-					if ($param['where'][$key[0]]['del_quote'] != true)
+					
+					if ( !isset( $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] )
+						or $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] != true )
 					{
 						$statement .= "'";
 					}
 				
 					$statement .= $param['where'][$key[0]]['value'];
 				
-					if ($param['where'][$key[0]]['del_quote'] != true)
+					if ( !isset( $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] )
+						or $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] != true )
 					{
 						$statement .= "'";
 					}
@@ -545,7 +564,8 @@ class MySmartRecords
 			}
 		}
 
-		if (is_array($param['order']))
+		if ( isset( $param[ 'order' ] )
+			and is_array( $param[ 'order' ] ) )
 		{
 			if (empty($param['order']['field']))
 			{

@@ -10,7 +10,7 @@ include('../common.php');
 
 
 function archive_header($title)
-{		
+{
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 	echo '<html dir="rtl" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ar" lang="ar">';
 	echo '<head>';
@@ -24,7 +24,7 @@ function archive_header($title)
 }
 
 if ($common->action == 'index')
-{	
+{
 	archive_header($MySmartBB->_CONF['info_row']['title']);
 	
 	$forums = array();

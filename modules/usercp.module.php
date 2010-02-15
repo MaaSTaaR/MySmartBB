@@ -31,16 +31,16 @@ class MySmartUserCPMOD
 			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		
-		if ($MySmartBB->_GET['index'])
+		if ( isset( $MySmartBB->_GET['index'] ) )
 		{
 			$this->_Index();
 		}
 		
 		/** Control **/
-		elseif ($MySmartBB->_GET['control'])
+		elseif ( isset( $MySmartBB->_GET['control'] ) )
 		{
 			/** Persenol Information control **/
-			if ($MySmartBB->_GET['info'])
+			if ( isset( $MySmartBB->_GET['info'] ) )
 			{
 				if ($MySmartBB->_GET['main'])
 				{
@@ -54,7 +54,7 @@ class MySmartUserCPMOD
 			/** **/
 			
 			/** Options control **/
-			elseif ($MySmartBB->_GET['setting'])
+			elseif ( isset( $MySmartBB->_GET['setting'] ) )
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
@@ -68,7 +68,7 @@ class MySmartUserCPMOD
 			/** **/
 			
 			/** Signature control **/
-			elseif ($MySmartBB->_GET['sign'])
+			elseif ( isset( $MySmartBB->_GET['sign'] ) )
 			{
 				if (!$MySmartBB->_CONF['group_info']['sig_allow'])
 				{
@@ -103,7 +103,7 @@ class MySmartUserCPMOD
 			/** **/
 			
 			/** Password control **/
-			elseif ($MySmartBB->_GET['password'])
+			elseif ( isset( $MySmartBB->_GET['password'] ) )
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
@@ -117,7 +117,7 @@ class MySmartUserCPMOD
 			/** **/
 			
 			/** Email control **/
-			elseif ($MySmartBB->_GET['email'])
+			elseif ( isset( $MySmartBB->_GET['email'] ) )
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
@@ -147,9 +147,9 @@ class MySmartUserCPMOD
 		/** **/
 		
 		/** Options **/
-		elseif ($MySmartBB->_GET['options'])
+		elseif ( isset( $MySmartBB->_GET['options'] ) )
 		{
-			if ($MySmartBB->_GET['reply'])
+			if ( isset( $MySmartBB->_GET['reply'] ) )
 			{
 				if ($MySmartBB->_GET['main'])
 				{
@@ -230,7 +230,7 @@ class MySmartUserCPMOD
 		$ReplyArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		
-		$MySmartBB->_CONF['template']['while']['MemberReplys'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
+		$MySmartBB->_CONF['template']['while']['MemberReplys'] = $MySmartBB->subject->GetSubjectList($ReplyArr);
 			
 		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberReplys'],'html');
 		

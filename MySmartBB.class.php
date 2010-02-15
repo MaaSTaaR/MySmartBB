@@ -2,12 +2,14 @@
 
 ////////////
 
-// MySmartBB Engine
+// MySmartBB Engine - The heart of this script
 require_once(DIR . 'engine/Engine.class.php');
 // General systems
-require_once(DIR . 'includes/functions.class.php');
-require_once(DIR . 'includes/template.class.php');
-require_once(DIR . 'includes/smartcodeparse.class.php');
+require_once( DIR . 'includes/functions.class.php' );
+require_once( DIR . 'includes/template.class.php' );
+require_once( DIR . 'includes/template.compiler.class.php' );
+require_once( DIR . 'includes/smartcodeparse.class.php' );
+require_once( DIR . 'includes/plugins.class.php' );
 
 ////////////
 
@@ -19,6 +21,7 @@ class MySmartBB extends Engine
 	var $functions;
 	var $template;
 	var $smartparse;
+	var $plugin;
 	
 	////////////
 	
@@ -32,8 +35,11 @@ class MySmartBB extends Engine
 		
 		if (!defined('INSTALL'))
 		{
-  			$this->template		  	= 	new MySmartTemplate;
-  			$this->smartparse	  	= 	new MySmartCodeParse;
+			$compiler = new MySmartTemplateCompiler( $this );
+			
+  			$this->template		=	new MySmartTemplate( $compiler );
+  			$this->smartparse	=	new MySmartCodeParse;
+  			$this->plugin		=	new MySmartPlugins;
   		}
   		
   		////////////

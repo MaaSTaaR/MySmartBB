@@ -59,13 +59,19 @@ class MySmartProfileMOD
 			
 			$MemArr['where'] = array('id',$id);
 			
-			$do_query = ($MySmartBB->_CONF['member_row']['id'] == $MySmartBB->_GET['id']) ? false : true;
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
+			{
+				$do_query = ($MySmartBB->_CONF['member_row']['id'] == $MySmartBB->_GET['id']) ? false : true;
+			}
 		}
 		elseif (!empty($MySmartBB->_GET['username']))
 		{
 			$MemArr['where'] 	= 	array('username',$MySmartBB->_GET['username']);
 			
-			$do_query = ($MySmartBB->_CONF['member_row']['username'] == $MySmartBB->_GET['username']) ? false : true;
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
+			{
+				$do_query = ($MySmartBB->_CONF['member_row']['username'] == $MySmartBB->_GET['username']) ? false : true;
+			}
 		}
 		else
 		{
@@ -111,7 +117,8 @@ class MySmartProfileMOD
 		}
 		
 		// We should be sneaky sometime ;)
-		if ($MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] 
+			and $MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
 		{
 			$GroupInfo = $MySmartBB->_CONF['rows']['group_info'];
 		}

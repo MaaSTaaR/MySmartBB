@@ -45,7 +45,7 @@ class MySmartSQL
 	
 	function sql_connect()
 	{
-		$function = (!$this->user_pconnect) ? 'mysql_connect' : 'mysql_pconnect';
+		$function = (!$this->use_pconnect) ? 'mysql_connect' : 'mysql_pconnect';
 		
 		$connect = @$function($this->host,$this->db_username,$this->db_password);
 		

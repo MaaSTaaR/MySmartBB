@@ -4,11 +4,15 @@ define('DIR',dirname( __FILE__ ) . '/');
 
 //////////
 
-define('JAVASCRIPT_SMARTCODE',false);
+if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
+{
+	define( 'JAVASCRIPT_SMARTCODE', false );
+}
 
 //////////
 
-if (!is_array($CALL_SYSTEM))
+if ( !isset( $CALL_SYSTEM )
+	or !is_array( $CALL_SYSTEM ) )
 {
 	$CALL_SYSTEM = array();
 }
@@ -91,7 +95,7 @@ class MySmartLocalCommon
  		
  		//////////
  		
- 		define('STOP_STYLE',$MySmartBB->_POST['ajax'] ? true : false);
+ 		define('STOP_STYLE',( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false);
  		
  		//////////
 	}

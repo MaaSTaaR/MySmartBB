@@ -20,36 +20,36 @@ if (is_array($CALL_SYSTEM))
 	
 	$files = array();
 	
-	$files[] = ($CALL_SYSTEM['INFO']) 				? 'info.class.php' : null;
-	$files[] = ($CALL_SYSTEM['ADS']) 				? 'ads.class.php' : null;
-	$files[] = ($CALL_SYSTEM['ANNOUNCEMENT']) 		? 'announcement.class.php' : null;
-	$files[] = ($CALL_SYSTEM['AVATAR']) 			? 'avatar.class.php' : null;
-	$files[] = ($CALL_SYSTEM['BANNED']) 			? 'banned.class.php' : null;
-	$files[] = ($CALL_SYSTEM['GROUP']) 				? 'group.class.php' : null;
-	$files[] = ($CALL_SYSTEM['MEMBER']) 			? 'member.class.php' : null;
-	$files[] = ($CALL_SYSTEM['ONLINE']) 			? 'online.class.php' : null;
-	$files[] = ($CALL_SYSTEM['PAGES']) 				? 'pages.class.php' : null;
-	$files[] = ($CALL_SYSTEM['PM']) 				? 'pm.class.php' : null;
-	$files[] = ($CALL_SYSTEM['REPLY']) 				? 'reply.class.php' : null;
-	$files[] = ($CALL_SYSTEM['SEARCH']) 			? 'search.class.php' : null;
-	$files[] = ($CALL_SYSTEM['SECTION']) 			? 'sections.class.php' : null;
-	$files[] = ($CALL_SYSTEM['STYLE']) 				? 'style.class.php' : null;
-	$files[] = ($CALL_SYSTEM['SUBJECT']) 			? 'subject.class.php' : null;
-	$files[] = ($CALL_SYSTEM['CACHE']) 				? 'cache.class.php' : null;
-	$files[] = ($CALL_SYSTEM['REQUEST']) 			? 'request.class.php' : null;
-	$files[] = ($CALL_SYSTEM['MISC']) 				? 'misc.class.php' : null;
-	$files[] = ($CALL_SYSTEM['MESSAGE']) 			? 'messages.class.php' : null;
-	$files[] = ($CALL_SYSTEM['ATTACH']) 			? 'attach.class.php' : null;
-	$files[] = ($CALL_SYSTEM['FIXUP']) 				? 'fixup.class.php' : null;
-	$files[] = ($CALL_SYSTEM['FILESEXTENSION']) 	? 'extension.class.php' : null;
-	$files[] = ($CALL_SYSTEM['USERTITLE']) 			? 'usertitle.class.php' : null;
-	$files[] = ($CALL_SYSTEM['ICONS']) 				? 'icons.class.php' : null;
-	$files[] = ($CALL_SYSTEM['TOOLBOX']) 			? 'toolbox.class.php' : null;
-	$files[] = ($CALL_SYSTEM['MODERATORS']) 		? 'moderators.class.php' : null;
-	$files[] = ($CALL_SYSTEM['POLL']) 				? 'poll.class.php' : null;
-	$files[] = ($CALL_SYSTEM['VOTE']) 				? 'vote.class.php' : null;
-	$files[] = ($CALL_SYSTEM['TAG']) 				? 'tags.class.php' : null;
-	$files[] = ($CALL_SYSTEM['BOOKMARK']) 			? 'bookmark.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['INFO'])) 				? 'info.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['ADS'])) 				? 'ads.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['ANNOUNCEMENT'])) 		? 'announcement.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['AVATAR'])) 				? 'avatar.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['BANNED'])) 				? 'banned.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['GROUP'])) 				? 'group.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['MEMBER'])) 				? 'member.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['ONLINE'])) 				? 'online.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['PAGES'])) 				? 'pages.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['PM'])) 					? 'pm.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['REPLY'])) 				? 'reply.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['SEARCH'])) 				? 'search.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['SECTION'])) 			? 'sections.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['STYLE'])) 				? 'style.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['SUBJECT'])) 			? 'subject.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['CACHE'])) 				? 'cache.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['REQUEST'])) 			? 'request.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['MISC'])) 				? 'misc.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['MESSAGE'])) 			? 'messages.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['ATTACH'])) 				? 'attach.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['FIXUP'])) 				? 'fixup.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['FILESEXTENSION'])) 		? 'extension.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['USERTITLE'])) 			? 'usertitle.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['ICONS'])) 				? 'icons.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['TOOLBOX'])) 			? 'toolbox.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['MODERATORS'])) 			? 'moderators.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['POLL'])) 				? 'poll.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['VOTE'])) 				? 'vote.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['TAG'])) 				? 'tags.class.php' : null;
+	$files[] = (isset($CALL_SYSTEM['BOOKMARK'])) 			? 'bookmark.class.php' : null;
 	
 	////////////
 
@@ -244,36 +244,36 @@ class Engine
   		
   		////////////
   		
-		$this->info 			= 	($CALL_SYSTEM['INFO']) 				? new MySmartInfo($this) : null;
-		$this->ads 				= 	($CALL_SYSTEM['ADS']) 				? new MySmartAds($this) : null;
-		$this->announcement 	= 	($CALL_SYSTEM['ANNOUNCEMENT']) 		? new MySmartAnnouncement($this) : null;
-		$this->avatar 			= 	($CALL_SYSTEM['AVATAR']) 			? new MySmartAvatar($this) : null;
-		$this->banned 			= 	($CALL_SYSTEM['BANNED']) 			? new MySmartBanned($this) : null;
-		$this->group 			= 	($CALL_SYSTEM['GROUP']) 			? new MySmartGroup($this) : null;
-		$this->member 			= 	($CALL_SYSTEM['MEMBER']) 			? new MySmartMember($this) : null;
-		$this->online 			= 	($CALL_SYSTEM['ONLINE']) 			? new MySmartOnline($this) : null;
-		$this->pages 			= 	($CALL_SYSTEM['PAGES']) 			? new MySmartPages($this) : null;
-		$this->pm 				= 	($CALL_SYSTEM['PM']) 				? new MySmartPM($this) : null;
-		$this->reply 			= 	($CALL_SYSTEM['REPLY']) 			? new MySmartReply($this) : null;
-		$this->search 			= 	($CALL_SYSTEM['SEARCH']) 			? new MySmartSearch($this) : null;
-		$this->section 			= 	($CALL_SYSTEM['SECTION']) 			? new MySmartSection($this) : null;
-		$this->style 			= 	($CALL_SYSTEM['STYLE']) 			? new MySmartStyle($this) : null;
-		$this->subject 			= 	($CALL_SYSTEM['SUBJECT']) 			? new MySmartSubject($this) : null;
-		$this->cache 			= 	($CALL_SYSTEM['CACHE']) 			? new MySmartCache($this) : null;
-		$this->misc 			= 	($CALL_SYSTEM['MISC']) 				? new MySmartMisc($this) : null;
-		$this->request 			= 	($CALL_SYSTEM['REQUEST']) 			? new MySmartRequest($this) : null;
-		$this->message 			= 	($CALL_SYSTEM['MESSAGE']) 			? new MySmartMessages($this) : null;
-		$this->attach 			= 	($CALL_SYSTEM['ATTACH']) 			? new MySmartAttach($this) : null;
-		$this->fixup 			= 	($CALL_SYSTEM['FIXUP']) 			? new MySmartFixup($this) : null;
-		$this->extension 		= 	($CALL_SYSTEM['FILESEXTENSION']) 	? new MySmartFileExtension($this) : null;
-		$this->usertitle 		= 	($CALL_SYSTEM['USERTITLE']) 		? new MySmartUsertitle($this) : null;
-		$this->icon 			= 	($CALL_SYSTEM['ICONS']) 			? new MySmartIcons($this) : null;
-		$this->toolbox 			= 	($CALL_SYSTEM['TOOLBOX']) 			? new MySmartToolBox($this) : null;
-		$this->moderator 		= 	($CALL_SYSTEM['MODERATORS']) 		? new MySmartModerators($this) : null;
-		$this->poll 			= 	($CALL_SYSTEM['POLL']) 				? new MySmartPoll($this) : null;
-		$this->vote 			= 	($CALL_SYSTEM['VOTE']) 				? new MySmartVote($this) : null;
-		$this->tag 				= 	($CALL_SYSTEM['TAG']) 				? new MySmartTag($this) : null;
-		$this->bookmark 		= 	($CALL_SYSTEM['BOOKMARK']) 			? new MySmartBookmark($this) : null;
+		$this->info 			= 	(isset( $CALL_SYSTEM['INFO'] )) 				? new MySmartInfo($this) : null;
+		$this->ads 				= 	(isset( $CALL_SYSTEM['ADS'] )) 				? new MySmartAds($this) : null;
+		$this->announcement 	= 	(isset( $CALL_SYSTEM['ANNOUNCEMENT'] )) 		? new MySmartAnnouncement($this) : null;
+		$this->avatar 			= 	(isset( $CALL_SYSTEM['AVATAR'] )) 			? new MySmartAvatar($this) : null;
+		$this->banned 			= 	(isset( $CALL_SYSTEM['BANNED'] )) 			? new MySmartBanned($this) : null;
+		$this->group 			= 	(isset( $CALL_SYSTEM['GROUP'] )) 			? new MySmartGroup($this) : null;
+		$this->member 			= 	(isset( $CALL_SYSTEM['MEMBER'] )) 			? new MySmartMember($this) : null;
+		$this->online 			= 	(isset( $CALL_SYSTEM['ONLINE'] )) 			? new MySmartOnline($this) : null;
+		$this->pages 			= 	(isset( $CALL_SYSTEM['PAGES'] )) 			? new MySmartPages($this) : null;
+		$this->pm 				= 	(isset( $CALL_SYSTEM['PM'] )) 				? new MySmartPM($this) : null;
+		$this->reply 			= 	(isset( $CALL_SYSTEM['REPLY'] )) 			? new MySmartReply($this) : null;
+		$this->search 			= 	(isset( $CALL_SYSTEM['SEARCH'] )) 			? new MySmartSearch($this) : null;
+		$this->section 			= 	(isset( $CALL_SYSTEM['SECTION'] )) 			? new MySmartSection($this) : null;
+		$this->style 			= 	(isset( $CALL_SYSTEM['STYLE'] )) 			? new MySmartStyle($this) : null;
+		$this->subject 			= 	(isset( $CALL_SYSTEM['SUBJECT'] )) 			? new MySmartSubject($this) : null;
+		$this->cache 			= 	(isset( $CALL_SYSTEM['CACHE'] )) 			? new MySmartCache($this) : null;
+		$this->misc 			= 	(isset( $CALL_SYSTEM['MISC'] )) 				? new MySmartMisc($this) : null;
+		$this->request 			= 	(isset( $CALL_SYSTEM['REQUEST'] )) 			? new MySmartRequest($this) : null;
+		$this->message 			= 	(isset( $CALL_SYSTEM['MESSAGE'] )) 			? new MySmartMessages($this) : null;
+		$this->attach 			= 	(isset( $CALL_SYSTEM['ATTACH'] )) 			? new MySmartAttach($this) : null;
+		$this->fixup 			= 	(isset( $CALL_SYSTEM['FIXUP'] )) 			? new MySmartFixup($this) : null;
+		$this->extension 		= 	(isset( $CALL_SYSTEM['FILESEXTENSION'] )) 	? new MySmartFileExtension($this) : null;
+		$this->usertitle 		= 	(isset( $CALL_SYSTEM['USERTITLE'] )) 		? new MySmartUsertitle($this) : null;
+		$this->icon 			= 	(isset( $CALL_SYSTEM['ICONS'] )) 			? new MySmartIcons($this) : null;
+		$this->toolbox 			= 	(isset( $CALL_SYSTEM['TOOLBOX'] )) 			? new MySmartToolBox($this) : null;
+		$this->moderator 		= 	(isset( $CALL_SYSTEM['MODERATORS'] )) 		? new MySmartModerators($this) : null;
+		$this->poll 			= 	(isset( $CALL_SYSTEM['POLL'] )) 				? new MySmartPoll($this) : null;
+		$this->vote 			= 	(isset( $CALL_SYSTEM['VOTE'] )) 				? new MySmartVote($this) : null;
+		$this->tag 				= 	(isset( $CALL_SYSTEM['TAG'] )) 				? new MySmartTag($this) : null;
+		$this->bookmark 		= 	(isset( $CALL_SYSTEM['BOOKMARK'] )) 			? new MySmartBookmark($this) : null;
 		
 		////////////
 		
@@ -302,10 +302,10 @@ class Engine
 		$x = 0;
 		$y = sizeof($rows);
 		
-		while ($x <= $y)
+		while ($x < $y)
 		{
-			$this->_CONF['info_row'][$rows[$x]['var_name']] = $rows[$x]['value'];
-				
+			$this->_CONF[ 'info_row' ][ $rows[ $x ][ 'var_name' ] ] = $rows[ $x ][ 'value' ];
+					
 			$x += 1;
 		}
 	}

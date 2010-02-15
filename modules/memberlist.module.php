@@ -10,6 +10,8 @@ define('CLASS_NAME','MySmartMemberlistMOD');
 
 class MySmartMemberlistMOD
 {
+	private $Section;
+	
 	function run()
 	{
 		global $MySmartBB;

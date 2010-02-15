@@ -9,7 +9,7 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	4/4/2006 , 11:26 PM
  * @end   		: 	4/4/2006 , 11:38 PM
- * @updated 	: 	31/08/2008 05:30:29 AM 
+ * @updated 	: 	15/02/2010 02:42:43 PM 
  */
 
 class MySmartOnline
@@ -32,7 +32,8 @@ class MySmartOnline
  		          			           
 		$query = $this->Engine->records->Insert($this->Engine->table['online'],$param['field']);
 		
-		if ($param['get_id'])
+		if ( isset( $param[ 'get_id' ] )
+			and $param[ 'get_id' ] )
 		{
 			$this->id = $this->Engine->DB->sql_insert_id();
 		}
@@ -124,34 +125,40 @@ class MySmartOnline
  		return ($query) ? true : false;
  	}
  	
- 	function GetOnlineInfo($param)
+ 	function GetOnlineInfo( $param )
  	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $param )
+ 			or !is_array( $param ) )
  		{
  			$param = array();
  		}
  		
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['online'];
+ 		$x = 0;
  		
- 		if (!empty($param['timeout'])
- 			or !empty($param['username']))
+ 		$param[ 'select' ] 	= 	'*';
+ 		$param[ 'from' ] 	= 	$this->Engine->table[ 'online' ];
+ 		
+ 		if ( isset( $param[ 'timeout' ] ) )
  		{
- 			$param['where'] 				= 	array();
- 			$param['where'][0] 				= 	array();
- 			$param['where'][0]['name'] 		= 	'logged';
- 			$param['where'][0]['oper'] 		= 	'>=';
- 			$param['where'][0]['value'] 	= 	$param['timeout'];
- 		
- 			$param['where'][1] 				= 	array();
- 			$param['where'][1]['con'] 		= 	'AND';
- 			$param['where'][1]['name'] 		= 	'username';
- 			$param['where'][1]['oper'] 		= 	'=';
- 			$param['where'][1]['value'] 	= 	$param['username'];
+ 			$param[ 'where' ] 					= 	array();
+ 			$param[ 'where' ][ $x ] 			= 	array();
+ 			$param[ 'where' ][ $x ][ 'name' ] 	= 	'logged';
+ 			$param[ 'where' ][ $x ][ 'oper' ] 	= 	'>=';
+ 			$param[ 'where' ][ $x ][ 'value' ] 	= 	$param[ 'timeout' ];
+ 			
+ 			$x += 1;
  		}
  		
- 		$rows = $this->Engine->records->GetInfo($param);
+ 		if ( isset( $param[ 'username' ] ) )
+ 		{
+ 			$param[ 'where' ][ $x ] 				= 	array();
+ 			$param[ 'where' ][ $x ][ 'con' ] 		= 	'AND';
+ 			$param[ 'where' ][ $x ][ 'name' ] 		= 	'username';
+ 			$param[ 'where' ][ $x ][ 'oper' ] 		= 	'=';
+ 			$param[ 'where' ][ $x ][ 'value' ] 		= 	$param[ 'username' ];
+ 		}
+ 		
+ 		$rows = $this->Engine->records->GetInfo( $param );
  		
  		return $rows;
  	}
@@ -268,7 +275,8 @@ class MySmartOnline
  		           			           
 		$query = $this->Engine->records->Insert($this->Engine->table['today'],$param['field']);
 		
-		if ($param['get_id'])
+		if ( isset( $param[ 'get_id' ] )
+			and $param[ 'get_id' ] )
 		{
 			$this->id = $this->Engine->DB->sql_insert_id();
 		}

@@ -152,7 +152,8 @@ class MySmartForumMOD
 		}
 			
 		// This is main section , so we can't get subjects list from it 
-		if ($this->Section['main_section'])
+		if ( isset( $this->Section[ 'main_section' ] )
+			and $this->Section[ 'main_section' ] )
 		{
 			$MySmartBB->functions->error('المعذره .. هذا المنتدى قسم رئيسي');
 		}
@@ -341,19 +342,19 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		if (!empty($this->Section['forums_cache']))
+		if ( !empty( $this->Section[ 'forums_cache' ] ) )
 		{
-			$forums = unserialize(base64_decode($this->Section['forums_cache']));
+			$forums = unserialize( base64_decode( $this->Section[ 'forums_cache' ] ) );
 			
-			$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = array();
 			
-			foreach ($forums as $forum)
+			foreach ( $forums as $forum )
 			{
-				if (is_array($forum['groups'][$MySmartBB->_CONF['group_info']['id']]))
+				if ( is_array( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 				{
-					if ($forum['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+					if ( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 					{
-						$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
+						$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ][ $forum[ 'id' ] . '_f' ] = $forum;
 					}
 				} // end if is_array
 			} // end foreach ($forums)

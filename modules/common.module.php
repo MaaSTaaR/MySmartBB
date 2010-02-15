@@ -229,8 +229,8 @@ class MySmartCommon
 			$InsertOnline['field']['user_ip'] 			= 	$MySmartBB->_CONF['ip'];
 			$InsertOnline['field']['hide_browse'] 		= 	$MySmartBB->_CONF['member_row']['hide_online'];
 			$InsertOnline['field']['user_location'] 	= 	$MemberLocation;
-			$InsertOnline['field']['subject_show'] 		= 	$subject_show;
-			$InsertOnline['field']['subject_id'] 		= 	$subject_id;
+			//$InsertOnline['field']['subject_show'] 		= 	$subject_show; TODO : where is "$subject_show"??
+			//$InsertOnline['field']['subject_id'] 		= 	$subject_id; TODO : where is "subject_id"??
 			$InsertOnline['field']['user_id'] 			= 	$MySmartBB->_CONF['member_row']['id'];
 			
 			$insert = $MySmartBB->online->InsertOnline($InsertOnline); 
@@ -255,8 +255,8 @@ class MySmartCommon
 				$UpdateOnline['field']['user_ip']			=	$MySmartBB->_CONF['ip'];
 				$UpdateOnline['field']['hide_browse']		=	$MySmartBB->_CONF['member_row']['hide_online'];
 				$UpdateOnline['field']['user_location']		=	$MemberLocation;
-				$UpdateOnline['field']['subject_show']		=	$subject_show;
-				$UpdateOnline['field']['subject_id']		=	$subject_id;
+				//$UpdateOnline['field']['subject_show']		=	$subject_show; TODO : where is "$subject_show"??
+				//$UpdateOnline['field']['subject_id']		=	$subject_id; TODO : where is "subject_id"??
 				$UpdateOnline['field']['user_id']			=	$MySmartBB->_CONF['member_row']['id'];
 				$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
 				
@@ -498,7 +498,9 @@ class MySmartCommon
 	function _ShowAds()
 	{
 		global $MySmartBB;
-				
+		
+		$MySmartBB->_CONF['temp']['ads_show'] = false;
+		
 		// Get random ads
 		if ($MySmartBB->_CONF['info_row']['ads_num'] > 0)
 		{

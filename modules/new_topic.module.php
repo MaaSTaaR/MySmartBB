@@ -18,7 +18,11 @@ $CALL_SYSTEM['FILESEXTENSION'] 	= 	true;
 $CALL_SYSTEM['ATTACH'] 			= 	true;
 $CALL_SYSTEM['MODERATORS'] 		= 	true;
 
-define('JAVASCRIPT_SMARTCODE',true);
+
+if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
+{
+	define( 'JAVASCRIPT_SMARTCODE', true );
+}
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

@@ -60,7 +60,7 @@ class MySmartIndexMOD
 		
 		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
 		
-		$MySmartBB->functions->GetForumsList(&$MySmartBB->_CONF['template']['foreach']['forums_list']);
+		$MySmartBB->functions->GetForumsList($MySmartBB->_CONF['template']['foreach']['forums_list']);
 		
 		//////////
 	}
@@ -170,7 +170,8 @@ class MySmartIndexMOD
 		$TodayArr['order']['field']		=	'user_id';
 		$TodayArr['order']['type']		=	'DESC';
 			
-		if (!$MySmartBB->_CONF['rows']['group_info']['show_hidden'])
+		if ( !isset( $MySmartBB->_CONF[ 'rows' ][ 'group_info' ][ 'show_hidden' ] ) 
+			or !$MySmartBB->_CONF[ 'rows' ][ 'group_info' ][ 'show_hidden' ] )
 		{
 			$TodayArr['where'][2]			=	array();
 			$TodayArr['where'][2]['con']	=	'AND';
