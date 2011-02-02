@@ -45,9 +45,10 @@ class MySmartVoteMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Poll = $MySmartBB->poll->getPollInfo();
+		$Poll = $MySmartBB->rec->getInfo();
 		
 		if (!$Poll)
 		{
@@ -59,9 +60,10 @@ class MySmartVoteMOD
 			$MySmartBB->func->error('يجب عليك الاختيار من اجل قبول اقتراعك');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND username='" . $MySmartBB->_CONF['member_row']['username'] .  "'";
 		
-		$Vote = $MySmartBB->vote->getVoteInfo();
+		$Vote = $MySmartBB->rec->getInfo();
 		
 		if ($Vote != false)
 		{
@@ -73,7 +75,8 @@ class MySmartVoteMOD
 											'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
 											'username'	=>	$MySmartBB->_CONF['member_row']['username']	);
 											
-											
+		
+		// [WE NEED A SYSTEM]									
 		$insert = $MySmartBB->vote->doVote( $Poll['answers'], $MySmartBB->_POST['answer'] );
 		
 		if ($insert)

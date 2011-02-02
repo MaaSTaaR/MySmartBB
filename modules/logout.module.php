@@ -18,35 +18,32 @@ class MySmartLogoutMOD
 	{
 		global $MySmartBB;
 		
-		/** Simply , logout :) **/
 		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_startLogout();
 		}
-		/** **/
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
 		}
 		
 		$MySmartBB->func->getFooter();
 	}
-		
-	/**
-	 * Delete cookies and the member's entry from online table then go to the last page which the member was in it :)
-	 */
+
 	private function _startLogout()
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "user_id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$MySmartBB->online->deleteOnline();
+		$MySmartBB->rec->delete();
 		
-		/* ... */
+		// ... //
 		
+		// [WE NEED A SYSTEM]
 		$logout = $MySmartBB->member->logout();
 								
 		$MySmartBB->func->showHeader( 'تسجيل خروج' );

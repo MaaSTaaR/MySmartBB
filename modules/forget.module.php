@@ -65,6 +65,7 @@ class MySmartForgetMOD
 		
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$CheckEmail = $MySmartBB->member->isMember();
 		
 		if (!$CheckEmail)
@@ -72,9 +73,10 @@ class MySmartForgetMOD
 			$MySmartBB->func->error('البريد الالكتروني غير موجود في قواعد بياناتنا !');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		$ForgetMemberInfo = $MySmartBB->member->getMemberInfo();
+		$ForgetMemberInfo = $MySmartBB->rec->getInfo();
 		
 		$MySmartBB->func->CleanArray($ForgetMemberInfo,'sql');
 		
@@ -84,28 +86,40 @@ class MySmartForgetMOD
 		$ChangeAdress = $Adress . 'index.php?page=new_password&index=1&code=' . $Code;
 		$CancelAdress = $Adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $Code;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+		
 		$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
 											'username'	=>	$ForgetMemberInfo['username'],
 											'request_type'	=>	'1'	);
 												
-		$InsertReq = $MySmartBB->request->insertRequest();
+		$InsertReq = $MySmartBB->rec->insert();
 		
 		if ($InsertReq)
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'new_password'	=>	$MySmartBB->func->randomCode() );
 			$MySmartBB->rec->filter = "id='" . $ForgetMemberInfo['id'] . "'";
 			
-			$UpdateNewPassword = $MySmartBB->member->updateMember();
+			$UpdateNewPassword = $MySmartBB->rec->update();
 			
 			if ($UpdateNewPassword)
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
 				$MySmartBB->rec->filter = "id='1'";
 				
-				$MassegeInfo = $MySmartBB->massege->getMessageInfo();
+				$MassegeInfo = $MySmartBB->rec->getInfo();
 				
-				$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
+				$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
+																				$MySmartBB->_CONF['info_row']['title'], 
+																				null, 
+																				$ChangeAdress, 
+																				$CancelAdress, 
+																				$MassegeInfo['text'] );
 				
-				$Send = $MySmartBB->func->mail($ForgetMemberInfo['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
+				$Send = $MySmartBB->func->mail(	$ForgetMemberInfo['email'],
+												$MassegeInfo['title'],
+												$MassegeInfo['text'],
+												$MySmartBB->_CONF['info_row']['send_email'] );
 				
 				if ($Send)
 				{

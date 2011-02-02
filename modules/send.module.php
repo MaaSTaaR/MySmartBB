@@ -54,9 +54,10 @@ class MySmartSendMOD
      	
      	/* ... */
      	
+     	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->member->getMemberInfo();
+		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->member->getInfo();
 		
 		/* ... */
 		
@@ -92,9 +93,10 @@ class MySmartSendMOD
      	
      	/* ... */
      	
+     	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$MemberInfo = $MySmartBB->member->getMemberInfo();
+		$MemberInfo = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		
@@ -113,7 +115,10 @@ class MySmartSendMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$send = $MySmartBB->func->mail($MemberInfo['email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
+		$send = $MySmartBB->func->mail(	$MemberInfo['email'],
+										$MySmartBB->_POST['title'],
+										$MySmartBB->_POST['text'],
+										$MySmartBB->_CONF['member_row']['email'] );
 		
 		if ($send)
 		{

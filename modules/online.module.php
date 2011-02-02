@@ -20,7 +20,7 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('المتواجدين حالياً');
+		$MySmartBB->func->showHeader('المتواجدون حالياً');
 		
 		if ($MySmartBB->_GET['show'])
 		{
@@ -38,9 +38,10 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->online->getOnlineList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('online');
 	}	

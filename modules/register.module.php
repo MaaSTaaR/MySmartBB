@@ -32,7 +32,6 @@ class MySmartRegisterMOD
    			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل اليوم');
    		}
    		
-		/** Show register form **/
 		if ($MySmartBB->_GET['index'])
 		{
 			if ($MySmartBB->_CONF['info_row']['reg_o'] 
@@ -45,14 +44,10 @@ class MySmartRegisterMOD
 				$this->_registerForm();
 			}
 		}
-		/** **/
-		
-		/** Start registetr **/
 		elseif ($MySmartBB->_GET['start'])
 		{
 			$this->_registerStart();
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -100,15 +95,12 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->func->showHeader('تنفيذ عملية التسجيل');
 		
-		// Clean the username and email from white spaces
-		$MySmartBB->_POST['username'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['username'],'trim');
-		$MySmartBB->_POST['email'] 		= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['email'],'trim');
+		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
+		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
 		
 		// Store the email provider in explode_email[1] and the name of email in explode_email[0]
-		// That will be useful to ban email provider
+		// That will be useful to ban email providers
 		$explode_email = explode('@',$MySmartBB->_POST['email']);
-	
-		// Well , we get the provider of email
 		$EmailProvider = $explode_email[1];
 		
 		// Ensure all necessary information are valid
@@ -140,6 +132,7 @@ class MySmartRegisterMOD
 		// Ensure there is no person used the same username
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( $isMember )
@@ -151,6 +144,7 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( $isMember )
@@ -158,16 +152,19 @@ class MySmartRegisterMOD
 			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً , يرجى كتابة غيره');
 		}
 		
+		// [WE NEED A SYSTEM]
 		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم لانه ممنوع من قبل الاداره');
 		}
 		
+		// [WE NEED A SYSTEM]
 		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد الالكتروني لانه ممنوع من قبل الاداره');
 		}
 		
+		// [WE NEED A SYSTEM]
 		if ($MySmartBB->banned->IsProviderBanned( $EmailProvider ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد لان مزود البريد ممنوع من التسجيل');
@@ -211,16 +208,17 @@ class MySmartRegisterMOD
       	/* ... */
       	
       	// Get the information of default group to set username style cache
-      	
+      	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['def_group'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->getGroupInfo();
+		$GroupInfo = $MySmartBB->group->getInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_POST['username'],
       										'password'	=>	$MySmartBB->_POST['password'],
       										'email'	=>	$MySmartBB->_POST['email'],
@@ -231,9 +229,9 @@ class MySmartRegisterMOD
       										'style'	=>	$MySmartBB->_CONF['info_row']['def_style'],
       										'username_style_cache'	=>	$username_style_cache);
       	
-      	$MySmartBB->member->get_id = true;
+      	$MySmartBB->rec->get_id = true;
       	
-      	$insert = $MySmartBB->member->insertMember();
+      	$insert = $MySmartBB->rec->insert();
       	
       	if (!$MySmartBB->_CONF['info_row']['ajax_register'])
       	{
@@ -246,8 +244,9 @@ class MySmartRegisterMOD
       	// Ouf finally , but we still have work in this module
       	if ($insert)
       	{
-      		$member_num = $this->engine->_CONF['info_row']['member_number'];
-      			
+      		$member_num = $MySmartBB->_CONF['info_row']['member_number'];
+      		
+      		// [WE NEED A SYSTEM]
       		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->member->id );
       														
       		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
@@ -256,22 +255,32 @@ class MySmartRegisterMOD
 				$code	=	$MySmartBB->func->randomCode();
 			
 				$ActiveAdress = $Adress . 'index.php?page=active_member&index=1&code=' . $code;
-		
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 				$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
 													'username'	=>	$MySmartBB->_POST['username'],
 													'request_type'	=>	'3'	);
 												
-				$insert = $MySmartBB->request->insertRequest();
+				$insert = $MySmartBB->rec->insert();
 			
 				if ($insert)
 				{
+					$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
 					$MySmartBB->rec->filter = "id='4'";
 					
-					$MassegeInfo = $MySmartBB->massege->getMessageInfo();
+					$MassegeInfo = $MySmartBB->rec->getInfo();
 					
-					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], $ActiveAdress, null, null, $MassegeInfo['text'] );
+					// [WE NEED A SYSTEM]
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
+																					$MySmartBB->_CONF['info_row']['title'], 
+																					$ActiveAdress, 
+																					null, null, 
+																					$MassegeInfo['text'] );
 					
-					$Send = $MySmartBB->func->mail($MySmartBB->_CONF['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
+					$Send = $MySmartBB->func->mail(	$MySmartBB->_CONF['member_row']['email'],
+													$MassegeInfo['title'],
+													$MassegeInfo['text'],
+													$MySmartBB->_CONF['info_row']['send_email'] );
 					
 					if ($Send)
 					{

@@ -2,7 +2,7 @@
 /*
 Started : 19-4-2007 11:55 AM
 End : 19-4-2007 12:03 PM
-Updated : 05/07/2010 09:01:35 PM 
+Updated : Wed 02 Feb 2011 05:03:43 PM AST 
 Version : 2.0.2
 */
 
@@ -26,6 +26,10 @@ class MySmartRecords
 	
 	// Pager information (Array)
 	public $pager;
+	
+	// ID
+	public $get_id;
+	public $id;
 	
 	/* ... */
 	
@@ -131,7 +135,7 @@ class MySmartRecords
 	// This function adds slashes to input automatically.
 	public function insert()
 	{
-		/* ... */
+		// ... //
 			
 		if ( empty( $this->table )
 			or empty( $this->fields ) )
@@ -139,13 +143,13 @@ class MySmartRecords
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Insert() -- TABLE OR FIELD', E_USER_ERROR );
 		}
 		
-		/* ... */
+		// ... //
 		
 		$statement = 'INSERT INTO ' . $this->table . ' SET ';
 		
 		unset( $this->table );
 		
-		/* ... */
+		// ... //
 		
 		$size = sizeof( $this->fields );
 		
@@ -165,9 +169,20 @@ class MySmartRecords
 		
 		unset( $this->fields );
 		
-		/* ... */
+		// ... //
 		
 		$query = $this->db->sql_unbuffered_query( $statement );
+		
+		// ... //
+		
+		if ( $this->get_id )
+		{
+			$this->id = $this->db->sql_insert_id();
+			
+			unset( $this->get_id );
+		}
+		
+		// ... //
 		
 		return $query;
 	}

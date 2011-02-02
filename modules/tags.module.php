@@ -45,14 +45,13 @@ class MySmartTagsMOD
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		$TagArr 			= 	array();
-		$TagArr['where'] 	= 	array('tag_id',$MySmartBB->_GET['id']);
-		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
 		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$number = $MySmartBB->tag->getSubjectNumber();
+		$number = $MySmartBB->rec->getNumber();
 		
-		// Pager setup
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$number;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['subject_perpage']; // TODO
@@ -60,7 +59,7 @@ class MySmartTagsMOD
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=tags&amp;show=1&amp;id=' . $MySmartBB->_GET['id'];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
-		$MySmartBB->tag->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		/*if (!$MySmartBB->_CONF['template']['while']['Subject'])
 		{

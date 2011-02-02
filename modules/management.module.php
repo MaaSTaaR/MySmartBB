@@ -30,9 +30,9 @@ class MySmartManagementMOD
 		
 		$MySmartBB->func->showHeader('ادارة المواضيع');
 		
-		$MySmartBB->_GET['section'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['section'],'intval');
+		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET[ 'section' ];
 		
-		if ( $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['section'] ) )
+		if ( $MySmartBB->func->moderatorCheck( $MySmartBB->_GET[ 'section' ] ) )
 		{
 			if ($MySmartBB->_GET['subject'])
 			{
@@ -143,13 +143,14 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		// [WE NEED A SYSTEM]
 		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
@@ -163,7 +164,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -183,7 +184,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -199,7 +200,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -219,7 +220,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -234,8 +235,8 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
-		$MySmartBB->_GET['section'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['section'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET['section'];
 		
 		if (empty($MySmartBB->_GET['subject_id'])
 			or empty($MySmartBB->_GET['section']))
@@ -311,7 +312,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -331,7 +332,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -351,7 +352,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -362,16 +363,18 @@ class MySmartManagementMOD
 
 		if ($update)
 		{
-			/* ... */
+			// ... //			
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 			
-			$Subject = $MySmartBB->subject->getSubjectInfo();
+			$Subject = $MySmartBB->rec->getInfo();
 			
 			$MySmartBB->func->cleanArray( $Subject, 'sql' );
 			
-			/* ... */
+			// ... //
 			
+			$MySmartBB->rec->table = $MySmartBB->rec->table[ 'pm' ];
 			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 												'user_to'	=>	$Subject['writer'],
 												'title'	=>	'تم حذف موضوعك ' . $Subject['title'],
@@ -380,18 +383,20 @@ class MySmartManagementMOD
 												'icon'	=>	$Subject['icon'],
 												'folder'	=>	'inbox'	);
 												
-			$send = $MySmartBB->pm->insertMessage();
+			$send = $MySmartBB->rec->insert();
 			
-			/* ... */
+			// ... //
 			
+			// [WE NEED A SYSTEM]
 			$number = $MySmartBB->pm->newMessageNumber( $Subject['writer'] );
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$number	);
 			$MySmartBB->rec->filter = "username='" . $Subject[ 'writer' ] . "'";
 			
-			$update_cache = $MySmartBB->member->updateMember();
+			$update_cache = $MySmartBB->rec->update();
 			
-			/* ... */
+			// ... //
 			
 			$MySmartBB->func->msg('تم حذف الموضوع');
 			$MySmartBB->func->goto('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
@@ -402,7 +407,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -413,9 +418,10 @@ class MySmartManagementMOD
 		
 		$MySmartBB->func->getEditorTools();
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->subject->getSubjectInfo();
+		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->rec->getInfo();
 		
 		$MySmartBB->template->display('subject_edit');
 	}
@@ -424,7 +430,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -437,6 +443,7 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
 											'text'	=>	$MySmartBB->_POST['text'],
 											'icon'	=>	$MySmartBB->_POST['icon'],
@@ -444,7 +451,7 @@ class MySmartManagementMOD
 											
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ( $update )
 		{
@@ -478,7 +485,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
@@ -498,20 +505,27 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		// ... //
+		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply_id'] . '&amp;section=' . $MySmartBB->_GET['section'] . '&amp;subject_id=' . $MySmartBB->_GET['subject_id']);
 		
 		$MySmartBB->func->getEditorTools();
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
 		
-		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->reply->getReplyInfo();
+		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->rec->getInfo();
+		
+		// ... //
 		
 		$MySmartBB->template->display('reply_edit');
 	}
@@ -520,7 +534,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
@@ -533,13 +547,18 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
 											'text'	=>	$MySmartBB->_POST['text'],
 											'icon'	=>	$MySmartBB->_POST['icon']	);
 											
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
 		
-		$update = $MySmartBB->reply->updateReply();
+		$update = $MySmartBB->rec->update();
+		
+		// ... //
 		
 		if ($update)
 		{
@@ -552,7 +571,7 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -568,57 +587,66 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$Subject = $MySmartBB->subject->getSubjectInfo();
+		$Subject = $MySmartBB->rec->getInfo();
 		
 		if (!$Subject)
 		{
 			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $Subject['section'] . "'";
 		
-		$Section = $MySmartBB->section->getSectionInfo();
+		$Section = $MySmartBB->rec->getInfo();
 		
 		if (!isset($MySmartBB->_POST['url']))
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		// [WE NEED A SYSTEM]
 		$update = $MySmartBB->subject->closeSubject( 'موضوع مُكرر', $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
      		$MySmartBB->rec->fields = array(	'text'	=>	'هذا الموضوع مكرر، راجع الاصل [url=' . $MySmartBB->_POST['url'] . ']هنا[/url]',
      											'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
      											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
      											'write_time'	=>	$MySmartBB->_CONF['now'],
      											'section'	=>	$Subject['section']	);
      											
-     		$MySmartBB->reply->get_id = true;
+     		$MySmartBB->rec->get_id = true; // TODO : Do we really need this?
      		
-     		$insert = $MySmartBB->reply->insertReply();
+     		$insert = $MySmartBB->rec->insert();
      	
      		if ($insert)
      		{
-     			$MySmartBB->fields = array(	'lastpost_time'	=>	$MySmartBB->_CONF['now']	);
+     			// ... //
      			
+     			$MySmartBB->table = $MySmartBB->table[ 'member' ];
+     			$MySmartBB->fields = array(	'lastpost_time'	=>	$MySmartBB->_CONF['now']	);
      			$MySmartBB->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
      			
-   				$UpdateMember = $MySmartBB->member->updateMember();
+   				$UpdateMember = $MySmartBB->member->update();
    				
+   				// ... //
+   				
+   				// [WE NEED (MAYBE NOT) A SYSTEM]
      			$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $MySmartBB->_GET['subject_id'] );
      			
      			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $Subject['reply_number'], $MySmartBB->_GET['subject_id'] );
@@ -629,10 +657,15 @@ class MySmartManagementMOD
      			     		
      			$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_GET['subject_id'] );
      			
+     			// ... //
+     			
+     			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
      			$MySmartBB->rec->fields = array(	'reply_num'	=>	$Section['reply_num'] + 1 );
      			$MySmartBB->rec->filter = "id='" . $Section['id'] . "'";
      			
-     			$UpdateSubjectNumber = $MySmartBB->section->updateSection();
+     			$UpdateSubjectNumber = $MySmartBB->rec->update();
+     			
+     			// ... //
      			     			
 				$MySmartBB->func->msg('تم التحديث بنجاح');
 				$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
@@ -644,17 +677,18 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 	  	
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('-42') )	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
@@ -667,17 +701,18 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000')	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
@@ -690,17 +725,18 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'review_subject'	=>	0	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
@@ -713,17 +749,18 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'special'	=>	1	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
@@ -736,17 +773,18 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'special'	=>	0	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$update = $MySmartBB->subject->updateSubject();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{

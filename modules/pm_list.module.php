@@ -26,33 +26,24 @@ class MySmartPrivateMassegeListMOD
 			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 		
-		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
-		/** **/
-		
-		/** Visitor can't use the private massege system **/
+
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-		/** **/
-		
-		/** Get the list of masseges **/
+
 		if ($MySmartBB->_GET['list'])
 		{
 			$this->_showList();
 		}
-		/** **/
 		
 		$MySmartBB->func->getFooter();
 	}
 	
-	/**
-	 * Get the list of masseges
-	 */
 	private function _showList()
 	{
 		global $MySmartBB;
@@ -64,17 +55,17 @@ class MySmartPrivateMassegeListMOD
 			$MySmartBB->func->error('المعذره .. المسار المتبع غير صحيح');
 		}
 		
-		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = ($MySmartBB->_GET['folder'] == 'inbox') ? 'user_to' : 'user_from';
 		$MySmartBB->rec->filter .= "='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='";
 		$MySmartBB->rec->filter .= ($MySmartBB->_GET['folder'] == 'inbox') ? 'inbox' : 'sent';
 		$MySmartBB->rec->filter .= "'";
 		
-		$number = $MySmartBB->pm->getPrivateMassegeNumber();
+		$number = $MySmartBB->rec->getNumber();
 		
 		/* ... */
 		
@@ -82,7 +73,8 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->_CONF['template']['res']['pmlist_res'] = '';
 		
-		// Pager setup
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$number;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
@@ -94,6 +86,7 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['pmlist_res'];
 		
+		// [WE NEED A SYSTEM]
 		if ($MySmartBB->_GET['folder'] == 'sent')
 		{
 			$GetMassegeList = $MySmartBB->pm->getSentList( $MySmartBB->_CONF['member_row']['username'] );

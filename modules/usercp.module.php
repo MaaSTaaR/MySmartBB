@@ -219,12 +219,13 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_CONF['template']['res']['reply_res'] = '';
 		
+		$MySmartBB->rec->table		=	$MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter 	= 	"writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		$MySmartBB->rec->order 		= 	'id DESC';
 		$MySmartBB->rec->limit 		= 	'5';
 		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF['template']['res']['last_subjects_res'];
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->subject->getList();
 		
 		/* ... */
 		
@@ -247,7 +248,8 @@ class MySmartUserCPMOD
 		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
-				
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'user_country'	=>	$MySmartBB->_POST['country'],
 											'user_website'	=>	$MySmartBB->_POST['website'],
 											'user_info'	=>	$MySmartBB->_POST['info'],
@@ -256,7 +258,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 		
 		if ( $update )
 		{
@@ -273,10 +275,11 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style '];
 		$MySmartBB->rec->order = 'style_order ASC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
-		$MySmartBB->style->getStyleList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('usercp_control_setting');
 	}
@@ -289,6 +292,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_POST['style'],
 											'hide_online'	=>	$MySmartBB->_POST['hide_online'],
 											'user_time'	=>	$MySmartBB->_POST['user_time'],
@@ -296,7 +300,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 		
 		if ( $update )
 		{
@@ -323,23 +327,31 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
-		$MySmartBB->_POST['text'] = $MySmartBB->func->cleanVariable( $MySmartBB->_POST['text'], 'trim' );
+		// ... //
 		
+		$MySmartBB->_POST['text'] = trim( $MySmartBB->_POST['text'] );
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'user_sig'	=>	$MySmartBB->_POST['text']	);
-		
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 				
+		// ... //
+		
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم تحديث التوقيع بنجاح !');
 			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
 		}
+		
+		// ... //
 	}
 	
 	/* Kill ME 
@@ -435,11 +447,13 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->func->showHeader('تنفيذ العمليه');
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
 		
-		//////////
+		// ... //
 		
 		// Check if the information aren't empty
 		if (empty($MySmartBB->_POST['old_password']) 
@@ -448,30 +462,23 @@ class MySmartUserCPMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		//////////
+		// ... //
 		
-		// Clean the information from white spaces (only in the begin and in the end)
-		$MySmartBB->_POST['old_password'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['old_password'],'trim');
-		$MySmartBB->_POST['new_password'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['new_password'],'trim');
+		$MySmartBB->_POST['old_password'] = md5( trim( $MySmartBB->_POST['old_password'] ) );
+		$MySmartBB->_POST['new_password'] = md5( trim( $MySmartBB->_POST['new_password'] ) );
 		
-		//////////
-		
-		// Convert password to md5
-		$MySmartBB->_POST['old_password'] = md5($MySmartBB->_POST['old_password']);
-		$MySmartBB->_POST['new_password'] = md5($MySmartBB->_POST['new_password']);
-		
-		//////////
-		
+		// ... //
+
 		// Ensure if the password is correct or not
+		// [WE NEED A SYSTEM]
 		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['old_password'] );
 		
-		// The password isn't correct, print error message
 		if (!$checkPasswordCorrect)
 		{
 			$MySmartBB->func->error('المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه');
 		}
 		
-		//////////
+		// ... //
 		
 		if ( $MySmartBB->_CONF['info_row']['confirm_on_change_pass'] )
 		{
@@ -480,29 +487,48 @@ class MySmartUserCPMOD
 			
 			$ChangeAdress = $adress . 'index.php?page=new_password&index=1&code=' . $code;
 			$CancelAdress = $adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $code;
-		
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 			$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
 												'username'	=>	$MySmartBB->_CONF['member_rows']['username'],
 												'request_type'	=>	'1'	);
 												
-			$insert = $MySmartBB->request->insertRequest();
+			$insert = $MySmartBB->rec->insert();
 		
 			if ( $insert )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->fields = array(	'new_password'	=>	$MySmartBB->_POST['new_password']	);
 				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 				
-				$update = $MySmartBB->member->updateMember();
+				$update = $MySmartBB->rec->update();
 			
 				if ( $update )
 				{
+					// ... //
+					
+					$MySmartBB->rec->table = $MySmartBB->rec->table[ 'email_msg' ];
 					$MySmartBB->rec->filter = "id='1'";
 					
-					$MassegeInfo = $MySmartBB->massege->getMessageInfo();
-				
-					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
+					$MassegeInfo = $MySmartBB->rec->getInfo();
 					
-					$send = $MySmartBB->func->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
+					// ... //
+					
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
+																					$MySmartBB->_CONF['info_row']['title'], 
+																					null, 
+																					$ChangeAdress, 
+																					$CancelAdress, 
+																					$MassegeInfo['text'] );
+					
+					// ... //
+					
+					$send = $MySmartBB->func->mail(	$MySmartBB->_CONF['member_row']['email'],
+													$MassegeInfo['title'],
+													$MassegeInfo['text'],
+													$MySmartBB->_CONF['info_row']['send_email'] );
+					
+					// ... //
 					
 					if ($send)
 					{
@@ -513,11 +539,12 @@ class MySmartUserCPMOD
 			}
 		}
 		else
-		{	
+		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'password'	=>	$MySmartBB->_POST['new_password']	);
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 				
-			$update = $MySmartBB->member->updateMember();
+			$update = $MySmartBB->rec->update();
 		
 			if ( $update )
 			{
@@ -531,7 +558,7 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->ShowHeader('تغيير البريد الالكتروني');
+		$MySmartBB->func->showHeader('تغيير البريد الالكتروني');
 		
 		$MySmartBB->template->display('usercp_control_email');
 	}
@@ -540,19 +567,24 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->func->showHeader('تنفيذ العمليه');
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
 		
+		// ... //
+		
 		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST['new_email']. "'";
 		
+		// [WE NEED A SYSTEM]
 		$EmailExists = $MySmartBB->member->isMember();
 		
 		if (empty($MySmartBB->_POST['new_email']))
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-		if (!$MySmartBB->func->CheckEmail($MySmartBB->_POST['new_email']))
+		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['new_email']))
 		{
 			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
@@ -561,7 +593,7 @@ class MySmartUserCPMOD
 			$MySmartBB->func->error('المعذره .. البريد الالكتروني موجود مسبقاً');
 		}
 		
-		$MySmartBB->_POST['new_email'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['new_email'],'trim');
+		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
 		
 		// We will send a confirm message, The confirm message will help user protect himself from crack
 		if ($MySmartBB->_CONF['info_row']['confirm_on_change_mail'])
@@ -572,11 +604,12 @@ class MySmartUserCPMOD
 			$ChangeAdress = $adress . 'index.php?page=new_email&index=1&code=' . $code;
 			$CancelAdress = $adress . 'index.php?page=cancel_requests&index=1&type=2&code=' . $code;
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 			$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
 												'username'	=>	$MySmartBB->_CONF['member_rows']['username'],
 												'request_type'	=>	'2'	);
 		
-			$insert = $MySmartBB->request->insertRequest();
+			$insert = $MySmartBB->rec->insert();
 		
 			if ( $insert )
 			{
@@ -627,8 +660,7 @@ class MySmartUserCPMOD
 		$MySmartBB->template->assign('JQUERY',true);
 		
 		$MySmartBB->func->showHeader('الصوره الشخصيه');
-				
-		// Stop this feature if it's not allowed
+		
 		if (!$MySmartBB->_CONF['info_row']['allow_avatar'])
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام هذه الميزه');
@@ -636,7 +668,8 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		// Pager setup
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$MySmartBB->avatar->getAvatarNumber();
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['avatar_perpage'];
@@ -648,7 +681,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['avatar_res'];
 		
-		$MySmartBB->avatar->getAvatarList();
+		$MySmartBB->avatar->getList();
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
@@ -814,12 +847,14 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		
 		$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		$MySmartBB->rec->order = 'id DESC';
 		$MySmartBB->rec->limit = '5';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('usercp_options_subjects');
 	}
@@ -830,7 +865,7 @@ class MySmartUserCPMOD
 
 		$MySmartBB->func->ShowHeader('لوحة تحكم العضو');
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
@@ -846,19 +881,19 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->func->ShowHeader(' إضافة الموضوع الى المفضلة');
+		$MySmartBB->func->showHeader(' إضافة الموضوع الى المفضلة');
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		/** Get the Subject information **/
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$subject = $MySmartBB->subject->getSubjectInfo($SubArr);
+		$subject = $MySmartBB->rec->getInfo();
 		
 		if (!$subject)
 		{
@@ -867,14 +902,14 @@ class MySmartUserCPMOD
 		
 		// TODO :: please check group information.
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
 		$MySmartBB->rec->fields = array(	'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
 											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
 											'subject_title'	=>	$Subject['title'],
 											'reason'	=>	$MySmartBB->_POST['reason']	);
 		
-		$MySmartBB->bookmark->get_id = true;
 		
-		$insert = $MySmartBB->bookmark->insertSubject();
+		$insert = $MySmartBB->rec->insert();
 
 		if ($insert)
 		{
@@ -889,16 +924,17 @@ class MySmartUserCPMOD
 
 		$MySmartBB->func->ShowHeader('حذف الموضوع من قائمة المواضيع المفضلة');
 
-		$MySmartBB->_GET['id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
 		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$del = $MySmartBB->bookmark->deleteSubject();
+		$del = $MySmartBB->rec->delete();
 		
 		if ( $del )
 		{
@@ -915,11 +951,12 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
 		$MySmartBB->rec->filter = "member_id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		$MySmartBB->rec->order = 'id DESC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
 		
-		$MySmartBB->bookmark->getSubjectList();
+		$MySmartBB->rec->getList();
 
 		$MySmartBB->template->display('subject_bookmark_show');
 	}

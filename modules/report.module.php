@@ -81,7 +81,10 @@ class MySmartReportMOD
 			$MySmartBB->func->error('الرجاء أدخل سبب كتابة تقرير عن هذه المشاركة.');
 		}
 		
-		$Report = $MySmartBB->func->mail($MySmartBB->_CONF['info_row']['admin_email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
+		$Report = $MySmartBB->func->mail(	$MySmartBB->_CONF['info_row']['admin_email'],
+											$MySmartBB->_POST['title'],
+											$MySmartBB->_POST['text'],
+											$MySmartBB->_CONF['member_row']['email'] );
 		
 		if ($Report)
 		{

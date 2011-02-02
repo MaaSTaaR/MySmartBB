@@ -18,12 +18,10 @@ class MySmartMemberlistMOD
 	{
 		global $MySmartBB;
 		
-		/** Get the member information as list **/
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_getMemberList();
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -40,7 +38,8 @@ class MySmartMemberlistMOD
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		// Pager setup
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$MySmartBB->member->getMemberNumber();
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
@@ -50,7 +49,7 @@ class MySmartMemberlistMOD
 		
 		$MySmartBB->rec->order = "id ASC";
 		
-		$MySmartBB->member->getMemberList();
+		$MySmartBB->rec->getList();
 
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		

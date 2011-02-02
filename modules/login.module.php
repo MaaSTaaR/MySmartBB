@@ -19,19 +19,16 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
-		/** Normal login **/
+		// Normal login //
 		if ( $MySmartBB->_GET[ 'login' ] )
 		{
 			$this->_startLogin();
 		}
-		/** **/
-		
-		/** Login after register **/
+		// Login after register //
 		elseif ( $MySmartBB->_GET[ 'register_login' ] )
 		{
 			$this->_startLogin( true );
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
@@ -40,14 +37,6 @@ class MySmartLoginMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	/**
-	 * Check if the username , password are true, then gives the permisson to the user.
-	 *
-	 * @param :
-	 *			register_login	-> 
-	 *								true : to use this function to login after register
-	 *								false : to use this function to normal login
-	 */
 	private function _startLogin( $register_login = false )
 	{
 		global $MySmartBB;
@@ -60,52 +49,56 @@ class MySmartLoginMOD
 		
 		if ( !$register_login )
 		{
-			$username = $MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'username' ], 'trim' );
-			$password = $MySmartBB->func->cleanVariable( md5( $MySmartBB->_POST[ 'password' ] ), 'trim' );
+			$username = trim( $MySmartBB->_POST[ 'username' ] );
+			$password = trim( md5( $MySmartBB->_POST[ 'password' ] ) );
 		}
 		else
 		{
-			$username = $MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'username' ], 'trim' );
-			$password = $MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'password' ], 'trim' );
+			$username = trim( $MySmartBB->_GET[ 'username' ] );
+			$password = trim( $MySmartBB->_GET[ 'password' ] );
 		}
 		
 		$expire = ( isset( $MySmartBB->_POST[ 'temporary' ] ) and $MySmartBB->_POST[ 'temporary' ] == 'on' ) ? 0 : time() + 31536000;
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->loginMember( $username, $password, $expire );
 		
-		$MySmartBB->func->ShowHeader('تسجيل دخول');
+		$MySmartBB->func->showHeader('تسجيل دخول');
 		
 		if ($isMember != false)
 		{
-			/* ... */
+			// ... //
 			
 			$MySmartBB->template->assign('username',$username);
 			
 			$MySmartBB->template->display('login_msg');
 			
-			/* ... */
+			// ... //
 			
 			if ( $isMember[ 'style' ] != $isMember[ 'style_id_cache' ] )
 			{
 				$MySmartBB->rec->filter = "id='" . (int) $isMember[ 'style' ] . "'";
 				
+				// [WE NEED A SYSTEM]
 				$style_cache = $MySmartBB->style->createStyleCache();
-					
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->fields = array( 	'style_cache'	=>	$style_cache,
 													'style_id_cache'	=>	$isMember['style']	);
 				
 				$MySmartBB->rec->filter = "id='" . (int) $isMember['id'] . "'";
-													
-				$update_cache = $MySmartBB->member->UpdateMember();
+				
+				$update_cache = $MySmartBB->rec->update();
 			}
 			
-			/* ... */
+			// ... //
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->filter = "user_ip='" . $MySmartBB->_CONF['ip'] . "'";
 			
-			$MySmartBB->online->deleteOnline();
+			$MySmartBB->rec->delete();
 			
-			/* ... */
+			// ... //
 			
 			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       		$url = $url[ 'query' ];
@@ -115,7 +108,7 @@ class MySmartLoginMOD
      		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
       		
-      		/* ... */
+      		// ... //
       		
       		if ( !$register_login )
       		{
@@ -123,18 +116,18 @@ class MySmartLoginMOD
       				or empty( $url ) 
       				or $url != 'page=login' )
            		{
-       				//$MySmartBB->func->goto( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+       				$MySmartBB->func->goto( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       			}
       			elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
       					or $url == 'page=logout' 
       					or $url == 'page=login' )
            		{
-       				//$MySmartBB->func->goto( 'index.php' );
+       				$MySmartBB->func->goto( 'index.php' );
       			}
       		}
       		else
       		{
-      			//$MySmartBB->func->goto( 'index.php' );
+      			$MySmartBB->func->goto( 'index.php' );
       		}
 		}
 		else

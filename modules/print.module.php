@@ -82,10 +82,8 @@ class MySmartPrintMOD
 
 		/* ... */
 
-		// Clean id from any string, that will protect us
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
-		// If the id is empty, so stop the page
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
@@ -94,6 +92,7 @@ class MySmartPrintMOD
 		/* ... */
 
 		// Get the subject and the subject's writer information
+		// [WE NEED A SYSTEM]
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 
 		// There is no subject, so show error message
@@ -107,12 +106,10 @@ class MySmartPrintMOD
 
 		/* ... */
 		
-		// Kill SQL Injection
 		$MySmartBB->func->cleanArray( $this->Info, 'sql' );
 
 		/* ... */
-
-		// Send subject id to template engine
+		
 		$MySmartBB->template->assign('subject_id',$MySmartBB->_GET['id']);
 		$MySmartBB->template->assign('section_id',$this->Info['section']);
 
@@ -123,13 +120,12 @@ class MySmartPrintMOD
 	private function __getSection()
 	{
 		global $MySmartBB;
-
-		/** Get the section information **/
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $this->Info['section'] . "'";
 		
-		$this->SectionInfo = $MySmartBB->section->getSectionInfo();
+		$this->SectionInfo = $MySmartBB->rec->getInfo();
 
-		// Kill SQL Injection
 		$MySmartBB->func->cleanArray($this->SectionInfo,'sql');
 
 		$MySmartBB->template->assign('section_info',$this->SectionInfo);
@@ -138,28 +134,26 @@ class MySmartPrintMOD
 	private function __getGroup()
 	{
 		global $MySmartBB;
-
-		/** Get section's group information and make some checks **/
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
-		// Finally get the permissions of group
-		$this->SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+				
+		$this->SectionGroup = $MySmartBB->rec->getInfo();
 	}
 
 	private function __checkSystem()
 	{
 		global $MySmartBB;
 
-		// The visitor can't show this section , so stop the page
 		if (!$this->SectionGroup['view_section'])
 		{
 			$MySmartBB->func->error('المعذره لا يمكنك طباعة هذا موضوع');
 		}
-		/** **/
 
 		// If the member isn't the writer , so register a new visit for the subject
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
 		{
+			// [WE NEED A SYSTEM]
 			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
 		}
 
@@ -193,7 +187,6 @@ class MySmartPrintMOD
 	{
 		global $MySmartBB;
 
-		// Make register date in nice format to show it
 		if (is_numeric($this->Info['register_date']))
 		{
 			$this->Info['register_date'] = $MySmartBB->func->date($this->Info['register_date']);
@@ -216,18 +209,15 @@ class MySmartPrintMOD
 	{
 		global $MySmartBB;
 
-		// If the SmartCode is allow , so use it :)
 		if ($this->SectionInfo['usesmartcode_allow'])
 		{
 			$this->Info['text'] = $MySmartBB->smartparse->replace($this->Info['text']);
 		}
-		// The SmartCode isn't allow , don't use it :(
 		else
 		{
 			$this->Info['text'] = nl2br($this->Info['text']);
 		}
 
-		// Convert smiles in subject to nice images :)
 		$MySmartBB->smartparse->replace_smiles($this->Info['text']);
 	}
 
@@ -239,11 +229,9 @@ class MySmartPrintMOD
 		$topic_time = $MySmartBB->func->time($this->Info['native_write_time']);
 
 		$this->Info['native_write_time'] = $topic_date . ' ; ' . $topic_time;
-
-		// Finally $this->Info to templates
+		
 		$MySmartBB->template->assign('Info',$this->Info);
-
-		// Show subject
+		
 		$MySmartBB->template->display('print_subject');
 	}
 
@@ -251,14 +239,13 @@ class MySmartPrintMOD
 	{
 		global $MySmartBB;
 
-		// Show the replies
-		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
-		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "subject_id='" . $this->Info['subject_id'] . "' AND delete_topic<>'1'";
 		
-		$reply_number = $MySmartBB->reply->getReplyNumber();
+		$reply_number = $MySmartBB->rec->getNumber();
 
-		// Pager setup
+		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$reply_number;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
@@ -268,21 +255,16 @@ class MySmartPrintMOD
 		
 		$MySmartBB->rec->filter = "delete_topic<>'1'";
 		
+		// [WE NEED A SYSTEM]
 		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
 		
 		$n = sizeof($this->RInfo);
 		$this->x = 0;
 
-		// Nice loop :D
 		while ($n > $this->x)
 		{
-			// Get the replier info
 			$this->___getReplierInfo();
-
-			// Make reply text as a nice format
 			$this->___replyFormat();
-
-			// The end of reply
 			$this->___replyEnd();
 		}
 	}

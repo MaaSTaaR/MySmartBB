@@ -35,10 +35,11 @@ class MySmartSpecialSubjectMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "special='1'";
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('special_subject');
 	}

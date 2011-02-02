@@ -84,6 +84,7 @@ class MySmartPrivateMassegeMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'autoreply'	=>	$MySmartBB->_POST['autoreply'],
 											'autoreply_title'	=>	$MySmartBB->_POST['title'],
 											'autoreply_msg'	=>	$MySmartBB->_POST['msg'],
@@ -92,7 +93,7 @@ class MySmartPrivateMassegeMOD
 											
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
-		$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{

@@ -36,14 +36,15 @@ class MySmartChangeStyleMOD
 		{
 			if ($MySmartBB->_CONF['member_permission'])
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
-				
 				$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_GET[ 'id' ]	);
 				
-				$change = $MySmartBB->member->updateMember();
+				$change = $MySmartBB->member->update();
 			}
 			else
 			{
+				// [WE NEED A SYSTEM]
 				$change = $MySmartBB->style->changeStyle( $MySmartBB->_GET[ 'id' ], time() + 31536000 );
 			}
 			

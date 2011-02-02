@@ -28,7 +28,7 @@ class MySmartAdsPageMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->func->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	private function _showPage()
@@ -44,9 +44,10 @@ class MySmartAdsPageMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$MySmartBB->_CONF['template']['GetPage'] = $MySmartBB->pages->getPageInfo();
+		$MySmartBB->_CONF['template']['GetPage'] = $MySmartBB->rec->getInfo();
 		
 		if (!$MySmartBB->_CONF['template']['GetPage'])
 		{

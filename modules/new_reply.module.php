@@ -67,62 +67,59 @@ class MySmartReplyAddMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$this->SubjectInfo = $MySmartBB->subject->getSubjectInfo();
+		$this->SubjectInfo = $MySmartBB->rec->getInfo();
 
 		if (!$this->SubjectInfo)
 		{
 			$MySmartBB->func->error('المعذره .. الموضوع المطلوب غير موجود');
 		}
 		
-		// Kill SQL Injection
-		$MySmartBB->func->CleanVariable($this->SubjectInfo,'sql');
+		$MySmartBB->func->cleanArray( $this->SubjectInfo, 'sql' );
 		
-		/* ... */
+		// ... //
 		
-		$SecArr 			= 	array();
-		$SecArr['where'] 	= 	array('id',$this->SubjectInfo['section']);
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $this->SubjectInfo['section'] . "'";
 		
-		$this->SectionInfo = $MySmartBB->section->GetSectionInfo($SecArr);
+		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
-		// Kill SQL Injection
-		$MySmartBB->func->CleanVariable($this->SectionInfo,'sql');
+		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
 		
-		/* ... */
+		// ... //
 		
 		$this->moderator = $MySmartBB->func->moderatorCheck( $this->SectionInfo['id'], $MySmartBB->_CONF['member_row']['username'] );
 		
-		/* ... */
+		// ... //
 
 		if ( !$this->moderator )
 		{
-			if ($this->SubjectInfo['close'])
+			if ( $this->SubjectInfo[ 'close' ] )
 			{
 				$MySmartBB->func->error('المعذره .. هذا الموضوع مغلق');
 			}
 		}
 		
-		/* ... */
+		// ... //
 		
-		/** Get section's group information and make some checks **/
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
-		// Finally get the permissions of group
-		$this->SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
+		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
-		// The visitor can't show this section , so stop the page
 		if ( !$this->SectionGroup['view_section']
 			or !$this->SectionGroup['write_reply'] )
 		{
 			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم');
 		}
 		
-		/* ... */
+		// ... //
 		
 		// TODO :: use functions
 		if ( !empty($this->SectionInfo['section_password']) 
@@ -149,18 +146,19 @@ class MySmartReplyAddMOD
      		}
      	}
      	
-		/* ... */
+		// ... //
 		
 		// Where is the member now?
 		if ( $MySmartBB->_CONF['member_permission'] )
      	{
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'user_location'	=>	'يكتب رداً على : ' . $this->SubjectInfo['title']	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$update = $MySmartBB->online->updateOnline();
+			$update = $MySmartBB->rec->update();
      	}
      	
-     	/* ... */
+     	// ... //
      	
      	$MySmartBB->template->assign('section_info',$this->SectionInfo);
      	$MySmartBB->template->assign('subject_info',$this->SubjectInfo);
@@ -194,8 +192,8 @@ class MySmartReplyAddMOD
 			$MySmartBB->func->showHeader('تنفيذ عملية اضافة الرد');
 		}
 		
-		$MySmartBB->_POST['title'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['title'],'trim');
-		$MySmartBB->_POST['text'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['title'] = trim( $MySmartBB->_POST[ 'title' ] );
+		$MySmartBB->_POST['text'] = trim( $MySmartBB->_POST[ 'text' ] );
 		
 		if (!isset($MySmartBB->_POST['ajax']))
 		{
@@ -236,11 +234,13 @@ class MySmartReplyAddMOD
      	{
 			if ($MySmartBB->_POST['stick'])
 			{
+				// [WE NEED A SYSTEM]
 				$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo['id'] );
 			}
 		
 			if ($MySmartBB->_POST['close'])
 			{
+				// [WE NEED A SYSTEM]
 				$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $this->SubjectInfo['id'] );
 			}
 		}
@@ -251,6 +251,7 @@ class MySmartReplyAddMOD
      		$MySmartBB->_POST['text'] = $MySmartBB->func->replaceWYSIWYG( $MySmartBB->_POST['text'] );
      	}
      	
+     	$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
      	$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
      										'text'	=>	$MySmartBB->_POST['text'],
      										'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
@@ -258,13 +259,13 @@ class MySmartReplyAddMOD
      										'write_time'	=>	$MySmartBB->_CONF['now'],
      										'section'	=>	$this->SubjectInfo['section'],
      										'icon'	=>	$MySmartBB->_POST['icon']	);
-     	$MySmartBB->reply->get_id = true;
+     	$MySmartBB->rec->get_id = true;
      	
-     	$insert = $MySmartBB->reply->insertReply();
+     	$insert = $MySmartBB->rec->insert();
      	
      	if ($insert)
      	{
-     		/* ... */
+     		// ... //
      		
      		if ($this->SectionGroup['no_posts'])
      		{
@@ -275,15 +276,16 @@ class MySmartReplyAddMOD
      			$posts = $MySmartBB->_CONF['member_row']['posts'];
      		}
      		
-     		/* ... */
+     		// ... //
      		
      		$usertitle = '';
      		
      		if ($MySmartBB->_CONF['group_info']['usertitle_change'])
      		{
+     			$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
      			$MySmartBB->rec->filter = "posts='" . $posts . "'";
      			
-     			$UserTitle = $MySmartBB->usertitle->getUsertitleInfo();
+     			$UserTitle = $MySmartBB->rec->getInfo();
      		
      			if ($UserTitle != false)
      			{
@@ -291,51 +293,57 @@ class MySmartReplyAddMOD
      			}
      		}
 
-     		/* ... */
+     		// ... //
      		
+     		$MySmartBB->table = $MySmartBB->table[ 'member' ];
      		$MySmartBB->fields = array(	'posts'	=>	$posts,
      									'lastpost_time'	=>	$MySmartBB->_CONF['now'],
      									'user_title'	=>	$usertitle	);
      		
      		$MySmartBB->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
      		
-   			$UpdateMember = $MySmartBB->member->updateMember();
+   			$UpdateMember = $MySmartBB->rec->update();
      		
-     		/* ... */
+     		// ... //
      		
+     		// [WE NEED (MAYBE NOT) A SYSTEM]
      		$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $this->SubjectInfo['id'] );
      		
-			/* ... */
+			// ... //
 			
+			// [WE NEED (MAYBE NOT) A SYSTEM]
 			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $this->SubjectInfo['reply_number'], $this->SubjectInfo['id'] );
 			
-			/* ... */
+			// ... //
      		
+     		// [WE NEED A SYSTEM]
      		$UpdateLast = $MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $this->SubjectInfo['title'], $this->SubjectInfo['id'], $MySmartBB->_CONF['date'],  (!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
      		
-     		/* ... */
+     		// ... //
      		
      		// TODO: only $MySmartBB->_CONF['info_row']['reply_number'] as a parameter?
      		// or $MySmartBB->_CONF['info_row']['reply_number'] + 1 instead??
      		$UpdateSubjectNumber = $MySmartBB->cache->updateReplyNumber( $MySmartBB->_CONF['info_row']['reply_number'] );
      		
-     		/* ... */
+     		// ... //
      		
+     		// [WE NEED (MAYBE NOT) A SYSTEM]
      		$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $this->SubjectInfo['id'] );
      		
-     		/* ... */
+     		// ... //
      		
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->fields = array(	'reply_num'	=>	$this->SectionInfo['reply_num'] + 1 );
 			$MySmartBB->rec->filter = "id='" . $this->SectionInfo['id'] . "'";
 			
-			$UpdateSubjectNumber = $MySmartBB->section->updateSection();
+			$UpdateSubjectNumber = $MySmartBB->rec->update();
      		
-     		/* ... */
+     		// ... //
      		
-     		// Update section's cache
+     		// [WE NEED A SYSTEM]
      		$update_cache = $MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
      		
-     		/* ... */
+     		// ... //
      		
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
@@ -466,7 +474,7 @@ class MySmartReplyAddMOD
      											{
      												$MySmartBB->rec->fields = array(	'attach_reply'	=>	'1'	);
      												
-     												$MySmartBB->rec->filter = "id='" . $MySmartBB->reply->id . "'";
+     												$MySmartBB->rec->filter = "id='" . $MySmartBB->rec->id . "'";
      												
      												$update = $MySmartBB->reply->UpdateReply($ReplyArr);
      											}
@@ -496,9 +504,10 @@ class MySmartReplyAddMOD
      		}
      		else
      		{
-     			$MySmartBB->rec->filter = "id='" . $MySmartBB->reply->id . "'";
+     			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
+     			$MySmartBB->rec->filter = "id='" . $MySmartBB->rec->id . "'";
      			
-     			$MySmartBB->_CONF['template']['Info'] = $MySmartBB->reply->getReplyInfo();
+     			$MySmartBB->_CONF['template']['Info'] = $MySmartBB->rec->getInfo();
      			
      			$MySmartBB->_CONF['template']['Info']['id'] 				= 	$MySmartBB->_CONF['member_row']['id'];
      			$MySmartBB->_CONF['template']['Info']['username'] 			= 	$MySmartBB->_CONF['member_row']['username'];
@@ -560,7 +569,7 @@ class MySmartReplyAddMOD
 	}
 }
 	
-	// Wooooooow , The latest modules of MySmartBB SEGMA 1 :) The THETA stage will come soon ;)
-	// 11/8/2006 -> 11:21 PM -> MaaSTaaR
+// Wooooooow , The latest modules of MySmartBB SEGMA 1 :) The THETA stage will come soon ;)
+// 11/8/2006 -> 11:21 PM -> MaaSTaaR
 	
 ?>

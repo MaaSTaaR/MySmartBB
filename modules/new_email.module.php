@@ -48,19 +48,21 @@ class MySmartEmailMOD
 			$MySmartBB->func->error('يرجى تسجيل دخولك اولاً');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='2' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$RequestInfo = $MySmartBB->request->getRequestInfo();
+		$RequestInfo = $MySmartBB->rec->getInfo();
 		
 		if (!$RequestInfo)
 		{
 			$MySmartBB->func->error('المعذره الطلب غير موجود !');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'email'	=>	$MySmartBB->_CONF['member_row']['new_email'] );
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'"
 		
-		$UpdateEmail= $MySmartBB->member->updateMember();
+		$UpdateEmail= $MySmartBB->rec->update();
 		
 		if ($UpdateEmail)
 		{

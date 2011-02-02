@@ -51,10 +51,11 @@ class MySmartActiveMOD
 			$MySmartBB->func->error('يرجى تسجيل دخولك اول');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
 		// Get request information
-		$RequestInfo = $MySmartBB->request->getRequestInfo();
+		$RequestInfo = $MySmartBB->rec->getInfo();
 		
 		// No request , so stop the page
 		if (!$RequestInfo)
@@ -66,22 +67,24 @@ class MySmartActiveMOD
       	
       	// Get the information of default group to set username style cache
       	
+      	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['adef_group'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->getGroupInfo();
+		$GroupInfo = $MySmartBB->rec->getInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_CONF['member_row']['username'],$style);
 		
       	/* ... */
       	
+      	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'usergroup'	=>	$MySmartBB->_CONF['info_row']['adef_group'],
 											'username_style_cache'	=>	$username_style_cache	);
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
 		// We found the request , so active the member
-		$UpdateGroup = $MySmartBB->member->updateMember();
+		$UpdateGroup = $MySmartBB->rec->update();
 		
 		// The active is success
 		if ($UpdateGroup)

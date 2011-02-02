@@ -30,39 +30,28 @@ class MySmartPrivateMassegeSendMOD
 			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 		
-		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
-		/** **/
 		
-		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-		/** **/
-		
-		/** Action to send the masseges **/
+
 		if ($MySmartBB->_GET['send'])
 		{
-			/** Show a nice form :) **/
 			if ($MySmartBB->_GET['index'])
 			{
 				$this->_sendForm();
 			}
-			/** **/
-			
-			/** Start send the massege **/
 			elseif ($MySmartBB->_GET['start'])
 			{
 				$this->_startSend();
 			}
-			/** **/
 		}
-		/** **/
-		
+
 		$MySmartBB->func->getFooter();
 	}
 	
@@ -79,16 +68,17 @@ class MySmartPrivateMassegeSendMOD
 		
 		if (isset($MySmartBB->_GET['username']))
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
 			
-			$GetToInfo = $MySmartBB->member->getMemberInfo();
+			$GetToInfo = $MySmartBB->rec->getInfo();
 															
 			if (!$GetToInfo)
 			{
 				$MySmartBB->func->error('العضو المطلوب غير موجود');
 			}
 			
-			// TODO : Change the names of variables to something else which has mean
+			// TODO : Change the names of variables to something meaningful [Ugly names :(]
 			$MySmartBB->template->assign('SHOW_MSG',$GetToInfo['pm_senders']);
 			$MySmartBB->template->assign('SHOW_MSG1',$GetToInfo['away']);
 			$MySmartBB->template->assign('MSG',$GetToInfo['pm_senders_msg']);
@@ -146,9 +136,10 @@ class MySmartPrivateMassegeSendMOD
      				continue;
      			}
 				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['to'][$x] . "'";
 				
-				$GetToInfo = $MySmartBB->member->getMemberInfo();
+				$GetToInfo = $MySmartBB->rec->getInfo();
 				
 				if (!$GetToInfo
 					and $size > 1)
@@ -166,10 +157,11 @@ class MySmartPrivateMassegeSendMOD
 				{
 					$MySmartBB->func->error('العضو المطلوب غير موجود');
 				}
-		
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 				$MySmartBB->rec->filter = "id='" . $GetToInfo['usergroup'] . "'";
 				
-				$GetMemberOptions = $MySmartBB->group->getGroupInfo();
+				$GetMemberOptions = $MySmartBB->rec->getInfo();
 				
 				if (!$GetMemberOptions['resive_pm']
 					and $size > 1)
@@ -190,9 +182,10 @@ class MySmartPrivateMassegeSendMOD
 		
 				if ($GetMemberOptions['max_pm'] > 0)
 				{
+					$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
 					$MySmartBB->rec->filter = "user_to='" . $GetToInfo['username'] . "'";
 					
-					$PrivateMassegeNumber = $MySmartBB->pm->getPrivateMessageNumber();
+					$PrivateMassegeNumber = $MySmartBB->pm->getNumber();
 					
 					if ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
 						and $size > 1)
@@ -214,6 +207,7 @@ class MySmartPrivateMassegeSendMOD
 				
 				/* ... */
 				
+				$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
 				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 													'user_to'	=>	$GetToInfo['username'],
 													'title'	=>	$MySmartBB->_POST['title'],
@@ -222,9 +216,9 @@ class MySmartPrivateMassegeSendMOD
 													'icon'	=>	$MySmartBB->_POST['icon'],
 													'folder'	=>	'inbox'	);
 				
-				$MySmartBB->pm->get_id = true;
+				$MySmartBB->rec->get_id = true;
 												
-				$Send = $MySmartBB->pm->insertMessage();
+				$Send = $MySmartBB->rec->insert();
 				
 				/* ... */
 														
@@ -364,6 +358,7 @@ class MySmartPrivateMassegeSendMOD
      				
      				//////////
 					
+					$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
 					$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 														'user_to'	=>	$GetToInfo['username'],
 														'title'	=>	$MySmartBB->_POST['title'],
@@ -372,13 +367,14 @@ class MySmartPrivateMassegeSendMOD
 														'icon'	=>	$MySmartBB->_POST['icon'],
 														'folder'	=>	'sent'	);
 													
-					$SentBox = $MySmartBB->pm->insertMassege();
+					$SentBox = $MySmartBB->rec->insert();
 														
 					if ($SentBox)
 					{
 						/** Auto reply **/
 						if ($GetToInfo['autoreply'])
 						{
+							$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
 							$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
 																'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
 																'title'	=>	'[الرد الآلي] ' . $GetToInfo['autoreply_title'],
@@ -386,15 +382,17 @@ class MySmartPrivateMassegeSendMOD
 																'date'	=>	$MySmartBB->_CONF['now'],
 																'folder'	=>	'inbox'	);
 														
-							$MySmartBB->pm->insertMassege();
+							$MySmartBB->rec->insert();
 						}
 						
+						// [WE NEED A SYSTEM]
 						$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo['username'] );
 		      			
+		      			$MySmartBB->rec->table = $MySamrtBB->table[ 'member' ];
 						$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
 						$MySmartBB->rec->filter = "username='" . $GetToInfo['username'] . "'";
 						
-						$Cache = $MySmartBB->member->updateMember();
+						$Cache = $MySmartBB->member->update();
 						
 						if ($Cache)
 						{

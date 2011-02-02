@@ -30,31 +30,23 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 
-		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
-		/** **/
-		
-		/** Visitor can't use the private massege system **/
+
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-		/** **/
-		
-		/** Conrol private masseges **/
+
 		if ($MySmartBB->_GET['cp'])
 		{
-			/** Delete private massege **/
 			if ($MySmartBB->_GET['del'])
 			{
 				$this->_deletePrivateMassege();
 			}
-			/** **/
 		}
-		/** **/
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -74,21 +66,24 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح .');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->pm->deletePrivateMessage();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			// Recount the number of new messages after delete this message
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 			$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='inobx' AND user_read='0'";
 			
-			$Number = $MySmartBB->pm->getPrivateMessageNumber();
+			$Number = $MySmartBB->rec->getNumber();
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$MySmartBB->member->updateMember();
+			$MySmartBB->rec->update();
 			
 			$MySmartBB->func->msg('تم حذف الرساله بنجاح !');
 			$MySmartBB->func->goto('index.php?page=pm_list&list=1&folder=inbox');

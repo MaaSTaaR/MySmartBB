@@ -40,7 +40,7 @@ class MySmartDownloadMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		// Clean id from any string, that will protect us
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -51,11 +51,12 @@ class MySmartDownloadMOD
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject']
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$SubjectInfo = $MySmartBB->subject->getSubjectInfo();
+		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
 		if ($SubjectInfo['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
@@ -63,22 +64,26 @@ class MySmartDownloadMOD
 			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
 		}
 		
-		$SecArr 			= 	array();
-		$SecArr['where'] 	= 	array('id',$SubjectInfo['section']);
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $SubjectInfo['section'] . "'";
 		
-		$SectionInfo = $MySmartBB->section->getSectionInfo();
+		$SectionInfo = $MySmartBB->rec->getInfo();
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
-		// Finally get the permissions of group
-		$SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+		$SectionGroup = $MySmartBB->rec->getInfo();
 		
 		if (!$SectionGroup['view_section'])
 		{
 			$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
 		}
+		
+		// ... //
 		
 		$filename = str_replace(' ','_',$SubjectInfo['title']);
 		$filename .= '.txt';
@@ -96,32 +101,30 @@ class MySmartDownloadMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
-		// Clean id from any string, that will protect us
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		// If the id is empty, so stop the page
+
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
-		// Get attachment information
+		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$AttachInfo = $MySmartBB->attach->getAttachInfo();
+		$AttachInfo = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 				
-		// Get subject information
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $AttachInfo['subject_id'] . "'";
 		
-		$SubjectInfo = $MySmartBB->subject->getSubjectInfo();
+		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		// The subject isn't available
 		if ($SubjectInfo['delete_topic'] 
@@ -130,17 +133,19 @@ class MySmartDownloadMOD
 			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
 		}
 		
-		/* ... */
+		// ... //
 		
 		// We can't stop the admin :)
 		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
+			// ... //
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 			
-			// Finally get the permissions of group
-			$SectionGroup = $MySmartBB->group->getSectionGroupInfo($SecGroupArr);
+			$SectionGroup = $MySmartBB->rec->getInfo();
 		
-			/* ... */
+			// ... //
 		
 			// The user can't show this subject
 			if (!$SectionGroup['view_section'])
@@ -165,7 +170,7 @@ class MySmartDownloadMOD
 			}
 		}
 
-		/* ... */
+		// ... //
 		
 		// Send headers
 		
@@ -178,13 +183,14 @@ class MySmartDownloadMOD
 		// MIME (TODO : dynamic)
 		header('Content-type: application/download');
 		
-		/* ... */
+		// ... //
 		
 		// Count a new download
+		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 		$MySmartBB->rec->fields = array(	'visitor'	=>	$AttachInfo['visitor'] + 1);
 		$MySmartBB->rec->filter = "id='" . $AttachInfo['id'] . "'";
 		
-		$update = $MySmartBB->attach->updateAttach();
+		$update = $MySmartBB->rec->update();
 		
 		//////////
 		
@@ -205,9 +211,10 @@ class MySmartDownloadMOD
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$MsgInfo = $MySmartBB->pm->getPrivateMassegeInfo();
+		$MsgInfo = $MySmartBB->rec->getInfo();
 																		
 		if (!$MsgInfo)
 		{

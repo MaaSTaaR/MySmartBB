@@ -14,12 +14,10 @@ class MySmartTeamMOD
 	{
 		global $MySmartBB;
 		
-		/** Show the team list **/
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showTeam();
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -37,6 +35,7 @@ class MySmartTeamMOD
 		
 		$MySmartBB->func->showHeader('المسؤولون');
 		
+		// [WE NEED A SYSTEM]
 		$MySmartBB->member->getTeamList();
 		
 		$MySmartBB->template->display('teamlist');

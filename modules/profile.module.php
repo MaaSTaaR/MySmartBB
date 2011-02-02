@@ -20,12 +20,10 @@ class MySmartProfileMOD
 	{
 		global $MySmartBB;
 		
-		/** Show the profile of member **/
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showProfile();
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -34,29 +32,20 @@ class MySmartProfileMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	/** Get member information and show it **/
 	private function _showProfile()
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		// Show the header
 
 		$MySmartBB->func->showHeader('عرض معلومات العضو');
 		
-		/* ... */
-		
-		// Get the member information
-		
-		$MemArr = array();
-		
-		$MemArr['get'] 	= 'id,username,usergroup,user_info,user_sig,user_country,user_gender,user_website,';
-		$MemArr['get']  .= 'lastvisit,user_time,register_date,posts,user_title,visitor,avater_path,away,away_msg';
+		// ... //
 		
 		$do_query = true;
 		
-		// Well I think we are the biggest sneaky in the world after wrote these lines :D
 		if (!empty($MySmartBB->_GET['id']))
 		{
 			$id = (int) $MySmartBB->_GET['id'];
@@ -82,9 +71,11 @@ class MySmartProfileMOD
 			$MySmartBB->func->error('مسار غير صحيح');
 		}
 		
-		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->member->getMemberInfo() : $MySmartBB->_CONF['member_row'];
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
-		/* ... */
+		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->rec->getInfo() : $MySmartBB->_CONF['member_row'];
+		
+		// ... //
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
@@ -93,18 +84,19 @@ class MySmartProfileMOD
 		
 		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
-		/* ... */
+		// ... //
 		
 		// Where is the member now?
 		if ($MySmartBB->_CONF['member_permission'])
      	{
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username']	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$update = $MySmartBB->online->updateOnline();			
+			$update = $MySmartBB->rec->update();			
      	}
      	
-     	/* ... */
+     	// ... //
      	
 		$MySmartBB->_CONF['template']['MemberInfo']['user_gender'] 	= 	($MySmartBB->_CONF['template']['MemberInfo']['user_gender'] == 'm') ? 'ذكر' : 'انثى';
 		//$MemberInfo['user_time']		=	$MySmartBB->member->GetMemberTime($MemberInfo['user_time']);
@@ -114,7 +106,6 @@ class MySmartProfileMOD
 			$MySmartBB->_CONF['template']['MemberInfo']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['MemberInfo']['register_date']);
 		}
 		
-		// We should be sneaky sometime ;)
 		if ( $MySmartBB->_CONF[ 'member_permission' ] 
 			and $MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
 		{
@@ -122,9 +113,10 @@ class MySmartProfileMOD
 		}
 		else
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['MemberInfo']['usergroup'] . "'";
 			
-			$GroupInfo = $MySmartBB->group->getGroupInfo($GroupInfo);
+			$GroupInfo = $MySmartBB->rec->getInfo();
 		}
 			
 		$MySmartBB->_CONF['template']['MemberInfo']['usergroup'] = $GroupInfo['title'];
@@ -135,39 +127,39 @@ class MySmartProfileMOD
 		
 		if ($MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0)
 		{
-			/* ... */
+			// ... //
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 			$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "' AND delete_topic<>'1' AND sec_subject<>'1'";
-			
-			$MySmartBB->rec->filter = "id DESC";
-			
+			$MySmartBB->rec->order = "id DESC";
 			$MySmartBB->rec->limit = '0,1';
 			
-			$MySmartBB->_CONF['template']['LastSubject'] = $MySmartBB->subject->getSubjectInfo();
+			$MySmartBB->_CONF['template']['LastSubject'] = $MySmartBB->rec->getInfo();
 			
-			/* ... */
+			// ... //
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 			$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "' AND delete_topic<>'1'";
-			
 			$MySmartBB->rec->order = "id DESC";
-			
 			$MySmartBB->rec->limit = '1';
 			
-			$GetLastReplyInfo = $MySmartBB->reply->getReplyInfo();
+			$GetLastReplyInfo = $MySmartBB->rec->getInfo();
 		
 			$MySmartBB->func->cleanArray($GetLastReplyInfo,'sql');
 			
 			if ($GetLastReplyInfo != false)
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 				$MySmartBB->rec->filter = "id='" . $GetLastReplyInfo['subject_id'] . "'";
 				
-				$MySmartBB->_CONF['template']['LastReply'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);				
+				$MySmartBB->_CONF['template']['LastReply'] = $MySmartBB->rec->getInfo();				
 			}
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "'";
 		
-		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->online->getOnlineInfo();
+		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->rec->getInfo();
 		
 		$MySmartBB->template->display('profile');
 	}

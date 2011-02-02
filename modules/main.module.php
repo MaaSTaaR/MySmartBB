@@ -20,22 +20,15 @@ class MySmartIndexMOD
 		// Who can live without $MySmartBB ? ;)
 		global $MySmartBB;
 		
-		/** Show header **/
 		$MySmartBB->func->showHeader();
 		
-		/** Firstly we get sections list **/
 		$this->_getSections();
-		
-		/** Get who are online **/
 		$this->_getOnline();
-		 
-		/** Now we get 'Who visit site today' **/
 		$this->_getToday();
 		
-		/** Show main template **/
+		// Show the main template //
 		$this->_callTemplate();
 		
-		/** Show footer **/
 		$MySmartBB->func->getFooter();
 	}
 	
@@ -59,33 +52,36 @@ class MySmartIndexMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='Guest'";
 		
-		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->online->getOnlineNumber();
+		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->rec->getNumber();
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username<>'Guest'";
 		
-		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->online->getOnlineNumber();
+		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->rec->getNumber();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
 		
+		$MySmartBB->rec->table		=	$MySmartBB->table['group'];
 		$MySmartBB->rec->filter 	= 	"view_usernamestyle='1'";
 		$MySmartBB->rec->order 		= 	'group_order ASC';
 		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
 		
-		$MySmartBB->group->getGroupList();
+		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$and_statement = false;
 		
-		if (!$MySmartBB->_CONF['info_row']['show_onlineguest'])
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'show_onlineguest' ] )
 		{
 			$MySmartBB->rec->filter = "username<>'Guest'";
 			
@@ -103,20 +99,20 @@ class MySmartIndexMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'online_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = 'user_id DESC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'online_res' ];
-
-		// Finally we get online list
-		$MySmartBB->online->getOnlineList();
 		
-		/* ... */
+		$MySmartBB->rec->getList();
+		
+		// ... //
 	}
 	
 	private function _getToday()
 	{
 		global $MySmartBB;
 
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->filter = "username<>'Guest' AND user_date='" . $MySmartBB->_CONF['date'] . "'";
 		
@@ -128,13 +124,13 @@ class MySmartIndexMOD
 		
 		$MySmartBB->_CONF['template']['res']['today_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 		$MySmartBB->rec->order = 'user_id DESC';
-		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['today_res'];
 		
-		$MySmartBB->online->getTodayList();
+		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		if ( !empty( $MySmartBB->_CONF[ 'info_row' ][ 'today_number_cache' ] ) )
 		{
@@ -142,12 +138,13 @@ class MySmartIndexMOD
 		}
 		else
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 			$MySmartBB->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
 			
-			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->online->getTodayNumber();
+			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->geNumber();
 		}
 		
-		/* ... */
+		// ... //
 	}
 	
 	private function _callTemplate()
