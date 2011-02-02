@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -17,7 +19,7 @@ define('CLASS_NAME','MySmartForumsMOD');
 	
 class MySmartForumsMOD extends _functions
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -29,45 +31,45 @@ class MySmartForumsMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['change_sort'])
 			{
-				$this->_ChangeSort();
+				$this->_changeSort();
 			}
 			elseif ($MySmartBB->_GET['groups'])
 			{
@@ -75,11 +77,11 @@ class MySmartForumsMOD extends _functions
 				{
 					if ($MySmartBB->_GET['index'])
 					{
-						$this->_GroupControlMain();
+						$this->_groupControlMain();
 					}
 					if ($MySmartBB->_GET['start'])
 					{
-						$this->_GroupControlStart();
+						$this->_groupControlStart();
 					}
 				}
 			}
@@ -87,7 +89,7 @@ class MySmartForumsMOD extends _functions
 			{
 				if ($MySmartBB->_GET['index'])
 				{
-					$this->_ForumMain();
+					$this->_forumMain();
 				}
 			}
 			
@@ -95,13 +97,13 @@ class MySmartForumsMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
 		//////////
 		
-		$SecArr 						= 	array();
+		/*$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
 		$SecArr['proc'] 				= 	array();
@@ -136,47 +138,49 @@ class MySmartForumsMOD extends _functions
 					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
 				}
 			}
-		}
+		}*/
 		
-		//////////
+		/* ... */
 		
 		$GroupArr 						= 	array();
 		$GroupArr['order'] 				= 	array();
 		$GroupArr['order']['field'] 	= 	'id';
 		$GroupArr['order']['type'] 		= 	'ASC';
 		
-		$MySmartBB->_CONF['template']['while']['groups'] = $MySmartBB->group->GetGroupList($GroupArr);
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
 		
-		//////////
+		$MySmartBB->rec->order = "id ASC";
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
+		
+		$MySmartBB->group->getGroupList();
+		
+		/* ... */
 		
 		$MySmartBB->template->display('forum_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
  		if (empty($MySmartBB->_POST['name'])
  			or ($MySmartBB->_POST['order_type'] == 'manual' and empty($MySmartBB->_POST['sort'])))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		//////////
+		/* ... */
 		
 		$sort = 0;
 		
 		if ($MySmartBB->_POST['order_type'] == 'auto')
 		{
-			$SortArr = array();
-			$SortArr['where'] = array('parent',$MySmartBB->_POST['parent']);
-			$SortArr['order'] = array();
-			$SortArr['order']['field'] = 'sort';
-			$SortArr['order']['type'] = 'DESC';
+			$MySmartBB->rec->filter = "parent='" . (int) $MySmartBB->_POST['parent'] . "'";
+			$MySmartBB->rec->order = "sort DESC";
 			
-			$SortSection = $MySmartBB->section->GetSectionInfo($SortArr);
+			$SortSection = $MySmartBB->section->getSectionInfo();
 			
 			// No section
 			if (!$SortSection)
@@ -194,98 +198,85 @@ class MySmartForumsMOD extends _functions
 			$sort = $MySmartBB->_POST['sort'];
 		}
 		
-		//////////
+		/* ... */
 		
 		
-		$SecArr 			= 	array();
-		$SecArr['field']	=	array();
+		$MySmartBB->rec->fields = array();
 		
-		$SecArr['field']['title'] 					= 	$MySmartBB->_POST['name'];
-		$SecArr['field']['sort'] 					= 	$sort;
-		$SecArr['field']['section_describe']		=	$MySmartBB->_POST['describe'];
-		$SecArr['field']['parent']					=	$MySmartBB->_POST['parent'];
-		$SecArr['field']['show_sig']				=	1;
-		$SecArr['field']['usesmartcode_allow']		=	1;
-		$SecArr['field']['subject_order']			=	1;
-		$SecArr['field']['sectionpicture_type']		=	2;
-		$SecArr['get_id']							=	true;
+		$MySmartBB->rec->fields['title'] 					= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['sort'] 					= 	$sort;
+		$MySmartBB->rec->fields['section_describe']			=	$MySmartBB->_POST['describe'];
+		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
+		$MySmartBB->rec->fields['show_sig']					=	1;
+		$MySmartBB->rec->fields['usesmartcode_allow']		=	1;
+		$MySmartBB->rec->fields['subject_order']			=	1;
+		$MySmartBB->rec->fields['sectionpicture_type']		=	2;
 		
-		$insert = $MySmartBB->section->InsertSection($SecArr);
+		$MySmartBB->section->get_id = true;
 		
-		//////////
+		$insert = $MySmartBB->section->insertSection();
+		
+		/* ... */
 		
 		if ($insert)
 		{
-			//////////
+			/* ... */
 			
-			$GroupArr 						= 	array();
-			$GroupArr['order'] 				= 	array();
-			$GroupArr['order']['field'] 	= 	'id';
-			$GroupArr['order']['type'] 		= 	'ASC';
+			$MySmartBB->rec->order = "id ASC";
 			
-			$groups = $MySmartBB->group->GetGroupList($GroupArr);
+			$MySmartBB->group->getGroupList();
 			
-			//////////
-			
-			$x = 0;
-			$n = sizeof($groups);
-			
-			while ($x < $n)
+			while ( $row = $MySmartBB->rec->getInfo() )
 			{
-				$SecArr 			= 	array();
-				$SecArr['field']	=	array();
+				$MySmartBB->rec->fields	=	array();
 				
-				$SecArr['field']['section_id'] 			= 	$MySmartBB->section->id;
-				$SecArr['field']['group_id'] 			= 	$groups[$x]['id'];
-				$SecArr['field']['view_section'] 		= 	$MySmartBB->_POST['groups'][$groups[$x]['id']]['view_section'];
-				$SecArr['field']['download_attach'] 	= 	$groups[$x]['download_attach'];
-				$SecArr['field']['write_subject'] 		= 	$MySmartBB->_POST['groups'][$groups[$x]['id']]['write_subject'];
-				$SecArr['field']['write_reply'] 		= 	$MySmartBB->_POST['groups'][$groups[$x]['id']]['write_reply'];
-				$SecArr['field']['upload_attach'] 		= 	$groups[$x]['upload_attach'];
-				$SecArr['field']['edit_own_subject']	= 	$groups[$x]['edit_own_subject'];
-				$SecArr['field']['edit_own_reply'] 		= 	$groups[$x]['edit_own_reply'];
-				$SecArr['field']['del_own_subject'] 	= 	$groups[$x]['del_own_subject'];
-				$SecArr['field']['del_own_reply'] 		= 	$groups[$x]['del_own_reply'];
-				$SecArr['field']['write_poll'] 			= 	$groups[$x]['write_poll'];
-				$SecArr['field']['no_posts'] 			= 	$groups[$x]['no_posts'];
-				$SecArr['field']['vote_poll'] 			= 	$groups[$x]['vote_poll'];
-				$SecArr['field']['main_section'] 		= 	0;
-				$SecArr['field']['group_name'] 			= 	$groups[$x]['title'];
+				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->section->id;
+				$MySmartBB->rec->fields['group_id'] 			= 	$row['id'];
+				$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['groups'][$row['id']]['view_section'];
+				$MySmartBB->rec->fields['download_attach'] 		= 	$row['download_attach'];
+				$MySmartBB->rec->fields['write_subject'] 		= 	$MySmartBB->_POST['groups'][$row['id']]['write_subject'];
+				$MySmartBB->rec->fields['write_reply'] 			= 	$MySmartBB->_POST['groups'][$row['id']]['write_reply'];
+				$MySmartBB->rec->fields['upload_attach'] 		= 	$row['upload_attach'];
+				$MySmartBB->rec->fields['edit_own_subject']		= 	$row['edit_own_subject'];
+				$MySmartBB->rec->fields['edit_own_reply'] 		= 	$row['edit_own_reply'];
+				$MySmartBB->rec->fields['del_own_subject'] 		= 	$row['del_own_subject'];
+				$MySmartBB->rec->fields['del_own_reply'] 		= 	$row['del_own_reply'];
+				$MySmartBB->rec->fields['write_poll'] 			= 	$row['write_poll'];
+				$MySmartBB->rec->fields['no_posts'] 			= 	$row['no_posts'];
+				$MySmartBB->rec->fields['vote_poll'] 			= 	$row['vote_poll'];
+				$MySmartBB->rec->fields['main_section'] 		= 	0;
+				$MySmartBB->rec->fields['group_name'] 			= 	$row['title'];
 				
-				$insert = $MySmartBB->group->InsertSectionGroup($SecArr);
-				
-				$x += 1;
+				$MySmartBB->group->insertSectionGroup();
 			}
 			
-			//////////
+			/* ... */
 			
-			$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$MySmartBB->_POST['parent']));
-			
-			//////////
+			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST['parent'] );
 				
 			if ($cache)
 			{
-				$MySmartBB->functions->msg('تم اضافة المنتدى بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
+				$MySmartBB->func->msg('تم اضافة المنتدى بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
 			}
 			else
 			{
-				$MySmartBB->functions->error('هناك مشكله، لا يمكنه تحديث المعلومات المخبأه');
+				$MySmartBB->func->error('هناك مشكله، لا يمكنه تحديث المعلومات المخبأه');
 			}
 		}
 		else
 		{
-			$MySmartBB->functions->error('هناك مشكله، لم يتمكن من اضافة القسم');
+			$MySmartBB->func->error('هناك مشكله، لم يتمكن من اضافة القسم');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
 		//////////
 		
-		$SecArr 						= 	array();
+		/*$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
 		$SecArr['proc'] 				= 	array();
@@ -321,25 +312,25 @@ class MySmartForumsMOD extends _functions
 				}
 			}
 		}
-		
+		*/
 		//////////
 		
 		$MySmartBB->template->display('forums_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->check_by_id( $MySmartBB->_CONF['template']['Inf'] );
 		
-		//////////
+		/* ... */
 		
-		$SecArr 						= 	array();
+		/*$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
 		$SecArr['proc'] 				= 	array();
@@ -379,117 +370,108 @@ class MySmartForumsMOD extends _functions
 			}
 		}
 		
-		//////////
+		//////////*/
 		
 		$MySmartBB->template->display('forum_edit');
 	}
 	
-	function _EditStart()
+	public function _editStart()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		//////////
+		/* ... */
 		
  		if (empty($MySmartBB->_POST['name']) 
  			or empty($MySmartBB->_POST['sort']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		//////////
+		/* ... */
 		
 		// Check if the user change the parent or not
-		$new_parent 	= 	false;
-		$old_parent		=	0;
+		$new_parent_flag 	= 	false;
+		$old_parent			=	0;
 		
 		if ($MySmartBB->_CONF['template']['Inf']['parent'] != $MySmartBB->_POST['parent'])
 		{
-			$new_parent		= 	true;
-			$old_parent		=	$MySmartBB->_CONF['template']['Inf']['id'];
+			$new_parent_flag	= 	true;
+			$old_parent			=	$MySmartBB->_CONF['template']['Inf']['id'];
 		}
 		
-		//////////
+		/* ... */
 		
-		$SecArr 			= 	array();
-		$SecArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$SecArr['field']['title'] 					= 	$MySmartBB->_POST['name'];
-		$SecArr['field']['sort'] 					= 	$MySmartBB->_POST['sort'];
-		$SecArr['field']['section_describe']		=	$MySmartBB->_POST['describe'];
-		$SecArr['field']['section_password']		=	$MySmartBB->_POST['section_password'];
-		$SecArr['field']['show_sig']				=	$MySmartBB->_POST['show_sig'];
-		$SecArr['field']['usesmartcode_allow']		=	$MySmartBB->_POST['usesmartcode_allow'];
-		$SecArr['field']['section_picture']			=	$MySmartBB->_POST['section_picture'];
-		$SecArr['field']['sectionpicture_type']		=	$MySmartBB->_POST['sectionpicture_type'];
-		$SecArr['field']['use_section_picture']		=	$MySmartBB->_POST['use_section_picture'];
-		$SecArr['field']['linksection']				=	$MySmartBB->_POST['linksection'];
-		$SecArr['field']['linksite']				=	$MySmartBB->_POST['linksite'];
-		$SecArr['field']['subject_order']			=	$MySmartBB->_POST['subject_order'];
-		$SecArr['field']['hide_subject']			=	$MySmartBB->_POST['hide_subject'];
-		$SecArr['field']['sec_section']				=	$MySmartBB->_POST['sec_section'];
-		$SecArr['field']['header'] 					= 	$MySmartBB->_POST['head'];
-		$SecArr['field']['footer'] 					= 	$MySmartBB->_POST['foot'];
-		$SecArr['field']['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
-		$SecArr['field']['parent']					=	$MySmartBB->_POST['parent'];
-		$SecArr['field']['review_subject']			=	$MySmartBB->_POST['review_subject'];
-		$SecArr['where']							= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+		$MySmartBB->rec->fields['title'] 					= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['sort'] 					= 	$MySmartBB->_POST['sort'];
+		$MySmartBB->rec->fields['section_describe']			=	$MySmartBB->_POST['describe'];
+		$MySmartBB->rec->fields['section_password']			=	$MySmartBB->_POST['section_password'];
+		$MySmartBB->rec->fields['show_sig']					=	$MySmartBB->_POST['show_sig'];
+		$MySmartBB->rec->fields['usesmartcode_allow']		=	$MySmartBB->_POST['usesmartcode_allow'];
+		$MySmartBB->rec->fields['section_picture']			=	$MySmartBB->_POST['section_picture'];
+		$MySmartBB->rec->fields['sectionpicture_type']		=	$MySmartBB->_POST['sectionpicture_type'];
+		$MySmartBB->rec->fields['use_section_picture']		=	$MySmartBB->_POST['use_section_picture'];
+		$MySmartBB->rec->fields['linksection']				=	$MySmartBB->_POST['linksection'];
+		$MySmartBB->rec->fields['linksite']					=	$MySmartBB->_POST['linksite'];
+		$MySmartBB->rec->fields['subject_order']			=	$MySmartBB->_POST['subject_order'];
+		$MySmartBB->rec->fields['hide_subject']				=	$MySmartBB->_POST['hide_subject'];
+		$MySmartBB->rec->fields['sec_section']				=	$MySmartBB->_POST['sec_section'];
+		$MySmartBB->rec->fields['header'] 					= 	$MySmartBB->_POST['head'];
+		$MySmartBB->rec->fields['footer'] 					= 	$MySmartBB->_POST['foot'];
+		$MySmartBB->rec->fields['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
+		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
+		$MySmartBB->rec->fields['review_subject']			=	$MySmartBB->_POST['review_subject'];
+
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$update = $MySmartBB->section->UpdateSection($SecArr);
+		$MySmartBB->section->updateSection();
 		
 		if ($update)
 		{
-			$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$MySmartBB->_POST['parent']));
+			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST['parent'] );
 			
 			// There is a new main section
-			if ($new_parent)
+			if ($new_parent_flag)
 			{
-				$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$old_parent));
+				$cache = $MySmartBB->section->updateSectionsCache( $old_parent );
 			}
 			
 			if ($cache)
 			{
-				$MySmartBB->functions->msg('تم تحديث القسم بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+				$MySmartBB->func->msg('تم تحديث القسم بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 			}
 			else
 			{
-				$MySmartBB->functions->error('هناك مشكله، لم يتم التحديث');
+				$MySmartBB->func->error('هناك مشكله، لم يتم التحديث');
 			}
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->check_by_id( $MySmartBB->_CONF['template']['Inf'] );
 		
-		$SecArr 					= 	array();
-		$SecArr['get_from']			=	'db';
-		$SecArr['proc'] 			= 	array();
-		$SecArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$SecArr['order']			=	array();
-		$SecArr['order']['field']	=	'sort';
-		$SecArr['order']['type']	=	'ASC';
+		$MySmartBB->rec->order = "sort ASC";
+		$MySmartBB->rec->filter = "parent<>'0' AND id<>'" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$SecArr['where']			=	array();
-		$SecArr['where'][0]			=	array('name'=>'parent','oper'=>'<>','value'=>'0');
-		$SecArr['where'][1]			=	array('con'=>'AND','name'=>'id','oper'=>'<>','value'=>$MySmartBB->_CONF['template']['Inf']['id']);
-		
-		$MySmartBB->_CONF['template']['while']['SecList'] = $MySmartBB->section->GetSectionsList($SecArr);
+		$MySmartBB->section->getSectionsList();
 		
 		$MySmartBB->template->display('forum_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -499,70 +481,55 @@ class MySmartForumsMOD extends _functions
 		
 		if ($MySmartBB->_POST['choose'] == 'move')
 		{
-			$DelArr 			= 	array();
-			$DelArr['where'] 	= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 			
-			$del = $MySmartBB->section->DeleteSection($DelArr);
+			$del = $MySmartBB->section->deleteSection();
 			
 			if ($del)
 			{
-				$MySmartBB->functions->msg('تم حذف المنتدى بنجاح !');
+				$MySmartBB->func->msg('تم حذف المنتدى بنجاح !');
 				
-				$move = $MySmartBB->subject->MassMoveSubject(array('to'=>$MySmartBB->_POST['to'],'from'=>$MySmartBB->_CONF['template']['Inf']['id']));
+				$move = $MySmartBB->subject->massMoveSubject( (int) $MySmartBB->_POST['to'], $MySmartBB->_CONF['template']['Inf']['id'] );
 				
 				if ($move)
 				{
-					$MySmartBB->functions->msg('تم نقل المواضيع بنجاح');
+					$MySmartBB->func->msg('تم نقل المواضيع بنجاح');
 					
-					//////////
+					/* ... */
 					
-					$NumberArr 				= 	array();
-					$NumberArr['get_from']	=	'db';
-					$NumberArr['where'] 	= 	array('section_id',$MySmartBB->_CONF['template']['Inf']['id']);
+					$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 					
-					$FromSubjectNumber = $MySmartBB->subject->GetSubjectNumber($NumberArr);
+					$FromSubjectNumber = $MySmartBB->subject->getSubjectNumber();
 					
-					unset($NumberArr);
+					/* ... */
 					
-					//////////
+					$MySmartBB->rec->filter = "section_id='" . (int) $MySmartBB->_POST['to'] . "'";
 					
-					$NumberArr 				= 	array();
-					$NumberArr['get_from']	=	'db';
-					$NumberArr['where'] 	= 	array('section_id',$MySmartBB->_POST['to']);
+					$ToSubjectNumber = $MySmartBB->subject->getSubjectNumber();
 					
-					$ToSubjectNumber = $MySmartBB->subject->GetSubjectNumber($NumberArr);
+					/* ... */
 					
-					//////////
-					
-		     		$UpdateArr 					= 	array();
-     				$UpdateArr['field']			=	array();
-     		
-     				$UpdateArr['field']['subject_num'] 	= 	$FromSubjectNumber + $ToSubjectNumber;
-     				$UpdateArr['where']					= 	array('id',$MySmartBB->_POST['to']);
-     		
-		     		$update = $MySmartBB->section->UpdateSection($UpdateArr);
+     				$MySmartBB->rec->fields = array(	'subject_num'	=>	$FromSubjectNumber + $ToSubjectNumber	);
+     				$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['to'] . "'";
+     				
+		     		$update = $MySmartBB->section->updateSection();
      				
      				if ($update)
      				{
-						$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$MySmartBB->_CONF['template']['Inf']['parent']));
-					
+						$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
+						
 						if ($cache)
 						{
-							$MySmartBB->functions->msg('تم تحديث المعلومات بنجاح !');
+							$MySmartBB->func->msg('تم تحديث المعلومات بنجاح !');
 							
-							$DelArr 						= 	array();
-							$DelArr['where']				=	array();
-							$DelArr['where'][0]				=	array();
-							$DelArr['where'][0]['name']		=	'section_id';
-							$DelArr['where'][0]['oper']		=	'=';
-							$DelArr['where'][0]['value']	=	$MySmartBB->_CONF['template']['Inf']['id'];
-			
-							$del = $MySmartBB->group->DeleteSectionGroup($DelArr);
+							$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+							
+							$del = $MySmartBB->group->deleteSectionGroup();
 							
 							if ($del)
 							{
-								$MySmartBB->functions->msg('تم حذف صلاحيات المجموعات بنجاح');
-								$MySmartBB->functions->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+								$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+								$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
 							}
 						}
 					}
@@ -571,47 +538,36 @@ class MySmartForumsMOD extends _functions
 		}
 		elseif ($MySmartBB->_POST['choose'] == 'del')
 		{
-			$DelArr 			= 	array();
-			$DelArr['where'] 	= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 			
-			$del = $MySmartBB->section->DeleteSection($DelArr);
+			$del = $MySmartBB->section->deleteSection();
 				
 			if ($del)
 			{
-				$MySmartBB->functions->msg('تم حذف المنتدى بنجاح !');
+				$MySmartBB->func->msg('تم حذف المنتدى بنجاح !');
 				
-				$DelArr 						= 	array();
-				$DelArr['where']				=	array();
-				$DelArr['where'][0]				=	array();
-				$DelArr['where'][0]['name']		=	'section';
-				$DelArr['where'][0]['oper']		=	'=';
-				$DelArr['where'][0]['value']	=	$MySmartBB->_CONF['template']['Inf']['id'];
-								
-				$del = $MySmartBB->subject->DeleteSubject($DelArr);
+				$MySmartBB->rec->filter = "section='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+				
+				$del = $MySmartBB->subject->deleteSubject();
 				
 				if ($del)
 				{
-					$MySmartBB->functions->msg('تم حذف المواضيع بنجاح');
+					$MySmartBB->func->msg('تم حذف المواضيع بنجاح');
 					
-					$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$MySmartBB->_CONF['template']['Inf']['parent']));
+					$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 					
 					if ($cache)
 					{
-						$MySmartBB->functions->msg('تم تحديث المعلومات بنجاح !');
+						$MySmartBB->func->msg('تم تحديث المعلومات بنجاح !');
 						
-						$DelArr 						= 	array();
-						$DelArr['where']				=	array();
-						$DelArr['where'][0]				=	array();
-						$DelArr['where'][0]['name']		=	'section_id';
-						$DelArr['where'][0]['oper']		=	'=';
-						$DelArr['where'][0]['value']	=	$MySmartBB->_CONF['template']['Inf']['id'];
-				
-						$del = $MySmartBB->group->DeleteSectionGroup($DelArr);
+						$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+						
+						$del = $MySmartBB->group->deleteSectionGroup();
 						
 						if ($del)
 						{
-							$MySmartBB->functions->msg('تم حذف صلاحيات المجموعات بنجاح');
-							$MySmartBB->functions->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+							$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+							$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
 						}
 					}
 				}
@@ -619,72 +575,53 @@ class MySmartForumsMOD extends _functions
 		}
 		else
 		{
-			$MySmartBB->functions->error('الاختيار غير صحيح!');
+			$MySmartBB->func->error('الاختيار غير صحيح!');
 		}
 	}
 	
-	function _ChangeSort()
+	private function _changeSort()
 	{
 		global $MySmartBB;
 		
- 		$SecArr 					= 	array();
-		$SecArr['get_from']			=	'db';
-		$SecArr['proc'] 			= 	array();
-		$SecArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$SecArr['order']			=	array();
-		$SecArr['order']['field']	=	'sort';
-		$SecArr['order']['type']	=	'ASC';
+		$MySmartBB->rec->filter = "parent<>'0'";
+		$MySmartBB->rec->order = "sort ASC";
 		
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]				=	array();
-		$SecArr['where'][0]['name']		=	'parent';
-		$SecArr['where'][0]['oper']		=	'<>';
-		$SecArr['where'][0]['value']	=	'0';
+		$MySmartBB->section->getSectionsList($SecArr);
 		
-		$SecList = $MySmartBB->section->GetSectionsList($SecArr);
-		
-		$x = 0;
-		$y = sizeof($SecList);
-		$s = array();
-		
-		while ($x < $y)
+		while ( $row = $MySmartBB->rec->getInfo() )
 		{
-			$name = 'order-' . $SecList[$x]['id'];
+			$name = 'order-' . $row['id'];
 			
-			if ($SecList[$x]['order'] != $MySmartBB->_POST[$name])
+			if ($row['order'] != $MySmartBB->_POST[$name])
 			{
-				$UpdateArr 						= 	array();
+				$MySmartBB->rec->fields = array(	'sort'	=>	$MySmartBB->_POST[ $name ]	);
+				$MySmartBB->rec->filter = "id='" . $row[ 'id' ] . "'";
 				
-				$UpdateArr['field']		 		= 	array();
-				$UpdateArr['field']['sort'] 	= 	$MySmartBB->_POST[$name];
-				
-				$UpdateArr['where'] 			=	array('id',$SecList[$x]['id']);
-				
-				$update = $MySmartBB->section->UpdateSection($UpdateArr);
+				$update = $MySmartBB->section->updateSection();
 				
 				if ($update)
 				{
-					$cache = $MySmartBB->section->UpdateSectionsCache(array('parent'=>$SecList[$x]['parent']));
+					$cache = $MySmartBB->section->updateSectionsCache( $row['parent'] );
 				}
 				
-				$s[$SecList[$x]['id']] = ($update) ? 'true' : 'false';
+				$s[ $row[ 'id' ] ] = ($update) ? 'true' : 'false';
 			}
 
 			$x += 1;
 		}
 		
-		if (in_array('false',$s))
+		if ( in_array( 'false', $s ) )
 		{
-			$MySmartBB->functions->error('المعذره، لم تنجح العمليه');
+			$MySmartBB->func->error('المعذره، لم تنجح العمليه');
 		}
 		else
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح!');
-			$MySmartBB->functions->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _GroupControlMain()
+	private function _groupControlMain()
 	{
 		global $MySmartBB;
 		
@@ -692,26 +629,14 @@ class MySmartForumsMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$SecGroupArr 						= 	array();
-		$SecGroupArr['where'] 				= 	array();
+		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "' AND main_section<>'1'";
 		
-		$SecGroupArr['where'][0]			=	array();
-		$SecGroupArr['where'][0]['name'] 	= 	'section_id';
-		$SecGroupArr['where'][0]['oper']	=	'=';
-		$SecGroupArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['template']['Inf']['id'];
-		
-		$SecGroupArr['where'][1]			=	array();
-		$SecGroupArr['where'][1]['con']		=	'AND';
-		$SecGroupArr['where'][1]['name']	=	'main_section';
-		$SecGroupArr['where'][1]['oper']	=	'<>';
-		$SecGroupArr['where'][1]['value']	=	'1';
-		
-		$MySmartBB->_CONF['template']['while']['SecGroupList'] = $MySmartBB->group->GetSectionGroupList($SecGroupArr);
+		$MySmartBB->group->getSectionGroupList();
 		
 		$MySmartBB->template->display('forums_groups_control_main');
 	}
 		
-	function _GroupControlStart()
+	private function _groupControlStart()
 	{
 		global $MySmartBB;
 		
@@ -719,7 +644,7 @@ class MySmartForumsMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 
-		$MySmartBB->functions->CleanVariable($MySmartBB->_GET['group_id'],'intval');
+		$MySmartBB->_GET['group_id'] = (int) $MySmartBB->_GET['group_id'];
 		
 		$success 	= 	array();
 		$fail		=	array();
@@ -727,27 +652,24 @@ class MySmartForumsMOD extends _functions
 		
 		foreach ($MySmartBB->_POST['groups'] as $id => $val)
 		{
-			$UpdateArr 				= 	array();
-			$UpdateArr['field']		=	array();
+			$MySmartBB->rec->fields		=	array();
 			
-			$UpdateArr['field']['view_section'] 		= 	$val['view_section'];
-			$UpdateArr['field']['download_attach'] 		= 	$val['download_attach'];
-			$UpdateArr['field']['write_subject'] 		= 	$val['write_subject'];
-			$UpdateArr['field']['write_reply'] 			= 	$val['write_reply'];
-			$UpdateArr['field']['upload_attach'] 		= 	$val['upload_attach'];
-			$UpdateArr['field']['edit_own_subject'] 	= 	$val['edit_own_subject'];
-			$UpdateArr['field']['edit_own_reply'] 		= 	$val['edit_own_reply'];
-			$UpdateArr['field']['del_own_subject'] 		= 	$val['del_own_subject'];
-			$UpdateArr['field']['del_own_reply'] 		= 	$val['del_own_reply'];
-			$UpdateArr['field']['write_poll'] 			= 	$val['write_poll'];
-			$UpdateArr['field']['no_posts'] 			= 	$val['no_posts'];
-			$UpdateArr['field']['vote_poll'] 			= 	$val['vote_poll'];
-			$UpdateArr['where'][0] 						= 	array('name'=>'group_id','oper'=>'=','value'=>$id);
-			$UpdateArr['where'][1] 						= 	array('con'=>'AND','name'=>'section_id','oper'=>'=','value'=>$MySmartBB->_CONF['template']['Inf']['id']);
+			$MySmartBB->rec->fields['view_section'] 		= 	$val['view_section'];
+			$MySmartBB->rec->fields['download_attach'] 		= 	$val['download_attach'];
+			$MySmartBB->rec->fields['write_subject'] 		= 	$val['write_subject'];
+			$MySmartBB->rec->fields['write_reply'] 			= 	$val['write_reply'];
+			$MySmartBB->rec->fields['upload_attach'] 		= 	$val['upload_attach'];
+			$MySmartBB->rec->fields['edit_own_subject'] 	= 	$val['edit_own_subject'];
+			$MySmartBB->rec->fields['edit_own_reply'] 		= 	$val['edit_own_reply'];
+			$MySmartBB->rec->fields['del_own_subject'] 		= 	$val['del_own_subject'];
+			$MySmartBB->rec->fields['del_own_reply'] 		= 	$val['del_own_reply'];
+			$MySmartBB->rec->fields['write_poll'] 			= 	$val['write_poll'];
+			$MySmartBB->rec->fields['no_posts'] 			= 	$val['no_posts'];
+			$MySmartBB->rec->fields['vote_poll'] 			= 	$val['vote_poll'];
 			
-			$update = $MySmartBB->group->UpdateSectionGroup($UpdateArr);
+			$MySmartBB->rec->filter = "group_id='" . $id . "' AND section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 			
-			unset($UpdateArr);
+			$update = $MySmartBB->group->updateSectionGroup();
 			
 			if ($update)
 			{
@@ -757,35 +679,27 @@ class MySmartForumsMOD extends _functions
 			{
 				$fail[] = $id;
 			}
-			
-			unset($update);
 		}
 		
 		$success_size 	= 	sizeof($success);
-		$fail_size		=	sizeof($fail);
+		$fail_size		=	sizeof($fail); // Why?
 		
 		if ($success_size == $size)
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->msg('تم التحديث بنجاح!');
 			
-			$UpdateArr 			= 	array();
-			$UpdateArr['id'] 	= 	$MySmartBB->_CONF['template']['Inf']['id'];
-			
-			$cache = $MySmartBB->group->UpdateSectionGroupCache($UpdateArr);
+			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->_CONF['template']['Inf']['id'] );
 			
 			if ($cache)
 			{
-				$MySmartBB->functions->msg('تم تحديث المعلومات المخبأه');
+				$MySmartBB->func->msg('تم تحديث المعلومات المخبأه');
 				
-				$UpdateArr 				= 	array();
-				$UpdateArr['parent'] 	= 	$MySmartBB->_CONF['template']['Inf']['parent'];
-			
-				$cache = $MySmartBB->section->UpdateSectionsCache($UpdateArr);
+				$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 				
 				if ($cache)
 				{
-					$MySmartBB->functions->msg('تمّت الخطوه النهائيه');
-					$MySmartBB->functions->goto('admin.php?page=forums&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+					$MySmartBB->func->msg('تمّت الخطوه النهائيه');
+					$MySmartBB->func->goto('admin.php?page=forums&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 				}
 			}
 		}
@@ -795,13 +709,13 @@ class MySmartForumsMOD extends _functions
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		//////////
+		/* ... */
 		
 		if (!empty($MySmartBB->_CONF['template']['Inf']['forums_cache']))
 		{
@@ -820,7 +734,7 @@ class MySmartForumsMOD extends _functions
 			$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
 		}
 		
-		//////////
+		/* ... */
 		
 		$MySmartBB->template->display('forums_forum_main');
 	}
@@ -828,28 +742,28 @@ class MySmartForumsMOD extends _functions
 
 class _functions
 {
-	function check_by_id(&$Inf)
+	public function check_by_id( &$Inf )
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		$SecArr 			= 	array();
 		$SecArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
 		
-		$Inf = $MySmartBB->section->GetSectionInfo($SecArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$Inf = $MySmartBB->section->getSectionInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('القسم المطلوب غير موجود');
-		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
+			$MySmartBB->func->error('القسم المطلوب غير موجود');
+		}		
 	}
 }
 

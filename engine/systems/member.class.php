@@ -7,185 +7,114 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   16/09/2008 12:23:49 AM  
+ * @updated 	:   02/08/2010 09:47:05 PM 
 */
 
 
 class MySmartMember
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartMember($Engine)
+	public $id;
+	public $get_id;
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Insert new member in database
-	 *
-	 * @access : public
-	 * @return : 
-	 *				false			->	if the function can't add the member
-	 *				true			->	if the function success to add member
-	 *
-	 * @param :
-	 *			username -> the username
-	 *			password -> of course the password :)
-	 *			email	 -> the email :\
-	 *			usergroup
-	 *			user_gender
-	 *			register_date
-	 *			user_title
-	 *			style
 	 */
-	function InsertMember($param)
+	public function insertMember()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['member'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'member' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
-		           
-		return ($query) ? true : false;
+		
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Get members list
-	 *
-	 * @param :
-	 *				sql_statment -> complete the sql query
 	 */
-	function GetMemberList($param)
+	public function getMemberList()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'member' ];
  		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['member'];
-		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
 	
+	/* ... */
+	
 	/**
-	 * Get member information
-	 *
-	 * @param :
-	 *			get	->	the list of fields
+	 * Get a member information
 	 */
-	function GetMemberInfo($param)
+	public function getMemberInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	(!empty($param['get'])) ? $param['get'] : '*';
-		$param['from'] 		= 	$this->Engine->table['member'];
+		$this->engine->rec->table = $this->engine->table['member'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
 	
 	/**
 	 * Get the total of members
-	 *
-	 * @param :
-	 *			get_from	->	cache or db
 	 */
-	function GetMemberNumber($param)
+	public function getMemberNumber()
 	{
-		if ($param['get_from'] == 'cache')
-		{
-			$num = $this->Engine->_CONF['info_row']['member_number'];
-		}
-		elseif ($param['get_from'] == 'db')
-		{
-			$param['select'] 	= 	'*';
-			$param['from'] 		= 	$this->Engine->table['member'];
-			
-			$num = $this->Engine->records->GetNumber($param);
-		}
-		else
-		{
-			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetMemberNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
-		}
-		
-		return $num;
-	}
-	
-	function UpdateMember($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'member' ];
  		
-		$query = $this->Engine->records->Update($this->Engine->table['member'],$param['field'],$param['where']);
-				
-		return ($query) ? true : false;
+ 		return $this->engine->rec->getNumber();
 	}
 	
-	function DeleteMember($param)
+	/* ... */
+	
+	public function updateMember()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['member'];
  		
-		$param['table'] = $this->Engine->table['member'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	///
-		 
+	/* ... */
+	
+	public function deleteMember()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'member' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
+	
 	/**
 	 * Check if the member exists in database or not
-	 *
-	 * @param :
-	 *				way	->
-	 						id
-	 						username
-	 						email
-	 *
-	 * @return :
-	 *				false 	-> if isn't member
-	 *				true	-> if is member
 	 */
-	function IsMember($param)
+	public function isMember()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['member'];
-
-		$num = $this->Engine->records->GetNumber($param);
-				      		      
+		$num = $this->engine->rec->getNumber();
+		
 		return ($num <= 0) ? false : true;
 	}
+	
+	/* ... */
 		  
 	/**
 	 * Check if user is exists and set cookie to log in
@@ -194,146 +123,116 @@ class MySmartMember
 	 *			username -> the usename
 	 *			password -> the password with md5
 	 */
-	function LoginMember($param)
+	public function loginMember( $username, $password, $expire = null )
 	{
-		if (empty($param['username'])
-			or empty($param['password']))
+		if ( empty( $username )
+			or empty( $password ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM LoginMember() -- EMPTY username or password',E_USER_ERROR);
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM LoginMember() -- EMPTY username or password', E_USER_ERROR );
 		}
 		
-		$CheckMember = $this->CheckMember(array('username'	=>	$param['username'],
-		       									'password'	=>	$param['password']));
+		$checkMember = $this->checkMember( $username, $password );
 		    	       		       
-		if (!$CheckMember)
+		if ( !$checkMember )
 		{
 			return false;
 		}
 		else
 		{
-			setcookie($this->Engine->_CONF['username_cookie'],$param['username'],$param['expire']);
-			setcookie($this->Engine->_CONF['password_cookie'],$param['password'],$param['expire']);
+			setcookie( $this->engine->_CONF['username_cookie'], $username, $expire );
+			setcookie( $this->engine->_CONF['password_cookie'], $password, $expire );
        				
-       		return $CheckMember;
+       		return $checkMember;
        	}
 	}
+	
+	/* ... */
 		   
 	/**
 	 * Check if the member information is correct
-	 *
-	 * @param :
-	 *			username -> the username
-	 *			password -> the password
-	 *			object	 -> if this function used in system file we sould identify the system object
 	 */
-	function CheckMember($param)
+	public function checkMember( $username, $password )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		
-		$MemberArr['get'] = '*';
-		
-		if (!empty($param['username'])
-			and !empty($param['password']))
+		if ( !empty( $username )
+			and !empty( $password ) )
 		{
-			$MemberArr['where'] 				= 	array();
-			$MemberArr['where'][0] 				= 	array();
-			$MemberArr['where'][0]['name'] 		= 	'username';
-			$MemberArr['where'][0]['oper'] 		= 	'=';
-			$MemberArr['where'][0]['value'] 	= 	$param['username'];
-		
-			$MemberArr['where'][1] 				= 	array();
-			$MemberArr['where'][1]['con'] 		= 	'AND';
-			$MemberArr['where'][1]['name'] 		= 	'password';
-			$MemberArr['where'][1]['oper'] 		= 	'=';
-			$MemberArr['where'][1]['value'] 	= 	$param['password'];
+			$this->engine->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
+		}
+		else
+		{
+			return false;
 		}
 		
-		$CheckMember = $this->GetMemberInfo($MemberArr);
+		$checkMember = $this->getMemberInfo();
 		
-		return (!$CheckMember) ? false : $CheckMember;
+		return (!$checkMember) ? false : $checkMember;
 	}
+	
+	/* ... */
 	     	
 	/**
 	 * Member logout
-	 *	
 	 */
-	function Logout()
+	public function logout()
 	{
 		$del = array();	
 
-		$del[1] = setcookie($this->Engine->_CONF['username_cookie'],'');
-     	$del[2] = setcookie($this->Engine->_CONF['password_cookie'],'');
+		$del[ 1 ] = setcookie( $this->engine->_CONF[ 'username_cookie' ], '' );
+     	$del[ 2 ] = setcookie( $this->engine->_CONF[ 'password_cookie' ], '' );
      	
-     	return ($del[1] and $del[2]) ? true : false;
+     	return ( $del[ 1 ] and $del[ 2 ] ) ? true : false;
 	}
+	
+	/* ... */
 		        	 
 	/**
-	 * Get username with group style
-	 *
-	 * @param :
-	 *				username	->	the name of user
-	 *				group_style	->	the style of gorup
+	 * Get the username with the group style
 	 */
-	function GetUsernameByStyle($param)
+	public function getUsernameWithStyle( $username, $style )
 	{
-		// These codes from the first generation of MySmartBB
+		// These codes are from the first generation of MySmartBB
 		// Do you remember it ? :)
 		
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		
-		if (empty($param['group_style'])
-			or empty($param['username']))
+		if ( empty( $username )
+			or empty( $style ) )
 		{
-			trigger_error('ERROR::NEED_PARAMATER -- FROM GetUsernameByStyle() -- EMPTY group_style or username',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMATER -- FROM getUsernameWithStyle() -- EMPTY style or username',E_USER_ERROR);
 		}
 		
-		$general_style = $param['group_style'];
-		$general_style = explode('[username]',$general_style);
+		$html_tags = explode( '[username]', $style );
     					  
-		$style  = $general_style[0];
-		$style .= $this->Engine->sys_functions->CleanVariable($param['username'],'html');
-		$style .= $general_style[1];
+		$res  = $html_tags[ 0 ];
+		$res .= $username;
+		$res .= $html_tags[ 1 ];
 		
-		return $style;
+		return $res;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Update the last visit date
-	 *
-	 * @param :
-	 *			last_visit	->	the date
 	 */
-	function LastVisitCookie($param)
+	public function lastVisitCookie( $last_visit, $date, $member_id )
 	{
-		if (empty($param['last_visit'])
-			or empty($param['date'])
-			or empty($param['id']))
+		if ( empty( $last_visit )
+			or empty( $date )
+			or empty( $member_id ) )
 		{
 			trigger_error('ERROR::NEED_PARAMETER -- FROM LastVisitCookie() -- EMPTY last_visit OR date OR id',E_USER_ERROR);
 		}
 		
 		// TODO :: store the name of cookie in a variable like username,password cookies.
-		$cookie = setcookie('MySmartBB_lastvisit',$param['last_visit'],time()+85200);
+		$cookie = setcookie( 'MySmartBB_lastvisit', $last_visit, time()+85200 );
 		
-		$UpdateArr 					= 	array();
+		$this->rec->fields = array(	'lastvisit'	=>	$date	);
 		
-		$UpdateArr['field']					=	array();
-		$UpdateArr['field']['lastvisit'] 	= 	$param['date'];
-		
-		$UpdateArr['where']			=	array('id',$param['id']);
+		$this->rec->filter = "id='" . $member_id . "'";
 								
-		$query = $this->UpdateMember($UpdateArr);
+		$query = $this->updateMember();
 	}
 	
-
+	/* ... */
 
 	/**
 	 * Get the member time
@@ -341,36 +240,26 @@ class MySmartMember
 	 // Probabbly this way is wrong   
 	/*function GetMemberTime($param)
 	{
-		$time   = $this->Engine->_CONF['gmt_hour'] + $param['time'];
-     	$time   = $time . $this->Engine->_CONF['gmt_seconds'];
+		$time   = $this->engine->_CONF['gmt_hour'] + $param['time'];
+     	$time   = $time . $this->engine->_CONF['gmt_seconds'];
      	
      	return $time;
 	}*/
-		
+	
+	/* ... */
+	
 	/**
 	 * Get the number of member who have posts > 0
 	 */
-	function GetActiveMemberNumber()
+	public function getActiveMemberNumber()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 			= 	'*';
-		$param['from'] 				= 	$this->Engine->table['member'];
+		$this->engine->table = $this->engine->table['member'];
+		$this->engine->filter = "posts>0";
 		
-		$param['where'] 			= 	array();
-		$param['where'][0] 			= 	array();
-		$param['where'][0]['name'] 	= 	'posts';
-		$param['where'][0]['oper'] 	= 	'>';
-		$param['where'][0]['value'] = 	'0';
-		
-		$num   = $this->Engine->records->GetNumber($param);
-		
-		return $num;
+		return $this->engine->rec->getNumber();
 	}
+	
+	/* ... */
 	
 	/**
 	 * TODO : play with cache
@@ -378,7 +267,7 @@ class MySmartMember
 	/*
 	function GetTeamList()
 	{
-		$GetGroupList = $this->Engine->group->GetGroupList(array(	'sql_statment'	=>	"WHERE forum_team='1'",
+		$GetGroupList = $this->engine->group->GetGroupList(array(	'sql_statment'	=>	"WHERE forum_team='1'",
 																	'way'			=>	'normal'));
 		
 		for ($i = 0 ; $i <= sizeof($GetGroupList) ; $i++)
@@ -390,44 +279,36 @@ class MySmartMember
 	}
 	*/
 	
-	function CleanNewPassword($param)
+	/* ... */
+	
+	public function cleanNewPassword( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$UpdateArr 					= 	array();
-		$UpdateArr['new_password'] 	= 	'';
-		$UpdateArr['where']			=	array('id',$param['id']);
-								
-		$query = $this->UpdateMember($UpdateArr);
-		        	
-		return ($query) ? true : false;	
+		$this->engine->rec->table = $this->engine->table['member'];
+		
+		$this->engine->rec->fields = array(	'new_password'	=>	'' );
+		$this->engine->rec->filter = "id='" . $id . "'";
+		
+		$query = $this->engine->rec->update();
 	}
-		
-	function CheckAdmin($param)
+	
+	/* ... */
+	
+	public function checkAdmin( $username, $password )
 	{
- 		if (!isset($param['username'])
- 			or !isset($param['password']))
+ 		if (!isset($username)
+ 			or !isset($password))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM CheckAdmin() -- EMPTY username OR password',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM checkAdmin() -- EMPTY username OR password',E_USER_ERROR);
  		}
  		
- 		$MemberArr 					= 	array();
- 		$MemberArr['username']		=	$param['username'];
- 		$MemberArr['password']		=	$param['password'];
-		
-		$CheckMember = $this->CheckMember($MemberArr);
+		$CheckMember = $this->checkMember( $username, $password );
 		
 		// Well , this is a member
 		if ($CheckMember != false)
 		{
-			$GroupArr 			= 	array();
-			$GroupArr['where'] 	= 	array('id',$CheckMember['usergroup']);
+			$MySmartBB->rec->filter = "id='" . $CheckMember['usergroup'] . "'";
 			
-			$GroupInfo = $this->Engine->group->GetGroupInfo($GroupArr);
+			$GroupInfo = $this->engine->group->getGroupInfo();
 			
 			if ($GroupInfo != false)
 			{
@@ -444,20 +325,22 @@ class MySmartMember
 		}
 	}
 	
-	function LoginAdmin($param)
+	/* ... */
+	
+	public function loginAdmin( $username, $password )
 	{
- 		if (empty($param['username'])
- 			or empty($param['password']))
+ 		if (empty($username)
+ 			or empty($password))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM LoginAdmin() -- EMPTY username OR password',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM loginAdmin() -- EMPTY username OR password',E_USER_ERROR);
  		}
  		
-		$Check = $this->CheckAdmin($param);
+		$Check = $this->checkAdmin( $username, $password );
 		
 		if ($Check != false)
 		{
-			setcookie($this->Engine->_CONF['admin_username_cookie'],$param['username']);
-			setcookie($this->Engine->_CONF['admin_password_cookie'],$param['password']);
+			setcookie($this->engine->_CONF['admin_username_cookie'],$username);
+			setcookie($this->engine->_CONF['admin_password_cookie'],$password);
        		
        		return true;
 		}

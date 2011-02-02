@@ -8,49 +8,53 @@
  * @package 	: 	MySmartAttach
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	2/8/2006 , 1:14 PM
- * @updated 	: 	23/09/2008 01:49:20 AM 
+ * @updated 	: 	15/07/2010 03:30:51 AM 
  */
 
 class MySmartAttach
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartAttach($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
- 	function InsertAttach($param)
+	/* ... */
+	
+ 	public function insertAttach()
  	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-     			           
-		$query = $this->Engine->records->Insert($this->Engine->table['attach'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'attach' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
  	}
  	
- 	function UpdateAttach($param)
+ 	/* ... */
+ 	
+ 	public function updateAttach()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['attach'];
  		
-		$query = $this->Engine->records->Update($this->Engine->table['attach'],$param['field'],$param['where']);
-				
-		return ($query) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
  	}
+ 	
+ 	/* ... */
  	
 	function DeleteAttach($param)
 	{
@@ -60,28 +64,23 @@ class MySmartAttach
  			$param = array();
  		}
  		
-		$param['table'] = $this->Engine->table['attach'];
+		$param['table'] = $this->engine->table['attach'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 		
 		return ($del) ? true : false;
 	}
 	
-	function GetAttachList($param)
+	/* ... */
+	
+	public function getAttachList()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'attach' ];
  		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['attach'];
-		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
+	
+	/* ... */
 	
 	function GetAttachNumber($param)
 	{
@@ -91,27 +90,25 @@ class MySmartAttach
 		}
 		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['attach'];
+		$param['from'] 		= 	$this->engine->table['attach'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return $num;
 	}
 	
-	function GetAttachInfo($param)
+	/* ... */
+	
+	public function getAttachInfo()
 	{
-		if (!isset($param))
-		{
-			$param 	= array();
-		}
+ 		$this->engine->rec->table = $this->engine->table['attach'];
 		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['attach'];
-				
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
+
 	}
+	
+	/* ... */
+	
 }
 
 ?>

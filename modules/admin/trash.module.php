@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,10 +15,10 @@ define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 include('common.php');
 
 define('CLASS_NAME','MySmartTrashMOD');
-	
-class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
+
+class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -28,21 +30,21 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_SubjectTrashMain();
+					$this->_subjectTrashMain();
 				}
 				elseif ($MySmartBB->_GET['untrash'])
 				{
-					$this->_SubjectUnTrash();
+					$this->_subjectUnTrash();
 				}
 				elseif ($MySmartBB->_GET['del'])
 				{
 					if ($MySmartBB->_GET['confirm'])
 					{
-						$this->_SubjectDelMain();
+						$this->_subjectDelMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_SubjectDelete();
+						$this->_subjectDelete();
 					}
 				}
 			}
@@ -50,21 +52,21 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ReplyTrashMain();
+					$this->_replyTrashMain();
 				}
 				elseif ($MySmartBB->_GET['untrash'])
 				{
-					$this->_ReplyUnTrash();
+					$this->_replyUnTrash();
 				}
 				elseif ($MySmartBB->_GET['del'])
 				{
 					if ($MySmartBB->_GET['confirm'])
 					{
-						$this->_ReplyDelMain();
+						$this->_replyDelMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_ReplyDelete();
+						$this->_replyDelete();
 					}
 				}
 			}
@@ -73,54 +75,39 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		}
 	}
 	
-	function _SubjectTrashMain()
+	private function _subjectTrashMain()
 	{
 		global $MySmartBB;
 		
-		$TrashArr 						= 	array();
+		$MySmartBB->rec->filter = "delete_topic='1'";
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$TrashArr['proc'] 				= 	array();
-		$TrashArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$TrashArr['where']				=	array();
-		$TrashArr['where'][0]			=	array();
-		$TrashArr['where'][0]['name']	=	'delete_topic';
-		$TrashArr['where'][0]['oper']	=	'=';
-		$TrashArr['where'][0]['value']	=	'1';
-		
-		$TrashArr['order']				=	array();
-		$TrashArr['order']['field']		=	'id';
-		$TrashArr['order']['type']		=	'DESC';
-		
-		$MySmartBB->_CONF['template']['while']['TrashList'] = $MySmartBB->subject->GetSubjectList($TrashArr);
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('trash_subjects');
 	}
 	
-	function _SubjectUnTrash()
+	private function _subjectUnTrash()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('طلب غير صحيح');
+			$MySmartBB->func->error('طلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$Trash				=	array();
-		$Trash['where'] 	= 	array('id',$MySmartBB->_GET['id']);
-
-		$UnTrash = $MySmartBB->subject->UnTrashSubject($Trash);
+		$UnTrash = $MySmartBB->subject->unTrashSubject( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)
 		{
-			$MySmartBB->functions->msg('تم إعادة الموضوع بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
+			$MySmartBB->func->msg('تم إعادة الموضوع بنجاح');
+			$MySmartBB->func->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
 	
-	function _SubjectDelMain()
+	private function _subjectDelMain()
 	{
 		global $MySmartBB;
 		
@@ -129,68 +116,56 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		$MySmartBB->template->display('trash_subject_del');
 	}
 	
-	function _SubjectDelete()
+	private function _subjectDelete()
 	{
 		global $MySmartBB;
 		
 		$this->check_subject_by_id($Inf);
 		
-		$del = $MySmartBB->subject->DeleteSubject(array('id'	=>	$Inf['id']));
+		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
+		
+		$del = $MySmartBB->subject->deleteSubject();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الموضوع بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الموضوع بنجاح');
+			$MySmartBB->func->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
 	
-	function _ReplyTrashMain()
+	private function _replyTrashMain()
 	{
 		global $MySmartBB;
 		
-		$TrashArr 						= 	array();
-		$TrashArr['proc'] 				= 	array();
-		$TrashArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->filter = "delete_topic='1'";
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$TrashArr['order']				=	array();
-		$TrashArr['order']['field']		=	'id';
-		$TrashArr['order']['type']		=	'DESC';
-		
-		$TrashArr['where']				=	array();
-		$TrashArr['where'][0]			=	array();
-		$TrashArr['where'][0]['name']	=	'delete_topic';
-		$TrashArr['where'][0]['oper']	=	'=';
-		$TrashArr['where'][0]['value']	=	'1';
-		
-		$MySmartBB->_CONF['template']['while']['TrashList'] = $MySmartBB->reply->GetReplyList($TrashArr);
+		$MySmartBB->reply->getReplyList();
 		
 		$MySmartBB->template->display('trash_replies');		
 	}
 	
-	function _ReplyUnTrash()
+	private function _replyUnTrash()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('طلب غير صحيح');
+			$MySmartBB->func->error('طلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$Trash				= 	array();
-		$Trash['where'] 	= 	array('id',$MySmartBB->_GET['id']);
-		
-		$UnTrash = $MySmartBB->reply->UnTrashReply($Trash);
+		$UnTrash = $MySmartBB->reply->unTrashReply( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)
 		{
-			$MySmartBB->functions->msg('تم إعادة الرد بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
+			$MySmartBB->func->msg('تم إعادة الرد بنجاح');
+			$MySmartBB->func->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
 	
-	function _ReplyDelMain()
+	private function _replyDelMain()
 	{
 		global $MySmartBB;
 		
@@ -199,26 +174,25 @@ class MySmartTrashMOD extends _functions /** Yes it's Smart Trash :D **/
 		$MySmartBB->template->display('trash_reply_del');
 	}
 	
-	function _ReplyDelete()
+	private function _replyDelete()
 	{
 		global $MySmartBB;
 		
 		$this->check_reply_by_id($ReplyInf);
 		
-		$DelArr				=	array();
-		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->reply->DeleteReply($DelArr);
+		$del = $MySmartBB->reply->deleteReply($DelArr);
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الرد بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الرد بنجاح');
+			$MySmartBB->func->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_subject_by_id(&$Inf)
 	{
@@ -226,22 +200,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$InfArr 			= 	array();
-		$InfArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$Inf = $MySmartBB->subject->GetSubjectInfo($InfArr);
+		$Inf = $MySmartBB->subject->getSubjectInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 	
 	function check_reply_by_id(&$ReplyInf)
@@ -250,22 +221,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$ReplyArr = array();
-		$ReplyArr['where'] = array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$ReplyInf = $MySmartBB->reply->GetReplyInfo($ReplyArr);
+		$ReplyInf = $MySmartBB->reply->getReplyInfo();
 		
 		if ($ReplyInf == false)
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($ReplyInf,'html');
 	}
 }
 

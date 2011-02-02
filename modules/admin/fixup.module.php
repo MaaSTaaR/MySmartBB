@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -15,7 +17,7 @@ define('CLASS_NAME','MySmartFixMOD');
 	
 class MySmartFixMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,7 +29,7 @@ class MySmartFixMOD
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_RepairMain();
+					$this->_repairMain();
 				}
 			}
 				
@@ -35,21 +37,21 @@ class MySmartFixMOD
 		}
 	}
 	
-	function _RepairMain()
+	private function _repairMain()
 	{
 		global $MySmartBB;
 		
-		$repair = $MySmartBB->fixup->RepairTables();
+		$repair = $MySmartBB->fixup->repairTables();
 		
 		foreach ($repair as $table => $success)
 		{
 			if ($success)
 			{
-				$MySmartBB->functions->msg('تم تصليح الجدول ' . $table);
+				$MySmartBB->func->msg('تم تصليح الجدول ' . $table);
 			}
 			else
 			{
-				$MySmartBB->functions->msg('فشل في تصليح الجدول ' . $table);
+				$MySmartBB->func->msg('فشل في تصليح الجدول ' . $table);
 			}
 		}
 	}

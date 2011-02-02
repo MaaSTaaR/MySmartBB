@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -19,26 +21,26 @@ define('CLASS_NAME','MySmartPrivateMassegeMOD');
 
 class MySmartPrivateMassegeMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 		
 		/** Can't use the private massege system **/
-		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
+		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
 		/** **/
 		
 		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		/** **/
 				
@@ -46,58 +48,56 @@ class MySmartPrivateMassegeMOD
 		{
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_SettingIndex();
+				$this->_settingIndex();
 			}
 			elseif ($MySmartBB->_GET['start'])
 			{
-				$this->_SettingStart();
+				$this->_settingStart();
 			}
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 					
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 			
-	function _SettingIndex()
+	private function _settingIndex()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إعدادات الرسائل الخاصه');
+		$MySmartBB->func->showHeader('إعدادات الرسائل الخاصه');
 		
 		$MySmartBB->template->display('pm_setting');
 	}
 	
-	function _SettingStart()
+	private function _settingStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إعدادات الرسائل الخاصه');
+		$MySmartBB->func->showHeader('إعدادات الرسائل الخاصه');
 		
 		if ($MySmartBB->_POST['autoreply']
 			and (!isset($MySmartBB->_POST['title']) or !isset($MySmartBB->_POST['msg'])))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['field']		=	array();
+		$MySmartBB->rec->fields = array(	'autoreply'	=>	$MySmartBB->_POST['autoreply'],
+											'autoreply_title'	=>	$MySmartBB->_POST['title'],
+											'autoreply_msg'	=>	$MySmartBB->_POST['msg'],
+											'pm_senders'	=>	$MySmartBB->_POST['pm_senders'],
+											'pm_senders_msg'	=>		$MySmartBB->_POST['pm_senders_msg']	);
+											
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
-		$UpdateArr['field']['autoreply'] 		= 	$MySmartBB->_POST['autoreply'];
-		$UpdateArr['field']['autoreply_title'] 	= 	$MySmartBB->_POST['title'];
-		$UpdateArr['field']['autoreply_msg'] 	= 	$MySmartBB->_POST['msg'];
-		$UpdateArr['field']['pm_senders'] 		= 	$MySmartBB->_POST['pm_senders'];
-		$UpdateArr['field']['pm_senders_msg'] 	= 	$MySmartBB->_POST['pm_senders_msg'];
-		$UpdateArr['where']						=	array('id',$MySmartBB->_CONF['member_row']['id']);
-		
-		$update = $MySmartBB->member->UpdateMember($UpdateArr);
+		$update = $MySmartBB->member->updateMember();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث البيانات بنجاح');
-			$MySmartBB->functions->goto('index.php?page=pm_setting&amp;setting=1&amp;index=1');
+			$MySmartBB->func->msg('تم تحديث البيانات بنجاح');
+			$MySmartBB->func->goto('index.php?page=pm_setting&amp;setting=1&amp;index=1');
 		}
 	}
 }

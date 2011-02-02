@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -13,86 +15,79 @@ define('CLASS_NAME','MySmartActiveMOD');
 
 class MySmartActiveMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تفعيل العضويه');
+		$MySmartBB->func->showHeader('تفعيل العضويه');
 		
 		// The index page for active
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_Index();
+			$this->_index();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 			
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
-	function _Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->AddressBar('تفعيل العضويه');
+		$MySmartBB->func->addressBar('تفعيل العضويه');
 		
 		// No code !
 		if (empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->functions->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error('الرابط المتبع غير صحيح');
 		}
 		// This isn't member
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('يرجى تسجيل دخولك اول');
+			$MySmartBB->func->error('يرجى تسجيل دخولك اول');
 		}
 		
-		$ReqArr = array();
-		
-		$ReqArr['code'] 	= 	$MySmartBB->_GET['code'];
-		$ReqArr['type'] 	= 	3;
-		$ReqArr['username'] = 	$MySmartBB->_CONF['member_row']['username'];
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
 		// Get request information
-		$RequestInfo = $MySmartBB->request->GetRequestInfo($ReqArr);
+		$RequestInfo = $MySmartBB->request->getRequestInfo();
 		
 		// No request , so stop the page
 		if (!$RequestInfo)
 		{
-			$MySmartBB->functions->error('المعذره الطلب غير موجود !');
+			$MySmartBB->func->error('المعذره الطلب غير موجود !');
 		}
 		
-      	//////////
+      	/* ... */
       	
       	// Get the information of default group to set username style cache
       	
-		$GrpArr 			= 	array();
-		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['adef_group']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['adef_group'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		$GroupInfo = $MySmartBB->group->getGroupInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_CONF['member_row']['username'],$style);
 		
-      	//////////
+      	/* ... */
       	
-		$GroupArr 				= 	array();
-		$GroupArr['field'] 		= 	array();
+		$MySmartBB->rec->fields = array(	'usergroup'	=>	$MySmartBB->_CONF['info_row']['adef_group'],
+											'username_style_cache'	=>	$username_style_cache	);
 		
-		$GroupArr['field']['usergroup'] 			= 	$MySmartBB->_CONF['info_row']['adef_group'];
-		$GroupArr['field']['username_style_cache']	=	$username_style_cache;
-		$GroupArr['where'] 							= 	array('id',$MySmartBB->_CONF['member_row']['id']);
-			
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+		
 		// We found the request , so active the member
-		$UpdateGroup = $MySmartBB->member->UpdateMember($GroupArr);
+		$UpdateGroup = $MySmartBB->member->updateMember();
 		
 		// The active is success
 		if ($UpdateGroup)
 		{	
-			$MySmartBB->functions->msg('تم تفعيل عضويتك بنجاح , شكراً لك  !');
-			$MySmartBB->functions->goto('index.php');
+			$MySmartBB->func->msg('تم تفعيل عضويتك بنجاح , شكراً لك  !');
+			$MySmartBB->func->goto('index.php');
 		}
 	}
 }

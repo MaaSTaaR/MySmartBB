@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -18,17 +20,17 @@ define('CLASS_NAME','MySmartAJAXtMOD');
 
 class MySmartAJAXtMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['management'])
 		{
-			$MySmartBB->_POST['section'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['section'],'intval');
+			$MySmartBB->_POST['section'] = (int) $MySmartBB->_POST['section'];
 			
-			if ($MySmartBB->functions->ModeratorCheck($MySmartBB->_POST['section']))
+			if ($MySmartBB->func->moderatorCheck( $MySmartBB->_POST['section'] ))
 			{
-				$MySmartBB->_POST['subject'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['subject'],'intval');
+				$MySmartBB->_POST['subject'] = (int) $MySmartBB->_POST['subject'];
 				
 				if (empty($MySmartBB->_POST['subject']))
 				{
@@ -38,10 +40,7 @@ class MySmartAJAXtMOD
 				{
 					if ($MySmartBB->_POST['oper'] == 'stick')
 					{
-						$UpdateArr 			= array();
-						$UpdateArr['where'] = array('id',$MySmartBB->_POST['subject']);
-		
-						$update = $MySmartBB->subject->StickSubject($UpdateArr);
+						$update = $MySmartBB->subject->stickSubject($MySmartBB->_POST['subject']);
 		
 						if ($update)
 						{
@@ -54,10 +53,7 @@ class MySmartAJAXtMOD
 					}
 					else if ($MySmartBB->_POST['oper'] == 'unstick')
 					{
-						$UpdateArr 			= array();
-						$UpdateArr['where'] = array('id',$MySmartBB->_POST['subject']);
-		
-						$update = $MySmartBB->subject->UnstickSubject($UpdateArr);
+						$update = $MySmartBB->subject->unStickSubject( $MySmartBB->_POST['subject'] );
 		
 						if ($update)
 						{
@@ -70,10 +66,7 @@ class MySmartAJAXtMOD
 					}
 					else if ($MySmartBB->_POST['oper'] == 'close')
 					{
-						$UpdateArr 				= 	array();
-						$UpdateArr['where'] 	= 	array('id',$MySmartBB->_POST['subject']);
-						
-						$update = $MySmartBB->subject->CloseSubject($UpdateArr);
+						$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['subject'] );
 						
 						if ($update)
 						{
@@ -86,10 +79,7 @@ class MySmartAJAXtMOD
 					}
 					else if ($MySmartBB->_POST['oper'] == 'open')
 					{
-						$UpdateArr 				= 	array();
-						$UpdateArr['where'] 	= 	array('id',$MySmartBB->_POST['subject']);
-						
-						$update = $MySmartBB->subject->OpenSubject($UpdateArr);
+						$update = $MySmartBB->subject->openSubject( $MySmartBB->_POST['subject'] );
 						
 						if ($update)
 						{
@@ -102,10 +92,7 @@ class MySmartAJAXtMOD
 					}
 					else if ($MySmartBB->_POST['oper'] == 'delete')
 					{
-						$UpdateArr 				= 	array();
-						$UpdateArr['where'] 	= 	array('id',$MySmartBB->_POST['subject']);
-						
-						$update = $MySmartBB->subject->MoveSubjectToTrash($UpdateArr);
+						$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['subject'] );
 						
 						if ($update)
 						{
@@ -118,11 +105,10 @@ class MySmartAJAXtMOD
 					}
 					else if ($MySmartBB->_POST['oper'] == 'up')
 					{
-						$UpdateArr 							= 	array();
-						$UpdateArr['field']['write_time'] 	= 	time() - ( intval('-42') );
-						$UpdateArr['where'] 				= 	array('id',$MySmartBB->_POST['subject']);
+						$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('-42') ) );
+						$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['subject'] . "'";
 						
-						$update =  $MySmartBB->subject->UpdateSubject($UpdateArr);
+						$update =  $MySmartBB->subject->updateSubject();
 						
 						if ($update)
 						{
@@ -134,12 +120,11 @@ class MySmartAJAXtMOD
 						}
 					}
 					else if ($MySmartBB->_POST['oper'] == 'down')
-					{
-						$UpdateArr 							= 	array();
-						$UpdateArr['field']['write_time'] 	= 	time() - ( intval('420000000000000000000') );
-						$UpdateArr['where'] 				= 	array('id',$MySmartBB->_POST['subject']);
+					{						
+						$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000') ) );
+						$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['subject'] . "'";
 						
-						$update = $MySmartBB->subject->UpdateSubject($UpdateArr);
+						$update = $MySmartBB->subject->updateSubject();
 						
 						if ($update)
 						{

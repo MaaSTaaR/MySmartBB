@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -19,86 +21,79 @@ define('CLASS_NAME','MySmartPrivateMassegeShowMOD');
 
 class MySmartPrivateMassegeShowMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 		
 		/** Can't use the private massege system **/
-		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
+		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
 		/** **/
 		
 		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		/** **/
 		
 		/** Read a massege **/
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowMassege();
+			$this->_showMassege();
 		}
 		/** **/
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	/**
 	 * Get a massege information to show it
 	 */
-	function _ShowMassege()
+	private function _showMassege()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال رساله خاصه');
+		$MySmartBB->func->showHeader('إرسال رساله خاصه');
 		
 		if (empty($MySmartBB->_GET['id']))		
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MsgArr 			= 	array();
-		$MsgArr['id'] 		= 	$MySmartBB->_GET['id'];
-		$MsgArr['username'] = 	$MySmartBB->_CONF['member_row']['username'];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$MySmartBB->_CONF['template']['MassegeRow'] = $MySmartBB->pm->GetPrivateMassegeInfo($MsgArr);
+		$MySmartBB->_CONF['template']['MassegeRow'] = $MySmartBB->pm->getPrivateMassegeInfo();
 																		
 		if (!$MySmartBB->_CONF['template']['MassegeRow'])
 		{
-			$MySmartBB->functions->error('الرساله المطلوبه غير موجوده');
+			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
 		}
 		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MassegeRow'],'html');
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MassegeRow'],'sql');
+		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['MassegeRow'],'sql');
 		
-		$get_list  = 'id,username,user_sig,user_country,user_gender,register_date';
-		$get_list .= ',posts,user_title,avater_path,away,away_msg,hide_online';
+		/* ... */
 		
-		$SenderArr = array();
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['template']['MassegeRow']['user_from'] . "'";
 		
-		$SenderArr['get'] 		= 	$get_list;
-		$SenderArr['where']		=	array('username',$MySmartBB->_CONF['template']['MassegeRow']['user_from']);
+		$MySmartBB->_CONF['template']['Info'] = $MySmartBB->member->getMemberInfo();
 		
-		$MySmartBB->_CONF['template']['Info'] = $MySmartBB->member->GetMemberInfo($SenderArr);
-																		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['Info'],'html');
+		/* ... */
 		
 		$send_text = $MySmartBB->_CONF['template']['MassegeRow']['text'];
 		
 		if (is_numeric($MySmartBB->_CONF['template']['Info']['register_date']))
 		{
-			$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['Info']['register_date']);
+			$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['Info']['register_date']);
 		}
 		
 		$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['template']['Info']['user_gender']);
@@ -110,24 +105,26 @@ class MySmartPrivateMassegeShowMOD
 		
 		if (is_numeric($MySmartBB->_CONF['template']['MassegeRow']['date']))
 		{
-			$MassegeDate = $MySmartBB->functions->date($MySmartBB->_CONF['template']['MassegeRow']['date']);
-			$MassegeTime = $MySmartBB->functions->time($MySmartBB->_CONF['template']['MassegeRow']['date']);
+			$MassegeDate = $MySmartBB->func->date($MySmartBB->_CONF['template']['MassegeRow']['date']);
+			$MassegeTime = $MySmartBB->func->time($MySmartBB->_CONF['template']['MassegeRow']['date']);
 			
 			$MySmartBB->_CONF['template']['MassegeRow']['date'] = $MassegeDate . ' ; ' . $MassegeTime;
 		}
 		
-		$AttachArr 				= 	array();
-		$AttachArr['where'] 	= 	array('pm_id',$MySmartBB->_GET['id']);
+		/* ... */
+		
+		$MySmartBB->_CONF['template']['res']['attach_res'] = '';
+		
+		$MySmartBB->rec->filter = "pm_id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
 		
 		// Get the attachment information
-		$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->attach->GetAttachList($AttachArr);
+		$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->attach->getAttachList();
 		
-		if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
+		/*if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
 		{
 			$MySmartBB->template->assign('ATTACH_SHOW',true);
-
-			$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
-		}
+		}*/
 		
 		// The writer signture isn't empty 
 		if (!empty($MySmartBB->_CONF['template']['Info']['user_sig']))
@@ -141,43 +138,30 @@ class MySmartPrivateMassegeShowMOD
 		$MySmartBB->template->assign('send_text','[quote]' . $send_text . '[/quote]');
 		$MySmartBB->template->assign('to',$MySmartBB->_CONF['template']['MassegeRow']['user_from']);
 				
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
-		$OnlineArr 				= 	array();	
-		$OnlineArr['way'] 		= 	'username';
-		$OnlineArr['username'] 	= 	$MySmartBB->_CONF['template']['MassegeRow']['user_from'];
-		$OnlineArr['timeout'] 	= 	$MySmartBB->_CONF['timeout'];
+		/* ... */
 		
-		$CheckOnline = $MySmartBB->online->IsOnline($OnlineArr);
+		$CheckOnline = $MySmartBB->online->isOnline( $MySmartBB->_CONF['timeout'], 'username', $MySmartBB->_CONF['template']['MassegeRow']['user_from'] );
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
+		/* ... */
+		
 		if (!$MySmartBB->_CONF['template']['MassegeRow']['user_read'])
 		{
-			$ReadArr 						= 	array();
-			$ReadArr['where'] 				= 	array();
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 			
-			$ReadArr['where'][0] 			= 	array();
-			$ReadArr['where'][0]['name'] 	= 	'id';
-			$ReadArr['where'][0]['oper'] 	= 	'=';
-			$ReadArr['where'][0]['value'] 	= 	$MySmartBB->_GET['id'];
-			
-			$Read = $MySmartBB->pm->MakeMassegeRead($ReadArr);
+			$Read = $MySmartBB->pm->markMessageAsRead();
 			
 			if ($Read)
 			{
-				$NumArr 				= 	array();
-				$NumArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-				$Number = $MySmartBB->pm->NewMessageNumber($NumArr);
-						      															
-				$CacheArr 					= 	array();
-				$CacheArr['field']			=	array();
+				$Number = $MySmartBB->pm->newMessageNumber( $MySmartBB->_CONF['member_row']['username'] );
 				
-				$CacheArr['field']['unread_pm'] 	= 	$Number;
-				$CacheArr['where'] 					= 	array('username',$MySmartBB->_CONF['member_row']['username']);
+				$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number);
+				$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 				
-				$Cache = $MySmartBB->member->UpdateMember($CacheArr);
+				$Cache = $MySmartBB->member->UpdateMember();
 			}
 		}
 				

@@ -9,19 +9,23 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	12/3/2006 , 11:57 PM (kuwait : GMT+3)
  * @end   		: 	13/3/2006 , 12:01 AM (kuwait : GMT+3)
- * @updated 	: 	03/09/2008 09:34:08 AM 
+ * @updated 	: 	27/07/2010 05:13:42 PM 
  */
 
 
 class MySmartReply
 {
-	var $id;
-	var $Engine;
+	public $id;
+	private $engine;
 	
-	function MySmartReply($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Get reply list by subject id
@@ -38,230 +42,178 @@ class MySmartReply
  		}
  		
  		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['reply'];
+ 		$param['from'] 		= 	$this->engine->table['reply'];
  		
- 	 	$rows = $this->Engine->records->GetList($param);
+ 	 	$rows = $this->engine->records->GetList($param);
  		
  		return $rows; 		
 	}
 	
-	function GetReplyInfo($param)
+	/* ... */
+	
+	public function getReplyInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['reply'];
-	 	
- 	 	$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows; 		
+		$this->engine->rec->table = $this->engine->table['reply'];
+		
+		return $this->engine->rec->getInfo();
 	}
 	
-	function GetReplyNumber($param)
+	/* ... */
+	
+	public function getReplyNumber()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
+ 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
+ 		
+ 		return $this->engine->rec->getNumber(); 		
+	}
+	
+	/* ... */
+	
+	public function getReplyWriterInfo( $subject_id )
+	{
+ 		if ( !isset( $subject_id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM getReplyWriterInfo()',E_USER_ERROR);
  		}
  		
-		if ($param['get_from'] == 'cache')
-		{
-			$num = $this->Engine->_CONF['info_row']['reply_number'];
-		}
-		elseif ($param['get_from'] == 'db')
-		{
-			$param['select'] 	= 	'*';
-			$param['from'] 		= 	$this->Engine->table['reply'];
+		$this->engine->rec->select = '*,r.id AS reply_id';
+		$this->engine->rec->table = $this->engine->table['reply'] . ' AS r,' . $this->engine->table['member'] . ' AS m';
 		
-			$num = $this->Engine->records->GetNumber($param);
+		$statement = "r.subject_id='" . $subject_id . "' AND m.username=r.writer";
+		
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
 		}
 		else
 		{
-			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetReplyNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
+			$this->engine->rec->filter = $statement;
 		}
 		
-		return $num;
+		$this->engine->rec->getList();		
 	}
 	
-	function GetReplyWriterInfo($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*,r.id AS reply_id';
-		$param['from'] 		= 	$this->Engine->table['reply'] . ' AS r,' . $this->Engine->table['member'] . ' AS m';
-		
-		$z = 0;
-		
-		if (is_array($param['where']))
-		{
-			$z = sizeof($param['where']);
-			
-			$param['where'][$z] 		= 	array();
-			$param['where'][$z]['con'] 	= 	'AND';
-		}
-		else
-		{
-			$param['where'] = array();
-		}
-		
-		$param['where'][$z]['name'] 	= 	'r.subject_id';
-		$param['where'][$z]['oper'] 	= 	'=';
-		$param['where'][$z]['value'] 	= 	$param['subject_id'];
-		
-		$z += 1;
-		
-		$param['where'][$z] 				= 	array();
-		$param['where'][$z]['con'] 			= 	'AND';
-		$param['where'][$z]['name'] 		= 	'm.username';
-		$param['where'][$z]['oper'] 		= 	'=';
-		$param['where'][$z]['value'] 		= 	'r.writer';
-		$param['where'][$z]['del_quote'] 	= 	true;
-		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
-	}
+	/* ... */
 	
 	/**
-	 * Insert new reply
-	 *
-	 * @param :
-	 *			see field array
+	 * Insert a new reply
 	 */
-	function InsertReply($param)
+	public function insertReply()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['reply'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'reply' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false; 	    	
+		return ( $query ) ? true : false;
 	}
 	
- 	function UpdateReply($param)
+	/* ... */
+	
+ 	public function updateReply()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$param['field'],$param['where']);
-				
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['reply'];
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
  	}
+ 	
+ 	/* ... */
 	
-	function UnTrashReply($param)
+	public function unTrashReply( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashReply() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field 					= 	array();
- 		$field['delete_topic'] 	= 	0;
-		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['reply'];
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'0'	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	function DeleteReply($param)
+	/* ... */
+	
+	public function deleteReply()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
  		
-		$param['table'] = $this->Engine->table['reply'];
-				
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function MassDeleteReply($param)
+	/* ... */
+	
+	public function massDeleteReply( $section_id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
  		
-		$param['table'] = $this->Engine->table['reply'];
-		
-		if (!empty($param['section_id']))
-		{
-			$param['where'] = array('section',$param['section_id']);
-		}
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$this->engine->rec->filter = "section='" . $section_id . "'";
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function MassMoveReply($param)
+	/* ... */
+	
+	public function massMoveReply( $to, $from )
 	{
- 		if (empty($param['to'])
- 			or empty($param['from']))
+ 		if ( !isset( $to )
+ 			or !isset( $from ) )
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM MassMoveReply() -- EMPTY to OR from',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM massMoveReply() -- EMPTY to OR from',E_USER_ERROR);
  		}
  		
- 		$field 					= 	array();
- 		$field['section'] 		= 	$param['to'];
+ 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
  		
- 		$where 					=	array('section',$param['from']);
-		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$field,$where);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->fields = array(	'section'	=>	$to	);
+ 		
+ 		$this->engine->rec->filter = "section='" . $from . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
-
+	
+	/* ... */
+	
 	/**
 	 * Move reply to trash
-	 *
-	 * @param :
-	 *			id	->	the id of reply
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
 	 */
-	function MoveReplyToTrash($param)
+	public function moveReplyToTrash( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveReplyToTrash() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field 					= 	array();
- 		$field['delete_topic'] 	= 	1;
-		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['reply'];
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'1'	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 	   
 	/**
 	 * Restore reply from trash
@@ -284,7 +236,7 @@ class MySmartReply
  		$field 				= 	array();
  		$field['delete'] 	= 	0;
 		
-		$query = $this->Engine->records->Update($this->Engine->table['reply'],$field,$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['reply'],$field,$param['where']);
 		
 		return ($query) ? true : false;
 	}

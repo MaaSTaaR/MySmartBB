@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -12,7 +14,7 @@ define('CLASS_NAME','MySmartNotesMOD');
 
 class MySmartNotesMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -29,7 +31,7 @@ class MySmartNotesMOD
 			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات !');
 		}
 		
-		$update = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['note'],'var_name'=>'admin_notes')); 
+		$update = $MySmartBB->info->updateInfo( 'admin_notes', $MySmartBB->_POST['note'] );
 		
 		if ($update)
 		{

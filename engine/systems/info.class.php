@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
@@ -9,19 +11,19 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	20/1/2007 , 9:29 PM
  * @end   		: 	20/1/2007 , 9:33 PM
- * @updated		: 	21/08/2008 08:47:19 PM 
+ * @updated		: 	03/07/2010 09:03:27 PM 
  */
 
 class MySmartInfo
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartInfo($Engine)
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function GetSettingInfo($param=null)
+	public function getSettingInfo( $param = null )
 	{
  		if (!isset($param)
  			or !is_array($param))
@@ -30,25 +32,26 @@ class MySmartInfo
  		}
  	 	
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['info'];
+		$param['from'] 		= 	$this->engine->table['info'];
 		
-		$rows = $this->Engine->records->GetList($param);
+		$rows = $this->engine->rec->GetList($param);
 		
 		return $rows;
 	}
 	
- 	function UpdateInfo($param)
+ 	public function updateInfo( $name, $value )
  	{
- 		if (!isset($param['var_name']))
+ 		if ( !isset( $name )
+ 			or !isset( $value ) )
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateInfo() -- EMPTY var_name',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM UpdateInfo() -- EMPTY name or value', E_USER_ERROR );
  		}
  		
- 		$field = array('value'		=>	$param['value']);
+		$this->engine->rec->table = $this->engine->table['info'];
+		$this->engine->rec->fields = array(	'value'	=>	$value	);
+		$this->engine->rec->filter = "var_name='" . $name . "'";
 		
-		$where = array('var_name',$param['var_name']);
-		
-		$query = $this->Engine->records->Update($this->Engine->table['info'],$field,$where);
+		$query = $this->engine->rec->update();
 		           
 		return ($query) ? true : false;
  	}

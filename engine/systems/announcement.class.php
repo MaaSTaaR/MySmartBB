@@ -9,131 +9,95 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	13/3/2006 , 12:06 AM
  * @end   		: 	13/3/2006 , 12:15 AM
- * @updated 	: 	16/07/2008 08:40:55 PM 
+ * @updated 	: 	02/08/2010 12:54:05 PM 
  */
 
 
 class MySmartAnnouncement
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartAnnouncement($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
+	/* ... */
+	
  	/**
- 	 * Insert new announcement
- 	 *
- 	 * @param :
- 	 *			Oh :O it's a long list
+ 	 * Insert a new announcement
  	 */
- 	function InsertAnnouncement($param)
+ 	public function insertAnnouncement()
  	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-     			           
-		$query = $this->Engine->records->Insert($this->Engine->table['announcement'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'announcement' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
  	}
+ 	
+ 	/* ... */
  	
  	/**
- 	 * Update announcement information
- 	 *
- 	 * @param :
- 	 *			long list :\
+ 	 * Update an announcement information
  	 */
- 	function UpdateAnnouncement($param)
+ 	public function updateAnnouncement()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'announcement' ];
  		
-		$query = $this->Engine->records->Update($this->Engine->table['announcement'],$param['field'],$param['where']);
-				
-		return ($query) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
  	}
  	
-	function DeleteAnnouncement($param)
+ 	/* ... */
+ 	
+	public function deleteAnnouncement()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'announcement' ];
  		
-		$param['table'] = $this->Engine->table['announcement'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Get the list of announcement
-	 *
-	 * $param =
-	 *			array(	'sql_statment'	=>	'complete SQL statement',
-	 *					'proc'			=>	true // When you want proccess the outputs
-	 *					);
-	 *
-	 * @return :
-	 *				array -> of information
-	 *				false -> when found no information
 	 */
-	function GetAnnouncementList($param)
+	public function getAnnouncementList()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'announcement' ];
  		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['announcement'];
-		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
+	
+	/* ... */
 	
 	/**
 	 * Get announcement info
-	 *
-	 * $param =
-	 *			array(	'id'	=>	'the id of announcement');
-	 *
-	 * @return :
-	 *			array -> of information
-	 *			false -> when found no information
 	 */
-	function GetAnnouncementInfo($param)
+	public function getAnnouncementInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['announcement'];
+ 		$this->engine->rec->table = $this->engine->table['announcement'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
 	
 	function GetAnnouncementNumber($param)
 	{
@@ -143,9 +107,9 @@ class MySmartAnnouncement
 		}
 		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['announcement'];
+		$param['from'] 		= 	$this->engine->table['announcement'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return $num;
 	}

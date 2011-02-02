@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -12,7 +14,7 @@ define('CLASS_NAME','MySmartCPOptionsMOD');
 	
 class MySmartCPOptionsMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -22,17 +24,17 @@ class MySmartCPOptionsMOD
 		
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_IndexPage();
+				$this->_indexPage();
 			}
 			elseif ($MySmartBB->_GET['ajax'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AjaxMain();
+					$this->_ajaxMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_AjaxUpdate();
+					$this->_ajaxUpdate();
 				}
 			}
 			
@@ -40,32 +42,32 @@ class MySmartCPOptionsMOD
 		}
 	}
 	
-	function _IndexPage()
+	private function _indexPage()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('cp_options_main');
 	}
 	
-	function _AjaxMain()
+	private function _ajaxMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('cp_options_ajax');
 	}
 	
-	function _AjaxUpdate()
+	private function _ajaxUpdate()
 	{
 		global $MySmartBB;
 			
 		$update = array();
 		
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['admin_ajax_main_rename'],'var_name'=>'admin_ajax_main_rename'));
+		$update[0] = $MySmartBB->info->updateInfo( 'admin_ajax_main_rename', $MySmartBB->_POST['admin_ajax_main_rename'] );
 				
 		if ($update[0])
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=cp_options&amp;ajax=1&amp;main=1');
+			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->goto('admin.php?page=cp_options&amp;ajax=1&amp;main=1');
 		}
 	}
 }

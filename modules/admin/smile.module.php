@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartSmileMOD');
 	
-class MySmartSmileMOD extends _functions
+class MySmartSmileMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartSmileMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,67 +70,61 @@ class MySmartSmileMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('smile_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['short'])	
 			or empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$SmlArr 			= 	array();
-		$SmlArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$SmlArr['field']['smile_short'] 	= 	$MySmartBB->_POST['short'];
-		$SmlArr['field']['smile_path'] 		= 	$MySmartBB->_POST['path'];
+		$MySmartBB->rec->fields['smile_short'] 	= 	$MySmartBB->_POST['short'];
+		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
 		
-		$insert = $MySmartBB->icon->InsertSmile($SmlArr);
+		$insert = $MySmartBB->icon->insertSmile();
 			
 		if ($insert)
 		{
-			$cache = $MySmartBB->icon->UpdateSmilesCache(null);
+			$cache = $MySmartBB->icon->updateSmilesCache();
 			
 			if ($cache)
 			{
-				$num = $MySmartBB->icon->GetSmilesNumber(null);
+				$num = $MySmartBB->icon->getSmilesNumber();
 				
-				$number = $MySmartBB->info->UpdateInfo(array('value'=>$num,'var_name'=>'smiles_number'));
+				$number = $MySmartBB->info->updateInfo( 'smiles_number', $num );
 				
 				if ($number)
 				{
-					$MySmartBB->functions->msg('تم اضافة الابتسامه بنجاح !');
-					$MySmartBB->functions->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+					$MySmartBB->func->msg('تم اضافة الابتسامه بنجاح !');
+					$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
 				}
 			}
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$SmlArr 					= 	array();
-		$SmlArr['proc'] 			= 	array();
-		$SmlArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$SmlArr['order']			=	array();
-		$SmlArr['order']['field']	=	'id';
-		$SmlArr['order']['type']	=	'DESC';
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['SmlList'] = $MySmartBB->icon->GetSmileList($SmlArr);
+		$MySmartBB->icon->getSmileList($SmlArr);
 		
 		$MySmartBB->template->display('smiles_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -137,7 +133,7 @@ class MySmartSmileMOD extends _functions
 		$MySmartBB->template->display('smile_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -146,31 +142,31 @@ class MySmartSmileMOD extends _functions
 		if (empty($MySmartBB->_POST['short']) 
 			or empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 
-		$SmlArr 			= 	array();
-		$SmlArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$SmlArr['field']['smile_short'] 	= 	$MySmartBB->_POST['short'];
-		$SmlArr['field']['smile_path'] 		= 	$MySmartBB->_POST['path'];
-		$SmlArr['where']					= 	array('id',$Inf['id']);
-				
-		$update = $MySmartBB->icon->UpdateSmile($SmlArr);
+		$MySmartBB->rec->fields['smile_short'] 	= 	$MySmartBB->_POST['short'];
+		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
+		
+		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
+		
+		$update = $MySmartBB->icon->updateSmile();
 		
 		if ($update)
 		{
-			$cache = $MySmartBB->icon->UpdateSmilesCache(array());
+			$cache = $MySmartBB->icon->updateSmilesCache();
 			
 			if ($cache)
 			{
-				$MySmartBB->functions->msg('تم تحديث الابتسامه بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+				$MySmartBB->func->msg('تم تحديث الابتسامه بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -179,28 +175,30 @@ class MySmartSmileMOD extends _functions
 		$MySmartBB->template->display('smile_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_by_id($Inf);
 		
-		$del = $MySmartBB->icon->DeleteSmile(array('id'	=>	$Inf['id']));
+		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
+		
+		$del = $MySmartBB->icon->deleteSmile();
 		
 		if ($del)
 		{
-			$cache = $MySmartBB->icon->UpdateSmilesCache(array());
+			$cache = $MySmartBB->icon->updateSmilesCache();
 			
 			if ($cache)
 			{
-				$MySmartBB->functions->msg('تم حذف الابتسامه بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+				$MySmartBB->func->msg('تم حذف الابتسامه بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$Inf)
 	{
@@ -208,19 +206,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$Inf = $MySmartBB->icon->GetSmileInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$Inf = $MySmartBB->icon->getSmileInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الابتسامه المطلوبه غير موجود');
+			$MySmartBB->func->error('الابتسامه المطلوبه غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 }
 

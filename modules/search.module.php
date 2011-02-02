@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -14,41 +16,41 @@ define('CLASS_NAME','MySmartSearchEngineMOD');
 
 class MySmartSearchEngineMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Show search form **/
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_SearchForm();
+			$this->_searchForm();
 		}
 		/** **/
 		
 		/** Show the results of search **/
 		elseif ($MySmartBB->_GET['start'])
 		{
-			$this->_StartSearch();
+			$this->_startSearch();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 	}
 	
 	/**
 	 * Get the list of sections to show it in a list , and show search form
 	 */
-	function _SearchForm()
+	private function _searchForm()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('البحث');
+		$MySmartBB->func->showHeader('البحث');
 		
 		//////////
 				
-		$SecArr 						= 	array();
+		/*$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
 		$SecArr['proc'] 				= 	array();
@@ -100,7 +102,7 @@ class MySmartSearchEngineMOD
 					} // end if is_array
 				} // end foreach ($forums)
 			} // end !empty($forums_cache)
-		} // end foreach ($cats)
+		} // end foreach ($cats)*/
 		
 		//////////
 				
@@ -108,19 +110,19 @@ class MySmartSearchEngineMOD
 		
 		//////////
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
 	/**
 	 * Get the results of search
 	 */
-	function _StartSearch()
+	private function _startSearch()
 	{
 		global $MySmartBB;
 		
 		if (!$MySmartBB->_POST['ajax'])
 		{
-			$MySmartBB->functions->ShowHeader('نتائج البحث');
+			$MySmartBB->func->showHeader('نتائج البحث');
 		}
 		
 		//////////
@@ -133,7 +135,7 @@ class MySmartSearchEngineMOD
 		
 		if (empty($keyword))
 		{
-			$MySmartBB->functions->error('يرجى كتابة كلمة البحث المطلوبه');
+			$MySmartBB->func->error('يرجى كتابة كلمة البحث المطلوبه');
 		}
 		
 		//////////
@@ -147,12 +149,12 @@ class MySmartSearchEngineMOD
 		{
 			$stop = ($MySmartBB->_CONF['info_row']['ajax_search'] and !$MySmartBB->_POST['ajax']) ? false : true;
 			
-			$MySmartBB->functions->error('لا يوجد نتائج',$stop,$stop);
+			$MySmartBB->func->error('لا يوجد نتائج',$stop,$stop);
 		}
 		
 		//////////
 		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['SearchResult'],'html');
+		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['while']['SearchResult'],'html');
 				
 		$MySmartBB->template->assign('highlight',$keyword);
 		
@@ -162,12 +164,12 @@ class MySmartSearchEngineMOD
 		{
 			if (!$MySmartBB->_POST['ajax'])
 			{
-				$MySmartBB->functions->GetFooter();
+				$MySmartBB->func->getFooter();
 			}
 		}
 		else
 		{
-			$MySmartBB->functions->GetFooter();
+			$MySmartBB->func->getFooter();
 		}
 	}
 }

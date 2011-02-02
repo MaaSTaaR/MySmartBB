@@ -8,25 +8,31 @@
  * @package 	: 	MySmartMisc
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	16/6/2006 
- * @updated 	: 	31/08/2008 06:32:02 AM 
+ * @updated 	: 	18/07/2010 03:53:13 AM 
  */
 
 class MySmartMisc
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartMisc($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function GetForumAge($param)
+	/* ... */
+	
+	public function getForumAge( $date )
 	{
-     	$age = time() - $param['date'];
-     	$age = ceil($age/(60*60*24));
+     	$age = time() - $date;
+     	$age = ceil( $age / ( 60 * 60 * 24 ) );
      	
      	return $age;
 	}
+	
+	/* ... */
 }
 
 ?>

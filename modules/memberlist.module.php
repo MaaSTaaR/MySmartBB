@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
@@ -12,55 +14,44 @@ class MySmartMemberlistMOD
 {
 	private $Section;
 	
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Get the member information as list **/
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_GetMemberList();
+			$this->_getMemberList();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
-	function _GetMemberList()
+	private function _getMemberList()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('قائمة الاعضاء');
+		$MySmartBB->func->showHeader('قائمة الاعضاء');
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		$ListArr 						= 	array();
-		
-		// Order data
-		$ListArr['order']				=	array();
-		$ListArr['order']['field']		=	'id';
-		$ListArr['order']['type']		=	'ASC';
-		
-		// Clean data from HTML
-		$ListArr['proc'] 				= 	array();
-		$ListArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
 		// Pager setup
-		$ListArr['pager'] 				= 	array();
-		$ListArr['pager']['total']		= 	$MySmartBB->member->GetMemberNumber(array('get_from'=>'db'));
-		$ListArr['pager']['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
-		$ListArr['pager']['count'] 		= 	$MySmartBB->_GET['count'];
-		$ListArr['pager']['location'] 	= 	'index.php?page=member_list&amp;show=1&amp;id=' . $this->Section['id'];
-		$ListArr['pager']['var'] 		= 	'count';
+		$MySmartBB->rec->pager 				= 	array();
+		$MySmartBB->rec->pager['total']		= 	$MySmartBB->member->getMemberNumber();
+		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
+		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=member_list&amp;show=1&amp;id=' . $this->Section['id'];
+		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
-		$GetMemberList = $MySmartBB->member->GetMemberList($ListArr);
+		$MySmartBB->rec->order = "id ASC";
 		
-		$MySmartBB->_CONF['template']['while']['MemberList'] = $GetMemberList;
-		
+		$MySmartBB->member->getMemberList();
+
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
 		$MySmartBB->template->display('show_memberlist');

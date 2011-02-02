@@ -10,26 +10,15 @@ class MySmartFooterMOD
 	{
 		global $MySmartBB;
 		
-		// Get style list			
-		$StyleListArr 							= 	array();
+		/* ... */
 		
-		// Clean data
-		$StyleListArr['proc']					=	array();
-		$StyleListArr['proc']['*']				=	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->filter = "style_on='1'";
+		$MySmartBB->rec->order = 'style_order ASC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
-		// Where setup
-		$StyleListArr['where'][0]				=	array();
-		$StyleListArr['where'][0]['con']		=	'AND';
-		$StyleListArr['where'][0]['name']		=	'style_on';
-		$StyleListArr['where'][0]['oper']		=	'=';
-		$StyleListArr['where'][0]['value']		=	'1';
+		$MySmartBB->style->getStyleList();
 		
-		// Order setup
-		$StyleListArr['order'] 					= 	array();
-		$StyleListArr['order']['field'] 		= 	'style_order';
-		$StyleListArr['order']['type'] 			= 	'ASC';
-		
-		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($StyleListArr);
+		/* ... */
 		
 		$MySmartBB->template->assign('memory_usage',memory_get_usage()/1024);
 		$MySmartBB->template->assign('query_num',$MySmartBB->_CONF['temp']['query_numbers']);

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -13,60 +15,48 @@ define('CLASS_NAME','MySmartCReqMOD');
 
 class MySmartCReqMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_Index();
+			$this->_index();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 			
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
 		// Show header with page title
-		$MySmartBB->functions->ShowHeader('إلغاء الطلب');
+		$MySmartBB->func->showHeader('إلغاء الطلب');
 		
-		$MySmartBB->functions->AddressBar('إلغاء الطلب');
+		$MySmartBB->func->addressBar('إلغاء الطلب');
 		
 		if (empty($MySmartBB->_GET['type']) 
 			or empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->functions->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error('الرابط المتبع غير صحيح');
 		}
 		
-		$MySmartBB->_GET['type'] = $MySmartBB->functions->CleanVarialbe($MySmartBB->_GET['type'],'intval');
-		$MySmartBB->_GET['code'] = $MySmartBB->functions->CleanVarialbe($MySmartBB->_GET['code'],'trim');
+		$MySmartBB->_GET['type'] = (int) $MySmartBB->_GET['type'];
+		$MySmartBB->_GET['code'] = trim( $MySmartBB->_GET['code'] );
 		
-		$CleanArr 			= 	array();
-		$CleanArr['where'] 	= 	array();
+		$MySmartBB->rec->filter = "type='" . $MySmartBB->_GET['type'] . "' AND random_url='" . $MySmartBB->_GET['code'] . "'";
 		
-		$CleanArr['where'][0]			=	array();
-		$CleanArr['where'][0]['name'] 	= 	'type';
-		$CleanArr['where'][0]['oper']	=	'=';
-		$CleanArr['where'][0]['value']	=	$MySmartBB->_GET['type'];
-		
-		$CleanArr['where'][1]			=	array();
-		$CleanArr['where'][1]['con']	=	'AND';
-		$CleanArr['where'][1]['name'] 	= 	'random_url';
-		$CleanArr['where'][1]['oper']	=	'=';
-		$CleanArr['where'][1]['value']	=	$MySmartBB->_GET['code'];
-		
-		$CleanReq = $MySmartBB->request->DeleteRequest($CleanArr);
+		$CleanReq = $MySmartBB->request->deleteRequest();
 			
 		if ($CleanReq)
 		{
-			$MySmartBB->functions->msg('تم الغاء الطلب بنجاح !');
-			$MySmartBB->functions->goto('index.php');
+			$MySmartBB->func->msg('تم الغاء الطلب بنجاح !');
+			$MySmartBB->func->goto('index.php');
 		}
 	}
 }

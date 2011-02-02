@@ -4,243 +4,182 @@
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
 
-
 /**
  * @package 	: 	MySmartSubject
  * @author 		: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	11/3/2006 , 8:18 PM
  * @end   		: 	11/3/2006 , 8:47 PM
- * @updated 	: 	05/11/2008 12:58:48 AM 
+ * @updated 	: 	27/07/2010 05:12:29 PM 
  */
  
 class MySmartSubject
 {
-	var $id;
-	var $Engine;
+	public $id;
+	private $engine;
 	
-	function MySmartSubject($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function GetSubjectNumber($param)
+	/* ... */
+	
+	public function getSubjectNumber()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'subject' ];
  		
-		if ($param['get_from'] == 'cache')
-		{
-			$num = $this->Engine->_CONF['info_row']['subject_number'];
-		}
-		elseif ($param['get_from'] == 'db')
-		{
-			$param['select'] 	= 	'*';
-			$param['from'] 		= 	$this->Engine->table['subject'];
-			
-			$num   = $this->Engine->records->GetNumber($param);
-		}
- 		else
- 		{
- 			trigger_error('ERROR::BAD_VALUE_OF_GET_FROM_VARIABLE -- FROM GetSubjectNumber() -- get_from SHOULD BE cache OR db',E_USER_ERROR);
- 		}
-		
-		return $num;
+ 		return $this->engine->rec->getNumber();
 	}
 	
-	function DeleteSubject($param)
+	/* ... */
+	
+	public function deleteSubject()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'subject' ];
  		
-		$param['table'] = $this->Engine->table['subject'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
- 	function UpdateSubject($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
+	/* ... */
+	
+ 	public function updateSubject()
+ 	{		
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+
+ 		if ( isset( $this->engine->fields[ 'tags_cache' ] ) )
  		{
- 			$param = array();
+ 			$this->engine->fields[ 'tags_cache' ] = serialize( $this->engine->fields[ 'tags_cache' ] );
  		}
- 		
- 		if (isset($param['field']['tags_cache']))
- 		{
- 			$param['field']['tags_cache'] = serialize($param['field']['tags_cache']);
- 		}
- 		
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$param['field'],$param['where']);
-				
-		return ($query) ? true : false;
+	
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
  	}
  	
+	/* ... */
 	
-	function GetSubjectList($param)
+	public function getSubjectList()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['subject'];
  		
- 	 	$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['subject'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 	 	
- 	 	return $rows;
+ 	 	$this->engine->rec->getList();
 	}
- 	 
-	/**
-	 * Get subject info by id
- 	 *
- 	 * @param :
-	 *				id	->	the id of subject
-	 *
-	 */
-	function GetSubjectInfo($param)
+	
+	/* ... */
+ 	
+	public function getSubjectInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	    $param['select'] 	= 	'*';
- 	    $param['from'] 		= 	$this->Engine->table['subject'];
- 	     	    
- 		$rows = $this->Engine->records->GetInfo($param);
- 		
-		return $rows;
+		$this->engine->rec->table = $this->engine->table['subject'];
+		
+		return $this->engine->rec->getInfo();
 	}
  	
+ 	/* ... */
+ 	
 	/**
-	 * Insert new subject
-	 *
-	 * @param :
+	 * Insert a new subject
 	 */
-	function InsertSubject($param)
+	public function insertSubject()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
+		$this->engine->rec->table = $this->engine->table[ 'subject' ];
+		
+ 		if ( isset( $this->engine->fields[ 'tags_cache' ] ) )
  		{
- 			$param = array();
+ 			$this->engine->fields[ 'tags_cache' ] = serialize( $this->engine->fields[ 'tags_cache' ] );
  		}
  		
- 		if (isset($param['field']['tags_cache']))
- 		{
- 			$param['field']['tags_cache'] = serialize($param['field']['tags_cache']);
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['subject'],$param['field']);
-				
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false; 	    	
+		return ( $query ) ? true : false;	    	
 	}
 	
-	/**
-	 * Restore subject from trash
-	 *
-	 * @param :
-	 *			id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
-	 */
+	/* ... */
 	
-	function MassDeleteSubject($param)
+	public function massDeleteSubject( $section_id )
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'subject' ];
  		
-		$param['table'] = $this->Engine->table['subject'];
-
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$this->engine->rec->filter = "section_id='" . $section_id . "'";
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function MassMoveSubject($param)
+	/* ... */
+	
+	public function massMoveSubject( $to, $from )
 	{
- 		if (empty($param['to'])
- 			or empty($param['from']))
+ 		if ( !isset( $to )
+ 			or !isset( $from ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM MassMoveSubject() -- EMPTY to OR from',E_USER_ERROR);
  		}
  		
-		$field 				= 	array();
-		$field['section'] 	= 	$param['to'];
-		
-		$where	 			= 	array('section',$param['from']);
-		
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$where);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table[ 'subject' ];
+ 		
+ 		$this->engine->rec->fields = array(	'section'	=>	$to	);
+ 		
+ 		$this->engine->rec->filter = "section='" . $from . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
+	/* ... */
+	
 	/**
-	 * Very spiecal function , it's get the subject and it's writer,section info in one query
+	 * A very spiecal function , it gets the subject and its writer,section info in one query
 	 */
-	function GetSubjectWriterInfo($param)
+	public function getSubjectWriterInfo( $id )
 	{
-		if (empty($param['id']))
+		if ( !isset( $id ) )
 		{
 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSubjectWriterInfo() -- EMPTY id');
 		}
 		
- 		$arr							=	array();
- 		$arr['select']					=	'*';
- 		$arr['from']					=	$this->Engine->table['subject'] . ' AS s,' . $this->Engine->table['member'] . " AS m";
+ 		$this->engine->rec->table = $this->engine->table['subject'] . ' AS s,' . $this->engine->table['member'] . " AS m";
+ 		$this->engine->rec->filter = "s.id='" . $id . "' AND m.username=s.writer";
  		
- 	    $arr['where'] 					= 	array();
- 	    $arr['where'][0] 				= 	array();
- 	    $arr['where'][0]['name'] 		= 	's.id';
- 	    $arr['where'][0]['oper'] 		= 	'=';
- 	    $arr['where'][0]['value'] 		= 	$param['id'];
- 	    
- 	    $arr['where'][1] 				= 	array();
- 	    $arr['where'][1]['con'] 		= 	'AND';
- 	    $arr['where'][1]['name'] 		= 	'm.username';
- 	    $arr['where'][1]['oper'] 		= 	'=';
- 	    $arr['where'][1]['value'] 		= 	's.writer';
- 	    $arr['where'][1]['del_quote']	=	true;
- 		
- 		$rows = $this->Engine->records->GetInfo($arr);
+ 		$rows = $this->engine->rec->getInfo();
  		
 		return $rows;
 	}
 	
-	function UpdateSubjectVisitor($param)
+	/* ... */
+	
+	public function updateSubjectVisits( $visits, $id )
 	{
-		if (empty($param['visitor']))
+		if ( !isset( $visits )
+			or !isset( $id ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateSubjectVisitor() -- EMPTY visitor',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()',E_USER_ERROR);
 		}
 		
-		$field = array('visitor'	=> 	$param['visitor']+1);
-		           			           
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['subject'];
  		
- 		return ($query) ? true : false;
+ 		$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
  		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 	
 	function IsFlood()
 	{
@@ -249,221 +188,235 @@ class MySmartSubject
 			trigger_error('ERROR::NEED_PARAMETER -- FROM IsFlood() -- EMPTY last_time',E_USER_ERROR);
 		}
 		
-		return (($this->Engine->_CONF['now'] - $this->Engine->_CONF['info_row']['floodctrl']) <= $param['last_time']) ? true : false;
+		return (($this->engine->_CONF['now'] - $this->engine->_CONF['info_row']['floodctrl']) <= $param['last_time']) ? true : false;
 	}
 	
-	function UpdateWriteTime($param)
+	/* ... */
+	
+	public function updateWriteTime( $write_time, $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id )
+ 			or !isset( $write_time ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateWriteTime() -- EMPTY id or write_time',E_USER_ERROR);
  		}
  		
-		$field = array('write_time'	=> 	$param['write_time']);
-		           			           
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
- 				
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'write_time'	=>	$write_time	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	function UpdateReplyNumber($param)
+	/* ... */
+	
+	public function updateReplyNumber( $reply_number, $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id )
+ 			or !isset( $reply_number ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateReplyNumber() -- EMPTY id or reply_number',E_USER_ERROR);
  		}
  		
-		$field = array('reply_number'	=> 	$param['reply_number']+1);
-		           			           
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'reply_number'	=>	$reply_number + 1	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	function UpdateLastReplier($param)
+	/* ... */
+	
+	public function updateLastReplier( $replier, $id )
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
+ 		if ( !isset( $id )
+ 			or !isset( $replier ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastReplier() -- EMPTY id or reply_number',E_USER_ERROR);
  		}
  		
-		$field = array('last_replier'	=> 	$param['replier']);
-		           			           
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'last_replier'	=>	$replier	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
-
+	
+	/* ... */
+	
  	/**
  	 * Stick subjects
- 	 *
- 	 * @param :
- 	 *			id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
  	 */
-	function StickSubject($param)
+	public function stickSubject( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM stickSubject() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field = array('stick'	=> 	1);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'stick'	=>	'1'	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
  	 
  	/**
  	 * Close subjects
- 	 *
- 	 * @param :
- 	 *				id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
  	 */
-	function CloseSubject($param)
+	public function closeSubject( $reason, $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM closeSubject() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field = array(	'close'				=> 	1,
- 						'close_reason'		=>	$param['reason']);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
-	}
- 	  
-	/**
-	 * Move subjects
-	 *
-	 * @param :
- 	 *			subject_id	->	the id of subject
- 	 *			section_id	->	the id of new section
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false	 
-	 */
-	function MoveSubject($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['subject'];
  		
- 		$field = array('section'	=> 	$param['section_id']);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
-	}
- 	   
-	/**
-	 * Move subjects to trash
-	 *
-	 * @param :
-	 *			id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
-	 */
-	function MoveSubjectToTrash($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->fields = array(	'close'	=>	'1',
+ 											'close_reason'	=>	$reason	);
  		
- 		$field = array(	'delete_topic'	=> 	1,
- 						'delete_reason' => $param['reason']);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	function UnTrashSubject($param)
+	/* ... */
+	
+	/**
+	 * Move subjects 
+	 */
+	public function moveSubject( $section_id, $subject_id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $section_id )
+ 			or !isset( $subject_id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubject() -- EMPTY section_id or subject_id',E_USER_ERROR);
  		}
  		
- 		$field = array('delete_topic'	=> 	0);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'section'	=>	$section_id	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $subject_id . "'";
+ 		
+		$query = $this->engine->rec->update();
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
+	
+	/**
+	 * Move subjects to trash
+	 */
+	public function moveSubjectToTrash( $reason, $id )
+	{
+ 		if ( !isset( $id ) )
+ 		{
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id',E_USER_ERROR);
+ 		}
+ 		
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'1',
+ 											'delete_reason'	=>	$reason	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+	}
+	
+	/* ... */
+	
+	public function unTrashSubject( $id )
+	{
+ 		if ( !isset( $id ) )
+ 		{
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id',E_USER_ERROR);
+ 		}
+ 		
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'0' );
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+	}
+	
+	/* ... */
 	
 	/**
 	 * Unstick subject
-	 *
-	 * @param :
-	 *			id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false	 
 	 */
-	function UnstickSubject($param)
+	public function unStickSubject( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM unStickSubject() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field = array('stick'	=> 	0);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'stick'	=>	'0'	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Open subject
-	 *
-	 * @param :
-	 *				id	->	the id of subject
- 	 *
- 	 * @return :
- 	 *			if success	->	true
- 	 *			else		->	false
 	 */
-	function OpenSubject($param)
+	public function openSubject( $id )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM openSubject() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$field = array('close'	=> 	0);
-		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subject'],$field,$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['subject'];
+ 		
+ 		$this->engine->rec->fields = array(	'close'	=>	'0'	);
+ 		
+ 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 		
-		return ($query) ? true : false;
 	}
+	
+	/* ... */
 }
  
 ?>

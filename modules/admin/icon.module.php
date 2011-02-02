@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartIconMOD');
 	
-class MySmartIconMOD extends _functions
+class MySmartIconMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartIconMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,53 +70,47 @@ class MySmartIconMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('icon_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$SmlArr 				= 	array();
-		$SmlArr['field']		=	array();
+		$MySmartBB->rec->fields		=	array();
 		
-		$SmlArr['field']['smile_path'] 	= 	$MySmartBB->_POST['path'];
+		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
 		
-		$insert = $MySmartBB->icon->InsertIcon($SmlArr);
+		$insert = $MySmartBB->icon->insertIcon();
 			
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة الايقونه بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة الايقونه بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
-
-		$IcnArr 					= 	array();
-		$IcnArr['order']			=	array();
-		$IcnArr['order']['field']	=	'id';
-		$IcnArr['order']['type']	=	'DESC';
-		$IcnArr['proc'] 			= 	array();
-		$IcnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
 		
-		$MySmartBB->_CONF['template']['while']['IcnList'] = $MySmartBB->icon->GetIconList($IcnArr);
+		$MySmartBB->rec->order = 'id DESC';
+		
+		$MySmartBB->icon->getIconList();
 		
 		$MySmartBB->template->display('icons_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -125,7 +121,7 @@ class MySmartIconMOD extends _functions
 		$MySmartBB->template->display('icon_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -135,25 +131,25 @@ class MySmartIconMOD extends _functions
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 
-		$IcnArr 			= 	array();
-		$IcnArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$IcnArr['field']['smile_path'] 	= 	$MySmartBB->_POST['path'];
-		$IcnArr['where']				= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
+		
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 				
-		$update = $MySmartBB->icon->UpdateIcon($IcnArr);
+		$update = $MySmartBB->icon->updateIcon();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الايقونه بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الايقونه بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -164,7 +160,7 @@ class MySmartIconMOD extends _functions
 		$MySmartBB->template->display('icon_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -172,17 +168,19 @@ class MySmartIconMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$del = $MySmartBB->icon->DeleteIcon(array('id'	=>	$MySmartBB->_CONF['template']['Inf']['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		
+		$del = $MySmartBB->icon->deleteIcon();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الايقونه بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الايقونه بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$Inf)
 	{
@@ -190,19 +188,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$Inf = $MySmartBB->icon->GetIconInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		
+		$Inf = $MySmartBB->icon->getIconInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الايقونه المطلوبه غير موجود');
+			$MySmartBB->func->error('الايقونه المطلوبه غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 }
 

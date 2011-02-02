@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,40 +15,39 @@ define('CLASS_NAME','MySmartLoginMOD');
 	
 class MySmartLoginMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['login'])
 		{
-			$this->_StartLogin();
+			$this->_startLogin();
 		}
 	}
 	
-	function _StartLogin()
+	private function _startLogin()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['username'])
 			or empty($MySmartBB->_POST['password']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$username = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
-		$password = $MySmartBB->functions->CleanVariable(md5($MySmartBB->_POST['password']),'trim');
+		$username = trim( $MySmartBB->_POST['username'] );
+		$password = md5( trim( $MySmartBB->_POST['password'] ) );
 		
-		$IsMember = $MySmartBB->member->LoginAdmin(array(	'username'	=>	$username,
-															'password'	=>	$password));
+		$IsMember = $MySmartBB->member->loginAdmin( $username, $password );
 															
 
 		if ($IsMember)
 		{
-			$MySmartBB->functions->goto('admin.php',0);
+			$MySmartBB->func->goto('admin.php',0);
 		}
 		else
 		{
-			$MySmartBB->functions->error('المعلومات غير صحيحه');
+			$MySmartBB->func->error('المعلومات غير صحيحه');
 		}
 	}
 }

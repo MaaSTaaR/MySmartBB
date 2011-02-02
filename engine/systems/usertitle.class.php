@@ -9,96 +9,82 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	22/3/2006 , 5:05 PM
  * @end   		: 	22/3/2006 , 5:19 PM
- * @updated 	: 	17/07/2008 12:29:56 AM 
+ * @updated 	: 	02/08/2010 09:10:54 PM 
  */
 
 class MySmartUsertitle
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartUsertitle($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertUsertitle($param)
+	/* ... */
+	
+	public function insertUsertitle()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['usertitle'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'usertitle' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;		
+		return ( $query ) ? true : false;	
 	}
 	
-	function GetUsertitleList($param)
+	/* ... */
+	
+	public function getUsertitleList()
 	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'usertitle' ];
  		
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['usertitle'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
 	
-	function GetUsertitleInfo($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['usertitle'];
-	 	
- 	 	$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows; 	 	
-	}
+	/* ... */
 	
-	function UpdateUsertitle($param)
+	public function getUsertitleInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 				           	   
-		$query = $this->Engine->records->Update($this->Engine->table['usertitle'],$param['field'],$param['where']);
-		           
-		return ($query) ? true : false;
-	}
-	
-	function DeleteUsertitle($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['table'] = $this->Engine->table['usertitle'];
-	
-		$del = $this->Engine->records->Delete($param);
+ 		$this->engine->rec->table = $this->engine->table['usertitle'];
 		
-		return ($del) ? true : false;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
+	
+	public function updateUsertitle()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'usertitle' ];
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+	}
+	
+	/* ... */
+	
+	public function deleteUsertitle()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'usertitle' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
 	
 	function GetUsertitleNumber($param)
 	{
@@ -108,9 +94,9 @@ class MySmartUsertitle
 		}
 		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['usertitle'];
+		$param['from'] 		= 	$this->engine->table['usertitle'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return $num;
 	}

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -17,7 +19,7 @@ define('CLASS_NAME','MySmartMainMOD');
 	
 class MySmartMainMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -32,22 +34,22 @@ class MySmartMainMOD
 			
 			elseif ($MySmartBB->_GET['top'])
 			{
-				$this->_DisplayTopPage();
+				$this->_displayTopPage();
 			}
 		
 			elseif ($MySmartBB->_GET['right'])
 			{
-				$this->_DisplayMenuPage();			
+				$this->_displayMenuPage();			
 			}
 		
 			elseif ($MySmartBB->_GET['left'])
 			{
-				$this->_DisplayBodyPage();
+				$this->_displayBodyPage();
 			}
 		}
 	}
 	
-	function _DisplayTopPage()
+	private function _DisplayTopPage()
 	{
 		global $MySmartBB;
 		
@@ -56,7 +58,7 @@ class MySmartMainMOD
 		$MySmartBB->template->display('footer');
 	}
 	
-	function _DisplayMenuPage()
+	private function _displayMenuPage()
 	{
 		global $MySmartBB;
 		
@@ -65,66 +67,37 @@ class MySmartMainMOD
 		$MySmartBB->template->display('footer');
 	}
 	
-	function _DisplayBodyPage()
+	private function _displayBodyPage()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'db'));
+		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->_CONF['info_row']['member_number'];
+		$MySmartBB->_CONF['template']['ActiveMember'] = $MySmartBB->member->getActiveMemberNumber();
 		
-		$MySmartBB->_CONF['template']['ActiveMember'] = $MySmartBB->member->GetActiveMemberNumber();
+		$MySmartBB->rec->filter = "parent<>'0'";
 		
-		$SecArr 						= 	array();
-		$SecArr['where'] 				= 	array();
-		$SecArr['where'][0] 			= 	array();
-		$SecArr['where'][0]['name'] 	= 	'parent';
-		$SecArr['where'][0]['oper'] 	= 	'<>';
-		$SecArr['where'][0]['value'] 	= 	'0';
+		$MySmartBB->_CONF['template']['ForumsNumber'] = $MySmartBB->section->getSectionNumber();
+		$MySmartBB->_CONF['template']['SubjectNumber'] = $MySmartBB->subject->getSubjectNumber();
+		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->reply->getReplyNumber();
 		
-		$MySmartBB->_CONF['template']['ForumsNumber'] = $MySmartBB->section->GetSectionNumber($SecArr);
+		$day 	= 	date( 'j' );
+		$month 	= 	date( 'n' );
+		$year 	= 	date( 'Y' );
 		
-		$MySmartBB->_CONF['template']['SubjectNumber'] = $MySmartBB->subject->GetSubjectNumber(array('get_from'	=>	'db'));
+		$from 	= 	mktime( 0, 0, 0, $month, $day, $year );
+		$to 	= 	mktime( 23, 59, 59, $month, $day, $year );
 		
-		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->reply->GetReplyNumber(array('get_from'	=>	'db'));
+		$MySmartBB->rec->filter = "register_time BETWEEN '" . $from . "' AND '" . $to . "'";
 		
-		$day 	= 	date('j');
-		$month 	= 	date('n');
-		$year 	= 	date('Y');
+		$MySmartBB->_CONF['template']['TodayMemberNumber'] = $MySmartBB->member->getMemberNumber();
 		
-		$from 	= 	mktime(0,0,0,$month,$day,$year);
-		$to 	= 	mktime(23,59,59,$month,$day,$year);
+		$MySmartBB->rec->filter = "native_write_time BETWEEN '" . $from . "' AND '" . $to . "'";
 		
-		$TodayMemberArr 				= 	array();
-		$TodayMemberArr['get_from'] 	= 	'db';
-		$TodayMemberArr['where'] 		= 	array();
+		$MySmartBB->_CONF['template']['TodaySubjectNumber'] = $MySmartBB->subject->getSubjectNumber();
 		
-		$TodayMemberArr['where'][0] 			= 	array();
-		$TodayMemberArr['where'][0]['name'] 	= 	'register_time';
-		$TodayMemberArr['where'][0]['oper'] 	= 	'BETWEEN';
-		$TodayMemberArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
+		$MySmartBB->rec->filter = "write_time BETWEEN '" . $from . "' AND '" . $to . "'";
 		
-		$MySmartBB->_CONF['template']['TodayMemberNumber'] = $MySmartBB->member->GetMemberNumber($TodayMemberArr);
-		
-		$TodaySubjectArr 				= 	array();
-		$TodaySubjectArr['get_from'] 	= 	'db';
-		$TodaySubjectArr['where'] 		= 	array();
-		
-		$TodaySubjectArr['where'][0] 			= 	array();
-		$TodaySubjectArr['where'][0]['name'] 	= 	'native_write_time';
-		$TodaySubjectArr['where'][0]['oper'] 	= 	'BETWEEN';
-		$TodaySubjectArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
-		
-		$MySmartBB->_CONF['template']['TodaySubjectNumber'] = $MySmartBB->subject->GetSubjectNumber($TodaySubjectArr);
-		
-		$TodayReplyArr 				= 	array();
-		$TodayReplyArr['get_from'] 	= 	'db';
-		$TodayReplyArr['where'] 	= 	array();
-		
-		$TodayReplyArr['where'][0] 				= 	array();
-		$TodayReplyArr['where'][0]['name'] 		= 	'write_time';
-		$TodayReplyArr['where'][0]['oper'] 		= 	'BETWEEN';
-		$TodayReplyArr['where'][0]['value'] 	= 	$from . ' AND ' . $to;
-		
-		$MySmartBB->_CONF['template']['TodayReplyNumber'] = $MySmartBB->reply->GetReplyNumber($TodayReplyArr);
+		$MySmartBB->_CONF['template']['TodayReplyNumber'] = $MySmartBB->reply->getReplyNumber();
 		
 		$MySmartBB->template->display('header');
 		$MySmartBB->template->display('main_body');

@@ -1,8 +1,10 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_FUNCTIONS',true);
+define('JAVASCRIPT_func',true);
 define('JAVASCRIPT_SMARTCODE',true);
 
 $CALL_SYSTEM				=	array();
@@ -22,18 +24,18 @@ define('CLASS_NAME','MySmartUserCPMOD');
 
 class MySmartUserCPMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		if (!$MySmartBB->_CONF['member_permission'])
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
 		}
 		
 		if ( isset( $MySmartBB->_GET['index'] ) )
 		{
-			$this->_Index();
+			$this->_index();
 		}
 		
 		/** Control **/
@@ -44,11 +46,11 @@ class MySmartUserCPMOD
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_InfoMain();
+					$this->_infoMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_InfoChange();
+					$this->_infoChange();
 				}
 			}
 			/** **/
@@ -58,11 +60,11 @@ class MySmartUserCPMOD
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
-					$this->_SettingMain();
+					$this->_settingMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_SettingChange();
+					$this->_settingChange();
 				}
 			}
 			/** **/
@@ -72,32 +74,32 @@ class MySmartUserCPMOD
 			{
 				if (!$MySmartBB->_CONF['group_info']['sig_allow'])
 				{
-					$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام هذه الميزه');
+					$MySmartBB->func->error('المعذره .. لا يمكنك استخدام هذه الميزه');
 				}
 				
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_SignMain();
+					$this->_signMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_SignChange();
+					$this->_signChange();
 				}
 				elseif ($MySmartBB->_GET['subject'])
 				{
-					$this->_SignSubjectMain();
+					$this->_SignSubjectMain(); // TODO : Kill Me Please
 				}
 				elseif ($MySmartBB->_GET['subject_start'])
 				{
-					$this->_SignSubjectChange();
+					$this->_SignSubjectChange(); // TODO : Kill Me Please
 				}
 				elseif ($MySmartBB->_GET['reply'])
 				{
-					$this->_SignReplyMain();
+					$this->_SignReplyMain(); // TODO : Kill Me Please
 				}
 				elseif ($MySmartBB->_GET['reply_start'])
 				{
-					$this->_SignReplyChange();
+					$this->_SignReplyChange(); // TODO : Kill Me Please
 				}
 			}
 			/** **/
@@ -107,11 +109,11 @@ class MySmartUserCPMOD
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
-					$this->_PasswordMain();
+					$this->_passwordMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_PasswordChange();
+					$this->_passwordChange();
 				}
 			}
 			/** **/
@@ -121,11 +123,11 @@ class MySmartUserCPMOD
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
-					$this->_EmailMain();
+					$this->_emailMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EmailChange();
+					$this->_emailChange();
 				}
 			}
 			/** **/
@@ -135,11 +137,11 @@ class MySmartUserCPMOD
 			{
 				if ($MySmartBB->_GET['main'])				
 				{
-					$this->_AvatarMain();
+					$this->_avatarMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AvatarChange();
+					$this->_avatarChange();
 				}
 			}
 			/** **/
@@ -171,222 +173,183 @@ class MySmartUserCPMOD
 		{
 			if (!$MySmartBB->_CONF['info_row']['bookmark_feature'])
 			{
-				$MySmartBB->functions->error('المعذره .. خاصية مفضلة المواضيع موقوفة حاليا');
+				$MySmartBB->func->error('المعذره .. خاصية مفضلة المواضيع موقوفة حاليا');
 			}
 			
 			if ($MySmartBB->_GET['add'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_BookmarkAddMain();
+					$this->_bookmarkAddMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_BookmarkAddStart();
+					$this->_bookmarkAddStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
-				$this->_BookmarkDelStart();
+				$this->_bookmarkDelStart();
 			}
 			elseif ($MySmartBB->_GET['show'])
 			{
-				$this->_BookmarkShow();
+				$this->_bookmarkShow();
 			}
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('لوحة تحكم العضو');
+		$MySmartBB->func->showHeader('لوحة تحكم العضو');
 		
-		//////////
+		/* ... */
 		
-		$ReplyArr 								= 	array();
-		$ReplyArr['where'] 						= 	array();
+		// [MaaSTaaR] TODO
+		/*$ReplyArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
-		$ReplyArr['select']						=	'DISTINCT subject_id';
+		$MySmartBB->_CONF['template']['res']['reply_res'] = '';
 		
-		$ReplyArr['where'][0] 					= 	array();
-		$ReplyArr['where'][0]['name'] 			= 	'writer';
-		$ReplyArr['where'][0]['oper'] 			= 	'=';
-		$ReplyArr['where'][0]['value'] 			= 	$MySmartBB->_CONF['rows']['member_row']['username'];
+		$MySmartBB->rec->filter 	= 	"writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->order 		= 	'id DESC';
+		$MySmartBB->rec->limit 		= 	'5';
+		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF['template']['res']['last_subjects_res'];
 		
-		$ReplyArr['order'] 						=	 array();
-		$ReplyArr['order']['field'] 			= 	'id';
-		$ReplyArr['order']['type'] 				= 	'DESC';
+		$MySmartBB->subject->getSubjectList();
 		
-		$ReplyArr['limit'] 						= 	'5';
-		
-		$ReplyArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		
-		$MySmartBB->_CONF['template']['while']['MemberReplys'] = $MySmartBB->subject->GetSubjectList($ReplyArr);
-			
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberReplys'],'html');
-		
-		//////////
-		
-		$SubjectArr 							= 	array();
-		$SubjectArr['where'] 					= 	array();
-		
-		$SubjectArr['where'][0] 				= 	array();
-		$SubjectArr['where'][0]['name'] 		= 	'writer';
-		$SubjectArr['where'][0]['oper'] 		= 	'=';
-		$SubjectArr['where'][0]['value'] 		= 	$MySmartBB->_CONF['rows']['member_row']['username'];
-		
-		$SubjectArr['order'] 					=	 array();
-		$SubjectArr['order']['field'] 			= 	'id';
-		$SubjectArr['order']['type'] 			= 	'DESC';
-		
-		$SubjectArr['limit'] 					= 	'5';
-		
-		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		
-		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
-			
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
+		/* ... */
 		
       	$MySmartBB->template->display('usercp_index');
 	}
 	
-	function _InfoMain()
+	private function _infoMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تحرير المعلومات الشخصيه');
+		$MySmartBB->func->ShowHeader('تحرير المعلومات الشخصيه');
 		
 		$MySmartBB->template->display('usercp_control_info');
 	}
 	
-	function _InfoChange()
+	private function _infoChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+				
+		$MySmartBB->rec->fields = array(	'user_country'	=>	$MySmartBB->_POST['country'],
+											'user_website'	=>	$MySmartBB->_POST['website'],
+											'user_info'	=>	$MySmartBB->_POST['info'],
+											'away'	=>	$MySmartBB->_POST['away'],
+											'away_msg'	=>	$MySmartBB->_POST['away_msg']	);
 		
-		$StartArr 			= 	array();
-		$StartArr['field'] 	= 	array();
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$StartArr['field']['user_country'] 	= 	$MySmartBB->_POST['country'];
-		$StartArr['field']['user_website'] 	= 	$MySmartBB->_POST['website'];
-		$StartArr['field']['user_info'] 	= 	$MySmartBB->_POST['info'];
-		$StartArr['field']['away'] 			= 	$MySmartBB->_POST['away'];
-		$StartArr['field']['away_msg'] 		= 	$MySmartBB->_POST['away_msg'];
-		$StartArr['where']					=	array('id',$MySmartBB->_CONF['member_row']['id']);
+		$update = $MySmartBB->member->updateMember();
 		
-		$StartChange = $MySmartBB->member->UpdateMember($StartArr);
-		
-		if ($StartChange)
+		if ( $update )
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح');
-			$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;info=1&amp;main=1');
+			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;info=1&amp;main=1');
 		}
 	}
 	
-	function _SettingMain()
+	private function _settingMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تحرير خياراتك الخاصه');
+		$MySmartBB->func->showHeader('تحرير خياراتك الخاصه');
 		
-		$GetStyleArr 						= 	array();
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
-		$GetStyleArr['order'] 				= 	array();
-		$GetStyleArr['order']['field'] 		= 	'style_order';
-		$GetStyleArr['order']['type'] 		= 	'ASC';
+		$MySmartBB->rec->order = 'style_order ASC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
-		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($GetStyleArr);
-		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['StyleList'],'html');
+		$MySmartBB->style->getStyleList();
 		
 		$MySmartBB->template->display('usercp_control_setting');
 	}
 		
-	function _SettingChange()
+	private function _settingChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
-		$UpdateArr 					= 	array();
-		$UpdateArr['field']			=	array();
+		$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_POST['style'],
+											'hide_online'	=>	$MySmartBB->_POST['hide_online'],
+											'user_time'	=>	$MySmartBB->_POST['user_time'],
+											'send_allow'	=>	$MySmartBB->_POST['send_allow']	);
 		
-		$UpdateArr['field']['style'] 		= 	$MySmartBB->_POST['style'];
-		$UpdateArr['field']['hide_online'] 	= 	$MySmartBB->_POST['hide_online'];
-		$UpdateArr['field']['user_time'] 	= 	$MySmartBB->_POST['user_time'];
-		$UpdateArr['field']['send_allow'] 	= 	$MySmartBB->_POST['send_allow'];
-		$UpdateArr['where']					=	array('id',$MySmartBB->_CONF['member_row']['id']);
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$UpdateSetting = $MySmartBB->member->UpdateMember($UpdateArr);
+		$update = $MySmartBB->member->updateMember();
 		
-		if ($UpdateSetting)
+		if ( $update )
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح');
-			$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;setting=1&amp;main=1',2);
+			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;setting=1&amp;main=1',2);
 		}
 	}
 	
-	function _SignMain()
+	private function _signMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تحرير توقيعك الخاص');
+		$MySmartBB->func->ShowHeader('تحرير توقيعك الخاص');
 		
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
-		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['user_sig']);
+		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['member_row']['user_sig']);
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
 		
 		$MySmartBB->template->display('usercp_control_sign');
 	}
-		
-	function _SignChange()
+	
+	private function _signChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
-		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['text'] = $MySmartBB->func->cleanVariable( $MySmartBB->_POST['text'], 'trim' );
 		
-		$SignArr 				= 	array();
-		$SignArr['field']		=	array();
+		$MySmartBB->rec->fields = array(	'user_sig'	=>	$MySmartBB->_POST['text']	);
 		
-		$SignArr['field']['user_sig'] 	= 	$MySmartBB->_POST['text'];
-		$SignArr['where']				=	array('id',$MySmartBB->_CONF['member_row']['id']);
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$UpdateSign = $MySmartBB->member->UpdateMember($SignArr);
-			
-		if ($UpdateSign)
+		$update = $MySmartBB->member->updateMember();
+				
+		if ( $update )
 		{
-			$MySmartBB->functions->msg('تم تحديث التوقيع بنجاح !');
-			$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث التوقيع بنجاح !');
+			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
 		}
 	}
 	
+	/* Kill ME 
 	function _SignSubjectMain()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('تحرير توقيعك الإفتراضي للمواضيع');
+		$MySmartBB->func->ShowHeader('تحرير توقيعك الإفتراضي للمواضيع');
 
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->GetEditorTools();
 
 		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['subject_sig']);
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
@@ -398,11 +361,11 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->ShowHeader('تنفيذ عملية التحديث');
 
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 
-		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['text'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['text'],'trim');
 
 		$SignArr = array();
 		$SignArr['field'] = array();
@@ -414,8 +377,8 @@ class MySmartUserCPMOD
 
 		if ($UpdateSign)
 		{
-			$MySmartBB->functions->msg('تم تحديث التوقيع الإفتراضي للمواضيع بنجاح !');
-			$MySmartBB->functions->goto('index.php?page=usercp&control=1&subjects=1&main=1');
+			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للمواضيع بنجاح !');
+			$MySmartBB->func->goto('index.php?page=usercp&control=1&subjects=1&main=1');
 		}
 	}
 	
@@ -423,9 +386,9 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('تحرير توقيعك الإفتراضي الخاص بالردود');
+		$MySmartBB->func->ShowHeader('تحرير توقيعك الإفتراضي الخاص بالردود');
 
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->GetEditorTools();
 
 		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['reply_sig']);
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
@@ -437,11 +400,11 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->ShowHeader('تنفيذ عملية التحديث');
 
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 
-		$MySmartBB->_POST['text'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['text'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['text'],'trim');
 
 		$SignArr = array();
 		$SignArr['field'] = array();
@@ -453,27 +416,28 @@ class MySmartUserCPMOD
 
 		if ($UpdateSign)
 		{
-			$MySmartBB->functions->msg('تم تحديث التوقيع الإفتراضي للردود بنجاح !');
-			$MySmartBB->functions->goto('index.php?page=usercp&control=1&replays=1&main=1');
+			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للردود بنجاح !');
+			$MySmartBB->func->goto('index.php?page=usercp&control=1&replays=1&main=1');
 		}
 	}
-		
-	function _PasswordMain()
+	*/
+	
+	private function _passwordMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تغيير كلمة السر');
+		$MySmartBB->func->showHeader('تغيير كلمة السر');
 		
 		$MySmartBB->template->display('usercp_control_password');
 	}
 	
-	function _PasswordChange()
+	private function _passwordChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ العمليه');
+		$MySmartBB->func->showHeader('تنفيذ العمليه');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
 		
 		//////////
 		
@@ -481,14 +445,14 @@ class MySmartUserCPMOD
 		if (empty($MySmartBB->_POST['old_password']) 
 			or empty($MySmartBB->_POST['new_password']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
 		//////////
 		
 		// Clean the information from white spaces (only in the begin and in the end)
-		$MySmartBB->_POST['old_password'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['old_password'],'trim');
-		$MySmartBB->_POST['new_password'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['new_password'],'trim');
+		$MySmartBB->_POST['old_password'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['old_password'],'trim');
+		$MySmartBB->_POST['new_password'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['new_password'],'trim');
 		
 		//////////
 		
@@ -499,175 +463,142 @@ class MySmartUserCPMOD
 		//////////
 		
 		// Ensure if the password is correct or not
-		$PassArr 				= 	array();
-		$PassArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		$PassArr['password'] 	= 	$MySmartBB->_POST['old_password'];
-		
-		$CheckPasswordCorrect = $MySmartBB->member->CheckMember($PassArr);
+		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['old_password'] );
 		
 		// The password isn't correct, print error message
-		if (!$CheckPasswordCorrect)
+		if (!$checkPasswordCorrect)
 		{
-			$MySmartBB->functions->error('المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه');
+			$MySmartBB->func->error('المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه');
 		}
 		
 		//////////
 		
-		if ($MySmartBB->_CONF['info_row']['confirm_on_change_pass'])
+		if ( $MySmartBB->_CONF['info_row']['confirm_on_change_pass'] )
 		{
-			$Adress	= 	$MySmartBB->functions->GetForumAdress();
-			$Code	=	$MySmartBB->functions->RandomCode();
+			$adress	= 	$MySmartBB->func->getForumAdress();
+			$code	=	$MySmartBB->func->randomCode();
 			
-			$ChangeAdress = $Adress . 'index.php?page=new_password&index=1&code=' . $Code;
-			$CancelAdress = $Adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $Code;
+			$ChangeAdress = $adress . 'index.php?page=new_password&index=1&code=' . $code;
+			$CancelAdress = $adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $code;
 		
-			$ReqArr 					= 	array();
-			$ReqArr['field']			=	array();
-			
-			$ReqArr['field']['random_url'] 		= 	$Code;
-			$ReqArr['field']['username'] 		= 	$MySmartBB->_CONF['rows']['member_rows']['username'];
-			$ReqArr['field']['request_type'] 	= 	1;
+			$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
+												'username'	=>	$MySmartBB->_CONF['member_rows']['username'],
+												'request_type'	=>	'1'	);
+												
+			$insert = $MySmartBB->request->insertRequest();
 		
-			$InsertReq = $MySmartBB->request->InsertRequest($ReqArr);
-		
-			if ($InsertReq)
+			if ( $insert )
 			{
-				$UpdateArr 				= 	array();
-				$UpdateArr['field']		= 	array();
+				$MySmartBB->rec->fields = array(	'new_password'	=>	$MySmartBB->_POST['new_password']	);
+				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+				
+				$update = $MySmartBB->member->updateMember();
 			
-				$UpdateArr['field']['new_password'] 	= 	$MySmartBB->_POST['new_password'];
-				$UpdateArr['where'] 					= 	array('id',$MySmartBB->_CONF['member_row']['id']);
-			
-				$UpdateNewPassword = $MySmartBB->member->UpdateMember($UpdateArr);
-			
-				if ($UpdateNewPassword)
+				if ( $update )
 				{
-					$MsgArr 			= 	array();
-					$MsgArr['where'] 	= 	array('id','1');
+					$MySmartBB->rec->filter = "id='1'";
 					
-					$MassegeInfo = $MySmartBB->massege->GetMessageInfo($MsgArr);
+					$MassegeInfo = $MySmartBB->massege->getMessageInfo();
 				
-					$MsgArr = array();
-				
-					$MsgArr['text'] 		= 	$MassegeInfo['text'];
-					$MsgArr['change_url'] 	= 	$ChangeAdress;
-					$MsgArr['cancel_url'] 	= 	$CancelAdress;
-					$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
-					$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
 					
-					$MassegeInfo['text'] = $MySmartBB->massege->MessageProccess($MsgArr);
+					$send = $MySmartBB->func->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
 					
-					$Send = $MySmartBB->functions->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
-					
-					if ($Send)
+					if ($send)
 					{
-						$MySmartBB->functions->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
-						$MySmartBB->functions->goto('index.php?page=usercp&index=1');
+						$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
+						$MySmartBB->func->goto('index.php?page=usercp&index=1');
 					}
 				}
 			}
 		}
 		else
-		{
-			$PassArr 				= 	array();
-			$PassArr['field']		=	array();
-			
-			$PassArr['field']['password'] 	= 	md5($MySmartBB->_POST['new_password']);
-			$PassArr['where'] 				= 	array('id',$MySmartBB->_CONF['member_row']['id']);
+		{	
+			$MySmartBB->rec->fields = array(	'password'	=>	$MySmartBB->_POST['new_password']	);
+			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+				
+			$update = $MySmartBB->member->updateMember();
 		
-			$UpdatePassword = $MySmartBB->member->UpdateMember($PassArr);
-		
-			if ($UpdatePassword)
+			if ( $update )
 			{
-				$MySmartBB->functions->msg('تم التحديث بنجاح !');
-				$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;password=1&amp;main=1');
+				$MySmartBB->func->msg('تم التحديث بنجاح !');
+				$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;password=1&amp;main=1');
 			}
 		}
 	}
 	
-	function _EmailMain()
+	private function _emailMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تغيير البريد الالكتروني');
+		$MySmartBB->func->ShowHeader('تغيير البريد الالكتروني');
 		
 		$MySmartBB->template->display('usercp_control_email');
 	}
 	
-	function _EmailChange()
+	private function _emailChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ العمليه');
+		$MySmartBB->func->showHeader('تنفيذ العمليه');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه');
 		
-		$EmailArr = array();
-		$EmailArr['where']	=	array('email',$MySmartBB->_POST['new_email']);
+		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST['new_email']. "'";
 		
-		$EmailExists = $MySmartBB->member->IsMember($EmailArr);
+		$EmailExists = $MySmartBB->member->isMember();
 		
 		if (empty($MySmartBB->_POST['new_email']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['new_email']))
+		if (!$MySmartBB->func->CheckEmail($MySmartBB->_POST['new_email']))
 		{
-			$MySmartBB->functions->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
 		if ($EmailExists)
 		{
-			$MySmartBB->functions->error('المعذره .. البريد الالكتروني موجود مسبقاً');
+			$MySmartBB->func->error('المعذره .. البريد الالكتروني موجود مسبقاً');
 		}
 		
-		$MySmartBB->_POST['new_email'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['new_email'],'trim');
+		$MySmartBB->_POST['new_email'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['new_email'],'trim');
 		
 		// We will send a confirm message, The confirm message will help user protect himself from crack
 		if ($MySmartBB->_CONF['info_row']['confirm_on_change_mail'])
 		{
-			$Adress	= 	$MySmartBB->functions->GetForumAdress();
-			$Code	=	$MySmartBB->functions->RandomCode();
+			$adress	= 	$MySmartBB->func->getForumAdress();
+			$code	=	$MySmartBB->func->randomCode();
 		
-			$ChangeAdress = $Adress . 'index.php?page=new_email&index=1&code=' . $Code;
-			$CancelAdress = $Adress . 'index.php?page=cancel_requests&index=1&type=2&code=' . $Code;
-		
-			$ReqArr 			= 	array();
-			$ReqArr['field'] 	= 	array();
+			$ChangeAdress = $adress . 'index.php?page=new_email&index=1&code=' . $code;
+			$CancelAdress = $adress . 'index.php?page=cancel_requests&index=1&type=2&code=' . $code;
 			
-			$ReqArr['field']['random_url'] 		= 	$Code;
-			$ReqArr['field']['username'] 		= 	$MySmartBB->_CONF['member_rows']['username'];
-			$ReqArr['field']['request_type'] 	= 	2;
+			$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
+												'username'	=>	$MySmartBB->_CONF['member_rows']['username'],
+												'request_type'	=>	'2'	);
 		
-			$InsertReq = $MySmartBB->request->InsertRequest($ReqArr);
+			$insert = $MySmartBB->request->insertRequest();
 		
-			if ($InsertReq)
+			if ( $insert )
 			{
 				$UpdateArr = array();
 			
 				$UpdateArr['email'] 	= 	$MySmartBB->_POST['new_email'];
 				$UpdateArr['where'] 	= 	array('id',$MySmartBB->_CONF['member_row']['id']);
 			
-				$UpdateNewEmail = $MySmartBB->member->UpdateNewEmail($UpdateArr);
+				$UpdateNewEmail = $MySmartBB->member->UpdateNewEmail($UpdateArr); /* TODO : may you tell me please, where is this function? */
 			
 				if ($UpdateNewEmail)
 				{
 					$MassegeInfo = $MySmartBB->massege->GetMessageInfo(array('id'	=>	2));
-			
-					$MsgArr = array();
-					$MsgArr['text'] 		= 	$MassegeInfo['text'];
-					$MsgArr['change_url'] 	= 	$ChangeAdress;
-					$MsgArr['cancel_url'] 	= 	$CancelAdress;
-					$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
-					$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
+					
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
 				
-					$MassegeInfo['text'] = $MySmartBB->massege->MessageProccess($MsgArr);
+					$send = $MySmartBB->func->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
 				
-					$Send = $MySmartBB->functions->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
-				
-					if ($Send)
+					if ( $send )
 					{
-						$MySmartBB->functions->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
-						$MySmartBB->functions->goto('index.php?page=usercp&index=1');
+						$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
+						$MySmartBB->func->goto('index.php?page=usercp&index=1');
 					}
 				}
 			}
@@ -675,122 +606,114 @@ class MySmartUserCPMOD
 		// Confirm message is off, so change email direct
 		else
 		{
-			$EmailArr 			= 	array();
-			$EmailArr['field']	=	array();
+			$MySmartBB->rec->fields = array(	'new_email'	=>	$MySmartBB->_POST['new_email']	);
+			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+					
+			$update = $MySmartBB->member->updateMember();
 		
-			$EmailArr['field']['email'] 	= 	$MySmartBB->_POST['new_email'];
-			$EmailArr['where'] 				= 	array('id',$MySmartBB->_CONF['member_row']['id']);
-		
-			$UpdateEmail= $MySmartBB->member->UpdateMember($EmailArr);
-		
-			if ($UpdateEmail)
+			if ( $update )
 			{
-				$MySmartBB->functions->msg('تم التحديث بنجاح !');
-				$MySmartBB->functions->goto('index.php?page=usercp&amp;control=1&amp;email=1&amp;main=1');
+				$MySmartBB->func->msg('تم التحديث بنجاح !');
+				$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;email=1&amp;main=1');
 			}
 		}
 	}
 	
-	function _AvatarMain()
+	private function _avatarMain()
 	{
 		global $MySmartBB;
 		
 		// This line will include jQuery (Javascript library)
 		$MySmartBB->template->assign('JQUERY',true);
 		
-		$MySmartBB->functions->ShowHeader('الصوره الشخصيه');
+		$MySmartBB->func->showHeader('الصوره الشخصيه');
 				
 		// Stop this feature if it's not allowed
 		if (!$MySmartBB->_CONF['info_row']['allow_avatar'])
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام هذه الميزه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام هذه الميزه');
 		}
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		$AvaArr 					= 	array();
-		$AvaArr['proc'] 			= 	array();
-		$AvaArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$AvaArr['order']			=	array();
-		$AvaArr['order']['field']	=	'id';
-		$AvaArr['order']['type']	=	'DESC';
-		
 		// Pager setup
-		$AvaArr['pager'] 				= 	array();
-		$AvaArr['pager']['total']		= 	$MySmartBB->avatar->GetAvatarNumber(null);
-		$AvaArr['pager']['perpage'] 	= 	$MySmartBB->_CONF['info_row']['avatar_perpage'];
-		$AvaArr['pager']['count'] 		= 	$MySmartBB->_GET['count'];
-		$AvaArr['pager']['location'] 	= 	'index.php?page=usercp&amp;control=1&amp;avatar=1&amp;main=1';
-		$AvaArr['pager']['var'] 		= 	'count';
+		$MySmartBB->rec->pager 				= 	array();
+		$MySmartBB->rec->pager['total']		= 	$MySmartBB->avatar->getAvatarNumber();
+		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['avatar_perpage'];
+		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=usercp&amp;control=1&amp;avatar=1&amp;main=1';
+		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
-		$MySmartBB->_CONF['template']['while']['AvatarList'] = $MySmartBB->avatar->GetAvatarList($AvaArr);
+		$MySmartBB->rec->order = 'id DESC';
+		
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['avatar_res'];
+		
+		$MySmartBB->avatar->getAvatarList();
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
 		$MySmartBB->template->display('usercp_control_avatar');
 	}
 	
-	function _AvatarChange()
+	private function _avatarChange()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
 		
 		$allowed_array = array('.jpg','.gif','.png');
 		
-		$UpdateArr 					= 	array();
-		$UpdateArr['field']			=	array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
-		$UpdateArr['where']					= 	array('id',$MySmartBB->_CONF['member_row']['id']);
-		$UpdateArr['field']['avater_path'] 	= 	'';
+		$MySmartBB->rec->fields['avater_path'] = '';
 		
 		if ($MySmartBB->_POST['options'] == 'no')
 		{
-			$MySmartBB->_CONF['param']['UpdateArr']['path'] = '';
+			$MySmartBB->rec->fields['avater_path'] = '';
 		}
 		elseif ($MySmartBB->_POST['options'] == 'list')
 		{
 			if (empty($MySmartBB->_POST['avatar_list']))
 			{
-				$MySmartBB->functions->error('يرجى اختيار الصوره المطلوبه');
+				$MySmartBB->func->error('يرجى اختيار الصوره المطلوبه');
 			}
 			
-			$UpdateArr['field']['path'] = $MySmartBB->_POST['avatar_list'];
+			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar_list'];
 		}
 		elseif ($MySmartBB->_POST['options'] == 'site')
 		{
 			if (empty($MySmartBB->_POST['avatar'])
 				or $MySmartBB->_POST['avatar'] == 'http://')
 			{
-				$MySmartBB->functions->error('يرجى اختيار الصوره المطلوبه');
+				$MySmartBB->func->error('يرجى اختيار الصوره المطلوبه');
 			}
-			elseif (!$MySmartBB->functions->IsSite($MySmartBB->_POST['avatar']))
+			elseif (!$MySmartBB->func->IsSite($MySmartBB->_POST['avatar']))
 			{
-				$MySmartBB->functions->error('الموقع الذي قمت بكتابته غير صحيح !');
+				$MySmartBB->func->error('الموقع الذي قمت بكتابته غير صحيح !');
 			}
 				
-			$extension = $MySmartBB->functions->GetURLExtension($MySmartBB->_POST['avatar']);
+			$extension = $MySmartBB->func->GetURLExtension($MySmartBB->_POST['avatar']);
 				
 			if (!in_array($extension,$allowed_array))
 			{
-				$MySmartBB->functions->error('امتداد الصوره غير مسموح به !');
+				$MySmartBB->func->error('امتداد الصوره غير مسموح به !');
 			}
 			
 			$size = @getimagesize($MySmartBB->_POST['avatar']);
 
 			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
 			{
-				$MySmartBB->functions->error('عرض الصورة غير مقبول');
+				$MySmartBB->func->error('عرض الصورة غير مقبول');
 			}
 			
 			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
 			{
-				$MySmartBB->functions->error('طول الصورة غير مقبول');
+				$MySmartBB->func->error('طول الصورة غير مقبول');
 			}
 			
-			$UpdateArr['field']['avater_path'] = $MySmartBB->_POST['avatar'];
+			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar'];
 		}
 		elseif ($MySmartBB->_POST['options'] == 'upload')
 		{
@@ -800,12 +723,12 @@ class MySmartUserCPMOD
 
 			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
 			{
-				$MySmartBB->functions->error('عرض الصورة غير مقبول');
+				$MySmartBB->func->error('عرض الصورة غير مقبول');
 			}
 
 			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
 			{
-				$MySmartBB->functions->error('طول الصورة غير مقبول');
+				$MySmartBB->func->error('طول الصورة غير مقبول');
 			}
 			
      		if (!empty($MySmartBB->_FILES['upload']['name']))
@@ -813,7 +736,7 @@ class MySmartUserCPMOD
      			//////////
      				
      			// Get the extension of the file
-     			$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['upload']['name']);
+     			$ext = $MySmartBB->func->GetFileExtension($MySmartBB->_FILES['upload']['name']);
      			
      			// Bad try!
      			if ($ext == 'MULTIEXTENSION'
@@ -828,7 +751,7 @@ class MySmartUserCPMOD
     	 			// The extension is not allowed
     	 			if (!in_array($ext,$allowed_array))
 					{
-						$MySmartBB->functions->error('امتداد الصوره غير مسموح به !');
+						$MySmartBB->func->error('امتداد الصوره غير مسموح به !');
 					}
     	 			else
     	 			{
@@ -839,7 +762,7 @@ class MySmartUserCPMOD
     	 				// There is a file which has same name, so change the name of the new file
     	 				if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename))
     	 				{
-    	 					$filename = $MySmartBB->_FILES['files']['upload'] . '-' . $MySmartBB->functions->RandomCode();
+    	 					$filename = $MySmartBB->_FILES['files']['upload'] . '-' . $MySmartBB->func->RandomCode();
     	 				}
     	 					
     	 				//////////
@@ -851,7 +774,7 @@ class MySmartUserCPMOD
     	 				if ($copy)
     	 				{
     	 					// Change avatar to the new one
-    	 					$UpdateArr['field']['avater_path'] = $MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename;
+    	 					$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename;
     	 				}
     	 							
     	 				//////////
@@ -861,66 +784,57 @@ class MySmartUserCPMOD
     	}
 		else
 		{
-			$MySmartBB->functions->msg('يرجى الانتظار');
-			$MySmartBB->functions->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
-			$MySmartBB->functions->stop();
+			$MySmartBB->func->msg('يرجى الانتظار');
+			$MySmartBB->func->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
+			$MySmartBB->func->stop();
 		}
 		
-		$UpdateAvatar = $MySmartBB->member->UpdateMember($UpdateArr);
+		$update = $MySmartBB->member->updateMember();
 			
-		if ($UpdateAvatar)
+		if ( $update )
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح !');
-			$MySmartBB->functions->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
+			$MySmartBB->func->msg('تم التحديث بنجاح !');
+			$MySmartBB->func->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
 		}
 	}
 	
-	function _ReplyListMain()
+	private function _replyListMain()
 	{
 		//TODO later ...
 	}
 	
-	function _SubjectListMain()
+	private function _subjectListMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('مواضيعك');
+		$MySmartBB->func->ShowHeader('مواضيعك');
 		
-		$SubjectArr 							= 	array();
-		$SubjectArr['where'] 					= 	array();
+		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
-		$SubjectArr['where'][0] 				= 	array();
-		$SubjectArr['where'][0]['name'] 		= 	'writer';
-		$SubjectArr['where'][0]['oper'] 		= 	'=';
-		$SubjectArr['where'][0]['value'] 		= 	$MySmartBB->_CONF['rows']['member_row']['username'];
+		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
 		
-		$SubjectArr['order'] 					=	 array();
-		$SubjectArr['order']['field'] 			= 	'id';
-		$SubjectArr['order']['type'] 			= 	'DESC';
+		$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->limit = '5';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
 		
-		$SubjectArr['limit'] 					= 	'5';
-		
-		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		
-		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->subject->GetSubjectList($SubjectArr);
-			
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('usercp_options_subjects');
 	}
 	
-	function _BookmarkAddMain()
+	private function _bookmarkAddMain()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('لوحة تحكم العضو');
+		$MySmartBB->func->ShowHeader('لوحة تحكم العضو');
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -928,97 +842,84 @@ class MySmartUserCPMOD
 		$MySmartBB->template->display('subject_bookmark_add');
 	}
 
-	function _BookmarkAddStart()
+	private function _bookmarkAddStart()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader(' إضافة الموضوع الى المفضلة');
+		$MySmartBB->func->ShowHeader(' إضافة الموضوع الى المفضلة');
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		/** Get the Subject information **/
-		$SubArr = array();
-		$SubArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-
-		$Subject = $MySmartBB->subject->GetSubjectInfo($SubArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		if (!$Subject)
+		$subject = $MySmartBB->subject->getSubjectInfo($SubArr);
+		
+		if (!$subject)
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
 		}
 		
 		// TODO :: please check group information.
 		
-		$BookmarkArr 			= 	array();
-		$BookmarkArr['field'] 	= 	array();
-
-		$BookmarkArr['field']['member_id'] 		= 	$MySmartBB->_CONF['member_row']['id'];
-		$BookmarkArr['field']['subject_id'] 	= 	$MySmartBB->_GET['subject_id'];
-		$BookmarkArr['field']['subject_title'] 	= 	$Subject['title'];
-		$BookmarkArr['field']['reason'] 		= 	$MySmartBB->_POST['reason'];
-		$BookmarkArr['get_id'] 					= 	true;
-
-		$insert = $MySmartBB->bookmark->InsertSubject($BookmarkArr);
+		$MySmartBB->rec->fields = array(	'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
+											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
+											'subject_title'	=>	$Subject['title'],
+											'reason'	=>	$MySmartBB->_POST['reason']	);
+		
+		$MySmartBB->bookmark->get_id = true;
+		
+		$insert = $MySmartBB->bookmark->insertSubject();
 
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم إضافة الموضوع الى المفضلة');
-			$MySmartBB->functions->goto('index.php?page=usercp&bookmark=1&show=1');
+			$MySmartBB->func->msg('تم إضافة الموضوع الى المفضلة');
+			$MySmartBB->func->goto('index.php?page=usercp&bookmark=1&show=1');
 		}
 	}
 	
-	function _BookmarkDelStart()
+	private function _bookmarkDelStart()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('حذف الموضوع من قائمة المواضيع المفضلة');
+		$MySmartBB->func->ShowHeader('حذف الموضوع من قائمة المواضيع المفضلة');
 
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['id'],'intval');
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$DelArr = array();
-		$DelArr['where'] = array('subject_id',$MySmartBB->_GET['id']);
-
-		$del = $MySmartBB->bookmark->DeleteSubject($DelArr);
-
-
-		if ($del)
+		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$del = $MySmartBB->bookmark->deleteSubject();
+		
+		if ( $del )
 		{
-			$MySmartBB->functions->msg('تم حذف الموضوع');
-			$MySmartBB->functions->goto('index.php?page=usercp&bookmark=1&show=1');
+			$MySmartBB->func->msg('تم حذف الموضوع');
+			$MySmartBB->func->goto('index.php?page=usercp&bookmark=1&show=1');
 		}
 	}
 	
-	function _BookmarkShow()
+	private function _bookmarkShow()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->functions->ShowHeader('المواضيع المفضلة الخاصة بي');
-
-		$SubjectArr = array();
-		$SubjectArr['where'] = array();
-
-		$SubjectArr['where'][0] = array();
-		$SubjectArr['where'][0]['name'] = 'member_id';
-		$SubjectArr['where'][0]['oper'] = '=';
-		$SubjectArr['where'][0]['value'] = $MySmartBB->_CONF['rows']['member_row']['id'];
-
-		$SubjectArr['order'] = array();
-		$SubjectArr['order']['field'] = 'id';
-		$SubjectArr['order']['type'] = 'DESC';
-
-		$MySmartBB->_CONF['template']['while']['MemberSubjects'] = $MySmartBB->bookmark->GetSubjectList($SubjectArr);
-
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['MemberSubjects'],'html');
+		$MySmartBB->func->ShowHeader('المواضيع المفضلة الخاصة بي');
+		
+		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
+		
+		$MySmartBB->rec->filter = "member_id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
+		
+		$MySmartBB->bookmark->getSubjectList();
 
 		$MySmartBB->template->display('subject_bookmark_show');
 	}

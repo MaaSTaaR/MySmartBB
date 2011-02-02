@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -15,7 +17,7 @@ define('CLASS_NAME','MySmartAjaxMOD');
 
 class MySmartAjaxMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -25,13 +27,13 @@ class MySmartAjaxMOD
 			{	
 				if ($MySmartBB->_GET['rename'])
 				{
-					$this->_SectionRename();
+					$this->_sectionRename();
 				}
 			}
 		}
 	}
 	
-	function _SectionRename()
+	private function _sectionRename()
 	{
 		global $MySmartBB;
 		
@@ -41,13 +43,13 @@ class MySmartAjaxMOD
 			$MySmartBB->functions->error('المسار المُتبع غير صحيح');
 		}
 		
-		$SecArr 			= 	array();
-		$SecArr['field'] 	= 	array();
+		$MySmartBB->rec->fields 	= 	array();
 		
-		$SecArr['field']['title'] 	= 	$MySmartBB->_POST['title'];
-		$SecArr['where']			= 	array('id',$MySmartBB->_POST['id']);
+		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
+		
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['id'] . "'";
 				
-		$update = $MySmartBB->section->UpdateSection($SecArr);
+		$update = $MySmartBB->section->updateSection();
 		
 		if ($update)
 		{

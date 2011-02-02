@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -20,193 +22,166 @@ define('CLASS_NAME','MySmartPrintMOD');
 
 class MySmartPrintMOD
 {
-	var $Info;
-	var $SectionInfo;
-	var $SectionGroup;
-	var $RInfo;
-	var $x = 0;
-	var $reply_number = 0;
+	private $Info;
+	private $SectionInfo;
+	private $SectionGroup;
+	private $RInfo;
+	private $x = 0;
+	private $reply_number = 0;
 
 	/**
 	 * The main function , will require from kernel file "index.php"
 	 */
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
-
 
 		// Show the topic
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowTopic();
+			$this->_showTopic();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 	}
 
-	function _ShowTopic()
+	private function _showTopic()
 	{
 		global $MySmartBB;
 
 		// Get subject information
-		$this->__GetSubject();
+		$this->__getSubject();
 
 		// Get subject's section information
-		$this->__GetSection();
+		$this->__getSection();
 
 		// Get visitor/member group info
-		$this->__GetGroup();
+		$this->__getGroup();
 
 		// Check about everything
-		$this->__CheckSystem();
+		$this->__checkSystem();
 
 		// Get subject's writer information
-		$this->__GetWriterInfo();
+		$this->__getWriterInfo();
 
 		// Make subject text as a nice text
-		$this->__SubjectTextFormat();
+		$this->__subjectTextFormat();
 
 		// Show subject
-		$this->__SubjectEnd();
+		$this->__subjectEnd();
 
 		// Get the replies
-		$this->__GetReply();
+		$this->__getReply();
 	}
 
-	function __GetSubject()
+	private function __getSubject()
 	{
 		global $MySmartBB;
 
-		//////////
+		/* ... */
 
 		// Clean id from any string, that will protect us
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
 		// If the id is empty, so stop the page
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 
-		//////////
+		/* ... */
 
 		// Get the subject and the subject's writer information
-		$this->Info = $MySmartBB->subject->GetSubjectWriterInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 
 		// There is no subject, so show error message
 		if (!$this->Info)
 		{
-			$MySmartBB->functions->error('المعذره، الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('المعذره، الموضوع المطلوب غير موجود');
 		}
 
 		// The ID of subject
 		$this->Info['subject_id'] = $MySmartBB->_GET['id'];
 
-		//////////
-
-		// Kill XSS
-		$MySmartBB->functions->CleanVariable($this->Info,'html');
+		/* ... */
+		
 		// Kill SQL Injection
-		$MySmartBB->functions->CleanVariable($this->Info,'sql');
+		$MySmartBB->func->cleanArray( $this->Info, 'sql' );
 
-		//////////
+		/* ... */
 
 		// Send subject id to template engine
 		$MySmartBB->template->assign('subject_id',$MySmartBB->_GET['id']);
 		$MySmartBB->template->assign('section_id',$this->Info['section']);
 
-		//////////
+		/* ... */
 
 	}
 
-	function __GetSection()
+	private function __getSection()
 	{
 		global $MySmartBB;
 
 		/** Get the section information **/
-		$SecArr 			= 	array();
-		$SecArr['where'] 	= 	array('id',$this->Info['section']);
+		$MySmartBB->rec->filter = "id='" . $this->Info['section'] . "'";
+		
+		$this->SectionInfo = $MySmartBB->section->getSectionInfo();
 
-		$this->SectionInfo = $MySmartBB->section->GetSectionInfo($SecArr);
-
-		// Kill XSS
-		$MySmartBB->functions->CleanVariable($this->SectionInfo,'html');
 		// Kill SQL Injection
-		$MySmartBB->functions->CleanVariable($this->SectionInfo,'sql');
-		/** **/
+		$MySmartBB->func->cleanArray($this->SectionInfo,'sql');
 
 		$MySmartBB->template->assign('section_info',$this->SectionInfo);
 	}
 
-	function __GetGroup()
+	private function __getGroup()
 	{
 		global $MySmartBB;
 
 		/** Get section's group information and make some checks **/
-		$SecGroupArr 						= 	array();
-		$SecGroupArr['where'] 				= 	array();
-		$SecGroupArr['where'][0]			=	array();
-		$SecGroupArr['where'][0]['name'] 	= 	'section_id';
-		$SecGroupArr['where'][0]['value'] 	= 	$this->SectionInfo['id'];
-		$SecGroupArr['where'][1]			=	array();
-		$SecGroupArr['where'][1]['con']		=	'AND';
-		$SecGroupArr['where'][1]['name']	=	'group_id';
-		$SecGroupArr['where'][1]['value']	=	$MySmartBB->_CONF['group_info']['id'];
-
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		
 		// Finally get the permissions of group
-		$this->SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
+		$this->SectionGroup = $MySmartBB->group->getSectionGroupInfo();
 	}
 
-	function __CheckSystem()
+	private function __checkSystem()
 	{
 		global $MySmartBB;
 
 		// The visitor can't show this section , so stop the page
 		if (!$this->SectionGroup['view_section'])
 		{
-			$MySmartBB->functions->error('المعذره لا يمكنك طباعة هذا موضوع');
+			$MySmartBB->func->error('المعذره لا يمكنك طباعة هذا موضوع');
 		}
 		/** **/
 
 		// If the member isn't the writer , so register a new visit for the subject
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
 		{
-			$UpdateArr 				= 	array();
-			$UpdateArr['visitor'] 	= 	$this->Info['visitor'];
-			$UpdateArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
-
-			$NewVisitor = $MySmartBB->subject->UpdateSubjectVisitor($UpdateArr);
+			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
 		}
 
 		// We have password in the subject's section , so check the password
 		if (!empty($this->SectionInfo['section_password'])
-			and !$MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
 			// The visitor don't give me password , so require it
      		if (empty($MySmartBB->_GET['password']))
         	{
       			$MySmartBB->template->display('forum_password');
-      			$MySmartBB->functions->stop();
+      			$MySmartBB->func->stop();
      		}
      		// The visitor give me password , so check
      		elseif (!empty($MySmartBB->_GET['password']))
      		{
-     			$PassArr = array();
-
-     			// Section id
-     			$PassArr['id'] 		= $this->SectionInfo['id'];
-
-     			// The password to check
-     			$PassArr['password'] 	= base64_decode($MySmartBB->_GET['password']);
-
-     			$IsTruePassword = $MySmartBB->section->CheckPassword($PassArr);
+     			$IsTruePassword = $MySmartBB->section->checkPassword( base64_decode($MySmartBB->_GET['password']), $this->SectionInfo['id'] );
 
      			// Stop ! it's don't true password
      			if (!$IsTruePassword)
      			{
-     				$MySmartBB->functions->error('المعذره .. كلمة المرور غير صحيحه');
+     				$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه');
      			}
 
      			$MySmartBB->_CONF['template']['password'] = '&amp;password=' . $MySmartBB->_GET['password'];
@@ -214,14 +189,14 @@ class MySmartPrintMOD
      	}
 	}
 
-	function __GetWriterInfo()
+	private function __getWriterInfo()
 	{
 		global $MySmartBB;
 
 		// Make register date in nice format to show it
 		if (is_numeric($this->Info['register_date']))
 		{
-			$this->Info['register_date'] = $MySmartBB->functions->date($this->Info['register_date']);
+			$this->Info['register_date'] = $MySmartBB->func->date($this->Info['register_date']);
 		}
 
 
@@ -233,11 +208,11 @@ class MySmartPrintMOD
 		{
 			$this->Info['display_username'] = $this->Info['username_style_cache'];
 
-			$this->Info['display_username'] = $MySmartBB->functions->CleanVariable($this->Info['display_username'],'unhtml');
+			$this->Info['display_username'] = $MySmartBB->func->cleanVariable($this->Info['display_username'],'unhtml');
 		}
 	}
 	
-	function __SubjectTextFormat()
+	private function __subjectTextFormat()
 	{
 		global $MySmartBB;
 
@@ -256,12 +231,12 @@ class MySmartPrintMOD
 		$MySmartBB->smartparse->replace_smiles($this->Info['text']);
 	}
 
-	function __SubjectEnd()
+	private function __subjectEnd()
 	{
 		global $MySmartBB;
 
-		$topic_date = $MySmartBB->functions->date($this->Info['native_write_time']);
-		$topic_time = $MySmartBB->functions->time($this->Info['native_write_time']);
+		$topic_date = $MySmartBB->func->date($this->Info['native_write_time']);
+		$topic_time = $MySmartBB->func->time($this->Info['native_write_time']);
 
 		$this->Info['native_write_time'] = $topic_date . ' ; ' . $topic_time;
 
@@ -272,51 +247,29 @@ class MySmartPrintMOD
 		$MySmartBB->template->display('print_subject');
 	}
 
-	function __GetReply()
+	private function __getReply()
 	{
 		global $MySmartBB;
 
 		// Show the replies
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
-
-		$ReplyNumArr 					= 	array();
-		$ReplyNumArr['get_from'] 		= 	'db';
-
-		$ReplyNumArr['where'] 		= 	array('subject_id',$this->Info['subject_id']);
-
-		$ReplyNumArr['where'][1] 			= 	array();
-		$ReplyNumArr['where'][1]['con']		=	'AND';
-		$ReplyNumArr['where'][1]['name']	=	'delete_topic';
-		$ReplyNumArr['where'][1]['oper']	=	'<>';
-		$ReplyNumArr['where'][1]['value']	=	'1';
-
-		$ReplyArr = array();
-
-		$ReplyArr['proc'] 				= 	array();
-		$ReplyArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		
+		$MySmartBB->rec->filter = "subject_id='" . $this->Info['subject_id'] . "' AND delete_topic<>'1'";
+		
+		$reply_number = $MySmartBB->reply->getReplyNumber();
 
 		// Pager setup
-		$ReplyArr['pager'] 				= 	array();
-		$ReplyArr['pager']['total']		= 	$MySmartBB->reply->GetReplyNumber($ReplyNumArr);
-		$ReplyArr['pager']['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
-		$ReplyArr['pager']['count'] 	= 	$MySmartBB->_GET['count'];
-		$ReplyArr['pager']['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['subject_id'];
-		$ReplyArr['pager']['var'] 		= 	'count';
-
-		$ReplyArr['where']				=	array();
-		$ReplyArr['where'][0] 			= 	array();
-		$ReplyArr['where'][0]['name']	=	'delete_topic';
-		$ReplyArr['where'][0]['oper']	=	'<>';
-		$ReplyArr['where'][0]['value']	=	'1';
-
-		$ReplyArr['subject_id'] 		= 	$this->Info['subject_id'];
-
-		$this->RInfo = $MySmartBB->reply->GetReplyWriterInfo($ReplyArr);
-
-		// Kill XSS
-		// TODO :: it's better to kill XSS inside the loop
-		$MySmartBB->functions->CleanVariable($this->RInfo,'html');
-
+		$MySmartBB->rec->pager 				= 	array();
+		$MySmartBB->rec->pager['total']		= 	$reply_number;
+		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
+		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['subject_id'];
+		$MySmartBB->rec->pager['var'] 		= 	'count';
+		
+		$MySmartBB->rec->filter = "delete_topic<>'1'";
+		
+		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
+		
 		$n = sizeof($this->RInfo);
 		$this->x = 0;
 
@@ -324,17 +277,17 @@ class MySmartPrintMOD
 		while ($n > $this->x)
 		{
 			// Get the replier info
-			$this->___GetReplierInfo();
+			$this->___getReplierInfo();
 
 			// Make reply text as a nice format
-			$this->___ReplyFormat();
+			$this->___replyFormat();
 
 			// The end of reply
-			$this->___ReplyEnd();
+			$this->___replyEnd();
 		}
 	}
 
-	function ___GetReplierInfo()
+	private function ___getReplierInfo()
 	{
 		global $MySmartBB;
 
@@ -346,7 +299,7 @@ class MySmartPrintMOD
 		{
 			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username_style_cache'];
 
-			$this->RInfo[$this->x]['display_username'] = $MySmartBB->functions->CleanVariable($this->RInfo[$this->x]['display_username'],'unhtml');
+			$this->RInfo[$this->x]['display_username'] = $MySmartBB->func->cleanVariable($this->RInfo[$this->x]['display_username'],'unhtml');
 		}
 
 		$this->RInfo[$this->x]['reply_number'] = $this->reply_number;
@@ -354,7 +307,7 @@ class MySmartPrintMOD
 		$this->reply_number += 1;
 	}
 
-	function ___ReplyFormat()
+	private function ___replyFormat()
 	{
 		global $MySmartBB;
 
@@ -370,12 +323,12 @@ class MySmartPrintMOD
 		}
 	}
 
-	function ___ReplyEnd()
+	private function ___replyEnd()
 	{
 		global $MySmartBB;
 
-		$reply_date = $MySmartBB->functions->date($this->RInfo[$this->x]['write_time']);
-		$reply_time = $MySmartBB->functions->time($this->RInfo[$this->x]['write_time']);
+		$reply_date = $MySmartBB->func->date($this->RInfo[$this->x]['write_time']);
+		$reply_time = $MySmartBB->func->time($this->RInfo[$this->x]['write_time']);
 
 		$this->RInfo[$this->x]['write_time'] = $reply_date . ' ; ' . $reply_time;
 

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -15,39 +17,28 @@ define('CLASS_NAME','MySmartSpecialSubjectMOD');
 
 class MySmartSpecialSubjectMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader();
+		$MySmartBB->func->showHeader();
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_SpecialSubject();
+			$this->_specialSubject();
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 
-	function _SpecialSubject()
+	private function _specialSubject()
 	{
 		global $MySmartBB;
 		
-		$SpecialArr 							= 	array();
-		$SpecialArr['proc'] 					= 	array();
-		$SpecialArr['proc']['*'] 				= 	array('method'=>'clean','param'=>'html');
-
-		$SpecialArr['where']					=	array();
-		$SpecialArr['where'][0]					=	array();
-		$SpecialArr['where'][0]['name']			=	'special';
-		$SpecialArr['where'][0]['oper']			=	'=';
-		$SpecialArr['where'][0]['value']		=	'1';
-
-		$SpecialArr['order']					=	array();
-		$SpecialArr['order']['field']			=	'id';
-		$SpecialArr['order']['type']			=	'DESC';
-
-		$MySmartBB->_CONF['template']['while']['SpecialSubjectList'] = $MySmartBB->subject->GetSubjectList($SpecialArr);
+		$MySmartBB->rec->filter = "special='1'";
+		$MySmartBB->rec->order = "id DESC";
+		
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('special_subject');
 	}

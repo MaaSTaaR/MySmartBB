@@ -1,5 +1,7 @@
 ﻿<?php
 
+/** PHP5 **/
+
 $CALL_SYSTEM = array();
 $CALL_SYSTEM['SUBJECT'] = true;
 
@@ -13,7 +15,7 @@ define('CLASS_NAME','MySmartReportMOD');
 
 class MySmartReportMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -21,76 +23,74 @@ class MySmartReportMOD
 		{
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_MemberReportIndex();
+				$this->_memberReportIndex();
 			}
 			elseif ($MySmartBB->_GET['start'])
 			{
-				$this->_MemberReportStart();
+				$this->_memberReportStart();
 			}
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _MemberReportIndex()
+	private function _memberReportIndex()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال تقرير عن مشاركة مخالفة');
+		$MySmartBB->func->showHeader('إرسال تقرير عن مشاركة مخالفة');
 		
 		if (!$MySmartBB->_CONF['member_permission'])
-     	{
-     		$MySmartBB->functions->error('لا يمكن للزوار إرسال تقارير');
-     	}
-     	
-     	$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
-     	
-     	if (empty($MySmartBB->_GET['id']))
-     	{
-     		$MySmartBB->functions->error('المسار المتبع غير صحيح');
-     	}
-     	
-     	//////////
-     			
+		{
+			$MySmartBB->func->error('لا يمكن للزوار إرسال تقارير');
+		}
+		
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if (empty($MySmartBB->_GET['id']))
+		{
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
+		}
+				
 		$MySmartBB->template->display('send_report');
 	}
 	
-	function _MemberReportStart()
+	private function _memberReportStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال تقرير عن مشاركة مخالفة');
+		$MySmartBB->func->showHeader('إرسال تقرير عن مشاركة مخالفة');
 		
 		if (!$MySmartBB->_CONF['member_permission'])
-     	{
-     		$MySmartBB->functions->error('لا يمكن للزوار إرسال تقارير');
-     	}
-     	
-     	$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
-     	
-     	if (empty($MySmartBB->_GET['id']))
-     	{
-     		$MySmartBB->functions->error('المسار المتبع غير صحيح');
-     	}
-     	
-     	//////////
-     	
+		{
+			$MySmartBB->func->error('لا يمكن للزوار إرسال تقارير');
+		}
+		
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if (empty($MySmartBB->_GET['id']))
+		{
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
+		}
+		
+		/* ... */
+		
 		if (empty($MySmartBB->_POST['title'])
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('الرجاء أدخل سبب كتابة تقرير عن هذه المشاركة.');
+			$MySmartBB->func->error('الرجاء أدخل سبب كتابة تقرير عن هذه المشاركة.');
 		}
 		
-		$Report = $MySmartBB->functions->mail($MySmartBB->_CONF['info_row']['admin_email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
+		$Report = $MySmartBB->func->mail($MySmartBB->_CONF['info_row']['admin_email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
 		
 		if ($Report)
 		{
-			$MySmartBB->functions->msg('تم إرسال التقرير بنجاح');
-			$MySmartBB->functions->goto('index.php');
+			$MySmartBB->func->msg('تم إرسال التقرير بنجاح');
+			$MySmartBB->func->goto('index.php');
 		}
 		else
 		{
-			$MySmartBB->functions->msg('هناك خطأ، لم يتم إرسال التقرير');
+			$MySmartBB->func->msg('هناك خطأ، لم يتم إرسال التقرير');
 		}
 	}
 }

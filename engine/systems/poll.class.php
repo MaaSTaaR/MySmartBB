@@ -13,33 +13,39 @@
 
 class MySmartPoll
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartPoll($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertPoll($param)
+	/* ... */
+	
+	public function insertPoll()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$param['field']['answers'] = serialize($param['field']['answers']);
-		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['poll'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'poll' ];
 		
-		if ($param['get_id'])
+ 		$this->engine->fields[ 'answers' ] = serialize( $this->engine->fields[ 'answers' ] );
+ 		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 			
  	function UpdatePoll($param)
  	{
@@ -51,7 +57,7 @@ class MySmartPoll
  		
  		$param['field']['answers'] = serialize($param['field']['answers']);
  			 
-		$query = $this->Engine->records->Update($this->Engine->table['poll'],$$param['field'],$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['poll'],$$param['field'],$param['where']);
 		           
 		return ($query) ? true : false;
  	}
@@ -64,9 +70,9 @@ class MySmartPoll
  			$param = array();
  		}
  		
-		$param['table'] = $this->Engine->table['poll'];
+		$param['table'] = $this->engine->table['poll'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 		
 		return ($del) ? true : false;
 	}
@@ -80,33 +86,30 @@ class MySmartPoll
  		}
  		
  		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['poll'];
+ 		$param['from']		=	$this->engine->table['poll'];
  		
-		$rows = $this->Engine->records->GetList($param);
+		$rows = $this->engine->records->GetList($param);
 		
 		return $rows;
 	}
 	
-	function GetPollInfo($param)
+	/* ... */
+	
+	public function getPollInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['poll'];
+ 		$this->engine->rec->table = $this->engine->table['poll'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
+		$row = $this->engine->rec->getInfo();
 		
-		if (is_array($rows))
+		if ( is_array( $row ) )
 		{
-			$rows['answers'] = unserialize($rows['answers']);
+			$row[ 'answers' ] = unserialize( $row[ 'answers' ] );
 		}
 		
-		return $rows;
+		return $row;
 	}
+	
+	/* ... */
 		
  	function GetPollNumber($param)
  	{
@@ -117,9 +120,9 @@ class MySmartPoll
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['poll'];
+		$param['from'] 		= 	$this->engine->table['poll'];
 		
-		$num   = $this->Engine->records->GetNumber($param);
+		$num   = $this->engine->records->GetNumber($param);
 		
 		return $num;
  	}

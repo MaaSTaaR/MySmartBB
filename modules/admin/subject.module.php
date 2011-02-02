@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -15,9 +17,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartSubjectMOD');
 	
-class MySmartSubjectMOD extends _functions
+class MySmartSubjectMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -29,40 +31,40 @@ class MySmartSubjectMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_CloseSubject();
+					$this->_closeSubject();
 				}
 			}
 			elseif ($MySmartBB->_GET['attach'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AttachSubject();
+					$this->_attachSubject();
 				}
 			}
 			elseif ($MySmartBB->_GET['mass_del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_MassDelMain();
+					$this->_massDelMain();
 				}
 				elseif ($MySmartBB->_GET['confirm'])
 				{
-					$this->_MassDelConfirm();
+					$this->_massDelConfirm();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_MassDelStart();
+					$this->_massDelStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['mass_move'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_MassMoveMain();
+					$this->_massMoveMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_MassMoveStart();
+					$this->_massMoveStart();
 				}
 			}
 			
@@ -70,71 +72,42 @@ class MySmartSubjectMOD extends _functions
 		}
 	}
 	
-	function _CloseSubject()
+	private function _closeSubject()
 	{
 		global $MySmartBB;
 		
-		$CloseArr 							= 	array();
-		$CloseArr['proc'] 					= 	array();
-		$CloseArr['proc']['*'] 				= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->filter = "close='1'";
+		$MySmartBB->rec->order = "id DESC";
 		
-		$CloseArr['where']					=	array();
-		$CloseArr['where'][0]				=	array();
-		$CloseArr['where'][0]['name']		=	'close';
-		$CloseArr['where'][0]['oper']		=	'=';
-		$CloseArr['where'][0]['value']		=	'1';
-		
-		$CloseArr['order']					=	array();
-		$CloseArr['order']['field']			=	'id';
-		$CloseArr['order']['type']			=	'DESC';
-		
-		$MySmartBB->_CONF['template']['while']['CloseList'] = $MySmartBB->subject->GetSubjectList($CloseArr);
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('subjects_closed');
 	}
 	
-	function _AttachSubject()
+	private function _attachSubject()
 	{
 		global $MySmartBB;
 
-		$AttachArr 							= 	array();
-		$AttachArr['proc'] 					= 	array();
-		$AttachArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->filter = "attach_subject='1'";
+		$MySmartBB->rec->order = "id DESC";
 		
-		$AttachArr['where']					=	array();
-		$AttachArr['where'][0]				=	array();
-		$AttachArr['where'][0]['name']		=	'attach_subject';
-		$AttachArr['where'][0]['oper']		=	'=';
-		$AttachArr['where'][0]['value']		=	'1';
-		
-		$AttachArr['order']					=	array();
-		$AttachArr['order']['field']		=	'id';
-		$AttachArr['order']['type']			=	'DESC';
-		
-		$MySmartBB->_CONF['template']['while']['AttachList'] = $MySmartBB->subject->GetSubjectList($AttachArr);
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('subjects_attach');		
 	}
 	
-	function _MassDelMain()
+	private function _massDelMain()
 	{
 		global $MySmartBB;
 		
-		$SecArr 					= 	array();
-		$SecArr['get_from']			=	'db';
-		$SecArr['type']				=	'forums';
-		$SecArr['proc'] 			= 	array();
-		$SecArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$SecArr['order']			=	array();
-		$SecArr['order']['field']	=	'id';
-		$SecArr['order']['type']	=	'DESC';
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['SectionList'] = $MySmartBB->section->GetSectionsList($SecArr);
+		$MySmartBB->section->getSectionsList();
 		
 		$MySmartBB->template->display('subjects_mass_del');
 	}
 	
-	function _MassDelConfirm()
+	private function _massDelConfirm()
 	{
 		global $MySmartBB;
 		
@@ -143,51 +116,41 @@ class MySmartSubjectMOD extends _functions
 		$MySmartBB->template->display('subjects_mass_del_confirm');
 	}
 	
-	function _MassDelStart()
+	private function _massDelStart()
 	{
 		global $MySmartBB;
 		
-		$this->check_section_by_id($SectionInf,$z);
+		$this->check_section_by_id( $SectionInf, $z );
 		
 		$del = array();
 		
-		$del[0] = $MySmartBB->subject->MassDeleteSubject(array('section_id'	=>	$SectionInf['id']));
+		$del[0] = $MySmartBB->subject->massDeleteSubject( $SectionInf['id'] );
 		
 		if ($del[0])
 		{
-			$del[1] = $MySmartBB->reply->MassDeleteReply(array('section_id'	=>	$SectionInf['id']));
+			$del[1] = $MySmartBB->reply->massDeleteReply( $SectionInf['id'] );
 			
 			if ($del[1])
 			{
-				$MySmartBB->functions->msg('تم حذف المواضيع بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=subject&amp;mass_del=1&amp;main=1');
+				$MySmartBB->func->msg('تم حذف المواضيع بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=subject&amp;mass_del=1&amp;main=1');
 			}
 		}
 	}
 	
-	function _MassMoveMain()
+	private function _massMoveMain()
 	{
 		global $MySmartBB;
 		
-		$SecArr 						= 	array();
-		$SecArr['get_from']				=	'db';
-				
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]				=	array();
-		$SecArr['where'][0]['name']		=	'parent';
-		$SecArr['where'][0]['oper']		=	'<>';
-		$SecArr['where'][0]['value']	=	'0';
+		$MySmartBB->rec->filter = "parent<>'0'";
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$SecArr['order']				=	array();
-		$SecArr['order']['field']		=	'id';
-		$SecArr['order']['type']		=	'DESC';
-		
-		$MySmartBB->_CONF['template']['while']['SectionList'] = $MySmartBB->section->GetSectionsList($SecArr);
+		$MySmartBB->section->getSectionsList();
 		
 		$MySmartBB->template->display('subjects_mass_move');
 	}
 		
-	function _MassMoveStart()
+	private function _massMoveStart()
 	{
 		global $MySmartBB;
 		
@@ -195,24 +158,24 @@ class MySmartSubjectMOD extends _functions
 		
 		$move = array();
 		
-		$move[0] = $MySmartBB->subject->MassMoveSubject(array('from'	=>	$FromInf['id'],'to'	=>	$ToInf['id']));
+		$move[0] = $MySmartBB->subject->massMoveSubject( $ToInf['id'], $FromInf['id'] );
 		
 		if ($move[0])
 		{
-			$move[1] = $MySmartBB->reply->MassMoveReply(array('from'	=>	$FromInf['id'],'to'	=>	$ToInf['id']));
+			$move[1] = $MySmartBB->reply->massMoveReply( $ToInf['id'], $FromInf['id'] );
 			
 			if ($move[1])
 			{
-				$MySmartBB->functions->msg('تم نقل المواضيع بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=subject&amp;mass_move=1&amp;main=1');
+				$MySmartBB->func->msg('تم نقل المواضيع بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=subject&amp;mass_move=1&amp;main=1');
 			}
 		}
 	}
 }
 
-class _functions
+class _func
 {
-	function check_section_by_id(&$Inf,&$ToInf,$move=false)
+	function check_section_by_id( &$Inf, &$ToInf, $move = false )
 	{
 		global $MySmartBB;
 		
@@ -220,55 +183,47 @@ class _functions
 		{
 			if (empty($MySmartBB->_GET['id']))
 			{
-				$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+				$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 			}
 		
-			$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
-		
-			$SecArr 			= 	array();
-			$SecArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
-		
-			$Inf = $MySmartBB->section->GetSectionInfo($SecArr);
+			$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+			
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+			
+			$Inf = $MySmartBB->section->getSectionInfo();
 			
 			if ($Inf == false)
 			{
-				$MySmartBB->functions->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
 			}
-		
-			$MySmartBB->functions->CleanVariable($Inf,'html');
 		}
 		else
 		{
 			if (empty($MySmartBB->_POST['from'])
 				or empty($MySmartBB->_POST['to']))
 			{
-				$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+				$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 			}
 		
-			$MySmartBB->_POST['from'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['from'],'intval');
-			$MySmartBB->_POST['to'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['to'],'intval');
+			$MySmartBB->_POST['from'] = (int) $MySmartBB->_POST['from'];
+			$MySmartBB->_POST['to'] = (int) $MySmartBB->_POST['to'];
 			
-			$SecArr 			= 	array();
-			$SecArr['where'] 	= 	array('id',$MySmartBB->_GET['from']);
-		
-			$Inf = $MySmartBB->section->GetSectionInfo($SecArr);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['from'] . "'";
 			
-			$ToArr 				= 	array();
-			$ToArr['where'] 	= 	array('id',$MySmartBB->_GET['to']);
+			$Inf = $MySmartBB->section->getSectionInfo();
 			
-			$ToInf = $MySmartBB->section->GetSectionInfo($ToArr);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['to'] . "'";
+			
+			$ToInf = $MySmartBB->section->getSectionInfo();
 			
 			if ($Inf == false)
 			{
-				$MySmartBB->functions->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
 			}
 			elseif ($ToInf == false)
 			{
-				$MySmartBB->functions->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
 			}
-		
-			$MySmartBB->functions->CleanVariable($Inf,'html');
-			$MySmartBB->functions->CleanVariable($ToInf,'html');
 		}
 	}
 }

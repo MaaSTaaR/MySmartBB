@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 /*$CALL_SYSTEM				=	array();
@@ -14,34 +16,31 @@ define('CLASS_NAME','MySmartOnlineMOD');
 
 class MySmartOnlineMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('المتواجدين حالياً');
+		$MySmartBB->func->showHeader('المتواجدين حالياً');
 		
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_Show();
+			$this->_show();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->GetFooter();
 	}
 	
-	function _Show()
+	private function _show()
 	{
 		global $MySmartBB;
 		
-		$OnlineArr = array();
-		$OnlineArr['order'] = array();
-		$OnlineArr['order']['field'] = 'id';
-		$OnlineArr['order']['type'] = 'DESC';
+		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->_CONF['template']['while']['Online'] = $MySmartBB->online->GetOnlineList($OnlineArr);
+		$MySmartBB->online->getOnlineList();
 		
 		$MySmartBB->template->display('online');
 	}	

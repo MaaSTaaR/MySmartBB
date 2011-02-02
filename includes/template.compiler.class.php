@@ -67,7 +67,15 @@ class MySmartTemplateCompiler
 			$string = $this->_defineVariables( $string );
 		}
 		
-		//////////
+		/* ... */
+		
+		// A new syntax for the new way of get information from database ($engine->rec->getInfo())
+		if ( preg_match( '~\{DB::getInfo}{([^[<].*?)}~', $string ) )
+		{
+			$string = $this->_proccessDBGetInfo( $string );
+		}
+		
+		/* ... */
 		
 		if (preg_match('~\{Des::while}{([^[<].*?)}~',$string)
 			or preg_match('~\{Des::while::complete}~',$string))
@@ -432,6 +440,35 @@ class MySmartTemplateCompiler
 		/* ... */
 		
 		return $string;
+	}
+	
+	/* ... */
+	
+	private function _proccessDBGetInfo( $string )
+	{
+		/* ... */
+		
+		$search_array 	= 	array();
+		$replace_array 	= 	array();
+		
+		/* ... */
+		
+		$search_array[] 	= 	'~\{DB::getInfo}{\$([^[<].*?)}{\$([^[<].*?)}~';
+		$replace_array[] 	= 	'<?php while ( $this->compiler->vars[\'\\2\'] = $MySmartBB->rec->getInfo( $this->compiler->vars[\'res\'][\'\\1\'] ) ) { ?>';
+		
+		$search_array[] 	= 	'~\{DB::getInfo}{\$([^[<].*?)}~';
+		$replace_array[] 	= 	'<?php while ( $this->compiler->vars[\'\\1\'] = $MySmartBB->rec->getInfo() ) { ?>';
+		
+		$search_array[] 	= 	'~\{/DB::getInfo}~';
+		$replace_array[] 	= 	'<?php } ?>';
+		
+		/* ... */
+		
+		$string = preg_replace( $search_array, $replace_array, $string );
+		
+		/* ... */
+		
+		return $string;	
 	}
 	
 	/* ... */

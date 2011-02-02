@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_SMARTCODE',true);
@@ -32,94 +34,75 @@ define('CLASS_NAME','MySmartTopicAddMOD');
 
 class MySmartTopicAddMOD
 {
-	var $SectionInfo;
-	var $SectionGroup;
+	private $SectionInfo;
+	private $SectionGroup;
+	private $moderator;
 	
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$this->_CommonCode();
+		$this->_commonCode();
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_Index();
+			$this->_index();
 		}
 		elseif ($MySmartBB->_GET['start'])
 		{
-			$this->_Start();
+			$this->_start();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
-		
-	function _CommonCode()
+	
+	private function _commonCode()
 	{
 		global $MySmartBB;
 		
-		//////////
+		// ... //
 		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		if (empty($MySmartBB->_GET['id']))
+		if ( empty( $MySmartBB->_GET['id'] ) )
 		{
-			$MySmartBB->functions->ShowHeader('خطأ');
-			
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		//////////
+		// ... //
 		
-		$SecArr 			= 	array();
-		$SecArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$this->SectionInfo = $MySmartBB->section->GetSectionInfo($SecArr);
+		$this->SectionInfo = $MySmartBB->section->getSectionInfo();
+		
+		// ... //
 		
 		if (!$this->SectionInfo)
 		{
-			$MySmartBB->functions->ShowHeader('خطأ');
-		
-			$MySmartBB->functions->error('المعذره .. القسم المطلوب غير موجود');
+			$MySmartBB->func->error('المعذره .. القسم المطلوب غير موجود');
 		}
 		
-		// Kill XSS
-		$MySmartBB->functions->CleanVariable($this->SectionInfo,'html');
 		// Kill SQL Injection
-		$MySmartBB->functions->CleanVariable($this->SectionInfo,'sql');
+		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
 		
-		//////////
+		// ... //
 		
 		/** Get section's group information and make some checks **/
-		$SecGroupArr 						= 	array();
-		$SecGroupArr['where'] 				= 	array();
 		
-		$SecGroupArr['where'][0]			=	array();
-		$SecGroupArr['where'][0]['name'] 	= 	'section_id';
-		$SecGroupArr['where'][0]['oper']	=	'=';
-		$SecGroupArr['where'][0]['value'] 	= 	$this->SectionInfo['id'];
-		
-		$SecGroupArr['where'][1]			=	array();
-		$SecGroupArr['where'][1]['con']		=	'AND';
-		$SecGroupArr['where'][1]['name']	=	'group_id';
-		$SecGroupArr['where'][1]['oper']	=	'=';
-		$SecGroupArr['where'][1]['value']	=	$MySmartBB->_CONF['group_info']['id'];
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
 		// Finally get the permissions of group
-		$this->SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
-		
-		//////////
+		$this->SectionGroup = $MySmartBB->group->getSectionGroupInfo();
 		
 		// The visitor can't show this section , so stop the page
 		if (!$this->SectionGroup['view_section'] 
 			or !$this->SectionGroup['write_subject'])
 		{
-			$MySmartBB->functions->ShowHeader('خطأ');
-
-			$MySmartBB->functions->error('المعذره لا يمكنك الكتابه في هذا القسم');
+			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم');
 		}
 		
 		if (!empty($this->SectionInfo['section_password']) 
@@ -129,47 +112,41 @@ class MySmartTopicAddMOD
      		if (empty($MySmartBB->_GET['password']))
         	{
       			$MySmartBB->template->display('forum_password');
-      			$MySmartBB->functions->stop();
+      			$MySmartBB->func->stop();
      		}
      		// The visitor give me password , so check
      		elseif (!empty($MySmartBB->_GET['password']))
      		{
-     			$PassArr = array();
-     			
-     			// Section id
-     			$PassArr['id'] 	= $this->SectionInfo['id'];
-     			
-     			// The password to check
-     			$PassArr['password'] = base64_decode($MySmartBB->_GET['password']);
-     			
-     			$IsTruePassword = $MySmartBB->section->CheckPassword($PassArr);
+     			$IsTruePassword = $MySmartBB->section->checkPassword( $MySmartBB->_GET['password'], $this->SectionInfo['id'] );
      			
      			// Stop ! it's don't true password															
      			if (!$IsTruePassword)
      			{
-     				$MySmartBB->functions->ShowHeader('خطأ');
-
-     				$MySmartBB->functions->error('المعذره .. كلمة المرور غير صحيحه');
+     				$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه');
      			}
      			
      			$MySmartBB->_CONF['template']['password'] = '&amp;password=' . $MySmartBB->_GET['password'];
      		}
      	}
      	
-     	//////////
+     	/* ... */
+     	
+     	$this->moderator = $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['id'] );
+     	
+     	/* ... */
      	
      	$MySmartBB->template->assign('section_info',$this->SectionInfo);
      	
-     	//////////
+     	/* ... */
 	}
 		
-	function _Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('اضافة موضوع');
+		$MySmartBB->func->showHeader('اضافة موضوع');
 		
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 			     		
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
      	
@@ -177,106 +154,107 @@ class MySmartTopicAddMOD
      	// We just send options which we really need, we use this way to save memory
      	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
      	
-		////////
+		/* ... */
 		
-		$Admin = $MySmartBB->functions->ModeratorCheck($MySmartBB->_GET['id']);
-		
-		$MySmartBB->template->assign('Admin',$Admin);
+		$MySmartBB->template->assign('Admin',$this->moderator);
 				
-		////////
+		/* ... */
 		
      	$MySmartBB->template->display('new_topic');
 	}
 	
-	function _Start()
+	private function _start()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية اضافة الموضوع');
+		$MySmartBB->func->showHeader('تنفيذ عملية اضافة الموضوع');
 		
-		$MySmartBB->_POST['title'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['title'],'trim');
-		$MySmartBB->_POST['text'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['title'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['title'],'trim');
+		$MySmartBB->_POST['text'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['text'],'trim');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate']  . ' تنفيذ عملية كتابة موضوع');
+		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate']  . ' تنفيذ عملية كتابة موضوع');
 		
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		if (!$MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
 			/*$IsFlood = $MySmartBB->subject->IsFlood(array('last_time'=>$MySmartBB->_CONF['member_row']['lastpost_time']));
 			
 			if ($IsFlood)
 			{
-				$MySmartBB->functions->error('المعذره .. لا يمكنك كتابة موضوع جديد إلا بعد ' . $MySmartBB->_CONF['info_row']['floodctrl'] . ' ثانيه');
+				$MySmartBB->func->error('المعذره .. لا يمكنك كتابة موضوع جديد إلا بعد ' . $MySmartBB->_CONF['info_row']['floodctrl'] . ' ثانيه');
 			}*/
 		
      		if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']}))
      		{
-       			$MySmartBB->functions->error('عدد حروف عنوان الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_title_max'] . ')');
+       			$MySmartBB->func->error('عدد حروف عنوان الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_title_max'] . ')');
     		}
 
         	if  (!isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_min']}))
      		{
-      			$MySmartBB->functions->error('عدد حروف عنوان الموضوع أقل من  (' . $MySmartBB->_CONF['info_row']['post_title_min'] . ')');
+      			$MySmartBB->func->error('عدد حروف عنوان الموضوع أقل من  (' . $MySmartBB->_CONF['info_row']['post_title_min'] . ')');
      		}
-       	 	if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']}))
+
+       	 	if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']}))
      		{
-      			$MySmartBB->functions->error('عدد حروف الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_text_max'] . ')');
+      			$MySmartBB->func->error('عدد حروف الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_text_max'] . ')');
      		}
 
      		if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
      		{
-      			$MySmartBB->functions->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
+      			$MySmartBB->func->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
      		}
      	}
      	
      	// Hello WYSIWYG :)
      	if ($MySmartBB->_CONF['info_row']['wysiwyg_topic'])
      	{
-     		$MySmartBB->_POST['text'] = $MySmartBB->functions->ReplaceWYSIWYG($MySmartBB->_POST['text']);
+     		$MySmartBB->_POST['text'] = $MySmartBB->func->replaceWYSIWYG($MySmartBB->_POST['text']);
      	}
      	
-     	$SubjectArr 								= 	array();
-     	$SubjectArr['get_id']						=	true;
-     	$SubjectArr['field']						=	array();
-     	$SubjectArr['field']['title'] 				= 	$MySmartBB->_POST['title'];
-     	$SubjectArr['field']['text'] 				= 	$MySmartBB->_POST['text'];
-     	$SubjectArr['field']['writer'] 				= 	$MySmartBB->_CONF['rows']['member_row']['username'];
-     	$SubjectArr['field']['section'] 			= 	$this->SectionInfo['id'];
-     	$SubjectArr['field']['write_time'] 			= 	$MySmartBB->_CONF['now'];
-     	$SubjectArr['field']['icon'] 				= 	$MySmartBB->_POST['icon'];
-     	$SubjectArr['field']['subject_describe'] 	= 	$MySmartBB->_POST['describe'];
-     	$SubjectArr['field']['native_write_time'] 	= 	$MySmartBB->_CONF['now'];
-     	$SubjectArr['field']['sec_subject'] 		= 	$this->SectionInfo['sec_section'];
-     	$SubjectArr['field']['poll_subject'] 		= 	0;
-     	$SubjectArr['field']['attach_subject'] 		= 	0;
-     	$SubjectArr['field']['tags_cache']			=	$MySmartBB->_POST['tags'];
-     	
+    	$MySmartBB->subject->get_id = true;
+
+     	$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
+     										'text'	=>	$MySmartBB->_POST['text'],
+     										'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
+     										'section'	=>	$this->SectionInfo['id'],
+     										'write_time'	=>	$MySmartBB->_CONF['now'],
+     										'icon'	=>	$MySmartBB->_POST['icon'],
+     										'subject_describe'	=>	$MySmartBB->_POST['describe'],
+     										'native_write_time'	=>	$MySmartBB->_CONF['now'],
+     										'sec_subject'	=>	$this->SectionInfo['sec_section'],
+     										'poll_subject'	=>	0,
+     										'attach_subject'	=>	0,
+     										'tags_cache'	=>	$MySmartBB->_POST['tags']	);
+     										
 		if (($this->SectionInfo['review_subject'] or $MySmartBB->_CONF['member_row']['review_subject'])
-			and !$MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$SubjectArr['field']['review_subject'] = 1;
+			$MySmartBB->rec->fields['review_subject'] = 1;
 		}
 		
-     	if ($MySmartBB->_POST['stick'])
-     	{
-     		$SubjectArr['field']['stick'] = 1;
+		if ( $this->moderator )
+		{
+     		if ($MySmartBB->_POST['stick'])
+     		{
+     			$MySmartBB->rec->fields['stick'] = 1;
+     		}
+     	
+     		if ($MySmartBB->_POST['close'])
+     		{
+     			$MySmartBB->rec->fields['close'] = 1;
+     		}
      	}
      	
-     	if ($MySmartBB->_POST['close'])
-     	{
-     		$SubjectArr['field']['close'] = 1;
-     	}
-     	
-     	$Insert = $MySmartBB->subject->InsertSubject($SubjectArr);
+     	$Insert = $MySmartBB->subject->insertSubject();
      				
      	if ($Insert)
      	{
-     		//////////
+     		/* ... */
      		
      		if ($MySmartBB->_POST['poll'])
      		{
@@ -306,16 +284,15 @@ class MySmartTopicAddMOD
      					$x += 1;
      				}
      				
-     				$PollArr 				= 	array();
-     				$PollArr['question'] 	= 	$MySmartBB->_POST['question'];
-     				$PollArr['answers'] 	= 	$answers;
-     				$PollArr['subject_id']	=	$MySmartBB->subject->id;
+     				$MySmartBB->rec->fields = array(	'qus'	=>	$MySmartBB->_POST['question'],
+     													'answers'	=>	$answers,
+     													'subject_id'	=>	$MySmartBB->subject->id);
      				
-     				$InsertPoll = $MySmartBB->poll->InsertPoll($PollArr);
+     				$MySmartBB->poll->insertPoll();
      			}
      		}
      		
-     		//////////
+     		/* ... */
      		
      		// Set tags for the subject
      		$tags_size = sizeof($MySmartBB->_POST['tags']);
@@ -325,53 +302,42 @@ class MySmartTopicAddMOD
      		{
      			foreach ($MySmartBB->_POST['tags'] as $tag)
      			{
-     				$CheckArr 			= 	array();
-     				$CheckArr['where'] 	= 	array('tag',$tag);
-     				
      				$tag_id = 1;
      				
-     				$Tag = $MySmartBB->tag->GetTagInfo($CheckArr);
+     				$MySmartBB->rec->filter = "tag='" . $tag . "'";
+     				
+     				$Tag = $MySmartBB->tag->getTagInfo($CheckArr);
      				
      				if (!$Tag)
      				{
-     					$InsertArr 					=	array();
-     					$InsertArr['field']			=	array();
-     					$InsertArr['field']['tag']	=	$tag;
-     					$InsertArr['get_id']		=	true;
+     					$MySmartBB->rec->fields = array(	'tag'	=>	$tag	);
+     					$MySmartBB->tag->get_id = true;
      					
-     					$insert = $MySmartBB->tag->InsertTag($InsertArr);
+     					$insert = $MySmartBB->tag->insertTag($InsertArr);
      					
      					$tag_id = $MySmartBB->tag->id;
-     					
-     					unset($InsertArr);
      				}
      				else
      				{
-     					$UpdateArr 			= 	array();
-     					$UpdateArr['field']	=	array();
+     					$MySmartBB->rec->fields = array(	'number'	=>	$Tag['num'] + 1);
+     					$MySmartBB->rec->filter = "id='" . $Tag['id'] . "'";
      					
-     					$UpdateArr['field']['number'] 	= 	$Tag['num'] + 1;
-     					$UpdateArr['where']				=	array('id',$Tag['id']);
-     					
-     					$update = $MySmartBB->tag->UpdateTag($UpdateArr);
+     					$update = $MySmartBB->tag->updateTag();
      					
      					$tag_id = $Tag['id'];
      				}
      				
-     				$InsertArr 						= 	array();
-     				$InsertArr['field']				=	array();
-     				
-     				$InsertArr['field']['tag_id'] 			= 	$tag_id;
-     				$InsertArr['field']['subject_id'] 		=	$MySmartBB->subject->id;
-     				$InsertArr['field']['tag'] 				= 	$tag;
-     				$InsertArr['field']['subject_title'] 	= 	$MySmartBB->_POST['title'];
-     				
+     				$MySmartBB->rec->fields = array(	'tag_id'	=>	$tag_id,
+     													'subject_id'	=>	$MySmartBB->subject->id,
+     													'tag'	=>	$tag,
+     													'subject_title'	=>	$MySmartBB->_POST['title']);
+     													
      				// Note, this function is from tag system not subject system
-     				$insert = $MySmartBB->tag->InsertSubject($InsertArr);
+     				$insert = $MySmartBB->tag->insertSubject();
      			}
      		}
      		
-     		//////////
+     		/* ... */
      		
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
@@ -388,7 +354,7 @@ class MySmartTopicAddMOD
      					if ($files_number > $this->SectionGroup['upload_attach_num']
      						and !$MySmartBB->_CONF['group_info']['admincp_allow'])
      					{
-     						$MySmartBB->functions->error('المعذره لا يمكنك رفع اكثر من ' . $this->SectionGroup['upload_attach_num'] . 'ملف');
+     						$MySmartBB->func->error('المعذره لا يمكنك رفع اكثر من ' . $this->SectionGroup['upload_attach_num'] . 'ملف');
      					}
      					
      					// All of these variables use for loop and arrays
@@ -403,7 +369,7 @@ class MySmartTopicAddMOD
      							//////////
      							
      							// Get the extension of the file
-     							$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['files']['name'][$x]);
+     							$ext = $MySmartBB->func->getFileExtension($MySmartBB->_FILES['files']['name'][$x]);
      						
      							// Bad try!
      							if ($ext == 'MULTIEXTENSION'
@@ -421,10 +387,9 @@ class MySmartTopicAddMOD
      								//////////
      								
      								// Check if the extenstion is allowed or not (TODO : cache me please)
-     								$ExtArr 			= 	array();
-     								$ExtArr['where'] 	= 	array('Ex',$ext);
+     								$MySmartBB->rec->filter = "Ex='" . $ext . "'";
      								
-     								$extension = $MySmartBB->extension->GetExtensionInfo($ExtArr);
+     								$extension = $MySmartBB->extension->getExtensionInfo();
      							
      								// The extension is not allowed
      								if (!$extension)
@@ -475,7 +440,7 @@ class MySmartTopicAddMOD
      										// There is a file which has same name, so change the name of the new file
      										if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
      										{
-     											$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
+     											$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->func->randomCode();
      										}
      									
      										//////////
@@ -489,24 +454,20 @@ class MySmartTopicAddMOD
      											// Add the file to the success array 
      											$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
      										
-     											// Insert attachment to the database
-     											$AttachArr 							= 	array();
-     											$AttachArr['field'] 				= 	array();
-     											$AttachArr['field']['filename'] 	= 	$MySmartBB->_FILES['files']['name'][$x];
-     											$AttachArr['field']['filepath'] 	= 	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename;
-     											$AttachArr['field']['filesize'] 	= 	$MySmartBB->_FILES['files']['size'][$x];
-     											$AttachArr['field']['subject_id'] 	= 	$MySmartBB->subject->id;
+     											// Insert the attachment to the database
+     											$MySmartBB->rec->fields = array(	'filename'	=>	$MySmartBB->_FILES['files']['name'][$x],
+     																				'filepath'	=>	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename,
+     																				'filesize'	=>	$MySmartBB->_FILES['files']['size'][$x],
+     																				'subject_id'	=>	$MySmartBB->subject->id);
      											
-     											$InsertAttach = $MySmartBB->attach->InsertAttach($AttachArr);
+     											$InsertAttach = $MySmartBB->attach->insertAttach();
      											
      											if ($InsertAttach)
      											{
-     												$SubjectArr 							= 	array();
-     												$SubjectArr['field'] 					= 	array();
-     												$SubjectArr['field']['attach_subject'] 	= 	'1';
-     												$SubjectArr['where'] 					= 	array('id',$MySmartBB->subject->id);
+     												$MySmartBB->rec->fields = array(	'attach_subject'	=>	'1'	);
+     												$MySmartBB->rec->filter = "id='" . $MySmartBB->subject->id . "'";
      												
-     												$update = $MySmartBB->subject->UpdateSubject($SubjectArr);
+     												$update = $MySmartBB->subject->updateSubject();
      											}
      										
      											$z += 1;
@@ -527,7 +488,7 @@ class MySmartTopicAddMOD
      			}
      		}
      		
-     		//////////
+     		/* ... */
      		
      		if ($this->SectionGroup['no_posts'])
      		{
@@ -540,10 +501,9 @@ class MySmartTopicAddMOD
      		
      		if ($MySmartBB->_CONF['group_info']['usertitle_change'])
      		{
-    	 		$UsertitleArr 			= 	array();
-     			$UsertitleArr['where'] 	= 	array('posts',$posts);
-     		
-     			$UserTitle = $MySmartBB->usertitle->GetUsertitleInfo($UsertitleArr);
+     			$MySmartBB->rec->filter = "posts='" . $posts . "'";
+     			
+     			$UserTitle = $MySmartBB->usertitle->getUsertitleInfo();
      		
      			if ($UserTitle != false)
      			{
@@ -551,78 +511,54 @@ class MySmartTopicAddMOD
      			}
      		}
 
-     		//////////
+     		/* ... */
      		
-     		$MemberArr 				= 	array();
-     		$MemberArr['field'] 	= 	array();
-     		
-     		$MemberArr['field']['posts']			=	$posts;
-     		$MemberArr['field']['lastpost_time'] 	=	$MySmartBB->_CONF['now'];
-     		$MemberArr['field']['user_title']		=	(isset($usertitle)) ? $usertitle : null;
-     		$MemberArr['where']						=	array('id',$MySmartBB->_CONF['member_row']['id']);
-     		
-   			$UpdateMember = $MySmartBB->member->UpdateMember($MemberArr);
+     		$MySmartBB->rec->fields = array(	'posts'	=>	$posts,
+     											'lastpost_time'	=>	$MySmartBB->_CONF['now'],
+     											'user_title'	=>	(isset($usertitle)) ? $usertitle : null);
+     											
+   			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
    			
-   			//////////
-     		
-     		$LastArr = array();
-     		
-     		$LastArr['writer'] 		= 	$MySmartBB->_CONF['member_row']['username'];
-     		$LastArr['title'] 		= 	$MySmartBB->_POST['title'];
-     		$LastArr['subject_id'] 	= 	$MySmartBB->subject->id;
-     		$LastArr['date'] 		= 	$MySmartBB->_CONF['date'];
-     		$LastArr['where'] 		= 	(!$this->SectionInfo['sub_section']) ? array('id',$this->SectionInfo['id']) : array('id',$this->SectionInfo['from_sub_section']);
+   			$MySmartBB->member->updateMember();
+   			
+   			/* ... */
      		
      		// Update Last subject's information
-     		$UpdateLast = $MySmartBB->section->UpdateLastSubject($LastArr);
-     		
-     		// Free memory
-     		unset($LastArr);
-     		
-     		//////////
+     		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['title'], $MySmartBB->subject->id, $MySmartBB->_CONF['date'], (!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
+     		     		
+     		/* ... */
      		
      		// The overall number of subjects
-     		$UpdateSubjectNumber = $MySmartBB->cache->UpdateSubjectNumber(array('subject_num'	=>	$MySmartBB->_CONF['info_row']['subject_number']));
+     		$MySmartBB->cache->updateSubjectNumber( $MySmartBB->_CONF['info_row']['subject_number'] );
      		
-     		//////////
+     		/* ... */
      		
      		// The number of section's subjects number
-     		$UpdateArr 					= 	array();
-     		$UpdateArr['field']			=	array();
+     		$MySmartBB->rec->fields = array(	'subject_num'	=>	$this->SectionInfo['subject_num'] + 1	);
+     		$MySmartBB->rec->filter = "id='" . $this->SectionInfo['id'] . "'";
      		
-     		$UpdateArr['field']['subject_num'] 	= 	$this->SectionInfo['subject_num'] + 1;
-     		$UpdateArr['where']					= 	array('id',$this->SectionInfo['id']);
+     		$UpdateSubjectNumber = $MySmartBB->section->updateSection();
      		
-     		$UpdateSubjectNumber = $MySmartBB->section->UpdateSection($UpdateArr);
-     		
-     		// Free memory
-     		unset($UpdateArr);
-     		
-     		//////////
+     		/* ... */
      		
      		// Update section's cache
-     		$UpdateArr 				= 	array();
-     		$UpdateArr['parent'] 	= 	$this->SectionInfo['parent'];
+     		$MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
      		
-     		$update_cache = $MySmartBB->section->UpdateSectionsCache($UpdateArr);
-     		
-     		unset($UpdateArr);
-     		
-     		//////////
+     		/* ... */
      		
      		if ((!$this->SectionInfo['review_subject'] and !$MySmartBB->_CONF['member_row']['review_subject'])
-     			or $MySmartBB->_CONF['rows']['group_info']['admincp_allow'])
+     			or $MySmartBB->_CONF['group_info']['admincp_allow'])
 			{
-     			$MySmartBB->functions->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-     			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->subject->id . $MySmartBB->_CONF['template']['password']);
+     			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
+     			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->subject->id . $MySmartBB->_CONF['template']['password']);
      		}
      		else
      		{
-     			$MySmartBB->functions->msg('نشكرك لمشاركتك! مشاركتك لن تضاف حتى تتم الموافقة عليها من قبل الإدارة. سيتم الآن إعادتك الى المنتدى.');
-     			$MySmartBB->functions->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
+     			$MySmartBB->func->msg('نشكرك لمشاركتك! مشاركتك لن تضاف حتى تتم الموافقة عليها من قبل الإدارة. سيتم الآن إعادتك الى المنتدى.');
+     			$MySmartBB->func->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
      		}
      		
-     		//////////
+     		/* ... */
      	}
 	}
 }

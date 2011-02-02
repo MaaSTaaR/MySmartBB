@@ -5,6 +5,7 @@
  * @author : MaaSTaaR <MaaSTaaR@hotmail.com>
  * @author : abuamal <abdullah@kuwaitphp.com>
  * @start : 23/9/2006 -> The first day of Ramadan 1427 :)
+ * @updated : 10/07/2010 05:23:49 AM 
  */
  
 class MySmartSystemFunctions
@@ -230,39 +231,9 @@ class MySmartSystemFunctions
  	 *
  	 * By : abuamal
  	 */
-	function CleanVariable(&$variable, $type)
+	public function cleanVariable( $var, $type )
 	{
-		if (!is_array($variable))
-		{
-			return $this->SafeInput($variable,$type);
-		}
-		else
-		{
-			foreach ($variable as $key => $var)
-			{
-				if (is_array($var))
-				{
-					$this->CleanVariable($variable[$key], $type);
-				}
-				else
-				{
-					if (isset($variable[$key]))
-					{
-				    	$variable[$key] = $this->SafeInput($var, $type);
-					}
-				}
-			}
-			
-			return true;
-		}
-	}
-	
-	/**
-	 * Kill script kiddes and crackers!
-	 */
-	function SafeInput($var,$type)
-	{
-		switch ($type)
+		switch ( $type )
 		{
 			case 'sql':
 				return addslashes($var);
@@ -271,15 +242,15 @@ class MySmartSystemFunctions
 			case 'html':
 				return htmlspecialchars($var);
 				break;
-			
+				
 			case 'intval':
 				return intval($var);
 				break;
-				
+					
 			case 'trim':
 				return trim($var);
 				break;
-				
+					
 			case 'unhtml':
 				return $this->BackHTML($var);
 				break;
@@ -291,42 +262,35 @@ class MySmartSystemFunctions
 	}
 	
 	/**
-	 * Clean the local arrays (like _POST , _GET , _SERVER etc ...)
-	 */ 
-	function LocalArraySetup()
+	 * Clean the array from dirty, this function based on "cleanVariable( $var, $type )"
+	 *
+	 * By : abuamal
+	 */
+	public function cleanArray( &$variable, $type )
 	{
-		global $_GET,$_POST,$_COOKIE,$_FILES,$_SERVER;
- 		
- 		// Array with names and values
- 		$vars				=	array();
- 		$vars['_POST'] 		= 	$_POST;
- 		$vars['_GET'] 		= 	$_GET;
- 		$vars['_COOKIE'] 	= 	$_COOKIE;
- 		$vars['_FILES'] 	= 	$_FILES;
- 		$vars['_SERVER'] 	= 	$_SERVER;
- 		
- 		// Is magic quotes on or off?
-  		$magic = get_magic_quotes_gpc();
-  		
-		foreach ($vars as $name => $value)
-		{	
-			$this->CleanVariable($value, 'html');
-			
-			if (!$magic
-				and !empty($value))
+		foreach ( $variable as $key => $var )
+		{
+			/* Multidimensional Array */
+			// We should not be in this case as possible, because we want to be light.
+			if ( is_array( $var ) )
 			{
-				$this->CleanVariable($value, 'sql');	
+				$this->cleanArray( $variable[ $key ], $type );
 			}
-			
-			$this->Engine->$name = $value;
+			else
+			{
+				if ( isset( $variable[ $key ] ) )
+				{
+					$variable[ $key ] = $this->cleanVariable( $var, $type );
+				}
+			}
 		}
 		
-		// Sorry, but we _should_ do that!
- 		unset($HTTP_POST_VARS,$HTTP_GET_VARS,$HTTP_COOKIE_VARS,$HTTP_POST_FILES,$HTTP_SERVER_VARS);
- 		unset($_POST,$_GET,$_COOKIE,$_FILES,$_SERVER);
+		return true;
 	}
 	
-	function date( $input, $type = 'ty', $format = 'j/n/Y' )
+	/* ... */
+	
+	public function date( $input, $type = 'ty', $format = 'j/n/Y' )
 	{
 		$input = date( $format, $input );
 		
@@ -395,6 +359,8 @@ class MySmartSystemFunctions
 			}
 		}		
 	}
+	
+	/* ... */
 	
 	function time($time,$format='h:i:s A')
 	{

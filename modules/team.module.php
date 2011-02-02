@@ -10,36 +10,34 @@ define('CLASS_NAME','MySmartTeamMOD');
 
 class MySmartTeamMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Show the team list **/
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowTeam();
+			$this->_showTeam();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter(); 
+		$MySmartBB->func->getFooter(); 
 	}
 	
 	/** 
 	 * Get team list 
 	 */
-	function _ShowTeam()
+	public function _showTeam()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('المسؤولين');
+		$MySmartBB->func->showHeader('المسؤولون');
 		
-		$MySmartBB->_CONF['template']['while']['GetTeamList'] = $MySmartBB->member->GetTeamList();
-		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['while']['GetTeamList'],'html');
+		$MySmartBB->member->getTeamList();
 		
 		$MySmartBB->template->display('teamlist');
 	}

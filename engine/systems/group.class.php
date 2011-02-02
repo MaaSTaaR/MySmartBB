@@ -5,304 +5,233 @@
  */
  
 /**
- * @package 	: 	MySmartGroup
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	5/4/2006 , 6:07 PM
- * @end   		: 	5/4/2006 , 6:11 PM
- * @updated 	: 	18/08/2008 09:37:01 PM 
+ * @package	:	MySmartGroup
+ * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @start		:	5/4/2006 , 6:07 PM
+ * @end 		:	5/4/2006 , 6:11 PM
+ * @updated	:	24/07/2010 12:17:57 PM 
  */
 
 class MySmartGroup
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartGroup($Engine)
+	public $id;
+	public $get_id;
+
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertGroup($param)
+	/* ... */
+	
+	public function insertGroup()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           	  		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['group'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'group' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
-	function DeleteGroup($param)
+	/* ... */
+	
+	public function deleteGroup()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'group' ];
  		
-		$param['table'] = $this->Engine->table['group'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function UpdateGroup($param)
+	/* ... */
+	
+	public function updateGroup()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           	  
-		$query = $this->Engine->records->Update($this->Engine->table['group'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
+ 		$this->engine->rec->table = $this->engine->table['group'];
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
-
+	
+	/* ... */
+	
 	/**
 	 * Get group information
-	 *
-	 * $param =
-	 * 			array('group_id or id'=>'the id of member group');
-	 *
-	 * @return
-	 *			array -> or information
-	 *			false -> when no information
 	 */
-	function GetGroupInfo($param)
- 	{
-  		if (!isset($param) 
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['group'];
+	public function getGroupInfo()
+	{		
+		$this->engine->rec->table = $this->engine->table[ 'group' ];
 		
- 		$rows = $this->Engine->records->GetInfo($param);
- 		
- 		return $rows;
- 	}
- 	
-  	/**
- 	 * Get the list of groups
- 	 *
- 	 * @param :
- 	 *			sql_statment	->	complete the sql statment
- 	 *			way				->	(normal) or (online_table)
- 	 */
- 	function GetGroupList($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['group'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
- 	}
- 	
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
+	
+	public function getGroupList()
+	{
+		$this->engine->rec->table = $this->engine->table['group'];
+		
+		$this->engine->rec->getList();
+	}
+	
+	/* ... */
+	
 	function GetGroupNumber($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['group'];
+	{
+		if (!isset($param) 
+			or !is_array($param))
+		{
+			$param = array();
+		}
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$param['select']	=	'*';
+		$param['from']		=	$this->engine->table['group'];
+		
+		$num = $this->engine->rec->GetNumber($param);
 		
 		return $num;
- 	}
- 	
- 	///
+	}
 	
-	function CreateSectionGroupCache($param)
+	
+	public function createSectionGroupCache( $id )
 	{
-  		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$cache = array();
- 		
- 		$GroupArr 						= 	array();
- 		$GroupArr['get_from'] 			= 	'db';
- 		
- 		$GroupArr['order']				=	array();
- 		$GroupArr['order']['field']		=	'id';
- 		$GroupArr['order']['type']		=	'ASC';
- 		
- 		$GroupArr['where']				=	array('section_id',$param['id']);
- 				
-		$groups = $this->GetSectionGroupList($GroupArr);
+		$this->engine->rec->order = "id ASC";
+		$this->engine->rec->filter = "section_id='" . $id . "'";
 		
- 		$x	=	0;
- 		$n	=	sizeof($groups);
- 		
-		while ($x < $n)
+		$groups = $this->getSectionGroupList();
+		
+		$cache = array();
+		
+		while ( $row = $this->engine->rec->getInfo() )
 		{
-			$cache[$groups[$x]['group_id']] 					= 	array();
-			$cache[$groups[$x]['group_id']]['id'] 				= 	$groups[$x]['id'];
-			$cache[$groups[$x]['group_id']]['view_section'] 	= 	$groups[$x]['view_section'];
-			$cache[$groups[$x]['group_id']]['main_section'] 	= 	$groups[$x]['main_section'];
+			$cache[$row['group_id']]					=	array();
+			$cache[$row['group_id']]['id']				=	$row['id'];
+			$cache[$row['group_id']]['view_section']	=	$row['view_section'];
+			$cache[$row['group_id']]['main_section']	=	$row['main_section'];
 			
 			$x += 1;
 		}
 		
-		$cache = base64_encode(serialize($cache));
+		$cache = base64_encode( serialize( $cache ) );
 		
 		return $cache;
 	}
 	
- 	function UpdateSectionGroupCache($param)
- 	{
-  		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$cache = $this->CreateSectionGroupCache($param);
- 		
- 		$UpdateArr 									= 	array();
- 		$UpdateArr['field']							=	array();
- 		$UpdateArr['field']['sectiongroup_cache'] 	= 	$cache;
- 		$UpdateArr['where'] 						= 	array('id',$param['id']);
- 		
- 		$update = $this->Engine->section->UpdateSection($UpdateArr);
- 		
- 		return ($update) ? true : false;
- 	}
- 	
-	function InsertSectionGroup($param)
+	/* ... */
+	
+	public function updateSectionGroupCache( $id )
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           	  		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['section_group'],$param['field']);
+		$cache = $this->createSectionGroupCache( $id );
 		
-		if ($param['get_id'])
+		$this->engine->rec->table = $this->engine->table['section'];
+		
+		$this->engine->rec->fields = array(	'sectiongroup_cache'	=>	$cache );
+		$this->engine->rec->filter = "id='" . $id . "'";
+		
+		$query = $this->engine->rec->update();
+	}
+	
+	/* ... */
+	
+	public function insertSectionGroup()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'section_group' ];
+		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
+
 	}
 	
-	function DeleteSectionGroup($param)
+	/* ... */
+	
+	public function deleteSectionGroup()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['table'] = $this->Engine->table['section_group'];
+		$this->engine->rec->table = $this->engine->table[ 'section_group' ];
 		
-		$del = $this->Engine->records->Delete($param);
+		$query = $this->engine->rec->delete();
 		
-		return ($del) ? true : false;
+		return ($query) ? true : false;	
 	}
 	
-	function UpdateSectionGroup($param)
+	/* ... */
+	
+	public function updateSectionGroup()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           	  
-		$query = $this->Engine->records->Update($this->Engine->table['section_group'],$param['field'],$param['where']);
+		$this->engine->rec->table = $this->engine->table['section_group'];
 		
-		return ($query) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
-
-
- 	
- 	/**
- 	 * Get the permisson of group in sections
- 	 *
- 	 * @param :
- 	 *			get_from	->	cache or db
- 	 */
- 	function GetSectionGroupList($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['section_group'];
- 		
-		$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
- 	}
- 	
- 	function _GetCachedSectionGroup()
- 	{
- 		$cache = $this->Engine->_CONF['info_row']['sectiongroup_cache'];
- 		$cache = unserialize($cache);
- 		 		
- 		return $cache;
- 	}
- 	
+	
+	/* ... */
+	
+	/**
+	 * Get the permisson of group in sections
+	 */
+	public function getSectionGroupList()
+	{
+		$this->engine->rec->table = $this->engine->table['section_group'];
+		
+		$this->engine->rec->getList();
+	}
+	
+	/* ... */
+	
+	function _GetCachedSectionGroup()
+	{
+		$cache = $this->engine->_CONF['info_row']['sectiongroup_cache'];
+		$cache = unserialize($cache);
+				
+		return $cache;
+	}
+	
 	function GetSectionGroupNumber($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['section_group'];
+	{
+		if (!isset($param) 
+			or !is_array($param))
+		{
+			$param = array();
+		}
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$param['select']	=	'*';
+		$param['from']		=	$this->engine->table['section_group'];
+		
+		$num = $this->engine->rec->GetNumber($param);
 		
 		return $num;
- 	}
- 	
-	function GetSectionGroupInfo($param)
- 	{
-  		if (!isset($param) 
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['section_group'];
+	}
+	
+	/* ... */
+	
+	public function getSectionGroupInfo()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'section_group' ];
 		
- 		$rows = $this->Engine->records->GetInfo($param);
- 		
- 		return $rows;
- 	}
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
 }
  
 ?>

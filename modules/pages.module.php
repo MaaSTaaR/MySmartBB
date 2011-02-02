@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM			=	array();
@@ -13,43 +15,42 @@ define('CLASS_NAME','MySmartAdsPageMOD');
 
 class MySmartAdsPageMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowPage();
+			$this->_showPage();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->GetFooter();
 	}
 	
-	function _ShowPage()
+	private function _showPage()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('عرض صفحه');
+		$MySmartBB->func->showHeader('عرض صفحه');
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$PageArr 			= 	array();
-		$PageArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$MySmartBB->_CONF['template']['GetPage'] = $MySmartBB->pages->GetPageInfo($PageArr);
+		$MySmartBB->_CONF['template']['GetPage'] = $MySmartBB->pages->getPageInfo();
 		
 		if (!$MySmartBB->_CONF['template']['GetPage'])
 		{
-			$MySmartBB->functions->error('الصفحه المطلوبه غير متوفره');
+			$MySmartBB->func->error('الصفحه المطلوبه غير متوفره');
 		}
 		
 		$MySmartBB->template->display('show_page');

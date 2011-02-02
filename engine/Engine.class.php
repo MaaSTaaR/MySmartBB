@@ -4,19 +4,20 @@
  * MySmartBB Engine
  */
 
-////////////
-// General systems
+/* ... */
+
+// General systems
 require_once('config.php');
 require_once('libs/functions.class.php');
 require_once('libs/db.class.php');
 require_once('libs/records.class.php');
 require_once('libs/pager.class.php');
 
-////////////
+/* ... */
 
 if (is_array($CALL_SYSTEM))
 {
-	////////////
+	/* ... */
 	
 	$files = array();
 	
@@ -51,7 +52,7 @@ if (is_array($CALL_SYSTEM))
 	$files[] = (isset($CALL_SYSTEM['TAG'])) 				? 'tags.class.php' : null;
 	$files[] = (isset($CALL_SYSTEM['BOOKMARK'])) 			? 'bookmark.class.php' : null;
 	
-	////////////
+	/* ... */
 
 	if (sizeof($files) > 0)
 	{
@@ -64,22 +65,22 @@ if (is_array($CALL_SYSTEM))
 		}
 	}
 	
-	////////////
+	/* ... */
 }
 
-////////////
+/* ... */
 
 class Engine
 {
-	////////////
+	/* ... */
 	
 	// General systems
-	var $DB;
-	var $sys_functions;
-	var $records;
+	var $db;
+	var $sys_func;
+	var $rec;
 	var $pager;
 	
-	////////////
+	/* ... */
 	
 	// Systems
 	var $ads;
@@ -110,8 +111,9 @@ class Engine
 	var $extension;
 	var $bookmark;
 	
-	////////////
- 	// Other variables
+	/* ... */
+
+ 	// Other variables
 	var $_CONF		=	array();
 	var $_GET		=	array();
 	var $_POST		=	array();
@@ -119,42 +121,43 @@ class Engine
 	var $_FILES		=	array();
 	var $_SERVER	=	array();
 	
-	////////////
+	/* ... */
 	
 	// Tables
 	var $prefix 	= 	'MySmartBB_';
 	var $table 		= 	array();
 	
-	////////////
+	/* ... */
 
 	// Main system
 	function Engine()
 	{
 		global $config,$CALL_SYSTEM;
+		global $_POST,$_GET,$_COOKIE,$_FILES;
 		
-		////////////
+		/* ... */
 		
 		// General systems
-  		$this->DB				= 	new MySmartSQL;
+  		$this->db				= 	new MySmartSQL;
   		$this->pager			=	new MySmartPager;
-  		$this->sys_functions	=	new MySmartSystemFunctions($this);
-  		$this->records			=	new MySmartRecords($this);  	
+  		$this->sys_func			=	new MySmartSystemFunctions($this);
+  		$this->rec				=	new MySmartRecords($this->db, $this->sys_func, $this->pager);  	
   		
-  		////////////	
+  		/* ... */	
   		
-  		$this->DB->SetInformation(	$config['db']['server'],
+  		$this->db->SetInformation(	$config['db']['server'],
   									$config['db']['username'],
   									$config['db']['password'],
   									$config['db']['name']);
   									
-  		////////////
+  		/* ... */
   		
   		if (!empty($config['db']['prefix']))
   		{
   			$this->prefix = $config['db']['prefix'];
   		}
   		
-  		////////////
+  		/* ... */
   		
   		$this->table['ads'] 				= 	$this->prefix . 'ads';
   		$this->table['announcement'] 		= 	$this->prefix . 'announcement';
@@ -191,11 +194,14 @@ class Engine
   		$this->table['tag_subject']			=	$this->prefix . 'tags_subject';
   		$this->table['subjects_bookmark'] 	= 	$this->prefix . 'subjects_bookmark';
   		
-  		////////////
+  		/* ... */
   		
     	$this->_CONF['temp']					=	array();
     	$this->_CONF['info']					=	array();
     	$this->_CONF['info_row']				=	array();
+    	
+    	// TODO
+    	date_default_timezone_set( 'Asia/Kuwait' ); // (PHP 5 >= 5.1.0)
     	
     	$this->_CONF['now']						=	time();
  		$this->_CONF['timeout']					=	time()-300;
@@ -208,16 +214,16 @@ class Engine
  		$this->_CONF['admin_password_cookie']	=	'MySmartBB_admin_password';
  		$this->_CONF['style_cookie']			=	'MySmartBB_style';
  		
- 		////////////
+ 		/* ... */
  		
  		// Connect to database
- 		$this->DB->sql_connect();
-  		$this->DB->sql_select_db();
+ 		$this->db->sql_connect();
+  		$this->db->sql_select_db();
   		
-  		////////////
+  		/* ... */
   		
   		// Ensure if tables are installed or not
-  		$check = $this->DB->check($this->prefix . 'info');
+  		$check = $this->db->check($this->prefix . 'info');
   		
   		// Well, the table "MySBB_info" isn't exists, so return an error message
   		if (!$check
@@ -226,23 +232,53 @@ class Engine
   			return 'ERROR::THE_TABLES_ARE_NOT_INSTALLED';
   		}
   		
-  		////////////
+  		/* ... */
   		
   		// Get informations from info table
   		if (!defined('NO_INFO'))
   		{
- 			$this->_GetInfoRows();
+ 			// TODO :: Cache me please!
+				
+			$this->rec->table = $this->table[ 'info' ];
+		
+			$this->rec->getList();
+		
+			while ( $r = $this->rec->getInfo() )
+			{			
+				$this->_CONF[ 'info_row' ][ $r[ 'var_name' ] ] = $r[ 'value' ];
+			}
  		}
  		
- 		////////////
- 		
- 		$this->sys_functions->LocalArraySetup();
- 		
- 		////////////
+		/* ... */
+		
+		$this->_POST 	= 	$_POST;
+		$this->_GET 	= 	$_GET;
+		$this->_COOKIE 	= 	$_COOKIE;
+		$this->_FILES 	= 	$_FILES;
+		$this->_SERVER 	= 	$_SERVER;
+		
+		// Prevent the programmer from using the normal variable.
+		unset( $_POST, $_GET, $_COOKIE, $_FILES, $_SERVER );
+		
+		/** Clean values in the local arrays to prevent SQL Injection **/
+		$vars = array( '_POST', '_GET', '_COOKIE', '_FILES', '_SERVER' );
+		
+		// Is magic quotes on or off?
+		$magic = get_magic_quotes_gpc();
+		
+		foreach ( $vars as $name )
+		{
+			if ( !$magic )
+			{
+				$this->sys_func->cleanArray( $this->$name, 'sql' );
+			}
+		}
+		
+		/* ... */
  		
  		$this->_CONF['ip'] = $this->_SERVER['REMOTE_ADDR'];
   		
-  		////////////
+  		/* ... */
   		
 		$this->info 			= 	(isset( $CALL_SYSTEM['INFO'] )) 				? new MySmartInfo($this) : null;
 		$this->ads 				= 	(isset( $CALL_SYSTEM['ADS'] )) 				? new MySmartAds($this) : null;
@@ -275,42 +311,19 @@ class Engine
 		$this->tag 				= 	(isset( $CALL_SYSTEM['TAG'] )) 				? new MySmartTag($this) : null;
 		$this->bookmark 		= 	(isset( $CALL_SYSTEM['BOOKMARK'] )) 			? new MySmartBookmark($this) : null;
 		
-		////////////
+		/* ... */
 		
 		// Free memory
-		unset($CALL_SYSTEM);
+		unset( $CALL_SYSTEM );
 	
-		////////////
+		/* ... */
 		
 		return true;
 		
-		////////////
+		/* ... */
  	}
  	
- 	////////////
- 	
- 	function _GetInfoRows()
-	{
-		// TODO :: Cache me please!
-		
-		$arr 				= 	array();
-		$arr['select'] 		= 	'*';
-		$arr['from'] 		= 	$this->table['info'];
-		
-		$rows = $this->records->GetList($arr);
-		
-		$x = 0;
-		$y = sizeof($rows);
-		
-		while ($x < $y)
-		{
-			$this->_CONF[ 'info_row' ][ $rows[ $x ][ 'var_name' ] ] = $rows[ $x ][ 'value' ];
-					
-			$x += 1;
-		}
-	}
-	
-	////////////
+ 	/* ... */
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartUsertitleMOD');
 	
-class MySmartUsertitleMOD extends _functions
+class MySmartUsertitleMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartUsertitleMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,56 +70,49 @@ class MySmartUsertitleMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('usertitle_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UTArr 			= 	array();
-		$UTArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$UTArr['field']['usertitle'] 	= 	$MySmartBB->_POST['title'];
-		$UTArr['field']['posts'] 		= 	$MySmartBB->_POST['posts'];
+		$MySmartBB->rec->fields['usertitle'] 	= 	$MySmartBB->_POST['title'];
+		$MySmartBB->rec->fields['posts'] 		= 	$MySmartBB->_POST['posts'];
 		
-		$insert = $MySmartBB->usertitle->InsertUsertitle($UTArr);
+		$insert = $MySmartBB->usertitle->insertUsertitle();
 		
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة المسمى بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة المسمى بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$UTArr 						= 	array();
-		$UTArr['proc'] 				= 	array();
-		$UTArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$UTArr['order']				=	array();
-		$UTArr['order']['field']	=	'id';
-		$UTArr['order']['type']		=	'DESC';
-		
-		$MySmartBB->_CONF['template']['while']['UTList'] = $MySmartBB->usertitle->GetUsertitleList($UTArr);
+		$MySmartBB->usertitle->getUsertitleList();
 		
 		$MySmartBB->template->display('usertitles_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -126,7 +121,7 @@ class MySmartUsertitleMOD extends _functions
 		$MySmartBB->template->display('usertitle_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -135,26 +130,26 @@ class MySmartUsertitleMOD extends _functions
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UTArr 			= 	array();
-		$UTArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$UTArr['field']['usertitle'] 	= 	$MySmartBB->_POST['title'];
-		$UTArr['field']['posts'] 		= 	$MySmartBB->_POST['posts'];
-		$UTArr['where']					=	array('id',$UTInfo['id']);
+		$MySmartBB->rec->fields['usertitle'] 	= 	$MySmartBB->_POST['title'];
+		$MySmartBB->rec->fields['posts'] 		= 	$MySmartBB->_POST['posts'];
 		
-		$update = $MySmartBB->usertitle->UpdateUsertitle($UTArr);
+		$MySmartBB->rec->filter = "id='" . $UTInfo['id'] . "'";
+		
+		$update = $MySmartBB->usertitle->updateUsertitle();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث المسمى بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث المسمى بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -163,26 +158,25 @@ class MySmartUsertitleMOD extends _functions
 		$MySmartBB->template->display('usertitle_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_by_id($UTInfo);
 		
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->usertitle->DeleteUsertitle($DelArr);
+		$del = $MySmartBB->usertitle->deleteUsertitle();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف المسمى بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف المسمى بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$UTInfo)
 	{
@@ -190,22 +184,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$UTArr 				= 	array();
-		$UTArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$UTInfo = $MySmartBB->usertitle->GetUsertitleInfo($UTArr);
+		$UTInfo = $MySmartBB->usertitle->getUsertitleInfo();
 		
 		if ($UTInfo == false)
 		{
-			$MySmartBB->functions->error('الاسم المطلوب غير موجود');
+			$MySmartBB->func->error('الاسم المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($UTInfo,'html');
 	}
 }
 

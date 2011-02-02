@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -12,7 +14,7 @@ define('CLASS_NAME','MySmartOptionsMOD');
 	
 class MySmartOptionsMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -22,138 +24,138 @@ class MySmartOptionsMOD
 		
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_IndexPage();
+				$this->_indexPage();
 			}
 			elseif ($MySmartBB->_GET['general'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_GeneralMain();
+					$this->_generalMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_GeneralUpdate();
+					$this->_generalUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['features'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_FeaturesMain();
+					$this->_featuresMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_FeaturesUpdate();
+					$this->_featuresUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['time'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_TimeMain();
+					$this->_timeMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_TimeUpdate();
+					$this->_timeUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['pages'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_PagesMain();
+					$this->_pagesMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_PagesUpdate();
+					$this->_pagesUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['register'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_RegisterMain();
+					$this->_registerMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_RegisterUpdate();
+					$this->_registerUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['topics'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_TopicsMain();
+					$this->_topicsMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_TopicsUpdate();
+					$this->_topicsUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['fast_reply'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_FastReplyMain();
+					$this->_fastReplyMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_FastReplyUpdate();
+					$this->_fastReplyUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['member'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_MemberMain();
+					$this->_memberMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_MemberUpdate();
+					$this->_memberUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['avatar'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AvatarMain();
+					$this->_avatarMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_AvatarUpdate();
+					$this->_avatarUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['close_days'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_CloseDaysMain();
+					$this->_closeDaysMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_CloseDaysUpdate();
+					$this->_closeDaysUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['close'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_CloseMain();
+					$this->_closeMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_CloseUpdate();
+					$this->_closeUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['ajax'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AjaxMain();
+					$this->_ajaxMain();
 				}
 				elseif ($MySmartBB->_GET['update'])
 				{
-					$this->_AjaxUpdate();
+					$this->_ajaxUpdate();
 				}
 			}
 			elseif ($MySmartBB->_GET['wysiwyg'])
@@ -172,21 +174,21 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _IndexPage()
+	private function _indexPage()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_main');
 	}
 	
-	function _GeneralMain()
+	private function _generalMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_general');
 	}
 	
-	function _GeneralUpdate()
+	private function _generalUpdate()
 	{
 		global $MySmartBB;
 		
@@ -196,9 +198,9 @@ class MySmartOptionsMOD
 		}
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['title'],'var_name'=>'title'));
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['send_email'],'var_name'=>'send_email'));
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['admin_email'],'var_name'=>'admin_email'));
+		$update[0] = $MySmartBB->info->updateInfo( 'title', $MySmartBB->_POST['title'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'send_email', $MySmartBB->_POST['send_email'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'admin_email', $MySmartBB->_POST['admin_email'] );
 		
 		if ($update[0] 
 			and $update[1] 
@@ -209,22 +211,22 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _FeaturesMain()
+	private function _featuresMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_features');
 	}
 	
-	function _FeaturesUpdate()
+	private function _featuresUpdate()
 	{
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['guest_online'],'var_name'=>'show_onlineguest'));
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['pm_feature'],'var_name'=>'pm_feature'));
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['bookmark_feature'],'var_name'=>'bookmark_feature'));
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['describe_feature'],'var_name'=>'describe_feature'));
+		$update[0] = $MySmartBB->info->updateInfo( 'show_onlineguest', $MySmartBB->_POST['guest_online'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'pm_feature', $MySmartBB->_POST['pm_feature'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'bookmark_feature', $MySmartBB->_POST['bookmark_feature'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'describe_feature', $MySmartBB->_POST['describe_feature'] );
 		
 		if ($update[0]
 			and $update[1]
@@ -236,20 +238,20 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _TimeMain()
+	private function _timeMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_time');
 	}
 	
-	function _TimeUpdate()
+	private function _timeUpdate()
 	{
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['time_stamp'],'var_name'=>'timestamp'));
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['time_system'],'var_name'=>'timesystem'));
+		$update[0] = $MySmartBB->info->updateInfo( 'timestamp', $MySmartBB->_POST['time_stamp'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'timesystem', $MySmartBB->_POST['time_system'] );
 		
 		if ($update[0] and $update[1])
 		{
@@ -258,14 +260,14 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _PagesMain()
+	private function _pagesMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_page');
 	}
 	
-	function _PagesUpdate()
+	private function _pagesUpdate()
 	{
 		global $MySmartBB;
 		
@@ -279,13 +281,10 @@ class MySmartOptionsMOD
 		
 		$update = array();
 		
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['page_max'],'var_name'=>'page_max'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['subject_perpage'],'var_name'=>'subject_perpage'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reply_perpage'],'var_name'=>'perpage'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['avatar_perpage'],'var_name'=>'avatar_perpage'));
+		$update[0] = $MySmartBB->info->updateInfo( 'page_max', $MySmartBB->_POST['page_max'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'subject_perpage', $MySmartBB->_POST['subject_perpage'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'perpage', $MySmartBB->_POST['reply_perpage'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'avatar_perpage', $MySmartBB->_POST['avatar_perpage'] );
 		
 		if ($update[0] 
 			and $update[1] 
@@ -297,26 +296,22 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _RegisterMain()
+	private function _registerMain()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
-		$GroupArr 							= 	array();
+		$MySmartBB->rec->order = "group_order ASC";
 		
-		$GroupArr['order'] 					= 	array();
-		$GroupArr['order']['field'] 		= 	'group_order';
-		$GroupArr['order']['type'] 			= 	'ASC';
+		$MySmartBB->group->getGroupList();
 		
-		$MySmartBB->_CONF['template']['while']['GroupList'] = $MySmartBB->group->GetGroupList($GroupArr);
-		
-		//////////
+		/* ... */
 		
 		$MySmartBB->template->display('options_register');
 	}
 	
-	function _RegisterUpdate()
+	private function _registerUpdate()
 	{
 		global $MySmartBB;
 		
@@ -329,35 +324,21 @@ class MySmartOptionsMOD
 		}
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_close'],'var_name'=>'reg_close'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['def_group'],'var_name'=>'def_group'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['adef_group'],'var_name'=>'adef_group'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_o'],'var_name'=>'reg_o'));
-		
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_less_num'],'var_name'=>'reg_less_num'));
-		
-		$update[5] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_max_num'],'var_name'=>'reg_max_num'));
-		
-		$update[6] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_pass_min_num'],'var_name'=>'reg_pass_min_num'));
-		
-		$update[7] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['reg_pass_max_num'],'var_name'=>'reg_pass_max_num'));
-		
-		$update[8] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sat'],'var_name'=>'reg_Sat'));
-		
-		$update[9] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sun'],'var_name'=>'reg_Sun'));
-		
-		$update[10] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Mon'],'var_name'=>'reg_Mon'));
-		
-		$update[11] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Tue'],'var_name'=>'reg_Tue'));
-		
-		$update[12] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Wed'],'var_name'=>'reg_Wed'));
-		
-		$update[13] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Thu'],'var_name'=>'reg_Thu'));
-		
-		$update[14] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Fri'],'var_name'=>'reg_Fri'));
+		$update[0] = $MySmartBB->info->updateInfo( 'reg_close', $MySmartBB->_POST['reg_close'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'def_group', $MySmartBB->_POST['def_group'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'adef_group', $MySmartBB->_POST['adef_group'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'reg_o', $MySmartBB->_POST['reg_o'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'reg_less_num', $MySmartBB->_POST['reg_less_num'] );
+		$update[5] = $MySmartBB->info->updateInfo( 'reg_max_num', $MySmartBB->_POST['reg_max_num'] );
+		$update[6] = $MySmartBB->info->updateInfo( 'reg_pass_min_num', $MySmartBB->_POST['reg_pass_min_num'] );
+		$update[7] = $MySmartBB->info->updateInfo( 'reg_pass_max_num', $MySmartBB->_POST['reg_pass_max_num'] );
+		$update[8] = $MySmartBB->info->updateInfo( 'reg_Sat', $MySmartBB->_POST['Sat'] );
+		$update[9] = $MySmartBB->info->updateInfo( 'reg_Sun', $MySmartBB->_POST['Sun'] );
+		$update[10] = $MySmartBB->info->updateInfo( 'reg_Mon', $MySmartBB->_POST['Mon'] );
+		$update[11] = $MySmartBB->info->updateInfo( 'reg_Tue', $MySmartBB->_POST['Tue'] );
+		$update[12] = $MySmartBB->info->updateInfo( 'reg_Wed', $MySmartBB->_POST['Wed'] );
+		$update[13] = $MySmartBB->info->updateInfo( 'reg_Thu', $MySmartBB->_POST['Thu'] );
+		$update[14] = $MySmartBB->info->updateInfo( 'reg_Fri', $MySmartBB->_POST['Fri'] );
 		
 		if ($update[0] 
 			and $update[1] 
@@ -380,14 +361,14 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _TopicsMain()
+	private function _topicsMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_topics');
 	}
 	
-	function _TopicsUpdate()
+	private function _topicsUpdate()
 	{
 		global $MySmartBB;
 		
@@ -404,27 +385,17 @@ class MySmartOptionsMOD
 		}
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['post_text_min'],'var_name'=>'post_text_min'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['post_text_max'],'var_name'=>'post_text_max'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['post_title_min'],'var_name'=>'post_title_min'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['post_title_max'],'var_name'=>'post_title_max'));
-		
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['time_out'],'var_name'=>'time_out'));
-		
-		$update[5] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['floodctrl'],'var_name'=>'floodctrl'));
-		
-		$update[6] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['samesubject_show'],'var_name'=>'samesubject_show'));
-		
-		$update[7] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['show_subject_all'],'var_name'=>'show_subject_all'));
-		
-		$update[8] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['resize_imagesAllow'],'var_name'=>'resize_imagesAllow'));
-		
-		$update[9] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['default_imagesW'],'var_name'=>'default_imagesW'));
-		
-		$update[10] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['default_imagesH'],'var_name'=>'default_imagesH'));
+		$update[0] = $MySmartBB->info->updateInfo( 'post_text_min', $MySmartBB->_POST['post_text_min'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'post_text_max', $MySmartBB->_POST['post_text_max'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'post_title_min', $MySmartBB->_POST['post_title_min'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'post_title_max', $MySmartBB->_POST['post_title_max'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'time_out', $MySmartBB->_POST['time_out'] );
+		$update[5] = $MySmartBB->info->updateInfo( 'floodctrl', $MySmartBB->_POST['floodctrl'] );
+		$update[6] = $MySmartBB->info->updateInfo( 'samesubject_show', $MySmartBB->_POST['samesubject_show'] );
+		$update[7] = $MySmartBB->info->updateInfo( 'show_subject_all', $MySmartBB->_POST['show_subject_all'] );
+		$update[8] = $MySmartBB->info->updateInfo( 'resize_imagesAllow', $MySmartBB->_POST['resize_imagesAllow'] );
+		$update[9] = $MySmartBB->info->updateInfo( 'default_imagesW', $MySmartBB->_POST['default_imagesW'] );
+		$update[10] = $MySmartBB->info->updateInfo( 'default_imagesH', $MySmartBB->_POST['default_imagesH'] );
 		
 		if ($update[0] 
 			and $update[1] 
@@ -443,29 +414,24 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _FastReplyMain()
+	private function _fastReplyMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_fast_reply');
 	}
 	
-	function _FastReplyUpdate()
+	private function _fastReplyUpdate()
 	{
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['fastreply_allow'],'var_name'=>'fastreply_allow'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['toolbox_show'],'var_name'=>'toolbox_show'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['smiles_show'],'var_name'=>'smiles_show'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['icons_show'],'var_name'=>'icons_show'));
-		
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['title_quote'],'var_name'=>'title_quote'));
-		
-		$update[5] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['activate_closestick'],'var_name'=>'activate_closestick'));
+		$update[0] = $MySmartBB->info->updateInfo( 'fastreply_allow', $MySmartBB->_POST['fastreply_allow'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'toolbox_show', $MySmartBB->_POST['toolbox_show'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'smiles_show', $MySmartBB->_POST['smiles_show'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'icons_show', $MySmartBB->_POST['icons_show'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'title_quote', $MySmartBB->_POST['title_quote'] );
+		$update[5] = $MySmartBB->info->updateInfo( 'activate_closestick', $MySmartBB->_POST['activate_closestick'] );
 		
 		if ($update[0] 
 			and $update[1] 
@@ -479,23 +445,21 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _MemberMain()
+	private function _memberMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_member');
 	}
 	
-	function _MemberUpdate()
+	private function _memberUpdate()
 	{
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['confirm_on_change_mail'],'var_name'=>'confirm_on_change_mail'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['confirm_on_change_pass'],'var_name'=>'confirm_on_change_pass'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['allow_apsent'],'var_name'=>'allow_apsent'));
+		$update[0] = $MySmartBB->info->updateInfo( 'confirm_on_change_mail', $MySmartBB->_POST['confirm_on_change_mail'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'confirm_on_change_pass', $MySmartBB->_POST['confirm_on_change_pass'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'allow_apsent', $MySmartBB->_POST['allow_apsent'] );
 		
 		if ($update[0] 
 			and $update[1]
@@ -506,14 +470,14 @@ class MySmartOptionsMOD
 		}
 	}
 
-	function _AvatarMain()
+	private function _avatarMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('options_avatar');
 	}
 	
-	function _AvatarUpdate()
+	private function _avatarUpdate()
 	{
 		global $MySmartBB;
 		
@@ -524,15 +488,11 @@ class MySmartOptionsMOD
 		}
 			
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['allow_avatar'],'var_name'=>'allow_avatar'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['upload_avatar'],'var_name'=>'upload_avatar'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['max_avatar_width'],'var_name'=>'max_avatar_width'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['max_avatar_height'],'var_name'=>'max_avatar_height'));
-		
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['default_avatar'],'var_name'=>'default_avatar'));
+		$update[0] = $MySmartBB->info->updateInfo( 'allow_avatar', $MySmartBB->_POST['allow_avatar'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'upload_avatar', $MySmartBB->_POST['upload_avatar'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'max_avatar_width', $MySmartBB->_POST['max_avatar_width'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'max_avatar_height', $MySmartBB->_POST['max_avatar_height'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'default_avatar', $MySmartBB->_POST['default_avatar'] );
 		
 		if ($update[0] 
 			and $update[1]
@@ -545,31 +505,25 @@ class MySmartOptionsMOD
 		}
 	}
 
-	function _CloseDaysMain()
+	private function _closeDaysMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_days');
 	}
 	
-	function _CloseDaysUpdate()
+	private function _closeDaysUpdate()
 	{
 		global $MySmartBB;
 			
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sat'],'var_name'=>'Sat'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Sun'],'var_name'=>'Sun'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Mon'],'var_name'=>'Mon'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Tue'],'var_name'=>'Tue'));
-		
-		$update[4] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Wed'],'var_name'=>'Wed'));
-		
-		$update[5] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Thu'],'var_name'=>'Thu'));
-		
-		$update[6] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['Fri'],'var_name'=>'Fri'));
+		$update[0] = $MySmartBB->info->updateInfo( 'Sat', $MySmartBB->_POST['Sat'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'Sun', $MySmartBB->_POST['Sun'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'Mon', $MySmartBB->_POST['Mon'] );
+		$update[3] = $MySmartBB->info->updateInfo( 'Tue', $MySmartBB->_POST['Tue'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'Wed', $MySmartBB->_POST['Wed'] );
+		$update[5] = $MySmartBB->info->updateInfo( 'Thu', $MySmartBB->_POST['Thu'] );
+		$update[6] = $MySmartBB->info->updateInfo( 'Fri', $MySmartBB->_POST['Fri'] );
 		
 		if ($update[0] 
 			and $update[1]
@@ -584,21 +538,20 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _CloseMain()
+	private function _closeMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_close');
 	}
 	
-	function _CloseUpdate()
+	private function _closeUpdate()
 	{
 		global $MySmartBB;
 			
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['board_close'],'var_name'=>'board_close'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['board_msg'],'var_name'=>'board_msg'));
+		$update[0] = $MySmartBB->info->updateInfo( 'board_close', $MySmartBB->_POST['board_close'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'board_msg', $MySmartBB->_POST['board_msg'] );
 				
 		if ($update[0] and $update[1])
 		{
@@ -607,26 +560,23 @@ class MySmartOptionsMOD
 		}
 	}
 
-	function _AjaxMain()
+	private function _ajaxMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_ajax');
 	}
 	
-	function _AjaxUpdate()
+	private function _ajaxUpdate()
 	{
 		global $MySmartBB;
 			
 		$update = array();
 		
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_search'],'var_name'=>'ajax_search'));
-		
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_register'],'var_name'=>'ajax_register'));
-		
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_freply'],'var_name'=>'ajax_freply'));
-		
-		$update[3] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['ajax_moderator_options'],'var_name'=>'ajax_moderator_options'));
+		$update[0] = $MySmartBB->info->updateInfo( 'ajax_search', $MySmartBB->_POST['ajax_search'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'ajax_register', $MySmartBB->_POST['ajax_register'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'ajax_freply', $MySmartBB->_POST['ajax_freply']);
+		$update[3] = $MySmartBB->info->updateInfo( 'ajax_moderator_options', $MySmartBB->_POST['ajax_moderator_options'] );
 				
 		if ($update[0]
 			and $update[1]
@@ -638,21 +588,21 @@ class MySmartOptionsMOD
 		}
 	}
 	
-	function _WYSIWYGMain()
+	private function _WYSIWYGMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('options_wysiwyg');
 	}
 	
-	function _WYSIWYGUpdate()
+	private function _WYSIWYGUpdate()
 	{
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_topic'],'var_name'=>'wysiwyg_topic'));
-		$update[1] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_reply'],'var_name'=>'wysiwyg_reply'));
-		$update[2] = $MySmartBB->info->UpdateInfo(array('value'=>$MySmartBB->_POST['wysiwyg_freply'],'var_name'=>'wysiwyg_freply'));
+		$update[0] = $MySmartBB->info->updateInfo( 'wysiwyg_topic', $MySmartBB->_POST['wysiwyg_topic'] );
+		$update[1] = $MySmartBB->info->updateInfo( 'wysiwyg_reply', $MySmartBB->_POST['wysiwyg_reply'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'wysiwyg_freply', $MySmartBB->_POST['wysiwyg_freply'] );
 		
 		if ($update[0]
 			and $update[1]

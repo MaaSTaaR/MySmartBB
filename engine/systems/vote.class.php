@@ -8,18 +8,24 @@
  * @package 	: 	MySmartVote
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	09/06/2008 07:28:04 AM 
- * @updated 	:	21/08/2008 08:57:59 PM 
+ * @updated 	:	18/07/2010 04:53:39 AM 
  */
 
 class MySmartVote
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartVote($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
 	function InsertVote($param)
 	{
@@ -29,11 +35,11 @@ class MySmartVote
  			$param = array();
  		}
  		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['vote'],$param['field']);
+		$query = $this->engine->records->Insert($this->engine->table['vote'],$param['field']);
 		
 		if ($param['get_id'])
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->DB->sql_insert_id();
 		}
 		
 		return ($query) ? true : false;
@@ -47,7 +53,7 @@ class MySmartVote
  			$param = array();
  		}
  		           				 
-		$query = $this->Engine->records->Update($this->Engine->table['vote'],$param['field'],$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['vote'],$param['field'],$param['where']);
 		           
 		return ($query) ? true : false;
  	}
@@ -60,9 +66,9 @@ class MySmartVote
  			$param = array();
  		}
  		
-		$param['table'] = $this->Engine->table['vote'];
+		$param['table'] = $this->engine->table['vote'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 		
 		return ($del) ? true : false;
 	}
@@ -76,29 +82,24 @@ class MySmartVote
  		}
  		
  		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['vote'];
+ 		$param['from']		=	$this->engine->table['vote'];
  		
-		$rows = $this->Engine->records->GetList($param);
+		$rows = $this->engine->records->GetList($param);
 		
 		return $rows;
 	}
 	
-	function GetVoteInfo($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['vote'];
+	/* ... */
+	
+	public function getVoteInfo()
+	{		
+ 		$this->engine->rec->table = $this->engine->table['vote'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
 	}
-		
+	
+	/* ... */
+	
  	function GetVoteNumber($param)
  	{
  		if (!isset($param) 
@@ -108,28 +109,24 @@ class MySmartVote
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['vote'];
+		$param['from'] 		= 	$this->engine->table['vote'];
 		
-		$num   = $this->Engine->records->GetNumber($param);
+		$num   = $this->engine->records->GetNumber($param);
 		
 		return $num;
  	}
  	
- 	function DoVote($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
+ 	/* ... */
+ 	
+ 	public function doVote( $answers, $answer )
+ 	{	
  		$x 		= 	0;
- 		$size 	= 	sizeof($param['answers']);
+ 		$size 	= 	sizeof($answers);
  		$index	=	-1;
  		
  		while ($x < $size)
  		{
- 			if ($param['answers'][$x][0] == $param['answer'])
+ 			if ($answers[$x][0] == $answer)
  			{
  				$index = $x;
  				
@@ -141,17 +138,17 @@ class MySmartVote
  		
  		if ($index != -1)
  		{
- 			$param['answers'][$index][1] += 1;
+ 			$answers[$index][1] += 1;
  			
- 			unset($param['answer']);
+ 			unset($answer);
  			
- 			$insert = $this->Engine->poll->UpdatePoll($param);
+ 			$insert = $this->engine->poll->updatePoll();
  			
- 			unset($param['answers'],$param['where']);
+ 			unset($answers);
  			
  			if ($insert)
  			{
- 				$vote = $this->InsertVote($param);
+ 				$vote = $this->insertVote();
  				
  				return ($vote) ? true : false;
  			}

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -15,9 +17,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartToolboxMOD');
 	
-class MySmartToolboxMOD extends _functions
+class MySmartToolboxMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -31,40 +33,40 @@ class MySmartToolboxMOD extends _functions
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_AddFontsMain();
+						$this->_addFontsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_AddFontsStart();
+						$this->_addFontsStart();
 					}
 				}
 				elseif ($MySmartBB->_GET['control'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_ControlFontsMain();
+						$this->_controlFontsMain();
 					}
 				}
 				elseif ($MySmartBB->_GET['edit'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_EditFontsMain();
+						$this->_editFontsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_EditFontsStart();
+						$this->_editFontsStart();
 					}
 				}
 				elseif ($MySmartBB->_GET['del'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_DelFontsMain();
+						$this->_delFontsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_DelFontsStart();
+						$this->_delFontsStart();
 					}
 				}
 			}
@@ -75,40 +77,40 @@ class MySmartToolboxMOD extends _functions
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_AddColorsMain();
+						$this->_addColorsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_AddColorsStart();
+						$this->_addColorsStart();
 					}
 				}
 				elseif ($MySmartBB->_GET['control'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_ControlColorsMain();
+						$this->_controlColorsMain();
 					}
 				}
 				elseif ($MySmartBB->_GET['edit'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_EditColorsMain();
+						$this->_editColorsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_EditColorsStart();
+						$this->_editColorsStart();
 					}
 				}
 				elseif ($MySmartBB->_GET['del'])
 				{
 					if ($MySmartBB->_GET['main'])
 					{
-						$this->_DelColorsMain();
+						$this->_delColorsMain();
 					}
 					elseif ($MySmartBB->_GET['start'])
 					{
-						$this->_DelColorsStart();
+						$this->_delColorsStart();
 					}
 				}
 			}
@@ -120,53 +122,47 @@ class MySmartToolboxMOD extends _functions
 	/**
 	 * Fonts functions
 	 */
-	function _AddFontsMain()
+	private function _addFontsMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('font_add');
 	}
 	
-	function _AddFontsStart()
+	private function _addFontsStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$FntArr 			= 	array();
-		$FntArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$FntArr['field']['name'] 	= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
 		
-		$insert = $MySmartBB->toolbox->InsertFont($FntArr);
+		$insert = $MySmartBB->toolbox->insertFont();
 			
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة الخط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة الخط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlFontsMain()
+	private function _controlFontsMain()
 	{
 		global $MySmartBB;
 		
-		$FntArr 					= 	array();
-		$FntArr['order'] 			=	array();
-		$FntArr['order']['field'] 	= 	'id';
-		$FntArr['order']['type']	=	'DESC';
-		$FntArr['proc'] 			= 	array();
-		$FntArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['FntList'] = $MySmartBB->toolbox->GetFontsList($FntArr);
+		$MySmartBB->toolbox->getFontsList();
 		
 		$MySmartBB->template->display('fonts_main');
 	}
 	
-	function _EditFontsMain()
+	private function _editFontsMain()
 	{
 		global $MySmartBB;
 		
@@ -175,7 +171,7 @@ class MySmartToolboxMOD extends _functions
 		$MySmartBB->template->display('font_edit');
 	}
 	
-	function _EditFontsStart()
+	private function _editFontsStart()
 	{
 		global $MySmartBB;
 		
@@ -183,25 +179,25 @@ class MySmartToolboxMOD extends _functions
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$FntArr 			= 	array();
-		$FntArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$FntArr['field']['name'] 	= 	$MySmartBB->_POST['name'];
-		$FntArr['where']			= 	array('id',$Inf['id']);
-				
-		$update = $MySmartBB->toolbox->UpdateFont($FntArr);
+		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
+		
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
+		
+		$update = $MySmartBB->toolbox->updateFont();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الخط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الخط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelFontsMain()
+	private function _delFontsMain()
 	{
 		global $MySmartBB;
 		
@@ -210,71 +206,67 @@ class MySmartToolboxMOD extends _functions
 		$MySmartBB->template->display('font_del');
 	}
 	
-	function _DelFontsStart()
+	private function _DelFontsStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_font_by_id($Inf);
 		
-		$del = $MySmartBB->toolbox->DeleteFont(array('id'	=>	$Inf['id']));
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
+		
+		$del = $MySmartBB->toolbox->deleteFont();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الخط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الخط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
 	/**
-	 * Colors functions
+	 * Colors func
 	 */
-	function _AddColorsMain()
+	private function _addColorsMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('color_add');
 	}
 	
-	function _AddColorsStart()
+	private function _addColorsStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$ClrArr 			= 	array();
-		$ClrArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$ClrArr['field']['name'] = $MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['name'] = $MySmartBB->_POST['name'];
 		
-		$insert = $MySmartBB->toolbox->InsertColor($ClrArr);
-			
+		$insert = $MySmartBB->toolbox->insertColor();
+		
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة اللون بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة اللون بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlColorsMain()
+	private function _controlColorsMain()
 	{
 		global $MySmartBB;
 		
-		$ClrArr 					= 	array();
-		$ClrArr['proc'] 			= 	array();
-		$ClrArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$ClrArr['order']			=	array();
-		$ClrArr['order']['field']	=	'id';
-		$ClrArr['order']['type']	=	'DESC';
+		$MySmartBB->rec->filter = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['ClrList'] = $MySmartBB->toolbox->GetColorsList($ClrArr);
+		$MySmartBB->toolbox->getColorsList();
 		
 		$MySmartBB->template->display('colors_main');
 	}
 	
-	function _EditColorsMain()
+	private function _editColorsMain()
 	{
 		global $MySmartBB;
 		
@@ -283,7 +275,7 @@ class MySmartToolboxMOD extends _functions
 		$MySmartBB->template->display('color_edit');
 	}
 
-	function _EditColorsStart()
+	private function _editColorsStart()
 	{
 		global $MySmartBB;
 		
@@ -291,25 +283,25 @@ class MySmartToolboxMOD extends _functions
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$ClrArr 			= 	array();
-		$ClrArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$ClrArr['field']['name'] 	= 	$MySmartBB->_POST['name'];
-		$ClrArr['where']			= 	array('id',$Inf['id']);
-				
-		$update = $MySmartBB->toolbox->UpdateColor($ClrArr);
+		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
+		
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
+		
+		$update = $MySmartBB->toolbox->updateColor();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث اللون بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث اللون بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelColorsMain()
+	private function _delColorsMain()
 	{
 		global $MySmartBB;
 		
@@ -318,23 +310,25 @@ class MySmartToolboxMOD extends _functions
 		$MySmartBB->template->display('color_del');
 	}
 	
-	function _DelColorsStart()
+	private function _delColorsStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_color_by_id($Inf);
 		
-		$del = $MySmartBB->toolbox->DeleteColor(array('id'	=>	$Inf['id']));
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
+		
+		$del = $MySmartBB->toolbox->deleteColor();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف اللون بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف اللون بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {	
 	function check_font_by_id(&$Inf)
 	{
@@ -342,19 +336,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$Inf = $MySmartBB->toolbox->GetFontInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		
+		$Inf = $MySmartBB->toolbox->getFontInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الخط المطلوب غير موجود');
+			$MySmartBB->func->error('الخط المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 	
 	function check_color_by_id(&$Inf)
@@ -363,19 +357,17 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$Inf = $MySmartBB->toolbox->GetColorInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$Inf = $MySmartBB->toolbox->getColorInfo(array('id'	=>	$MySmartBB->_GET['id']));
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الخط المطلوب غير موجود');
+			$MySmartBB->func->error('الخط المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 }
 

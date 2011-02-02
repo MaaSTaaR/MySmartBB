@@ -1,104 +1,92 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
 
 /**
  * @package 	: 	MySmartFileExtension
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	22/3/2006 , 6:01 PM
- * @end   		: 	22/3/2006 , 6:22 PM
- * @updated 	: 	03/12/2007 12:04:22 AM 
+ * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @start		: 	22/3/2006 , 6:01 PM
+ * @end  		: 	22/3/2006 , 6:22 PM
+ * @updated 	: 	27/07/2010 05:02:26 PM 
  */
 
 class MySmartFileExtension
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartFileExtension($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertExtension($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		         			           
-		$query = $this->Engine->records->Insert($this->Engine->table['extension'],$param['field']);
+	/* ... */
 		
-		if ($param['get_id'])
+	public function insertExtension()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'extension' ];
+		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
-	function GetExtensionList($param)
+	/* ... */
+	
+	public function getExtensionList()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['extension'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows; 		
+		$this->engine->rec->table = $this->engine->table[ 'extension' ];
+		
+ 	 	$this->engine->rec->getList();
 	}
 	
-	function GetExtensionInfo($param)
-	{		
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['extension'];
-	 	
- 	 	$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows;
-	}
+	/* ... */
 	
-	function UpdateExtension($param)
+	public function getExtensionInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+		$this->engine->rec->table = $this->engine->table['extension'];
 		
-		$query = $this->Engine->records->Update($this->Engine->table['extension'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
+	
+	public function updateExtension()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'extension' ];
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}	
 	
-	function DeleteExtension($param)
+	/* ... */
+	
+	public function deleteExtension()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'extension' ];
  		
- 		$param['table'] = $this->Engine->table['extension'];
+ 		$query = $this->engine->rec->delete();
  		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		return ($query) ? true : false;
 	}
+	
+	/* ... */
 }
 
 ?>

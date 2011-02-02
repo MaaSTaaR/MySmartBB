@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -13,69 +15,59 @@ define('CLASS_NAME','MySmartPasswordMOD');
 
 class MySmartPasswordMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->Index();
+			$this->_index();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إتمام عملية تغيير كلمة المرور');
+		$MySmartBB->func->showHeader('إتمام عملية تغيير كلمة المرور');
 		
-		$MySmartBB->functions->AddressBar('إتمام عملية تغيير كلمة المرور');
+		$MySmartBB->func->addressBar('إتمام عملية تغيير كلمة المرور');
 		
 		if (empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->functions->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error('الرابط المتبع غير صحيح');
 		}
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('يرجى تسجيل دخولك اولاً');
+			$MySmartBB->func->error('يرجى تسجيل دخولك اولاً');
 		}
 		
-		$ReqArr = array();
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$ReqArr['code'] 		= 	$MySmartBB->_GET['code'];
-		$ReqArr['type'] 		= 	1;
-		$ReqArr['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-		$RequestInfo = $MySmartBB->request->GetRequestInfo($ReqArr);
+		$RequestInfo = $MySmartBB->request->getRequestInfo();
 		
 		if (!$RequestInfo)
 		{
-			$MySmartBB->functions->error('المعذره الطلب غير موجود !');
+			$MySmartBB->func->error('المعذره الطلب غير موجود !');
 		}
 		
-		$PassArr 			= 	array();
-		$PassArr['field'] 	= 	array();
+		$MySmartBB->rec->fields = array(	'password'	=>	md5($MySmartBB->_CONF['member_row']['new_password']) );
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
-		$PassArr['field']['password'] 	= 	md5($MySmartBB->_CONF['member_row']['new_password']);
-		$PassArr['where'] 				= 	array('id',$MySmartBB->_CONF['member_row']['id']);
+		$UpdatePassword = $MySmartBB->member->updateMember();
 		
-		$UpdatePassword = $MySmartBB->member->UpdateMember($PassArr);
-		
-		$CleanArr 			= 	array();
-		$CleanArr['id'] 	= 	$MySmartBB->_CONF['member_row']['id'];
-		
-		$CleanNewPassword = $MySmartBB->member->CleanNewPassword($CleanArr);
+		$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
 		
 		if ($UpdatePassword)
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح !');
-			$MySmartBB->functions->goto('index.php');
+			$MySmartBB->func->msg('تم التحديث بنجاح !');
+			$MySmartBB->func->goto('index.php');
 		}
 	}
 }

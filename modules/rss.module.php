@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -14,7 +16,7 @@ define('CLASS_NAME','MySmartRSSMOD');
 
 class MySmartRSSMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -22,74 +24,48 @@ class MySmartRSSMOD
 		echo '<rss version="2.0">';
 		echo '<channel>';
 		echo '<title>' . $MySmartBB->_CONF['info_row']['title'] . '</title>';
-		echo '<link>' . $MySmartBB->functions->GetForumAdress() . '</link>';
+		echo '<link>' . $MySmartBB->func->getForumAdress() . '</link>';
 		echo '<description>خلاصات آخر المواضيع النشطه في ' . $MySmartBB->_CONF['info_row']['title'] . '</description>';
 		
 		if ($MySmartBB->_GET['subject'])
 		{
-			$this->_SubjectRSS();
+			$this->_subjectRSS();
 		}
 		elseif ($MySmartBB->_GET['section'])
 		{
-			$this->_SectionRSS();
+			$this->_sectionRSS();
 		}
 		
 		echo '</channel>';
 		echo '</rss>';
 	}
 	
-	function _SubjectRSS()
+	private function _subjectRSS()
 	{
 		global $MySmartBB;
 		
-		$SubjectArr = array();
+		$MySmartBB->rec->filter = "delete_topic<>'1' AND sec_subject<>'1'";
+		$MySmartBB->rec->order = "write_time DESC";
+		$MySmartBB->rec->limit = '10';
 		
-		$SubjectArr['where'] 				= 	array();
-				
-		$SubjectArr['where'][0] 			= 	array();
-		$SubjectArr['where'][0]['name'] 	= 	'delete_topic';
-		$SubjectArr['where'][0]['oper'] 	= 	'<>';
-		$SubjectArr['where'][0]['value'] 	= 	'1';
+		$MySmartBB->subject->getSubjectList();
 		
-		$SubjectArr['where'][1] 			= 	array();
-		$SubjectArr['where'][1]['con']		=	'AND';
-		$SubjectArr['where'][1]['name'] 	= 	'sec_subject';
-		$SubjectArr['where'][1]['oper'] 	= 	'<>';
-		$SubjectArr['where'][1]['value'] 	= 	'1';
-				
-		$SubjectArr['order'] 			= 	array();
-		$SubjectArr['order']['field'] 	= 	'write_time';
-		$SubjectArr['order']['type'] 	= 	'DESC';
-		
-		$SubjectArr['limit'] 			= 	'10';
-		
-		$SubjectArr['proc'] 			= 	array();
-		// Ok Mr.XSS go to hell !
-		$SubjectArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html'); 
-		
-		$SubjectList = $MySmartBB->subject->GetSubjectList($SubjectArr);
-		
-		$size 	= 	sizeof($SubjectList);
-		$x		=	0;
-		
-		while ($x < $size)
+		while ( $row = $MySmartBB->rec->getInfo() )
 		{
 			echo '<item>';
-			echo '<title>' . $SubjectList[$x]['title'] . '</title>';
-			echo '<link>' . $MySmartBB->functions->GetForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $SubjectList[$x]['id'] . '</link>';
-			echo '<description>' . $SubjectList[$x]['text'] . '</description>';
+			echo '<title>' . $row['title'] . '</title>';
+			echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $row['id'] . '</link>';
+			echo '<description>' . $row['text'] . '</description>';
 			echo '</item>';
-			
-			$x += 1;
 		}
 	}
 	
-	function _SectionRSS()
+	private function _sectionRSS()
 	{
 		global $MySmartBB;
 		
 		// Clean id from any strings
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		// No _GET['id'] , so ? show a small error :)
 		if (empty($MySmartBB->_GET['id']))
@@ -101,38 +77,25 @@ class MySmartRSSMOD
 		else
 		{
 			// Get section information and set it in $this->Section
-			$SecArr 			= 	array();
-			$SecArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 			
-			$Section = $MySmartBB->section->GetSectionInfo($SecArr);
-				
-			// Clear section information from any denger
-			$MySmartBB->functions->CleanVariable($Section,'html');
+			$Section = $MySmartBB->section->getSectionInfo();
 			
-			// Temporary array to save the parameter of GetSectionGroupList() in nice way
-			$SecGroupArr 						= 	array();
-			$SecGroupArr['where'] 				= 	array();
-		
-			$SecGroupArr['where'][0]			=	array(	'name' 	=> 'section_id',
-															'oper'	=>	'=',
-															'value'	=>	$Section['id']);
-		
-			$SecGroupArr['where'][1]			=	array();
-			$SecGroupArr['where'][1]['con']		=	'AND';
-			$SecGroupArr['where'][1]['name']	=	'group_id';
-			$SecGroupArr['where'][1]['oper']	=	'=';
-			$SecGroupArr['where'][1]['value']	=	$MySmartBB->_CONF['group_info']['id'];
-		
-			
-			// Ok :) , the permssion for this visitor/member in this section
-			$SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
-					
 			// This section isn't exists
 			if (!$Section)
 			{
-				$MySmartBB->functions->error('القسم المطلوب غير موجود');
+				$MySmartBB->func->error('القسم المطلوب غير موجود');
 			}	
-		
+
+			/* ... */
+			
+			$MySmartBB->rec->filter = "section_id='" . $Section['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+			
+			// Ok :) , the permssion for this visitor/member in this section
+			$SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+			
+			/* ... */
+					
 			// This member can't view this section
 			if ($SectionGroup['view_section'] != 1)
 			{
@@ -162,45 +125,19 @@ class MySmartRSSMOD
 				return 0;
 			}
 			
-			$SubjectArr = array();
-				
-			$SubjectArr['where'] 				= 	array();
+			$MySmartBB->rec->filter = "section='" . $MySmartBB->_GET['id'] . "' AND delete_topic<>'1'";
+			$MySmartBB->rec->order = "write_time DESC";
+			$MySmartBB->rec->limit = '10';
 			
-			$SubjectArr['where'][0] 			= 	array();
-			$SubjectArr['where'][0]['name'] 	= 	'section';
-			$SubjectArr['where'][0]['oper'] 	= 	'=';
-			$SubjectArr['where'][0]['value'] 	= 	$MySmartBB->_GET['id'];
+			$MySmartBB->subject->getSubjectList();
 			
-			$SubjectArr['where'][1] 			= 	array();
-			$SubjectArr['where'][1]['con'] 		= 	'AND';
-			$SubjectArr['where'][1]['name'] 	= 	'delete_topic';
-			$SubjectArr['where'][1]['oper'] 	= 	'<>';
-			$SubjectArr['where'][1]['value'] 	= 	'1';
-				
-			$SubjectArr['order'] 			= 	array();
-			$SubjectArr['order']['field'] 	= 	'write_time';
-			$SubjectArr['order']['type'] 	= 	'DESC';
-			
-			$SubjectArr['limit'] 			= 	'10';
-		
-			$SubjectArr['proc'] 			= 	array();
-			// Ok Mr.XSS go to hell !
-			$SubjectArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html'); 
-		
-			$SubjectList = $MySmartBB->subject->GetSubjectList($SubjectArr);
-		
-			$size 	= 	sizeof($SubjectList);
-			$x		=	0;
-		
-			while ($x < $size)
+			while ( $row = $MySmartBB->rec->getInfo() )
 			{
 				echo '<item>';
-				echo '<title>' . $SubjectList[$x]['title'] . '</title>';
-				echo '<link>' . $MySmartBB->functions->GetForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $SubjectList[$x]['id'] . '</link>';
-				echo '<description>' . $SubjectList[$x]['text'] . '</description>';
-				echo '</item>';
-			
-				$x += 1;
+				echo '<title>' . $row['title'] . '</title>';
+				echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $row['id'] . '</link>';
+				echo '<description>' . $row['text'] . '</description>';
+				echo '</item>';			
 			}
 		}
 	}

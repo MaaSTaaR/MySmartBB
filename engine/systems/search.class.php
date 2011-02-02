@@ -7,21 +7,25 @@
 /**
  * @package 	: 	MySmartSearch
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
- * @updated 	: 	17/07/2008 12:13:54 AM 
+ * @updated 	: 	18/07/2010 04:08:46 AM 
  */
  
 class MySmartSearch
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartSearch($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function Search($param)
+	/* ... */
+	
+	public function search()
 	{
- 		if (!isset($param)
+ 		/*if (!isset($param)
  			or !is_array($param))
  		{
  			$param = array();
@@ -70,9 +74,9 @@ class MySmartSearch
        		}
       	}
 
-		$rows = $this->Engine->records->GetList($search_query,$param);
+		$rows = $this->engine->rec->getList($search_query,$param);
       	
-      	return (is_array($rows)) ? $rows : false;
+      	return (is_array($rows)) ? $rows : false;*/
  	}
 }
  

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -14,122 +16,105 @@ define('CLASS_NAME','MySmartForgetMOD');
 
 class MySmartForgetMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_Index();
+			$this->_index();
 		}
 		elseif ($MySmartBB->_GET['start'])
 		{
-			$this->_Start();
+			$this->_start();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _Index()
+	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('استرجاع كلمة المرور');
+		$MySmartBB->func->showHeader('استرجاع كلمة المرور');
 				
 		$MySmartBB->template->display('forget_password_form');
 	}
 	
-	function _Start()
+	private function _start()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية استرجاع كلمة المرور');
+		$MySmartBB->func->showHeader('تنفيذ عملية استرجاع كلمة المرور');
 		
-		$MySmartBB->functions->AddressBar('تنفيذ عملية استرجاع كلمة المرور');
+		$MySmartBB->func->addressBar('تنفيذ عملية استرجاع كلمة المرور');
 		
 		if (empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
+		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->functions->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
 		
-		$CheckArr 			= 	array();
-		$CheckArr['where']	=	array('email',$MySmartBB->_POST['email']);
+		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		$CheckEmail = $MySmartBB->member->IsMember($CheckArr);
+		$CheckEmail = $MySmartBB->member->isMember();
 		
 		if (!$CheckEmail)
 		{
-			$MySmartBB->functions->error('البريد الالكتروني غير موجود في قواعد بياناتنا !');
+			$MySmartBB->func->error('البريد الالكتروني غير موجود في قواعد بياناتنا !');
 		}
 		
-		$MemberArr 			= 	array();
-		$MemberArr['where'] 	= 	array('email',$MySmartBB->_POST['email']);
+		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		$ForgetMemberInfo = $MySmartBB->member->GetMemberInfo($MemberArr);
-			
-		$MySmartBB->functions->CleanVariable($ForgetMemberInfo,'html');
-		$MySmartBB->functions->CleanVariable($ForgetMemberInfo,'sql');
+		$ForgetMemberInfo = $MySmartBB->member->getMemberInfo();
 		
-		$Adress = 	$MySmartBB->functions->GetForumAdress();
-		$Code	=	$MySmartBB->functions->RandomCode();
+		$MySmartBB->func->CleanArray($ForgetMemberInfo,'sql');
+		
+		$Adress = 	$MySmartBB->func->getForumAdress();
+		$Code	=	$MySmartBB->func->randomCode();
 		
 		$ChangeAdress = $Adress . 'index.php?page=new_password&index=1&code=' . $Code;
 		$CancelAdress = $Adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $Code;
 		
-		$ReqArr 				= 	array();
-		$ReqArr['field']		=	array();
-		
-		$ReqArr['field']['random_url'] 		= 	$Code;
-		$ReqArr['field']['username'] 		= 	$ForgetMemberInfo['username'];
-		$ReqArr['field']['request_type'] 	= 	1;
-		
-		$InsertReq = $MySmartBB->request->InsertRequest($ReqArr);
+		$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
+											'username'	=>	$ForgetMemberInfo['username'],
+											'request_type'	=>	'1'	);
+												
+		$InsertReq = $MySmartBB->request->insertRequest();
 		
 		if ($InsertReq)
 		{
-			$UpdateArr 					= 	array();
-			$UpdateArr['field']			=	array();
+			$MySmartBB->rec->fields = array(	'new_password'	=>	$MySmartBB->func->randomCode() );
+			$MySmartBB->rec->filter = "id='" . $ForgetMemberInfo['id'] . "'";
 			
-			$UpdateArr['field']['new_password'] 	= 	$MySmartBB->functions->RandomCode();
-			$UpdateArr['where'] 					= 	array('id',$ForgetMemberInfo['id']);
-			
-			$UpdateNewPassword = $MySmartBB->member->UpdateMember($UpdateArr);
+			$UpdateNewPassword = $MySmartBB->member->updateMember();
 			
 			if ($UpdateNewPassword)
 			{
-				$MsgArr 			= 	array();
-				$MsgArr['where'] 	= 	array('id','1');
+				$MySmartBB->rec->filter = "id='1'";
 				
-				$MassegeInfo = $MySmartBB->message->GetMessageInfo($MsgArr);
-			
-				$MsgArr 				= 	array();
-				$MsgArr['text'] 		= 	$MassegeInfo['text'];
-				$MsgArr['change_url'] 	= 	$ChangeAdress;
-				$MsgArr['cancel_url'] 	= 	$CancelAdress;
-				$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
-				$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
+				$MassegeInfo = $MySmartBB->massege->getMessageInfo();
 				
-				$MassegeInfo['text'] = $MySmartBB->message->MessageProccess($MsgArr);
+				$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
 				
-				$Send = $MySmartBB->functions->mail($ForgetMemberInfo['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
+				$Send = $MySmartBB->func->mail($ForgetMemberInfo['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
 				
 				if ($Send)
 				{
-					$MySmartBB->functions->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني، يرجى مراجعته');
-					$MySmartBB->functions->goto('index.php',2);
+					$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني، يرجى مراجعته');
+					$MySmartBB->func->goto('index.php',2);
 				}
 				else
 				{
-					$MySmartBB->functions->error('لم يتم الارسال');
+					$MySmartBB->func->error('لم يتم الارسال');
 				}
 			}
 		}

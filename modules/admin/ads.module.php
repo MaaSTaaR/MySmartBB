@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartAdsMOD');
 	
-class MySmartAdsMOD extends _functions
+class MySmartAdsMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,55 +29,55 @@ class MySmartAdsMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
 			$MySmartBB->template->display('footer');
 		}
 	}
-		
-	function _AddMain()
+	
+	private function _addMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('ads_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
@@ -83,52 +85,46 @@ class MySmartAdsMOD extends _functions
 			or empty($MySmartBB->_POST['link']) 
 			or empty($MySmartBB->_POST['picture']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$AdsArr 			= 	array();
-		$AdsArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$AdsArr['field']['sitename'] 	= 	$MySmartBB->_POST['name'];
-		$AdsArr['field']['site'] 		= 	$MySmartBB->_POST['link'];
-		$AdsArr['field']['picture'] 	= 	$MySmartBB->_POST['picture'];
-		$AdsArr['field']['width'] 		= 	$MySmartBB->_POST['width'];
-		$AdsArr['field']['height'] 		= 	$MySmartBB->_POST['height'];
-		$AdsArr['field']['clicks'] 		= 	0;
+		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['site'] 		= 	$MySmartBB->_POST['link'];
+		$MySmartBB->rec->fields['picture'] 		= 	$MySmartBB->_POST['picture'];
+		$MySmartBB->rec->fields['width'] 		= 	$MySmartBB->_POST['width'];
+		$MySmartBB->rec->fields['height'] 		= 	$MySmartBB->_POST['height'];
+		$MySmartBB->rec->fields['clicks'] 		= 	0;
 				
-		$insert = $MySmartBB->ads->InsertAds($AdsArr);
+		$insert = $MySmartBB->ads->insertAds();
 			
 		if ($insert)
 		{
-			$ads_num = $MySmartBB->ads->GetAdsNumber(null);
+			$ads_num = $MySmartBB->ads->getAdsNumber();
 			
-			$update = $MySmartBB->info->UpdateInfo(array('value'	=>	$ads_num,'var_name'	=>	'ads_num'));
+			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
 			
 			if ($update)
 			{
-				$MySmartBB->functions->msg('تم اضافة الاعلان بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+				$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$AdsArr 					= 	array();
-		$AdsArr['order']			=	array();
-		$AdsArr['order']['field']	=	'id';
-		$AdsArr['order']['type']	=	'DESC';
-		$AdsArr['proc'] 			= 	array();
-		$AdsArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->filter = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['AdsList'] = $MySmartBB->ads->GetAdsList($AdsArr);
+		$MySmartBB->ads->getAdsList();
 				
 		$MySmartBB->template->display('ads_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -139,7 +135,7 @@ class MySmartAdsMOD extends _functions
 		$MySmartBB->template->display('ads_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -151,30 +147,30 @@ class MySmartAdsMOD extends _functions
 			or empty($MySmartBB->_POST['link']) 
 			or empty($MySmartBB->_POST['picture']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$AdsArr 			= 	array();
-		$AdsArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$AdsArr['field']['sitename'] 	= 	$MySmartBB->_POST['name'];
-		$AdsArr['field']['site'] 		= 	$MySmartBB->_POST['link'];
-		$AdsArr['field']['picture'] 	= 	$MySmartBB->_POST['picture'];
-		$AdsArr['field']['width'] 		= 	$MySmartBB->_POST['width'];
-		$AdsArr['field']['height'] 		= 	$MySmartBB->_POST['height'];
-		$AdsArr['field']['clicks'] 		= 	$MySmartBB->_CONF['template']['Inf']['clicks'];
-		$AdsArr['where'] 				= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
-				
-		$update = $MySmartBB->ads->UpdateAds($AdsArr);
+		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['site'] 		= 	$MySmartBB->_POST['link'];
+		$MySmartBB->rec->fields['picture'] 	= 	$MySmartBB->_POST['picture'];
+		$MySmartBB->rec->fields['width'] 		= 	$MySmartBB->_POST['width'];
+		$MySmartBB->rec->fields['height'] 		= 	$MySmartBB->_POST['height'];
+		$MySmartBB->rec->fields['clicks'] 		= 	$MySmartBB->_CONF['template']['Inf']['clicks'];
+		
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		
+		$update = $MySmartBB->ads->updateAds();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -185,7 +181,7 @@ class MySmartAdsMOD extends _functions
 		$MySmartBB->template->display('ads_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -193,24 +189,26 @@ class MySmartAdsMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$del = $MySmartBB->ads->DeleteAds(array('id'	=>	$MySmartBB->_GET['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		
+		$del = $MySmartBB->ads->deleteAds();
 		
 		if ($del)
 		{
-			$ads_num = $MySmartBB->ads->GetAdsNumber(null);
+			$ads_num = $MySmartBB->ads->getAdsNumber();
 			
-			$update = $MySmartBB->info->UpdateInfo(array('value'	=>	$ads_num,'var_name'	=>	'ads_num'));
+			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
 			
 			if ($update)
 			{
-				$MySmartBB->functions->msg('تم حذف الاعلان بنجاح !');
-				$MySmartBB->functions->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+				$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
+				$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
 	}
 }
 
-class _functions
+class _func
 {	
 	function check_by_id(&$AdsInfo)
 	{
@@ -218,22 +216,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$AdsArr 			= 	array();
-		$AdsArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$AdsInfo = $MySmartBB->ads->GetAdsInfo($AdsArr);
+		$AdsInfo = $MySmartBB->ads->getAdsInfo();
 		
 		if ($AdsInfo == false)
 		{
-			$MySmartBB->functions->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($AdsInfo,'html');
 	}
 }
 

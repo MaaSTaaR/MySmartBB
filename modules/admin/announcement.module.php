@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartAnnouncementMOD');
 	
-class MySmartAnnouncementMOD extends _functions
+class MySmartAnnouncementMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartAnnouncementMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,58 +70,53 @@ class MySmartAnnouncementMOD extends _functions
 		}
 	}
 		
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('announcement_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$AnnArr 			= 	array();
-		$AnnArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$AnnArr['field']['title'] 	= 	$MySmartBB->_POST['title'];
-		$AnnArr['field']['text'] 	= 	$MySmartBB->_POST['text'];
-		$AnnArr['field']['writer'] 	= 	$MySmartBB->_CONF['rows']['member_row']['username'];
-		$AnnArr['field']['date'] 	= 	$MySmartBB->_CONF['now'];
+		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
+		$MySmartBB->rec->fields['text'] 	= 	$MySmartBB->_POST['text'];
+		$MySmartBB->rec->fields['writer'] 	= 	$MySmartBB->_CONF['member_row']['username'];
+		$MySmartBB->rec->fields['date'] 	= 	$MySmartBB->_CONF['now'];
 		
-		$insert = $MySmartBB->announcement->InsertAnnouncement($AnnArr);
+		$insert = $MySmartBB->announcement->insertAnnouncement();
 		
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة الاعلان بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$AnnArr 					= 	array();
-		$AnnArr['order']			=	array();
-		$AnnArr['order']['field']	=	'id';
-		$AnnArr['order']['type']	=	'DESC';
-		$AnnArr['proc'] 			= 	array();
-		$AnnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$AnnArr['proc']['date'] 	= 	array('method'=>'date','store'=>'date');
+		//$AnnArr['proc']['date'] 	= 	array('method'=>'date','store'=>'date');
 		
-		$MySmartBB->_CONF['template']['while']['AnnList'] = $MySmartBB->announcement->GetAnnouncementList($AnnArr);
+		$MySmartBB->rec->order = 'id DESC';
+		
+		$MySmartBB->announcement->getAnnouncementList();
 		
 		$MySmartBB->template->display('announcements_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -130,7 +127,7 @@ class MySmartAnnouncementMOD extends _functions
 		$MySmartBB->template->display('announcement_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -141,28 +138,28 @@ class MySmartAnnouncementMOD extends _functions
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$AnnArr 			= 	array();
-		$AnnArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$AnnArr['field']['title'] 	= 	$MySmartBB->_POST['title'];
-		$AnnArr['field']['text'] 	= 	$MySmartBB->_POST['text'];
-		$AnnArr['field']['writer'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['writer'];
-		$AnnArr['field']['date'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['date'];
-		$AnnArr['where']			=	array('id',$MySmartBB->_CONF['template']['AnnInfo']['id']);
+		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
+		$MySmartBB->rec->fields['text'] 	= 	$MySmartBB->_POST['text'];
+		$MySmartBB->rec->fields['writer'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['writer'];
+		$MySmartBB->rec->fields['date'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['date'];
 		
-		$insert = $MySmartBB->announcement->UpdateAnnouncement($AnnArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['AnnInfo']['id'] . "'";
 		
-		if ($insert)
+		$update = $MySmartBB->announcement->updateAnnouncement();
+		
+		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -173,7 +170,7 @@ class MySmartAnnouncementMOD extends _functions
 		$MySmartBB->template->display('announcement_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -181,20 +178,19 @@ class MySmartAnnouncementMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
 		
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$del = $MySmartBB->announcement->DeleteAnnouncement($DelArr);
+		$del = $MySmartBB->announcement->deleteAnnouncement();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الاعلان بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$AnnInfo)
 	{
@@ -202,22 +198,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$AnnArr 			= 	array();
-		$AnnArr['where']	=	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$AnnInfo = $MySmartBB->announcement->GetAnnouncementInfo($AnnArr);
+		$AnnInfo = $MySmartBB->announcement->getAnnouncementInfo();
 		
 		if ($AnnInfo == false)
 		{
-			$MySmartBB->functions->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($AnnInfo,'html');
 	}
 }
 

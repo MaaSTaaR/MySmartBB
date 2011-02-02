@@ -2,286 +2,160 @@
 /*
 Started : 19-4-2007 11:55 AM
 End : 19-4-2007 12:03 PM
-Update : 13/02/2010 10:20:44 AM 
+Updated : 05/07/2010 09:01:35 PM 
+Version : 2.0.2
 */
 
 class MySmartRecords
 {
-	var $from;
-	var $Engine;
+	private $db; // Database class
+	private $func; // Functions class (must implement the function cleanVariable)
+	private $pager_obj; // Pager class
+	private $query;
 	
-	function MySmartRecords($Engine)
+	public $filter;
+	public $fields;
+	public $table;
+	public $order;
+	public $limit;
+	public $result;
+	
+	// For select()
+	public $select;
+	public $join;
+	
+	// Pager information (Array)
+	public $pager;
+	
+	/* ... */
+	
+	function __construct( $db, $func, $pager )
 	{
-		$this->Engine = $Engine;
+		$this->db = $db;
+		$this->func = $func;
+		$this->pager = $pager;
 	}
 	
-	function Select($param)
+	/* ... */
+	
+	public function select()
 	{
-		if (empty($param['from']))
+		if ( !isset( $this->table ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- FROM',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- table',E_USER_ERROR);
 		}
+		
+		/* ... */
 		
 		$statement 	= 	'SELECT ';
-		$statement	.=	(!empty($param['select'])) ? $param['select'] : '*';
-		$statement	.=	' FROM ' . $param['from'];
+		$statement	.=	( isset( $this->select ) ) ? $this->select : '*'; // Choose fields to fetch, or fetch all of them
+		$statement	.=	' FROM ' . $this->table;
 		
-		if ( isset( $param[ 'join' ] )
-			and is_array( $param[ 'join' ] ) )
+		unset( $this->select, $this->table );
+		
+		/* ... */
+		
+		if ( isset( $this->join ) )
 		{
-			if ($param['join']['type'] == 'inner')
+			$statement .= ' JOIN ' . $this->join;
+			
+			unset( $this->join );
+		}
+		
+		/* ... */
+				
+		if ( isset( $this->filter ) )
+		{
+			$statement .= ' WHERE ' . $this->filter;
+		
+			unset( $this->filter );
+		}
+		
+		/* ... */
+		
+		if ( isset( $this->order ) )
+		{
+			$statement .= ' ORDER BY ' . $this->order;
+			
+			unset( $this->order );
+		}
+		
+		/* ... */
+		
+		if ( is_object( $this->pager_obj ) )
+		{
+			if ( is_array( $this->pager ) )
 			{
-				$statement .= ' INNER';
-			}
-			elseif ($param['join']['type'] == 'left')
-			{
-				$statement .= ' LEFT';
-			}
-			elseif ($param['join']['type'] == 'right')
-			{
-				$statement .= ' RIGHT';
+				if (!isset( $this->pager[ 'total' ] )
+					or !isset( $this->pager[ 'perpage' ] )
+					or !isset( $this->pager[ 'count' ] )
+					or empty( $this->pager[ 'location' ] )
+					or empty( $this->pager[ 'var' ] ) )
+				{
+					trigger_error( 'ERROR::NEED_PARAMETER -- FROM Select() -- PAGER', E_USER_ERROR );
+				}
+				
+				$this->pager[ 'perpage' ] 	= ( $this->pager[ 'perpage' ] < 0 ) ? 10 : $this->pager[ 'perpage' ];
+				$this->pager[ 'count' ] 	= ( $this->pager[ 'count' ] < 0 ) ? 0 : $this->pager[ 'count' ];
+		
+				$this->pager_obj->start($this->pager[ 'total' ], $this->pager[ 'perpage' ], $this->pager[ 'count' ], $this->pager[ 'location' ], $this->pager[ 'var' ]);
+			
+				$statement .= ' LIMIT ' . $this->pager['count'] . ',' . $this->pager['perpage'];
 			}
 			else
 			{
-				trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- JOIN TYPE',E_USER_ERROR);
-			}
-			
-			$statement .= ' JOIN ' . $param['join']['from'] . ' ON ' . $param['join']['where'];
-		}
-		
-		if ( ( isset( $param[ 'where' ] ) and is_array($param['where']) )
-			or ( ( isset( $param[ 'field' ] ) and is_array( $param['field'] ) ) and $this->from == 'info' ) )
-		{
-			$statement .= ' WHERE ';
-			
-			$k = 'where';
-			
-			if ( isset( $param[ 'field' ] ) 
-				and is_array( $param[ 'field' ] ) ) 
-			{
-				$k = 'field';
-			}
-			
-			$y = sizeof($param[$k]);
-			
-			if ($y == 1)
-			{
-				$key = array_keys($param[$k]);
-				
-				if (empty($param[$k][$key[0]]['name']))
+				if ( isset( $this->limit ) )
 				{
-					trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- WHERE NAME');
-				}
-							
-				$oper = (!empty($param[$k][$key[0]]['oper'])) ? $param[$k][$key[0]]['oper'] : '=';
-				
-				$statement .= $param[$k][$key[0]]['name'];
-				
-				$oper_need_space = false;
-				
-				$oper_to_check = strtolower($oper);
-				
-				if ($oper_to_check == 'like'
-					or $oper_to_check == 'between')
-				{
-					$oper_need_space = true;
-					
-					$statement .= ' ';
-				}
-				
-				$statement .= $oper;
-				
-				if ($oper_need_space)
-				{
-					$statement .= ' ';
-				}
-				
-				if ( ( !isset( $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] ) or $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] != true )
-					and $oper_to_check != 'between' )
-				{
-					$statement .= "'";
-				}
-				
-				$statement .= $param[$k][$key[0]]['value'];
-				
-				if ( ( !isset( $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] ) or $param[ $k ][ $key[ 0 ] ][ 'del_quote' ] != true )
-					and $oper_to_check != 'between')
-				{
-					$statement .= "'";
+					$statement .= ' LIMIT ' . $this->limit;
 				}
 			}
-			elseif ($y > 1)
-			{
-				$x = 0;
-								
-				while ($x < $y)
-				{
-					if (!isset($param[$k][$x]['name']))
-					{
-						trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- WHERE NAME');
-					}
-										
-					$oper = (!empty($param[$k][$x]['oper'])) ? $param[$k][$x]['oper'] : '=';
-					
-					if ( !isset( $param[ $k ][ $x ][ 'con' ] ) )
-					{
-						$param[$k][$x]['con'] = '';
-					}
-					
-					$statement .= ' ' . $param[$k][$x]['con'] . ' ' . $param[$k][$x]['name'];
-					
-					$oper_is_like = false;
-					$oper_need_space = false;
-				
-					$oper_to_check = strtolower($oper);
-				
-					if ($oper_to_check == 'like'
-						or $oper_to_check == 'between')
-					{
-						$oper_need_space = true;
-					
-						$statement .= ' ';
-					}
-				
-					$statement .= $oper;
-				
-					if ($oper_need_space)
-					{
-						$statement .= ' ';
-					}
-					
-					if ( ( !isset( $param[ $k ][ $x ][ 'del_quote' ] ) or $param[ $k ][ $x ][ 'del_quote' ] != true )
-						and $oper_to_check != 'between' )
-					{
-						$statement .= "'";
-					}
-				
-					$statement .= $param[$k][$x]['value'];
-					
-					if ( ( !isset( $param[ $k ][ $x ][ 'del_quote' ] ) or $param[ $k ][ $x ][ 'del_quote' ] != true )
-						and $oper_to_check != 'between' )
-					{
-						$statement .= "'";
-					}
-										
-					$x += 1;
-				}
-			}
-			else
-			{
-				trigger_error('ERROR::EMPTY_ARRAY -- FROM Select()',E_USER_ERROR);
-			}
-		}
-				
-		if ( isset( $param[ 'order' ] )
-			and is_array( $param[ 'order' ] ) )
-		{
-			if ($param['order']['type'] != 'RAND()')
-			{
-				if (empty($param['order']['field']))
-				{
-					trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- ORDER FIELD',E_USER_ERROR);
-				}
-			}
-			
-			$statement .= ' ORDER BY ' . $param['order']['field'] . ' ';
-			$statement .= (!empty($param['order']['type'])) ? $param['order']['type'] : 'DESC';
-		}
-		
-		if ( isset( $param[ 'pager' ] )
-			and is_array( $param[ 'pager' ] ) )
-		{
-			if (!isset($param['pager']['total'])
-				or !isset($param['pager']['perpage'])
-				or !isset($param['pager']['count'])
-				or empty($param['pager']['location'])
-				or empty($param['pager']['var']))
-			{
-				trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- PAGER',E_USER_ERROR);
-			}
-				
-			$param['pager']['perpage'] 	= ($param['pager']['perpage'] < 0) ? 10 : $param['pager']['perpage'];
-			$param['pager']['count'] 	= ($param['pager']['count'] < 0) ? 0 : $param['pager']['count'];
-		
-			$this->Engine->pager->start(	$param['pager']['total'],
-											$param['pager']['perpage'],
-											$param['pager']['count'],
-											$param['pager']['location'],
-											$param['pager']['var']);
-			
-			$statement .= ' LIMIT ' . $param['pager']['count'] . ',' . $param['pager']['perpage'];
 		}
 		else
 		{
-			if (!empty($param['limit']))
+			if ( isset( $this->limit ) )
 			{
-				$statement .= ' LIMIT ' . $param['limit'];
+				$statement .= ' LIMIT ' . $this->limit;
 			}
 		}
+
 		
-		if (!empty($param['sql_statment']))
-		{
-			$statement .= ' ' . $param['sql_statment'];
-		}
+		/* ... */
 		
-		$query = $this->Engine->DB->sql_query($statement);
+		$query = $this->db->sql_query( $statement );
 		
 		return $query;
 	}
 	
-	function Insert($table,$field)
-	{		
-		if (empty($table)
-			or empty($field))
+	/* ... */
+	
+	// This function adds slashes to input automatically.
+	public function insert()
+	{
+		/* ... */
+			
+		if ( empty( $this->table )
+			or empty( $this->fields ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM Insert() -- TABLE OR FIELD',E_USER_ERROR);
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Insert() -- TABLE OR FIELD', E_USER_ERROR );
 		}
 		
-		$query_string = "INSERT INTO " . $table . " SET ";
-		           	
-		$size = count($field);
+		/* ... */
+		
+		$statement = 'INSERT INTO ' . $this->table . ' SET ';
+		
+		unset( $this->table );
+		
+		/* ... */
+		
+		$size = sizeof( $this->fields );
 		
 		$i = 0;
 		          	
-		foreach ($field as $name => $value)
+		foreach ( $this->fields as $name => $value )
 		{
-			$query_string .= $name . '=' . "'$value'";
+			$statement .= $name . '=' . "'" . $this->func->cleanVariable( $value, 'sql' ) . "'"; // Ensure there is no SQL Injection by adding slashes
 			
-			if ($i < $size-1)
-			{
-				$i += 1;
-				
-				$query_string .= ',';
-			}
-		}
-		
-		$query = $this->Engine->DB->sql_unbuffered_query($query_string);
-		
-		return $query;
-	}
-	
-	function Update($table,$field,$complete)
-	{
-		if (empty($table) 
-			or !isset($field))
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- TABLE OR FIELD',E_USER_ERROR);
-		}
-				
-		$statement = "UPDATE " . $table . " SET ";
-		
-		$f = array_filter($field,array('MySmartRecords','_UpdateCallBack'));
-		
-		$size = sizeof($f);
-		
-		$i = 0;
-		$x = 0;
-		
-		foreach ($f as $name => $value)
-		{
-			$statement .= $name . '=' . "'$value'";
-		
-			if ($i < $size-1)
+			if ( $i < $size - 1 )
 			{
 				$i += 1;
 				
@@ -289,312 +163,202 @@ class MySmartRecords
 			}
 		}
 		
-		if (is_array($complete))
-		{
-			$statement .= ' WHERE ';
-			
-			$y = sizeof($complete);
-			
-			$key = array_keys($complete);
-			
-			if (!is_array($complete[$key[0]]))
-			{
-				$statement .= $complete[0] . "='" . $complete[1] . "'";
-			}
-			else
-			{
-				if ($y == 1)
-				{	
-					if (empty($complete[$key[0]]['name']))
-					{
-						trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- WHERE NAME');
-					}
-							
-					$oper = (!empty($complete[$key[0]]['oper'])) ? $complete[$key[0]]['oper'] : '=';
-				
-					$statement .= $complete[$key[0]]['name'] . $oper;
-				
-					if ($complete[$key[0]]['del_quote'] != true)
-					{
-						$statement .= "'";
-					}
-				
-					$statement .= $complete[$key[0]]['value'];
-				
-					if ($complete[$key[0]]['del_quote'] != true)
-					{
-						$statement .= "'";
-					}
-				}
-				elseif ($y > 1)
-				{
-					$x = 0;
-								
-					while ($x < $y)
-					{
-						if (empty($complete[$x]['name']))
-						{
-							trigger_error('ERROR::NEED_PARAMETER -- FROM Update() -- WHERE NAME');
-						}
-										
-						$oper = (!empty($complete[$x]['oper'])) ? $complete[$x]['oper'] : '=';
-					
-						$statement .= ' ' . $complete[$x]['con'] . ' ' . $complete[$x]['name'] . $oper;
-					
-						if ($complete[$x]['del_quote'] != true)
-						{
-							$statement .= "'";
-						}
-					
-						$statement .= $complete[$x]['value'];
-					
-						if ($complete[$x]['del_quote'] != true)
-						{
-							$statement .= "'";
-						}
-					
-						$x += 1;
-					}
-				}
-				else
-				{
-					trigger_error('ERROR::EMPTY_ARRAY',E_USER_ERROR);
-				}
-			}
-		}
+		unset( $this->fields );
 		
-		$query = $this->Engine->DB->sql_unbuffered_query($statement);
+		/* ... */
+		
+		$query = $this->db->sql_unbuffered_query( $statement );
 		
 		return $query;
 	}
 	
-	function GetList($param,$query=null)
+	/* ... */
+	
+	public function update()
 	{
-		$this->from = 'list';
-		
-		if ( isset( $param[ 'where' ] )
-			and is_array( $param[ 'where' ] ) )
+		if ( !isset( $this->table )
+			or !isset( $this->fields ) )
 		{
-			$key = array_keys($param['where']);
-			
-			if (!is_array($param['where'][$key[0]]))
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Update() -- TABLE OR FIELD', E_USER_ERROR  );
+		}
+		
+		/* ... */
+				
+		$statement = "UPDATE " . $this->table . " SET ";
+		
+		unset( $this->table );
+		
+		/* ... */
+		
+		$f = array_filter( $this->fields, array( 'MySmartRecords', '_updateCallBack' ) ); // TODO :: explain why?
+		
+		$size = sizeof( $f );
+		
+		$i = 0;
+		$x = 0;
+		
+		foreach ( $f as $name => $value )
+		{
+			$statement .= $name . '=' . "'" . $this->func->cleanVariable( $value, 'sql' ) . "'"; // Ensure there is no SQL Injection by adding slashes
+		
+			if ( $i < $size - 1 )
 			{
-				$old_where = $param['where'];
+				$i += 1;
 				
-				unset($param['where']);
-				
-				$param['where'] 			= 	array();
-				$param['where'][0] 			= 	array();
-				$param['where'][0]['name'] 	= 	$old_where[0];
-				$param['where'][0]['oper']	=	'=';
-				$param['where'][0]['value']	=	$old_where[1];
+				$statement .= ',';
 			}
 		}
 		
-		if (empty($query))
+		unset( $this->fields );
+		
+		/* ... */
+		
+		if ( isset( $this->filter ) )
 		{
-			$query = $this->Select($param);
+			$statement .= ' WHERE ' . $this->filter;
+		
+			unset( $this->filter );
 		}
 		
-		$rows = array();
- 	 	
- 	 	$x = 0;
- 	 	
- 	 	while ($r = $this->Engine->DB->sql_fetch_array($query))
- 	 	{
- 	 		$rows[$x] = $r;
- 	 		
- 	 		if (!empty($param['proc'])
- 	 			and is_array($param['proc']))
-			{
- 	 			$this->Engine->sys_functions->ListProc($rows,$x,$param);
- 	 		}
- 	 		
- 	 		$x += 1;
- 	 	}
- 	 	
- 	 	return (is_array($rows)) ? $rows : $query;
+		/* ... */
+		
+		$query = $this->db->sql_unbuffered_query( $statement );
+		
+		return $query;
 	}
 	
-	function GetInfo($param,$query=null)
+	/* ... */
+	
+	public function getList()
 	{
-		$this->from = 'info';
+		$query = $this->select();
 		
-		if ( isset( $param[ 'where' ] ) 
-			and is_array( $param[ 'where' ] ) )
+		if ( !isset( $this->result ) )
 		{
-			$key = array_keys($param['where']);
+			$this->query = $query;
+		}
+		else
+		{
 			
-			if (!is_array($param['where'][$key[0]]))
-			{
-				$old_where = $param['where'];
-				
-				unset($param['where']);
-				
-				$param['where'] 			= 	array();
-				$param['where'][0] 			= 	array();
-				$param['where'][0]['name'] 	= 	$old_where[0];
-				$param['where'][0]['oper']	=	'=';
-				$param['where'][0]['value']	=	$old_where[1];
-			}
+			$this->result = $query;
+			
+			unset( $this->result );
 		}
-		
-		if (empty($query))
-		{
-			$query = $this->Select($param);
-		}
-		
-		$rows = array();
-		
-		$rows = $this->Engine->DB->sql_fetch_array($query);
-		
-		return (is_array($rows)) ? $rows : false;
 	}
 	
-	function GetNumber($param,$query=null)
-	{
-		$this->from = 'number';
-		
-		if ( isset( $param[ 'where' ] ) 
-			and is_array( $param[ 'where' ] ) )
-		{
-			$key = array_keys($param['where']);
-			
-			if (!is_array($param['where'][$key[0]]))
-			{
-				$old_where = $param['where'];
-				
-				unset($param['where']);
-				
-				$param['where'] 			= 	array();
-				$param['where'][0] 			= 	array();
-				$param['where'][0]['name'] 	= 	$old_where[0];
-				$param['where'][0]['oper']	=	'=';
-				$param['where'][0]['value']	=	$old_where[1];
-			}
-		}
-		
-		if (empty($query))
-		{
-			$query = $this->Select($param);
-		}
-		
-		$num = $this->Engine->DB->sql_num_rows($query);
-		
-		return is_numeric($num) ? $num : $query;
-	}
+	/* ... */
 	
-	function Delete($param)
+	public function getInfo( $result = null )
 	{
-		$statement = 'DELETE FROM ' . $param['table'];
-		
-		if (is_array($param['where']))
+		if ( !isset( $result ) )
 		{
-			$statement .= ' WHERE ';
-			
-			$y = sizeof($param['where']);
-			
-			$key = array_keys($param['where']);
-			
-			if (!is_array($param['where'][$key[0]]))
+			// There is no request to a list, so we just need one row
+			if ( !isset( $this->query ) )
 			{
-				$statement .= $param['where'][0] . "='" . $param['where'][1] . "'";
+				$query = $this->select();
 			}
 			else
 			{
-				if ($y == 1)
-				{	
-					if (empty($param['where'][$key[0]]['name']))
-					{
-						trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- WHERE NAME');
-					}
-							
-					$oper = (!empty($param['where'][$key[0]]['oper'])) ? $param['where'][$key[0]]['oper'] : '=';
-				
-					$statement .= $param['where'][$key[0]]['name'] . $oper;
-					
-					if ( !isset( $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] )
-						or $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] != true )
-					{
-						$statement .= "'";
-					}
-				
-					$statement .= $param['where'][$key[0]]['value'];
-				
-					if ( !isset( $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] )
-						or $param[ 'where' ][ $key[ 0 ] ][ 'del_quote' ] != true )
-					{
-						$statement .= "'";
-					}
-				}
-				elseif ($y > 1)
-				{
-					$x = 0;
-								
-					while ($x < $y)
-					{
-						if (empty($param['where'][$x]['name']))
-						{
-							trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- WHERE NAME');
-						}
-										
-						$oper = (!empty($param['where'][$x]['oper'])) ? $param['where'][$x]['oper'] : '=';
-					
-						$statement .= ' ' . $param['where'][$x]['con'] . ' ' . $param['where'][$x]['name'] . $oper;
-					
-						if ($param['where'][$x]['del_quote'] != true)
-						{
-							$statement .= "'";
-						}
-					
-						$statement .= $param['where'][$x]['value'];
-					
-						if ($param['where'][$x]['del_quote'] != true)
-						{
-							$statement .= "'";
-						}
-					
-						$x += 1;
-					}
-				}
-				else
-				{
-					trigger_error('ERROR::EMPTY_ARRAY -- FROM Delete()',E_USER_ERROR);
-				}
+				$query = $this->query;
 			}
 		}
-
-		if ( isset( $param[ 'order' ] )
-			and is_array( $param[ 'order' ] ) )
+		else
 		{
-			if (empty($param['order']['field']))
-			{
-				trigger_error('ERROR::NEED_PARAMETER -- FROM Delete() -- ORDER FIELD',E_USER_ERROR);
-			}
-			
-			$statement .= ' ORDER BY ' . $param['order']['field'] . ' ';
-			$statement .= (!empty($param['order']['type'])) ? $param['order']['type'] : 'DESC';
+			$query = $result;
 		}
 		
-		if (!empty($param['limit']))
+		$row = $this->db->sql_fetch_array( $query );
+		
+		// To prevent the user from any XSS attack, clean the data from html tags.
+		if ( is_array( $row ) )
 		{
-			$statement .= ' LIMIT ' . $param['limit'];
+			/* 
+		 	 * Note : This feature is new and important one that comes with the new version of MySmartRecords
+		 	 * the main goal of this feature is improve the performance, instead of clean the array after get
+		 	 * the whole data we clean it immediately after get it from database.
+		 	 */
+		 	 
+			$this->func->cleanArray( $row, 'html' );
 		}
 		
-		if (!empty($param['sql_statment']))
+		// If there is a request of a list and there is no more rows, unset this->query
+		if ( isset( $this->query )
+			and $row == false )
 		{
-			$statement .= ' ' . $param['sql_statment'];
+			unset( $this->query );
 		}
-				
-		$query = $this->Engine->DB->sql_unbuffered_query($statement);
 		
-		return ($query) ? true : false;
+		return $row;
 	}
 	
-	function _UpdateCallBack($var)
+	/* ... */
+	
+	public function getNumber()
 	{
-		return ((isset($var) or !empty($var))) ? true : false;
+		$query = $this->select();
+		
+		$num = $this->db->sql_num_rows( $query );
+		
+		return is_numeric( $num ) ? $num : $query;
 	}
+
+	/* ... */
+		
+	public function delete()
+	{
+		if ( !isset( $this->table ) )
+		{
+			trigger_error('ERROR::NEED_PARAMETER -- FROM delete() -- TABLE',E_USER_ERROR);
+		}
+		
+		/* ... */
+		
+		$statement = 'DELETE FROM ' . $this->table;
+		
+		unset( $this->table );
+		
+		/* ... */
+		
+		if ( isset( $this->filter ) )
+		{
+			$statement .= ' WHERE ' . $this->filter;
+		
+			unset( $this->filter );
+		}
+		
+		/* ... */
+		
+		if ( isset( $this->order ) )
+		{
+			$statement .= ' ORDER BY ' . $this->order;
+			
+			unset( $this->order );
+		}
+		
+		/* ... */
+		
+		if ( isset( $this->limit ) )
+		{
+			$statement .= ' LIMIT ' . $this->limit;
+			
+			unset( $this->limit );
+		}
+		
+		/* ... */
+
+		$query = $this->db->sql_unbuffered_query( $statement );
+		
+		return ( $query ) ? true : false;
+	}
+	
+	/* ... */
+	
+	private function _updateCallBack( $var )
+	{
+		return ( ( isset( $var ) or !empty( $var ) ) ) ? true : false;
+	}
+	
+	/* ... */
 }
 
 ?>

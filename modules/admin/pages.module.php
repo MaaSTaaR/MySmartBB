@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartPagesMOD');
 	
-class MySmartPagesMOD extends _functions
+class MySmartPagesMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartPagesMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,55 +70,49 @@ class MySmartPagesMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('page_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['text']) 
 			or empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$PageArr 			= 	array();
-		$PageArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$PageArr['field']['title'] 		= 	$MySmartBB->_POST['name'];
-		$PageArr['field']['html_code'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['text'],'unhtml');
+		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST['text'], 'unhtml' );
 				
-		$insert = $MySmartBB->pages->InsertPage($PageArr);
+		$insert = $MySmartBB->pages->insertPage();
 		
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة الصفحه بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة الصفحه بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$PageArr 					= 	array();
-		$PageArr['order']			=	array();
-		$PageArr['order']['field']	=	'id';
-		$PageArr['order']['type']	=	'DESC';
-		$PageArr['proc'] 			= 	array();
-		$PageArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->_CONF['template']['while']['PagesList'] = $MySmartBB->pages->GetPagesList($PageArr);
+		$MySmartBB->pages->getPagesList();
 		
 		$MySmartBB->template->display('pages_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -127,7 +123,7 @@ class MySmartPagesMOD extends _functions
 		$MySmartBB->template->display('page_edit');		
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -136,26 +132,26 @@ class MySmartPagesMOD extends _functions
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$PageArr 				= 	array();
-		$PageArr['field']		=	array();
+		$MySmartBB->rec->fields		=	array();
 		
-		$PageArr['field']['title'] 		= 	$MySmartBB->_POST['name'];
-		$PageArr['field']['html_code'] 	= 	$MySmartBB->_POST['text'];
-		$PageArr['where']				=	array('id',$PageInfo['id']);
+		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->_POST['text'];
 		
-		$insert = $MySmartBB->pages->UpdatePage($PageArr);
+		$MySmartBB->rec->filter = "id='" . $PageInfo['id'] . "'";
 		
-		if ($insert)
+		$update = $MySmartBB->pages->updatePage();
+		
+		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -164,26 +160,25 @@ class MySmartPagesMOD extends _functions
 		$MySmartBB->template->display('page_del');		
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_by_id($PageInfo);
 		
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->pages->DeletePage($DelArr);
+		$del = $MySmartBB->pages->deletePage();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الصفحه بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الصفحه بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$PageInfo)
 	{
@@ -191,22 +186,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$PageArr 			= 	array();
-		$PageArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$PageInfo = $MySmartBB->pages->GetPageInfo($PageArr);
+		$PageInfo = $MySmartBB->pages->getPageInfo();
 		
 		if ($PageInfo == false)
 		{
-			$MySmartBB->functions->error('الصفحه المطلوبه غير موجوده');
+			$MySmartBB->func->error('الصفحه المطلوبه غير موجوده');
 		}
-		
-		$MySmartBB->functions->CleanVariable($PageInfo,'html');
 	}
 }
 

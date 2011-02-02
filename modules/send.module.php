@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 $CALL_SYSTEM = array();
 $CALL_SYSTEM['SUBJECT'] = true;
 
@@ -13,7 +15,7 @@ define('CLASS_NAME','MySmartSendMOD');
 
 class MySmartSendMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -21,118 +23,106 @@ class MySmartSendMOD
 		{
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_MemberSendIndex();
+				$this->_memberSendIndex();
 			}
 			elseif ($MySmartBB->_GET['start'])
 			{
-				$this->_MemberSendStart();
+				$this->_memberSendStart();
 			}
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _MemberSendIndex()
+	private function _memberSendIndex()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال رساله بريديه إلى عضو');
+		$MySmartBB->func->showHeader('إرسال رساله بريديه إلى عضو');
 		
 		if (!$MySmartBB->_CONF['member_permission'])
      	{
-     		$MySmartBB->functions->error('لا يمكن للزوار إرسال رساله بريديه');
+     		$MySmartBB->func->error('لا يمكن للزوار إرسال رساله بريديه');
      	}
      	
-     	$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+     	$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
      	
      	if (empty($MySmartBB->_GET['id']))
      	{
-     		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error('المسار المتبع غير صحيح');
      	}
      	
-     	//////////
+     	/* ... */
      	
-		$MemArr = array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$MemArr['get'] 	= 'id,username';
-		$MemArr['where'] = array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->member->getMemberInfo();
 		
-		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->member->GetMemberInfo($MemArr);
-		
-		//////////
+		/* ... */
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
-			$MySmartBB->functions->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
 		} 
 		
-		// Kill XSS first
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'html');
-		// Second Kill SQL Injections
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
+		$MySmartBB->func->cleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
-		//////////
+		/* ... */
 		
 		$MySmartBB->template->display('send_email');
 	}
 	
-	function _MemberSendStart()
+	private function _memberSendStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال رساله بريديه إلى عضو');
+		$MySmartBB->func->showHeader('إرسال رساله بريديه إلى عضو');
 		
 		if (!$MySmartBB->_CONF['member_permission'])
      	{
-     		$MySmartBB->functions->error('لا يمكن للزوار إرسال رساله بريديه');
+     		$MySmartBB->func->error('لا يمكن للزوار إرسال رساله بريديه');
      	}
      	
-     	$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+     	$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
      	
      	if (empty($MySmartBB->_GET['id']))
      	{
-     		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error('المسار المتبع غير صحيح');
      	}
      	
-     	//////////
+     	/* ... */
      	
-		$MemArr = array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$MemArr['get'] 	= 'id,username';
-		$MemArr['where'] = array('id',$MySmartBB->_GET['id']);
+		$MemberInfo = $MySmartBB->member->getMemberInfo();
 		
-		$MemberInfo = $MySmartBB->member->GetMemberInfo($MemArr);
-		
-		//////////
+		/* ... */
 		
 		if (!$MemberInfo)
 		{
-			$MySmartBB->functions->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
 		} 
 		
-		// Kill XSS first
-		$MySmartBB->functions->CleanVariable($MemberInfo,'html');
-		// Second Kill SQL Injections
-		$MySmartBB->functions->CleanVariable($MemberInfo,'sql');
+		$MySmartBB->func->cleanArray($MemberInfo,'sql');
 		
-		//////////
+		/* ... */
 		
 		if (empty($MySmartBB->_POST['title'])
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$send = $MySmartBB->functions->mail($MemberInfo['email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
+		$send = $MySmartBB->func->mail($MemberInfo['email'],$MySmartBB->_POST['title'],$MySmartBB->_POST['text'],$MySmartBB->_CONF['member_row']['email']);
 		
 		if ($send)
 		{
-			$MySmartBB->functions->msg('تم إرسال الرساله بنجاح');
-			$MySmartBB->functions->goto('index.php');
+			$MySmartBB->func->msg('تم إرسال الرساله بنجاح');
+			$MySmartBB->func->goto('index.php');
 		}
 		else
 		{
-			$MySmartBB->functions->msg('هناك خطأ، لم يتم الارسال');
+			$MySmartBB->func->msg('هناك خطأ، لم يتم الارسال');
 		}
 	}
 }

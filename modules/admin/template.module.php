@@ -1,5 +1,7 @@
 ﻿<?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -14,9 +16,9 @@ include('common.php');
 
 define('CLASS_NAME','MySmartTemplateMOD');
 
-class MySmartTemplateMOD extends _functions
+class MySmartTemplateMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 
@@ -28,41 +30,41 @@ class MySmartTemplateMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 
 				elseif ($MySmartBB->_GET['show'])
 				{
-					$this->_ControlShow();
+					$this->_controlShow();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 
 			}
@@ -71,23 +73,18 @@ class MySmartTemplateMOD extends _functions
 		}
 	}
 
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
-		$StyArr 					= 	array();
-		$StyArr['order'] 			=	array();
-		$StyArr['order']['field'] 	= 	'id';
-		$StyArr['order']['type']	=	'DESC';
-		$StyArr['proc'] 			= 	array();
-		$StyArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-
-		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($StyArr);
+		$MySmartBB->rec->order = "id DESC";
+		
+		$MySmartBB->style->getStyleList();
 
 		$MySmartBB->template->display('template_add');
 	}
 
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 
@@ -95,20 +92,19 @@ class MySmartTemplateMOD extends _functions
 			or empty($MySmartBB->_POST['style'])
 			or empty($MySmartBB->_POST['context']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-
-		$StyleArr 			= 	array();
-		$StyleArr['where'] 	= 	array('id',$MySmartBB->_POST['style']);
-
-		$StyleInfo = $MySmartBB->style->GetStyleInfo($StyleArr);
+		
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['style'] . "'";
+		
+		$StyleInfo = $MySmartBB->style->getStyleInfo();
 
 		if (!$StyleInfo)
 		{
-			$MySmartBB->functions->error('النمط المطلوب غير مسجل في قواعد البيانات');
+			$MySmartBB->func->error('النمط المطلوب غير مسجل في قواعد البيانات');
 		}
 
-	     $MySmartBB->_POST['context'] = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['context'],'unhtml');
+	     $MySmartBB->_POST['context'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['context'],'unhtml');
 	     $MySmartBB->_POST['context'] = stripslashes($MySmartBB->_POST['context']);
 	     
 	     $fp = fopen('./' . $StyleInfo['template_path'] . '/' . $MySmartBB->_POST['filename'],'w');
@@ -118,50 +114,42 @@ class MySmartTemplateMOD extends _functions
 	     
 	     if ($fw)
 	     {
-	     	$MySmartBB->functions->msg('تم اضافة القالب بنجاح !');
-	     	$MySmartBB->functions->goto('admin.php?page=template&amp;&amp;control=1&amp;main=1');
+	     	$MySmartBB->func->msg('تم اضافة القالب بنجاح !');
+	     	$MySmartBB->func->goto('admin.php?page=template&amp;&amp;control=1&amp;main=1');
 	     }
 	}
 
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
-
-		$StyleArr 					= 	array();
-		$StyleArr['order'] 			=	array();
-		$StyleArr['order']['field']	= 	'style_order';
-		$StyleArr['order']['type']	=	'ASC';
-		$StyleArr['proc'] 			= 	array();
-		$StyleArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-
-		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($StyleArr);
-
+		
+		$MySmartBB->rec->order = "style_order ASC";
+		
+		$MySmartBB->style->getStyleList();
+		
 		$MySmartBB->template->display('templates_main');
 	}
 
-	function _ControlShow()
+	private function _controlShow()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
-
-		$StyleArr 				= 	array();
-		$StyleArr['where'] 		= 	array('id',$MySmartBB->_GET['id']);
-
-		$StyleInfo = $MySmartBB->style->GetStyleInfo($StyleArr);
+		
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$StyleInfo = $MySmartBB->style->getStyleInfo();
 
 		if (!$StyleInfo)
 		{
-			$MySmartBB->functions->error('النمط غير موجود في السجلات');
+			$MySmartBB->func->error('النمط غير موجود في السجلات');
 		}
-
-		$MySmartBB->functions->CleanVariable($StyleInfo,'html');
-
+		
 		$TemplatesList = array();
 
 		if (is_dir($StyleInfo['template_path']))
@@ -193,7 +181,7 @@ class MySmartTemplateMOD extends _functions
 
 	}
 
-    function _EditMain()
+    private function _editMain()
     {
     	global $MySmartBB;
     	
@@ -203,16 +191,16 @@ class MySmartTemplateMOD extends _functions
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error('المسار المتبع غير صحيح');
     	}
     	
-    	$MySmartBB->_GET['filename'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['filename'],'html');
+    	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
     	
     	$path = './' . $MySmartBB->_CONF['template']['Inf']['template_path'] . '/' . $MySmartBB->_GET['filename'];
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->functions->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error('القالب المطلوب غير موجود');
     	}
     	
     	$lines = file($path);
@@ -223,7 +211,7 @@ class MySmartTemplateMOD extends _functions
     		$context .= $line;
     	}
     	
-    	$context = $MySmartBB->functions->CleanVariable($context,'unhtml');
+    	$context = $MySmartBB->func->cleanVariable($context,'unhtml');
     	
     	$last_edit = date("d. M. Y", filectime($path));
     	
@@ -234,7 +222,7 @@ class MySmartTemplateMOD extends _functions
     	$MySmartBB->template->display('template_edit');
 	}
 
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 
@@ -244,22 +232,22 @@ class MySmartTemplateMOD extends _functions
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error('المسار المتبع غير صحيح');
     	}
     	
-    	$MySmartBB->_GET['filename'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['filename'],'html');
+    	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
     	
     	$path = './' . $StyleInfo['template_path'] . '/' . $MySmartBB->_GET['filename'];
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->functions->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error('القالب المطلوب غير موجود');
     	}
     	
     	// To be more advanced :D
     	if (!is_writable($path))
     	{
-    		$MySmartBB->functions->error('المعذره .. هذا القالب غير قابل للكتابه');
+    		$MySmartBB->func->error('المعذره .. هذا القالب غير قابل للكتابه');
     	}
     	
     	$MySmartBB->_POST['context'] = stripslashes($MySmartBB->_POST['context']);
@@ -275,13 +263,13 @@ class MySmartTemplateMOD extends _functions
     		// Simply we can't ensure we have $compiled_filename in $StyleInfo['cache_path'] or not
     		$del = @unlink('./' . $StyleInfo['cache_path'] . '/' . $compiled_filename);
     		
-    		$MySmartBB->functions->msg('تم تحديث القالب بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
+    		$MySmartBB->func->msg('تم تحديث القالب بنجاح');
+			$MySmartBB->func->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
     	}
     }
 
 
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 
@@ -291,29 +279,29 @@ class MySmartTemplateMOD extends _functions
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error('المسار المتبع غير صحيح');
     	}
     	
-    	$MySmartBB->_GET['filename'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['filename'],'html');
+    	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
     	
     	$path = './' . $StyleInfo['template_path'] . '/' . $MySmartBB->_GET['filename'];
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->functions->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error('القالب المطلوب غير موجود');
     	}
     	
     	$del = unlink($path);
 
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم الحذف بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
+			$MySmartBB->func->msg('تم الحذف بنجاح');
+			$MySmartBB->func->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$StyleInfo)
 	{
@@ -321,22 +309,19 @@ class _functions
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
-		$StyleArr 			= 	array();
-		$StyleArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
-
-		$StyleInfo = $MySmartBB->style->GetStyleInfo($StyleArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$StyleInfo = $MySmartBB->style->getStyleInfo();
 
 		if ($StyleInfo == false)
 		{
-			$MySmartBB->functions->error('الستايل المطلوب غير موجود');
+			$MySmartBB->func->error('الستايل المطلوب غير موجود');
 		}
-
-		$MySmartBB->functions->CleanVariable($StyleInfo,'html');
 	}
 }
 

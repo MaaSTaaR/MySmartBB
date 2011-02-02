@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 $CALL_SYSTEM 			= 	array();
 $CALL_SYSTEM['SUBJECT'] = 	true;
 $CALL_SYSTEM['SECTION'] = 	true;
@@ -16,81 +18,66 @@ define('CLASS_NAME','MySmartDownloadMOD');
 
 class MySmartDownloadMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['subject'])
 		{
-			$this->_DownloadSubject();
+			$this->_downloadSubject();
 		}
 		elseif ($MySmartBB->_GET['attach'])
 		{
-			$this->_DownloadAttach();
+			$this->_downloadAttach();
 		}
 		elseif ($MySmartBB->_GET['pm'])
 		{
-			$this->_DownloadPM();
+			$this->_downloadPM();
 		}
 	}
 	
-	function _DownloadSubject()
+	private function _downloadSubject()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
 		// Clean id from any string, that will protect us
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
-			
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
 		// If the id is empty, so stop the page
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 		
-		//////////
+		/* ... */
 		
-		$SubjectArr = array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$SubjectArr['where'] 				= 	array();
-
-		$SubjectArr['where'][0] 			= 	array();
-		$SubjectArr['where'][0]['name'] 	= 	'id';
-		$SubjectArr['where'][0]['oper'] 	= 	'=';
-		$SubjectArr['where'][0]['value'] 	= 	$MySmartBB->_GET['id'];
-
-		$SubjectInfo = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
-		
-		$MySmartBB->functions->CleanVariable($SubjectInfo,'html');
+		$SubjectInfo = $MySmartBB->subject->getSubjectInfo();
 		
 		if ($SubjectInfo['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
+			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
 		}
 		
 		$SecArr 			= 	array();
 		$SecArr['where'] 	= 	array('id',$SubjectInfo['section']);
 		
-		$SectionInfo = $MySmartBB->section->GetSectionInfo($SecArr);
+		$MySmartBB->rec->filter = "id='" . $SubjectInfo['section'] . "'";
 		
-		$SecGroupArr 						= 	array();
-		$SecGroupArr['where'] 				= 	array();
-		$SecGroupArr['where'][0]			=	array();
-		$SecGroupArr['where'][0]['name'] 	= 	'section_id';
-		$SecGroupArr['where'][0]['value'] 	= 	$SectionInfo['id'];
-		$SecGroupArr['where'][1]			=	array();
-		$SecGroupArr['where'][1]['con']		=	'AND';
-		$SecGroupArr['where'][1]['name']	=	'group_id';
-		$SecGroupArr['where'][1]['value']	=	$MySmartBB->_CONF['group_info']['id'];
-			
+		$SectionInfo = $MySmartBB->section->getSectionInfo();
+		
+		$MySmartBB->rec->filter = "section_id='" . $SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		
 		// Finally get the permissions of group
-		$SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
+		$SectionGroup = $MySmartBB->group->getSectionGroupInfo();
 		
 		if (!$SectionGroup['view_section'])
 		{
-			$MySmartBB->functions->error('المعذره لا يمكنك عرض هذا الموضوع');
+			$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
 		}
 		
 		$filename = str_replace(' ','_',$SubjectInfo['title']);
@@ -105,94 +92,66 @@ class MySmartDownloadMOD
 ' . $SubjectInfo['text'];
 	}
 	
-	function _DownloadAttach()
+	private function _downloadAttach()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
 		// Clean id from any string, that will protect us
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
-			
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
 		// If the id is empty, so stop the page
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 		
-		//////////
+		/* ... */
 		
 		// Get attachment information
-		$AttachArr = array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$AttachArr['where'] 				= 	array();
-
-		$AttachArr['where'][0] 				= 	array();
-		$AttachArr['where'][0]['name'] 		= 	'id';
-		$AttachArr['where'][0]['oper'] 		= 	'=';
-		$AttachArr['where'][0]['value'] 	= 	$MySmartBB->_GET['id'];
+		$AttachInfo = $MySmartBB->attach->getAttachInfo();
 		
-		$AttachInfo = $MySmartBB->attach->GetAttachInfo($AttachArr);
-		
-		// Clean the information from XSS
-		$MySmartBB->functions->CleanVariable($AttachInfo,'html');
-		
-		//////////
+		/* ... */
 				
 		// Get subject information
-		$SubjectArr = array();
+		$MySmartBB->rec->filter = "id='" . $AttachInfo['subject_id'] . "'";
 		
-		$SubjectArr['where'] 				= 	array();
-
-		$SubjectArr['where'][0] 			= 	array();
-		$SubjectArr['where'][0]['name'] 	= 	'id';
-		$SubjectArr['where'][0]['oper'] 	= 	'=';
-		$SubjectArr['where'][0]['value'] 	= 	$AttachInfo['subject_id'];
+		$SubjectInfo = $MySmartBB->subject->getSubjectInfo();
 		
-		$SubjectInfo = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
-		
-		// Clean the information from XSS
-		$MySmartBB->functions->CleanVariable($SubjectInfo,'html');
-		
-		//////////
+		/* ... */
 		
 		// The subject isn't available
 		if ($SubjectInfo['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
+			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
 		}
 		
-		//////////
+		/* ... */
 		
 		// We can't stop the admin :)
 		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$SecGroupArr 						= 	array();
-			$SecGroupArr['where'] 				= 	array();
-			$SecGroupArr['where'][0]			=	array();
-			$SecGroupArr['where'][0]['name'] 	= 	'section_id';
-			$SecGroupArr['where'][0]['value'] 	= 	$SubjectInfo['id'];
-			$SecGroupArr['where'][1]			=	array();
-			$SecGroupArr['where'][1]['con']		=	'AND';
-			$SecGroupArr['where'][1]['name']	=	'group_id';
-			$SecGroupArr['where'][1]['value']	=	$MySmartBB->_CONF['group_info']['id'];
+			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 			
 			// Finally get the permissions of group
-			$SectionGroup = $MySmartBB->group->GetSectionGroupInfo($SecGroupArr);
+			$SectionGroup = $MySmartBB->group->getSectionGroupInfo($SecGroupArr);
 		
-			//////////
+			/* ... */
 		
 			// The user can't show this subject
 			if (!$SectionGroup['view_section'])
 			{
-				$MySmartBB->functions->error('المعذره لا يمكنك عرض هذا الموضوع');
+				$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
 			}
 		
 			// The user can't download this attachment
 			if (!$SectionGroup['download_attach'])
 			{
-				$MySmartBB->functions->error('المعذره لا يمكنك تحميل هذا المرفق');
+				$MySmartBB->func->error('المعذره لا يمكنك تحميل هذا المرفق');
 			}
 			
 			// These checks are special for members	
@@ -201,12 +160,12 @@ class MySmartDownloadMOD
 				// No enough posts
 				if ($MySmartBB->_CONF['group_info']['download_attach_number'] > $MySmartBB->_CONF['member_row']['posts'])
 				{
-					$MySmartBB->functions->error('يجب ان تكون عدد مشاركاتك ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
+					$MySmartBB->func->error('يجب ان تكون عدد مشاركاتك ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
 				}
 			}
 		}
 
-		//////////
+		/* ... */
 		
 		// Send headers
 		
@@ -219,15 +178,13 @@ class MySmartDownloadMOD
 		// MIME (TODO : dynamic)
 		header('Content-type: application/download');
 		
-		//////////
+		/* ... */
 		
 		// Count a new download
-		$UpdateArr 						= 	array();
-		$UpdateArr['field'] 			= 	array();
-		$UpdateArr['field']['visitor'] 	= 	$AttachInfo['visitor'] + 1;
-		$UpdateArr['where'] 			= 	array('id',$AttachInfo['id']);
+		$MySmartBB->rec->fields = array(	'visitor'	=>	$AttachInfo['visitor'] + 1);
+		$MySmartBB->rec->filter = "id='" . $AttachInfo['id'] . "'";
 		
-		$update = $MySmartBB->attach->UpdateAttach($UpdateArr);
+		$update = $MySmartBB->attach->updateAttach();
 		
 		//////////
 		
@@ -237,29 +194,27 @@ class MySmartDownloadMOD
 		//////////
 	}
 	
-	function _DownloadPM()
+	private function _downloadPM()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))		
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MsgArr 			= 	array();
-		$MsgArr['id'] 		= 	$MySmartBB->_GET['id'];
-		$MsgArr['username'] = 	$MySmartBB->_CONF['member_row']['username'];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$MsgInfo = $MySmartBB->pm->GetPrivateMassegeInfo($MsgArr);
+		$MsgInfo = $MySmartBB->pm->getPrivateMassegeInfo();
 																		
 		if (!$MsgInfo)
 		{
-			$MySmartBB->functions->error('الرساله المطلوبه غير موجوده');
+			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
 		}
 		
-		$MsgInfo['title'] = $MySmartBB->functions->CleanVariable($MsgInfo['title'],'html');
+		$MsgInfo['title'] = $MySmartBB->func->cleanVariable($MsgInfo['title'],'html');
 		
 		$filename = str_replace(' ','_',$MsgInfo['title']);
 		$filename .= '.txt';

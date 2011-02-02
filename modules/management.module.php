@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -22,176 +24,170 @@ define('CLASS_NAME','MySmartManagementMOD');
 
 class MySmartManagementMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('ادارة المواضيع');
+		$MySmartBB->func->showHeader('ادارة المواضيع');
 		
-		$MySmartBB->_GET['section'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['section'],'intval');
+		$MySmartBB->_GET['section'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['section'],'intval');
 		
-		if ($MySmartBB->functions->ModeratorCheck($MySmartBB->_GET['section']))
+		if ( $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['section'] ) )
 		{
 			if ($MySmartBB->_GET['subject'])
 			{
-				$this->_Subject();
+				$this->_subject();
 			}
 			elseif ($MySmartBB->_GET['move'])
 			{
-				$this->_MoveStart();
+				$this->_moveStart();
 			}
 			elseif ($MySmartBB->_GET['subject_edit'])
 			{
-				$this->_SubjectEditStart();
+				$this->_subjectEditStart();
 			}
 			elseif ($MySmartBB->_GET['repeat'])
 			{
-				$this->_SubjectRepeatStart();
+				$this->_subjectRepeatStart();
 			}
 			elseif ($MySmartBB->_GET['close'])
 			{
-				$this->_CloseStart();
+				$this->_closeStart();
 			}
 			elseif ($MySmartBB->_GET['delete'])
 			{
-				$this->_DeleteStart();
+				$this->_deleteStart();
 			}
 			elseif ($MySmartBB->_GET['reply'])
 			{
-				$this->_Reply();
+				$this->_reply();
 			}
 			elseif ($MySmartBB->_GET['reply_edit'])
 			{
-				$this->_ReplyEditStart();
+				$this->_replyEditStart();
 			}
 		}
 		else
 		{
-			$MySmartBB->functions->error('غير مسموح لك بالوصول إلى هذه الصفحه');
+			$MySmartBB->func->error('غير مسموح لك بالوصول إلى هذه الصفحه');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
-	function _Subject()
+	private function _subject()
 	{
 		global $MySmartBB;
 		
 		if (!isset($MySmartBB->_GET['operator'])
 			or !isset($MySmartBB->_GET['section']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		if ($MySmartBB->_GET['operator'] == 'stick')
 		{
-			$this->__Stick();
+			$this->__stick();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'unstick')
 		{
-			$this->__UnStick();
+			$this->__unStick();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'close')
 		{
-			$this->__Close();
+			$this->__close();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'open')
 		{
-			$this->__Open();
+			$this->__open();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'delete')
 		{
-			$this->__SubjectDelete();
+			$this->__subjectDelete();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'move')
 		{
-			$this->__MoveIndex();
+			$this->__moveIndex();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'edit')
 		{
-			$this->__SubjectEdit();
+			$this->__subjectEdit();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'repeated')
 		{
-			$this->__SubjectRepeat();
+			$this->__subjectRepeat();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'up')
 		{
-			$this->__UpStart();
+			$this->__upStart();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'down')
 		{
-			$this->__DownStart();
+			$this->__downStart();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'unreview_subject')
 		{
-			$this->__UnReviewSubject();
+			$this->__unReviewSubject();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'special')
 		{
-			$this->_SpecialStart();
+			$this->_specialStart();
 		}
 		elseif ($MySmartBB->_GET['operator'] == 'unspecial')
 		{
-			$this->_UnSpecialStart();
+			$this->_unSpecialStart();
 		}
 	}
 	
-	function __Stick()
+	private function __stick()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 			= array();
-		$UpdateArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->StickSubject($UpdateArr);
+		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تثبيت الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم تثبيت الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __UnStick()
+	private function __unStick()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 			= array();
-		$UpdateArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->UnstickSubject($UpdateArr);
+		$update = $MySmartBB->subject->unStickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم إلغاء تثبيت الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم إلغاء تثبيت الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __Close()
+	private function __close()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -199,58 +195,57 @@ class MySmartManagementMOD
 		$MySmartBB->template->display('subject_close_index');
 	}
 	
-	function __Open()
+	private function __open()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 			= array();
-		$UpdateArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->OpenSubject($UpdateArr);
+		$update = $MySmartBB->subject->openSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم فتح الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم فتح الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __SubjectDelete()
+	private function __subjectDelete()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
 		$MySmartBB->template->display('subject_delete_reason');
 	}
 	
-	function __MoveIndex()
+	private function __moveIndex()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
-		$MySmartBB->_GET['section'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['section'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['section'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['section'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id'])
 			or empty($MySmartBB->_GET['section']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$SecArr 						= 	array();
+		// TODO : use $MySmartBB->func->getForumList();
+		
+		/*$SecArr 						= 	array();
 		$SecArr['get_from']				=	'db';
 		
 		$SecArr['proc'] 				= 	array();
@@ -307,173 +302,158 @@ class MySmartManagementMOD
 		//////////
 		
 		$MySmartBB->template->assign('section',$MySmartBB->_GET['section']);
-		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
+		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);*/
 		
 		$MySmartBB->template->display('subject_move_index');
 	}
 	
-	function _MoveStart()
+	private function _moveStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 					= 	array();
-		$UpdateArr['section_id']	=	$MySmartBB->_POST['section'];
-		$UpdateArr['where'] 		= 	array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->MoveSubject($UpdateArr);
+		$update = $MySmartBB->subject->moveSubject( $MySmartBB->_POST['section'], $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم نقل الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم نقل الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function _CloseStart()
+	private function _closeStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['reason']	=	$MySmartBB->_POST['reason'];
-		$UpdateArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->CloseSubject($UpdateArr);
+		$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم إغلاق الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم إغلاق الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function _DeleteStart()
+	private function _deleteStart()
 	{
 		global $MySmartBB;
 
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 					= 	array();
-		$UpdateArr['reason'] 		= 	$MySmartBB->_POST['reason'];
-		$UpdateArr['where'] 		= 	array('id',$MySmartBB->_GET['subject_id']);
-
-		$update = $MySmartBB->subject->MoveSubjectToTrash($UpdateArr);
+		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
 
 		if ($update)
 		{
-			$SubjectArr 			= 	array();
-			$SubjectArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
+			/* ... */
 			
-			$Subject = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 			
-			$MySmartBB->functions->CleanVariable($Subject,'sql');
+			$Subject = $MySmartBB->subject->getSubjectInfo();
 			
-			$MsgArr 						= 	array();
-			$MsgArr['field'] 				= 	array();
-			$MsgArr['field']['user_from'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-			$MsgArr['field']['user_to'] 	= 	$Subject['writer'];
-			$MsgArr['field']['title'] 		= 	'تم حذف موضوعك ' . $Subject['title'];
-			$MsgArr['field']['text'] 		= 	$MySmartBB->_POST['reason'];
-			$MsgArr['field']['date'] 		= 	$MySmartBB->_CONF['now'];
-			$MsgArr['field']['icon'] 		= 	$Subject['icon'];
-			$MsgArr['field']['folder'] 		= 	'inbox';
+			$MySmartBB->func->cleanArray( $Subject, 'sql' );
 			
-			$Send = $MySmartBB->pm->InsertMassege($MsgArr);
-
-			$NumberArr 				= 	array();
-			$NumberArr['username'] 	= 	$Subject['writer'];
+			/* ... */
 			
-			$Number = $MySmartBB->pm->NewMessageNumber($NumberArr);
-
-			$CacheArr 							= 	array();
-			$CacheArr['field'] 					= 	array();
-			$CacheArr['field']['unread_pm'] 	= 	$Number;
-			$CacheArr['where'] 					= 	array('username',$Subject['writer']);
+			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
+												'user_to'	=>	$Subject['writer'],
+												'title'	=>	'تم حذف موضوعك ' . $Subject['title'],
+												'text'	=>	$MySmartBB->_POST['reason'],
+												'date'	=>	$MySmartBB->_CONF['now'],
+												'icon'	=>	$Subject['icon'],
+												'folder'	=>	'inbox'	);
+												
+			$send = $MySmartBB->pm->insertMessage();
 			
-			$Cache = $MySmartBB->member->UpdateMember($CacheArr);
-
-			$MySmartBB->functions->msg('تم حذف الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
+			/* ... */
+			
+			$number = $MySmartBB->pm->newMessageNumber( $Subject['writer'] );
+			
+			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$number	);
+			$MySmartBB->rec->filter = "username='" . $Subject[ 'writer' ] . "'";
+			
+			$update_cache = $MySmartBB->member->updateMember();
+			
+			/* ... */
+			
+			$MySmartBB->func->msg('تم حذف الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 
-	function __SubjectEdit()
+	private function __subjectEdit()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
 		
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
-		$SubjectArr = array();
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->subject->getSubjectInfo();
 		
 		$MySmartBB->template->display('subject_edit');
 	}
 	
-	function _SubjectEditStart()
+	private function _subjectEditStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		if (!isset($MySmartBB->_POST['title'])
 			or !isset($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['field']		=	array();
+		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
+											'text'	=>	$MySmartBB->_POST['text'],
+											'icon'	=>	$MySmartBB->_POST['icon'],
+											'subject_describe'	=>	$MySmartBB->_POST['describe']	);
+											
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$UpdateArr['field']['title'] 				= 	$MySmartBB->_POST['title'];
-		$UpdateArr['field']['text'] 				= 	$MySmartBB->_POST['text'];
-		$UpdateArr['field']['icon'] 				= 	$MySmartBB->_POST['icon'];
-		$UpdateArr['field']['subject_describe'] 	= 	$MySmartBB->_POST['describe'];
-		$UpdateArr['where'] 						= 	array('id',$MySmartBB->_GET['subject_id']);
+		$update = $MySmartBB->subject->updateSubject();
 		
-		$update = $MySmartBB->subject->UpdateSubject($UpdateArr);
-		
-		if ($update)
+		if ( $update )
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function _Reply()
+	private function _reply()
 	{
 		global $MySmartBB;
 		
@@ -481,7 +461,7 @@ class MySmartManagementMOD
 			or !isset($MySmartBB->_GET['section'])
 			or !isset($MySmartBB->_GET['reply']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		elseif ($MySmartBB->_GET['operator'] == 'delete')
@@ -494,95 +474,89 @@ class MySmartManagementMOD
 		}
 	}
 	
-	function __ReplyDelete()
+	private function __replyDelete()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$UpdateArr 			= array();
-		$UpdateArr['where'] = array('id',$MySmartBB->_GET['reply_id']);
-		
-		$update = $MySmartBB->reply->MoveReplyToTrash($UpdateArr);
+		$update = $MySmartBB->reply->moveReplyToTrash( $MySmartBB->_GET['reply_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم حذف الرد');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم حذف الرد');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __ReplyEdit()
+	private function __replyEdit()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply_id'] . '&amp;section=' . $MySmartBB->_GET['section'] . '&amp;subject_id=' . $MySmartBB->_GET['subject_id']);
 		
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
-		$ReplyArr = array();
-		$ReplyArr['where'] = array('id',$MySmartBB->_GET['reply_id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
 		
-		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->reply->GetReplyInfo($ReplyArr);
+		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->reply->getReplyInfo();
 		
 		$MySmartBB->template->display('reply_edit');
 	}
 	
-	function _ReplyEditStart()
+	private function _replyEditStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['reply_id'],'intval');
+		$MySmartBB->_GET['reply_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['reply_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		if (!isset($MySmartBB->_POST['title'])
 			or !isset($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['field']		= 	array();
+		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
+											'text'	=>	$MySmartBB->_POST['text'],
+											'icon'	=>	$MySmartBB->_POST['icon']	);
+											
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
 		
-		$UpdateArr['field']['title'] 		= 	$MySmartBB->_POST['title'];
-		$UpdateArr['field']['text'] 		= 	$MySmartBB->_POST['text'];
-		$UpdateArr['field']['icon'] 		= 	$MySmartBB->_POST['icon'];
-		$UpdateArr['where'] 				= 	array('id',$MySmartBB->_GET['reply_id']);
-		
-		$update = $MySmartBB->reply->UpdateReply($UpdateArr);
+		$update = $MySmartBB->reply->updateReply();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم التحديث بنجاح');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __SubjectRepeat()
+	private function __subjectRepeat()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -590,250 +564,194 @@ class MySmartManagementMOD
 		$MySmartBB->template->display('subject_repeat_index');
 	}
 	
-	function _SubjectRepeatStart()
+	private function _subjectRepeatStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$SubjectArr 			= 	array();
-		$SubjectArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
+		/* ... */
 		
-		$Subject = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+		
+		$Subject = $MySmartBB->subject->getSubjectInfo();
 		
 		if (!$Subject)
 		{
-			$MySmartBB->functions->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
 		}
 		
-		$SectionArr 			= 	array();
-		$SectionArr['where'] 	= 	array('id',$Subject['section']);
+		/* ... */
 		
-		$Section = $MySmartBB->section->GetSectionInfo($SectionArr);
+		$MySmartBB->rec->filter = "id='" . $Subject['section'] . "'";
+		
+		$Section = $MySmartBB->section->getSectionInfo();
 		
 		if (!isset($MySmartBB->_POST['url']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['reason']	=	'موضوع مُكرر';
-		$UpdateArr['where'] 	= 	array('id',$MySmartBB->_GET['subject_id']);
-		
-		$update = $MySmartBB->subject->CloseSubject($UpdateArr);
+		$update = $MySmartBB->subject->closeSubject( 'موضوع مُكرر', $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-     		$ReplyArr 			= 	array();
-     		$ReplyArr['field'] 	= 	array();
+     		$MySmartBB->rec->fields = array(	'text'	=>	'هذا الموضوع مكرر، راجع الاصل [url=' . $MySmartBB->_POST['url'] . ']هنا[/url]',
+     											'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
+     											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
+     											'write_time'	=>	$MySmartBB->_CONF['now'],
+     											'section'	=>	$Subject['section']	);
+     											
+     		$MySmartBB->reply->get_id = true;
      		
-     		$ReplyArr['field']['text'] 			= 	'هذا الموضوع مكرر، راجع الاصل [url=' . $MySmartBB->_POST['url'] . ']هنا[/url]';
-     		$ReplyArr['field']['writer'] 		= 	$MySmartBB->_CONF['member_row']['username'];
-     		$ReplyArr['field']['subject_id'] 	= 	$MySmartBB->_GET['subject_id'];
-     		$ReplyArr['field']['write_time'] 	= 	$MySmartBB->_CONF['now'];
-     		$ReplyArr['field']['section'] 		= 	$Subject['section'];
-     		$ReplyArr['get_id']					=	true;
-     	
-     		$insert = $MySmartBB->reply->InsertReply($ReplyArr);
+     		$insert = $MySmartBB->reply->insertReply();
      	
      		if ($insert)
      		{
-	   			$MemberArr 				= 	array();
-	   			$MemberArr['field'] 	= 	array();
-     		
-     			$MemberArr['field']['lastpost_time'] 	=	$MySmartBB->_CONF['now'];
-     			$MemberArr['where']						=	array('id',$MySmartBB->_CONF['member_row']['id']);
+     			$MySmartBB->fields = array(	'lastpost_time'	=>	$MySmartBB->_CONF['now']	);
      			
-   				$UpdateMember = $MySmartBB->member->UpdateMember($MemberArr);
+     			$MySmartBB->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
      			
-     			$TimeArr = array();
-     		
-     			$TimeArr['write_time'] 	= 	$MySmartBB->_CONF['now'];
-     			$TimeArr['where']		=	array('id',$MySmartBB->_GET['subject_id']);
-     		
-     			$UpdateWriteTime = $MySmartBB->subject->UpdateWriteTime($TimeArr);
-     		
-     			$RepArr 					= 	array();
-     			$RepArr['reply_number']		=	$Subject['reply_number'];
-     			$RepArr['where'] 			= 	array('id',$MySmartBB->_GET['subject_id']);
-     		
-     			$UpdateReplyNumber = $MySmartBB->subject->UpdateReplyNumber($RepArr);
-     		     		
-     			$LastArr = array();
-     		
-     			$LastArr['writer'] 		= 	$MySmartBB->_CONF['member_row']['username'];
-     			$LastArr['title'] 		= 	$Subject['title'];
-     			$LastArr['subject_id'] 	= 	$Subject['id'];
-     			$LastArr['date'] 		= 	$MySmartBB->_CONF['date'];
-     			$LastArr['where'] 		= 	(!$Section['sub_section']) ? array('id',$Section['id']) : array('id',$Section['from_sub_section']);
-     		
-     			$UpdateLast = $MySmartBB->section->UpdateLastSubject($LastArr);
-     		
-     			// Free memory
-     			unset($LastArr);
-     		
-     			$UpdateSubjectNumber = $MySmartBB->cache->UpdateReplyNumber(array('reply_num'	=>	$MySmartBB->_CONF['info_row']['reply_number']));
-     		
-     			$LastArr = array();
-     		
-     			$LastArr['replier'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-     			$LastArr['where']		=	array('id',$MySmartBB->_GET['subject_id']);
-     		
-     			$UpdateLastReplier = $MySmartBB->subject->UpdateLastReplier($LastArr);
-     		
-     			// Free memory
-     			unset($LastArr);
-     		
-     			$UpdateArr 					= 	array();
-     			$UpdateArr['field']			=	array();
+   				$UpdateMember = $MySmartBB->member->updateMember();
+   				
+     			$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $MySmartBB->_GET['subject_id'] );
      			
-     			$UpdateArr['field']	['reply_num'] 	= 	$Section['reply_num'] + 1;
-     			$UpdateArr['where']					= 	array('id',$Section['id']);
-     		
-     			$UpdateSubjectNumber = $MySmartBB->section->UpdateSection($UpdateArr);
-     		
-     			// Free memory
-     			unset($UpdateArr);
+     			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $Subject['reply_number'], $MySmartBB->_GET['subject_id'] );
+     		    
+     			$UpdateLast = $MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $Subject['title'], $Subject['id'], $MySmartBB->_CONF['date'],  (!$Section['sub_section']) ? $Section['id'] : $Section['from_sub_section'] );
      			
-				$MySmartBB->functions->msg('تم التحديث بنجاح');
-				$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+     			$UpdateSubjectNumber = $MySmartBB->cache->updateReplyNumber( $MySmartBB->_CONF['info_row']['reply_number'] );
+     			     		
+     			$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_GET['subject_id'] );
+     			
+     			$MySmartBB->rec->fields = array(	'reply_num'	=>	$Section['reply_num'] + 1 );
+     			$MySmartBB->rec->filter = "id='" . $Section['id'] . "'";
+     			
+     			$UpdateSubjectNumber = $MySmartBB->section->updateSection();
+     			     			
+				$MySmartBB->func->msg('تم التحديث بنجاح');
+				$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
      		}
 		}
 	}
 	
-	function __UpStart()
+	private function __upStart()
 	{
 		global $MySmartBB;
 	  	
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$SubjectArr = array();
-		$SubjectArr['field'] = array();
-		$SubjectArr['field']['write_time'] = time() - ( intval('-42') );
+		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('-42') )	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+		$update = $MySmartBB->subject->updateSubject();
 		
-		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
-		
-		if ($Update)
+		if ($update)
 		{
-			$MySmartBB->functions->msg('تم رفع الموضوع بنجاح');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تم رفع الموضوع بنجاح');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 		
-	function __DownStart()
+	private function __downStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+		$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$SubjectArr = array();
-		$SubjectArr['field'] = array();
-		$SubjectArr['field']['write_time'] = time() - ( intval('420000000000000000000') );
+		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000')	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
+		$update = $MySmartBB->subject->updateSubject();
 		
-		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
-	
-		if ($Update)
+		if ($update)
 		{
-	    	$MySmartBB->functions->msg('تم إنزال الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+	    	$MySmartBB->func->msg('تم إنزال الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function __UnReviewSubject()
+	private function __unReviewSubject()
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
-
-		$SubjectArr = array();
-		$SubjectArr['field'] = array();
-		$SubjectArr['field']['review_subject'] = 0;
-
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-
-		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
-
-		if ($Update)
+		
+		$MySmartBB->rec->fields = array(	'review_subject'	=>	0	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+		
+		$update = $MySmartBB->subject->updateSubject();
+		
+		if ($update)
 		{
-			$MySmartBB->functions->msg('تمت الموافقه على الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->msg('تمت الموافقه على الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
-	function _SpecialStart()
+	private function _specialStart()
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
-
-		$SubjectArr = array();
-		$SubjectArr['field'] = array();
-		$SubjectArr['field']['special'] = 1;
-
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-
-		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
-
-			if ($Update)
+		
+		$MySmartBB->rec->fields = array(	'special'	=>	1	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+		
+		$update = $MySmartBB->subject->updateSubject();
+		
+		if ($update)
 		{
-	    	$MySmartBB->functions->msg('تم إضافة الموضوع إلى المواضيع المميزة');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+	    	$MySmartBB->func->msg('تم إضافة الموضوع إلى المواضيع المميزة');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 
-	function _UnSpecialStart()
+	private function _unSpecialStart()
 	{
 		global $MySmartBB;
 
-	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['subject_id'],'intval');
+	  	$MySmartBB->_GET['subject_id'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['subject_id'],'intval');
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
-
-		$SubjectArr = array();
-		$SubjectArr['field'] = array();
-		$SubjectArr['field']['special'] = 0;
-
-		$SubjectArr['where'] = array('id',$MySmartBB->_GET['subject_id']);
-
-		$Update = $MySmartBB->subject->UpdateSubject($SubjectArr);
-
-
-		if ($Update)
+		
+		$MySmartBB->rec->fields = array(	'special'	=>	0	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+		
+		$update = $MySmartBB->subject->updateSubject();
+		
+		if ($update)
 		{
-	    	$MySmartBB->functions->msg('تم إلغاء التميز عن الموضوع');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+	    	$MySmartBB->func->msg('تم إلغاء التميز عن الموضوع');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 }

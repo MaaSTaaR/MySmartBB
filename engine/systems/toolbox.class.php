@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
@@ -8,250 +10,212 @@
  * @package 	: 	MySmartToolbox
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	21/09/2007 10:30:28 PM 
- * @updated 	:	21/08/2008 08:57:03 PM 
+ * @updated 	:	25/07/2010 06:56:28 PM 
  */
 
 class MySmartToolbox
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartToolbox($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
- 	function InsertFont($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		if (!is_array($param['field']))
- 		{
- 			$param['field'] = array();
- 		}
- 		
-		$param['field']['tool_type'] = 1;
+	/* ... */
+	
+ 	public function insertFont()
+ 	{	
+		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
 		
-		$query = $this->Engine->records->Insert($this->Engine->table['toolbox'],$param['field']);
-		
-		if ($param['get_id'])
+		if ( !is_array( $this->engine->rec->fields ) )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->engine->rec->fields = array();
 		}
 		
-		return ($query) ? true : false;
- 	}
- 	
-	function GetFontsList($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$param['select'] 				= 	'*';
- 		$param['from'] 					= 	$this->Engine->table['toolbox'];
- 		$param['where'] 				= 	array('tool_type','1');
- 		
-		$rows = $this->Engine->records->GetList($param);
+		$this->engine->rec->fields[ 'tool_type' ] = 1;
 		
-		return $rows;
-	}
-	
- 	function UpdateFont($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		if (!is_array($param['field']))
- 		{
- 			$param['field'] = array();
- 		}
- 		
-		$param['field']['tool_type'] = 1;
+		$query = $this->engine->rec->insert();
 		
-		$query = $this->Engine->records->Update($this->Engine->table['toolbox'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
- 	}
- 	
-	function GetFontInfo($param)
-	{
- 		if (empty($param['id']))
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetFontInfo() -- EMPTY id',E_USER_ERROR);
- 		}
- 		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['toolbox'];
-		
-		$param['where'] 				= 	array();
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'tool_type';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	'1';
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'id';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	$param['id'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-			
-		return $rows;
-	}
-	
-	function DeleteFont($param)
-	{
- 		if (empty($param['id']))
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteFont() -- EMPTY id',E_USER_ERROR);
- 		}
- 		
-		$param['table'] 				= 	$this->Engine->table['toolbox'];
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'id';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['id'];
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'tool_type';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'1';
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
-	}
-	
-	///
-	
- 	function InsertColor($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		if (!is_array($param['field']))
- 		{
- 			$param['field'] = array();
- 		}
- 		
-		$param['field']['tool_type'] = 2;
-		
-		$query = $this->Engine->records->Insert($this->Engine->table['toolbox'],$param['field']);
-		
-		if ($param['get_id'])
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
  	}
  	
-	function GetColorsList($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-	 	$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['toolbox'];
-		$param['where'] 	= 	array('tool_type','2');
- 		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
-	}
+ 	/* ... */
  	
-  	function UpdateColor($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		if (!is_array($param['field']))
- 		{
- 			$param['field'] = array();
- 		}
- 		
-		$param['field']['tool_type'] = 2;
-		
-		$query = $this->Engine->records->Update($this->Engine->table['toolbox'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
- 	}
- 	
- 	function GetColorInfo($param)
+	public function getFontsList()
 	{
- 		if (empty($param['id']))
+		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
+ 		
+ 		$statement = "tool_type='1'";
+ 		
+ 		if ( isset( $this->engine->rec->filter ) )
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetColorInfo() -- EMPTY id',E_USER_ERROR);
+ 			$this->engine->rec->filter .= ' AND ' . $statement;
+ 		}
+ 		else
+ 		{
+ 			$this->engine->rec->filter = $statement;
  		}
  		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['toolbox'];
-		
-		$param['where'] 				= 	array();
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'tool_type';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	'2';
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'id';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	$param['id'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-			
-		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
 	
-	function DeleteColor($param)
+	/* ... */
+	
+ 	public function updateFont()
+ 	{
+ 		$this->engine->rec->table = $this->engine->table['toolbox'];
+ 		
+ 		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'tool_type' ] = 1;
+		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+ 	}
+ 	
+ 	/* ... */
+ 	
+	public function getFontInfo()
 	{
- 		if (empty($param['id']))
+ 		$this->engine->rec->table = $this->engine->table['toolbox'];
+		
+		$statement = "tool_type='1'";
+ 		
+ 		if ( isset( $this->engine->rec->filter ) )
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteColor() -- EMPTY id',E_USER_ERROR);
+ 			$this->engine->rec->filter .= ' AND ' . $statement;
+ 		}
+ 		else
+ 		{
+ 			$this->engine->rec->filter = $statement;
  		}
  		
-		$param['table'] 				= 	$this->Engine->table['toolbox'];
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'id';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['id'];
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'tool_type';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'2';
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
+	
+	public function deleteFont()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
+	
+ 	public function insertColor()
+ 	{
+		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
+		
+		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'tool_type' ] = 2;
+		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
+		{
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
+		}
+		
+		return ( $query ) ? true : false;
+ 	}
+ 	
+ 	/* ... */
+ 	
+	public function getColorsList()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
+ 		
+ 		$statement = "tool_type='2'";
+ 		
+ 		if ( isset( $this->engine->rec->filter ) )
+ 		{
+ 			$this->engine->rec->filter .= ' AND ' . $statement;
+ 		}
+ 		else
+ 		{
+ 			$this->engine->rec->filter = $statement;
+ 		}
+ 		
+ 	 	$this->engine->rec->getList();
+	}
+ 	
+ 	/* ... */
+ 	
+  	public function updateColor()
+ 	{
+ 		$this->engine->rec->table = $this->engine->table['toolbox'];
+ 		
+ 		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'tool_type' ] = 2;
+		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+ 	}
+ 	
+ 	/* ... */
+ 	
+ 	public function getColorInfo()
+	{
+ 		$this->engine->rec->table = $this->engine->table['toolbox'];
+		
+		$statement = "tool_type='2'";
+ 		
+ 		if ( isset( $this->engine->rec->filter ) )
+ 		{
+ 			$this->engine->rec->filter .= ' AND ' . $statement;
+ 		}
+ 		else
+ 		{
+ 			$this->engine->rec->filter = $statement;
+ 		}
+ 		
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
+	
+	public function deleteColor()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'toolbox' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
 }
 
 ?>

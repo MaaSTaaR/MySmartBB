@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 // TODO :: groups, visitor
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
@@ -16,85 +18,68 @@ define('CLASS_NAME','MySmartVoteMOD');
 
 class MySmartVoteMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		// Show header with page title
-		$MySmartBB->functions->ShowHeader('التصويت');
+		$MySmartBB->func->showHeader('التصويت');
 		
 		if ($MySmartBB->_GET['start'])
 		{
-			$this->_Start();
+			$this->_start();
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _Start()
+	private function _start()
 	{
 		global $MySmartBB;
 		
 		// Clean the id from any strings
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$PollArr = array();
-		$PollArr['where'] = array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Poll = $MySmartBB->poll->GetPollInfo($PollArr);
+		$Poll = $MySmartBB->poll->getPollInfo();
 		
 		if (!$Poll)
 		{
-			$MySmartBB->functions->error('الاقتراع المطلوب غير موجود');
+			$MySmartBB->func->error('الاقتراع المطلوب غير موجود');
 		}
 		
 		if (!isset($MySmartBB->_POST['answer']))
 		{
-			$MySmartBB->functions->error('يجب عليك الاختيار من اجل قبول اقتراعك');
+			$MySmartBB->func->error('يجب عليك الاختيار من اجل قبول اقتراعك');
 		}
 		
-		$CheckArr 						= 	array();
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND username='" . $MySmartBB->_CONF['member_row']['username'] .  "'";
 		
-		$CheckArr['where'][0] 			= 	array();
-		$CheckArr['where'][0]['name'] 	= 	'id';
-		$CheckArr['where'][0]['oper'] 	= 	'=';
-		$CheckArr['where'][0]['value'] 	= 	$MySmartBB->_GET['id'];
-		
-
-		$CheckArr['where'][1] 			= 	array();
-		$CheckArr['where'][1]['con'] 	= 	'AND';
-		$CheckArr['where'][1]['name'] 	= 	'username';
-		$CheckArr['where'][1]['oper'] 	= 	'=';
-		$CheckArr['where'][1]['value'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-		$Vote = $MySmartBB->vote->GetVoteInfo($CheckArr);
+		$Vote = $MySmartBB->vote->getVoteInfo();
 		
 		if ($Vote != false)
 		{
-			$MySmartBB->functions->error('غير مسموح لك بالتصويت اكثر من مرّه');
+			$MySmartBB->func->error('غير مسموح لك بالتصويت اكثر من مرّه');
 		}
 		
-		$VoteArr 				= 	array();
-		$VoteArr['field']		=	array();
-		
-		$VoteArr['answers'] 			= 	$Poll['answers'];
-		$VoteArr['answer'] 				= 	$MySmartBB->_POST['answer'];
-		$VoteArr['where'] 				= 	array('id',$MySmartBB->_GET['id']);
-		$VoteArr['field']['poll_id'] 	= 	$MySmartBB->_GET['id'];
-		$VoteArr['field']['member_id'] 	= 	$MySmartBB->_CONF['member_row']['id'];
-		$VoteArr['field']['username'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-		$insert = $MySmartBB->vote->DoVote($VoteArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->fields = array(	'poll_id'	=>	$MySmartBB->_GET['id'],
+											'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
+											'username'	=>	$MySmartBB->_CONF['member_row']['username']	);
+											
+											
+		$insert = $MySmartBB->vote->doVote( $Poll['answers'], $MySmartBB->_POST['answer'] );
 		
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم احتساب تصويتك');
-			$MySmartBB->functions->goto('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
+			$MySmartBB->func->msg('تم احتساب تصويتك');
+			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
 		}
 	}
 }

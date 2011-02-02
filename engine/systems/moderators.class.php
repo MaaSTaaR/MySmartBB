@@ -8,96 +8,82 @@
  * @package 	: 	MySmartModerators
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@hotmail.com>
  * @start 		: 	18/05/2008 04:53:56 PM 
- * @updated 	:	16/07/2008 11:47:00 PM 
+ * @updated 	:	06/07/2010 11:19:41 AM 
  */
 
 class MySmartModerators
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartModerators($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertModerator($param)
+	/* ... */
+	
+	public function insertModerator()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['moderators'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'moderators' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
-	}
-			
- 	function UpdateModerator($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           				 
-		$query = $this->Engine->records->Update($this->Engine->table['moderators'],$param['field'],$param['where']);
-		           
-		return ($query) ? true : false;
- 	}
- 	 	
-	function DeleteModerator($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['table'] = $this->Engine->table['moderators'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
-	}
-		
-	function GetModeratorList($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['moderators'];
- 		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
+		return ( $query ) ? true : false;
 	}
 	
-	function GetModeratorInfo($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+	/* ... */
+	
+ 	public function updateModerator()
+ 	{
+ 		$this->engine->rec->table = $this->engine->table['moderators'];
  		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['moderators'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+ 	}
+ 	
+ 	/* ... */
+ 	
+	public function deleteModerator()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'moderators' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
+	
+	/* ... */
+	
+	public function getModeratorList()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'moderators' ];
+ 		
+ 	 	$this->engine->rec->getList();
+	}
+	
+	/* ... */
+	
+	public function getModeratorInfo()
+	{
+ 		$this->engine->rec->table = $this->engine->table['moderators'];
+		
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
 	
  	function GetModeratorsNumber($param)
  	{
@@ -108,82 +94,70 @@ class MySmartModerators
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['moderators'];
+		$param['from'] 		= 	$this->engine->table['moderators'];
 		
-		$num   = $this->Engine->records->GetNumber($param);
+		$num   = $this->engine->records->GetNumber($param);
 		
 		return $num;
  	}
  	
- 	///
+ 	/* ... */
 	
- 	function CreateModeratorsCache($param)
+ 	public function createModeratorsCache( $section_id )
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->filter = "section_id='" . $section_id . "'";
  		
-		$moderators = $this->GetModeratorList($param);
+		$this->getModeratorList();
 		
  		$cache 	= 	array();
  		$x		=	0;
- 		$n		=	sizeof($moderators);
  		
-		while ($x < $n)
+		while ( $row = $this->engine->rec->getInfo() )
 		{
 			$cache[$x] 					= 	array();
-			$cache[$x]['id']		 	= 	$moderators[$x]['id'];
-			$cache[$x]['section_id'] 	= 	$moderators[$x]['section_id'];
-			$cache[$x]['member_id'] 	= 	$moderators[$x]['member_id'];
-			$cache[$x]['username'] 		= 	$moderators[$x]['username'];
+			$cache[$x]['id']		 	= 	$row['id'];
+			$cache[$x]['section_id'] 	= 	$row['section_id'];
+			$cache[$x]['member_id'] 	= 	$row['member_id'];
+			$cache[$x]['username'] 		= 	$row['username'];
 			
 			$x += 1;
 		}
 		
-		$cache = serialize($cache);
+		$cache = serialize( $cache );
 		
 		return $cache;
  	}
  	
- 	function IsModerator($param)
+ 	/* ... */
+ 	
+ 	// When the parameter "$is_id = true", so use the field "member_id" otherwise use the field "username" to compare with "$value"
+ 	public function isModerator( $value, $section_id, $is_id = false )
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
+ 		if ( !isset( $value )
+ 			or !isset( $section_id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM isModerator() -- EMPTY value or section_id');
  		}
  		
- 		$InfoArr = array();
+ 		$this->engine->rec->table = $this->engine->table['moderators'];
  		
- 		$InfoArr['where'] = array();
+ 		$this->engine->rec->filter = "section_id='" . $section_id . "'";
  		
- 		if (isset($param['username']))
+ 		if ( $is_id )
  		{
- 			$InfoArr['where'][0] 			= 	array();
- 			$InfoArr['where'][0]['name'] 	= 	'username';
- 			$InfoArr['where'][0]['oper']	=	'=';
- 			$InfoArr['where'][0]['value'] 	= 	$param['username'];
+ 			$this->engine->rec->filter .= " AND member_id='" . $value . "'";
  		}
- 		elseif (isset($param['member_id']))
+ 		else
  		{
- 			$InfoArr['where'][0] 			= 	array();
- 			$InfoArr['where'][0]['name'] 	= 	'member_id';
- 			$InfoArr['where'][0]['oper']	=	'=';
- 			$InfoArr['where'][0]['value'] 	= 	$param['member_id'];
+ 			$this->engine->rec->filter .= " AND username='" . $value . "'";
  		}
  		
- 		
- 		$InfoArr['where'][1] 			= 	array();
- 		$InfoArr['where'][1]['con'] 	= 	'AND';
- 		$InfoArr['where'][1]['name'] 	= 	'section_id';
- 		$InfoArr['where'][1]['value'] 	= 	$param['section_id'];
- 		
- 		$Info = $this->GetModeratorInfo($InfoArr);
- 		
- 		return is_array($Info) ? true : false;
+    	$num = $this->engine->rec->getNumber();
+    	 	
+    	return ($num <= 0) ? false : true;
  	}
+ 	
+ 	/* ... */
 }
 
 ?>

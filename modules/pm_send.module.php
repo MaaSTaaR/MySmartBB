@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -19,26 +21,26 @@ define('CLASS_NAME','MySmartPrivateMassegeSendMOD');
 
 class MySmartPrivateMassegeSendMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 		
 		/** Can't use the private massege system **/
-		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
+		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
 		/** **/
 		
 		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		/** **/
 		
@@ -48,46 +50,45 @@ class MySmartPrivateMassegeSendMOD
 			/** Show a nice form :) **/
 			if ($MySmartBB->_GET['index'])
 			{
-				$this->_SendForm();
+				$this->_sendForm();
 			}
 			/** **/
 			
 			/** Start send the massege **/
 			elseif ($MySmartBB->_GET['start'])
 			{
-				$this->_StartSend();
+				$this->_startSend();
 			}
 			/** **/
 		}
 		/** **/
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	/**
 	 * Show send form for the sender , Get the colors , fonts , icons and smiles list
 	 */
-	function _SendForm()
+	private function _sendForm()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('إرسال رساله خاصه');
+		$MySmartBB->func->showHeader('إرسال رساله خاصه');
 		
-		$MySmartBB->functions->GetEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
 		if (isset($MySmartBB->_GET['username']))
 		{
-			$ToArr 				= 	array();
-			$ToArr['get'] 		= 	'usergroup,username,pm_senders,pm_senders_msg,away,away_msg';		
-			$ToArr['where']		=	array('username',$MySmartBB->_GET['username']);
-		
-			$GetToInfo = $MySmartBB->member->GetMemberInfo($ToArr);
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
+			
+			$GetToInfo = $MySmartBB->member->getMemberInfo();
 															
 			if (!$GetToInfo)
 			{
-				$MySmartBB->functions->error('العضو المطلوب غير موجود');
+				$MySmartBB->func->error('العضو المطلوب غير موجود');
 			}
 			
+			// TODO : Change the names of variables to something else which has mean
 			$MySmartBB->template->assign('SHOW_MSG',$GetToInfo['pm_senders']);
 			$MySmartBB->template->assign('SHOW_MSG1',$GetToInfo['away']);
 			$MySmartBB->template->assign('MSG',$GetToInfo['pm_senders_msg']);
@@ -95,7 +96,6 @@ class MySmartPrivateMassegeSendMOD
 			$MySmartBB->template->assign('to',$GetToInfo['username']);
 		}
 		
-		// Finally , show the form :)
 		$MySmartBB->template->display('pm_send');
 	}
 		
@@ -103,27 +103,27 @@ class MySmartPrivateMassegeSendMOD
 	 * Check if the necessary informations is not empty , 
 	 * and some checks about the sender and resiver then send the massege .
 	 */
-	function _StartSend()
+	private function _startSend()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية الارسال');
+		$MySmartBB->func->showHeader('تنفيذ عملية الارسال');
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الارسال');
+		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الارسال');
 		
 		if (empty($MySmartBB->_POST['to'][0]))
 		{
-			$MySmartBB->functions->error('يجب كتابة اسم المستخدم الذي تريد الارسال إليه');
+			$MySmartBB->func->error('يجب كتابة اسم المستخدم الذي تريد الارسال إليه');
 		}
 		
 		if (empty($MySmartBB->_POST['title']))
 		{
-			$MySmartBB->functions->error('يجب كتابة عنوان الرساله');
+			$MySmartBB->func->error('يجب كتابة عنوان الرساله');
 		}
 		
 		if (empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->functions->error('يجب كتابة الرساله الخاصه');
+			$MySmartBB->func->error('يجب كتابة الرساله الخاصه');
 		}
 		
 		$size = sizeof($MySmartBB->_POST['to']);
@@ -145,12 +145,10 @@ class MySmartPrivateMassegeSendMOD
      				
      				continue;
      			}
-     			
-				$ToArr 				= 	array();
-				$ToArr['get'] 		= 	'usergroup,username,autoreply,autoreply_title,autoreply_msg';		
-				$ToArr['where']		=	array('username',$MySmartBB->_POST['to'][$x]);
-		
-				$GetToInfo = $MySmartBB->member->GetMemberInfo($ToArr);
+				
+				$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['to'][$x] . "'";
+				
+				$GetToInfo = $MySmartBB->member->getMemberInfo();
 				
 				if (!$GetToInfo
 					and $size > 1)
@@ -166,13 +164,12 @@ class MySmartPrivateMassegeSendMOD
 				elseif (!$GetToInfo
 						and $size == 1)
 				{
-					$MySmartBB->functions->error('العضو المطلوب غير موجود');
+					$MySmartBB->func->error('العضو المطلوب غير موجود');
 				}
 		
-				$GroupInfo 				= 	array();
-				$GroupInfo['where'] 	= 	array('id',$GetToInfo['usergroup']);
-		
-				$GetMemberOptions = $MySmartBB->group->GetGroupInfo($GroupInfo);
+				$MySmartBB->rec->filter = "id='" . $GetToInfo['usergroup'] . "'";
+				
+				$GetMemberOptions = $MySmartBB->group->getGroupInfo();
 				
 				if (!$GetMemberOptions['resive_pm']
 					and $size > 1)
@@ -188,15 +185,14 @@ class MySmartPrivateMassegeSendMOD
 				elseif (!$GetMemberOptions['resive_pm']
 						and $size == 1)
 				{
-					$MySmartBB->functions->error('المعذره , هذا العضو لا يمكن ان يستقبل الرسائل الخاصه');
+					$MySmartBB->func->error('المعذره , هذا العضو لا يمكن ان يستقبل الرسائل الخاصه');
 				}
 		
 				if ($GetMemberOptions['max_pm'] > 0)
 				{
-					$PMNumberArr 				= 	array();
-					$PMNumberArr['username'] 	= 	$GetToInfo['username'];
-			
-					$PrivateMassegeNumber = $MySmartBB->pm->GetPrivateMassegeNumber($PMNumberArr);
+					$MySmartBB->rec->filter = "user_to='" . $GetToInfo['username'] . "'";
+					
+					$PrivateMassegeNumber = $MySmartBB->pm->getPrivateMessageNumber();
 					
 					if ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
 						and $size > 1)
@@ -212,23 +208,25 @@ class MySmartPrivateMassegeSendMOD
 					elseif ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
 							and $size == 1)
 					{
-						$MySmartBB->functions->error('المعذره .. استهلك هذا العضو الحد الاقصى لرسائله , لذلك لا يمكنه استقبال رسائل جديده');
+						$MySmartBB->func->error('المعذره .. استهلك هذا العضو الحد الاقصى لرسائله , لذلك لا يمكنه استقبال رسائل جديده');
 					}
 				}
-		     	
-				$MsgArr 				= 	array();
-				$MsgArr['get_id']		=	true;
-				$MsgArr['field']		=	array();
 				
-				$MsgArr['field']['user_from'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-				$MsgArr['field']['user_to'] 	= 	$GetToInfo['username'];
-				$MsgArr['field']['title'] 		= 	$MySmartBB->_POST['title'];
-				$MsgArr['field']['text'] 		= 	$MySmartBB->_POST['text'];
-				$MsgArr['field']['date'] 		= 	$MySmartBB->_CONF['now'];
-				$MsgArr['field']['icon'] 		= 	$MySmartBB->_POST['icon'];
-				$MsgArr['field']['folder'] 		= 	'inbox';
-		
-				$Send = $MySmartBB->pm->InsertMassege($MsgArr);
+				/* ... */
+				
+				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
+													'user_to'	=>	$GetToInfo['username'],
+													'title'	=>	$MySmartBB->_POST['title'],
+													'text'	=>	$MySmartBB->_POST['text'],
+													'date'	=>	$MySmartBB->_CONF['now'],
+													'icon'	=>	$MySmartBB->_POST['icon'],
+													'folder'	=>	'inbox'	);
+				
+				$MySmartBB->pm->get_id = true;
+												
+				$Send = $MySmartBB->pm->insertMessage();
+				
+				/* ... */
 														
 				if ($Send)
 				{
@@ -250,10 +248,10 @@ class MySmartPrivateMassegeSendMOD
      						{
      							if (!empty($MySmartBB->_FILES['files']['name'][$x]))
      							{
-     								//////////
+     								/* ... */
      							
      								// Get the extension of the file
-     								$ext = $MySmartBB->functions->GetFileExtension($MySmartBB->_FILES['files']['name'][$x]);
+     								$ext = $MySmartBB->func->getFileExtension($MySmartBB->_FILES['files']['name'][$x]);
      							
      								// Bad try!
      								if ($ext == 'MULTIEXTENSION'
@@ -271,10 +269,9 @@ class MySmartPrivateMassegeSendMOD
      									//////////
      									
      									// Check if the extenstion is allowed or not (TODO : cache me please)
-     									$ExtArr 			= 	array();
-     									$ExtArr['where'] 	= 	array('Ex',$ext);
+     									$MySmartBB->rec->filter = "Ex='" . $ext . "'";
      									
-     									$extension = $MySmartBB->extension->GetExtensionInfo($ExtArr);
+     									$extension = $MySmartBB->extension->getExtensionInfo();
      								
      									// The extension is not allowed
      									if (!$extension)
@@ -325,7 +322,7 @@ class MySmartPrivateMassegeSendMOD
      											// There is a file which has same name, so change the name of the new file
      											if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
      											{
-     												$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->functions->RandomCode();
+     												$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->func->randomCode();
      											}
      										
      											//////////
@@ -340,14 +337,12 @@ class MySmartPrivateMassegeSendMOD
      												$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
      											
      												// Insert attachment to the database
-     												$AttachArr 							= 	array();
-     												$AttachArr['field'] 				= 	array();
-     												$AttachArr['field']['filename'] 	= 	$MySmartBB->_FILES['files']['name'][$x];
-     												$AttachArr['field']['filepath'] 	= 	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename;
-     												$AttachArr['field']['filesize'] 	= 	$MySmartBB->_FILES['files']['size'][$x];
-     												$AttachArr['field']['pm_id'] 		= 	$MySmartBB->pm->id;
+     												$MySmartBB->rec->fields = array(	'filename'	=>	$MySmartBB->_FILES['files']['name'][$x],
+     																					'filepath'	=>	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename,
+     																					'filesize'	=>	$MySmartBB->_FILES['files']['size'][$x],
+     																					'pm_id'	=>	$MySmartBB->pm->id);
      												
-     												$InsertAttach = $MySmartBB->attach->InsertAttach($AttachArr);
+     												$InsertAttach = $MySmartBB->attach->insertAttach();
      											
     										
      												$z += 1;
@@ -369,49 +364,37 @@ class MySmartPrivateMassegeSendMOD
      				
      				//////////
 					
-					$MsgArr 				= 	array();
-					$MsgArr['field']		=	array();
-					
-					$MsgArr['field']['user_from'] 	= $MySmartBB->_CONF['member_row']['username'];
-					$MsgArr['field']['user_to'] 	= $GetToInfo['username'];
-					$MsgArr['field']['title'] 		= $MySmartBB->_POST['title'];
-					$MsgArr['field']['text'] 		= $MySmartBB->_POST['text'];
-					$MsgArr['field']['date'] 		= $MySmartBB->_CONF['date'];
-					$MsgArr['field']['icon'] 		= $MySmartBB->_POST['icon'];
-					$MsgArr['field']['folder'] 		= 'sent';
-			
-					$SentBox = $MySmartBB->pm->InsertMassege($MsgArr);
+					$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
+														'user_to'	=>	$GetToInfo['username'],
+														'title'	=>	$MySmartBB->_POST['title'],
+														'text'	=>	$MySmartBB->_POST['text'],
+														'date'	=>	$MySmartBB->_CONF['date'],
+														'icon'	=>	$MySmartBB->_POST['icon'],
+														'folder'	=>	'sent'	);
+													
+					$SentBox = $MySmartBB->pm->insertMassege();
 														
 					if ($SentBox)
 					{
 						/** Auto reply **/
 						if ($GetToInfo['autoreply'])
 						{
-							$MsgArr 			= 	array();
-							$MsgArr['field'] 	= 	array();
-							
-							$MsgArr['field']['user_from'] 	= 	$GetToInfo['username'];
-							$MsgArr['field']['user_to'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-							$MsgArr['field']['title'] 		= 	'[الرد الآلي] ' . $GetToInfo['autoreply_title'];
-							$MsgArr['field']['text'] 		= 	$GetToInfo['autoreply_msg'];
-							$MsgArr['field']['date'] 		= 	$MySmartBB->_CONF['now'];
-							$MsgArr['field']['folder'] 		= 	'inbox';
-			
-							$AutoReply = $MySmartBB->pm->InsertMassege($MsgArr);
+							$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
+																'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
+																'title'	=>	'[الرد الآلي] ' . $GetToInfo['autoreply_title'],
+																'text'	=>	$GetToInfo['autoreply_msg'],
+																'date'	=>	$MySmartBB->_CONF['now'],
+																'folder'	=>	'inbox'	);
+														
+							$MySmartBB->pm->insertMassege();
 						}
 						
-						$NumberArr 				= 	array();
-						$NumberArr['username'] 	= 	$GetToInfo['username'];
+						$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo['username'] );
+		      			
+						$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
+						$MySmartBB->rec->filter = "username='" . $GetToInfo['username'] . "'";
 						
-						$Number = $MySmartBB->pm->NewMessageNumber($NumberArr);
-		      															
-						$CacheArr 					= 	array();
-						$CacheArr['field']			=	array();
-						
-						$CacheArr['field']['unread_pm'] 	= 	$Number;
-						$CacheArr['where'] 					= 	array('username',$GetToInfo['username']);
-				
-						$Cache = $MySmartBB->member->UpdateMember($CacheArr);
+						$Cache = $MySmartBB->member->updateMember();
 						
 						if ($Cache)
 						{
@@ -427,7 +410,7 @@ class MySmartPrivateMassegeSendMOD
      	}
      	else
      	{
-     		$MySmartBB->functions->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error('المسار المتبع غير صحيح');
      	}
      	
      	$sucess_number 	= 	sizeof($success);
@@ -435,18 +418,18 @@ class MySmartPrivateMassegeSendMOD
 
      	if ($sucess_number == $size)
      	{
-     		$MySmartBB->functions->msg('تم إرسال الرساله الخاصه بنجاح');	
+     		$MySmartBB->func->msg('تم إرسال الرساله الخاصه بنجاح');	
      	}
      	elseif ($fail_number == $size)
      	{
-     		$MySmartBB->functions->msg('لم يتم إرسال الرساله الخاصه');
+     		$MySmartBB->func->msg('لم يتم إرسال الرساله الخاصه');
      	}
      	elseif ($sucess_number < $size)
      	{
-     		$MySmartBB->functions->msg('تم إرسال الرساله الخاصه إلى البعض');
+     		$MySmartBB->func->msg('تم إرسال الرساله الخاصه إلى البعض');
      	}
      	
-     	$MySmartBB->functions->goto('index.php?page=pm_list&amp;list=1&amp;folder=inbox');
+     	$MySmartBB->func->goto('index.php?page=pm_list&amp;list=1&amp;folder=inbox');
 	}
 }
 

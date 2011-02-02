@@ -8,37 +8,41 @@
  * @package 	: 	MySmartBookmark
  * @author 		: 	Ehab J. Ghazall <Ghazallsyria@gmail.com>
  * @start 		: 	15/2/2009 , 3:31 PM
- * @end   		: 	15/2/2009 , 4:12 PM
+ * @end   		: 	05/07/2010 11:01:50 PM 
 */
  
 class MySmartBookmark
 {
-	var $id;
-	var $Engine;
+	public $id;
+	private $engine;
 	
-	function MySmartBookmark($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertSubject($param)
+	/* ... */
+	
+	public function insertSubject()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['subjects_bookmark'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
-			
+	
+	/* ... */
+	
 	function UpdateSubject($param)
 	{
  		if (!isset($param)
@@ -47,25 +51,23 @@ class MySmartBookmark
  			$param = array();
  		}
  		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['subjects_bookmark'],$param['field'],$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['subjects_bookmark'],$param['field'],$param['where']);
 		
 		return ($query) ? true : false;
 	}
 	
-	function DeleteSubject($param)
+	/* ... */
+	
+	public function deleteSubject()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'subjects_bookmark' ];
  		
-		$param['table'] = $this->Engine->table['subjects_bookmark'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
+	
+	/* ... */
 	
 	function GetSubjectInfo($param)
 	{
@@ -76,28 +78,23 @@ class MySmartBookmark
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['subjects_bookmark'];
+		$param['from'] 		= 	$this->engine->table['subjects_bookmark'];
 
-		$rows = $this->Engine->records->GetInfo($param);
+		$rows = $this->engine->records->GetInfo($param);
  	 	
 		return $rows;
 	}
 	
-	function GetSubjectList($param)
+	/* ... */
+	
+	public function getSubjectList()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+  		$this->engine->rec->table = $this->engine->table[ 'subjects_bookmark' ];
  		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['subjects_bookmark'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
+	
+	/* ... */
 	
 	function GetSubjectsNumber()
 	{
@@ -107,9 +104,9 @@ class MySmartBookmark
 		}
 		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['subjects_bookmark'];
+		$param['from'] 		= 	$this->engine->table['subjects_bookmark'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return $num;
 	}

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /****
 			We have something TODO in this file
 *****/
@@ -20,7 +22,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartMemberMOD');
 	
-class MySmartMemberMOD extends _functions
+class MySmartMemberMOD extends _func
 {
 	function run()
 	{
@@ -34,29 +36,29 @@ class MySmartMemberMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['merge'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_MergeMain();
+					$this->_mergeMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_MergeStart();
+					$this->_mergeStart();
 				}
 
 			}
@@ -64,33 +66,33 @@ class MySmartMemberMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['search'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_SearchMain();
+					$this->_searchMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_SearchStart();
+					$this->_searchStart();
 				}
 			}
 			
@@ -98,198 +100,205 @@ class MySmartMemberMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('member_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 					
-		$MySmartBB->_POST['username'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
-		$MySmartBB->_POST['email'] 		= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['email'],'trim');
+		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
+		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
 		
 		if (empty($MySmartBB->_POST['username']) 
 			or empty($MySmartBB->_POST['password']) 
 			or empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
+		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->functions->error('يرجى كتابة بريد إلكتروني صحيح');
+			$MySmartBB->func->error('يرجى كتابة بريد إلكتروني صحيح');
 		}
 		
-		if ($MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['username']))))
+		// Ensure there is no person used the same username
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( $isMember )
 		{
-			$MySmartBB->functions->error('اسم المستخدم موجود مسبقاً');
+			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
 		}
 		
-		if ($MySmartBB->member->IsMember(array('where' => array('email',$MySmartBB->_POST['email']))))
+		// Ensure there is no person used the same email
+		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( $isMember )
 		{
-			$MySmartBB->functions->error('البريد الالكتروني مسجل مسبقاً');
+			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً');
 		}
 		
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->functions->error('لا يمكن التسجيل بهذا الاسم');
+			$MySmartBB->func->error('لا يمكن التسجيل بهذا الاسم');
 		}
 		
 		$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
 		
-      	//////////
+      	/* ... */
       	
       	// Get the information of default group to set username style cache
       	
-		$GrpArr 			= 	array();
-		$GrpArr['where'] 	= 	array('id',4);
+		$MySmartBB->rec->filter = "id='4'";
 		
-		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		$GroupInfo = $MySmartBB->group->getGroupInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
 		
-      	//////////
+      	/* ... */
       	
-		$InsertArr 					= 	array();
-		$InsertArr['field']			=	array();
+		$MySmartBB->rec->fields			=	array();
 		
-		$InsertArr['field']['username']				= 	$MySmartBB->_POST['username'];
-		$InsertArr['field']['password']				= 	$MySmartBB->_POST['password'];
-		$InsertArr['field']['email']				= 	$MySmartBB->_POST['email'];
-		$InsertArr['field']['usergroup']			= 	4;
-		$InsertArr['field']['user_gender']			= 	$MySmartBB->_POST['gender'];
-		$InsertArr['field']['register_date']		= 	$MySmartBB->_CONF['now'];
-		$InsertArr['field']['user_title']			= 	'عضو';
-		$InsertArr['field']['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
-		$InsertArr['field']['username_style_cache']	=	$username_style_cache;
-		$InsertArr['get_id']						=	true;
+		$MySmartBB->rec->fields['username']				= 	$MySmartBB->_POST['username'];
+		$MySmartBB->rec->fields['password']				= 	$MySmartBB->_POST['password'];
+		$MySmartBB->rec->fields['email']				= 	$MySmartBB->_POST['email'];
+		$MySmartBB->rec->fields['usergroup']			= 	4;
+		$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
+		$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
+		$MySmartBB->rec->fields['user_title']			= 	'عضو';
+		$MySmartBB->rec->fields['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
+		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		
-		$insert = $MySmartBB->member->InsertMember($InsertArr);
+		$MySmartBB->member->get_id = true;
+		
+		$insert = $MySmartBB->member->insertMember();
 		
 		if ($insert)
 		{
-			$member_num = $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'cache'));
-			
-			$MySmartBB->cache->UpdateLastMember(array(	'username'		=>	$MySmartBB->_POST['username'],
-      													'id'			=>	$MySmartBB->member->id,
-      													'member_num'	=>	$member_num));
+			$MySmartBB->cache->updateLastMember( $MySmartBB->_CONF['info_row']['member_number'] , $MySmartBB->_POST['username'], $MySmartBB->member->id );
 
-			$MySmartBB->functions->msg('تم اضافة العضو بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
+			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
+			$MySmartBB->func->goto('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$MemArr 					= 	array();
-		$MemArr['order']			=	array();
-		$MemArr['order']['field']	=	'id';
-		$MemArr['order']['type']	=	'DESC';
-		$MemArr['proc'] 			= 	array();
-		$MemArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->_CONF['template']['while']['MembersList'] = $MySmartBB->member->GetMemberList($MemArr);
+		$MySmartBB->member->getMemberList();
 		
 		$MySmartBB->template->display('members_main');
 	}
 	
-	function _MergeMain()
+	private function _MergeMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('merge_users');
 	}
 
-	function _MergeStart()
+	private function _MergeStart()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
 		
-		$MySmartBB->_POST['user_get'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['user_get'],'trim');
-		$MySmartBB->_POST['user_to'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['user_to'],'trim');
+		$MySmartBB->_POST['user_get'] 	= 	trim( $MySmartBB->_POST['user_get'] );
+		$MySmartBB->_POST['user_to'] 	= 	trim( $MySmartBB->_POST['user_to'] );
 
-		//////////
+		/* ... */
 		
 		if (empty($MySmartBB->_POST['user_get'])
 			or empty($MySmartBB->_POST['user_to']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-
-		if (!$MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['user_get']))))
+		
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( !$isMember )
 		{
-			$MySmartBB->functions->error('اسم العضو المراد اخذ بياناته غير موجود في قاعدة البيانات');
+			$MySmartBB->func->error('اسم العضو المراد اخذ بياناته غير موجود في قاعدة البيانات');
 		}
 		
-		if (!$MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['user_to']))))
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( !$isMember )
 		{
-			$MySmartBB->functions->error('اسم العضو المراد نقل البيانات له غير موجود في قاعدة البيانات');
+			$MySmartBB->func->error('اسم العضو المراد نقل البيانات له غير موجود في قاعدة البيانات');
 		}
 		
-		//////////
+		/* ... */
 		
-		$MemArr 			= 	array();
-		$MemArr['get'] 		= 	'*';
-		$MemArr['where'] 	= 	array('username',$MySmartBB->_POST['user_get']);
-
-		$GetMemInfo = $MySmartBB->member->GetMemberInfo($MemArr);
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
 		
-		unset($MemArr);
+		$GetMemInfo = $MySmartBB->member->getMemberInfo();
 		
-		$MemArr 			= 	array();
-		$MemArr['get'] 		= 	'*';
-		$MemArr['where'] 	= 	array('username',$MySmartBB->_POST['user_to']);
-
-		$ToMemInfo = $MySmartBB->member->GetMemberInfo($MemArr);
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
 		
-		//////////
+		$ToMemInfo = $MySmartBB->member->getMemberInfo();
 		
-		$UpdateSubjectArr 						= 	array();
-		$UpdateSubjectArr['field'] 				= 	array();
-		$UpdateSubjectArr['field']['writer'] 	= 	$ToMemInfo['username'];
-		$UpdateSubjectArr['where'] 				= 	array('writer',$GetMemInfo['username']);
-
-		$u_subject = $MySmartBB->subject->UpdateSubject($UpdateSubjectArr);
+		/* ... */
 		
-		$UpdateReplyArr 					= 	array();
-		$UpdateReplyArr['field'] 			= 	array();
-		$UpdateReplyArr['field']['writer'] 	= 	$ToMemInfo['username'];
-		$UpdateReplyArr['where'] 			= 	array('writer',$GetMemInfo['username']);
+		$MySmartBB->rec->fields 				= 	array();
+		$MySmartBB->rec->fields['writer'] 	= 	$ToMemInfo['username'];
+		
+		$MySmartBB->rec->filter = "writer='" . $GetMemInfo['username'] . "'";
+		
+		$u_subject = $MySmartBB->subject->updateSubject();
+		
+		/* ... */
+		
+		$MySmartBB->rec->fields 			= 	array();
+		$MySmartBB->rec->fields['writer'] 	= 	$ToMemInfo['username'];
+		
+		$MySmartBB->rec->filter = "writer='" . $GetMemInfo['username'] . "'";
 
-		$u_reply = $MySmartBB->reply->UpdateReply($UpdateReplyArr);
-
-		$UpdateMemberArr 						= 	array();
-		$UpdateMemberArr['field'] 				= 	array();
-		$UpdateMemberArr['field']['posts'] 		= 	$ToMemInfo['posts']+$GetMemInfo['posts'];
-		$UpdateMemberArr['field']['visitor'] 	= 	$ToMemInfo['visitor']+$GetMemInfo['visitor'];
-		$UpdateMemberArr['where'] 				= 	array('username',$ToMemInfo['username']);
-
-		$u_member = $MySmartBB->member->UpdateMember($UpdateMemberArr);
-
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$GetMemInfo['id']);
-
-		$del = $MySmartBB->member->DeleteMember($DelArr);
+		$u_reply = $MySmartBB->reply->updateReply();
+		
+		/* ... */
+		
+		$MySmartBB->rec->fields 				= 	array();
+		$MySmartBB->rec->fields['posts'] 		= 	$ToMemInfo['posts']+$GetMemInfo['posts'];
+		$MySmartBB->rec->fields['visitor'] 		= 	$ToMemInfo['visitor']+$GetMemInfo['visitor'];
+		
+		$MySmartBB->rec->filter = "username='" . $ToMemInfo['username'] . "'";
+		
+		$u_member = $MySmartBB->member->updateMember();
+		
+		/* ... */
+		
+		$MySmartBB->rec->filter = "id='" . $GetMemInfo['id'] . "'";
+		
+		$del = $MySmartBB->member->deleteMember();
 
 		if ($u_subject
 			and $u_reply
 			and $u_member
 			and $del)
 		{
-			$MySmartBB->functions->msg('تم دمج بيانات العضو بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=member&control=1&main=1');
+			$MySmartBB->func->msg('تم دمج بيانات العضو بنجاح');
+			$MySmartBB->func->goto('admin.php?page=member&control=1&main=1');
 		}
 	}
 	 
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -297,43 +306,34 @@ class MySmartMemberMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		//////////
+		/* ... */
 		
 		// Get styles list
-		$StyleArr 							= 	array();
-		$StyleArr['order']					=	array();
-		$StyleArr['order']['field']			=	'id';
-		$StyleArr['order']['type']			=	'DESC';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
-		$StyleArr['proc']					=	array();
-		$StyleArr['*']						=	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
-		// Store information in "StyleList"
-		$MySmartBB->_CONF['template']['while']['StyleList'] = $MySmartBB->style->GetStyleList($StyleArr);
+		$MySmartBB->style->getStyleList();
 		
-		//////////
+		/* ... */
 		
 		// Get groups list
-		$GroupArr 							= 	array();
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
 		
-		$AdsArr['order']					=	array();
-		$AdsArr['order']['field']			=	'id';
-		$AdsArr['order']['type']			=	'DESC';
+		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
 		
-		$GroupArr['proc'] 					= 	array();
-		$GroupArr['proc']['*'] 				= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->group->getGroupList();
 		
-		// Store information in "GroupList"
-		$MySmartBB->_CONF['template']['while']['GroupList'] = $MySmartBB->group->GetGroupList($GroupArr);
-		
-		//////////
+		/* ... */
 		
 		$MySmartBB->template->display('member_edit');
 		
-		//////////
+		/* ... */
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -345,38 +345,42 @@ class MySmartMemberMOD extends _functions
 			or empty($MySmartBB->_POST['user_title'])
 			or !isset($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
+		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->functions->error('يرجى كتابة بريد إلكتروني صحيح');
+			$MySmartBB->func->error('يرجى كتابة بريد إلكتروني صحيح');
 		}
 		
-		if ($MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['new_username']))))
+		// Ensure there is no person used the same username
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['new_username'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( $isMember )
 		{
-			$MySmartBB->functions->error('اسم المستخدم موجود مسبقاً');
+			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
 		}
-		
+
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->functions->error('لا يمكن التسجيل بهذا الاسم');
+			$MySmartBB->func->error('لا يمكن التسجيل بهذا الاسم');
 		}
 		
-		//////////
+		/* ... */
 		
 		$username = (!empty($MySmartBB->_POST['new_username'])) ? $MySmartBB->_POST['new_username'] : $MemInfo['username'];
 		
-		//////////
+		/* ... */
 		
 		// If the admin change the group of this member, so we should change the cache of username style
 		
 		if ($MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'])
 		{
-			$GrpArr 			= 	array();
-			$GrpArr['where'] 	= 	array('id',$MySmartBB->_POST['usergroup']);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['usergroup'] . "'";
 			
-			$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+			$GroupInfo = $MySmartBB->group->getGroupInfo();
 			
 			$style = $GroupInfo['username_style'];
 			$username_style_cache = str_replace('[username]',$username,$style);			
@@ -386,28 +390,28 @@ class MySmartMemberMOD extends _functions
 			$username_style_cache = null;
 		}
 		
-		//////////
+		/* ... */
 		
-		$UpdateArr 				= 	array();
-		$UpdateArr['field'] 	= 	array();
+		$MySmartBB->rec->fields 	= 	array();
 		
-		$UpdateArr['field']['username'] 			= 	$username;
-		$UpdateArr['field']['password'] 			= 	(!empty($MySmartBB->_POST['new_password'])) ? md5($MySmartBB->_POST['new_password']) : $MemInfo['password'];
-		$UpdateArr['field']['email'] 				= 	$MySmartBB->_POST['email'];
-		$UpdateArr['field']['user_gender'] 			= 	$MySmartBB->_POST['gender'];
-		$UpdateArr['field']['style'] 				= 	$MySmartBB->_POST['style'];
-		$UpdateArr['field']['avater_path'] 			= 	$MySmartBB->_POST['avater_path'];
-		$UpdateArr['field']['user_info'] 			= 	$MySmartBB->_POST['user_info'];
-		$UpdateArr['field']['user_title'] 			= 	$MySmartBB->_POST['user_title'];
-		$UpdateArr['field']['posts'] 				= 	$MySmartBB->_POST['posts'];
-		$UpdateArr['field']['user_website'] 		= 	$MySmartBB->_POST['user_website'];
-		$UpdateArr['field']['user_country'] 		= 	$MySmartBB->_POST['user_country'];
-		$UpdateArr['field']['usergroup'] 			= 	$MySmartBB->_POST['usergroup'];
-		$UpdateArr['field']['review_subject'] 		= 	$MySmartBB->_POST['review_subject'];
-		$UpdateArr['field']['username_style_cache']	=	$username_style_cache;
-		$UpdateArr['where']							=	array('id',$MemInfo['id']);
+		$MySmartBB->rec->fields['username'] 			= 	$username;
+		$MySmartBB->rec->fields['password'] 			= 	(!empty($MySmartBB->_POST['new_password'])) ? md5($MySmartBB->_POST['new_password']) : $MemInfo['password'];
+		$MySmartBB->rec->fields['email'] 				= 	$MySmartBB->_POST['email'];
+		$MySmartBB->rec->fields['user_gender'] 			= 	$MySmartBB->_POST['gender'];
+		$MySmartBB->rec->fields['style'] 				= 	$MySmartBB->_POST['style'];
+		$MySmartBB->rec->fields['avater_path'] 			= 	$MySmartBB->_POST['avater_path'];
+		$MySmartBB->rec->fields['user_info'] 			= 	$MySmartBB->_POST['user_info'];
+		$MySmartBB->rec->fields['user_title'] 			= 	$MySmartBB->_POST['user_title'];
+		$MySmartBB->rec->fields['posts'] 				= 	$MySmartBB->_POST['posts'];
+		$MySmartBB->rec->fields['user_website'] 		= 	$MySmartBB->_POST['user_website'];
+		$MySmartBB->rec->fields['user_country'] 		= 	$MySmartBB->_POST['user_country'];
+		$MySmartBB->rec->fields['usergroup'] 			= 	$MySmartBB->_POST['usergroup'];
+		$MySmartBB->rec->fields['review_subject'] 		= 	$MySmartBB->_POST['review_subject'];
+		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		
-		$update = $MySmartBB->member->UpdateMember($UpdateArr);
+		$MySmartBB->rec->filter = "id='" . $MemInfo['id'] . "'";
+		
+		$update = $MySmartBB->member->updateMember();
 		
 		if (!empty($MySmartBB->_POST['new_username']))
 		{
@@ -417,12 +421,12 @@ class MySmartMemberMOD extends _functions
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث بيانات العضو بنجاح');
-			$MySmartBB->functions->goto('admin.php?page=member&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث بيانات العضو بنجاح');
+			$MySmartBB->func->goto('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -433,7 +437,7 @@ class MySmartMemberMOD extends _functions
 		$MySmartBB->template->display('member_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -441,36 +445,32 @@ class MySmartMemberMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->member->DeleteMember($DelArr);
+		$del = $MySmartBB->member->deleteMember();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف العضو بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=member&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف العضو بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _SearchMain()
+	private function _searchMain()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->display('member_search_main');
 	}
 	
-	function _SearchStart()
+	private function _searchStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['keyword']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-		
-		$GetArr 		= array();
-		$GetArr['get'] 	= 'id,username';
 		
 		if ($MySmartBB->_POST['search_by'] == 'username')
 		{
@@ -485,22 +485,20 @@ class MySmartMemberMOD extends _functions
 			$field = 'id';
 		}
 		
-		$GetArr['where'] = array($field,$MySmartBB->_POST['keyword']);
+		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_POST['keyword'] . "'";
 		
-		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->member->GetMemberInfo($GetArr);
+		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->member->getMemberInfo();
 		
 		if ($MySmartBB->_CONF['template']['MemInfo'] == false)
 		{
-			$MySmartBB->functions->error('لا يوجد نتائج');
+			$MySmartBB->func->error('لا يوجد نتائج');
 		}
-		
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemInfo'],'html');
 				
 		$MySmartBB->template->display('member_search_result');
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$MemInfo)
 	{
@@ -508,24 +506,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MemArr 			= 	array();
-		$MemArr['get'] 		= 	'*';
-		$MemArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$MemInfo = $MySmartBB->member->GetMemberInfo($MemArr);
+		$MemInfo = $MySmartBB->member->getMemberInfo();
 		
 		if ($MemInfo == false)
 		{
-			$MySmartBB->functions->error('العضو المطلوب غير موجود');
+			$MySmartBB->func->error('العضو المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($MemInfo,'html');
-		$MySmartBB->functions->CleanVariable($MemInfo,'sql');
 	}
 }
 

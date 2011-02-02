@@ -7,127 +7,94 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	: 	16/09/2008 03:43:15 AM 
+ * @updated 	: 	24/07/2010 12:24:46 PM 
  */
  
 class MySmartSection
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartSection($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertSection($param)
+	/* ... */
+	
+	function insertSection()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           	  		           	  		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['section'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'section' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
- 	function UpdateSection($param)
+	/* ... */
+	
+ 	public function updateSection()
  	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-				
-		$query = $this->Engine->records->Update($this->Engine->table['section'],$param['field'],$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['section'];
+ 		
+		$query = $this->engine->rec->update();
 		           
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
  	}
+ 	
+ 	/* ... */
  		
-	function DeleteSection($param)
+	public function deleteSection()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'section' ];
  		
-		$param['table'] = $this->Engine->table['section'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
- 	/**
- 	 * Get sections by two ways
- 	 *
- 	 * @param : $get_from -> string : get sections from cache or from databese
- 	 * @param : $des -> array : descript of many things
- 	 *
- 	 * @access public
- 	 */
-	function GetSectionsList($param)
+	/* ... */
+	
+	public function getSectionsList()
  	{
-  		if (!isset($param) 
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'section' ];
  		
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['section'];
- 		
- 		$rows = $this->Engine->records->GetList($param);
- 		
-		return $rows;
+ 		$this->engine->rec->getList();
  	}
-	 	
+ 	
+ 	/* ... */
+	
  	/**
  	 * Get section information
- 	 *
- 	 * @access public
  	 */
-	function GetSectionInfo($param)
+	public function getSectionInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['section'];
- 	 		
-		$rows = $this->Engine->records->GetInfo($param);
+		$this->engine->rec->table = $this->engine->table['section'];
 		
-		return $rows;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
  	
-	function GetSectionNumber($param)
+	public function getSectionNumber()
  	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+  		$this->engine->rec->table = $this->engine->table[ 'section' ];
  		
- 		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['section'];
- 		
- 		$num = $this->Engine->records->GetNumber($param);
- 		
- 		return $num;
+ 		return $this->engine->rec->getNumber();
  	}
  	
- 	///
+ 	/* ... */
  	
  	// TODO :: DELETE ME!
 	/**
@@ -143,187 +110,173 @@ class MySmartSection
  		}
  		
  		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['section_admin'];
+ 		$param['from'] 		= 	$this->engine->table['section_admin'];
  		
- 	 	$rows = $this->Engine->records->GetList($param);
+ 	 	$rows = $this->engine->rec->GetList($param);
  	       
 		return $rows;
 	}*/
-	 	
-
+	
+ 	/* ... */
  	
- 	function CheckPassword($param)
+ 	public function checkPassword( $password, $id )
  	{
- 		if (empty($param['id'])
- 			or empty($param['password']))
+ 		if (empty( $id )
+ 			or empty( $password ))
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM CheckPassword() -- EMPTY id OR password',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM checkPassword() -- EMPTY id OR password',E_USER_ERROR);
  		}
  		
- 		$param['select'] 				= 	'*';
- 		$param['from'] 					= 	$this->Engine->table['section'];
- 		$param['where']					=	array();
+ 		$MySmartBB->rec->table = $this->engine->table['section'];
+ 		$MySmartBB->rec->filter = "id='" . $id . "' AND section_password='" . $password . "'";
  		
- 		$param['where'][0]				=	array();
- 		$param['where'][0]['name'] 		= 	'id';
- 		$param['where'][0]['oper'] 		= 	'=';
- 		$param['where'][0]['value'] 	= 	$param['id'];
- 		
- 		$param['where'][1]				=	array();
- 		$param['where'][1]['con'] 		= 	'AND';
- 		$param['where'][1]['name'] 		= 	'section_password';
- 		$param['where'][1]['oper'] 		= 	'=';
- 		$param['where'][1]['value'] 	= 	$param['password'];
- 		
-      	$num = $this->Engine->records->GetNumber($param);
+      	$num = $this->engine->rec->getNumber();
       	
       	return ($num <= 0) ? false : true;
  	}
  	
- 	function UpdateLastSubject($param)
+ 	/* ... */
+ 	
+ 	public function updateLastSubject( $writer, $title, $subject_id, $date, $section_id )
  	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( !isset( $writer )
+ 			or !isset( $title )
+ 			or !isset( $subject_id )
+ 			or !isset( $date )
+ 			or !isset( $section_id ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastSubject()',E_USER_ERROR);
  		}
  		
-		$field = array(
-		           		'last_writer'		=> 	$param['writer']		,
-		           		'last_subject'		=>	$param['title']			,
-		           		'last_subjectid'	=>	$param['subject_id']	,
-		           		'last_date'			=>	$param['date']			,
-		           	   );
-		           			           
-		$query = $this->Engine->records->Update($this->Engine->table['section'],$field,$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['section'];
  		
- 		return ($query) ? true : false;
+ 		$MySmartBB->rec->fields = array(	'last_writer'	=>	$writer,
+ 											'last_subject'	=>	$title,
+ 											'last_subjectid'	=>	$subject_id,
+ 											'last_date'	=>	$date	);
+ 		
+ 		$MySmartBB->rec->filter = "id='" . $section_id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
  	}
  	
-	function CreateSectionsCache($param)
+ 	/* ... */
+ 	
+	public function createSectionsCache( $parent )
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
+ 		if ( !isset( $parent ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM createSectionsCache()',E_USER_ERROR);
  		}
  		
- 		$arr 					= 	array();
- 		$arr['get_from'] 		= 	'db';
- 		$arr['type'] 			= 	'forum';
-		$arr['order']			=	array();
-		$arr['order']['field']	=	'sort';
-		$arr['order']['type']	=	'ASC';
- 		$arr['where'] 			= 	array('parent',$param['parent']);
+ 		$this->engine->rec->filter = "parent='" . $parent . "'";
+ 		$this->engine->rec->order = "sort ASC";
  		
- 		$forums = $this->GetSectionsList($arr);
+ 		$forums = $this->getSectionsList();
  		
- 		if ($forums != false)
+ 		$cache = array();
+ 		$x = 0;
+ 		
+ 		while ( $forum = $this->rec->getInfo() )
  		{
- 			$x = 0;
- 			$size = sizeof($forums);
- 		
- 			$cache = array();
- 		
- 			while ($x < $size)
- 			{
- 				$cache[$x] 							= 	array();
-				$cache[$x]['id'] 					= 	$forums[$x]['id'];
-				$cache[$x]['title'] 				= 	$forums[$x]['title'];
-				$cache[$x]['section_describe'] 		= 	$forums[$x]['section_describe'];
-				$cache[$x]['parent'] 				= 	$forums[$x]['parent'];
-				$cache[$x]['sort'] 					= 	$forums[$x]['sort'];
-				$cache[$x]['section_picture'] 		= 	$forums[$x]['section_picture'];
-				$cache[$x]['sectionpicture_type'] 	= 	$forums[$x]['sectionpicture_type'];
-				$cache[$x]['use_section_picture'] 	= 	$forums[$x]['use_section_picture'];
-				$cache[$x]['linksection'] 			= 	$forums[$x]['linksection'];
-				$cache[$x]['linkvisitor'] 			= 	$forums[$x]['linkvisitor'];
-				$cache[$x]['last_writer'] 			= 	$forums[$x]['last_writer'];
-				$cache[$x]['last_subject'] 			= 	$forums[$x]['last_subject'];
-				$cache[$x]['last_subjectid'] 		= 	$forums[$x]['last_subjectid'];
-				$cache[$x]['last_date'] 			= 	$forums[$x]['last_date'];
-				$cache[$x]['subject_num'] 			= 	$forums[$x]['subject_num'];
-				$cache[$x]['reply_num'] 			= 	$forums[$x]['reply_num'];
-				$cache[$x]['moderators'] 			= 	$forums[$x]['moderators'];
-				$cache[$x]['forums_cache'] 			= 	$forums[$x]['forums_cache'];
+ 			$cache[$x] 							= 	array();
+			$cache[$x]['id'] 					= 	$forum['id'];
+			$cache[$x]['title'] 				= 	$forum['title'];
+			$cache[$x]['section_describe'] 		= 	$forum['section_describe'];
+			$cache[$x]['parent'] 				= 	$forum['parent'];
+			$cache[$x]['sort'] 					= 	$forum['sort'];
+			$cache[$x]['section_picture'] 		= 	$forum['section_picture'];
+			$cache[$x]['sectionpicture_type'] 	= 	$forum['sectionpicture_type'];
+			$cache[$x]['use_section_picture'] 	= 	$forum['use_section_picture'];
+			$cache[$x]['linksection'] 			= 	$forum['linksection'];
+			$cache[$x]['linkvisitor'] 			= 	$forum['linkvisitor'];
+			$cache[$x]['last_writer'] 			= 	$forum['last_writer'];
+			$cache[$x]['last_subject'] 			= 	$forum['last_subject'];
+			$cache[$x]['last_subjectid'] 		= 	$forum['last_subjectid'];
+			$cache[$x]['last_date'] 			= 	$forum['last_date'];
+			$cache[$x]['subject_num'] 			= 	$forum['subject_num'];
+			$cache[$x]['reply_num'] 			= 	$forum['reply_num'];
+			$cache[$x]['moderators'] 			= 	$forum['moderators'];
+			$cache[$x]['forums_cache'] 			= 	$forum['forums_cache'];
 			
-				$cache[$x]['groups'] 				= 	array();
+			/* ... */
 			
- 				$GroupArr 							= 	array();
- 				$GroupArr['get_from'] 				= 	'db';
- 				$GroupArr['order']					=	array();
- 				$GroupArr['order']['field']			=	'id';
- 				$GroupArr['order']['type']			=	'ASC';
- 				$GroupArr['where'] 					= 	array('section_id',$forums[$x]['id']);
+			$cache[$x]['groups'] 				= 	array();
+			
+ 			$this->engine->rec->filter = "section_id='" . $forum['id'] . "'";
+ 			$this->engine->rec->order = "id ASC";
  			
-				$groups = $this->Engine->group->GetSectionGroupList($GroupArr);
+			$this->engine->group->getSectionGroupList();
 			
-				foreach ($groups as $group)
-				{
-					$cache[$x]['groups'][$group['group_id']] 					=	array();
-					$cache[$x]['groups'][$group['group_id']]['view_section'] 	= 	$group['view_section'];
-					$cache[$x]['groups'][$group['group_id']]['main_section'] 	= 	$group['main_section'];
-				}
-				
-				$x += 1;
- 			}
+			while ( $group = $this->rec->getInfo() )
+			{
+				$cache[$x]['groups'][$group['group_id']] 					=	array();
+				$cache[$x]['groups'][$group['group_id']]['view_section'] 	= 	$group['view_section'];
+				$cache[$x]['groups'][$group['group_id']]['main_section'] 	= 	$group['main_section'];
+			}
  			
- 			$cache = serialize($cache);
- 			$cache = base64_encode($cache);
+ 			/* ... */
+ 				
+			$x += 1;
+ 		}
+ 		
+ 		if ( $x > 0 )
+ 		{
+ 			$cache = serialize( $cache );
+ 			$cache = base64_encode( $cache );
  		}
  		else
  		{
- 			return false;
+ 			$cache = false;
  		}
- 		
+ 		 		
 		return $cache;
 	}
 	
- 	function UpdateSectionsCache($param)
+	/* ... */
+	
+ 	public function updateSectionsCache( $parent )
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
+ 		if ( !isset( $parent ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSectionsCache()',E_USER_ERROR);
  		}
  		
- 		$cache = $this->CreateSectionsCache($param);
+ 		$cache = $this->createSectionsCache( $parent );
  		
- 		if ($cache == false)
+ 		if ( $cache == false )
  		{
  			$cache = '';
  		}
  		
- 		$UpdateArr 					= 	array();
- 		$UpdateArr['field']			=	array();
+ 		$this->engine->rec->fields = array(	'forums_cache'	=>	$cache	);
+ 		$this->engine->rec->filter = "id='" . $parent . "'";
  		
- 		$UpdateArr['field']['forums_cache'] 	= 	$cache;
- 		$UpdateArr['where']						=	array('id',$param['parent']);
- 		
- 		$update = $this->UpdateSection($UpdateArr);
+ 		$update = $this->updateSection();
  		
  		return ($update) ? true : false;
  	}
  	
- 	function UpdateAllSectionsCache()
+ 	/* ... */
+ 	
+ 	public function updateAllSectionsCache()
  	{
- 		$Sections = $this->GetSectionsList(null);
+ 		$this->getSectionsList();
  		
  		$fail = false;
  		
- 		foreach ($Sections as $Section)
+ 		while ( $row = $this->engine->rec->getInfo() )
  		{
- 			if (!empty($Section['forums_cache']))
+ 			if (!empty($row['forums_cache']))
  			{
- 				$CacheArr 				= 	array();
- 				$CacheArr['parent'] 	= 	$Section['id'];
- 			
- 				$UpdateArr 								= 	array();
- 				$UpdateArr['field']						=	array();
- 				$UpdateArr['field']['forums_cache'] 	= 	$this->CreateSectionsCache($CacheArr);
- 				$UpdateArr['where']						=	array('id',$Section['id']);
- 			
- 				$update = $this->UpdateSection($UpdateArr);
+ 				$this->engine->rec->fields					=	array();
+ 				$this->engine->rec->fields['forums_cache'] 	= 	$this->createSectionsCache( $row['id'] );
+ 				
+ 				$this->engine->rec->filter = "id='" . $row[ 'id' ] . "'";
+ 				
+ 				$update = $this->updateSection();
  				
  				if (!$update)
  				{
@@ -338,6 +291,10 @@ class MySmartSection
  		
  		return ($fail) ? false : true;
  	}
+ 	
+ 	/* ... */
 }
+ 
+?>
  
 ?>

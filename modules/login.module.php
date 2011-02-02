@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('STOP_STYLE',true);
@@ -13,142 +15,131 @@ define('CLASS_NAME','MySmartLoginMOD');
 
 class MySmartLoginMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Normal login **/
-		if ($MySmartBB->_GET['login'])
+		if ( $MySmartBB->_GET[ 'login' ] )
 		{
-			$this->_StartLogin();
+			$this->_startLogin();
 		}
 		/** **/
 		
 		/** Login after register **/
-		elseif ($MySmartBB->_GET['register_login'])
+		elseif ( $MySmartBB->_GET[ 'register_login' ] )
 		{
-			$this->_StartLogin(true);
+			$this->_startLogin( true );
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	/**
-	 * Check if the username , password is true , then give the permisson .
-	 * otherwise don't give the permisson
+	 * Check if the username , password are true, then gives the permisson to the user.
 	 *
 	 * @param :
 	 *			register_login	-> 
 	 *								true : to use this function to login after register
 	 *								false : to use this function to normal login
 	 */
-	function _StartLogin($register_login=false)
+	private function _startLogin( $register_login = false )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['username'])
-			or empty($MySmartBB->_POST['password']))
+		if ( empty( $MySmartBB->_POST[ 'username' ])
+			or empty( $MySmartBB->_POST[ 'password' ] ) )
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات',true);
+			$MySmartBB->func->error( 'يرجى تعبئة كافة المعلومات', true );
 		}
-			
-		if (!$register_login)
+		
+		if ( !$register_login )
 		{
-			$username = $MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
-			$password = $MySmartBB->functions->CleanVariable(md5($MySmartBB->_POST['password']),'trim');
+			$username = $MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'username' ], 'trim' );
+			$password = $MySmartBB->func->cleanVariable( md5( $MySmartBB->_POST[ 'password' ] ), 'trim' );
 		}
 		else
 		{
-			$username = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['username'],'trim');
-			$password = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['password'],'trim');
+			$username = $MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'username' ], 'trim' );
+			$password = $MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'password' ], 'trim' );
 		}
 		
-		$expire = ($MySmartBB->_POST['temporary'] == 'on') ? 0 : time() + 31536000;
+		$expire = ( isset( $MySmartBB->_POST[ 'temporary' ] ) and $MySmartBB->_POST[ 'temporary' ] == 'on' ) ? 0 : time() + 31536000;
 		
-		$IsMember = $MySmartBB->member->LoginMember(array(	'username'	=>	$username,
-															'password'	=>	$password,
-															'expire'	=>	$expire));
+		$isMember = $MySmartBB->member->loginMember( $username, $password, $expire );
 		
-		$MySmartBB->functions->ShowHeader('تسجيل دخول');
+		$MySmartBB->func->ShowHeader('تسجيل دخول');
 		
-		if ($IsMember != false)
+		if ($isMember != false)
 		{
-			//////////
-			
-			$username = $MySmartBB->functions->CleanVariable($username,'html');
+			/* ... */
 			
 			$MySmartBB->template->assign('username',$username);
 			
 			$MySmartBB->template->display('login_msg');
 			
-			//////////
+			/* ... */
 			
-			if ($IsMember['style'] != $IsMember['style_id_cache'])
+			if ( $isMember[ 'style' ] != $isMember[ 'style_id_cache' ] )
 			{
-				$style_cache = $MySmartBB->style->CreateStyleCache(array('where'=>array('id',$IsMember['style'])));
-			
-				$UpdateArr						=	array();
-				$UpdateArr['field']				=	array();
+				$MySmartBB->rec->filter = "id='" . (int) $isMember[ 'style' ] . "'";
 				
-				$UpdateArr['field']['style_cache'] 		= 	$style_cache;
-				$UpdateArr['field']['style_id_cache']	=	$IsMember['style'];
-				$UpdateArr['where']						=	array('id',$IsMember['id']);
-			
-				$update_cache = $MySmartBB->member->UpdateMember($UpdateArr);
+				$style_cache = $MySmartBB->style->createStyleCache();
+					
+				$MySmartBB->rec->fields = array( 	'style_cache'	=>	$style_cache,
+													'style_id_cache'	=>	$isMember['style']	);
+				
+				$MySmartBB->rec->filter = "id='" . (int) $isMember['id'] . "'";
+													
+				$update_cache = $MySmartBB->member->UpdateMember();
 			}
 			
-			//////////
+			/* ... */
 			
-			$DelArr 						= 	array();
-			$DelArr['where'] 				= 	array();
-			$DelArr['where'][0] 			= 	array();
-			$DelArr['where'][0]['name'] 	= 	'user_ip';
-			$DelArr['where'][0]['oper'] 	= 	'=';
-			$DelArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['ip'];
+			$MySmartBB->rec->filter = "user_ip='" . $MySmartBB->_CONF['ip'] . "'";
 			
-			$MySmartBB->online->DeleteOnline($DelArr);
+			$MySmartBB->online->deleteOnline();
 			
-			//////////
+			/* ... */
 			
-			$url = parse_url($MySmartBB->_SERVER['HTTP_REFERER']);
-      		$url = $url['query'];
-      		$url = explode('&',$url);
-      		$url = $url[0];
+			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      		$url = $url[ 'query' ];
+      		$url = explode( '&', $url );
+      		$url = $url[ 0 ];
 
-     		$Y_url = explode('/',$MySmartBB->_SERVER['HTTP_REFERER']);
-      		$X_url = explode('/',$MySmartBB->_SERVER['HTTP_HOST']);
+     		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
       		
-      		//////////
+      		/* ... */
       		
-      		if (!$register_login)
+      		if ( !$register_login )
       		{
-      			if ($url != 'page=logout' 
-      				or empty($url) 
-      				or $url != 'page=login')
+      			if ( $url != 'page=logout' 
+      				or empty( $url ) 
+      				or $url != 'page=login' )
            		{
-       				$MySmartBB->functions->goto($MySmartBB->_SERVER['HTTP_REFERER']);
+       				//$MySmartBB->func->goto( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       			}
-
-      			elseif ($Y_url[2] != $X_url[0] 
+      			elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
       					or $url == 'page=logout' 
-      					or $url == 'page=login')
+      					or $url == 'page=login' )
            		{
-       				$MySmartBB->functions->goto('index.php');
+       				//$MySmartBB->func->goto( 'index.php' );
       			}
       		}
       		else
       		{
-      			$MySmartBB->functions->goto('index.php');
+      			//$MySmartBB->func->goto( 'index.php' );
       		}
 		}
 		else
 		{
-			$MySmartBB->functions->msg('كلمة المرور او اسم المستخدم غير صحيحين');
+			$MySmartBB->func->msg('كلمة المرور او اسم المستخدم غير صحيحين');
 		}
 	}
 }

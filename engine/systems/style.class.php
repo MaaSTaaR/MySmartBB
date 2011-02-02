@@ -5,171 +5,137 @@
  */
  
 /**
- * @package 	: 	MySmartStyle
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	27/2/2006 , 8:38 PM
- * @end   		: 	27/2/2006 , 8:47 PM
- * @updated 	: 	21/08/2008 08:54:11 PM 
+ * @package	:	MySmartStyle
+ * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @start		:	27/2/2006 , 8:38 PM
+ * @end 		:	27/2/2006 , 8:47 PM
+ * @updated	:	28/07/2010 01:23:55 PM 
  */
 
 class MySmartStyle
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartStyle($Engine)
+	public $id;
+	public $get_id;
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
- 	/**
- 	 * Insert new style
- 	 *
- 	 * @param :
- 	 *			Oh :O it's a long list
- 	 */
- 	function InsertStyle($param)
- 	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['style'],$param['field']);
+	/* ... */
+	
+	/**
+	 * Insert a new style
+	 */
+	public function insertStyle()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'style' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
- 	}
- 	
- 	/**
- 	 * Update style information
- 	 *
- 	 * @param :
- 	 *			long list :\
- 	 */
- 	function UpdateStyle($param)
- 	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['style'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
- 	}
- 		
-	function DeleteStyle($param)
-	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['table'] = $this->Engine->table['style'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+		return ( $query ) ? true : false;
 	}
- 	/**
- 	 * Get style list
- 	 *
- 	 * @param :
- 	 *			sql_statment	->	to complete SQL query
- 	 */
-	function GetStyleList($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['style'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 	 	  	 	
-		return $rows;
-  	 }
- 	 
+	
+	/* ... */
+	
 	/**
-	 * Set the correct style for member or user
-	 *
-	 * @return : the information about the correct style
+	 * Update style information
 	 */
-	function GetStyleInfo($param)
+	public function updateStyle()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'style' ];
  		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['style'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
+	
+	public function deleteStyle()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'style' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
+	
+	public function getStyleList()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		
+		$this->engine->rec->getList();
+	 }
+	 
+	/* ... */
+	
+	public function getStyleInfo()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
 	
 	function GetStyleNumber($param)
 	{
 		if (!isset($param))
 		{
-			$param 	= array();
+			$param	= array();
 		}
 		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['style'];
+		$param['select']	=	'*';
+		$param['from']		=	$this->engine->table['style'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->rec->GetNumber($param);
 		
 		return $num;
 	}
 	
-	function ChangeStyle($param)
+	/* ... */
+	
+	public function changeStyle( $style_id, $expire = null )
 	{
-		if (empty($param['style']))
+		if ( !isset( $style_id ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM ChangeStyle() -- EMPTY style',E_USER_ERROR);
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM ChangeStyle() -- EMPTY style', E_USER_ERROR );
 		}
 		
-		$update = setcookie($this->Engine->_CONF['style_cookie'],$param['style'],$param['expire']);
+		$update = setcookie( $this->engine->_CONF['style_cookie'], $style_id, $expire );
 		
 		return ($update) ? true : false;
 	}
 	
- 	function CreateStyleCache($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$style 	= 	$this->GetStyleInfo($param);
-		$cache 	= 	'';
+	/* ... */
+	
+	public function createStyleCache()
+	{
+		$style	=	$this->getStyleInfo();
+		$cache	=	'';
 		
-		if ($style != false)
+		if ( $style != false )
 		{
 			$cache = array();
 			
-			$cache['style_path'] 		= 	$style['style_path'];
-			$cache['image_path'] 		= 	$style['image_path'];
-			$cache['template_path'] 	= 	$style['template_path'];
-			$cache['cache_path'] 		= 	$style['cache_path'];
+			$cache[ 'style_path' ]		=	$style[ 'style_path' ];
+			$cache[ 'image_path' ]		=	$style[ 'image_path' ];
+			$cache[ 'template_path' ]	=	$style[ 'template_path' ];
+			$cache[ 'cache_path' ]		=	$style[ 'cache_path' ];
 			
-			$cache = base64_encode(serialize($cache));
+			$cache = base64_encode( serialize( $cache ) );
 		}
 		else
 		{
@@ -177,7 +143,9 @@ class MySmartStyle
 		}
 		
 		return $cache;
- 	}
+	}
+	
+	/* ... */
 }
 
 ?>

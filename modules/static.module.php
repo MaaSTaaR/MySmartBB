@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -16,143 +18,105 @@ define('CLASS_NAME','MySmartStaticMOD');
 
 class MySmartStaticMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_GET['index'])
 		{
-			$this->_ShowStatic();
+			$this->_showStatic();
 		}
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter(); 
+		$MySmartBB->func->getFooter(); 
 	}
 	
-	function _ShowStatic()
+	private function _showStatic()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('الاحصائيات');
+		$MySmartBB->func->showHeader('الاحصائيات');
 		
 		$StaticInfo = array();
 		
 		/**
-		 * Get the age of forums and install date
+		 * Get the age of the forum and install date
 		 */
-		$StaticInfo['Age'] 			= 	$MySmartBB->misc->GetForumAge(array('date'=>$MySmartBB->_CONF['info_row']['create_date']));
-		$StaticInfo['InstallDate']	=	$MySmartBB->functions->date($MySmartBB->_CONF['info_row']['create_date']);
+		$StaticInfo['Age'] 			= 	$MySmartBB->misc->getForumAge( $MySmartBB->_CONF['info_row']['create_date'] );
+		$StaticInfo['InstallDate']	=	$MySmartBB->func->date( $MySmartBB->_CONF['info_row']['create_date'] );
 		
 		/**
 		 * Get the number of members , subjects , replies , active members and sections
 		 */
-		$SecArr 						= 	array();
-		$SecArr['where'] 				= 	array();
-		$SecArr['where'][0] 			= 	array();
-		$SecArr['where'][0]['name'] 	= 	'parent';
-		$SecArr['where'][0]['oper'] 	= 	'<>';
-		$SecArr['where'][0]['value'] 	= 	'0';
+		$StaticInfo['GetMemberNumber']	= $MySmartBB->_CONF['info_row']['member_number'];
+		$StaticInfo['GetSubjectNumber'] = $MySmartBB->_CONF['info_row']['subject_number'];
+		$StaticInfo['GetReplyNumber']	= $MySmartBB->_CONF['info_row']['reply_number'];
+		$StaticInfo['GetActiveMember']	= $MySmartBB->member->getActiveMemberNumber();
 		
-		$StaticInfo['GetMemberNumber']	= $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'cache'));
-		$StaticInfo['GetSubjectNumber'] = $MySmartBB->subject->GetSubjectNumber(array('get_from'	=>	'cache'));
-		$StaticInfo['GetReplyNumber']	= $MySmartBB->reply->GetReplyNumber(array('get_from'	=>	'cache'));
-		$StaticInfo['GetActiveMember']	= $MySmartBB->member->GetActiveMemberNumber();
-		$StaticInfo['GetSectionNumber']	= $MySmartBB->section->GetSectionNumber($SecArr);
+		$MySmartBB->rec->filter = "parent<>'0'";
+		
+		$StaticInfo['GetSectionNumber']	= $MySmartBB->section->getSectionNumber();
 			
 		/**
 		 * Get the writer of oldest subject , the most subject of riplies and the newer subject
 		 * should be in cache
 		 */
-		$OldestArr 						= 	array();
-		$OldestArr['order'] 			= 	array();
-		$OldestArr['order']['field'] 	= 	'id';
-		$OldestArr['order']['type'] 	= 	'ASC';
-		$OldestArr['limit'] 			= 	'1';
+		 
+		$MySmartBB->rec->order = "id ASC";
+		$MySmartBB->rec->limit = '1';
 		
-		$GetOldest = $MySmartBB->subject->GetSubjectInfo($OldestArr);
+		$GetOldest = $MySmartBB->subject->getSubjectInfo();
 		$StaticInfo['OldestSubjectWriter'] = $GetOldest['writer'];
 		
-		$NewerArr 						= 	array();
-		$NewerArr['order'] 				= 	array();
-		$NewerArr['order']['field'] 	= 	'id';
-		$NewerArr['order']['type'] 		= 	'DESC';
-		$NewerArr['limit'] 				= 	'1';
+		$MySmartBB->rec->order = "id DESC";
+		$MySmartBB->rec->limit = '1';
 		
-		$GetNewer = $MySmartBB->subject->GetSubjectInfo($NewerArr);
+		$GetNewer = $MySmartBB->subject->getSubjectInfo();
 		$StaticInfo['NewerSubjectWriter'] = $GetNewer['writer'];
 
-		$MostVisitArr 						= 	array();
-		$MostVisitArr['order'] 			= 	array();
-		$MostVisitArr['order']['field'] 	= 	'visitor';
-		$MostVisitArr['order']['type'] 	= 	'DESC';
-		$MostVisitArr['limit'] 			= 	'1';
+		$MySmartBB->rec->order = "visitor DESC";
+		$MySmartBB->rec->limit = '1';
 		
-		$GetMostVisit = $MySmartBB->subject->GetSubjectInfo($MostVisitArr);
+		$GetMostVisit = $MySmartBB->subject->getSubjectInfo();
 		$StaticInfo['MostSubjectWriter'] = $GetMostVisit['writer'];
-		
-		$MySmartBB->functions->CleanVariable($StaticInfo,'html');
 		
 		$MySmartBB->template->assign('StaticInfo',$StaticInfo);
 		
 		/**
 		 * Get top ten list of member who have big posts
 		 */
-		$TopTenArr 						= 	array();
+		$MySmartBB->_CONF['template']['res']['topten_res'] = '';
 		
-		// Order data
-		$TopTenArr['order'] 			= 	array();
-		$TopTenArr['order']['field'] 	= 	'posts';
-		$TopTenArr['order']['type'] 	= 	'DESC';
+		$MySmartBB->rec->order = "posts DESC";
+		$MySmartBB->rec->limit = '10';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topten_res'];
 		
-		// Ten rows only
-		$TopTenArr['limit']				=	'10';
-		
-		// Clean data
-		$TopTenArr['proc'] 				= 	array();
-		$TopTenArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		
-		$MySmartBB->_CONF['template']['while']['TopTenList'] = $MySmartBB->member->GetMemberList($TopTenArr);
+		$MySmartBB->member->getMemberList();
 		
 		/**
 		 * Get top ten list of subjects which have big replies
 		 */
-		$TopSubjectArr 						= 	array();
-				
-		// Order data
-		$TopSubjectArr['order'] 			= 	array();
-		$TopSubjectArr['order']['field'] 	= 	'reply_number';
-		$TopSubjectArr['order']['type'] 	= 	'DESC';
+		$MySmartBB->_CONF['template']['res']['topsubject_res'] = '';
 		
-		// Ten rows only
-		$TopTenArr['limit']					=	'10';
+		$MySmartBB->rec->order = "reply_number DESC";
+		$MySmartBB->rec->limit = '10';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topsubject_res'];
 		
-		// Clean data
-		$TopSubjectArr['proc'] 				= 	array();
-		$TopSubjectArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		
-		$MySmartBB->_CONF['template']['while']['TopSubject'] = $MySmartBB->subject->GetSubjectList($TopSubjectArr);
+		$MySmartBB->subject->getSubjectList();
 		
 		/**
 		 * Get top ten list of subjects which have big visitors
 		 */
-		$TopSubjectVisitorArr 							= 	array();
+		$MySmartBB->_CONF['template']['res']['topvisit_res'] = '';
 		
-		// Order data
-		$TopSubjectVisitorArr['order'] 				= 	array();
-		$TopSubjectVisitorArr['order']['field'] 	= 	'visitor';
-		$TopSubjectVisitorArr['order']['type'] 		= 	'DESC';
+		$MySmartBB->rec->order = "visitor DESC";
+		$MySmartBB->rec->limit = '10';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topvisit_res'];
 		
-		// Ten rows only
-		$TopSubjectVisitorArr['limit']				=	'10';
-		
-		// Clean data
-		$TopSubjectVisitorArr['proc'] 				= 	array();
-		$TopSubjectVisitorArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$MySmartBB->_CONF['template']['while']['TopSubjectVisitor'] = $MySmartBB->subject->GetSubjectList($TopSubjectVisitorArr);
+		$MySmartBB->subject->getSubjectList();
 		
 		$MySmartBB->template->display('static');
 	}

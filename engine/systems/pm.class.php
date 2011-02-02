@@ -11,7 +11,7 @@
  * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	24/2/2006 8:31 AM
  * @end   		: 	24/2/2006 9:05 AM
- * @updated 	: 	16/07/2008 11:52:42 PM 
+ * @updated 	: 	06/07/2010 11:49:28 AM 
 */
 
 /**
@@ -20,72 +20,51 @@
 
 class MySmartPM
 {
-	var $id;
-	var $Engine;
+	public $id;
+	private $engine;
 	
-	function MySmartPM($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Send private massege for member
-	 *
-	 * @param :
-	 *			from	->	the username of the sender
-	 *			to		->	the username of the resiver
-	 *			title	->	the title of private massege
-	 *			text	->	the text of private massege
-	 *			date	->	the date of private massege
-	 *			icon	->	the icon of private massege
-	 *			folder	->	the folder of private massege
 	 */
-	function InsertMassege($param)
+	function insertMessage()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['pm'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'pm' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
-					
-		return ($query) ? true : false;
+		
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 		 
 	/**
 	 * Get the number of private massege
-	 *
-	 * @param :
-	 *			way -> 
-	 *					new 	- to get the number of new pm
-	 *					all 	- to get the total of pm
-	 *					query 	- our own SQL query 
-	 *
-	 *			username -> the username
-	 *			query	 -> if the way is query , this variable should value the query
 	 */
-	function GetPrivateMassegeNumber($param)
+	public function getPrivateMessageNumber()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'pm' ];
  		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['pm'];
-		
-		$num = $this->Engine->records->GetNumber($param);
-		
-		return $num;
+ 		return $this->engine->rec->getNumber();
 	}
-		   
+	
+	/* ... */
+	
 	/**
 	 * Get the list of private massege
 	 *
@@ -102,51 +81,24 @@ class MySmartPM
  		}
 		
  		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['pm'];
+ 		$param['from'] 		= 	$this->engine->table['pm'];
  		
- 	 	$rows = $this->Engine->records->GetList($param);
+ 	 	$rows = $this->engine->records->GetList($param);
 		
 		return $rows;
 	}
+	
+	/* ... */
 	  
-	/**
-	 * Read pm by id
-	 *
-	 * @param :
-	 *				id 			-> the id of pm
-	 *				username 	-> who request the msg to read ?
-	 */
-	function GetPrivateMassegeInfo($param)
+	public function getPrivateMassegeInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['pm'];
 		
-		$param['select'] 			= 	'*';
-		$param['from']				=	$this->Engine->table['pm'];
-		$param['where']				=	array();
-		
-		if (!empty($param['id'])
-			and !empty($param['username']))
-		{
-			$param['where'][0]			=	array();
-			$param['where'][0]['name']	=	'id';
-			$param['where'][0]['oper']	=	'=';
-			$param['where'][0]['value']	=	$param['id'];
-		
-			$param['where'][1]			=	array();
-			$param['where'][1]['con']	=	'AND';
-			$param['where'][1]['name']	=	'user_to';
-			$param['where'][1]['oper']	=	'=';
-			$param['where'][1]['value']	=	$param['username'];
-		}
-		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
+
 	}
+	
+	/* ... */
 	
 	/**
 	 * Delete private massege
@@ -155,7 +107,7 @@ class MySmartPM
 	 *			owner		->	the owner of list
 	 *			username	->	the username to delete
 	 */
-	function DeleteFromSenderList($param)
+	/*function DeleteFromSenderList($param)
 	{
  		if (!isset($param)
  			or !is_array($param))
@@ -163,7 +115,7 @@ class MySmartPM
  			$param = array();
  		}
 	 		
-	 	$param['table'] 	= 	$this->Engine->table['pm'];
+	 	$param['table'] 	= 	$this->engine->table['pm'];
 	 	$param['where'] 	= 	array();
 	 	
 	 	if (!empty($param['username'])
@@ -182,10 +134,24 @@ class MySmartPM
  		}
  		
  		
-	 	$del = $this->Engine->records->Delete($param);
+	 	$del = $this->engine->records->Delete($param);
 	 	
 	 	return ($del) ? true : false;
-	}
+	}*/
+	
+	
+ 	/* ... */
+ 	
+ 	public function deletePrivateMessage()
+ 	{
+ 		$this->engine->rec->table = $this->engine->table[ 'pm' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+ 	}
+ 	
+ 	/* ... */
 		       
 	/**
 	 * Get member sender list
@@ -202,7 +168,7 @@ class MySmartPM
  		}
 	 	
  		$param['select'] 			= 	'*';
- 		$param['from'] 				= 	$this->Engine->table['pm_list'];
+ 		$param['from'] 				= 	$this->engine->table['pm_list'];
  		
  		if (!empty($param['username']))
  		{
@@ -213,7 +179,7 @@ class MySmartPM
  			$param['where'][0]['value']	=	$param['username'];
  		}
  		
- 	 	$rows = $this->Engine->records->GetList($param);
+ 	 	$rows = $this->engine->records->GetList($param);
  		
  		return $rows;
 	}
@@ -238,11 +204,11 @@ class MySmartPM
 		           		'username'		=>	$param['owner'],
 		           	   );
 		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['pm_list'],$field);
+		$query = $this->engine->records->Insert($this->engine->table['pm_list'],$field);
 		
 		if ($param['get_id'])
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->DB->sql_insert_id();
 		}
 			
 		return ($query) ? true : false;
@@ -263,9 +229,9 @@ class MySmartPM
  			$param = array();
  		}
 	 	
-		$param['table'] = $this->Engine->table['pm_list'];
+		$param['table'] = $this->engine->table['pm_list'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 			
 		return ($del) ? true : false;
 	}
@@ -286,7 +252,7 @@ class MySmartPM
  		}
 	 	
 		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['pm_list'];
+		$param['from'] 					= 	$this->engine->table['pm_list'];
 		$param['where'] 				= 	array();
 		
 		if (!empty($param['username'])
@@ -304,110 +270,63 @@ class MySmartPM
 			$param['where'][1]['value'] 	= 	$param['owner'];
 		}
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return ($num > 0) ? true : false;
 	}
-		          
-	function MakeMassegeRead($param)
+	
+	/* ... */
+	
+	public function markMessageAsRead()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table['pm'];
+ 		$this->engine->rec->fields = array(	'user_read'	=>	'1'	);
  		
-		$field 				= 	array();
-		$field['user_read'] = 	'1';
-		
-		$update = $this->Engine->records->Update($this->Engine->table['pm'],$field,$param['where']);
-		
-		return ($update) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
-	function NewMessageNumber($param)
+	/* ... */
+	
+	public function newMessageNumber( $username )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
+ 		if ( empty( $username ) )
  		{
- 			$param = array();
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM newMessageNumber() -- EMPTY username');
  		}
  		
-		$arr 							= 	array();
-		$arr['where'] 					= 	array();
-		
-		$arr['where'][0] 				= 	array();
-		$arr['where'][0]['name'] 		= 	'user_to';
-		$arr['where'][0]['oper'] 		= 	'=';
-		$arr['where'][0]['value'] 		= 	$param['username'];
-		
-		$arr['where'][1] 				= 	array();
-		$arr['where'][1]['con'] 		= 	'AND';
-		$arr['where'][1]['name'] 		= 	'folder';
-		$arr['where'][1]['oper'] 		= 	'=';
-		$arr['where'][1]['value'] 		= 	'inbox';
-		
-		$arr['where'][2] 				= 	array();
-		$arr['where'][2]['con'] 		= 	'AND';
-		$arr['where'][2]['name'] 		= 	'user_read';
-		$arr['where'][2]['oper'] 		= 	'<>';
-		$arr['where'][2]['value'] 		= 	'1';
-		
-		return $this->GetPrivateMassegeNumber($arr);
+ 		$this->engine->rec->table = $this->engine->table['pm'];
+ 		
+		$this->engine->rec->filter = "user_to='" . $username . "' AND folder='inbox' AND user_read<>'1'";
+				
+		return $this->engine->rec->getNumber();
 	}
+	
+	/* ... */
 	
 	/** High-Level functions **/
-	function GetInboxList($param)
+	public function getInboxList()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'pm' ];
  		
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'user_to';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['username'];
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'folder';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'inbox';
-		
-		$rows = $this->GetPrivateMassegeList($param);
-		
-		return $rows;
+ 		$this->engine->rec->filter = "user_to='" . $username . "' AND folder='inbox'";
+ 		
+ 	 	$this->engine->rec->getList();
 	}
 	
-	function GetSentList($param)
+	/* ... */
+	
+	public function getSentList( $username )
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'pm' ];
  		
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'user_from';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['username'];
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'folder';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'sent';
-		
-		$rows = $this->GetPrivateMassegeList($param);
-		
-		return $rows;
+ 		$this->engine->rec->filter = "user_from='" . $username . "' AND folder='sent'";
+ 		
+ 	 	$this->engine->rec->getList();
 	}
+	
+	/* ... */
 	
 	function UpdatePrivateMessage($param)
  	{
@@ -417,7 +336,7 @@ class MySmartPM
  			$param = array();
  		}
  		
-		$query = $this->Engine->records->Update($this->Engine->table['pm'],$param['field'],$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['pm'],$param['field'],$param['where']);
 		           
 		return ($query) ? true : false;
  	}

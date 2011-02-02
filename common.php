@@ -1,6 +1,6 @@
 <?php
 
-define('DIR',dirname( __FILE__ ) . '/');
+define( 'DIR', dirname( __FILE__ ) . '/' );
 
 //////////
 
@@ -29,6 +29,7 @@ if (!defined('IN_ADMIN'))
 }
 
 //////////
+
 
 // Can't live without this file :)
 include('MySmartBB.class.php');
@@ -90,12 +91,13 @@ class MySmartLocalCommon
  		//////////
  		
  		// Make life easy for developers :)
- 		$MySmartBB->DB->SetDebug(true);
- 		$MySmartBB->DB->SetQueriesStore(true);
+ 		$MySmartBB->db->SetDebug(true);
+ 		$MySmartBB->db->SetQueriesStore(true);
  		
  		//////////
  		
- 		define('STOP_STYLE',( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false);
+ 		if ( !defined( 'STOP_STYLE' ) )
+ 			define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
  		
  		//////////
 	}
@@ -121,7 +123,7 @@ class MySmartLocalCommon
        			(eregi("<[^>]*form*\"?[^>]*>", $xss_get)) 	or
        			(eregi("<[^>]*img*\"?[^>]*>", $xss_get)))
             {
-    			$MySmartBB->functions->error('قمت بعمليه غير مشروعه!');
+    			$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
    			}
   		}
   		
@@ -173,5 +175,8 @@ $common = new MySmartCommon();
 $common->run();
 
 //////////
+
+// [DEBUG]
+mysql_set_charset( 'latin1' );
 
 ?>

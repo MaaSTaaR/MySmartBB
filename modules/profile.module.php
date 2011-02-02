@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -14,35 +16,37 @@ define('CLASS_NAME','MySmartProfileMOD');
 
 class MySmartProfileMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Show the profile of member **/
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowProfile();
+			$this->_showProfile();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 					
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	/** Get member information and show it **/
-	function _ShowProfile()
+	private function _showProfile()
 	{
 		global $MySmartBB;
 		
-		//////////
+		/* ... */
+		
 		// Show the header
 
-		$MySmartBB->functions->ShowHeader('عرض معلومات العضو');
+		$MySmartBB->func->showHeader('عرض معلومات العضو');
 		
-		//////////
+		/* ... */
+		
 		// Get the member information
 		
 		$MemArr = array();
@@ -55,9 +59,9 @@ class MySmartProfileMOD
 		// Well I think we are the biggest sneaky in the world after wrote these lines :D
 		if (!empty($MySmartBB->_GET['id']))
 		{
-			$id = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+			$id = (int) $MySmartBB->_GET['id'];
 			
-			$MemArr['where'] = array('id',$id);
+			$MySmartBB->rec->filter = "id='" . $id . "'";
 			
 			if ( $MySmartBB->_CONF[ 'member_permission' ] )
 			{
@@ -66,7 +70,7 @@ class MySmartProfileMOD
 		}
 		elseif (!empty($MySmartBB->_GET['username']))
 		{
-			$MemArr['where'] 	= 	array('username',$MySmartBB->_GET['username']);
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
 			
 			if ( $MySmartBB->_CONF[ 'member_permission' ] )
 			{
@@ -75,140 +79,95 @@ class MySmartProfileMOD
 		}
 		else
 		{
-			$MySmartBB->functions->error('مسار غير صحيح');
+			$MySmartBB->func->error('مسار غير صحيح');
 		}
 		
-		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->member->GetMemberInfo($MemArr) : $MySmartBB->_CONF['member_row'];
+		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->member->getMemberInfo() : $MySmartBB->_CONF['member_row'];
 		
-		//////////
+		/* ... */
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
-			$MySmartBB->functions->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
 		} 
 		
-		// Kill XSS first
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'html');
-		// Second Kill SQL Injections
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
+		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
-		//////////
+		/* ... */
 		
 		// Where is the member now?
 		if ($MySmartBB->_CONF['member_permission'])
      	{
-     		$UpdateOnline 			= 	array();
-			$UpdateOnline['field']	=	array();
+			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username']	);
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$UpdateOnline['field']['user_location']		=	'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username'];
-			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
-			
-			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+			$update = $MySmartBB->online->updateOnline();			
      	}
      	
-     	//////////
+     	/* ... */
      	
 		$MySmartBB->_CONF['template']['MemberInfo']['user_gender'] 	= 	($MySmartBB->_CONF['template']['MemberInfo']['user_gender'] == 'm') ? 'ذكر' : 'انثى';
 		//$MemberInfo['user_time']		=	$MySmartBB->member->GetMemberTime($MemberInfo['user_time']);
 		
 		if (is_numeric($MySmartBB->_CONF['template']['MemberInfo']['register_date']))
 		{
-			$MySmartBB->_CONF['template']['MemberInfo']['register_date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['MemberInfo']['register_date']);
+			$MySmartBB->_CONF['template']['MemberInfo']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['MemberInfo']['register_date']);
 		}
 		
 		// We should be sneaky sometime ;)
 		if ( $MySmartBB->_CONF[ 'member_permission' ] 
 			and $MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
 		{
-			$GroupInfo = $MySmartBB->_CONF['rows']['group_info'];
+			$GroupInfo = $MySmartBB->_CONF['group_info'];
 		}
 		else
 		{
-			$GroupInfo 				= 	array();
-			$GroupInfo['where'] 	= 	array('id',$MySmartBB->_CONF['template']['MemberInfo']['usergroup']);
-		
-			$GroupInfo = $MySmartBB->group->GetGroupInfo($GroupInfo);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['MemberInfo']['usergroup'] . "'";
+			
+			$GroupInfo = $MySmartBB->group->getGroupInfo($GroupInfo);
 		}
 			
 		$MySmartBB->_CONF['template']['MemberInfo']['usergroup'] = $GroupInfo['title'];
 			
-		$IsOnline = $MySmartBB->online->IsOnline(array(		'way'		=>	'username',
-															'username'	=>	$MySmartBB->_CONF['template']['MemberInfo']['username'],
-															'timeout'	=>	$MySmartBB->_CONF['timeout']));
+		$IsOnline = $MySmartBB->online->isOnline( $MySmartBB->_CONF['timeout'], 'username', $MySmartBB->_CONF['template']['MemberInfo']['username'] );
 		
 		$MySmartBB->_CONF['template']['MemberInfo']['IsOnline'] = $IsOnline; 
 		
 		if ($MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0)
 		{
-			$LastSubjectArr 						= 	array();
-		
-			$LastSubjectArr['where'] 				= 	array();
-			$LastSubjectArr['where'][0] 			= 	array();
-			$LastSubjectArr['where'][0]['name'] 	= 	'writer';
-			$LastSubjectArr['where'][0]['oper'] 	= 	'=';
-			$LastSubjectArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['template']['MemberInfo']['username'];
-		
-			$LastSubjectArr['where'][1] 			= 	array();
-			$LastSubjectArr['where'][1]['con'] 		= 	'AND';
-			$LastSubjectArr['where'][1]['name'] 	= 	'delete_topic';
-			$LastSubjectArr['where'][1]['oper'] 	= 	'<>';
-			$LastSubjectArr['where'][1]['value'] 	= 	'1';
-		
-			$LastSubjectArr['where'][2] 			= 	array();
-			$LastSubjectArr['where'][2]['con'] 		= 	'AND';
-			$LastSubjectArr['where'][2]['name'] 	= 	'sec_subject';
-			$LastSubjectArr['where'][2]['oper'] 	= 	'<>';
-			$LastSubjectArr['where'][2]['value'] 	= 	'1';
-		
-			$LastSubjectArr['order'] 				= 	array();
-			$LastSubjectArr['order']['field'] 		= 	'id';
-			$LastSubjectArr['order']['type']	 	= 	'DESC';
-		
-			$LastSubjectArr['limit'] 				= 	'0,1';
-		
-			$MySmartBB->_CONF['template']['LastSubject'] = $MySmartBB->subject->GetSubjectInfo($LastSubjectArr);
+			/* ... */
 			
-			$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['LastSubject'],'html');
-				
-			$LastReplyArr 						= 	array();
+			$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "' AND delete_topic<>'1' AND sec_subject<>'1'";
+			
+			$MySmartBB->rec->filter = "id DESC";
+			
+			$MySmartBB->rec->limit = '0,1';
+			
+			$MySmartBB->_CONF['template']['LastSubject'] = $MySmartBB->subject->getSubjectInfo();
+			
+			/* ... */
+			
+			$MySmartBB->rec->filter = "writer='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "' AND delete_topic<>'1'";
+			
+			$MySmartBB->rec->order = "id DESC";
+			
+			$MySmartBB->rec->limit = '1';
+			
+			$GetLastReplyInfo = $MySmartBB->reply->getReplyInfo();
 		
-			$LastReplyArr['where'] 				= 	array();
-			$LastReplyArr['where'][0] 			= 	array();
-			$LastReplyArr['where'][0]['name'] 	= 	'writer';
-			$LastReplyArr['where'][0]['oper'] 	= 	'=';
-			$LastReplyArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['template']['MemberInfo']['username'];
-		
-			$LastReplyArr['where'][1] 			= 	array();
-			$LastReplyArr['where'][1]['con'] 	= 	'AND';
-			$LastReplyArr['where'][1]['name'] 	= 	'delete_topic';
-			$LastReplyArr['where'][1]['oper'] 	= 	'<>';
-			$LastReplyArr['where'][1]['value'] 	= 	'1';
-		
-			$LastReplyArr['order'] 				= 	array();
-			$LastReplyArr['order']['field'] 	= 	'id';
-			$LastReplyArr['order']['type']	 	= 	'DESC';
-		
-			$LastReplyArr['limit'] 				= 	'1';
-		
-			$GetLastReplyInfo = $MySmartBB->reply->GetReplyInfo($LastReplyArr);
-		
-			$MySmartBB->functions->CleanVariable($GetLastReplyInfo,'sql');
+			$MySmartBB->func->cleanArray($GetLastReplyInfo,'sql');
 			
 			if ($GetLastReplyInfo != false)
 			{
-				$SubjectArr 			= 	array();
-				$SubjectArr['where'] 	= 	array('id',$GetLastReplyInfo['subject_id']);
-		
-				$MySmartBB->_CONF['template']['LastReply'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);
+				$MySmartBB->rec->filter = "id='" . $GetLastReplyInfo['subject_id'] . "'";
 				
-				$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['LastReply'],'html');
+				$MySmartBB->_CONF['template']['LastReply'] = $MySmartBB->subject->GetSubjectInfo($SubjectArr);				
 			}
 		}
 		
-		$OnlineArr 				= 	array();
-		$OnlineArr['username'] 	= 	$MySmartBB->_CONF['template']['MemberInfo']['username'];
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "'";
 		
-		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->online->GetOnlineInfo($OnlineArr);
+		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->online->getOnlineInfo();
 		
 		$MySmartBB->template->display('profile');
 	}

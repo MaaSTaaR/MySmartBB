@@ -1,218 +1,144 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
  
 /**
- * @package 	: 	MySmartAds
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	4/3/2006 , 8:28 PM
- * @end   		: 	4/3/2006 , 8:38 PM
- * @updated 	: 	21/08/2008 08:42:34 PM 
+ * @package	:	MySmartAds
+ * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @start		:	4/3/2006 , 8:28 PM
+ * @end  		:	4/3/2006 , 8:38 PM
+ * @updated	:	28/07/2010 01:36:44 PM  
  */
 
 class MySmartAds
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartAds($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
- 	/**
- 	 * Insert new ads
- 	 *
- 	 * @param :
- 	 *			Oh :O it's a long list
- 	 */
- 	function InsertAds($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['ads'],$param['field']);
+	/* ... */
+	
+	/**
+	 * Insert new ads
+	 */
+	public function insertAds()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'ads' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
- 	}
- 	
- 	/**
- 	 * Update ads information
- 	 *
- 	 * @param :
- 	 *			long list :\
- 	 */
- 	function UpdateAds($param)
- 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           
-		$query = $this->Engine->records->Update($this->Engine->table['ads'],$param['field'],$param['where']);
-		           
-		return ($query) ? true : false;
- 	}
- 		
-	function DeleteAds($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['table'] = $this->Engine->table['ads'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
+	
+	/**
+	 * Update ads information
+	 */
+	public function updateAds()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'ads' ];
+ 		
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
+	}
+	
+	/* ... */
+		
+	public function deleteAds()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'ads' ];
+ 		
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
+	}
+	
+	/* ... */
 	
 	/**
 	 * Get ads info
- 	 *
- 	 * $this->Engine->ads->GetAdsInfo(array $param);
- 	 *
- 	 * $param = 
- 	 *			array('id'=>'The id of ads');
- 	 *
- 	 * @return
- 	 *				array -> of information
- 	 *				false -> when no information found
- 	 */
-	function GetAdsInfo($param)
+	 */
+	public function getAdsInfo($param)
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['ads'];
-	 	
- 	 	$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows;
+		$this->engine->rec->table = $this->engine->table['ads'];
+		
+		return $this->engine->rec->getInfo();
 	}
- 	 
+	
+	/* ... */
+	
 	/**
- 	 * New visitor for the site
- 	 *
- 	 * $this->Engine->ads->NewVisit(array $param);
- 	 *
- 	 * $param =
- 	 *			array(	'clicks'	=>	'last clicks which stored in database',
- 	 					'id'		=>	'the id of ads	);
- 	 *
- 	 * @return
- 	 *				true	->	when success
- 	 *				false	->	when fail
- 	 */
-	function NewVisit($param)
+	 * New visitor for the site
+	 */
+	public function newVisit( $clicks )
 	{
-		if (empty($param['clicks'])
-			and $param['clicks'] != 0)
+		if (empty($clicks)
+			and $clicks != 0)
 		{
 			trigger_error('ERROR::NEED_PARAMETER -- FROM NewVisit() -- EMPTY clicks',E_USER_ERROR);
 		}
 		
-		$param['field'] = array();
-		$param['field']['clicks'] = $param['clicks'] + 1;
+		$this->engine->rec->table = $this->engine->table['ads'];
 		
-		$update = $this->UpdateAds($param);
+		$this->engine->rec->fields = array(	'clicks'	=> $clicks + 1	);
 		
-		return ($update) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
+	
+	/* ... */
 	
 	/**
-	 * Get random ads to show it
-	 *
-	 * $this->Engine->ads->GetRandomAds();
-	 *
-	 * $param = 
-	 *			null
-	 *
-	 * @return
-	 *			array -> of information
-	 *			false -> when no information
+	 * Get a random ads to show it
 	 */
-	function GetRandomAds()
+	public function getRandomAds()
 	{
- 		$arr					=	array();
- 		$arr['select']			=	'*';
- 		$arr['from']			=	$this->Engine->table['ads'];
- 		$arr['order']			=	array();
- 		$arr['order']['type']	=	'RAND()';
- 		
- 		$rows = $this->Engine->records->GetInfo($arr);
- 		
- 		return $rows;
+		$this->engine->rec->table = $this->engine->table['ads'];
+		
+		$this->engine->rec->order = 'RAND()';
+		
+		return $this->engine->rec->getInfo();
 	}
 	
-	/**
-	 * Get the number of ads which stored in database
-	 *
-	 * $param =
-	 *			null
-	 *
-	 * @return
-	 *			int	->	number of ads
-	 */
-	function GetAdsNumber($param)
+	/* ... */
+	
+	public function getAdsNumber()
 	{
-		if (!isset($param))
-		{
-			$param 	= array();
-		}
-		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['ads'];
-		
-		$num = $this->Engine->records->GetNumber($param);
-		
-		return $num;
+ 		$this->engine->rec->table = $this->engine->table[ 'ads' ];
+ 		
+ 		return $this->engine->rec->getNumber();
 	}
 	
-  	/**
- 	 * Get ads list
- 	 *
- 	 * $param =
- 	 *			array(	'sql_statment'	=>	'the complete of SQL statement',
- 	 *					'proc'			=>	true // When you want to proccess the outputs
- 	 *					);
- 	 *
- 	 * @return
- 	 *			array -> of information
- 	 *			false -> when found no information
- 	 */
- 	function GetAdsList($param)
- 	{
-  		if (!isset($param)
-  			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+	/* ... */
+	
+	public function getAdsList()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'ads' ];
  		
- 		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['ads'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
- 	}
+ 	 	$this->engine->rec->getList();
+	}
 }
  
  ?>

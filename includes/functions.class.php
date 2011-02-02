@@ -2,29 +2,49 @@
 
 class MySmartFunctions
 {
+	/* ... */
+	
 	/**
-	 * Check if delicious cookie is here or another eat it mmmm :)
+	 * Check if delicious cookie is here or somebody eat it mmmm :)
 	 */
-	function IsCookie($cookie_name)
+	public function isCookie( $cookie_name )
  	{
  		global $MySmartBB;
  		
- 		return empty($MySmartBB->_COOKIE[$cookie_name]) ? false : true;
+ 		return empty( $MySmartBB->_COOKIE[ $cookie_name ] ) ? false : true;
  	}
+ 	
+ 	/* ... */
  	
  	/**
  	 * Clean the variable from any dirty :) , we should be thankful for abuamal
  	 *
  	 * By : abuamal
  	 */
-	function CleanVariable(&$variable, $type)
+	public function cleanVariable( $var, $type )
 	{
 		global $MySmartBB;
 		
-		return $MySmartBB->sys_functions->CleanVariable($variable, $type);
+		return $MySmartBB->sys_func->cleanVariable( $var, $type );
 	}
 	
- 	function AddressBar($title)
+	/* ... */
+	
+	/**
+	 * Clean the array from dirty, this function based on "cleanVariable( $var, $type )"
+	 *
+	 * By : abuamal
+	 */
+	public function cleanArray( &$variable, $type )
+	{
+		global $MySmartBB;
+		
+		return $MySmartBB->sys_func->cleanArray( $variable, $type );
+	}
+	
+	/* ... */
+	
+ 	public function addressBar( $title )
  	{
  		global $MySmartBB;
  		
@@ -32,6 +52,8 @@ class MySmartFunctions
  		echo $title;
  		$MySmartBB->template->display('address_bar_part2');
  	}
+ 	
+ 	/* ... */
  	
  	/**
  	 * Show footer and stop the script , footer is like water in the life :)
@@ -49,9 +71,9 @@ class MySmartFunctions
  	}
  	
  	/**
- 	 * go to $site , abuamal hate this function :D don't ask me why , ask him ;)
+ 	 * go to $site , abuamal hates this function :D don't ask me why , ask him ;)
  	 */
-	function goto($site,$m=2)
+	public function move( $site, $m = 2 )
  	{
   		echo "<META HTTP-EQUIV=\"refresh\" CONTENT=\"$m; URL=$site\">\n";
  	}
@@ -91,25 +113,25 @@ class MySmartFunctions
   		$this->msg($msg,$no_style);
   		$this->stop($no_style);
  	}
-
+ 	
+ 	/* ... */
+ 	
 	/**
 	 * Check if $email is true email or not
 	 *
 	 * This function by : Pal Coder from MySmartBB 1.x
 	 */
-	function CheckEmail($email)
+	public function checkEmail( $email )
 	{
-        return eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[_a-z0-9-]+(\.[_a-z0-9-]+)",$email) ? true : false;
+        return eregi( "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[_a-z0-9-]+(\.[_a-z0-9-]+)", $email ) ? true : false;
 	}
 	
- 	 
+	/* ... */
+	 
  	/**
  	 * Get file extention
- 	 *
- 	 * @param :
- 	 *				filename -> the name of file which we want know it's extension
  	 */
- 	function GetFileExtension($filename)
+ 	public function getFileExtension( $filename )
     {
   		$ex = explode('.',$filename);
   		
@@ -129,10 +151,12 @@ class MySmartFunctions
   		}
  	}
  	
+ 	/* ... */
+ 	
  	/**
  	 * Show the default footer of forum page
  	 */
- 	function GetFooter()
+ 	public function getFooter()
  	{
  		// The instructions stored in footer module
  		// so include footer module to execute these inctructions
@@ -148,28 +172,30 @@ class MySmartFunctions
         $footer_name->run();
  	}
  	
+ 	/* ... */
+ 	
  	/**
  	 * Show the default header of forum page
  	 */
- 	function ShowHeader($title = null)
+ 	public function showHeader( $title = null )
  	{
  		global $MySmartBB;
  		
  		// Check if title is empty so use the default name of forum
  		// which stored in info_row['title']
- 		$title = (isset($title)) ? $title : $MySmartBB->_CONF['info_row']['title'];
+ 		$title = ( isset( $title ) ) ? $title : $MySmartBB->_CONF[ 'info_row' ][ 'title' ];
  		
- 		// Send a copy from $title to template engine
  		$MySmartBB->template->assign('title',$title);
  		
- 		// Show header template
  		$MySmartBB->template->display('header');
  	}
  	
+ 	/* ... */
+ 	
  	/**
- 	 * Get the forum's url adress
+ 	 * Get the forum's url address
  	 */
- 	function GetForumAdress()
+ 	public function getForumAdress()
  	{
  		global $MySmartBB;
  		
@@ -200,10 +226,12 @@ class MySmartFunctions
  		return $url;
  	}
  	
+ 	/* ... */
+ 	
  	/**
  	 * Get a strong random code :)
  	 */
- 	function RandomCode()
+ 	public function randomCode()
     {
   		$code = rand(1,500) . rand(1,1000) . microtime();
   		$code = ceil($code);
@@ -215,6 +243,8 @@ class MySmartFunctions
   		
   		return $code;
  	}
+ 	
+ 	/* ... */
 
 	/**
 	 * Just send email :)
@@ -248,7 +278,9 @@ class MySmartFunctions
 		return $this->GetFileExtension($filename);
  	}
  	
-	function date($input,$format = 'j/n/Y')
+ 	/* ... */
+ 	
+	public function date( $input, $format = 'j/n/Y' )
 	{
 		global $MySmartBB;
 		
@@ -257,211 +289,215 @@ class MySmartFunctions
 			$MySmartBB->_CONF[ 'info_row' ][ 'time_system' ] = 'ty';
 		}
 		
-		return $MySmartBB->sys_functions->date( $input, $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ], $format );
+		return $MySmartBB->sys_func->date( $input, $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ], $format );
 	}
+	
+	/* ... */
 	
 	function time($time,$format='h:i:s A')
 	{
 		global $MySmartBB;
 		
-		return $MySmartBB->sys_functions->time($time,$format);
+		return $MySmartBB->sys_func->time($time,$format);
 	}
 	
-	function GetEditorTools()
+	/* ... */
+	
+	public function getEditorTools()
 	{
 		global $MySmartBB;
 		
-		if (!is_object($MySmartBB->icon))
+		if ( !is_object( $MySmartBB->icon ) )
 		{
-			trigger_error('ERROR::ICON_OBJECT_DID_NOT_FOUND',E_USER_ERROR);
+			trigger_error( 'ERROR::ICON_OBJECT_DID_NOT_FOUND', E_USER_ERROR );
 		}
 		
-		if (!is_object($MySmartBB->toolbox))
+		if ( !is_object( $MySmartBB->toolbox ) )
 		{
-			trigger_error('ERROR::TOOLBOX_OBJECT_DID_NOT_FOUND',E_USER_ERROR);
+			trigger_error( 'ERROR::TOOLBOX_OBJECT_DID_NOT_FOUND', E_USER_ERROR );
 		}
 		
-		$SmlArr 					= 	array();
-		$SmlArr['order'] 			=	array();
-		$SmlArr['order']['field']	=	'id';
-		$SmlArr['order']['type']	=	'ASC';
-		$SmlArr['proc'] 			= 	array();
-		$SmlArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		/* ... */
 		
-		$MySmartBB->_CONF['template']['while']['SmileRows'] = $MySmartBB->icon->GetSmileList($SmlArr);
+		$MySmartBB->_CONF['template']['res']['smile_res'] = '';
 		
-		$IcnArr 					= 	array();
-		$IcnArr['order'] 			=	array();
-		$IcnArr['order']['field']	=	'id';
-		$IcnArr['order']['type']	=	'DESC';
-		$IcnArr['proc'] 			= 	array();
-		$IcnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id ASC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['smile_res'];
 		
-		$MySmartBB->_CONF['template']['while']['IconRows'] = $MySmartBB->icon->GetIconList($IcnArr);
+		$MySmartBB->icon->getSmileList();
 		
-		$ClrArr 					= 	array();
-		$ClrArr['proc'] 			= 	array();
-		$ClrArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		/* ... */
 		
-		$MySmartBB->_CONF['template']['while']['ColorRows'] = $MySmartBB->toolbox->GetColorsList($ClrArr);
+		$MySmartBB->_CONF['template']['res']['icon_res'] = '';
 		
-		$FntArr 					= 	array();
-		$FntArr['proc'] 			= 	array();
-		$FntArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['icon_res'];
 		
-		$MySmartBB->_CONF['template']['while']['FontRows'] = $MySmartBB->toolbox->GetFontsList($FntArr);
+		$MySmartBB->icon->getIconList();
+		
+		/* ... */
+		
+		$MySmartBB->_CONF['template']['res']['color_res'] = '';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['color_res'];
+		
+		$MySmartBB->toolbox->getColorsList();
+		
+		/* ... */
+		
+		$MySmartBB->_CONF['template']['res']['font_res'] = '';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['font_res'];
+		
+		$MySmartBB->toolbox->getFontsList();
+		
+		/* ... */
 	}
 	
-	function ModeratorCheck($section_id,$username = null)
+	/* ... */
+	
+	public function moderatorCheck( $section_id, $username = null )
 	{
 		global $MySmartBB;
 		
 		$Mod = false;
+		$user = null;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF['member_permission'] )
 		{
-			if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
-				or $MySmartBB->_CONF['group_info']['vice'])
+			if ( !isset( $username ) )
 			{
-				$Mod = true;
-			}
-			else
-			{
-				$ModArr = array();
-				
-				if ($username == null)
+				if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
+					or $MySmartBB->_CONF['group_info']['vice'])
 				{
-					$ModArr['username'] = $MySmartBB->_CONF['member_row']['username'];
+					$Mod = true;
 				}
 				else
 				{
-					$ModArr['username'] = $username;
+					$user = $MySmartBB->_CONF['member_row']['username'];
 				}
-				
-				$ModArr['section_id']	=	$section_id;
-				
-				$Mod = $MySmartBB->moderator->IsModerator($ModArr);
 			}
+			else
+			{
+				$user = $username;
+			}
+			
+			if ( !$Mod )
+				$Mod = $MySmartBB->moderator->isModerator( $user, $section_id );
 		}
 				
 		return $Mod;
 	}
 	
-	function GetForumsList(&$forums_list)
+	/* ... */
+	
+	public function getForumsList( &$forums_list )
 	{
 		global $MySmartBB;
-		
-		$SecArr 						= 	array();
-		$SecArr['get_from']				=	'db';
-		
-		$SecArr['proc'] 				= 	array();
-		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$SecArr['order']				=	array();
-		$SecArr['order']['field']		=	'sort';
-		$SecArr['order']['type']		=	'ASC';
-		
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]['name']		= 	'parent';
-		$SecArr['where'][0]['oper']		= 	'=';
-		$SecArr['where'][0]['value']	= 	'0';
+				
+		$MySmartBB->rec->filter = 'parent=0';
+		$MySmartBB->rec->order = 'sort ASC';
 		
 		// Get main sections
-		$cats = $MySmartBB->section->GetSectionsList($SecArr);
+		$MySmartBB->section->getSectionsList();
 		
 		// Loop to read the information of main sections
-		foreach ($cats as $cat)
+		while ( $cat = $MySmartBB->rec->getInfo() )
 		{
-			// Get the groups information to know view this section or not
-			$groups = unserialize(base64_decode($cat['sectiongroup_cache']));
+			/* ... */
 			
-			if (is_array($groups[$MySmartBB->_CONF['group_info']['id']]))
+			// Get the groups information to know view this section or not
+			$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
+			
+			if ( is_array( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 			{
-				if ($groups[$MySmartBB->_CONF['group_info']['id']]['view_section'])
+				if ( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 				{
-					$forums_list[$cat['id'] . '_m'] = $cat;
+					$forums_list[ $cat['id'] . '_m' ] = $cat;
 				}
 			}
 			
 			unset($groups);
 			
+			/* ... */
+			
 			if (!empty($cat['forums_cache']))
 			{
-				$forums = unserialize(base64_decode($cat['forums_cache']));
+				$forums = unserialize( base64_decode( $cat[ 'forums_cache' ] ) );
 				
 				foreach ($forums as $forum)
 				{
-					if (is_array($forum['groups'][$MySmartBB->_CONF['group_info']['id']]))
+					if ( is_array( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 					{
-						if ($forum['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+						if ( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 						{
-							//////////
+							/* ... */
 							
 							// Get the first-level sub forums as a _link_ and store it in $forum['sub']
 							
-							$forum['is_sub'] 	= 	0;
-							$forum['sub']		=	'';
+							$forum[ 'is_sub' ] 	= 	0;
+							$forum[ 'sub' ]		=	null;
 							
-							if (!empty($forum['forums_cache']))
+							if ( !empty( $forum[ 'forums_cache' ] ) )
 							{
-								$subs = unserialize(base64_decode($forum['forums_cache']));
+								$subs = unserialize( base64_decode( $forum[ 'forums_cache' ] ) );
 								
-								if (is_array($subs))
+								if ( is_array( $subs ) )
 								{
-									foreach ($subs as $sub)
+									foreach ( $subs as $sub )
 									{
-										if (is_array($sub['groups'][$MySmartBB->_CONF['group_info']['id']]))
+										if ( is_array( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 										{
-											if ($sub['groups'][$MySmartBB->_CONF['group_info']['id']]['view_section'])
+											if ( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 											{
-												if (!$forum['is_sub'])
+												if ( !$forum[ 'is_sub' ] )
 												{
-													$forum['is_sub'] = 1;
+													$forum[ 'is_sub' ] = 1;
 												}
 												
-												$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub['id'] . '">' . $sub['title'] . '</a> ، ';
+												$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ، ';
 											}
 										}
 									}
 								}
 							}
 							
-							//////////
+							/* ... */
 							
 							// Get the moderators list as a _link_ and store it in $forum['moderators_list']
 							
 							$forum['is_moderators'] 		= 	0;
-							$forum['moderators_list']		=	'';
+							$forum['moderators_list']		=	null;
 							
-							if (!empty($forum['moderators']))
+							if ( !empty( $forum[ 'moderators' ] ) )
 							{
-								$moderators = unserialize($forum['moderators']);
+								$moderators = unserialize( $forum[ 'moderators' ] );
 								
-								if (is_array($moderators))
+								if ( is_array( $moderators ) )
 								{
-									foreach ($moderators as $moderator)
+									foreach ( $moderators as $moderator )
 									{
-										if (!$forum['is_moderators'])
+										if ( !$forum[ 'is_moderators' ] )
 										{
-											$forum['is_moderators'] = 1;
+											$forum[ 'is_moderators' ] = 1;
 										}
 										
-										$forum['moderators_list'] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
+										$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
 									}
 								}
 							}
 							
-							//////////
+							/* ... */
 							
-							$forums_list[$forum['id'] . '_f'] = $forum;
+							$forums_list[ $forum[ 'id' ] . '_f' ] = $forum;
 						}
 					} // end if is_array
 				} // end foreach ($forums)
 			} // end !empty($forums_cache)
-		} // end foreach ($cats)
+		}		
 	}
 	
-	function ReplaceWYSIWYG($text)
+	/* ... */
+	
+	public function replaceWYSIWYG( $text )
 	{
 		global $MySmartBB;
 		
@@ -562,9 +598,10 @@ class MySmartFunctions
 	}
 }
 
-class MySmartAdminFunctions extends MySmartFunctions
+// TODO : Kill this class please
+/*class MySmartAdminFunctions extends MySmartFunctions
 {
  	//
-}
+}*/
 
 ?>

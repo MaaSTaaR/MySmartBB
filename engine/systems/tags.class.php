@@ -8,49 +8,53 @@
  * @package 	: 	MySmartTag
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	10/06/2008 03:56:35 AM 
- * @updated 	:	06/08/2008 02:40:01 AM 
+ * @updated 	:	19/07/2010 07:51:36 AM 
  */
 
 class MySmartTag
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartTag($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertTag($param)
+	/* ... */
+	
+	public function insertTag()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['tag'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'tag' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
- 	function UpdateTag($param)
+	/* ... */
+	
+ 	function updateTag()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		
-		$query = $this->Engine->records->Update($this->Engine->table['tag'],$param['field'],$param['where']);
+ 		$this->engine->rec->table = $this->engine->table['tag'];
+ 		
+		$query = $this->engine->rec->update();
 		           
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
  	}
+ 	
+ 	/* ... */
  	
 	function DeleteTag($param)
 	{
@@ -60,9 +64,9 @@ class MySmartTag
  			$param = array();
  		}
  		
-		$param['table'] = $this->Engine->table['tag'];
+		$param['table'] = $this->engine->table['tag'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 		
 		return ($del) ? true : false;
 	}
@@ -76,28 +80,23 @@ class MySmartTag
  		}
  		
  		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['tag'];
+ 		$param['from']		=	$this->engine->table['tag'];
  		
-		$rows = $this->Engine->records->GetList($param);
+		$rows = $this->engine->records->GetList($param);
 		
 		return $rows;
 	}
 	
-	function GetTagInfo($param)
+	/* ... */
+	
+	public function getTagInfo()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['tag'];
+ 		$this->engine->rec->table = $this->engine->table['tag'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
 	
  	function GetTagNumber($param)
  	{
@@ -108,32 +107,32 @@ class MySmartTag
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['tag'];
+		$param['from'] 		= 	$this->engine->table['tag'];
 		
-		$num   = $this->Engine->records->GetNumber($param);
+		$num   = $this->engine->records->GetNumber($param);
 		
 		return $num;
  	}
  	
-	///
+	/* ... */
 	
-	function InsertSubject($param)
+	public function insertSubject()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$query = $this->Engine->records->Insert($this->Engine->table['tag_subject'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'tag_subject' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
+ 	
+ 	/* ... */
  	
  	function UpdateSubject($param)
  	{
@@ -143,7 +142,7 @@ class MySmartTag
  			$param = array();
  		}
  			 
-		$query = $this->Engine->records->Update($this->Engine->table['tag_subject'],$param['field'],$param['where']);
+		$query = $this->engine->records->Update($this->engine->table['tag_subject'],$param['field'],$param['where']);
 		           
 		return ($query) ? true : false;
  	}
@@ -156,29 +155,24 @@ class MySmartTag
  			$param = array();
  		}
  		
-		$param['table'] = $this->Engine->table['tag_subject'];
+		$param['table'] = $this->engine->table['tag_subject'];
 		
-		$del = $this->Engine->records->Delete($param);
+		$del = $this->engine->records->Delete($param);
 		
 		return ($del) ? true : false;
 	}
-		
-	function GetSubjectList($param)
+	
+	/* ... */
+	
+	public function getSubjectList()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'tag_subject' ];
  		
- 		$param['select'] 	= 	'*';
- 		$param['from']		=	$this->Engine->table['tag_subject'];
- 		
-		$rows = $this->Engine->records->GetList($param);
-		
-		return $rows;
+ 	 	$this->engine->rec->getList();
 	}
-		
+	
+	/* ... */
+	
 	function GetSubjectInfo($param)
 	{
  		if (!isset($param) 
@@ -188,28 +182,23 @@ class MySmartTag
  		}
  		
 		$param['select'] 	= 	'*';
-		$param['from']		=	$this->Engine->table['tag_subject'];
+		$param['from']		=	$this->engine->table['tag_subject'];
 		
-		$rows = $this->Engine->records->GetInfo($param);
+		$rows = $this->engine->records->GetInfo($param);
 		
 		return $rows;
 	}
 	
- 	function GetSubjectNumber($param)
+	/* ... */
+	
+ 	public function getSubjectNumber()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'tag_subject' ];
  		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['tag_subject'];
-		
-		$num   = $this->Engine->records->GetNumber($param);
-		
-		return $num;
+ 		return $this->engine->rec->getNumber();
  	}
+ 	
+ 	/* ... */
 }
 
 ?>

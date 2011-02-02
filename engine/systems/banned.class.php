@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
@@ -9,128 +11,83 @@
  * @copyright 	: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	17/3/2006 , 7:13 PM
  * @end   		: 	17/3/2006 , 7:19 PM
- * @updated 	: 	21/08/2008 08:44:44 PM 
+ * @updated 	: 	13/07/2010 04:08:47 AM 
  */
  
 class MySmartBanned
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartBanned($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
  	/**
  	 * Know if the username is ban or not
- 	 *
- 	 * $param =
- 	 *			array('username'=>'the username');
- 	 *
- 	 * @return
- 	 *			true -> when the username is banned
- 	 *			false -> when the username isn't banned
  	 */
-	function IsUsernameBanned($param)
+	public function isUsernameBanned( $username )
 	{
-		if (empty($param['username']))
+		if ( !isset( $username ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM IsUsernameBanned() -- EMPTY username',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM isUsernameBanned() -- EMPTY username',E_USER_ERROR);
 		}
 		
-		$query_array 			= 	array();
-		$query_array['text'] 	= 	$param['username'];
-		$query_array['type'] 	= 	1;
-		
-		$num = $this->_BaseQueryNum($query_array);
+		$this->engine->rec->table = $this->engine->table['banned'];
  		
-		return ($num <= 0) ? false : true;
+ 		$this->engine->rec->filter = "text='" . $username . "' AND text_type='1'";
+ 		
+    	$num = $this->engine->rec->getNumber();
+    	 	
+    	return ($num <= 0) ? false : true;
 	}
+ 	
+ 	/* ... */
  	
  	/**
  	 * Know if the email is ban or not
- 	 *
- 	 * $param =
- 	 *			array('email'=>'the email');
- 	 *
- 	 * @return
- 	 *			true -> when the email is banned
- 	 *			false -> when the email isn't banned
  	 */
- 	function IsEmailBanned($param)
+ 	public function isEmailBanned( $email )
  	{
-		if (empty($param['email']))
+		if ( !isset( $email ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM IsEmailBanned() -- EMPTY email',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM isEmailBanned()',E_USER_ERROR);
 		}
 		
- 		$query_array 			= 	array();
-		$query_array['text'] 	= 	$param['email'];
-		$query_array['type'] 	= 	2;
-		
-		$num = $this->_BaseQueryNum($query_array);
+		$this->engine->rec->table = $this->engine->table['banned'];
  		
- 		return ($num <= 0) ? false : true;
+ 		$this->engine->rec->filter = "text='" . $email . "' AND text_type='2'";
+ 		
+    	$num = $this->engine->rec->getNumber();
+    	 	
+    	return ($num <= 0) ? false : true;
  	}
  	
  	/**
  	 * Know if the provider is ban or not
- 	 *
- 	 * $param =
- 	 *			array('provider'=>'the provider');
- 	 *
- 	 * @return
- 	 *			true -> when the provider is banned
- 	 *			false -> when the provider isn't banned
+
  	 */
- 	function IsProviderBanned($param)
+ 	public function isProviderBanned( $provider )
  	{
-		if (empty($param['provider']))
+		if ( !isset( $provider ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM IsProviderBanned() -- EMPTY provider',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM isProviderBanned()',E_USER_ERROR);
 		}
 		
- 		$query_array 			= 	array();
-		$query_array['text'] 	= 	$param['provider'];
-		$query_array['type'] 	= 	3;
-		
-		$num = $this->_BaseQueryNum($query_array);
-		
- 		return ($num <= 0) ? false : true;
- 	}
- 	
- 	/**
- 	 * Get the number of rows which stored in database
- 	 *
- 	 * @access : private
- 	 */
- 	function _BaseQueryNum($param)
- 	{
-		if (empty($param['text'])
-			or empty($param['type']))
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM _BaseQueryNum() -- EMPTY text or type',E_USER_ERROR);
-		}
-		
- 		$arr 						= 	array();
- 		$arr['select'] 				= 	'*';
- 		$arr['from'] 				= 	$this->Engine->table['banned'];
- 		$arr['where']				=	array();
+		$this->engine->rec->table = $this->engine->table['banned'];
  		
- 		$arr['where'][0]			=	array();
- 		$arr['where'][0]['name']	=	'text';
- 		$arr['where'][0]['oper']	=	'=';
- 		$arr['where'][0]['value']	=	$param['text'];
+ 		$this->engine->rec->filter = "text='" . $provider . "' AND text_type='3'";
  		
- 		$arr['where'][1]			=	array();
- 		$arr['where'][1]['con']		=	'AND';
- 		$arr['where'][1]['name']	=	'text_type';
- 		$arr['where'][1]['oper']	=	'=';
- 		$arr['where'][1]['value']	=	$param['type'];
- 		
- 		$num = $this->Engine->records->GetNumber($arr);
- 		
- 		return $num;
+    	$num = $this->engine->rec->getNumber();
+    	 	
+    	return ($num <= 0) ? false : true;
  	}
 }
  

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 class MySmartCommon
@@ -9,29 +11,29 @@ class MySmartCommon
 	/**
 	 * The main function
 	 */
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$this->_CheckMember();
+		$this->_checkMember();
 		
-		$this->_CommonCode();
+		$this->_commonCode();
 		
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
 			if (!constant('STOP_STYLE'))
 			{
-				$this->_ShowLoginForm();
+				$this->_showLoginForm();
 			}
 		}
 	}
 		
-	function _CheckMember()
+	private function _checkMember()
 	{
 		global $MySmartBB;
 		
-		$username = $MySmartBB->_COOKIE[$MySmartBB->_CONF['admin_username_cookie']];
-		$password = $MySmartBB->_COOKIE[$MySmartBB->_CONF['admin_password_cookie']];
+		$username = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'admin_username_cookie' ] ];
+		$password = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'admin_password_cookie' ] ];
 		
 		$MySmartBB->_CONF['member_permission'] = false;
 		
@@ -42,11 +44,11 @@ class MySmartCommon
 			$CheckArr['username'] 	= 	$username;
 			$CheckArr['password'] 	= 	$password;
 		
-			$CheckMember = $MySmartBB->member->CheckAdmin($CheckArr);
+			$CheckMember = $MySmartBB->member->checkAdmin();
 			
 			if ($CheckMember != false)
 			{
-				$MySmartBB->_CONF['rows']['member_row'] = 	$CheckMember;
+				$MySmartBB->_CONF['member_row'] = 	$CheckMember;
 				$MySmartBB->_CONF['member_permission'] 	= 	true;
 			}
 			else
@@ -60,27 +62,27 @@ class MySmartCommon
 		}
 	}
 	
-	function _CommonCode()
+	private function _commonCode()
 	{
 		global $MySmartBB;
 				
-		//////////
+		/* ... */
 		
 		// Set information for template engine
-		$MySmartBB->template->SetInformation(	'modules/admin/styles/main/templates/',
+		$MySmartBB->template->setInformation(	'modules/admin/styles/main/templates/',
 												'modules/admin/styles/main/compiler/',
 												'.tpl',
 												'file');
 		
-		//////////
+		/* ... */
 		
 		// We will use this in options page
 		$MySmartBB->template->assign('_CONF',$MySmartBB->_CONF);
 		
-		//////////
+		/* ... */
 	}
 	
-	function _ShowLoginForm()
+	private function _showLoginForm()
 	{
 		global $MySmartBB;
 		

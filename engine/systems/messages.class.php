@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
@@ -14,64 +16,51 @@
 
 class MySmartMessages
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartMessages($Engine)
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
+	/* ... */
+		
 	/**
 	 * Get massege information
-	 *
-	 * @param :
-	 *			id	->	the id of massege
 	 */
-	function GetMessageInfo($param)
+	public function getMessageInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 	 	$param['select'] 	= 	'*';
- 	 	$param['from'] 		= 	$this->Engine->table['email_msg'];
- 	 	
- 	 	$rows = $this->Engine->records->GetInfo($param);
- 	 	
- 	 	return $rows;
+ 		$this->engine->rec->table = $this->engine->table['email_msg'];
+		
+		return $this->engine->rec->getInfo();
 	}
 	
+	/* ... */
+	
 	/**
-	 * Proccess massege
-	 *
-	 * @param :
-	 *			active_url
-	 *			change_url
-	 *			text
+	 * Proccess a message
 	 */
-	function MessageProccess($param)
+	public function messageProccess( $username, $title, $active_url, $change_url, $cancel_url, $text )
 	{		
 		$search_array 		= 	array();
 		$replace_array 		= 	array();
 		
 		$search_array[]		=	'[MySBB]username[/MySBB]';
-		$replace_array[]	=	$param['username'];
+		$replace_array[]	=	$username;
 		
 		$search_array[]		=	'[MySBB]board_title[/MySBB]';
-		$replace_array[]	=	$param['title'];
+		$replace_array[]	=	$title;
 		
 		$search_array[]		=	'[MySBB]url[/MySBB]';
-		$replace_array[]	=	$param['active_url'];
+		$replace_array[]	=	$active_url;
 		
 		$search_array[]		=	'[MySBB]change_url[/MySBB]';
-		$replace_array[]	=	$param['change_url'];
+		$replace_array[]	=	$change_url;
 		
 		$search_array[]		=	'[MySBB]cancel_url[/MySBB]';
-		$replace_array[]	=	$param['cancel_url'];
+		$replace_array[]	=	$cancel_url;
 		
-		$text = str_replace($search_array,$replace_array,$param['text']);
+		$text = str_replace( $search_array, $replace_array, $text );
 		
 		return $text;
 	}

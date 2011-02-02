@@ -9,102 +9,82 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	9/3/2006 , 8:31 PM
  * @end   		: 	9/3/2006 , 8:33 PM
- * @updated 	: 	21/08/2008 03:26:18 AM 
+ * @updated 	: 	02/08/2010 08:54:08 PM 
  */
  
 class MySmartPages
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartPages($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertPage($param)
+	/* ... */
+	
+	public function insertPage()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           			           
-		$query = $this->Engine->records->Insert($this->Engine->table['pages'],$param['field']);
+		$this->engine->rec->table = $this->engine->table[ 'pages' ];
 		
-		if ($param['get_id'])
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
-	}
-			
-	function UpdatePage($param)
-	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		           	   
-		$query = $this->Engine->records->Update($this->Engine->table['pages'],$param['field'],$param['where']);
-		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
-	function DeletePage($param)
+	/* ... */
+	
+	public function updatePage()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'pages' ];
  		
-		$param['table'] = $this->Engine->table['pages'];
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+		$query = $this->engine->rec->update();
+		           
+		return ( $query ) ? true : false;
 	}
 	
- 	/**
- 	 * Get page
- 	 *
- 	 * @param :
- 	 *			id	->	the id of page
- 	 */
-	function GetPageInfo($param)
+	/* ... */
+	
+	public function deletePage()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'pages' ];
  		
-		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['pages'];
-
-		$rows = $this->Engine->records->GetInfo($param);
- 	 	
-		return $rows;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function GetPagesList($param)
+	/* ... */
+	
+	public function getPageInfo()
 	{
- 		if (!isset($param)
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 	= 	'*';
- 		$param['from'] 		= 	$this->Engine->table['pages'];
- 		
- 	 	$rows = $this->Engine->records->GetList($param);
- 		
- 		return $rows;
+ 		$this->engine->rec->table = $this->engine->table['pages'];
+		
+		return $this->engine->rec->getInfo();
 	}
+	
+	/* ... */
+	
+	public function getPagesList()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'pages' ];
+ 		
+ 	 	$this->engine->rec->getList();
+	}
+	
+	/* ... */
 	
 	function GetPagesNumber()
 	{
@@ -114,9 +94,9 @@ class MySmartPages
 		}
 		
 		$param['select'] 	= 	'*';
-		$param['from'] 		= 	$this->Engine->table['pages'];
+		$param['from'] 		= 	$this->engine->table['pages'];
 		
-		$num = $this->Engine->records->GetNumber($param);
+		$num = $this->engine->records->GetNumber($param);
 		
 		return $num;
 	}

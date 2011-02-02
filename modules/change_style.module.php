@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('STOP_STYLE',true);
@@ -15,50 +17,45 @@ define('CLASS_NAME','MySmartChangeStyleMOD');
 
 class MySmartChangeStyleMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تغيير النمط');
+		$MySmartBB->func->showHeader('تغيير النمط');
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->functions->AddressBar('تغيير النمط');
+		$MySmartBB->func->addressBar('تغيير النمط');
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المُتبع غير صحيح!');
+			$MySmartBB->func->error('المسار المُتبع غير صحيح!');
 		}
 				
 		if ($MySmartBB->_GET['change'])
 		{
-			$StyleArr 				= 	array();
-			$StyleArr['field']		=	array();
-			
-			$StyleArr['field']['style'] = $MySmartBB->_GET['id'];
-						
 			if ($MySmartBB->_CONF['member_permission'])
 			{
-				$StyleArr['where'] = array('id',$MySmartBB->_CONF['member_row']['id']);
+				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 				
-				$change = $MySmartBB->member->UpdateMember($StyleArr);
+				$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_GET[ 'id' ]	);
+				
+				$change = $MySmartBB->member->updateMember();
 			}
 			else
 			{
-				$StyleArr['expire'] = time() + 31536000;
-				
-				$change = $MySmartBB->style->ChangeStyle($StyleArr);
+				$change = $MySmartBB->style->changeStyle( $MySmartBB->_GET[ 'id' ], time() + 31536000 );
 			}
 			
 			if ($change)
 			{
-				$MySmartBB->functions->msg('تم تغيير النمط بنجاح');
-				$MySmartBB->functions->goto('index.php');
+				$MySmartBB->func->msg('تم تغيير النمط بنجاح');
+				$MySmartBB->func->goto('index.php');
 			}
 		}
 		else
 		{
-			$MySmartBB->functions->error('مسار غير صحيح');
+			$MySmartBB->func->error('مسار غير صحيح');
 		}
 	}
 }

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 /**
  * MySmartBB Engine - The Engine Helps You To Create Bulletin Board System.
  */
@@ -8,99 +10,80 @@
  * @package 	: 	MySmartCache
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	15/6/2006 , 10:46 PM
- * @updated 	: 	21/08/2008 08:45:16 PM 
+ * @updated 	: 	13/07/2010 04:18:29 AM 
  */
 
 class MySmartCache
 {
-	var $Engine;
+	private $engine;
 	
-	function MySmartCache($Engine)
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Update the last member
-	 *
-	 * $param =
-	 *			array(	'username'=>'the username of new member',
-	 *					'id'=>'the id of new member');
-	 *
-	 * @return
-	 *			true -> when success
-	 *			false -> when fail
 	 */
-	function UpdateLastMember($param)
+	public function updateLastMember( $member_num, $username, $id )
 	{
-		if (!isset($param['member_num'])
-			or empty($param['id']))
+		if ( !isset( $member_num )
+			or !isset( $username )
+			or !isset( $id ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateLastMember() -- EMPTY member_num or id',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastMember()',E_USER_ERROR);
 		}
 		
-		$updates = array();
+		$update_username = $this->engine->info->updateInfo( 'last_member', $username );
+		$update_id = $this->engine->info->updateInfo( 'last_member_id', $id );
+		$update_number = $this->engine->info->updateInfo( 'member_number', $member_num + 1 );
 		
-		// Get member number
-		$member_num 	= 	$param['member_num'];
-		// Add 1 to member number
-		$member_num 	+= 	1;
-		
-		$update[0] = $this->Engine->info->UpdateInfo(array('var_name'=>'last_member','value'=>$param['username']));
-		$update[1] = $this->Engine->info->UpdateInfo(array('var_name'=>'last_member_id','value'=>$param['id']));
-		$update[2] = $this->Engine->info->UpdateInfo(array('var_name'=>'member_number','value'=>$member_num));
-		
-		return ($update[0] and $update[1] and $update[2]) ? true : false;
+		return ( $update_username and $update_id and $update_number ) ? true : false;
 	}
+	
+	/* ... */
 	
 	/**
 	 * Update the total of subjects
-	 *
-	 * $param =
-	 *			array('subject_num'=>'the total of subject');
-	 *
-	 * @return 
-	 *			true -> when success
-	 *			false -> when fail
 	 */
-	function UpdateSubjectNumber($param)
+	public function updateSubjectNumber( $subject_num )
 	{
-		if (empty($param['subject_num'])
-			and $param['subject_num'] != 0)
+		if ( !isset( $subject_num ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateSubjectNumber() -- EMPTY subject_num',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSubjectNumber() -- EMPTY subject_num',E_USER_ERROR);
 		}
 		
-		$val = $param['subject_num'] + 1;
+		$val = $subject_num + 1;
 		
-		$update = $this->Engine->info->UpdateInfo(array('var_name'=>'subject_number','value'=>$val));
+		$update = $this->engine->info->updateInfo( 'subject_number', $val );
 		
 		return ($update) ? true : false;
 	}
 	
+	/* ... */
+	
 	/**
 	 * Update the total of replys
-	 *
-	 * $param =
-	 *			array('reply_num'=>'the total of replies');
-	 *
-	 * @return
-	 *			true -> when success
-	 *			false -> when fail
 	 */
-	function UpdateReplyNumber($param)
+	public function updateReplyNumber( $reply_num )
 	{
-		if (!isset($param['reply_num']))
+		if ( !isset( $reply_num ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM UpdateReplyNumber() -- EMPTY reply_num',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM updateReplyNumber() -- EMPTY reply_num',E_USER_ERROR);
 		}
 		
-		$val = $param['reply_num'] + 1;
+		$val = $reply_num + 1;
 		
-		$update = $this->Engine->info->UpdateInfo(array('var_name'=>'reply_number','value'=>$val));
+		$update = $this->engine->info->updateInfo( 'reply_number', $val );
 		
 		return ($update) ? true : false;
 	}
+	
+	/* ... */
 }
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -25,20 +27,20 @@ class MySmartPrivateMassegeCPMOD
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->functions->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
 		}
 
 		/** Can't use the private massege system **/
-		if (!$MySmartBB->_CONF['rows']['group_info']['use_pm'])
+		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
 		}
 		/** **/
 		
 		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->functions->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		/** **/
 		
@@ -48,72 +50,48 @@ class MySmartPrivateMassegeCPMOD
 			/** Delete private massege **/
 			if ($MySmartBB->_GET['del'])
 			{
-				$this->_DeletePrivateMassege();
+				$this->_deletePrivateMassege();
 			}
 			/** **/
 		}
 		/** **/
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
-	function _DeletePrivateMassege()
+	private function _deletePrivateMassege()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية الحذف');
+		$MySmartBB->func->showHeader('تنفيذ عملية الحذف');
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->functions->AddressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الحذف');
+		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الحذف');
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره المسار المتبع غير صحيح .');
+			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح .');
 		}
 		
-		$DelArr 			= 	array();
-		$DelArr['user_to'] 	= 	true;
-		$DelArr['username']	=	$MySmartBB->_CONF['member_row']['username'];
-		$DelArr['id']		=	$MySmartBB->_GET['id'];
+		$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->pm->DeleteFromSenderList($DelArr);
+		$del = $MySmartBB->pm->deletePrivateMessage();
 		
 		if ($del)
 		{
 			// Recount the number of new messages after delete this message
-			$NumArr 						= 	array();
-			$NumArr['where'] 				= 	array();
-		
-			$NumArr['where'][0] 			= 	array();
-			$NumArr['where'][0]['name'] 	= 	'user_to';
-			$NumArr['where'][0]['oper'] 	= 	'=';
-			$NumArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['member_row']['username'];
-		
-			$NumArr['where'][1] 			= 	array();
-			$NumArr['where'][1]['con'] 		= 	'AND';
-			$NumArr['where'][1]['name'] 	= 	'folder';
-			$NumArr['where'][1]['oper'] 	= 	'=';
-			$NumArr['where'][1]['value'] 	= 	'inbox';
-		
-			$NumArr['where'][2] 			= 	array();
-			$NumArr['where'][2]['con'] 		= 	'AND';
-			$NumArr['where'][2]['name'] 	= 	'user_read';
-			$NumArr['where'][2]['oper'] 	= 	'=';
-			$NumArr['where'][2]['value'] 	= 	'0';
-		
-			$Number = $MySmartBB->pm->GetPrivateMassegeNumber($NumArr);
-					      															
-			$CacheArr 					= 	array();
-			$CacheArr['field']			=	array();
+			$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='inobx' AND user_read='0'";
 			
-			$CacheArr['field']['unread_pm'] 	= 	$Number;
-			$CacheArr['where'] 					= 	array('username',$MySmartBB->_CONF['member_row']['username']);
+			$Number = $MySmartBB->pm->getPrivateMessageNumber();
 			
-			$Cache = $MySmartBB->member->UpdateMember($CacheArr);
+			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$MySmartBB->functions->msg('تم حذف الرساله بنجاح !');
-			$MySmartBB->functions->goto('index.php?page=pm_list&list=1&folder=inbox');
+			$MySmartBB->member->updateMember();
+			
+			$MySmartBB->func->msg('تم حذف الرساله بنجاح !');
+			$MySmartBB->func->goto('index.php?page=pm_list&list=1&folder=inbox');
 		}
 	}
 }

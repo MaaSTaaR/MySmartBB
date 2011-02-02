@@ -20,9 +20,9 @@ class Install extends DatabaseStruct
 		
 		$msgs[] = (!is_writable('../../download/contact')) ? 'خطأ : يجب اعطاء المجلد download/contact التصريح 777' : 'تصريح المجلد download/contact صحيح';
 		
-		$msgs[] = (!is_writable('../../look/styles/forum/main/compiler')) ? 'خطأ : يجب اعطاء المجلد look/styles/forum/main/compiler التصريح 777' : 'تصريح المجلد styles/main/compiler صحيح';
+		$msgs[] = (!is_writable('../../modules/styles/main/compiler')) ? 'خطأ : يجب اعطاء المجلد modules/styles/main/compiler التصريح 777' : 'تصريح المجلد modules/styles/main/compiler صحيح';
 		
-		$msgs[] = (!is_writable('../../look/styles/forum/main/templates')) ? 'خطأ : يجب اعطاء المجلد look/styles/forum/main/templates التصريح 777' : 'تصريح المجلد styles/main/compiler صحيح';
+		$msgs[] = (!is_writable('../../modules/styles/main/templates')) ? 'خطأ : يجب اعطاء المجلد modules/styles/main/templates التصريح 777' : 'تصريح المجلد modules/styles/main/templates صحيح';
 	}
 	
 	function CreateTables(&$msgs)

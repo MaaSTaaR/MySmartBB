@@ -6,334 +6,322 @@
 
 /**
  * @package 	: 	MySmartIcons
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	21/09/2007 10:28:43 PM 
- * @updated 	:	21/08/2008 08:46:50 PM 
+ * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @start		: 	21/09/2007 10:28:43 PM 
+ * @updated 	:	05/07/2010 09:27:25 PM 
  */
 
 class MySmartIcons
 {
-	var $id;
-	var $Engine;
+	private $engine;
 	
-	function MySmartIcons($Engine)
+	public $id;
+	public $get_id;
+	
+	/* ... */
+	
+	function __construct( $engine )
 	{
-		$this->Engine = $Engine;
+		$this->engine = $engine;
 	}
 	
-	function InsertSmile($param)
+	/* ... */
+	
+	public function insertSmile()
 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['field']['smile_type'] = 0;
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
 		
-		$query = $this->Engine->records->Insert($this->Engine->table['smiles'],$param['field']);
-		
-		if ($param['get_id'])
+		if ( !is_array( $this->engine->rec->fields ) )
 		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			$this->engine->rec->fields = array();
 		}
 		
-		return ($query) ? true : false;
+		$this->engine->rec->fields[ 'smile_type' ] = '0';
+		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
+		{
+			$this->id = $this->engine->db->sql_insert_id();
+			
+			unset( $this->get_id );
+		}
+		
+		return ( $query ) ? true : false;
 	}
 	
- 	function UpdateSmile($param)
+	/* ... */
+	
+ 	public function updateSmile()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
-		           			
-		$param['field']['smile_type'] = 0;
-			 
-		$query = $this->Engine->records->Update($this->Engine->table['smiles'],$param['field'],$param['where']);
-		           
-		return ($query) ? true : false;
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		
+		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'smile_type' ] = '0';
+		
+		$query = $this->engine->rec->update();
+		
+		return ( $query ) ? true : false;
  	}
  	
-	function DeleteSmile($param)
+ 	/* ... */
+ 	
+	public function deleteSmile()
 	{
- 		if (empty($param['id']))
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteSmile() -- EMPTY id',E_USER_ERROR);
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
  		
-		$param['table'] 				= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
+		$statement = "smile_type='0'";
 		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'id';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['id'];
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
+		}
 		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'smile_type';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'0';
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
 	
-	function GetSmileList($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$param['select'] 			= 	'*';
- 		$param['from'] 				= 	$this->Engine->table['smiles'];
- 		$param['where']				=	array();
- 		$param['where'][0]			=	array();
- 		$param['where'][0]['name']	=	'smile_type';
- 		$param['where'][0]['oper']	=	'=';
- 		$param['where'][0]['value']	=	'0';
- 		
-     	$rows = $this->Engine->records->GetList($param);
-     	
-     	return $rows;
+	/* ... */
+	
+	public function getSmileList()
+	{ 
+     	$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		
+		$statement = "smile_type='0'";
+		
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
+		}
+		
+ 	 	$this->engine->rec->getList();
      }
+     
+     /* ... */
 	
   	function GetCachedSmiles()
 	{
- 		$cache = $this->Engine->_CONF['info_row']['smiles_cache'];
- 		
-		$cache = unserialize($cache);
+		$cache = $this->engine->_CONF['info_row']['smiles_cache'];
+		
+		$cache = unserialize( $cache );
 		
 		return $cache;
 	}
 	
-	function GetSmileInfo($param)
+	/* ... */
+	
+	public function getSmileInfo()
 	{
-		if (empty($param['id']))
+ 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+				
+		$statement = "smile_type='0'";
+		
+		if ( isset( $this->engine->rec->filter ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSmileInfo() -- EMPTY id',E_USER_ERROR);
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
 		}
 		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'smile_type';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	'0';
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'id';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	$param['id'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+		return $this->engine->rec->getInfo();
 	}
 	
- 	function CreateSmilesCache($param)
- 	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$smiles = $this->GetSmileList($param);
+	/* ... */
+	
+ 	public function createSmilesCache()
+ 	{	
+		$cache 	= 	array();
+		$x		=	0;
 		
- 		$cache 	= 	array();
- 		$x		=	0;
- 		$n		=	sizeof($smiles);
- 		
-		while ($x < $n)
+		$this->getSmileList();
+		
+		while ( $row = $this->engine->rec->getInfo() )
 		{
-			$cache[$x] 					= 	array();
-			$cache[$x]['id']		 	= 	$smiles[$x]['id'];
-			$cache[$x]['smile_short'] 	= 	$smiles[$x]['smile_short'];
-			$cache[$x]['smile_path'] 	= 	$smiles[$x]['smile_path'];
+			$cache[$x]					= 	array();
+			$cache[$x]['id']		 	= 	$row['id'];
+			$cache[$x]['smile_short'] 	= 	$row['smile_short'];
+			$cache[$x]['smile_path'] 	= 	$row['smile_path'];
 			
 			$x += 1;
 		}
 		
-		$cache = serialize($cache);
+		$cache = serialize( $cache );
 		
 		return $cache;
  	}
  	
- 	function UpdateSmilesCache($param)
+ 	/* ... */
+ 	
+ 	public function updateSmilesCache()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
- 		$cache = $this->CreateSmilesCache($param);
- 		
- 		$update_cache = $this->Engine->info->UpdateInfo(array('value'=>$cache,'var_name'=>'smiles_cache'));
- 		
- 		return ($update_cache) ? true : false;
+		$cache = $this->createSmilesCache();
+		
+		$update_cache = $this->engine->info->updateInfo( 'smiles_cache', $cache );
+		
+		return ($update_cache) ? true : false;
  	}
  	
- 	function GetSmilesNumber($param)
+ 	/* ... */
+ 	
+ 	public function getSmilesNumber()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
 		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'smile_type';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	'0';
+		$statement = "smile_type='0'";
+		
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
+		}
+		
+		return $this->engine->rec->getNumber();
+ 	}
+	
+ 	/* ... */
+	
+	public function insertIcon()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		
+		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'smile_type' ] = '1';
+		
+		$query = $this->engine->rec->insert();
+		
+		if ( $this->get_id )
+		{
+			$this->id = $this->engine->db->sql_insert_id();
 			
-		$num   = $this->Engine->records->GetNumber($param); 
-		
-		return $num;
- 	}
-	
- 	///
-	
-	function InsertIcon($param)
-	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['field']['smile_type'] = 1;
-			    			           
-		$query = $this->Engine->records->Insert($this->Engine->table['smiles'],$param['field']);
-		
-		if ($param['get_id'])
-		{
-			$this->id = $this->Engine->DB->sql_insert_id();
+			unset( $this->get_id );
 		}
 		
-		return ($query) ? true : false;
+		return ( $query ) ? true : false;
 	}
 	
-  	function UpdateIcon($param)
+	/* ... */
+	
+  	public function updateIcon()
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['field']['smile_type'] = 1;
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
 		
-		$query = $this->Engine->records->Update($this->Engine->table['smiles'],$param['field'],$param['where']);
-		           
-		return ($query) ? true : false;
+		if ( !is_array( $this->engine->rec->fields ) )
+		{
+			$this->engine->rec->fields = array();
+		}
+		
+		$this->engine->rec->fields[ 'smile_type' ] = '1';
+		
+		$query = $this->engine->rec->update();
+		
+		return ( $query ) ? true : false;
+
  	}
  	
-	function DeleteIcon($param)
+ 	/* ... */
+ 	
+	public function deleteIcon()
 	{
- 		if (empty($param['id']))
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM DeleteIcon() -- EMPTY id',E_USER_ERROR);
- 		}
+ 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
  		
-		$param['table'] 				= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
+		$statement = "smile_type='1'";
 		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'id';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	$param['id'];
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'smile_type';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	'1';
-		
-		$del = $this->Engine->records->Delete($param);
-		
-		return ($del) ? true : false;
-	}
-     
-     function GetIconList($param)
-     {
-		if (!isset($param) 
-			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-     	$param['select'] 			= 	'*';
- 		$param['from'] 				= 	$this->Engine->table['smiles'];
- 		$param['where']				=	array();
- 		$param['where'][0]			=	array();
- 		$param['where'][0]['name']	=	'smile_type';
- 		$param['where'][0]['oper']	=	'<>';
- 		$param['where'][0]['value']	=	'0';
- 		
-     	$rows = $this->Engine->records->GetList($param);
-     	
-     	return $rows;
-    }
-    
-	function GetIconInfo($param)
-	{
-		if (empty($param['id']))
+		if ( isset( $this->engine->rec->filter ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM GetIconInfo() -- EMPTY id',E_USER_ERROR);
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
 		}
 		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
-		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'smile_type';
-		$param['where'][0]['oper'] 		= 	'=';
-		$param['where'][0]['value'] 	= 	'1';
-		
-		$param['where'][1] 				= 	array();
-		$param['where'][1]['con'] 		= 	'AND';
-		$param['where'][1]['name'] 		= 	'id';
-		$param['where'][1]['oper'] 		= 	'=';
-		$param['where'][1]['value'] 	= 	$param['id'];
-		
-		$rows = $this->Engine->records->GetInfo($param);
-		
-		return $rows;
+ 		$query = $this->engine->rec->delete();
+ 		
+ 		return ($query) ? true : false;
 	}
+    
+    /* ... */ 
+	
+	public function getIconList()
+	{
+		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		
+		$statement = "smile_type<>'0'";
+		
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
+		}
+		
+ 	 	$this->engine->rec->getList();
+	}
+    
+    /* ... */
+    
+	public function getIconInfo()
+	{
+ 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+				
+		$statement = "smile_type='1'";
+		
+		if ( isset( $this->engine->rec->filter ) )
+		{
+			$this->engine->rec->filter .= ' AND ' . $statement;
+		}
+		else
+		{
+			$this->engine->rec->filter = $statement;
+		}
+		
+		return $this->engine->rec->getInfo();
+	}
+	
+	/* ... */
 	
  	function GetIconsNumber($param)
  	{
- 		if (!isset($param) 
- 			or !is_array($param))
- 		{
- 			$param = array();
- 		}
- 		
-		$param['select'] 				= 	'*';
-		$param['from'] 					= 	$this->Engine->table['smiles'];
-		$param['where'] 				= 	array();
+		if (!isset($param) 
+			or !is_array($param))
+		{
+			$param = array();
+		}
 		
-		$param['where'][0] 				= 	array();
-		$param['where'][0]['name'] 		= 	'smile_type';
-		$param['where'][0]['oper'] 		= 	'=';
+		$param['select']				= 	'*';
+		$param['from']					= 	$this->engine->table['smiles'];
+		$param['where']				= 	array();
+		
+		$param['where'][0]				= 	array();
+		$param['where'][0]['name']		= 	'smile_type';
+		$param['where'][0]['oper']		= 	'=';
 		$param['where'][0]['value'] 	= 	'1';
 			
-		$num   = $this->Engine->records->GetNumber($param); 
+		$num   = $this->engine->records->GetNumber($param); 
 		
 		return $num;
  	}

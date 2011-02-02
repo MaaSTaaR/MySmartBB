@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,7 +15,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartStyleMOD');
 	
-class MySmartStyleMOD extends _functions
+class MySmartStyleMOD extends _func
 {
 	function run()
 	{
@@ -27,40 +29,40 @@ class MySmartStyleMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,14 +70,14 @@ class MySmartStyleMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('style_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
@@ -86,46 +88,40 @@ class MySmartStyleMOD extends _functions
 			or empty($MySmartBB->_POST['image_path']) 
 			or empty($MySmartBB->_POST['template_path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$StlArr 					= 	array();
-		$StlArr['field']			=	array();
+		$MySmartBB->rec->fields = array();
 		
-		$StlArr['field']['style_title'] 	= 	$MySmartBB->_POST['name'];
-		$StlArr['field']['style_path'] 		= 	$MySmartBB->_POST['style_path'];
-		$StlArr['field']['style_order'] 	= 	$MySmartBB->_POST['order'];
-		$StlArr['field']['style_on'] 		= 	$MySmartBB->_POST['style_on'];
-		$StlArr['field']['image_path'] 		= 	$MySmartBB->_POST['image_path'];
-		$StlArr['field']['template_path'] 	= 	$MySmartBB->_POST['template_path'];
-		$StlArr['field']['cache_path'] 		= 	$MySmartBB->_POST['cache_path'];
+		$MySmartBB->rec->fields['style_title'] 		= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['style_path'] 		= 	$MySmartBB->_POST['style_path'];
+		$MySmartBB->rec->fields['style_order'] 		= 	$MySmartBB->_POST['order'];
+		$MySmartBB->rec->fields['style_on'] 		= 	$MySmartBB->_POST['style_on'];
+		$MySmartBB->rec->fields['image_path'] 		= 	$MySmartBB->_POST['image_path'];
+		$MySmartBB->rec->fields['template_path'] 	= 	$MySmartBB->_POST['template_path'];
+		$MySmartBB->rec->fields['cache_path'] 		= 	$MySmartBB->_POST['cache_path'];
 		
-		$insert = $MySmartBB->style->InsertStyle($StlArr);
+		$insert = $MySmartBB->style->insertStyle();
 			
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة النمط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة النمط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
-
-		$StlArr 					= 	array();
-		$StlArr['proc'] 			= 	array();
-		$StlArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$StlArr['order']			=	array();
-		$StlArr['order']['field']	=	'id';
-		$StlArr['order']['type']	=	'DESC';
 		
-		$MySmartBB->_CONF['template']['while']['StlList'] = $MySmartBB->style->GetStyleList($StlArr);
+		$MySmartBB->rec->filter = 'id DESC';
+		
+		$MySmartBB->style->getStyleList();
 		
 		$MySmartBB->template->display('styles_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -134,7 +130,7 @@ class MySmartStyleMOD extends _functions
 		$MySmartBB->template->display('style_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -147,51 +143,51 @@ class MySmartStyleMOD extends _functions
 			or empty($MySmartBB->_POST['image_path']) 
 			or empty($MySmartBB->_POST['template_path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		//////////
+		/* ... */
 		
-		$StlArr 			= 	array();
-		$StlArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$StlArr['field']['style_title'] 	= 	$MySmartBB->_POST['name'];
-		$StlArr['field']['style_path'] 		= 	$MySmartBB->_POST['style_path'];
-		$StlArr['field']['style_order'] 	= 	$MySmartBB->_POST['order'];
-		$StlArr['field']['style_on'] 		= 	$MySmartBB->_POST['style_on'];
-		$StlArr['field']['image_path'] 		= 	$MySmartBB->_POST['image_path'];
-		$StlArr['field']['template_path'] 	= 	$MySmartBB->_POST['template_path'];
-		$StlArr['field']['cache_path'] 		= 	$MySmartBB->_POST['cache_path'];
-		$StlArr['where']					= 	array('id',$Inf['id']);
-				
-		$update = $MySmartBB->style->UpdateStyle($StlArr);
+		$MySmartBB->rec->fields['style_title'] 		= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields['style_path'] 		= 	$MySmartBB->_POST['style_path'];
+		$MySmartBB->rec->fields['style_order'] 		= 	$MySmartBB->_POST['order'];
+		$MySmartBB->rec->fields['style_on'] 		= 	$MySmartBB->_POST['style_on'];
+		$MySmartBB->rec->fields['image_path'] 		= 	$MySmartBB->_POST['image_path'];
+		$MySmartBB->rec->fields['template_path'] 	= 	$MySmartBB->_POST['template_path'];
+		$MySmartBB->rec->fields['cache_path'] 		= 	$MySmartBB->_POST['cache_path'];
 		
-		//////////
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
+		
+		$update = $MySmartBB->style->updateStyle();
+		
+		/* ... */
 		
 		if ($update)
 		{
-			//////////
+			/* ... */
 			
-			$UpdateArr 				= 	array();
-			$UpdateArr['field']		=	array();
+			$MySmartBB->rec->fields		=	array();
 			
-			$UpdateArr['field']['should_update_style_cache'] 	= 	1;
-			$UpdateArr['where'] 								= 	array('style',$Inf['id']);
+			$MySmartBB->rec->fields['should_update_style_cache'] 	= 	1;
 			
-			$cache_update = $MySmartBB->member->UpdateMember($UpdateArr);
+			$MySmartBB->rec->filter = "style='" . $Inf['id'] . "'";
 			
-			//////////
+			$MySmartBB->member->updateMember();
 			
-			$MySmartBB->functions->msg('تم تحديث النمط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			/* ... */
 			
-			//////////
+			$MySmartBB->func->msg('تم تحديث النمط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			
+			/* ... */
 		}
 		
-		//////////
+		/* ... */
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -200,26 +196,25 @@ class MySmartStyleMOD extends _functions
 		$MySmartBB->template->display('style_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
 		$this->check_by_id($Inf);
 		
-		$DelArr 			= 	array();
-		$DelArr['where'] 	= 	array('id',$Inf['id']);
+		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
-		$del = $MySmartBB->style->DeleteStyle($DelArr);
+		$del = $MySmartBB->style->deleteStyle($DelArr);
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف النمط بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف النمط بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$Inf)
 	{
@@ -227,22 +222,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$StyleArr 			= 	array();
-		$StyleArr['where'] 	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Inf = $MySmartBB->style->GetStyleInfo($StyleArr);
+		$Inf = $MySmartBB->style->getStyleInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('النمط المطلوب غير موجود');
+			$MySmartBB->func->error('النمط المطلوب غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 }
 

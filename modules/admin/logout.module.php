@@ -13,7 +13,7 @@ define('CLASS_NAME','MySmartLogoutMOD');
 	
 class MySmartLogoutMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -22,7 +22,7 @@ class MySmartLogoutMOD
 			setcookie($MySmartBB->_CONF['admin_username_cookie'],'');
 			setcookie($MySmartBB->_CONF['admin_password_cookie'],'');
 		
-			$MySmartBB->functions->goto('admin.php',0);
+			$MySmartBB->func->goto('admin.php',0);
 		}
 	}
 }

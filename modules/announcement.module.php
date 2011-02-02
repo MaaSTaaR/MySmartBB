@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM					=	array();
@@ -14,91 +16,84 @@ define('CLASS_NAME','MySmartAnnouncementMOD');
 
 class MySmartAnnouncementMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Show the announcement **/
 		if ($MySmartBB->_GET['show'])
 		{
-			$this->_ShowAnnouncement();
+			$this->_showAnnouncement();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 			
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
 	/** 
 	 * Get the announcement and show it
 	 */
-	function _ShowAnnouncement()		
+	private function _showAnnouncement()		
 	{
 		global $MySmartBB;
 		
 		// Show header with page title
-		$MySmartBB->functions->ShowHeader('عرض الاعلان الاداري');
+		$MySmartBB->func->showHeader('عرض الاعلان الاداري');
 		
 		// Clean the id from any strings
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$AnnArr 			= 	array();
-		$AnnArr['where']	=	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		// Get the announcement information
-		$MySmartBB->_CONF['template']['AnnInfo'] = $MySmartBB->announcement->GetAnnouncementInfo($AnnArr);
-		
-		// Clean the information
-		$MySmartBB->functions->CleanVariable($MySmartBB->_CONF['template']['AnnInfo'],'html');
+		$MySmartBB->_CONF['template']['AnnInfo'] = $MySmartBB->announcement->getAnnouncementInfo();
 		
 		// No announcement , stop the page
 		if (!$MySmartBB->_CONF['template']['AnnInfo'])
 		{
-			$MySmartBB->functions->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
 		}
 		
-		//////////
+		/* ... */
 		
 		// Where is the member now?
 		if ($MySmartBB->_CONF['member_permission'])
      	{
-     		$UpdateOnline 			= 	array();
-			$UpdateOnline['field']	=	array();
+			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title']	);
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$UpdateOnline['field']['user_location']		=	'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title'];
-			$UpdateOnline['where']						=	array('username',$MySmartBB->_CONF['member_row']['username']);
-			
-			$update = $MySmartBB->online->UpdateOnline($UpdateOnline);
+			$update = $MySmartBB->online->updateOnline();
      	}
      	
-     	//////////
+     	/* ... */
      	
      	// Change text format
 		$MySmartBB->_CONF['template']['AnnInfo']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['AnnInfo']['text']);
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['AnnInfo']['text']);
 		
-     	//////////
+     	/* ... */
      	
 		// We check if the "date" is saved as Unix stamptime, if true proccess it otherwise do nothing
 		// We wrote these lines to ensure MySmartBB 2.x is compatible with MySmartBB's 1.x time save method
 		if (is_numeric($MySmartBB->_CONF['template']['AnnInfo']['date']))
 		{
-			$MySmartBB->_CONF['template']['AnnInfo']['date'] = $MySmartBB->functions->date($MySmartBB->_CONF['template']['AnnInfo']['date']);
+			$MySmartBB->_CONF['template']['AnnInfo']['date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['AnnInfo']['date']);
 		}
 
-     	//////////
+     	/* ... */
      			
 		$MySmartBB->template->display('announcement');
 		
-     	//////////
+     	/* ... */
 	}
 }
 	

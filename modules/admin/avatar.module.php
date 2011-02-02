@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -13,9 +15,9 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartAvatarMOD');
 	
-class MySmartAvatarMOD extends _functions
+class MySmartAvatarMOD extends _func
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -27,40 +29,40 @@ class MySmartAvatarMOD extends _functions
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_AddMain();
+					$this->_addMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_AddStart();
+					$this->_addStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['control'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_ControlMain();
+					$this->_controlMain();
 				}
 			}
 			elseif ($MySmartBB->_GET['edit'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_EditMain();
+					$this->_editMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_EditStart();
+					$this->_editStart();
 				}
 			}
 			elseif ($MySmartBB->_GET['del'])
 			{
 				if ($MySmartBB->_GET['main'])
 				{
-					$this->_DelMain();
+					$this->_delMain();
 				}
 				elseif ($MySmartBB->_GET['start'])
 				{
-					$this->_DelStart();
+					$this->_delStart();
 				}
 			}
 			
@@ -68,53 +70,47 @@ class MySmartAvatarMOD extends _functions
 		}
 	}
 	
-	function _AddMain()
+	private function _addMain()
 	{
 		global $MySmartBB;
 
 		$MySmartBB->template->display('avatar_add');
 	}
 	
-	function _AddStart()
+	private function _addStart()
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$AvrArr 			= 	array();
-		$AvrArr['field']	=	array();
+		$MySmartBB->rec->fields	=	array();
 		
-		$AvrArr['field']['avatar_path'] = $MySmartBB->_POST['path'];
+		$MySmartBB->rec->fields['avatar_path'] = $MySmartBB->_POST['path'];
 		
-		$insert = $MySmartBB->avatar->InsertAvatar($AvrArr);
+		$insert = $MySmartBB->avatar->insertAvatar();
 			
 		if ($insert)
 		{
-			$MySmartBB->functions->msg('تم اضافة الصوره بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم اضافة الصوره بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _ControlMain()
+	private function _controlMain()
 	{
 		global $MySmartBB;
 		
-		$AvrArr 					= 	array();
-		$AvrArr['order']			=	array();
-		$AvrArr['order']['field']	=	'id';
-		$AvrArr['order']['type']	=	'DESC';
-		$AvrArr['proc'] 			= 	array();
-		$AvrArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
+		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->_CONF['template']['while']['AvrList'] = $MySmartBB->avatar->GetAvatarList($AvrArr);
+		$MySmartBB->avatar->getAvatarList();
 		
 		$MySmartBB->template->display('avatars_main');
 	}
 	
-	function _EditMain()
+	private function _editMain()
 	{
 		global $MySmartBB;
 		
@@ -125,7 +121,7 @@ class MySmartAvatarMOD extends _functions
 		$MySmartBB->template->display('avatar_edit');
 	}
 	
-	function _EditStart()
+	private function _editStart()
 	{
 		global $MySmartBB;
 		
@@ -135,25 +131,25 @@ class MySmartAvatarMOD extends _functions
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 
-		$AvrArr 			= 	array();
-		$AvrArr['field'] 	= 	array();
+		$MySmartBB->rec->fields 	= 	array();
 		
-		$AvrArr['field']['avatar_path'] 	= 	$MySmartBB->_POST['path'];
-		$AvrArr['where']					= 	array('id',$MySmartBB->_CONF['template']['Inf']['id']);
+		$MySmartBB->rec->fields['avatar_path'] 	= 	$MySmartBB->_POST['path'];
 		
-		$update = $MySmartBB->avatar->UpdateAvatar($AvrArr);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		
+		$update = $MySmartBB->avatar->updateAvatar();
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث الصوره بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم تحديث الصوره بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 	
-	function _DelMain()
+	private function _delMain()
 	{
 		global $MySmartBB;
 		
@@ -164,7 +160,7 @@ class MySmartAvatarMOD extends _functions
 		$MySmartBB->template->display('avatar_del');
 	}
 	
-	function _DelStart()
+	private function _delStart()
 	{
 		global $MySmartBB;
 		
@@ -172,17 +168,19 @@ class MySmartAvatarMOD extends _functions
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		$del = $MySmartBB->avatar->DeleteAvatar(array('id'	=>	$MySmartBB->_CONF['template']['id']));
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['id'] . "'";
+		
+		$del = $MySmartBB->avatar->deleteAvatar();
 		
 		if ($del)
 		{
-			$MySmartBB->functions->msg('تم حذف الصوره بنجاح !');
-			$MySmartBB->functions->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->msg('تم حذف الصوره بنجاح !');
+			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 }
 
-class _functions
+class _func
 {
 	function check_by_id(&$Inf)
 	{
@@ -190,22 +188,19 @@ class _functions
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->functions->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		$MySmartBB->_GET['id'] = $MySmartBB->functions->CleanVariable($MySmartBB->_GET['id'],'intval');
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$AvArr 			= 	array();
-		$AvArr['where']	= 	array('id',$MySmartBB->_GET['id']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Inf = $MySmartBB->avatar->GetAvatarInfo($AvArr);
+		$Inf = $MySmartBB->avatar->getAvatarInfo();
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->functions->error('الصوره المطلوبه غير موجود');
+			$MySmartBB->func->error('الصوره المطلوبه غير موجود');
 		}
-		
-		$MySmartBB->functions->CleanVariable($Inf,'html');
 	}
 }
 

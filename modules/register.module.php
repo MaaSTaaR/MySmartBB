@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -16,18 +18,18 @@ define('CLASS_NAME','MySmartRegisterMOD');
 
 class MySmartRegisterMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		if ($MySmartBB->_CONF['info_row']['reg_close'])
 		{
-			$MySmartBB->functions->error('المعذره .. التسجيل مغلق');
+			$MySmartBB->func->error('المعذره .. التسجيل مغلق');
 		}
 		
 		if (!$MySmartBB->_CONF['info_row']['reg_' . $MySmartBB->_CONF['day']])
    		{
-   			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل اليوم');
+   			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل اليوم');
    		}
    		
 		/** Show register form **/
@@ -36,11 +38,11 @@ class MySmartRegisterMOD
 			if ($MySmartBB->_CONF['info_row']['reg_o'] 
 				and ( !isset( $MySmartBB->_GET[ 'agree' ] ) or !$MySmartBB->_GET[ 'agree' ] ) )
 			{
-				$this->_RegisterRules();
+				$this->_registerRules();
 			}
 			else
 			{
-				$this->_RegisterForm();
+				$this->_registerForm();
 			}
 		}
 		/** **/
@@ -48,19 +50,19 @@ class MySmartRegisterMOD
 		/** Start registetr **/
 		elseif ($MySmartBB->_GET['start'])
 		{
-			$this->_RegisterStart();
+			$this->_registerStart();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
 		if (!$MySmartBB->_CONF['info_row']['ajax_register'])
 		{
 			if (!isset($MySmartBB->_POST['ajax']))
 			{
-				$MySmartBB->functions->GetFooter();
+				$MySmartBB->func->getFooter();
 			}
 		}
 	}
@@ -68,11 +70,11 @@ class MySmartRegisterMOD
 	/**
 	 * Print registeration rules
 	 */
-	function _RegisterRules()
+	private function _registerRules()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('شروط التسجيل');
+		$MySmartBB->func->showHeader('شروط التسجيل');
 		
 		$MySmartBB->template->display('register_rules');
 	}
@@ -80,11 +82,11 @@ class MySmartRegisterMOD
 	/**
 	 * Show nice form for register :)
 	 */
-	function _RegisterForm()
+	private function _registerForm()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('التسجيل');
+		$MySmartBB->func->showHeader('التسجيل');
 		
 		$MySmartBB->template->display('register');
 	}
@@ -92,15 +94,15 @@ class MySmartRegisterMOD
 	/**
 	 * Some checks then add the member to database
 	 */
-	function _RegisterStart()
+	private function _registerStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->functions->ShowHeader('تنفيذ عملية التسجيل');
+		$MySmartBB->func->showHeader('تنفيذ عملية التسجيل');
 		
 		// Clean the username and email from white spaces
-		$MySmartBB->_POST['username'] 	= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['username'],'trim');
-		$MySmartBB->_POST['email'] 		= 	$MySmartBB->functions->CleanVariable($MySmartBB->_POST['email'],'trim');
+		$MySmartBB->_POST['username'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['username'],'trim');
+		$MySmartBB->_POST['email'] 		= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['email'],'trim');
 		
 		// Store the email provider in explode_email[1] and the name of email in explode_email[0]
 		// That will be useful to ban email provider
@@ -114,77 +116,86 @@ class MySmartRegisterMOD
 			or empty($MySmartBB->_POST['password']) 
 			or empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
 		// Ensure the email is equal the confirm of email
 		if ($MySmartBB->_POST['email'] != $MySmartBB->_POST['email_confirm'])
 		{
-			$MySmartBB->functions->error('تأكيد البريد الالكتروني غير صحيح');
+			$MySmartBB->func->error('تأكيد البريد الالكتروني غير صحيح');
 		}
 		
 		// Ensure the password is equal the confirm of password
 		if ($MySmartBB->_POST['password'] != $MySmartBB->_POST['password_confirm']) 
 		{
-			$MySmartBB->functions->error('تأكيد كلمة المرور غير صحيح');
+			$MySmartBB->func->error('تأكيد كلمة المرور غير صحيح');
 		}
 		
 		// Check if the email is valid, This line will prevent any false email
-		if (!$MySmartBB->functions->CheckEmail($MySmartBB->_POST['email']))
+		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->functions->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
 		
 		// Ensure there is no person used the same username
-		if ($MySmartBB->member->IsMember(array('where' => array('username',$MySmartBB->_POST['username']))))
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( $isMember )
 		{
-			$MySmartBB->functions->error('المعذره اسم المستخدم موجود مسبقاً يرجى اختيار اسم آخر');
+			$MySmartBB->func->error('المعذره اسم المستخدم موجود مسبقاً يرجى اختيار اسم آخر');
 		}
 		
 		// Ensure there is no person used the same email
-		if ($MySmartBB->member->IsMember(array('where' => array('email',$MySmartBB->_POST['email']))))
+		
+		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
+		
+		$isMember = $MySmartBB->member->isMember();
+		
+		if ( $isMember )
 		{
-			$MySmartBB->functions->error('البريد الالكتروني مسجل مسبقاً , يرجى كتابة غيره');
+			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً , يرجى كتابة غيره');
 		}
 		
-		if ($MySmartBB->banned->IsUsernameBanned(array('username'	=>	$MySmartBB->_POST['username'])))
+		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل بهذا الاسم لانه ممنوع من قبل الاداره');
+			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم لانه ممنوع من قبل الاداره');
 		}
 		
-		if ($MySmartBB->banned->IsEmailBanned(array('email'	=>	$MySmartBB->_POST['email'])))
+		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل بهذا البريد الالكتروني لانه ممنوع من قبل الاداره');
+			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد الالكتروني لانه ممنوع من قبل الاداره');
 		}
 		
-		if ($MySmartBB->banned->IsProviderBanned(array('provider'	=>	$EmailProvider)))
+		if ($MySmartBB->banned->IsProviderBanned( $EmailProvider ))
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل بهذا البريد لان مزود البريد ممنوع من التسجيل');
+			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد لان مزود البريد ممنوع من التسجيل');
 		}
 		
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل بهذا الاسم');
+			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم');
 		}
 
    		if (!isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_less_num']}))
    		{
-   			$MySmartBB->functions->error('عدد حروف إسم المستخدم أقل من (' . $MySmartBB->_CONF['info_row']['reg_less_num'] . ')');
+   			$MySmartBB->func->error('عدد حروف إسم المستخدم أقل من (' . $MySmartBB->_CONF['info_row']['reg_less_num'] . ')');
       	}
       	
       	if (isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_max_num']+1}))
       	{
-       	 	$MySmartBB->functions->error('عدد حروف اسم المستخدم أكبر من  (' . $MySmartBB->_CONF['info_row']['reg_max_num'] . ')');
+       	 	$MySmartBB->func->error('عدد حروف اسم المستخدم أكبر من  (' . $MySmartBB->_CONF['info_row']['reg_max_num'] . ')');
       	}
 
       	if (isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_max_num']+1}))
       	{
-            $MySmartBB->functions->error('عدد حروف كلمة المرور أكبر من (' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] . ')');
+            $MySmartBB->func->error('عدد حروف كلمة المرور أكبر من (' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] . ')');
       	}
 
       	if (!isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_min_num']-1}))
       	{
-        	$MySmartBB->functions->error('عدد حروف كلمة المرور أقل من (' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] . ')');
+        	$MySmartBB->func->error('عدد حروف كلمة المرور أقل من (' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] . ')');
       	}
       		
 		if (strstr($MySmartBB->_POST['username'],'"') 
@@ -192,101 +203,85 @@ class MySmartRegisterMOD
 			or strstr($MySmartBB->_POST['username'],'>') 
 			or strstr($MySmartBB->_POST['username'],'<'))
       	{
-      		$MySmartBB->functions->error('المعذره .. لا يمكنك التسجيل بهذه الرموز');
+      		$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذه الرموز');
       	}
       		
       	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
       	
-      	//////////
+      	/* ... */
       	
       	// Get the information of default group to set username style cache
       	
-		$GrpArr 			= 	array();
-		$GrpArr['where'] 	= 	array('id',$MySmartBB->_CONF['info_row']['def_group']);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['def_group'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->GetGroupInfo($GrpArr);
+		$GroupInfo = $MySmartBB->group->getGroupInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
 		
-      	//////////
+		/* ... */
+		
+		$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_POST['username'],
+      										'password'	=>	$MySmartBB->_POST['password'],
+      										'email'	=>	$MySmartBB->_POST['email'],
+      										'usergroup'	=>	$MySmartBB->_CONF['info_row']['def_group'],
+      										'user_gender'	=>	$MySmartBB->_POST['gender'],
+      										'register_date'	=>	$MySmartBB->_CONF['now'],
+      										'user_title'	=>	'عضو',
+      										'style'	=>	$MySmartBB->_CONF['info_row']['def_style'],
+      										'username_style_cache'	=>	$username_style_cache);
       	
-      	$InsertArr 					= 	array();
-      	$InsertArr['field']			=	array();
+      	$MySmartBB->member->get_id = true;
       	
-      	$InsertArr['field']['username'] 			= 	$MySmartBB->_POST['username'];
-      	$InsertArr['field']['password'] 			= 	$MySmartBB->_POST['password'];
-      	$InsertArr['field']['email'] 				= 	$MySmartBB->_POST['email'];
-      	$InsertArr['field']['usergroup'] 			= 	$MySmartBB->_CONF['info_row']['def_group'];
-      	$InsertArr['field']['user_gender'] 			= 	$MySmartBB->_POST['gender'];
-      	$InsertArr['field']['register_date'] 		= 	$MySmartBB->_CONF['now'];
-      	$InsertArr['field']['user_title'] 			= 	'عضو';
-      	$InsertArr['field']['style'] 				= 	$MySmartBB->_CONF['info_row']['def_style'];
-      	$InsertArr['field']['username_style_cache']	=	$username_style_cache;
-      	$InsertArr['get_id']						=	true;
-      	
-      	$insert = $MySmartBB->member->InsertMember($InsertArr);
+      	$insert = $MySmartBB->member->insertMember();
       	
       	if (!$MySmartBB->_CONF['info_row']['ajax_register'])
       	{
       		if (!isset($MySmartBB->_POST['ajax']))
       		{
-      			$MySmartBB->functions->AddressBar('تنفيذ عملية التسجيل');
+      			$MySmartBB->func->addressBar('تنفيذ عملية التسجيل');
       		}
       	}
       	
       	// Ouf finally , but we still have work in this module
       	if ($insert)
       	{
-      		$member_num = $MySmartBB->member->GetMemberNumber(array('get_from'	=>	'cache'));
+      		$member_num = $this->engine->_CONF['info_row']['member_number'];
       			
-      		$MySmartBB->cache->UpdateLastMember(array(	'username'		=>	$MySmartBB->_POST['username'],
-      													'id'			=>	$MySmartBB->member->id,
-      													'member_num'	=>	$member_num));
+      		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->member->id );
       														
       		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
       		{
-      			$Adress	= 	$MySmartBB->functions->GetForumAdress();
-				$Code	=	$MySmartBB->functions->RandomCode();
+      			$adress	= 	$MySmartBB->func->getForumAdress();
+				$code	=	$MySmartBB->func->randomCode();
 			
-				$ActiveAdress = $Adress . 'index.php?page=active_member&index=1&code=' . $Code;
+				$ActiveAdress = $Adress . 'index.php?page=active_member&index=1&code=' . $code;
 		
-				$ReqArr 			= 	array();
-				$ReqArr['field'] 	= 	array();
-		
-				$ReqArr['field']['random_url'] 		= 	$Code;
-				$ReqArr['field']['username'] 		= 	$MySmartBB->_POST['username'];
-				$ReqArr['field']['request_type'] 	= 	3;
+				$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
+													'username'	=>	$MySmartBB->_POST['username'],
+													'request_type'	=>	'3'	);
+												
+				$insert = $MySmartBB->request->insertRequest();
 			
-				$InsertReq = $MySmartBB->request->InsertRequest($ReqArr);
-			
-				if ($InsertReq)
+				if ($insert)
 				{
-					$MsgArr 			= 	array();
-					$MsgArr['where'] 	= 	array('id','4');
-				
-					$MassegeInfo = $MySmartBB->message->GetMessageInfo($MsgArr);
-				
-					$MsgArr = array();
-				
-					$MsgArr['text'] 		= 	$MassegeInfo['text'];
-					$MsgArr['active_url'] 	= 	$ActiveAdress;
-					$MsgArr['username']		=	$MySmartBB->_CONF['member_row']['username'];
-					$MsgArr['title']		=	$MySmartBB->_CONF['info_row']['title'];
-				
-					$MassegeInfo['text'] = $MySmartBB->message->MessageProccess($MsgArr);
+					$MySmartBB->rec->filter = "id='4'";
 					
-					$Send = $MySmartBB->functions->mail($MySmartBB->_CONF['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
+					$MassegeInfo = $MySmartBB->massege->getMessageInfo();
+					
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], $ActiveAdress, null, null, $MassegeInfo['text'] );
+					
+					$Send = $MySmartBB->func->mail($MySmartBB->_CONF['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
 					
 					if ($Send)
 					{
-						$MySmartBB->functions->msg('تم التسجيل بنجاح، و تم ارسال بريد التفعيل إلى بريدك الالكتروني');
+						$MySmartBB->func->msg('تم التسجيل بنجاح، و تم ارسال بريد التفعيل إلى بريدك الالكتروني');
 						
 						if (!$MySmartBB->_CONF['info_row']['ajax_register'])
 						{
 							if (!isset($MySmartBB->_POST['ajax']))
 							{
-								$MySmartBB->functions->goto('index.php');
+								$MySmartBB->func->goto('index.php');
 							}
 						}
 					}
@@ -294,13 +289,13 @@ class MySmartRegisterMOD
 			}
 			else
       		{
-      			$MySmartBB->functions->msg('تم التسجيل بنجاح');
+      			$MySmartBB->func->msg('تم التسجيل بنجاح');
       			
       			if (!$MySmartBB->_CONF['info_row']['ajax_register'])
       			{
       				if (!isset($MySmartBB->_POST['ajax']))
       				{
-      					$MySmartBB->functions->goto('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
+      					$MySmartBB->func->goto('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
       				}
       			}
       		}

@@ -157,13 +157,13 @@ class MySmartTemplate
 			// 1- There is no previous compiled file.
 			// 2- There is one but original template file which has new modifications, so update the compiled file.
 			// 3- The operating system is Windows, so we can't use filectime() function
-			/*if ( !( file_exists( $compiled_file ) )
+			if ( !( file_exists( $compiled_file ) )
 				or ( file_exists( $compiled_file )
 					and filectime( $compiled_file ) < filectime( $template_file ) )
 				or ( strtoupper( substr( PHP_OS, 0, 3 ) ) == 'WIN' ) )
-			{*/
+			{
 				$this->_createCompiledFile( $template_file, $compiled_file );
-			//}
+			}
 			
 			//////////
 			
@@ -243,6 +243,8 @@ class MySmartTemplate
 			// Include the compiled file to display it.
 			if ( !$content )
 			{
+				global $MySmartBB; /** Only for our case **/
+				
 				include( $compiled_name );
 				
 				// Don't forget return true :)

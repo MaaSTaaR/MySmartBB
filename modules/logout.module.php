@@ -1,5 +1,7 @@
 <?php
 
+/** PHP5 **/
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('STOP_STYLE',true);
@@ -12,68 +14,67 @@ define('CLASS_NAME','MySmartLogoutMOD');
 
 class MySmartLogoutMOD
 {
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
 		/** Simply , logout :) **/
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
-			$this->_StartLogout();
+			$this->_startLogout();
 		}
 		/** **/
 		else
 		{
-			$MySmartBB->functions->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->functions->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 		
 	/**
-	 * Delete cookies , and the member from online table then go to last page which the member was in it :)
+	 * Delete cookies and the member's entry from online table then go to the last page which the member was in it :)
 	 */
-	function _StartLogout()
+	private function _startLogout()
 	{
 		global $MySmartBB;
 		
-		$DelArr 						= 	array();
-		$DelArr['where'] 				= 	array();
-		$DelArr['where'][0] 			= 	array();
-		$DelArr['where'][0]['name'] 	= 	'user_id';
-		$DelArr['where'][0]['oper'] 	= 	'=';
-		$DelArr['where'][0]['value'] 	= 	$MySmartBB->_CONF['member_row']['id'];
+		/* ... */
 		
-		$MySmartBB->online->DeleteOnline($DelArr);
+		$MySmartBB->rec->filter = "user_id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$Logout = $MySmartBB->member->Logout();
+		$MySmartBB->online->deleteOnline();
+		
+		/* ... */
+		
+		$logout = $MySmartBB->member->logout();
 								
-		$MySmartBB->functions->ShowHeader('تسجيل خروج');
+		$MySmartBB->func->showHeader( 'تسجيل خروج' );
 		
-		if ($Logout)
-		{	
+		if ( $logout )
+		{
 			$MySmartBB->template->display('logout_msg');
 			
-			$url = parse_url($MySmartBB->_SERVER['HTTP_REFERER']);
-      		$url = $url['query'];
-      		$url = explode('&',$url);
-      		$url = $url[0];
+			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      		$url = $url[ 'query' ];
+      		$url = explode( '&', $url );
+      		$url = $url[ 0 ];
       		
-     		$Y_url = explode('/',$MySmartBB->_SERVER['HTTP_REFERER']);
-      		$X_url = explode('/',$MySmartBB->_SERVER['HTTP_HOST']);
+     		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
       		
-      		if ($url != 'page=logout' 
-      			or empty($url)
-      			or $url != 'page=login')
+      		if ( $url != 'page=logout' 
+      			or empty( $url )
+      			or $url != 'page=login' )
            	{
-       			$MySmartBB->functions->goto($MySmartBB->_SERVER['HTTP_REFERER']);
+       			$MySmartBB->func->goto( $MySmartBB->_SERVER['HTTP_REFERER'] );
       		}
 
-      		elseif ($Y_url[2] != $X_url[0] 
+      		elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
       				or $url == 'page=logout' 
-      				or $url == 'page=login')
+      				or $url == 'page=login' )
            	{
-       			$MySmartBB->functions->goto('index.php');
+       			$MySmartBB->functions->goto( 'index.php' );
       		}
 		}
 	}
