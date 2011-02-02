@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// Kill this file please :'(
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();

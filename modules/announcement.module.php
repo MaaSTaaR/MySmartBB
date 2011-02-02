@@ -20,12 +20,10 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		/** Show the announcement **/
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showAnnouncement();
 		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -33,18 +31,13 @@ class MySmartAnnouncementMOD
 			
 		$MySmartBB->func->getFooter();
 	}
-		
-	/** 
-	 * Get the announcement and show it
-	 */
+	
 	private function _showAnnouncement()		
 	{
 		global $MySmartBB;
 		
-		// Show header with page title
 		$MySmartBB->func->showHeader('عرض الاعلان الاداري');
 		
-		// Clean the id from any strings
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
@@ -52,12 +45,11 @@ class MySmartAnnouncementMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		// Get the announcement information
-		$MySmartBB->_CONF['template']['AnnInfo'] = $MySmartBB->announcement->getAnnouncementInfo();
+		$MySmartBB->_CONF['template']['AnnInfo'] = $MySmartBB->rec->getInfo();
 		
-		// No announcement , stop the page
 		if (!$MySmartBB->_CONF['template']['AnnInfo'])
 		{
 			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
@@ -68,10 +60,11 @@ class MySmartAnnouncementMOD
 		// Where is the member now?
 		if ($MySmartBB->_CONF['member_permission'])
      	{
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title']	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$update = $MySmartBB->online->updateOnline();
+			$update = $MySmartBB->rec->update();
      	}
      	
      	/* ... */

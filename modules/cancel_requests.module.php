@@ -49,9 +49,10 @@ class MySmartCReqMOD
 		$MySmartBB->_GET['type'] = (int) $MySmartBB->_GET['type'];
 		$MySmartBB->_GET['code'] = trim( $MySmartBB->_GET['code'] );
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "type='" . $MySmartBB->_GET['type'] . "' AND random_url='" . $MySmartBB->_GET['code'] . "'";
 		
-		$CleanReq = $MySmartBB->request->deleteRequest();
+		$CleanReq = $MySmartBB->rec->delete();
 			
 		if ($CleanReq)
 		{

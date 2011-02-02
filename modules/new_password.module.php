@@ -48,20 +48,23 @@ class MySmartPasswordMOD
 			$MySmartBB->func->error('يرجى تسجيل دخولك اولاً');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$RequestInfo = $MySmartBB->request->getRequestInfo();
+		$RequestInfo = $MySmartBB->rec->getInfo();
 		
 		if (!$RequestInfo)
 		{
 			$MySmartBB->func->error('المعذره الطلب غير موجود !');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'password'	=>	md5($MySmartBB->_CONF['member_row']['new_password']) );
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 		
-		$UpdatePassword = $MySmartBB->member->updateMember();
+		$UpdatePassword = $MySmartBB->rec->update();
 		
+		// [WE NEED A SYSTEM]
 		$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
 		
 		if ($UpdatePassword)

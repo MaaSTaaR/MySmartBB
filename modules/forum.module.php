@@ -28,14 +28,12 @@ class MySmartForumMOD
 		$MySmartBB->template->assign('SECTION_RSS',true);
 		$MySmartBB->template->assign('SECTION_ID',$MySmartBB->_GET['id']);
 		
-		$MySmartBB->func->ShowHeader('تصفح منتدى');
+		$MySmartBB->func->showHeader('تصفح منتدى');
 		
-		/** Browse the forum **/
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_browseForum();
 		}
-		/** **/
 		elseif ($MySmartBB->_GET['password_check'])
 		{
 			$this->_passwordCheck();
@@ -53,15 +51,10 @@ class MySmartForumMOD
 		global $MySmartBB;
 		
 		$this->_generalProcesses();
-		
 		$this->_sectionOnline();
-		
 		$this->_getModeratorsList();
-		
 		$this->_getAnnouncementList();
-		
 		$this->_getSubSection();
-		
 		$this->_getSubjectList();
 		
 		$this->_callTemplate();
@@ -95,57 +88,52 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
-		// Clean id from any strings
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		// No _GET['id'] , so ? show a small error :)
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
-		// Get section information and set it in $this->Section
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$this->Section = $MySmartBB->section->getSectionInfo();
+		$this->Section = $MySmartBB->rec->getInfo();
 				
 		$MySmartBB->template->assign('section_info',$this->Section);
 		
-		/* ... */
+		// ... //
 		
-		// This section isn't exists
 		if (!$this->Section)
 		{
 			$MySmartBB->func->error('القسم المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
-		// Ok :) , the permssion for this visitor/member in this section
-		$this->SectionGroup = $MySmartBB->group->GetSectionGroupInfo();
+		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
-		// This member can't view this section
 		if ($this->SectionGroup['view_section'] != 1)
 		{
 			$MySmartBB->func->error('المعذره ... غير مسموح لك بعرض هذا القسم');
 		}
 			
-		// This is main section , so we can't get subjects list from it 
 		if ( isset( $this->Section[ 'main_section' ] )
 			and $this->Section[ 'main_section' ] )
 		{
 			$MySmartBB->func->error('المعذره .. هذا المنتدى قسم رئيسي');
 		}
 		
-		// This section is link , so we should go to another site
+		// This section is link , so we should go to another location
 		if ($this->Section['linksection'])
 		{
 			$MySmartBB->func->msg('يرجى الانتظار سوف يتم تحويلك إلى ' . $this->Section['linksite']);
@@ -153,7 +141,7 @@ class MySmartForumMOD
 			$MySmartBB->func->stop();
 		}
 		
-		/* ... */
+		// ... //
 		
 		// hmmmm , this section protected by a password so request the password
 		if ( !$check )
@@ -180,15 +168,16 @@ class MySmartForumMOD
      		}
      	}
      	
-     	/* ... */
+     	// ... //
      	
 		// Where is the member now?
 		if ( $MySmartBB->_CONF['member_permission'] )
      	{
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على : ' . $this->Section['title']	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$update = $MySmartBB->online->updateOnline();
+			$update = $MySmartBB->rec->update();
      	}
 	}
 		
@@ -199,7 +188,7 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['online_res'] = '';
 		
@@ -216,25 +205,27 @@ class MySmartForumMOD
 			$this->rec->filter .= " AND hide_browse<>'1'";
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "user_id DESC";
-		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['online_res'];
 		
-		$MySmartBB->online->getOnlineList();
+		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
 		
-		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->online->getOnlineNumber();
+		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->rec->getNumber();
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
 		
-		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->online->GetOnlineNumber();
+		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->rec->getNumber();
 		
-		/* ... */
+		// ... //
 	}
 	
 	private function _getModeratorsList()
@@ -243,10 +234,11 @@ class MySmartForumMOD
 		
 		$MySmartBB->_CONF['template']['res']['moderator_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['moderator_res'];
 		
-		$MySmartBB->moderator->getModeratorList();
+		$MySmartBB->rec->getList();
 		
 		/*if (is_array($MySmartBB->_CONF['template']['while']['ModeratorsList'])
 			and sizeof($MySmartBB->_CONF['template']['while']['ModeratorsList']) > 0)
@@ -268,6 +260,7 @@ class MySmartForumMOD
 		
 		$MySmartBB->_CONF['template']['res']['announcement_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->order = "id DESC";
 		$MySmartBB->rec->limit = '1';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['announcement_res'];
@@ -276,7 +269,7 @@ class MySmartForumMOD
 		$AnnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
 		$AnnArr['proc']['date'] 	= 	array('method'=>'date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
-		$MySmartBB->announcement->getAnnouncementList();
+		$MySmartBB->rec->getList();
 		
 		/*if ($MySmartBB->_CONF['template']['while']['AnnouncementList'] != false)
 		{
@@ -321,13 +314,14 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "section='" . $this->Section[ 'id' ] . "'";
 		
-		$subject_total = $MySmartBB->subject->getSubjectNumber();
+		$subject_total = $MySmartBB->subject->getNumber();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1' AND review_subject<>'1'";
 		
@@ -355,7 +349,8 @@ class MySmartForumMOD
 		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
-		// Pager setup
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$subject_total;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['subject_perpage'];
@@ -367,10 +362,11 @@ class MySmartForumMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick='1' AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "write_time DESC";
 		
@@ -381,7 +377,7 @@ class MySmartForumMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['stick_subject_res'];
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		/*if (sizeof($MySmartBB->_CONF['template']['while']['stick_subject_list']) <= 0)
 		{
@@ -392,12 +388,13 @@ class MySmartForumMOD
 			$MySmartBB->template->assign('NO_STICK_SUBJECTS',false);
 		}*/
 		
-		/* ... */
+		// ... //
 		
 		// Get the list of subjects that need a review
 		
 		if ( $MySmartBB->func->moderatorCheck( $this->Section['id'] ) )
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 			$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND review_subject='1' AND delete_topic<>'1'";
 			$MySmartBB->rec->order = "write_time DESC";
 		
@@ -408,7 +405,7 @@ class MySmartForumMOD
 		
 			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['review_subject_res'];
 		
-			$MySmartBB->subject->getSubjectList();
+			$MySmartBB->rec->getList();
 
 			/*if (sizeof($MySmartBB->_CONF['template']['while']['review_subject_list']) <= 0)
 			{
@@ -424,7 +421,7 @@ class MySmartForumMOD
 			$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',true);
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		$MySmartBB->template->assign('section_id',$this->Section['id']);

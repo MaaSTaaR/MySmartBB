@@ -36,21 +36,24 @@ class MySmartCommon
 		/* ... */
 		
  		// Delete not important rows in online table
- 		$MySmartBB->records->filter = 'logged<' . $MySmartBB->_CONF['timeout'];
+ 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
+ 		$MySmartBB->rec->filter = 'logged<' . $MySmartBB->_CONF['timeout'];
  		
- 		$CleanOnline = $MySmartBB->online->deleteOnline();
+ 		$MySmartBB->rec->delete();
  		
  		/* ... */
  		
  		// Delete not important rows in today table
- 		$MySmartBB->records->filter = 'user_date<>' . $MySmartBB->_CONF['date'];
+ 		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
+ 		$MySmartBB->rec->filter = 'user_date<>' . $MySmartBB->_CONF['date'];
  	 	
- 	 	$CleanToday = $MySmartBB->online->deleteToday();
+ 	 	$MySmartBB->rec->delete();
  	 	
  	 	/* ... */
  	 	
 		if ( $MySmartBB->_CONF[ 'info_row' ][ 'today_date_cache' ] != $MySmartBB->_CONF[ 'date' ] )
 		{
+			// [WE NEED A SYSTEM]
 			$MySmartBB->info->updateInfo( 'today_number_cache', '1' );
 			$MySmartBB->info->updateInfo( 'today_date_cache', $MySmartBB->_CONF[ 'date' ] );
 		}
@@ -79,6 +82,7 @@ class MySmartCommon
 			
 			// If the information isn't valid CheckMember's value will be false
 			// otherwise the value will be an array
+			// [WE NEED A SYSTEM]
 			$this->CheckMember = $MySmartBB->member->getMemberInfo();
 			
 			/* ... */
@@ -121,26 +125,25 @@ class MySmartCommon
 		
 		/* ... */
 		
-		// Get the member's group info and store it in _CONF['group_info']
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['usergroup'] . "'";
 		
-		$MySmartBB->_CONF[ 'group_info' ] = $MySmartBB->group->getGroupInfo();
+		$MySmartBB->_CONF[ 'group_info' ] = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		
-		// This member is banned :/
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
 		{
-			// Stop the page with small massege
 			$MySmartBB->func->error( 'المعذره .. لا يمكنك الدخول للمنتدى' );
 		}
 		
 		/* ... */
 		
 		// Check if the member is already online
+		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "logged>='" . $MySmartBB->_CONF['timeout'] . "' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
-		$IsOnline = $MySmartBB->online->getOnlineInfo();
+		$IsOnline = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		
@@ -175,13 +178,14 @@ class MySmartCommon
 		}
 		
 		// Get username with group style
+		// [WE NEED A SYSTEM]
 		$username_style = $MySmartBB->member->getUsernameWithStyle( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['group_info']['username_style']  );
 		
 		/* ... */
 		
-		// Member don't exists in online table , so we insert member info
 		if (!$IsOnline)
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_CONF['member_row']['username'],
 												'username_style'	=>	$username_style,
 												'logged'	=>	$MySmartBB->_CONF['now'],
@@ -191,7 +195,7 @@ class MySmartCommon
 												'user_location'	=>	$MemberLocation,
 												'user_id'	=>	$MySmartBB->_CONF['member_row']['id']	);
 												
-			$insert = $MySmartBB->online->insertOnline();
+			$insert = $MySmartBB->rec->insert();
 		}
 		// Member is already online , just update information
 		else
@@ -203,6 +207,7 @@ class MySmartCommon
 				or $IsOnline['username_style'] != $username_style_fi 
 				or $IsOnline['hide_browse'] != $MySmartBB->_CONF['rows']['member_row']['hide_online'])
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 				$MySmartBB->rec->fields = array(	'username'			=>	$MySmartBB->_CONF['member_row']['username'],
 													'username_style'	=>	$username_style,
 													'logged'			=>	$MySmartBB->_CONF['now'],
@@ -214,13 +219,14 @@ class MySmartCommon
 				
 				$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 				
-				$update = $MySmartBB->online->updateOnline();
+				$update = $MySmartBB->rec->update();
 			}
 		}
 		
 		/* ... */
 		
 		// Ok , now we check if this member is exists in today list
+		// [WE NEED A SYSTEM]
 		$IsToday = $MySmartBB->online->isToday( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_CONF[ 'date' ] );
 		
 		/* ... */
@@ -230,14 +236,7 @@ class MySmartCommon
 		{
 			/* ... */
 			
-			$InsertTodayArr 			= 	array();
-			$InsertTodayArr['field']	=	array();
-																				
-			$InsertTodayArr['field']['username'] 		= 	$MySmartBB->_CONF['member_row']['username'];
-			$InsertTodayArr['field']['user_id'] 		= 	$MySmartBB->_CONF['member_row']['id'];
-			$InsertTodayArr['field']['user_date'] 		= 	$MySmartBB->_CONF['date'];
-			$InsertTodayArr['field']['hide_browse'] 	= 	$MySmartBB->_CONF['member_row']['hide_online'];
-			$InsertTodayArr['field']['username_style'] 	= 	$username_style;
+			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 			
 			$MySmartBB->rec->fields = array(	'username'			=>	$MySmartBB->_CONF['member_row']['username'],
 												'user_id'			=>	$MySmartBB->_CONF['member_row']['id'],
@@ -245,7 +244,7 @@ class MySmartCommon
 												'hide_browse'		=>	$MySmartBB->_CONF['member_row']['hide_online'],
 												'username_style'	=>	$username_style	);
 			
-			$InsertToday = $MySmartBB->online->insertToday();
+			$InsertToday = $MySmartBB->rec->insert();
 			
 			/* ... */
 			
@@ -253,10 +252,11 @@ class MySmartCommon
 			{
 				/* ... */
 				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->fields = array(	'visitor'	=>	$MySmartBB->_CONF['member_row']['visitor'] + 1	);
 				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 				
-				$MySmartBB->member->updateMember();
+				$MySmartBB->rec->update();
 				
 				/* ... */
 				
@@ -264,6 +264,7 @@ class MySmartCommon
 				{
 					$number = $MySmartBB->_CONF['info_row']['today_number_cache'] + 1;
 					
+					// [WE NEED A SYSTEM]
 					$MySmartBB->info->updateInfo( 'today_number_cache', $number );
 				}
 				
@@ -280,6 +281,7 @@ class MySmartCommon
 		{
 			$last_visit = ( empty( $MySmartBB->_CONF[ 'member_row' ][ 'lastvisit' ] ) ) ? $MySmartBB->_CONF[ 'date' ] : $MySmartBB->_CONF[ 'member_row' ][ 'lastvisit' ];
 			
+			// [WE NEED A SYSTEM]
 			$MySmartBB->member->lastVisitCookie( $last_visit, $MySmartBB->_CONF[ 'date' ], $MySmartBB->_CONF[ 'member_row' ][ 'id' ]);
 		}
 		
@@ -302,18 +304,21 @@ class MySmartCommon
 		{
 			/* ... */
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
 			
-			$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->style->getStyleInfo();
+			$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
 			
 			/* ... */
 			
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
 			
+			// [WE NEED A SYSTEM]
 			$style_cache = $MySmartBB->style->createStyleCache();
 			
 			/* ... */
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'style_cache'	=>	$style_cache,
 												'style_id_cache'	=>	$MySmartBB->_CONF['member_row']['style']	);
 			
@@ -324,7 +329,7 @@ class MySmartCommon
 			
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 			
-			$update_cache = $MySmartBB->member->updateMember();
+			$update_cache = $MySmartBB->rec->update();
 			
 			/* ... */
 		}
@@ -332,13 +337,15 @@ class MySmartCommon
 		/* ... */
 		
 		if ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'])
-		{			
+		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			
 			$MySmartBB->rec->fields = array(	'logged'	=>	$MySmartBB->_CONF['now'],
 												'member_ip'	=>	$MySmartBB->_CONF['ip']	);
 			
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 			
-			$MySmartBB->member->updateMember();
+			$MySmartBB->rec->update();
 		}
 	}
 		
@@ -356,18 +363,21 @@ class MySmartCommon
 		/* ... */
 		
 		// Get the visitor's group info and store it in _CONF['group_info']
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='7'";
 		
-		$MySmartBB->_CONF['group_info'] = $MySmartBB->group->getGroupInfo();
+		$MySmartBB->_CONF['group_info'] = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		
 		// Check if the visitor is already online
+		// [WE NEED A SYSTEM]
 		$isOnline = $MySmartBB->online->isOnline($MySmartBB->_CONF['timeout'], 'ip', $MySmartBB->_CONF['ip']);
 								
 		// The visitor is already online , just update information										
 		if ( $isOnline )
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'username'	=>	'Guest',
 												'logged'	=>	$MySmartBB->_CONF['now'],
 												'path'		=>	$MySmartBB->_SERVER['QUERY_STRING'],
@@ -375,11 +385,12 @@ class MySmartCommon
 			
 			$MySmartBB->rec->filter = "username='Guest'";
 			
-			$update = $MySmartBB->online->updateOnline();
+			$update = $MySmartBB->rec->update();
 		}
 		// The visitor is not exist in online table , so we insert his info
 		else
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'username'			=>	'Guest',
 												'username_style'	=>	'Guest',
 												'logged'			=>	$MySmartBB->_CONF['now'],
@@ -387,15 +398,16 @@ class MySmartCommon
 												'user_ip'			=>	$MySmartBB->_CONF['ip'],
 												'user_id'			=>	-1	);
 			
-			$insert = $MySmartBB->online->insertOnline(); 
+			$insert = $MySmartBB->rec->insert(); 
 		}
 		
 		// Get visitor's style		
 		$style_id = (int) ( $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'style_cookie' ] ) ) ? $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'style_cookie' ] ] : $MySmartBB->_CONF[ 'info_row' ][ 'def_style' ];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $style_id . "'";
 		
-		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->style->getStyleInfo();
+		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
 										  
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
@@ -442,6 +454,7 @@ class MySmartCommon
 		// Get random ads
 		if ($MySmartBB->_CONF['info_row']['ads_num'] > 0)
 		{
+			// [WE NEED A SYSTEM]
 			$MySmartBB->_CONF['rows']['AdsInfo'] = $MySmartBB->ads->getRandomAds();
 			$MySmartBB->_CONF['temp']['ads_show'] = true;
 		}

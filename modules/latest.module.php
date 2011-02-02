@@ -47,10 +47,11 @@ class MySmartLatestMOD
 		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "native_write_time BETWEEN " . $from . " AND " . $to . " AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "id DESC";
 				
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('today_subject');
 	}

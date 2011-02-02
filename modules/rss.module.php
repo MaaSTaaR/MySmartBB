@@ -44,11 +44,12 @@ class MySmartRSSMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "delete_topic<>'1' AND sec_subject<>'1'";
 		$MySmartBB->rec->order = "write_time DESC";
 		$MySmartBB->rec->limit = '10';
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		while ( $row = $MySmartBB->rec->getInfo() )
 		{
@@ -76,12 +77,11 @@ class MySmartRSSMOD
 		}
 		else
 		{
-			// Get section information and set it in $this->Section
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 			
-			$Section = $MySmartBB->section->getSectionInfo();
+			$Section = $MySmartBB->rec->getInfo();
 			
-			// This section isn't exists
 			if (!$Section)
 			{
 				$MySmartBB->func->error('القسم المطلوب غير موجود');
@@ -89,10 +89,11 @@ class MySmartRSSMOD
 
 			/* ... */
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 			$MySmartBB->rec->filter = "section_id='" . $Section['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 			
 			// Ok :) , the permssion for this visitor/member in this section
-			$SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+			$SectionGroup = $MySmartBB->rec->getInfo();
 			
 			/* ... */
 					
@@ -125,11 +126,12 @@ class MySmartRSSMOD
 				return 0;
 			}
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 			$MySmartBB->rec->filter = "section='" . $MySmartBB->_GET['id'] . "' AND delete_topic<>'1'";
 			$MySmartBB->rec->order = "write_time DESC";
 			$MySmartBB->rec->limit = '10';
 			
-			$MySmartBB->subject->getSubjectList();
+			$MySmartBB->rec->getList();
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
