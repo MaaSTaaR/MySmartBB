@@ -207,7 +207,7 @@ class MySmartOptionsMOD
 			and $update[2])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;general=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;general=1&amp;main=1');
 		}
 	}
 	
@@ -234,7 +234,7 @@ class MySmartOptionsMOD
 			and $update[3])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;features=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;features=1&amp;main=1');
 		}
 	}
 	
@@ -256,7 +256,7 @@ class MySmartOptionsMOD
 		if ($update[0] and $update[1])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;time=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;time=1&amp;main=1');
 		}
 	}
 	
@@ -292,7 +292,7 @@ class MySmartOptionsMOD
 			and $update[3])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;pages=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;pages=1&amp;main=1');
 		}
 	}
 	
@@ -357,7 +357,7 @@ class MySmartOptionsMOD
 			and $update[14])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;register=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;register=1&amp;main=1');
 		}
 	}
 	
@@ -410,7 +410,7 @@ class MySmartOptionsMOD
 			and $update[10])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;topics=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;topics=1&amp;main=1');
 		}
 	}
 	
@@ -441,7 +441,7 @@ class MySmartOptionsMOD
 			and $update[5])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;fast_reply=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;fast_reply=1&amp;main=1');
 		}
 	}
 	
@@ -466,7 +466,7 @@ class MySmartOptionsMOD
 			and $update[2])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;member=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;member=1&amp;main=1');
 		}
 	}
 
@@ -501,7 +501,7 @@ class MySmartOptionsMOD
 			and $update[4])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;avatar=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;avatar=1&amp;main=1');
 		}
 	}
 
@@ -534,7 +534,7 @@ class MySmartOptionsMOD
 			and $update[6])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;close_days=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;close_days=1&amp;main=1');
 		}
 	}
 	
@@ -556,7 +556,7 @@ class MySmartOptionsMOD
 		if ($update[0] and $update[1])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;close=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;close=1&amp;main=1');
 		}
 	}
 
@@ -584,7 +584,7 @@ class MySmartOptionsMOD
 			and $update[3])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;ajax=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;ajax=1&amp;main=1');
 		}
 	}
 	
@@ -609,7 +609,7 @@ class MySmartOptionsMOD
 			and $update[2])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=options&amp;wysiwyg=1&amp;main=1');
+			$MySmartBB->functions->move('admin.php?page=options&amp;wysiwyg=1&amp;main=1');
 		}
 	}
 }

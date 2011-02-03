@@ -225,7 +225,7 @@ class MySmartUserCPMOD
 		$MySmartBB->rec->limit 		= 	'5';
 		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF['template']['res']['last_subjects_res'];
 		
-		$MySmartBB->subject->getList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
@@ -275,7 +275,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'style '];
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->order = 'style_order ASC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
@@ -681,7 +681,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['avatar_res'];
 		
-		$MySmartBB->avatar->getList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		

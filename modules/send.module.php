@@ -57,7 +57,7 @@ class MySmartSendMOD
      	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->member->getInfo();
+		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		

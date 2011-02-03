@@ -319,7 +319,7 @@ class MySmartForumMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "section='" . $this->Section[ 'id' ] . "'";
 		
-		$subject_total = $MySmartBB->subject->getNumber();
+		$subject_total = $MySmartBB->rec->getNumber();
 		
 		// ... //
 		

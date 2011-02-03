@@ -41,6 +41,7 @@ class MySmartFixMOD
 	{
 		global $MySmartBB;
 		
+		// [WE NEED A SYSTEM]
 		$repair = $MySmartBB->fixup->repairTables();
 		
 		foreach ($repair as $table => $success)

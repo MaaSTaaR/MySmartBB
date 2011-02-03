@@ -1,6 +1,6 @@
 <?php
 
-////////////
+// ... //
 
 // MySmartBB Engine - The heart of this script
 require_once(DIR . 'engine/Engine.class.php');
@@ -12,11 +12,11 @@ require_once( DIR . 'includes/template.compiler.class.php' );
 require_once( DIR . 'includes/smartcodeparse.class.php' );
 require_once( DIR . 'includes/plugins.class.php' );
 
-////////////
+// ... //
 
 class MySmartBB extends Engine
 {
-	////////////
+	// ... //
 	
 	// General systems
 	var $func;
@@ -24,15 +24,15 @@ class MySmartBB extends Engine
 	var $smartparse;
 	var $plugin;
 	
-	////////////
+	// ... //
 	
 	function __construct()
 	{
-		////////////
+		// ... //
 		
 		$e = Engine::Engine();
 		
-		////////////
+		// ... //
 		
 		if (!defined('INSTALL'))
 		{
@@ -43,18 +43,11 @@ class MySmartBB extends Engine
   			$this->plugin		=	new MySmartPlugins;
   		}
   		
-  		////////////
-  		
-  		if (defined('IN_ADMIN'))
-  		{
-  			$this->func = new MySmartAdminFunctions();
-  		}
-  		else
-  		{
-  			$this->func = new MySmartFunctions();
-  		}
-  		
-  		////////////
+  		// ... //
+		
+		$this->func = new MySmartFunctions();
+		
+  		// ... //
   		
   		if (!is_bool($e)
   			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
@@ -65,9 +58,9 @@ class MySmartBB extends Engine
   		}
   	}
   	
-  	////////////
+  	// ... //
 }
 
-////////////
+// ... //
 
 ?>

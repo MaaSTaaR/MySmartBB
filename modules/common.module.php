@@ -12,17 +12,11 @@ class MySmartCommon
 	public function run()
 	{
 		$this->_generalProc();
-			
 		$this->_checkMember();
-		
 		$this->_setInformation();
-		
 		$this->_showAds();
-		
 		$this->_getStylePath();
-			
 		$this->_checkClose();
-		
 		$this->_templateAssign();
 	}
 					

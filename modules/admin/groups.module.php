@@ -92,6 +92,8 @@ class MySmartGroupsMOD extends _func
 		// Enable HTML and (only) HTML
 		$MySmartBB->_POST['style'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['style'],'unhtml');
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 					= 	$MySmartBB->_POST['name'];
@@ -163,22 +165,25 @@ class MySmartGroupsMOD extends _func
 		$MySmartBB->rec->fields['group_order'] 				= 	$MySmartBB->_POST['group_order'];
 		$MySmartBB->rec->fields['admincp_contactus'] 		= 	$MySmartBB->_POST['admincp_contactus'];
 		
-		$MySmartBB->group->get_id = true;
+		$MySmartBB->rec->get_id = true;
 		
-		$insert = $MySmartBB->group->insertGroup();
+		$insert = $MySmartBB->rec->insert();
 		
 		if ($insert)
 		{
-			/* ... */
+			// ... //
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->order = 'id ASC';
 			
-			$sections = $MySmartBB->section->getSectionsList();
+			$sections = $MySmartBB->rec->getList();
 			
-			/* ... */
+			// ... //
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+				
 				$MySmartBB->rec->fields			=	array();
 				
 				$MySmartBB->rec->fields['section_id'] 			= 	$row['id'];
@@ -198,9 +203,10 @@ class MySmartGroupsMOD extends _func
 				$MySmartBB->rec->fields['main_section'] 		= 	($row['parent'] == 0) ? 1 : 0;
 				$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['title'];
 				
-				$insert = $MySmartBB->group->insertSectionGroup();
+				$insert = $MySmartBB->rec->insert();
 			}
 			
+			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->section->updateAllSectionsCache();
 			
 			if ($cache)
@@ -215,15 +221,16 @@ class MySmartGroupsMOD extends _func
 	{
 		global $MySmartBB;
 
-		/* ... */
+		// ... //
 		
 		//$GroupArr['proc']['username_style']	=	array('method'=>'replace','search'=>'[username]','replace'=>'rows{title}','store'=>'h_title');
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
 		
-		$MySmartBB->group->getGroupList();
+		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('groups_main');
 	}
@@ -257,6 +264,8 @@ class MySmartGroupsMOD extends _func
 		
 		// Enable HTML and (only) HTML
 		$MySmartBB->_POST['style'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['style'],'unhtml');
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		
 		$MySmartBB->rec->fields	=	array();
 		
@@ -331,7 +340,7 @@ class MySmartGroupsMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$update = $MySmartBB->group->updateGroup();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
@@ -359,9 +368,10 @@ class MySmartGroupsMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->group->deleteGroup();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
@@ -384,9 +394,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->getGroupInfo();
+		$GroupInfo = $MySmartBB->rec->getInfo();
 		
 		if ($GroupInfo == false)
 		{

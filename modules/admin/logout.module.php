@@ -22,7 +22,7 @@ class MySmartLogoutMOD
 			setcookie($MySmartBB->_CONF['admin_username_cookie'],'');
 			setcookie($MySmartBB->_CONF['admin_password_cookie'],'');
 		
-			$MySmartBB->func->goto('admin.php',0);
+			$MySmartBB->func->move( 'admin.php', 0 );
 		}
 	}
 }

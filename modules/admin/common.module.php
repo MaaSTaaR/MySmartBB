@@ -6,17 +6,13 @@
 
 class MySmartCommon
 {
-	var $CheckMember;
-		
-	/**
-	 * The main function
-	 */
+	var $CheckMember; // TODO : for what?
+	
 	public function run()
 	{
 		global $MySmartBB;
 		
 		$this->_checkMember();
-		
 		$this->_commonCode();
 		
 		if (!$MySmartBB->_CONF['member_permission'])
@@ -40,15 +36,12 @@ class MySmartCommon
 		if (!empty($username) 
 			and !empty($password))
 		{
-			$CheckArr 				= 	array();
-			$CheckArr['username'] 	= 	$username;
-			$CheckArr['password'] 	= 	$password;
-		
-			$CheckMember = $MySmartBB->member->checkAdmin();
+			// [WE NEED A SYSTEM]
+			$CheckMember = $MySmartBB->member->checkAdmin( $username, $password );
 			
 			if ($CheckMember != false)
 			{
-				$MySmartBB->_CONF['member_row'] = 	$CheckMember;
+				$MySmartBB->_CONF['member_row'] = $CheckMember;
 				$MySmartBB->_CONF['member_permission'] 	= 	true;
 			}
 			else

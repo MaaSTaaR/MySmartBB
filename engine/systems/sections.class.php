@@ -296,5 +296,3 @@ class MySmartSection
 }
  
 ?>
- 
-?>

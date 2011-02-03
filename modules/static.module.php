@@ -55,7 +55,7 @@ class MySmartStaticMOD
 		$StaticInfo['GetMemberNumber']	= $MySmartBB->_CONF['info_row']['member_number'];
 		$StaticInfo['GetSubjectNumber'] = $MySmartBB->_CONF['info_row']['subject_number'];
 		$StaticInfo['GetReplyNumber']	= $MySmartBB->_CONF['info_row']['reply_number'];
-		// [WE NEED A SYSTEM]
+		// [WE NEED A SYSTEM] TODO: There is an error here.
 		$StaticInfo['GetActiveMember']	= $MySmartBB->member->getActiveMemberNumber();
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];

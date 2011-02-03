@@ -75,9 +75,10 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$this->SectionInfo = $MySmartBB->section->getSectionInfo();
+		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
@@ -93,10 +94,11 @@ class MySmartTopicAddMOD
 		
 		/** Get section's group information and make some checks **/
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
 		// Finally get the permissions of group
-		$this->SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
 		// The visitor can't show this section , so stop the page
 		if (!$this->SectionGroup['view_section'] 
@@ -129,15 +131,15 @@ class MySmartTopicAddMOD
      		}
      	}
      	
-     	/* ... */
+     	// ... //
      	
      	$this->moderator = $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['id'] );
      	
-     	/* ... */
+     	// ... //
      	
      	$MySmartBB->template->assign('section_info',$this->SectionInfo);
      	
-     	/* ... */
+     	// ... //
 	}
 		
 	private function _index()
@@ -154,11 +156,11 @@ class MySmartTopicAddMOD
      	// We just send options which we really need, we use this way to save memory
      	$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
      	
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->assign('Admin',$this->moderator);
 				
-		/* ... */
+		// ... //
 		
      	$MySmartBB->template->display('new_topic');
 	}
@@ -169,8 +171,8 @@ class MySmartTopicAddMOD
 		
 		$MySmartBB->func->showHeader('تنفيذ عملية اضافة الموضوع');
 		
-		$MySmartBB->_POST['title'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['title'],'trim');
-		$MySmartBB->_POST['text'] 	= 	$MySmartBB->func->cleanVariable($MySmartBB->_POST['text'],'trim');
+		$MySmartBB->_POST['title'] 	= 	trim( $MySmartBB->_POST['title'] );
+		$MySmartBB->_POST['text'] 	= 	trim( $MySmartBB->_POST['text'] );
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate']  . ' تنفيذ عملية كتابة موضوع');
 		
@@ -216,7 +218,8 @@ class MySmartTopicAddMOD
      		$MySmartBB->_POST['text'] = $MySmartBB->func->replaceWYSIWYG($MySmartBB->_POST['text']);
      	}
      	
-    	$MySmartBB->subject->get_id = true;
+     	$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+    	$MySmartBB->rec->get_id = true;
 
      	$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
      										'text'	=>	$MySmartBB->_POST['text'],
@@ -250,11 +253,11 @@ class MySmartTopicAddMOD
      		}
      	}
      	
-     	$Insert = $MySmartBB->subject->insertSubject();
+     	$Insert = $MySmartBB->rec->insert();
      				
      	if ($Insert)
      	{
-     		/* ... */
+     		// ... //
      		
      		if ($MySmartBB->_POST['poll'])
      		{
@@ -284,15 +287,16 @@ class MySmartTopicAddMOD
      					$x += 1;
      				}
      				
+     				$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
      				$MySmartBB->rec->fields = array(	'qus'	=>	$MySmartBB->_POST['question'],
      													'answers'	=>	$answers,
      													'subject_id'	=>	$MySmartBB->subject->id);
      				
-     				$MySmartBB->poll->insertPoll();
+     				$MySmartBB->rec->insert();
      			}
      		}
      		
-     		/* ... */
+     		// ... //
      		
      		// Set tags for the subject
      		$tags_size = sizeof($MySmartBB->_POST['tags']);
@@ -304,40 +308,44 @@ class MySmartTopicAddMOD
      			{
      				$tag_id = 1;
      				
+     				$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
      				$MySmartBB->rec->filter = "tag='" . $tag . "'";
      				
-     				$Tag = $MySmartBB->tag->getTagInfo($CheckArr);
+     				$Tag = $MySmartBB->rec->getInfo();
      				
      				if (!$Tag)
      				{
+     					$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
      					$MySmartBB->rec->fields = array(	'tag'	=>	$tag	);
-     					$MySmartBB->tag->get_id = true;
+     					$MySmartBB->rec->get_id = true;
      					
-     					$insert = $MySmartBB->tag->insertTag($InsertArr);
+     					$insert = $MySmartBB->rec->insert();
      					
-     					$tag_id = $MySmartBB->tag->id;
+     					$tag_id = $MySmartBB->rec->id;
      				}
      				else
      				{
+     					$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
      					$MySmartBB->rec->fields = array(	'number'	=>	$Tag['num'] + 1);
      					$MySmartBB->rec->filter = "id='" . $Tag['id'] . "'";
      					
-     					$update = $MySmartBB->tag->updateTag();
+     					$update = $MySmartBB->rec->update();
      					
      					$tag_id = $Tag['id'];
      				}
      				
+     				$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
      				$MySmartBB->rec->fields = array(	'tag_id'	=>	$tag_id,
      													'subject_id'	=>	$MySmartBB->subject->id,
      													'tag'	=>	$tag,
      													'subject_title'	=>	$MySmartBB->_POST['title']);
      													
      				// Note, this function is from tag system not subject system
-     				$insert = $MySmartBB->tag->insertSubject();
+     				$insert = $MySmartBB->rec->insert();
      			}
      		}
      		
-     		/* ... */
+     		// ... //
      		
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
@@ -488,7 +496,7 @@ class MySmartTopicAddMOD
      			}
      		}
      		
-     		/* ... */
+     		// ... //
      		
      		if ($this->SectionGroup['no_posts'])
      		{
@@ -501,9 +509,10 @@ class MySmartTopicAddMOD
      		
      		if ($MySmartBB->_CONF['group_info']['usertitle_change'])
      		{
+     			$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
      			$MySmartBB->rec->filter = "posts='" . $posts . "'";
      			
-     			$UserTitle = $MySmartBB->usertitle->getUsertitleInfo();
+     			$UserTitle = $MySmartBB->rec->getInfo();
      		
      			if ($UserTitle != false)
      			{
@@ -511,40 +520,45 @@ class MySmartTopicAddMOD
      			}
      		}
 
-     		/* ... */
+     		// ... //
      		
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
      		$MySmartBB->rec->fields = array(	'posts'	=>	$posts,
      											'lastpost_time'	=>	$MySmartBB->_CONF['now'],
      											'user_title'	=>	(isset($usertitle)) ? $usertitle : null);
      											
    			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
    			
-   			$MySmartBB->member->updateMember();
+   			$MySmartBB->rec->update();
    			
-   			/* ... */
+   			// ... //
      		
      		// Update Last subject's information
+     		// [WE NEED A SYSTEM]
      		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['title'], $MySmartBB->subject->id, $MySmartBB->_CONF['date'], (!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
      		     		
-     		/* ... */
+     		// ... //
      		
      		// The overall number of subjects
+     		// [WE NEED A SYSTEM]
      		$MySmartBB->cache->updateSubjectNumber( $MySmartBB->_CONF['info_row']['subject_number'] );
      		
-     		/* ... */
+     		// ... //
      		
      		// The number of section's subjects number
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
      		$MySmartBB->rec->fields = array(	'subject_num'	=>	$this->SectionInfo['subject_num'] + 1	);
      		$MySmartBB->rec->filter = "id='" . $this->SectionInfo['id'] . "'";
      		
-     		$UpdateSubjectNumber = $MySmartBB->section->updateSection();
+     		$UpdateSubjectNumber = $MySmartBB->section->update();
      		
-     		/* ... */
+     		// ... //
      		
      		// Update section's cache
+     		// [WE NEED A SYSTEM]
      		$MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
      		
-     		/* ... */
+     		// ... //
      		
      		if ((!$this->SectionInfo['review_subject'] and !$MySmartBB->_CONF['member_row']['review_subject'])
      			or $MySmartBB->_CONF['group_info']['admincp_allow'])
@@ -558,7 +572,7 @@ class MySmartTopicAddMOD
      			$MySmartBB->func->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
      		}
      		
-     		/* ... */
+     		// ... //
      	}
 	}
 }

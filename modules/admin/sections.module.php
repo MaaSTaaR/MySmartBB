@@ -121,10 +121,11 @@ class MySmartSectionMOD extends _func
 		
 		if ($MySmartBB->_POST['order_type'] == 'auto')
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='0'";
 			$MySmartBB->rec->order = "sort DESC";
 			
-			$SortSection = $MySmartBB->section->getSectionInfo();
+			$SortSection = $MySmartBB->rec->getInfo();
 			
 			// No section
 			if (!$SortSection)
@@ -144,24 +145,29 @@ class MySmartSectionMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['name'];
 		$MySmartBB->rec->fields['sort'] 	= 	$sort;
 		$MySmartBB->rec->fields['parent'] 	= 	'0';
 		
-		$MySmartBB->section->get_id	= true;
+		$MySmartBB->rec->get_id	= true;
 		
-		$insert = $MySmartBB->section->insertSection();
+		$insert = $MySmartBB->rec->insert();
 		
 		if ($insert)
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 			$MySmartBB->rec->order = "id ASC";
 			
-			$groups = $MySmartBB->group->getGroupList();
+			$groups = $MySmartBB->rec->getList();
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+				
 				$MySmartBB->rec->fields		=	array();
 				
 				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->section->id;
@@ -180,11 +186,12 @@ class MySmartSectionMOD extends _func
 				$MySmartBB->rec->fields['main_section'] 		= 	1;
 				$MySmartBB->rec->fields['group_name'] 			= 	$row['title'];
 				
-				$insert = $MySmartBB->group->insertSectionGroup();
+				$insert = $MySmartBB->rec->insert();
 				
 				$x += 1;
 			}
 			
+			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->group->UpdateSectionGroupCache( $MySmartBB->section->id );
 			
 			if ($cache)
@@ -205,10 +212,11 @@ class MySmartSectionMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
 		$MySmartBB->rec->filter = "parent='0'";
 		
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
@@ -244,6 +252,8 @@ class MySmartSectionMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['name'];
@@ -251,7 +261,7 @@ class MySmartSectionMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
-		$update = $MySmartBB->section->updateSection();
+		$update = $MySmartBB->rec->update();
 		
 		/* ... */
 		
@@ -276,21 +286,23 @@ class MySmartSectionMOD extends _func
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'sec_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
 		$MySmartBB->rec->filter = "parent='0' AND id<>'" . $MySmartBB->_CONF['template']['Inf']['id'] . "";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'sec_res' ];
 		
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'forum_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
 		$MySmartBB->rec->filter = "parent<>'0' AND id<>'" . $MySmartBB->_CONF['template']['Inf']['id'] . "";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'forum_res' ];
 
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
@@ -319,13 +331,12 @@ class MySmartSectionMOD extends _func
 			/* ... */
 			
 			// Move normal sections to another main section
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->fields	= array();
-			
 			$MySmartBB->rec->fields['parent'] = $MySmartBB->_POST['to'];
-			
 			$MySmartBB->rec->filter = "parent='" . $Inf[ 'id' ] . "'";
 			
-			$update = $MySmartBB->section->updateSection();
+			$update = $MySmartBB->rec->update();
 			
 			/* ... */
 			
@@ -335,9 +346,10 @@ class MySmartSectionMOD extends _func
 				
 				$MySmartBB->func->msg('تم نقل المنتديات بنجاح');
 				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
 				
-				$del = $MySmartBB->section->deleteSection();
+				$del = $MySmartBB->rec->delete();
 				
 				/* ... */
 				
@@ -349,9 +361,10 @@ class MySmartSectionMOD extends _func
 					
 					/* ... */
 					
+					$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
 					
-					$del = $MySmartBB->group->deleteSectionGroup();
+					$del = $MySmartBB->rec->delete();
 					
 					/* ... */
 					
@@ -367,25 +380,28 @@ class MySmartSectionMOD extends _func
 		}
 		elseif ($MySmartBB->_POST['choose'] == 'del')
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='" . $Inf['id'] . "'";
 			$MySmartBB->rec->order = "sort ASC";
 			
-			$SecList = $MySmartBB->section->getSectionsList();
+			$SecList = $MySmartBB->rec->getList();
 		
 			$s = array();
 			$x = 0;
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_section' ];
 				$MySmartBB->rec->filter = "section='" . $row['id'] . "' AND main_section<>'1'";
 				
-				$del = $MySmartBB->group->deleteSectionGroup();
+				$del = $MySmartBB->rec->delete();
 				
 				$s[$x] = ($del) ? 'true' : 'false';
 				
-				$MySmartBB->filter = "section='" . $row['id'] . "'";
+				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+				$MySmartBB->rec->filter = "section='" . $row['id'] . "'";
 				
-				$del = $MySmartBB->subject->deleteSubject();
+				$del = $MySmartBB->rec->delete();
 				
 				$s[$x] = ($del) ? 'true' : 'false';
 				
@@ -401,30 +417,34 @@ class MySmartSectionMOD extends _func
 				$MySmartBB->func->msg('تم حذف صلاحيات المجموعات للمنتديات');
 			}
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='" . $Inf['id'] . "'";
 			
-			$del = $MySmartBB->section->deleteSection();
+			$del = $MySmartBB->rec->delete();
 			
 			if ($del)
 			{
 				$MySmartBB->func->msg('تم حذف المنتديات بنجاح');
 				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
 				
-				$del = $MySmartBB->section->deleteSection();
+				$del = $MySmartBB->rec->delete();
 				
 				if ($del)
 				{
 					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
 					
+					$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
 					
-					$del = $MySmartBB->group->deleteSectionGroup();
+					$del = $MySmartBB->rec->delete();
 					
 					if ($del)
 					{
 						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
 						
+						// [WE NEED A SYSTEM]
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
@@ -438,22 +458,25 @@ class MySmartSectionMOD extends _func
 		}
 		elseif ($MySmartBB->_POST['choose'] == 'move_subjects')
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='" . $Inf['id'] . "'";
 			$MySmartBB->rec->order = "sort ASC";
 			
-			$SecList = $MySmartBB->section->getSectionsList();
+			$SecList = $MySmartBB->rec->getList();
 		
 			$x = 0;
 			$s = array();
 		
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 				$MySmartBB->rec->filter = "section_id='" . $row['id'] . "'";
 				
-				$del = $MySmartBB->section->deleteSectionGroup();
+				$del = $MySmartBB->rec->delete();
 				
 				$s[$x] = ($del) ? 'true' : 'false';
 				
+				// [WE NEED A SYSTEM]
 				$move = $MySmartBB->subject->massMoveSubject( $MySmartBB->_POST['subject_to'], $row['id'] );
 				
 				$s[$x] = ($del) ? 'true' : 'false';
@@ -470,30 +493,34 @@ class MySmartSectionMOD extends _func
 				$MySmartBB->func->msg('تم حذف صلاحيات المجموعات للمنتديات');
 			}
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='" . $Inf['id'] . "'";
 			
-			$del = $MySmartBB->section->deleteSection();
+			$del = $MySmartBB->rec->delete();
 			
 			if ($del)
 			{
 				$MySmartBB->func->msg('تم حذف المنتديات بنجاح');
 				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
 				
-				$del = $MySmartBB->section->deleteSection();
+				$del = $MySmartBB->rec->delete();
 				
 				if ($del)
 				{
 					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
 					
+					$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
 					
-					$del = $MySmartBB->group->deleteSectionGroup();
+					$del = $MySmartBB->rec->delete();
 						
 					if ($del)
 					{
 						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
 						
+						// [WE NEED A SYSTEM]
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
@@ -515,9 +542,10 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "parent='0'";
 		
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		$x = 0;
 		$s = array();
@@ -526,12 +554,13 @@ class MySmartSectionMOD extends _func
 		{
 			$name = 'order-' . $SecList[$x]['id'];
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->fields				=	array();
 			$MySmartBB->rec->fields['sort'] 	= 	$MySmartBB->_POST[$name];
 			
 			$MySmartBB->rec->filter = "id='" . $row[ 'id' ] . "'";
 			
-			$update = $MySmartBB->section->updateSection();
+			$update = $MySmartBB->rec->update();
 			
 			$s[$SecList[$x]['id']] = ($update) ? 'true' : 'false';
 
@@ -555,9 +584,10 @@ class MySmartSectionMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "' AND main_section='1'";
 		
-		$MySmartBB->group->getSectionGroupList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('sections_groups_control_main');
 	}
@@ -582,12 +612,13 @@ class MySmartSectionMOD extends _func
 		
 		foreach ($MySmartBB->_POST['groups'] as $id => $val)
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 			$MySmartBB->rec->fields						=	array();
 			$MySmartBB->rec->fields['view_section'] 	= 	$val['view_section'];
 			
 			$MySmartBB->rec->filter = "group_id='" . $id . "' AND section_id='" . $Inf[ 'id' ] . "'";
 			
-			$update = $MySmartBB->group->updateSectionGroup();
+			$update = $MySmartBB->rec->update();
 
 			if ($update)
 			{
@@ -616,6 +647,7 @@ class MySmartSectionMOD extends _func
 			
 			/* ... */
 			
+			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->group->updateSectionGroupCache( $Inf['id'] );
 			
 			/* ... */
@@ -648,9 +680,10 @@ class _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Inf = $MySmartBB->section->getSectionInfo();
+		$Inf = $MySmartBB->rec->getInfo();
 		
 		/* ... */
 		

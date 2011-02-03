@@ -598,10 +598,4 @@ class MySmartFunctions
 	}
 }
 
-// TODO : Kill this class please
-/*class MySmartAdminFunctions extends MySmartFunctions
-{
- 	//
-}*/
-
 ?>

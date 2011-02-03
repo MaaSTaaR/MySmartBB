@@ -115,7 +115,7 @@ class MySmartPrivateMassegeShowMOD
 		$MySmartBB->rec->filter = "pm_id='" . $MySmartBB->_GET['id'] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
 		
-		$MySmartBB->attach->getList();
+		$MySmartBB->rec->getList();
 		
 		/*if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
 		{

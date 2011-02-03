@@ -39,42 +39,23 @@ class MySmartTopicMOD
 		
 		$MySmartBB->func->ShowHeader('عرض موضوع');
 		
-		// Show the topic
 		if ($MySmartBB->_GET['show'])
 		{
-			// Get subject information
 			$this->_getSubject();
-		
-			// Get subject's section information
 			$this->_getSection();
-		
 			$this->_moderatorCheck();
-			
-			// Get visitor/member group info 
-			$this->_getGroup();
-		
-			// Check about everything
-			$this->_checkSystem();
-		
-			// Get subject's writer information
-			$this->_getWriterInfo();
-		
-			$this->_checkTags();
-		
+			//$this->_getGroup();
+			//$this->_checkSystem();
+			//$this->_getWriterInfo();
+			/*$this->_checkTags();
 			$this->_checkPoll();
-		
-			// Make subject text as a nice text
 			$this->_subjectTextFormat();
-		
-			// Show subject
 			$this->_subjectEnd();
-		
-			// Get the replies
-			$this->_getReply();
+			$this->_getReply();*/
 		
 			if ($MySmartBB->_CONF['info_row']['samesubject_show'])
 			{
-				$this->_sameTopics();
+				//$this->_sameTopics();
 			}
 		
 			// The End of page
@@ -92,72 +73,67 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
-		// Clean id from any string, that will protect us
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		// If the id is empty stop the page
+
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Get the subject and the subject's writer information
+		// [WE NEED A SYSTEM]
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 		
-		// There is no subject, so show error message
 		if (!$this->Info)
 		{
 			$MySmartBB->func->error('المعذره، الموضوع المطلوب غير موجود');
 		}
-		
-		// The ID of subject
+
 		$this->Info['subject_id'] = $MySmartBB->_GET['id'];
 		
-		/* ... */
+		// ... //
 		
-		// hmmmmmmm , this subject deleted , so the members and visitor can't show it
 		if ($this->Info['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
 			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
 		}
 		
-		/* ... */
+		// ... //
 		
-		// Kill SQL Injection
 		$MySmartBB->func->CleanArray( $this->Info, 'sql' );
 		
-		/* ... */
-		
-		// Send subject id to template engine
+		// ... //
+
 		$MySmartBB->template->assign('subject_id',$MySmartBB->_GET['id']);
 		$MySmartBB->template->assign('section_id',$this->Info['section']);
 		
-		/* ... */
+		// ... //
 		
-		// Where is the member now?
 		if ($MySmartBB->_CONF['member_permission'])
      	{
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الموضوع : ' . $this->Info['title']	);
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
-			$update = $MySmartBB->online->updateOnline();
+			$update = $MySmartBB->rec->update();
      	}
      	
-     	/* ... */
+     	// ... //
 	}
 		
 	private function _getSection()
 	{
 		global $MySmartBB;
 		
+     	$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $this->Info['section'] . "'";
 		
-		$this->SectionInfo = $MySmartBB->section->getSectionInfo();
+		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
 		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
 		
@@ -177,22 +153,21 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 		
-		$this->SectionGroup = $MySmartBB->group->getSectionGroupInfo();
+		$this->SectionGroup = $MySmartBB->rec->getInfo();
 	}
 		
 	private function _checkSystem()
 	{
 		global $MySmartBB;
 		
-		// The visitor can't show this section , so stop the page
 		if (!$this->SectionGroup['view_section'])
 		{
 			$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
 		}
-		
-		// If the member isn't the writer , so register a new visit for the subject
+
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
 		{
 			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
@@ -228,13 +203,12 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// Make register date in nice format to show it
 		if (is_numeric($this->Info['register_date']))
 		{
 			$this->Info['register_date'] = $MySmartBB->func->date($this->Info['register_date']);
 		}
 		
-		// Make writer gender as readable text
+		// Make writer's gender as readable text
 		$this->Info['user_gender'] 	= 	str_replace('m','ذكر',$this->Info['user_gender']);
 		$this->Info['user_gender'] 	= 	str_replace('f','انثى',$this->Info['user_gender']);
 
@@ -244,7 +218,7 @@ class MySmartTopicMOD
 		// If the member is online , so store that in status variable					
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
-		$MySmartBB->smartparse->replace_smiles($this->Info['away_msg']);
+		//$MySmartBB->smartparse->replace_smiles($this->Info['away_msg']);
 		
 		if (empty($this->Info['username_style_cache']))
 		{
@@ -253,7 +227,6 @@ class MySmartTopicMOD
 		else
 		{
 			$this->Info['display_username'] = $this->Info['username_style_cache'];
-			
 			$this->Info['display_username'] = $MySmartBB->func->cleanVariable($this->Info['display_username'],'unhtml');
 		}
 	}
@@ -264,11 +237,12 @@ class MySmartTopicMOD
 		
 		$MySmartBB->_CONF['template']['res']['tags_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['tags_res'];
 		
-		$MySmartBB->tag->getSubjectList();
-		
+		$MySmartBB->rec->getList();
+			
 		// Aha, there are tags in this subject
 		/*if ($MySmartBB->_CONF['template']['while']['tags'] != false)
 		{
@@ -284,9 +258,10 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
 		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Poll = $MySmartBB->poll->getPollInfo();
+		$Poll = $MySmartBB->rec->getInfo();
 		
 		// Aha, there is a poll in this subject
 		if ($Poll != false)
@@ -315,18 +290,15 @@ class MySmartTopicMOD
 			$this->Info['text'] = str_replace($MySmartBB->_GET['highlight'],"<font class='highlight'>" . $MySmartBB->_GET['highlight'] . "</font>",$this->Info['text']);
 		}
 		
-		// If the SmartCode is allow , so use it :)
 		if ($this->SectionInfo['usesmartcode_allow'])
 		{
 			$this->Info['text'] = $MySmartBB->smartparse->replace($this->Info['text']);
 		}
-		// The SmartCode isn't allow , don't use it :(
 		else
 		{
 			$this->Info['text'] = nl2br($this->Info['text']);
 		}
 		
-		// Convert smiles in subject to nice images :)
 		$MySmartBB->smartparse->replace_smiles($this->Info['text']);
 	}
 		
@@ -339,11 +311,12 @@ class MySmartTopicMOD
 		{
 			$MySmartBB->_CONF['template']['res']['attach_res'] = '';
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 			$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
 			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
 			
 			// Get the attachment information
-			$MySmartBB->attach->getAttachList();
+			$MySmartBB->rec->getList();
 			
 			/*if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
 			{
@@ -356,14 +329,12 @@ class MySmartTopicMOD
 		// The writer signture isn't empty 
 		if (!empty($this->Info['user_sig']))
 		{
-			// So , use the SmartCode in it
 			$this->Info['user_sig'] = $MySmartBB->smartparse->replace($this->Info['user_sig']);
 			$MySmartBB->smartparse->replace_smiles($this->Info['user_sig']);
 		}
 		
 		if (!empty($this->Info['subject_sig']))
 		{
-			// So , use the SmartCode in it
 			$this->Info['subject_sig'] = $MySmartBB->smartparse->replace($this->Info['subject_sig']);
 			$MySmartBB->smartparse->replace_smiles($this->Info['subject_sig']);
 		}
@@ -376,7 +347,7 @@ class MySmartTopicMOD
 			$MySmartBB->smartparse->replace_smiles($this->Info['reply_sig']);
 		}
 		
-		/* ... */
+		// ... //
 		
 		$topic_date = $MySmartBB->func->date($this->Info['native_write_time']);
 		$topic_time = $MySmartBB->func->time($this->Info['native_write_time']);
@@ -397,13 +368,14 @@ class MySmartTopicMOD
 		// Show the replies
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		/* ... */
+		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "subject_id='" . $this->Info['subject_id'] . "' AND delete_topic<>'1'";
 		
-		$reply_number = $MySmartBB->reply->getReplyNumber();
+		$reply_number = $MySmartBB->rec->getNumber();
 		
-		/* ... */
+		// ... //
 		
 		// Pager setup
 		$MySmartBB->rec->pager 				= 	array();
@@ -415,6 +387,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->rec->filter = "delete_topic<>'1'";
 		
+		// [WE NEED A SYSTEM HERE]
 		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
 		
 		$n = sizeof($this->RInfo);
@@ -509,11 +482,12 @@ class MySmartTopicMOD
 		{
 			$MySmartBB->_CONF['template']['res']['reply_attach_res'] = '';
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 			$MySmartBB->rec->filter = "subject_id='" . $this->RInfo[$this->x]['reply_id'] . "' AND reply='1'";
 			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['reply_attach_res'];
 			
 			// Get the attachment information
-			$MySmartBB->attach->getAttachList();
+			$MySmartBB->rec->getList();
 		}
 		
 		// $RInfo to templates
@@ -531,21 +505,22 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['same_subjects_res'] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "title LIKE %" . $this->Info['title'] . "% AND delete_topic<>'1' AND id<>'" . $this->Info['subject_id'] . "'";
 		$MySmartBB->rec->order = 'write_time DESC';
 		$MySmartBB->rec->limit = '5';
-		$MySmartBB->rec->reslut = &$MySmartBB->_CONF['template']['res']['same_subjects_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['same_subjects_res'];
 		
 		/*$SubjectArr['proc'] 						= 	array();
 		$SubjectArr['proc']['*'] 					= 	array('method'=>'clean','param'=>'html'); 
 		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		/*if (!$MySmartBB->_CONF['template']['while']['SameSubject'])
 		{
@@ -553,13 +528,13 @@ class MySmartTopicMOD
 		}*/
 	}
 	
-	private function __pageEnd()
+	private function _pageEnd()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
-		$MySmartBB->func->getEditorTools();
+		//$MySmartBB->func->getEditorTools();
 		
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
      	
