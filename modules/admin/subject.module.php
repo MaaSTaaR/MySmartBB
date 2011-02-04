@@ -76,10 +76,11 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "close='1'";
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('subjects_closed');
 	}
@@ -87,11 +88,12 @@ class MySmartSubjectMOD extends _func
 	private function _attachSubject()
 	{
 		global $MySmartBB;
-
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "attach_subject='1'";
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('subjects_attach');		
 	}
@@ -100,9 +102,10 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('subjects_mass_del');
 	}
@@ -124,16 +127,18 @@ class MySmartSubjectMOD extends _func
 		
 		$del = array();
 		
+		// [WE NEED A SYSTEM]
 		$del[0] = $MySmartBB->subject->massDeleteSubject( $SectionInf['id'] );
 		
 		if ($del[0])
 		{
+			// [WE NEED A SYSTEM]
 			$del[1] = $MySmartBB->reply->massDeleteReply( $SectionInf['id'] );
 			
 			if ($del[1])
 			{
 				$MySmartBB->func->msg('تم حذف المواضيع بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=subject&amp;mass_del=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=subject&amp;mass_del=1&amp;main=1');
 			}
 		}
 	}
@@ -142,10 +147,11 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "parent<>'0'";
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->section->getSectionsList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('subjects_mass_move');
 	}
@@ -158,16 +164,18 @@ class MySmartSubjectMOD extends _func
 		
 		$move = array();
 		
+		// [WE NEED A SYSTEM]
 		$move[0] = $MySmartBB->subject->massMoveSubject( $ToInf['id'], $FromInf['id'] );
 		
 		if ($move[0])
 		{
+			// [WE NEED A SYSTEM]
 			$move[1] = $MySmartBB->reply->massMoveReply( $ToInf['id'], $FromInf['id'] );
 			
 			if ($move[1])
 			{
 				$MySmartBB->func->msg('تم نقل المواضيع بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=subject&amp;mass_move=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=subject&amp;mass_move=1&amp;main=1');
 			}
 		}
 	}
@@ -188,9 +196,10 @@ class _func
 		
 			$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 			
-			$Inf = $MySmartBB->section->getSectionInfo();
+			$Inf = $MySmartBB->rec->getInfo();
 			
 			if ($Inf == false)
 			{
@@ -208,13 +217,15 @@ class _func
 			$MySmartBB->_POST['from'] = (int) $MySmartBB->_POST['from'];
 			$MySmartBB->_POST['to'] = (int) $MySmartBB->_POST['to'];
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['from'] . "'";
 			
-			$Inf = $MySmartBB->section->getSectionInfo();
+			$Inf = $MySmartBB->rec->getInfo();
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['to'] . "'";
 			
-			$ToInf = $MySmartBB->section->getSectionInfo();
+			$ToInf = $MySmartBB->rec->getInfo();
 			
 			if ($Inf == false)
 			{

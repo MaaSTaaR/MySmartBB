@@ -129,6 +129,7 @@ class MySmartMemberMOD extends _func
 		// Ensure there is no person used the same username
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( $isMember )
@@ -139,6 +140,7 @@ class MySmartMemberMOD extends _func
 		// Ensure there is no person used the same email
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( $isMember )
@@ -157,14 +159,17 @@ class MySmartMemberMOD extends _func
       	
       	// Get the information of default group to set username style cache
       	
+      	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='4'";
 		
-		$GroupInfo = $MySmartBB->group->getGroupInfo();
+		$GroupInfo = $MySmartBB->rec->getInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
 		
       	/* ... */
+      	
+      	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
       	
 		$MySmartBB->rec->fields			=	array();
 		
@@ -178,16 +183,17 @@ class MySmartMemberMOD extends _func
 		$MySmartBB->rec->fields['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
 		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		
-		$MySmartBB->member->get_id = true;
+		$MySmartBB->rec->get_id = true;
 		
-		$insert = $MySmartBB->member->insertMember();
+		$insert = $MySmartBB->rec->insert();
 		
 		if ($insert)
 		{
+			// [WE NEED A SYSTEM]
 			$MySmartBB->cache->updateLastMember( $MySmartBB->_CONF['info_row']['member_number'] , $MySmartBB->_POST['username'], $MySmartBB->member->id );
 
 			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
-			$MySmartBB->func->goto('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
+			$MySmartBB->func->move('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
 		}
 	}
 	
@@ -195,6 +201,7 @@ class MySmartMemberMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->order = "id DESC";
 		
 		$MySmartBB->member->getMemberList();
@@ -228,6 +235,7 @@ class MySmartMemberMOD extends _func
 		
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( !$isMember )
@@ -237,6 +245,7 @@ class MySmartMemberMOD extends _func
 		
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( !$isMember )
@@ -246,33 +255,41 @@ class MySmartMemberMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
 		
-		$GetMemInfo = $MySmartBB->member->getMemberInfo();
+		$GetMemInfo = $MySmartBB->rec->getInfo();
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
 		
-		$ToMemInfo = $MySmartBB->member->getMemberInfo();
+		$ToMemInfo = $MySmartBB->rec->getInfo();
 		
 		/* ... */
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		
 		$MySmartBB->rec->fields 				= 	array();
 		$MySmartBB->rec->fields['writer'] 	= 	$ToMemInfo['username'];
 		
 		$MySmartBB->rec->filter = "writer='" . $GetMemInfo['username'] . "'";
 		
-		$u_subject = $MySmartBB->subject->updateSubject();
+		$u_subject = $MySmartBB->rec->update();
 		
 		/* ... */
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		
 		$MySmartBB->rec->fields 			= 	array();
 		$MySmartBB->rec->fields['writer'] 	= 	$ToMemInfo['username'];
 		
 		$MySmartBB->rec->filter = "writer='" . $GetMemInfo['username'] . "'";
 
-		$u_reply = $MySmartBB->reply->updateReply();
+		$u_reply = $MySmartBB->rec->update();
 		
 		/* ... */
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->rec->fields 				= 	array();
 		$MySmartBB->rec->fields['posts'] 		= 	$ToMemInfo['posts']+$GetMemInfo['posts'];
@@ -280,13 +297,14 @@ class MySmartMemberMOD extends _func
 		
 		$MySmartBB->rec->filter = "username='" . $ToMemInfo['username'] . "'";
 		
-		$u_member = $MySmartBB->member->updateMember();
+		$u_member = $MySmartBB->rec->update();
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $GetMemInfo['id'] . "'";
 		
-		$del = $MySmartBB->member->deleteMember();
+		$del = $MySmartBB->rec->delete();
 
 		if ($u_subject
 			and $u_reply
@@ -294,7 +312,7 @@ class MySmartMemberMOD extends _func
 			and $del)
 		{
 			$MySmartBB->func->msg('تم دمج بيانات العضو بنجاح');
-			$MySmartBB->func->goto('admin.php?page=member&control=1&main=1');
+			$MySmartBB->func->move('admin.php?page=member&control=1&main=1');
 		}
 	}
 	 
@@ -308,23 +326,25 @@ class MySmartMemberMOD extends _func
 		
 		/* ... */
 		
-		// Get styles list
+		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'styles' ];
 		$MySmartBB->rec->order = 'id DESC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
-		$MySmartBB->style->getStyleList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
 		// Get groups list
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = 'id DESC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
 		
-		$MySmartBB->group->getGroupList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
@@ -356,6 +376,7 @@ class MySmartMemberMOD extends _func
 		// Ensure there is no person used the same username
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['new_username'] . "'";
 		
+		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->isMember();
 		
 		if ( $isMember )
@@ -378,9 +399,10 @@ class MySmartMemberMOD extends _func
 		
 		if ($MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'])
 		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['usergroup'] . "'";
 			
-			$GroupInfo = $MySmartBB->group->getGroupInfo();
+			$GroupInfo = $MySmartBB->rec->getInfo();
 			
 			$style = $GroupInfo['username_style'];
 			$username_style_cache = str_replace('[username]',$username,$style);			
@@ -391,6 +413,8 @@ class MySmartMemberMOD extends _func
 		}
 		
 		/* ... */
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->rec->fields 	= 	array();
 		
@@ -411,7 +435,7 @@ class MySmartMemberMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $MemInfo['id'] . "'";
 		
-		$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 		
 		if (!empty($MySmartBB->_POST['new_username']))
 		{
@@ -422,7 +446,7 @@ class MySmartMemberMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث بيانات العضو بنجاح');
-			$MySmartBB->func->goto('admin.php?page=member&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -445,14 +469,15 @@ class MySmartMemberMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->member->deleteMember();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف العضو بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=member&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -485,9 +510,10 @@ class MySmartMemberMOD extends _func
 			$field = 'id';
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_POST['keyword'] . "'";
 		
-		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->member->getMemberInfo();
+		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->rec->getInfo();
 		
 		if ($MySmartBB->_CONF['template']['MemInfo'] == false)
 		{
@@ -511,9 +537,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$MemInfo = $MySmartBB->member->getMemberInfo();
+		$MemInfo = $MySmartBB->rec->getInfo();
 		
 		if ($MemInfo == false)
 		{

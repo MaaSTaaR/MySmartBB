@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// [WE NEED A SYSTEM]
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -107,7 +109,7 @@ class MySmartSmileMOD extends _func
 				if ($number)
 				{
 					$MySmartBB->func->msg('تم اضافة الابتسامه بنجاح !');
-					$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+					$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 				}
 			}
 		}
@@ -161,7 +163,7 @@ class MySmartSmileMOD extends _func
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم تحديث الابتسامه بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
 	}
@@ -192,7 +194,7 @@ class MySmartSmileMOD extends _func
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم حذف الابتسامه بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=smile&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
 	}

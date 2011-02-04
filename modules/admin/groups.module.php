@@ -212,7 +212,7 @@ class MySmartGroupsMOD extends _func
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم اضافة المجموعه بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=groups&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 			}
 		}
 	}
@@ -345,7 +345,7 @@ class MySmartGroupsMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث المجموعه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=groups&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -376,7 +376,7 @@ class MySmartGroupsMOD extends _func
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف المجموعه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=groups&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}
 	}
 }

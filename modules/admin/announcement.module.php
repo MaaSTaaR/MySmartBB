@@ -87,6 +87,8 @@ class MySmartAnnouncementMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
@@ -94,12 +96,12 @@ class MySmartAnnouncementMOD extends _func
 		$MySmartBB->rec->fields['writer'] 	= 	$MySmartBB->_CONF['member_row']['username'];
 		$MySmartBB->rec->fields['date'] 	= 	$MySmartBB->_CONF['now'];
 		
-		$insert = $MySmartBB->announcement->insertAnnouncement();
+		$insert = $MySmartBB->rec->insert();
 		
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -109,9 +111,10 @@ class MySmartAnnouncementMOD extends _func
 		
 		//$AnnArr['proc']['date'] 	= 	array('method'=>'date','store'=>'date');
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->announcement->getAnnouncementList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('announcements_main');
 	}
@@ -141,6 +144,8 @@ class MySmartAnnouncementMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
@@ -150,12 +155,12 @@ class MySmartAnnouncementMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['AnnInfo']['id'] . "'";
 		
-		$update = $MySmartBB->announcement->updateAnnouncement();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -178,14 +183,15 @@ class MySmartAnnouncementMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$del = $MySmartBB->announcement->deleteAnnouncement();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=announcement&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
 }
@@ -203,9 +209,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$AnnInfo = $MySmartBB->announcement->getAnnouncementInfo();
+		$AnnInfo = $MySmartBB->rec->getInfo();
 		
 		if ($AnnInfo == false)
 		{

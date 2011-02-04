@@ -87,17 +87,19 @@ class MySmartPagesMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
 		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST['text'], 'unhtml' );
 				
-		$insert = $MySmartBB->pages->insertPage();
+		$insert = $MySmartBB->rec->insert();
 		
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الصفحه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -105,9 +107,10 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->pages->getPagesList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('pages_main');
 	}
@@ -135,6 +138,8 @@ class MySmartPagesMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
+		
 		$MySmartBB->rec->fields		=	array();
 		
 		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
@@ -142,12 +147,12 @@ class MySmartPagesMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $PageInfo['id'] . "'";
 		
-		$update = $MySmartBB->pages->updatePage();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -166,14 +171,15 @@ class MySmartPagesMOD extends _func
 		
 		$this->check_by_id($PageInfo);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->pages->deletePage();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الصفحه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
 }
@@ -191,9 +197,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$PageInfo = $MySmartBB->pages->getPageInfo();
+		$PageInfo = $MySmartBB->rec->getInfo();
 		
 		if ($PageInfo == false)
 		{

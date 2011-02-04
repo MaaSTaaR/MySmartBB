@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// [WE NEED A SYSTEM]
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -23,7 +25,7 @@ class MySmartNotesMOD
 		// No changes
 		if ($MySmartBB->_POST['note'] == $MySmartBB->_CONF['info_row']['admin_notes'])
 		{
-			$MySmartBB->functions->goto('admin.php?page=index&left=1');
+			$MySmartBB->functions->move('admin.php?page=index&left=1');
 		}
 		
 		if (empty($MySmartBB->_POST['note']))
@@ -36,7 +38,7 @@ class MySmartNotesMOD
 		if ($update)
 		{
 			$MySmartBB->functions->msg('تم تحديث المذكرة بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->goto('admin.php?page=index&left=1');
+			$MySmartBB->functions->move('admin.php?page=index&left=1');
 		}
 		
 		$MySmartBB->template->display('footer');

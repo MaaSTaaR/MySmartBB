@@ -88,6 +88,8 @@ class MySmartAdsMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
@@ -97,18 +99,20 @@ class MySmartAdsMOD extends _func
 		$MySmartBB->rec->fields['height'] 		= 	$MySmartBB->_POST['height'];
 		$MySmartBB->rec->fields['clicks'] 		= 	0;
 				
-		$insert = $MySmartBB->ads->insertAds();
+		$insert = $MySmartBB->rec->insert();
 			
 		if ($insert)
 		{
-			$ads_num = $MySmartBB->ads->getAdsNumber();
+			$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
+			
+			$ads_num = $MySmartBB->rec->getNumber();
 			
 			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
 			
 			if ($update)
 			{
 				$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
 	}
@@ -117,9 +121,10 @@ class MySmartAdsMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = 'id DESC';
 		
-		$MySmartBB->ads->getAdsList();
+		$MySmartBB->rec->getList();
 				
 		$MySmartBB->template->display('ads_main');
 	}
@@ -150,6 +155,8 @@ class MySmartAdsMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
@@ -161,12 +168,12 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$update = $MySmartBB->ads->updateAds();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -189,20 +196,24 @@ class MySmartAdsMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->ads->deleteAds();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
-			$ads_num = $MySmartBB->ads->getAdsNumber();
+			$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 			
+			$ads_num = $MySmartBB->rec->getNumber();
+			
+			// [WE NEED A SYSTEM]
 			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
 			
 			if ($update)
 			{
 				$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=ads&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
 	}
@@ -221,9 +232,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$AdsInfo = $MySmartBB->ads->getAdsInfo();
+		$AdsInfo = $MySmartBB->rec->getInfo();
 		
 		if ($AdsInfo == false)
 		{

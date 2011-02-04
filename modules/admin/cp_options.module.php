@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// [WE NEED A SYSTEM]
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -67,7 +69,7 @@ class MySmartCPOptionsMOD
 		if ($update[0])
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->func->goto('admin.php?page=cp_options&amp;ajax=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=cp_options&amp;ajax=1&amp;main=1');
 		}
 	}
 }

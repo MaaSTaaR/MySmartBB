@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// [WE NEED A SYSTEM]
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -95,7 +97,7 @@ class MySmartIconMOD extends _func
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الايقونه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -145,7 +147,7 @@ class MySmartIconMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الايقونه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -175,7 +177,7 @@ class MySmartIconMOD extends _func
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الايقونه بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
 }

@@ -115,7 +115,7 @@ class MySmartTemplateMOD extends _func
 	     if ($fw)
 	     {
 	     	$MySmartBB->func->msg('تم اضافة القالب بنجاح !');
-	     	$MySmartBB->func->goto('admin.php?page=template&amp;&amp;control=1&amp;main=1');
+	     	$MySmartBB->func->move('admin.php?page=template&amp;&amp;control=1&amp;main=1');
 	     }
 	}
 
@@ -264,7 +264,7 @@ class MySmartTemplateMOD extends _func
     		$del = @unlink('./' . $StyleInfo['cache_path'] . '/' . $compiled_filename);
     		
     		$MySmartBB->func->msg('تم تحديث القالب بنجاح');
-			$MySmartBB->func->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
+			$MySmartBB->func->move('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
     	}
     }
 
@@ -296,7 +296,7 @@ class MySmartTemplateMOD extends _func
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم الحذف بنجاح');
-			$MySmartBB->func->goto('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
+			$MySmartBB->func->move('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
 		}
 	}
 }

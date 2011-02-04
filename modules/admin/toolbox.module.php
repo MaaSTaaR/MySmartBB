@@ -2,6 +2,8 @@
 
 /** PHP5 **/
 
+// [WE NEED A SYSTEM HERE]
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -147,7 +149,7 @@ class MySmartToolboxMOD extends _func
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الخط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -193,7 +195,7 @@ class MySmartToolboxMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الخط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -219,7 +221,7 @@ class MySmartToolboxMOD extends _func
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الخط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -251,7 +253,7 @@ class MySmartToolboxMOD extends _func
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة اللون بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -297,7 +299,7 @@ class MySmartToolboxMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث اللون بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -323,7 +325,7 @@ class MySmartToolboxMOD extends _func
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف اللون بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
 }

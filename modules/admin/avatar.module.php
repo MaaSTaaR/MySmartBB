@@ -86,16 +86,18 @@ class MySmartAvatarMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$MySmartBB->rec->fields	=	array();
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
+		$MySmartBB->rec->fields	= array();
 		
 		$MySmartBB->rec->fields['avatar_path'] = $MySmartBB->_POST['path'];
 		
-		$insert = $MySmartBB->avatar->insertAvatar();
+		$insert = $MySmartBB->rec->insert();
 			
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الصوره بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -103,9 +105,10 @@ class MySmartAvatarMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->avatar->getAvatarList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('avatars_main');
 	}
@@ -133,19 +136,21 @@ class MySmartAvatarMOD extends _func
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
-
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
 		$MySmartBB->rec->fields 	= 	array();
 		
 		$MySmartBB->rec->fields['avatar_path'] 	= 	$MySmartBB->_POST['path'];
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$update = $MySmartBB->avatar->updateAvatar();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الصوره بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -168,14 +173,16 @@ class MySmartAvatarMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['id'] . "'";
 		
-		$del = $MySmartBB->avatar->deleteAvatar();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الصوره بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=avatar&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
 }
@@ -193,9 +200,11 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Inf = $MySmartBB->avatar->getAvatarInfo();
+		$Inf = $MySmartBB->rec->getInfo();
 		
 		if ($Inf == false)
 		{

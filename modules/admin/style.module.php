@@ -91,6 +91,8 @@ class MySmartStyleMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
+		
 		$MySmartBB->rec->fields = array();
 		
 		$MySmartBB->rec->fields['style_title'] 		= 	$MySmartBB->_POST['name'];
@@ -101,12 +103,12 @@ class MySmartStyleMOD extends _func
 		$MySmartBB->rec->fields['template_path'] 	= 	$MySmartBB->_POST['template_path'];
 		$MySmartBB->rec->fields['cache_path'] 		= 	$MySmartBB->_POST['cache_path'];
 		
-		$insert = $MySmartBB->style->insertStyle();
+		$insert = $MySmartBB->rec->insert();
 			
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة النمط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -114,9 +116,10 @@ class MySmartStyleMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = 'id DESC';
 		
-		$MySmartBB->style->getStyleList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('styles_main');
 	}
@@ -148,6 +151,8 @@ class MySmartStyleMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
+		
 		$MySmartBB->rec->fields	=	array();
 		
 		$MySmartBB->rec->fields['style_title'] 		= 	$MySmartBB->_POST['name'];
@@ -160,7 +165,7 @@ class MySmartStyleMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
-		$update = $MySmartBB->style->updateStyle();
+		$update = $MySmartBB->rec->update();
 		
 		/* ... */
 		
@@ -168,18 +173,20 @@ class MySmartStyleMOD extends _func
 		{
 			/* ... */
 			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			
 			$MySmartBB->rec->fields		=	array();
 			
 			$MySmartBB->rec->fields['should_update_style_cache'] 	= 	1;
 			
 			$MySmartBB->rec->filter = "style='" . $Inf['id'] . "'";
 			
-			$MySmartBB->member->updateMember();
+			$MySmartBB->rec->update();
 			
 			/* ... */
 			
 			$MySmartBB->func->msg('تم تحديث النمط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 			
 			/* ... */
 		}
@@ -202,14 +209,15 @@ class MySmartStyleMOD extends _func
 		
 		$this->check_by_id($Inf);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
-		$del = $MySmartBB->style->deleteStyle($DelArr);
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف النمط بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=style&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
 }
@@ -227,9 +235,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$Inf = $MySmartBB->style->getStyleInfo();
+		$Inf = $MySmartBB->rec->getInfo();
 		
 		if ($Inf == false)
 		{

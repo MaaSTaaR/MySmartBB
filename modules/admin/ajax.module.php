@@ -43,13 +43,15 @@ class MySmartAjaxMOD
 			$MySmartBB->functions->error('المسار المُتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		
 		$MySmartBB->rec->fields 	= 	array();
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['id'] . "'";
 				
-		$update = $MySmartBB->section->updateSection();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{

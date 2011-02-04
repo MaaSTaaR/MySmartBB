@@ -16,7 +16,7 @@ include('common.php');
 
 define('CLASS_NAME','MySmartTrashMOD');
 
-class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
+class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 {
 	public function run()
 	{
@@ -79,10 +79,11 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "delete_topic='1'";
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->subject->getSubjectList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('trash_subjects');
 	}
@@ -98,12 +99,13 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		// [WE NEED A SYSTEM]
 		$UnTrash = $MySmartBB->subject->unTrashSubject( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)
 		{
 			$MySmartBB->func->msg('تم إعادة الموضوع بنجاح');
-			$MySmartBB->func->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
 	
@@ -122,14 +124,15 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 		
 		$this->check_subject_by_id($Inf);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
 		
-		$del = $MySmartBB->subject->deleteSubject();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الموضوع بنجاح');
-			$MySmartBB->func->goto('admin.php?page=trash&amp;subject=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
 	
@@ -137,10 +140,11 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "delete_topic='1'";
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->reply->getReplyList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('trash_replies');		
 	}
@@ -156,12 +160,13 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		// [WE NEED A SYSTEM]
 		$UnTrash = $MySmartBB->reply->unTrashReply( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)
 		{
 			$MySmartBB->func->msg('تم إعادة الرد بنجاح');
-			$MySmartBB->func->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
 	
@@ -180,14 +185,15 @@ class MySmartTrashMOD extends _func /** Yes it's a Smart Trash :D **/
 		
 		$this->check_reply_by_id($ReplyInf);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$del = $MySmartBB->reply->deleteReply($DelArr);
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الرد بنجاح');
-			$MySmartBB->func->goto('admin.php?page=trash&amp;reply=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
 }
@@ -205,9 +211,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$Inf = $MySmartBB->subject->getSubjectInfo();
+		$Inf = $MySmartBB->rec->getInfo();
 		
 		if ($Inf == false)
 		{
@@ -226,9 +233,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
-		$ReplyInf = $MySmartBB->reply->getReplyInfo();
+		$ReplyInf = $MySmartBB->rec->getInfo();
 		
 		if ($ReplyInf == false)
 		{

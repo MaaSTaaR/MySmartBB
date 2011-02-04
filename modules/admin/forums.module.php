@@ -260,7 +260,7 @@ class MySmartForumsMOD extends _functions
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم اضافة المنتدى بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
+				$MySmartBB->func->move('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
 			}
 			else
 			{
@@ -453,7 +453,7 @@ class MySmartForumsMOD extends _functions
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم تحديث القسم بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+				$MySmartBB->func->move('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 			}
 			else
 			{
@@ -545,7 +545,7 @@ class MySmartForumsMOD extends _functions
 							if ($del)
 							{
 								$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
-								$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+								$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 							}
 						}
 					}
@@ -587,7 +587,7 @@ class MySmartForumsMOD extends _functions
 						if ($del)
 						{
 							$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
-							$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+							$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 						}
 					}
 				}
@@ -640,7 +640,7 @@ class MySmartForumsMOD extends _functions
 		else
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح!');
-			$MySmartBB->func->goto('admin.php?page=forums&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -727,7 +727,7 @@ class MySmartForumsMOD extends _functions
 				if ($cache)
 				{
 					$MySmartBB->func->msg('تمّت الخطوه النهائيه');
-					$MySmartBB->func->goto('admin.php?page=forums&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+					$MySmartBB->func->move('admin.php?page=forums&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 				}
 			}
 		}

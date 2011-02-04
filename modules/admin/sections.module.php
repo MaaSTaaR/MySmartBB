@@ -197,7 +197,7 @@ class MySmartSectionMOD extends _func
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم اضافة القسم بنجاح !');
-				$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+				$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 			}
 		}
 		else
@@ -268,7 +268,7 @@ class MySmartSectionMOD extends _func
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث القسم بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 		}
 		
 		/* ... */
@@ -371,7 +371,7 @@ class MySmartSectionMOD extends _func
 					if ($del)
 					{
 						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');						
-						$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+						$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 					}
 					
 					/* ... */
@@ -450,7 +450,7 @@ class MySmartSectionMOD extends _func
 						if ($cache)
 						{
 							$MySmartBB->func->msg('تمت الخطوه النهائيه بنجاح');
-							$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 						}
 					}
 				}
@@ -526,7 +526,7 @@ class MySmartSectionMOD extends _func
 						if ($cache)
 						{
 							$MySmartBB->func->msg('تمت الخطوه النهائيه بنجاح');
-							$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 						}
 					}
 				}
@@ -574,7 +574,7 @@ class MySmartSectionMOD extends _func
 		else
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح!');
-			$MySmartBB->func->goto('admin.php?page=sections&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -655,7 +655,7 @@ class MySmartSectionMOD extends _func
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم تحديث المعلومات المخبأه');
-				$MySmartBB->func->goto('admin.php?page=sections&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $Inf['id']);
+				$MySmartBB->func->move('admin.php?page=sections&amp;groups=1&amp;control_group=1&amp;index=1&amp;id=' . $Inf['id']);
 			}
 		}
 	}

@@ -106,18 +106,19 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->_POST['extension'] = strtolower($MySmartBB->_POST['extension']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->fields			=	array();
 		
 		$MySmartBB->rec->fields['Ex'] 			= 	$MySmartBB->_POST['extension'];
 		$MySmartBB->rec->fields['max_size'] 	= 	$MySmartBB->_POST['max_size'];
 		$MySmartBB->rec->fields['mime_type'] 	= 	$MySmartBB->_POST['mime_type'];
 		
-		$insert = $MySmartBB->extension->insertExtension();
+		$insert = $MySmartBB->rec->insert();
 			
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم اضافة الامتداد بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=extension&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -125,9 +126,10 @@ class MySmartExtensionMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->order = 'id DESC';
 		
-		$MySmartBB->extension->getExtensionList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('extenstions_main');
 	}
@@ -158,6 +160,8 @@ class MySmartExtensionMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
+		
 		$MySmartBB->rec->fields		=	array();
 		
 		$MySmartBB->rec->fields['Ex'] 			= 	$MySmartBB->_POST['extension'];
@@ -166,12 +170,12 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$update = $MySmartBB->extension->updateExtension();
+		$update = $MySmartBB->rec->update();
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث الامتداد بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=extension&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -194,14 +198,15 @@ class MySmartExtensionMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
-		$del = $MySmartBB->extension->deleteExtension();
+		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg('تم حذف الامتداد بنجاح !');
-			$MySmartBB->func->goto('admin.php?page=extension&amp;control=1&amp;main=1');
+			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -241,6 +246,7 @@ class MySmartExtensionMOD extends _func
 			$field = 'filename';
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 		$MySmartBB->rec->filter = $field;
 		
 		if ( $field == 'filename' )
@@ -252,7 +258,7 @@ class MySmartExtensionMOD extends _func
 			$MySmartBB->rec->filter = "='" . $MySmartBB->_POST['keyword'] . "'";
 		}
 		
-		$MySmartBB->_CONF['template']['Inf'] = $MySmartBB->attach->getAttachInfo();
+		$MySmartBB->_CONF['template']['Inf'] = $MySmartBB->rec->getInfo();
 		
 		if ($MySmartBB->_CONF['template']['Inf'] == false)
 		{
@@ -276,9 +282,10 @@ class _func
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$Inf = $MySmartBB->extension->getExtensionInfo();
+		$Inf = $MySmartBB->rec->getInfo();
 		
 		if ($Inf == false)
 		{
