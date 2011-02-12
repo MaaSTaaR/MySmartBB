@@ -260,20 +260,21 @@ elseif ($MySmartBB->_GET['step'] == 5)
 		$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات!');
 	}
 	
-	$InsertArr 					= 	array();
-	$InsertArr['field']			=	array();
+	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 	
-	$InsertArr['field']['username']				= 	$MySmartBB->_POST['username'];
-	$InsertArr['field']['password']				= 	md5($MySmartBB->_POST['password']);
-	$InsertArr['field']['email']				= 	$MySmartBB->_POST['email'];
-	$InsertArr['field']['usergroup']			= 	1;
-	$InsertArr['field']['user_gender']			= 	$MySmartBB->_POST['gender'];
-	$InsertArr['field']['register_date']		= 	$MySmartBB->_CONF['now'];
-	$InsertArr['field']['user_title']			= 	'المشرف العام';
-	$InsertArr['field']['style']				=	1;
-	$InsertArr['field']['username_style_cache']	=	'<strong><em><span style="color: #800000;">' . $MySmartBB->_POST['username'] . '</span></em></strong>';
+	$MySmartBB->rec->fields			=	array();
 	
-	$insert = $MySmartBB->member->InsertMember($InsertArr);
+	$MySmartBB->rec->fields['username']				= 	$MySmartBB->_POST['username'];
+	$MySmartBB->rec->fields['password']				= 	md5($MySmartBB->_POST['password']);
+	$MySmartBB->rec->fields['email']				= 	$MySmartBB->_POST['email'];
+	$MySmartBB->rec->fields['usergroup']			= 	1;
+	$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
+	$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
+	$MySmartBB->rec->fields['user_title']			= 	'المشرف العام';
+	$MySmartBB->rec->fields['style']				=	1;
+	$MySmartBB->rec->fields['username_style_cache']	=	'<strong><em><span style="color: #800000;">' . $MySmartBB->_POST['username'] . '</span></em></strong>';
+	
+	$insert = $MySmartBB->rec->insert();
 	
 	if ($insert)
 	{
@@ -284,7 +285,7 @@ elseif ($MySmartBB->_GET['step'] == 5)
 		$MySmartBB->html->msg('لم يتم إنشاء حساب المدير');
 	}
 	
-	$update = $MySmartBB->DB->sql_query('UPDATE ' . $MySmartBB->table['info'] . " SET value='" . $MySmartBB->_CONF['now'] . "' WHERE var_name='create_date'");
+	$update = $MySmartBB->db->sql_query('UPDATE ' . $MySmartBB->table['info'] . " SET value='" . $MySmartBB->_CONF['now'] . "' WHERE var_name='create_date'");
 	
 	if ($update)
 	{
@@ -295,7 +296,7 @@ elseif ($MySmartBB->_GET['step'] == 5)
 		$MySmartBB->html->msg('لم يتم تسجيل تاريخ إنشاء المنتدى');
 	}
 	
-	$update = $MySmartBB->DB->sql_query('UPDATE ' . $MySmartBB->table['info'] . " SET value='" . $MySmartBB->_POST['title'] . "' WHERE var_name='title'");
+	$update = $MySmartBB->db->sql_query('UPDATE ' . $MySmartBB->table['info'] . " SET value='" . $MySmartBB->_POST['title'] . "' WHERE var_name='title'");
 	
 	if ($update)
 	{
@@ -306,7 +307,7 @@ elseif ($MySmartBB->_GET['step'] == 5)
 		$MySmartBB->html->msg('لم يتم وضع عنوان المنتدى');
 	}
 	
-	$cache = $MySmartBB->icon->UpdateSmilesCache(null);
+	$cache = $MySmartBB->icon->updateSmilesCache();
 	
 	if ($cache)
 	{

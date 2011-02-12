@@ -160,7 +160,7 @@ class DatabaseStruct extends MySmartInstall
 		
 		while ($x <= sizeof($MassegesArray))
 		{
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['email_msg'] . " SET 
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['email_msg'] . " SET 
 													id='" . $MassegesArray[$x]['id'] . "',
 													title='" . $MassegesArray[$x]['title'] . "',
 													text='" . $MassegesArray[$x]['text'] . "'");
@@ -221,7 +221,7 @@ class DatabaseStruct extends MySmartInstall
 		
 		while ($x < sizeof($ExtensionsArray))
 		{
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['extension'] . " SET 
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['extension'] . " SET 
 														id='NULL',
 														Ex='" . $ExtensionsArray[$x]['extension'] . "',
 														max_size='" . $ExtensionsArray[$x]['max_size'] . "'");
@@ -889,14 +889,14 @@ class DatabaseStruct extends MySmartInstall
 		
 		// I Can't Belive :| I Do It!
 		
-		$GroupArray = $MySmartBB->functions->CleanVariable($GroupArray,'sql');
+		$GroupArray = $MySmartBB->func->cleanArray( $GroupsArray, 'sql' );
 		
 		$x = 0;
 		$i = array();
 		
 		while ($x < sizeof($GroupsArray))
 		{
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['group'] . " SET 
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['group'] . " SET 
 											id='" . $GroupsArray[$x]['id'] . "',
 											title='" . $GroupsArray[$x]['title'] . "',
 											username_style='" . $GroupsArray[$x]['username_style'] . "',
@@ -1102,7 +1102,7 @@ class DatabaseStruct extends MySmartInstall
 		
 		foreach ($InfoArray as $k => $v)
 		{
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['info'] . " SET var_name='" . $k . "',value='" . $v . "'");
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['info'] . " SET var_name='" . $k . "',value='" . $v . "'");
 			
 			$i[$x] = ($insert) ? 'true' : 'false';
 			
@@ -1627,7 +1627,7 @@ class DatabaseStruct extends MySmartInstall
 		
 		while ($x < sizeof($SmilesArray))
 		{
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['smiles'] . " SET 
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['smiles'] . " SET 
 														smile_short='" . $SmilesArray[$x]['smile_short'] . "',
 														smile_path='" . $SmilesArray[$x]['smile_path'] . "',
 														smile_type='" . $SmilesArray[$x]['smile_type'] . "'");
@@ -1666,7 +1666,7 @@ class DatabaseStruct extends MySmartInstall
 	{
 		global $MySmartBB;
 		
-		$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['style'] . " SET
+		$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['style'] . " SET
 												style_title='النمط الافتراضي',
 												style_on='1',
 												style_order='0',
@@ -1839,7 +1839,7 @@ class DatabaseStruct extends MySmartInstall
 		{
 			$k = str_replace('_',' ',$k);
 			
-			$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['toolbox'] . " SET 
+			$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['toolbox'] . " SET 
 													name='" . $k . "',
 													tool_type='" . $v ."'");
 													
@@ -1871,7 +1871,7 @@ class DatabaseStruct extends MySmartInstall
 	{
 		global $MySmartBB;
 		
-		$insert = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->table['usertitle'] . " SET
+		$insert = $MySmartBB->db->sql_query("INSERT INTO " . $MySmartBB->table['usertitle'] . " SET
 												usertitle='عضو',
 												posts='0'");
 												

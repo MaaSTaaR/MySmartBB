@@ -58,11 +58,6 @@ class MySmartFunctions
 	 *
 	 * By : abuamal
 	 */
-	/**
-	 * Clean the array from dirty, this function based on "cleanVariable( $var, $type )"
-	 *
-	 * By : abuamal
-	 */
 	public function cleanArray( &$variable, $type )
 	{
 		foreach ( $variable as $key => $var )
