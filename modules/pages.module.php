@@ -1,11 +1,6 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
-
-$CALL_SYSTEM			=	array();
-$CALL_SYSTEM['PAGES'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

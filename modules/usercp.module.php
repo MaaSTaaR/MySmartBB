@@ -1,20 +1,9 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_func',true);
 define('JAVASCRIPT_SMARTCODE',true);
-
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['ICONS'] 		= 	true;
-$CALL_SYSTEM['TOOLBOX'] 	= 	true;
-$CALL_SYSTEM['REQUEST'] 	= 	true;
-$CALL_SYSTEM['MASSEGE'] 	= 	true;
-$CALL_SYSTEM['AVATAR'] 		= 	true;
-$CALL_SYSTEM['SUBJECT'] 	= 	true;
-$CALL_SYSTEM['BOOKMARK'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

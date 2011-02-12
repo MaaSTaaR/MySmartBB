@@ -1,25 +1,8 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_SMARTCODE',true);
-
-$CALL_SYSTEM					=	array();
-$CALL_SYSTEM['SUBJECT'] 		= 	true;
-$CALL_SYSTEM['SECTION'] 		= 	true;
-$CALL_SYSTEM['SMARTCODE'] 		= 	true;
-$CALL_SYSTEM['CACHE'] 			= 	true;
-$CALL_SYSTEM['ICONS'] 			= 	true;
-$CALL_SYSTEM['TOOLBOX'] 		= 	true;
-$CALL_SYSTEM['USERTITLE'] 		= 	true;
-$CALL_SYSTEM['POLL'] 			= 	true;
-$CALL_SYSTEM['TAG'] 			= 	true;
-$CALL_SYSTEM['FILESEXTENSION'] 	= 	true;
-$CALL_SYSTEM['ATTACH'] 			= 	true;
-$CALL_SYSTEM['MODERATORS'] 		= 	true;
-
 
 if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
 {

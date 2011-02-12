@@ -1,13 +1,6 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
-
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['SECTION'] 	= 	true;
-$CALL_SYSTEM['REPLY'] 		= 	true;
-$CALL_SYSTEM['SUBJECT'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

@@ -1,19 +1,6 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
-
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['SUBJECT'] 	= 	true;
-$CALL_SYSTEM['SECTION'] 	= 	true;
-$CALL_SYSTEM['ATTACH'] 		= 	true;
-$CALL_SYSTEM['REPLY'] 		= 	true;
-$CALL_SYSTEM['ICONS'] 		= 	true;
-$CALL_SYSTEM['TOOLBOX'] 	= 	true;
-$CALL_SYSTEM['MODERATORS'] 	= 	true;
-$CALL_SYSTEM['POLL'] 		= 	true;
-$CALL_SYSTEM['TAG'] 		= 	true;
 
 define('JAVASCRIPT_SMARTCODE',true);
 

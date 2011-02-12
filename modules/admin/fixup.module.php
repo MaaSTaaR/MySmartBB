@@ -2,14 +2,9 @@
 
 // TODO :: KILL ME!
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
-
-$CALL_SYSTEM			=	array();
-$CALL_SYSTEM['FIXUP'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

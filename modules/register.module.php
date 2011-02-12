@@ -1,14 +1,6 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
-
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['BANNED'] 		= 	true;
-$CALL_SYSTEM['CACHE'] 		= 	true;
-$CALL_SYSTEM['REQUEST'] 	= 	true;
-$CALL_SYSTEM['MESSAGE'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

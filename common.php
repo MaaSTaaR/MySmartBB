@@ -11,26 +11,6 @@ if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
 
 // ... //
 
-if ( !isset( $CALL_SYSTEM )
-	or !is_array( $CALL_SYSTEM ) )
-{
-	$CALL_SYSTEM = array();
-}
-
-$CALL_SYSTEM['GROUP'] 		= 	true;
-$CALL_SYSTEM['MEMBER'] 		= 	true;
-$CALL_SYSTEM['INFO'] 		= 	true;
-
-if (!defined('IN_ADMIN'))
-{
-	$CALL_SYSTEM['ADS'] 		= 	true;
-	$CALL_SYSTEM['ONLINE'] 		= 	true;
-	$CALL_SYSTEM['STYLE'] 		= 	true;	
-}
-
-// ... //
-
-
 // Can't live without this file :)
 include('MySmartBB.class.php');
 

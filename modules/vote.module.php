@@ -1,14 +1,8 @@
 <?php
 
-/** PHP5 **/
-
 // TODO :: groups, visitor
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
-
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['POLL'] 		= 	true;
-$CALL_SYSTEM['VOTE'] 		= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

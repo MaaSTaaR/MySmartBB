@@ -2,16 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['SUBJECT'] 	= 	true;
-$CALL_SYSTEM['SECTION'] 	= 	true;
-$CALL_SYSTEM['MODERATORS'] 	= 	true;
-$CALL_SYSTEM['ICONS'] 		= 	true;
-$CALL_SYSTEM['TOOLBOX'] 	= 	true;
-$CALL_SYSTEM['REPLY'] 		= 	true;
-$CALL_SYSTEM['CACHE'] 		= 	true;
-$CALL_SYSTEM['PM'] 			= 	true;
-
 define('JAVASCRIPT_SMARTCODE',true);
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');

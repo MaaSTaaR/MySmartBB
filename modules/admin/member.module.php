@@ -10,12 +10,6 @@
 
 define('IN_ADMIN',true);
 
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['CACHE'] 		= 	true;
-$CALL_SYSTEM['STYLE'] 		= 	true;
-$CALL_SYSTEM['SUBJECT'] 	= 	true;
-$CALL_SYSTEM['REPLY'] 		= 	true;
-
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');

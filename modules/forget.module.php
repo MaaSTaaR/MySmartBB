@@ -2,10 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['REQUEST'] 	= 	true;
-$CALL_SYSTEM['MESSAGE'] 	= 	true;
-
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');

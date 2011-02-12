@@ -1,13 +1,8 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('STOP_STYLE',true);
-
-$CALL_SYSTEM			=	array();
-$CALL_SYSTEM['STYLE'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 

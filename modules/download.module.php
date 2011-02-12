@@ -1,13 +1,5 @@
 <?php
 
-/** PHP5 **/
-
-$CALL_SYSTEM 			= 	array();
-$CALL_SYSTEM['SUBJECT'] = 	true;
-$CALL_SYSTEM['SECTION'] = 	true;
-$CALL_SYSTEM['ATTACH'] 	= 	true;
-$CALL_SYSTEM['PM'] 		= 	true;
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
