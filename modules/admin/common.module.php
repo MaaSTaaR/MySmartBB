@@ -36,7 +36,6 @@ class MySmartCommon
 		if (!empty($username) 
 			and !empty($password))
 		{
-			// [WE NEED A SYSTEM]
 			$CheckMember = $MySmartBB->member->checkAdmin( $username, $password );
 			
 			if ($CheckMember != false)

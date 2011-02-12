@@ -38,7 +38,6 @@ class MySmartLoginMOD
 		$username = trim( $MySmartBB->_POST['username'] );
 		$password = md5( trim( $MySmartBB->_POST['password'] ) );
 		
-		// [WE NEED A SYSTEM]
 		$IsMember = $MySmartBB->member->loginAdmin( $username, $password );
 		
 		if ($IsMember)

@@ -122,7 +122,7 @@ class MySmartAdsMOD extends _func
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-		$MySmartBB->rec->filter = 'id DESC';
+		$MySmartBB->rec->order = 'id DESC';
 		
 		$MySmartBB->rec->getList();
 				
@@ -161,7 +161,7 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
 		$MySmartBB->rec->fields['site'] 		= 	$MySmartBB->_POST['link'];
-		$MySmartBB->rec->fields['picture'] 	= 	$MySmartBB->_POST['picture'];
+		$MySmartBB->rec->fields['picture'] 		= 	$MySmartBB->_POST['picture'];
 		$MySmartBB->rec->fields['width'] 		= 	$MySmartBB->_POST['width'];
 		$MySmartBB->rec->fields['height'] 		= 	$MySmartBB->_POST['height'];
 		$MySmartBB->rec->fields['clicks'] 		= 	$MySmartBB->_CONF['template']['Inf']['clicks'];
@@ -207,7 +207,6 @@ class MySmartAdsMOD extends _func
 			
 			$ads_num = $MySmartBB->rec->getNumber();
 			
-			// [WE NEED A SYSTEM]
 			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
 			
 			if ($update)

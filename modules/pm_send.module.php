@@ -385,7 +385,6 @@ class MySmartPrivateMassegeSendMOD
 							$MySmartBB->rec->insert();
 						}
 						
-						// [WE NEED A SYSTEM]
 						$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo['username'] );
 		      			
 		      			$MySmartBB->rec->table = $MySamrtBB->table[ 'member' ];

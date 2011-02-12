@@ -130,42 +130,38 @@ class MySmartRegisterMOD
 		}
 		
 		// Ensure there is no person used the same username
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( $isMember )
+		if ( $isMember > 0 )
 		{
 			$MySmartBB->func->error('المعذره اسم المستخدم موجود مسبقاً يرجى اختيار اسم آخر');
 		}
 		
 		// Ensure there is no person used the same email
-		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( $isMember )
+		if ( $isMember > 0 )
 		{
 			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً , يرجى كتابة غيره');
 		}
 		
-		// [WE NEED A SYSTEM]
 		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم لانه ممنوع من قبل الاداره');
 		}
 		
-		// [WE NEED A SYSTEM]
 		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد الالكتروني لانه ممنوع من قبل الاداره');
 		}
 		
-		// [WE NEED A SYSTEM]
-		if ($MySmartBB->banned->IsProviderBanned( $EmailProvider ))
+		if ($MySmartBB->banned->isProviderBanned( $EmailProvider ))
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد لان مزود البريد ممنوع من التسجيل');
 		}
@@ -246,7 +242,6 @@ class MySmartRegisterMOD
       	{
       		$member_num = $MySmartBB->_CONF['info_row']['member_number'];
       		
-      		// [WE NEED A SYSTEM]
       		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->member->id );
       														
       		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
@@ -270,7 +265,6 @@ class MySmartRegisterMOD
 					
 					$MassegeInfo = $MySmartBB->rec->getInfo();
 					
-					// [WE NEED A SYSTEM]
 					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
 																					$MySmartBB->_CONF['info_row']['title'], 
 																					$ActiveAdress, 

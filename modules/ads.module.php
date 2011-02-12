@@ -53,10 +53,11 @@ class MySmartAdsPageMOD
 			$MySmartBB->func->error('الاعلان المطلوب غير موجود !');
 		}
 		
+		$MySmartBB->rec->table = $this->engine->table['ads'];
+		$MySmartBB->rec->fields = array(	'clicks'	=> $AdsRows['clicks'] + 1	);
 		$MySmartBB->rec->filter = "id='" . $AdsRows['id'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$MySmartBB->ads->newVisit( $AdsRows['clicks'] );
+		$query = $MySmartBB->rec->update();
 		
 		$MySmartBB->func->msg('يرجى الانتظار سوف يتم نقلك إلى الموقع التالي : ' . $AdsRows['sitename']);
 		$MySmartBB->func->goto($AdsRows['site']);

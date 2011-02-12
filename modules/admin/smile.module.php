@@ -1,9 +1,5 @@
 <?php
 
-/** PHP5 **/
-
-// [WE NEED A SYSTEM]
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);

@@ -64,7 +64,6 @@ class MySmartPasswordMOD
 		
 		$UpdatePassword = $MySmartBB->rec->update();
 		
-		// [WE NEED A SYSTEM]
 		$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
 		
 		if ($UpdatePassword)

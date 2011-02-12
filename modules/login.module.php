@@ -60,7 +60,6 @@ class MySmartLoginMOD
 		
 		$expire = ( isset( $MySmartBB->_POST[ 'temporary' ] ) and $MySmartBB->_POST[ 'temporary' ] == 'on' ) ? 0 : time() + 31536000;
 		
-		// [WE NEED A SYSTEM]
 		$isMember = $MySmartBB->member->loginMember( $username, $password, $expire );
 		
 		$MySmartBB->func->showHeader('تسجيل دخول');
@@ -79,7 +78,6 @@ class MySmartLoginMOD
 			{
 				$MySmartBB->rec->filter = "id='" . (int) $isMember[ 'style' ] . "'";
 				
-				// [WE NEED A SYSTEM]
 				$style_cache = $MySmartBB->style->createStyleCache();
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];

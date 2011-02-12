@@ -86,7 +86,6 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['pmlist_res'];
 		
-		// [WE NEED A SYSTEM]
 		if ($MySmartBB->_GET['folder'] == 'sent')
 		{
 			$GetMassegeList = $MySmartBB->pm->getSentList( $MySmartBB->_CONF['member_row']['username'] );

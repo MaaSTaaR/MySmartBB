@@ -45,8 +45,7 @@ class MySmartStaticMOD
 		/**
 		 * Get the age of the forum and install date
 		 */
-		// [WE NEED A SYSTEM]
-		$StaticInfo['Age'] 			= 	$MySmartBB->misc->getForumAge( $MySmartBB->_CONF['info_row']['create_date'] );
+		//$StaticInfo['Age'] 			= 	$MySmartBB->misc->getForumAge( $MySmartBB->_CONF['info_row']['create_date'] );
 		$StaticInfo['InstallDate']	=	$MySmartBB->func->date( $MySmartBB->_CONF['info_row']['create_date'] );
 		
 		/**
@@ -55,7 +54,7 @@ class MySmartStaticMOD
 		$StaticInfo['GetMemberNumber']	= $MySmartBB->_CONF['info_row']['member_number'];
 		$StaticInfo['GetSubjectNumber'] = $MySmartBB->_CONF['info_row']['subject_number'];
 		$StaticInfo['GetReplyNumber']	= $MySmartBB->_CONF['info_row']['reply_number'];
-		// [WE NEED A SYSTEM] TODO: There is an error here.
+		// TODO: There is an error here.
 		$StaticInfo['GetActiveMember']	= $MySmartBB->member->getActiveMemberNumber();
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];

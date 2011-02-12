@@ -43,7 +43,6 @@ class MySmartLogoutMOD
 		
 		// ... //
 		
-		// [WE NEED A SYSTEM]
 		$logout = $MySmartBB->member->logout();
 								
 		$MySmartBB->func->showHeader( 'تسجيل خروج' );

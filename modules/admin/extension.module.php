@@ -210,7 +210,7 @@ class MySmartExtensionMOD extends _func
 		}
 	}
 	
-	private function _dearchAttachMain()
+	private function _searchAttachMain()
 	{
 		global $MySmartBB;
 		

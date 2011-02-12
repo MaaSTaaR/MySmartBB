@@ -1,7 +1,5 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -72,15 +70,20 @@ class MySmartMainMOD
 		global $MySmartBB;
 		
 		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->_CONF['info_row']['member_number'];
-		// [WE NEED A SYSTEM]
 		//$MySmartBB->_CONF['template']['ActiveMember'] = $MySmartBB->member->getActiveMemberNumber();
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "parent<>'0'";
 		
 		$MySmartBB->_CONF['template']['ForumsNumber'] = $MySmartBB->rec->getNumber();
-		$MySmartBB->_CONF['template']['SubjectNumber'] = $MySmartBB->subject->getSubjectNumber();
-		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->reply->getReplyNumber();
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		
+		$MySmartBB->_CONF['template']['SubjectNumber'] = $MySmartBB->rec->getNumber();
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
+		
+		$MySmartBB->_CONF['template']['ReplyNumber'] = $MySmartBB->rec->getNumber();
 		
 		$day 	= 	date( 'j' );
 		$month 	= 	date( 'n' );

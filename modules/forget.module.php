@@ -1,7 +1,5 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -63,12 +61,12 @@ class MySmartForgetMOD
 			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$CheckEmail = $MySmartBB->member->isMember();
+		$CheckEmail = $MySmartBB->rec->getNumber();
 		
-		if (!$CheckEmail)
+		if ( $CheckEmail > 0 )
 		{
 			$MySmartBB->func->error('البريد الالكتروني غير موجود في قواعد بياناتنا !');
 		}

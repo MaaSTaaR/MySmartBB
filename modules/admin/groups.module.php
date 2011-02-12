@@ -206,7 +206,6 @@ class MySmartGroupsMOD extends _func
 				$insert = $MySmartBB->rec->insert();
 			}
 			
-			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->section->updateAllSectionsCache();
 			
 			if ($cache)

@@ -470,7 +470,6 @@ class MySmartUserCPMOD
 		// ... //
 
 		// Ensure if the password is correct or not
-		// [WE NEED A SYSTEM]
 		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['old_password'] );
 		
 		if (!$checkPasswordCorrect)
@@ -575,9 +574,9 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST['new_email']. "'";
 		
-		// [WE NEED A SYSTEM]
 		$EmailExists = $MySmartBB->member->isMember();
 		
 		if (empty($MySmartBB->_POST['new_email']))
@@ -588,7 +587,7 @@ class MySmartUserCPMOD
 		{
 			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
 		}
-		if ($EmailExists)
+		if ( $EmailExists > 0 )
 		{
 			$MySmartBB->func->error('المعذره .. البريد الالكتروني موجود مسبقاً');
 		}

@@ -85,7 +85,6 @@ class MySmartTopicMOD
 		// ... //
 		
 		// Get the subject and the subject's writer information
-		// [WE NEED A SYSTEM]
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 		
 		if (!$this->Info)
@@ -387,7 +386,6 @@ class MySmartTopicMOD
 		
 		$MySmartBB->rec->filter = "delete_topic<>'1'";
 		
-		// [WE NEED A SYSTEM HERE]
 		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
 		
 		$n = sizeof($this->RInfo);

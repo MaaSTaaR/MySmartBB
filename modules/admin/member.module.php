@@ -127,23 +127,23 @@ class MySmartMemberMOD extends _func
 		}
 		
 		// Ensure there is no person used the same username
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( $isMember )
+		if ( $isMember > 0 )
 		{
 			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
 		}
 		
 		// Ensure there is no person used the same email
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( $isMember )
+		if ( $isMember > 0 )
 		{
 			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً');
 		}
@@ -189,8 +189,9 @@ class MySmartMemberMOD extends _func
 		
 		if ($insert)
 		{
-			// [WE NEED A SYSTEM]
-			$MySmartBB->cache->updateLastMember( $MySmartBB->_CONF['info_row']['member_number'] , $MySmartBB->_POST['username'], $MySmartBB->member->id );
+			$MySmartBB->cache->updateLastMember( 	$MySmartBB->_CONF['info_row']['member_number'], 
+													$MySmartBB->_POST['username'], 
+													$MySmartBB->rec->id );
 
 			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
 			$MySmartBB->func->move('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
@@ -204,7 +205,7 @@ class MySmartMemberMOD extends _func
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->member->getMemberList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('members_main');
 	}
@@ -233,22 +234,22 @@ class MySmartMemberMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( !$isMember )
+		if ( $isMember <= 0 )
 		{
 			$MySmartBB->func->error('اسم العضو المراد اخذ بياناته غير موجود في قاعدة البيانات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( !$isMember )
+		if ( $isMember <= 0 )
 		{
 			$MySmartBB->func->error('اسم العضو المراد نقل البيانات له غير موجود في قاعدة البيانات');
 		}
@@ -329,7 +330,7 @@ class MySmartMemberMOD extends _func
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'styles' ];
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->order = 'id DESC';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
 		
@@ -374,12 +375,12 @@ class MySmartMemberMOD extends _func
 		}
 		
 		// Ensure there is no person used the same username
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['new_username'] . "'";
 		
-		// [WE NEED A SYSTEM]
-		$isMember = $MySmartBB->member->isMember();
+		$isMember = $MySmartBB->rec->getNumber();
 		
-		if ( $isMember )
+		if ( $isMember > 0 )
 		{
 			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
 		}

@@ -26,7 +26,7 @@ class MySmartIndexMOD
 		$this->_getOnline();
 		$this->_getToday();
 		
-		// Show the main template //
+		// Show the main template
 		$this->_callTemplate();
 		
 		$MySmartBB->func->getFooter();

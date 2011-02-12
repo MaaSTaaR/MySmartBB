@@ -1,7 +1,5 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 $CALL_SYSTEM				=	array();
@@ -150,7 +148,6 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		// [WE NEED A SYSTEM]
 		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
@@ -387,7 +384,6 @@ class MySmartManagementMOD
 			
 			// ... //
 			
-			// [WE NEED A SYSTEM]
 			$number = $MySmartBB->pm->newMessageNumber( $Subject['writer'] );
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -618,7 +614,6 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		// [WE NEED A SYSTEM]
 		$update = $MySmartBB->subject->closeSubject( 'موضوع مُكرر', $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
@@ -646,7 +641,6 @@ class MySmartManagementMOD
    				
    				// ... //
    				
-   				// [WE NEED (MAYBE NOT) A SYSTEM]
      			$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $MySmartBB->_GET['subject_id'] );
      			
      			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $Subject['reply_number'], $MySmartBB->_GET['subject_id'] );

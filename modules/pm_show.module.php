@@ -138,7 +138,6 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
-		// [WE NEED A SYSTEM]
 		$CheckOnline = $MySmartBB->online->isOnline( $MySmartBB->_CONF['timeout'], 'username', $MySmartBB->_CONF['template']['MassegeRow']['user_from'] );
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
@@ -149,12 +148,10 @@ class MySmartPrivateMassegeShowMOD
 		{
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 			
-			// [WE NEED A SYSTEM]
 			$Read = $MySmartBB->pm->markMessageAsRead();
 			
 			if ($Read)
 			{
-				// [WE NEED A SYSTEM]
 				$Number = $MySmartBB->pm->newMessageNumber( $MySmartBB->_CONF['member_row']['username'] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];

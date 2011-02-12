@@ -99,7 +99,6 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		// [WE NEED A SYSTEM]
 		$UnTrash = $MySmartBB->subject->unTrashSubject( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)
@@ -160,7 +159,6 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		// [WE NEED A SYSTEM]
 		$UnTrash = $MySmartBB->reply->unTrashReply( $MySmartBB->_GET['id'] );
 		
 		if ($UnTrash)

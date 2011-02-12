@@ -534,13 +534,15 @@ class MySmartTopicAddMOD
    			// ... //
      		
      		// Update Last subject's information
-     		// [WE NEED A SYSTEM]
-     		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_POST['title'], $MySmartBB->subject->id, $MySmartBB->_CONF['date'], (!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
+     		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], 
+     												$MySmartBB->_POST['title'], 
+     												$MySmartBB->rec->id, 
+     												$MySmartBB->_CONF['date'], 
+     												(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
      		     		
      		// ... //
      		
      		// The overall number of subjects
-     		// [WE NEED A SYSTEM]
      		$MySmartBB->cache->updateSubjectNumber( $MySmartBB->_CONF['info_row']['subject_number'] );
      		
      		// ... //
@@ -555,7 +557,6 @@ class MySmartTopicAddMOD
      		// ... //
      		
      		// Update section's cache
-     		// [WE NEED A SYSTEM]
      		$MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
      		
      		// ... //

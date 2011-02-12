@@ -44,8 +44,7 @@ class MySmartChangeStyleMOD
 			}
 			else
 			{
-				// [WE NEED A SYSTEM]
-				$change = $MySmartBB->style->changeStyle( $MySmartBB->_GET[ 'id' ], time() + 31536000 );
+				setcookie( $MySmartBB->_CONF['style_cookie'], $MySmartBB->_GET[ 'id' ], time() + 31536000 );
 			}
 			
 			if ($change)

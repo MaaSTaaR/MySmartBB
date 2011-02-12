@@ -1,5 +1,7 @@
 <?php
 
+// TODO :: KILL ME!
+
 /** PHP5 **/
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
@@ -41,8 +43,7 @@ class MySmartFixMOD
 	{
 		global $MySmartBB;
 		
-		// [WE NEED A SYSTEM]
-		$repair = $MySmartBB->fixup->repairTables();
+		/*$repair = $MySmartBB->fixup->repairTables();
 		
 		foreach ($repair as $table => $success)
 		{
@@ -54,7 +55,7 @@ class MySmartFixMOD
 			{
 				$MySmartBB->func->msg('فشل في تصليح الجدول ' . $table);
 			}
-		}
+		}*/
 	}
 }
 

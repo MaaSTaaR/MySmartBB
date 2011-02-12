@@ -234,13 +234,11 @@ class MySmartReplyAddMOD
      	{
 			if ($MySmartBB->_POST['stick'])
 			{
-				// [WE NEED A SYSTEM]
 				$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo['id'] );
 			}
 		
 			if ($MySmartBB->_POST['close'])
 			{
-				// [WE NEED A SYSTEM]
 				$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $this->SubjectInfo['id'] );
 			}
 		}
@@ -306,18 +304,19 @@ class MySmartReplyAddMOD
      		
      		// ... //
      		
-     		// [WE NEED (MAYBE NOT) A SYSTEM]
      		$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $this->SubjectInfo['id'] );
      		
 			// ... //
 			
-			// [WE NEED (MAYBE NOT) A SYSTEM]
 			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $this->SubjectInfo['reply_number'], $this->SubjectInfo['id'] );
 			
 			// ... //
-     		
-     		// [WE NEED A SYSTEM]
-     		$UpdateLast = $MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $this->SubjectInfo['title'], $this->SubjectInfo['id'], $MySmartBB->_CONF['date'],  (!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
+
+     		$UpdateLast = $MySmartBB->section->updateLastSubject( 	$MySmartBB->_CONF['member_row']['username'], 
+     																$this->SubjectInfo['title'], 
+     																$this->SubjectInfo['id'], 
+     																$MySmartBB->_CONF['date'], 
+     																(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
      		
      		// ... //
      		
@@ -327,7 +326,6 @@ class MySmartReplyAddMOD
      		
      		// ... //
      		
-     		// [WE NEED (MAYBE NOT) A SYSTEM]
      		$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $this->SubjectInfo['id'] );
      		
      		// ... //
@@ -340,7 +338,6 @@ class MySmartReplyAddMOD
      		
      		// ... //
      		
-     		// [WE NEED A SYSTEM]
      		$update_cache = $MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
      		
      		// ... //

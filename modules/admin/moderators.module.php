@@ -141,7 +141,6 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		// [WE NEED A SYSTEM]
 		$IsModerator = $MySmartBB->moderator->isModerator( $MySmartBB->_POST['username'], $MySmartBB->_POST['section'] );
 		
 		if ($IsModerator)
@@ -216,7 +215,6 @@ class MySmartModeratorsMOD extends _func
 				
 				/* ... */
 				
-				// [WE NEED A SYSTEM]
 				$cache = $MySmartBB->moderator->createModeratorsCache( $MySmartBB->_POST['section'] );
 				
 				/* ... */
@@ -229,7 +227,6 @@ class MySmartModeratorsMOD extends _func
 			
 				if ($update)
 				{
-					// [WE NEED A SYSTEM]
 					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
 				
 					if ($cache)
@@ -415,7 +412,6 @@ class MySmartModeratorsMOD extends _func
 				
 				/* ... */
 				
-				// [WE NEED A SYSTEM]
 				$cache = $MySmartBB->moderator->createModeratorsCache( $MySmartBB->_POST['section'] );
 				
 				/* ... */
@@ -428,7 +424,6 @@ class MySmartModeratorsMOD extends _func
 			
 				if ($update)
 				{
-					// [WE NEED A SYSTEM]
 					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
 				
 					if ($cache)
@@ -511,8 +506,7 @@ class MySmartModeratorsMOD extends _func
 				
 				/* ... */
 				
-				// [WE NEED A SYSTEM]
-				$cache = $MySmartBB->moderator->CreateModeratorsCache( $ModInfo['section_id'] );
+				$cache = $MySmartBB->moderator->createModeratorsCache( $ModInfo['section_id'] );
 				
 				/* ... */
 				
@@ -524,8 +518,7 @@ class MySmartModeratorsMOD extends _func
 			
 				if ($update)
 				{
-					// [WE NEED A SYSTEM]
-					$cache = $MySmartBB->section->UpdateSectionsCache(array('type'=>'normal'));
+					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
 				
 					if ($cache)
 					{

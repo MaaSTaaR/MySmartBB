@@ -76,7 +76,6 @@ class MySmartVoteMOD
 											'username'	=>	$MySmartBB->_CONF['member_row']['username']	);
 											
 		
-		// [WE NEED A SYSTEM]									
 		$insert = $MySmartBB->vote->doVote( $Poll['answers'], $MySmartBB->_POST['answer'] );
 		
 		if ($insert)

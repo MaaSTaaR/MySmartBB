@@ -127,12 +127,10 @@ class MySmartSubjectMOD extends _func
 		
 		$del = array();
 		
-		// [WE NEED A SYSTEM]
 		$del[0] = $MySmartBB->subject->massDeleteSubject( $SectionInf['id'] );
 		
 		if ($del[0])
 		{
-			// [WE NEED A SYSTEM]
 			$del[1] = $MySmartBB->reply->massDeleteReply( $SectionInf['id'] );
 			
 			if ($del[1])
@@ -164,12 +162,10 @@ class MySmartSubjectMOD extends _func
 		
 		$move = array();
 		
-		// [WE NEED A SYSTEM]
 		$move[0] = $MySmartBB->subject->massMoveSubject( $ToInf['id'], $FromInf['id'] );
 		
 		if ($move[0])
 		{
-			// [WE NEED A SYSTEM]
 			$move[1] = $MySmartBB->reply->massMoveReply( $ToInf['id'], $FromInf['id'] );
 			
 			if ($move[1])

@@ -1,7 +1,5 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -254,7 +252,6 @@ class MySmartForumsMOD extends _functions
 			
 			// ... //
 			
-			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST['parent'] );
 				
 			if ($cache)
@@ -440,13 +437,11 @@ class MySmartForumsMOD extends _functions
 		
 		if ($update)
 		{
-			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST['parent'] );
 			
 			// There is a new main section
 			if ($new_parent_flag)
 			{
-				// [WE NEED A SYSTEM]
 				$cache = $MySmartBB->section->updateSectionsCache( $old_parent );
 			}
 			
@@ -499,7 +494,6 @@ class MySmartForumsMOD extends _functions
 			{
 				$MySmartBB->func->msg('تم حذف المنتدى بنجاح !');
 				
-				// [WE NEED A SYSTEM]
 				$move = $MySmartBB->subject->massMoveSubject( (int) $MySmartBB->_POST['to'], $MySmartBB->_CONF['template']['Inf']['id'] );
 				
 				if ($move)
@@ -530,7 +524,6 @@ class MySmartForumsMOD extends _functions
      				
      				if ($update)
      				{
-     					// [WE NEED A SYSTEM]
 						$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 						
 						if ($cache)
@@ -572,7 +565,6 @@ class MySmartForumsMOD extends _functions
 				{
 					$MySmartBB->func->msg('تم حذف المواضيع بنجاح');
 					
-					// [WE NEED A SYSTEM]
 					$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 					
 					if ($cache)
@@ -623,7 +615,6 @@ class MySmartForumsMOD extends _functions
 				
 				if ($update)
 				{
-					// [WE NEED A SYSTEM]
 					$cache = $MySmartBB->section->updateSectionsCache( $row[ 'parent' ] );
 				}
 				
@@ -714,14 +705,12 @@ class MySmartForumsMOD extends _functions
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح!');
 			
-			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->_CONF['template']['Inf']['id'] );
 			
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم تحديث المعلومات المخبأه');
 				
-				// [WE NEED A SYSTEM]
 				$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 				
 				if ($cache)

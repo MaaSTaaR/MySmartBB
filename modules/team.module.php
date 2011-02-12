@@ -35,8 +35,7 @@ class MySmartTeamMOD
 		
 		$MySmartBB->func->showHeader('المسؤولون');
 		
-		// [WE NEED A SYSTEM]
-		$MySmartBB->member->getTeamList();
+		//$MySmartBB->member->getTeamList();
 		
 		$MySmartBB->template->display('teamlist');
 	}

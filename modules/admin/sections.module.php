@@ -1,7 +1,5 @@
 <?php
 
-/** PHP5 **/
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -96,9 +94,10 @@ class MySmartSectionMOD extends _func
 		
 		/* ... */
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
 		
-		$MySmartBB->group->getGroupList();
+		$MySmartBB->rec->getList();
 		
 		/* ... */
 
@@ -191,8 +190,7 @@ class MySmartSectionMOD extends _func
 				$x += 1;
 			}
 			
-			// [WE NEED A SYSTEM]
-			$cache = $MySmartBB->group->UpdateSectionGroupCache( $MySmartBB->section->id );
+			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->section->id );
 			
 			if ($cache)
 			{
@@ -444,7 +442,6 @@ class MySmartSectionMOD extends _func
 					{
 						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
 						
-						// [WE NEED A SYSTEM]
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
@@ -476,7 +473,6 @@ class MySmartSectionMOD extends _func
 				
 				$s[$x] = ($del) ? 'true' : 'false';
 				
-				// [WE NEED A SYSTEM]
 				$move = $MySmartBB->subject->massMoveSubject( $MySmartBB->_POST['subject_to'], $row['id'] );
 				
 				$s[$x] = ($del) ? 'true' : 'false';
@@ -520,7 +516,6 @@ class MySmartSectionMOD extends _func
 					{
 						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
 						
-						// [WE NEED A SYSTEM]
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
@@ -647,7 +642,6 @@ class MySmartSectionMOD extends _func
 			
 			/* ... */
 			
-			// [WE NEED A SYSTEM]
 			$cache = $MySmartBB->group->updateSectionGroupCache( $Inf['id'] );
 			
 			/* ... */

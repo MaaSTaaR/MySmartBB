@@ -2,14 +2,14 @@
 
 define( 'DIR', dirname( __FILE__ ) . '/' );
 
-//////////
+// ... //
 
 if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
 {
 	define( 'JAVASCRIPT_SMARTCODE', false );
 }
 
-//////////
+// ... //
 
 if ( !isset( $CALL_SYSTEM )
 	or !is_array( $CALL_SYSTEM ) )
@@ -28,7 +28,7 @@ if (!defined('IN_ADMIN'))
 	$CALL_SYSTEM['STYLE'] 		= 	true;	
 }
 
-//////////
+// ... //
 
 
 // Can't live without this file :)
@@ -37,7 +37,7 @@ include('MySmartBB.class.php');
 // The master object
 $MySmartBB = new MySmartBB;
 
-//////////
+// ... //
 
 if (defined('COMMON_FILE_PATH'))
 {
@@ -48,35 +48,32 @@ else
 	die('ERROR::COMMON_FILE_PATH_HAS_NO_VALUE');
 }
 
-//////////
+// ... //
 
 class MySmartLocalCommon
 {
-	function run()
+	public function run()
 	{
-		//////////
+		// ... //
 		
 		@header('Content-Type: text/html; charset=utf-8'); // Viva utf ;)
 		
-		//////////
+		// ... //
 		
-		$this->_SetConfigArray();
+		$this->_setConfigArray();
 		
-		//////////
+		// ... //
 		
-		$this->_ProtectionFunctions();
+		$this->_protectionFunctions();
 		
-		//////////
+		// ... //
 	}
-		
-	/**
-	 * Set the important variables for the system
-	 */
-	function _SetConfigArray()
+	
+	private function _setConfigArray()
 	{
 		global $MySmartBB;
 		
-		//////////
+		// ... //
 		
 		// Important variables , all important variables should store in _CONF array
 		$MySmartBB->_CONF['member_permission']		=	false;
@@ -88,28 +85,28 @@ class MySmartLocalCommon
  		$MySmartBB->_CONF['template']['while']		=	array();
  		$MySmartBB->_CONF['template']['foreach']	=	array();
  		
- 		//////////
+ 		// ... //
  		
  		// Make life easy for developers :)
- 		$MySmartBB->db->SetDebug(true);
- 		$MySmartBB->db->SetQueriesStore(true);
+ 		//$MySmartBB->db->SetDebug(true);
+ 		//$MySmartBB->db->SetQueriesStore(true);
  		
- 		//////////
+ 		// ... //
  		
  		if ( !defined( 'STOP_STYLE' ) )
  			define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
  		
- 		//////////
+ 		// ... //
 	}
 
 	/**
 	 * Protect the forums from script kiddie and crackers
 	 */
-	function _ProtectionFunctions()
+	private function _protectionFunctions()
 	{
 		global $MySmartBB;
 		
-		//////////
+		// ... //
 		
 		// Check if $_GET don't value any HTML or Javascript codes
     	foreach ($MySmartBB->_GET as $xss_get)
@@ -127,7 +124,7 @@ class MySmartLocalCommon
    			}
   		}
   		
-  		//////////
+  		// ... //
 		
 		// Check if $_GET don't value any SQL Injection
   		foreach ($MySmartBB->_GET as $sql_get)
@@ -140,41 +137,41 @@ class MySmartLocalCommon
    			}
   		}
   		
-  		//////////
+  		// ... //
   		
   		// Stop any unknown forms
  		if ($MySmartBB->_SERVER['REQUEST_METHOD'] == 'POST')
     	{
-    		//////////
+    		// ... //
     		
   			$Y = explode('/',$GLOBALS['HTTP_REFERER']);
   			$X = explode('/',$GLOBALS['HTTP_HOST']);
   			
-  			//////////
+  			// ... //
   			
   			if ($Y[2] != $X[0])
         	{
    				$this->error('قمت بعمليه غير مشروعه!');
   			}
   			
-  			//////////
+  			// ... //
  		}
  		
- 		//////////
+ 		// ... //
 	}
 }
 
-//////////
+// ... //
 
 $local_common = new MySmartLocalCommon();
 $local_common->run();
 
-//////////
+// ... //
 
 $common = new MySmartCommon();
 $common->run();
 
-//////////
+// ... //
 
 // [DEBUG]
 mysql_set_charset( 'latin1' );

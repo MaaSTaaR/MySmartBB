@@ -92,7 +92,6 @@ class MySmartPrintMOD
 		/* ... */
 
 		// Get the subject and the subject's writer information
-		// [WE NEED A SYSTEM]
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 
 		// There is no subject, so show error message
@@ -153,7 +152,6 @@ class MySmartPrintMOD
 		// If the member isn't the writer , so register a new visit for the subject
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
 		{
-			// [WE NEED A SYSTEM]
 			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
 		}
 
@@ -255,7 +253,6 @@ class MySmartPrintMOD
 		
 		$MySmartBB->rec->filter = "delete_topic<>'1'";
 		
-		// [WE NEED A SYSTEM]
 		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
 		
 		$n = sizeof($this->RInfo);
