@@ -153,7 +153,4 @@ $common->run();
 
 // ... //
 
-// [DEBUG]
-mysql_set_charset( 'latin1' );
-
 ?>

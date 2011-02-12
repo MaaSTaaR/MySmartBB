@@ -35,6 +35,8 @@ class MySmartStyle
 	
 	public function createStyleCache()
 	{
+		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		
 		$style	=	$this->engine->rec->getInfo();
 		$cache	=	'';
 		

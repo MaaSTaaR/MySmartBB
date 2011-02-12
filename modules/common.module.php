@@ -6,9 +6,6 @@ class MySmartCommon
 {
 	private $CheckMember;
 			
-	/**
-	 * The main function
-	 */
 	public function run()
 	{
 		$this->_generalProc();
@@ -19,15 +16,12 @@ class MySmartCommon
 		$this->_checkClose();
 		$this->_templateAssign();
 	}
-					
-	/**
-	 * Clean not important information
-	 */
+	
 	private function _generalProc()
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
  		// Delete not important rows in online table
  		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
@@ -35,7 +29,7 @@ class MySmartCommon
  		
  		$MySmartBB->rec->delete();
  		
- 		/* ... */
+ 		// ... //
  		
  		// Delete not important rows in today table
  		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
@@ -43,7 +37,7 @@ class MySmartCommon
  	 	
  	 	$MySmartBB->rec->delete();
  	 	
- 	 	/* ... */
+ 	 	// ... //
  	 	
 		if ( $MySmartBB->_CONF[ 'info_row' ][ 'today_date_cache' ] != $MySmartBB->_CONF[ 'date' ] )
 		{
@@ -51,24 +45,24 @@ class MySmartCommon
 			$MySmartBB->info->updateInfo( 'today_date_cache', $MySmartBB->_CONF[ 'date' ] );
 		}
 		
-		/* ... */
+		// ... //
 	}
 		
 	private function _checkMember()
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
-		if ($MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'username_cookie' ] ) 
+		if ( $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'username_cookie' ] ) 
 			and $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'password_cookie' ] ) )
 		{
-			/* ... */
+			// ... //
 			
 			$username = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'username_cookie' ] ];
 			$password = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'password_cookie' ] ];
 			
-			/* ... */
+			// ... //
 		
 			// Check if the visitor is a member or not ?
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -78,7 +72,7 @@ class MySmartCommon
 			// otherwise the value will be an array
 			$this->CheckMember = $MySmartBB->rec->getInfo();
 			
-			/* ... */
+			// ... //
 			
 			// This is a member :)										
 			if ($this->CheckMember != false)
@@ -96,7 +90,7 @@ class MySmartCommon
 			$this->__visitorProcesses();
 		}
 		
-		/* ... */
+		// ... //
 	}
 		
 	/**
@@ -106,31 +100,31 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'member_row' ] 			= 	$this->CheckMember;	
 		$MySmartBB->_CONF[ 'member_permission' ]	= 	true;
 		
-		/* ... */
+		// ... //
 		
 		// I hate SQL Injections
 		$MySmartBB->func->cleanArray( $MySmartBB->_CONF['member_row'], 'sql' );
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['usergroup'] . "'";
 		
 		$MySmartBB->_CONF[ 'group_info' ] = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
 		{
 			$MySmartBB->func->error( 'المعذره .. لا يمكنك الدخول للمنتدى' );
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Check if the member is already online
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
@@ -138,7 +132,7 @@ class MySmartCommon
 		
 		$IsOnline = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		// Where is the member now ?
 		$MemberLocation = 'الصفحه الرئيسيه';
@@ -174,7 +168,7 @@ class MySmartCommon
 		$username_style = $MySmartBB->member->getUsernameWithStyle( $MySmartBB->_CONF['member_row']['username'], 
 																	$MySmartBB->_CONF['group_info']['username_style']  );
 		
-		/* ... */
+		// ... //
 		
 		if (!$IsOnline)
 		{
@@ -216,17 +210,17 @@ class MySmartCommon
 			}
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Ok , now we check if this member is exists in today list
 		$IsToday = $MySmartBB->online->isToday( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_CONF[ 'date' ] );
 		
-		/* ... */
+		// ... //
 		
 		// Member isn't exists in today table , so insert the member								  
 		if (!$IsToday)
 		{
-			/* ... */
+			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 			
@@ -238,11 +232,11 @@ class MySmartCommon
 			
 			$InsertToday = $MySmartBB->rec->insert();
 			
-			/* ... */
+			// ... //
 			
 			if ($InsertToday)
 			{
-				/* ... */
+				// ... //
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->fields = array(	'visitor'	=>	$MySmartBB->_CONF['member_row']['visitor'] + 1	);
@@ -250,7 +244,7 @@ class MySmartCommon
 				
 				$MySmartBB->rec->update();
 				
-				/* ... */
+				// ... //
 				
 				if ( $MySmartBB->_CONF[ 'info_row' ][ 'today_date_cache' ] == $MySmartBB->_CONF[ 'date' ] )
 				{
@@ -259,13 +253,13 @@ class MySmartCommon
 					$MySmartBB->info->updateInfo( 'today_number_cache', $number );
 				}
 				
-				/* ... */
+				// ... //
 			}
 			
-			/* ... */
+			// ... //
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Can't find last visit cookie , so register it
 		if ( !$MySmartBB->func->isCookie( 'MySmartBB_lastvisit' ) )
@@ -275,7 +269,7 @@ class MySmartCommon
 			$MySmartBB->member->lastVisitCookie( $last_visit, $MySmartBB->_CONF[ 'date' ], $MySmartBB->_CONF[ 'member_row' ][ 'id' ]);
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Get member style
 		if ( $MySmartBB->_CONF['member_row']['style_id_cache'] == $MySmartBB->_CONF['member_row']['style']
@@ -292,20 +286,20 @@ class MySmartCommon
 		else if ( $MySmartBB->_CONF[ 'member_row' ][ 'style_id_cache' ] != $MySmartBB->_CONF[ 'member_row' ][ 'style' ] 
 				or ( $MySmartBB->_CONF['member_row']['should_update_style_cache'] ) )
 		{
-			/* ... */
+			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
 			
 			$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
 			
-			/* ... */
+			// ... //
 			
 			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
 			
 			$style_cache = $MySmartBB->style->createStyleCache();
 			
-			/* ... */
+			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'style_cache'	=>	$style_cache,
@@ -320,10 +314,10 @@ class MySmartCommon
 			
 			$update_cache = $MySmartBB->rec->update();
 			
-			/* ... */
+			// ... //
 		}
 				
-		/* ... */
+		// ... //
 		
 		if ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'])
 		{
@@ -345,11 +339,11 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'member_permission' ] = false;
 		
-		/* ... */
+		// ... //
 		
 		// Get the visitor's group info and store it in _CONF['group_info']
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
@@ -357,7 +351,7 @@ class MySmartCommon
 		
 		$MySmartBB->_CONF['group_info'] = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		// Check if the visitor is already online
 		$isOnline = $MySmartBB->online->isOnline($MySmartBB->_CONF['timeout'], 'ip', $MySmartBB->_CONF['ip']);
@@ -415,7 +409,7 @@ class MySmartCommon
 		{
 			$MySmartBB->func->error('لم يتم ايجاد معلومات النمط');
 		}
-				
+		
 		$MySmartBB->template->setInformation(	$MySmartBB->_CONF[ 'style_info' ]['template_path'] . '/',
 												$MySmartBB->_CONF[ 'style_info' ]['cache_path'] . '/',
 												'.tpl',
@@ -463,7 +457,7 @@ class MySmartCommon
 		{
 			$filename = explode('/',$MySmartBB->_CONF[ 'style_info' ]['style_path']);
 			
-			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ]['style_path']);
+			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ]);
 		}
 		else
 		{
