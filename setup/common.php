@@ -41,36 +41,36 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 			
-		$query = $MySmartBB->db->sql_query('ALTER TABLE ' . $param['table'] . ' ADD ' . $param['field_name'] . ' ' . $param['field_des']);
+		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['table'] . ' ADD ' . $param['field_name'] . ' ' . $param['field_des']; /*)*/;
 					
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function rename_field($param)
 	{
 		global $MySmartBB;
 			
-		$query = $MySmartBB->db->sql_query('ALTER TABLE ' . $param['old_name'] . ' RENAME ' . $param['new_name']);
+		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['old_name'] . ' RENAME ' . $param['new_name']; /*);*/
 			
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function drop_field($param)
 	{
 		global $MySmartBB;
 		
-		$query = $MySmartBB->db->sql_query("ALTER TABLE " . $param['table_name'] . " DROP " . $param['field_name']);
+		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " DROP " . $param['field_name']; /*);*/
 		
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function change_field($param)
 	{
 		global $MySmartBB;
 		
-		$query = $MySmartBB->db->sql_query("ALTER TABLE " . $param['table_name'] . " CHANGE " . $param['field_name'] . " " . $param['field_name'] . " " . $param['change']);
+		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " CHANGE " . $param['field_name'] . " " . $param['field_name'] . " " . $param['change']; /*);*/
 		
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function create_table($param)
@@ -96,27 +96,27 @@ class MySmartInstall
 		
 		$sql_statement .= ') TYPE = MYISAM AUTO_INCREMENT=1';
 		
-		$query = $MySmartBB->db->sql_query($sql_statement);
+		/*$query = $MySmartBB->db->sql_query(*/echo $sql_statement . '<br /><br />';/*);*/
 		
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function drop_table($table_name)
 	{
 		global $MySmartBB;
 		
-		$query = $MySmartBB->db->sql_query("DROP TABLE " . $table_name);
+		/*$query = $MySmartBB->db->sql_query(*/echo "DROP TABLE " . $table_name;/*);*/
 		
-		return ($query) ? true : false;
+		return true;
 	}
 	
 	function rename_table($old,$new)
 	{
 		global $MySmartBB;
 		
-		$query = $MySmartBB->db->sql_query("RENAME TABLE " . $old  . " TO " . $new);
+		/*$query = $MySmartBB->db->sql_query(*/echo "RENAME TABLE " . $old  . " TO " . $new;/*);*/
 		
-		return ($query) ? true : false;
+		return true;
 	}
 }
 

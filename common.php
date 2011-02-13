@@ -67,12 +67,6 @@ class MySmartLocalCommon
  		
  		// ... //
  		
- 		// Make life easy for developers :)
- 		//$MySmartBB->db->SetDebug(true);
- 		//$MySmartBB->db->SetQueriesStore(true);
- 		
- 		// ... //
- 		
  		if ( !defined( 'STOP_STYLE' ) )
  			define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
  		

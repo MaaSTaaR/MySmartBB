@@ -1,0 +1,1 @@
+CREATE TABLE MySBB_requests (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,random_url varchar(26) NOT NULL,username varchar(200) NOT NULL,request_type int(1) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1

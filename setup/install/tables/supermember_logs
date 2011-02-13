@@ -1,0 +1,1 @@
+CREATE TABLE MySBB_supermemberlogs (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,username varchar(200) NOT NULL,edit_action varchar(255) NOT NULL,subject_title varchar(200) NOT NULL,subject_id int(9) NOT NULL,edit_date varchar(10) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1
