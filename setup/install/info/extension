@@ -1,0 +1,4 @@
+INSERT INTO MySBB_ex SET id='NULL', Ex='.zip', max_size='500'
+INSERT INTO MySBB_ex SET id='NULL', Ex='.txt', max_size='500'
+INSERT INTO MySBB_ex SET id='NULL', Ex='.jpg', max_size='500'
+INSERT INTO MySBB_ex SET id='NULL', Ex='.gif', max_size='500'
