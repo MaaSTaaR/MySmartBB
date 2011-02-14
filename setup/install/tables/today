@@ -1,1 +1,1 @@
-CREATE TABLE MySBB_today (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,username varchar(200) NOT NULL,user_id int(9) NOT NULL,user_date varchar(10) NOT NULL,hide_browse int(1) NOT NULL,username_style varchar(255) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1
+CREATE TABLE #table# (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,username varchar(200) NOT NULL,user_id int(9) NOT NULL,user_date varchar(10) NOT NULL,hide_browse int(1) NOT NULL,username_style varchar(255) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1

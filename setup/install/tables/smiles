@@ -1,1 +1,1 @@
-CREATE TABLE MySBB_smiles (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,smile_short varchar(15) NOT NULL,smile_path varchar(255) NOT NULL,smile_type int(1) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1
+CREATE TABLE #table# (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,smile_short varchar(15) NOT NULL,smile_path varchar(255) NOT NULL,smile_type int(1) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1

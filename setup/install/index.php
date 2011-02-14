@@ -7,7 +7,7 @@ $CALL_SYSTEM['ICONS'] = true;
 
 require_once('database_struct.php');
 
-class Install extends DatabaseStruct
+/*class Install extends DatabaseStruct
 {	
 	var $_TempArr 	= 	array();
 	var $_Masseges	=	array();
@@ -163,8 +163,8 @@ class Install extends DatabaseStruct
 		$msgs[7] = ($p[7]) ? $success . 'مسميات الاعضاء' : $fail . 'مسميات الاعضاء';
 	}
 }
-
-$MySmartBB->install = new Install;
+*/
+$installer = new MySmartInstaller( $MySmartBB );
 
 $MySmartBB->html->page_header('معالج تثبيت برنامج منتديات MySmartBB');
 
@@ -172,7 +172,17 @@ $logo = $MySmartBB->html->create_image(array('align'=>'right','alt'=>'MySmartBB'
 $MySmartBB->html->open_table('100%',true);
 $MySmartBB->html->cells($logo,'header_logo_side');
 
-if (empty($MySmartBB->_GET['step']))
+// ... //
+
+$MySmartBB->html->cells('اولاً : رسالة الترحيب','main1');
+$MySmartBB->html->close_table();
+
+$installer->createTables();
+
+// ... //
+
+
+/*if (empty($MySmartBB->_GET['step']))
 {
 	$MySmartBB->html->cells('اولاً : رسالة الترحيب','main1');
 	$MySmartBB->html->close_table();
@@ -321,6 +331,6 @@ elseif ($MySmartBB->_GET['step'] == 5)
 	$MySmartBB->html->msg('تهانينا! تم تثبيت المنتدى بنجاح. يرجى التأكد من حذفك لهذا المجلد','center');
 	$MySmartBB->html->msg('للذهاب إلى الصفحه الرئيسيه للمنتدى : ') . $MySmartBB->html->make_link('هنا','../../index.php');
 	$MySmartBB->html->msg('للذهاب إلى لوحة التحكم : ') . $MySmartBB->html->make_link('هنا','../../admin.php');
-}
+}*/
 
 ?>
