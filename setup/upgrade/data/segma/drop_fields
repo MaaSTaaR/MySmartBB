@@ -1,0 +1,1 @@
+ALTER TABLE #online# DROP notinindex_id

@@ -41,7 +41,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 			
-		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['table'] . ' ADD ' . $param['field_name'] . ' ' . $param['field_des']; /*)*/;
+		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['table'] . ' ADD ' . $param['field_name'] . ' ' . $param['field_des'] . '<br /><br />'; /*)*/;
 					
 		return true;
 	}
@@ -50,7 +50,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 			
-		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['old_name'] . ' RENAME ' . $param['new_name']; /*);*/
+		/*$query = $MySmartBB->db->sql_query(*/ echo 'ALTER TABLE ' . $param['old_name'] . ' RENAME ' . $param['new_name'] . '<br /><br />'; /*);*/
 			
 		return true;
 	}
@@ -59,7 +59,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 		
-		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " DROP " . $param['field_name']; /*);*/
+		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " DROP " . $param['field_name'] . '<br /><br />'; /*);*/
 		
 		return true;
 	}
@@ -68,7 +68,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 		
-		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " CHANGE " . $param['field_name'] . " " . $param['field_name'] . " " . $param['change']; /*);*/
+		/*$query = $MySmartBB->db->sql_query(*/ echo "ALTER TABLE " . $param['table_name'] . " CHANGE " . $param['field_name'] . " " . $param['field_name'] . " " . $param['change'] . '<br /><br />'; /*);*/
 		
 		return true;
 	}
@@ -105,7 +105,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 		
-		/*$query = $MySmartBB->db->sql_query(*/echo "DROP TABLE " . $table_name;/*);*/
+		/*$query = $MySmartBB->db->sql_query(*/echo "DROP TABLE " . $table_name . '<br /><br />';/*);*/
 		
 		return true;
 	}
@@ -114,7 +114,7 @@ class MySmartInstall
 	{
 		global $MySmartBB;
 		
-		/*$query = $MySmartBB->db->sql_query(*/echo "RENAME TABLE " . $old  . " TO " . $new;/*);*/
+		/*$query = $MySmartBB->db->sql_query(*/echo "RENAME TABLE " . $old  . " TO " . $new . '<br /><br />';/*);*/
 		
 		return true;
 	}

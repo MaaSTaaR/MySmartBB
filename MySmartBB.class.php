@@ -265,6 +265,11 @@ class MySmartBB
   	}
   	
   	// ... //
+  	
+  	public function getPrefix()
+  	{
+  		return $this->prefix;
+  	}
 }
 
 // ... //

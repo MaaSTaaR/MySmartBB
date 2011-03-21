@@ -10,11 +10,14 @@
 *		6- Convert register dates format from old method to new one (which based on unixstamp)
 */
 
-$CALL_SYSTEM				= 	array();
-$CALL_SYSTEM['GROUP'] 		= 	true;
-$CALL_SYSTEM['ICONS'] 		= 	true;
-
 include('../common.php');
+
+require_once( 'MySmartUpgrader.class.php' );
+
+function sql_query( $sql )
+{
+	echo $sql;
+}
 
 class MySmartSEGMA extends MySmartInstall
 {
@@ -22,20 +25,22 @@ class MySmartSEGMA extends MySmartInstall
 	var $_Masseges	=	array();
 	
 	// Convert old info table to new info table :)
-	function ConvertInfoTable()
+	/*function ConvertInfoTable()
 	{
 		global $MySmartBB;
 		
+		$prefix = $MySmartBB->getPrefix();
+		
 		$this->_TempArr['RenameArr'] = array();
-		$this->_TempArr['RenameArr']['old_name'] = $MySmartBB->prefix . 'info';
-		$this->_TempArr['RenameArr']['new_name'] = $MySmartBB->prefix . 'oldinfo';
+		$this->_TempArr['RenameArr']['old_name'] = $prefix . 'info';
+		$this->_TempArr['RenameArr']['new_name'] = $prefix . 'oldinfo';
 		
 		$rename = $this->rename_field($this->_TempArr['RenameArr']);
 	
 		if ($rename)
 		{
 			$this->_TempArr['CreateArr']				= 	array();
-			$this->_TempArr['CreateArr']['table_name'] 	= 	$MySmartBB->prefix . 'info';
+			$this->_TempArr['CreateArr']['table_name'] 	= 	$prefix . 'info';
 			$this->_TempArr['CreateArr']['fields'] 		= 	array();
 			$this->_TempArr['CreateArr']['fields'][] 	= 	'id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY';
 			$this->_TempArr['CreateArr']['fields'][] 	= 	'var_name VARCHAR( 255 ) NOT NULL';
@@ -45,17 +50,17 @@ class MySmartSEGMA extends MySmartInstall
 			
 			if ($create)
 			{
-				$getoldinfo = $MySmartBB->DB->sql_query('SELECT * FROM ' . $MySmartBB->prefix . "oldinfo WHERE id='1'");
+				$getoldinfo = sql_query('SELECT * FROM ' . $prefix . "oldinfo WHERE id='1'");
 				$old_info   = $MySmartBB->DB->sql_fetch_array($getoldinfo);
 				        
 		        $did = false;
 		        
-				$field_query = $MySmartBB->DB->sql_query('SHOW FIELDS FROM ' . $MySmartBB->prefix . 'oldinfo');
+				$field_query = sql_query('SHOW FIELDS FROM ' . $prefix . 'oldinfo');
 				while ($row = $MySmartBB->DB->sql_fetch_array($field_query))
 				{
 					$value = addslashes($old_info[$row['Field']]);		    
 		    
-		    		$query = $MySmartBB->DB->sql_query("INSERT INTO " . $MySmartBB->prefix . "info(id,var_name,value) VALUES('NULL','" . $row['Field'] . "','" . $value . "')");
+		    		$query = sql_query("INSERT INTO " . $prefix . "info(id,var_name,value) VALUES('NULL','" . $row['Field'] . "','" . $value . "')");
 		    		
 		    		if ($query)
 		    		{		    			
@@ -65,7 +70,7 @@ class MySmartSEGMA extends MySmartInstall
 
 				if ($did)
 				{			
-					$del = $this->drop_table($MySmartBB->prefix . 'oldinfo');
+					$del = $this->drop_table($prefix . 'oldinfo');
 			
 					if ($del)
 					{
@@ -81,7 +86,7 @@ class MySmartSEGMA extends MySmartInstall
 	{
 		global $MySmartBB;
 		
-		$query = $MySmartBB->DB->sql_query('SELECT register_date FROM ' . $MySmartBB->table['member'] . ' ORDER BY id ASC LIMIT 1');
+		$query = sql_query('SELECT register_date FROM ' . $MySmartBB->table['member'] . ' ORDER BY id ASC LIMIT 1');
 		$row = $MySmartBB->DB->sql_fetch_array($query);
 		
 		$date = $this->_DateFormatDo($row['register_date']);
@@ -89,10 +94,10 @@ class MySmartSEGMA extends MySmartInstall
 		$new_date = explode('/', $date, 3);
 		$time = gmmktime(0,  0, 0, $new_date[1], $new_date[2], $new_date[0]);
 		
-		$insert = $MySmartBB->DB->sql_query('INSERT INTO ' . $MySmartBB->table['info'] . " SET var_name='create_date',value='" . $time . "'");
+		$insert = sql_query('INSERT INTO ' . $MySmartBB->table['info'] . " SET var_name='create_date',value='" . $time . "'");
 		
 		return ($insert) ? true : false;
-	}
+	}*/
 	
 	// Drop notinindex_id
 	function DropNotInIndex()
@@ -139,11 +144,11 @@ class MySmartSEGMA extends MySmartInstall
 		return ($add) ? true : false;
 	}
 	
-	function NewRegisterDateFormat(/* I Love & :D */&$msgs)
-	{
+	//function NewRegisterDateFormat(/* I Love & :D */&$msgs)
+	/*{
 		global $MySmartBB;
 				
-		$query = $MySmartBB->DB->sql_query('SELECT * FROM ' . $MySmartBB->table['member']);
+		$query = sql_query('SELECT * FROM ' . $MySmartBB->table['member']);
 		
 		while ($row = $MySmartBB->DB->sql_fetch_array($query))
 		{
@@ -152,17 +157,17 @@ class MySmartSEGMA extends MySmartInstall
 			$date = explode('/', $r_date, 3);
 			$time = gmmktime(0,  0, 0, $date[1], $date[2], $date[0]);
 			
-			$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['member'] . " SET register_time='" . $time . "'");
+			$update = sql_query("UPDATE " . $MySmartBB->table['member'] . " SET register_time='" . $time . "'");
 			
 			if ($update)
 			{
 				$msgs[] = 'تم تحديث تاريخ تسجيل ' . htmlspecialchars($row['username']);
 			}
 		}
-	}
+	}*/
 	
 	// By KHALED MAMDOUH .. vbzoom.com
- 	function _DateFormatDo($GetDateFormat,$DateFormat="j/n/Y")
+ 	/*function _DateFormatDo($GetDateFormat,$DateFormat="j/n/Y")
     {
   		$Day   = SubStr($GetDateFormat,8,2);
   		$Month = SubStr($GetDateFormat,5,2);
@@ -171,9 +176,9 @@ class MySmartSEGMA extends MySmartInstall
   		$ResultDate = @date ($DateFormat, mktime (0,0,0,$Month,$Day,$Year));
 
   		return $ResultDate;
- 	}
+ 	}*/
  	
- 	function FixCaches(&$msgs)
+ 	/*function FixCaches(&$msgs)
  	{
  		global $MySmartBB;
  		
@@ -195,11 +200,17 @@ class MySmartSEGMA extends MySmartInstall
 	{
 		global $MySmartBB;
 		
-		$update = $MySmartBB->DB->sql_query("UPDATE " . $MySmartBB->table['info'] . " SET value='2.0 SEGMA' WHERE var_name='MySBB_version'");
+		$update = sql_query("UPDATE " . $MySmartBB->table['info'] . " SET value='2.0 SEGMA' WHERE var_name='MySBB_version'");
 		
 		return ($update) ? true : false;
-	}
+	}*/
 }
+
+$Upgrader = new MySmartUpgrader( $MySmartBB, 'segma' );
+
+$Upgrader->addFields();
+
+
 
 $MySmartBB->install = new MySmartSEGMA;
 
@@ -228,11 +239,11 @@ elseif ($MySmartBB->_GET['step'] == 1)
 	$p 			= 	array();
 	$msgs 		= 	$MySmartBB->install->_Masseges;
 	
-	$p[1] 		= 	$MySmartBB->install->ConvertInfoTable();
-	$msgs[1] 	= 	($p[1]) ? 'تم تحديث جدول المعلومات إلى النمط الجديد' : 'لم يتم تحديث جدول المعلومات إلى النمط الجديد';
+	/*$p[1] 		= 	$MySmartBB->install->ConvertInfoTable();
+	$msgs[1] 	= 	($p[1]) ? 'تم تحديث جدول المعلومات إلى النمط الجديد' : 'لم يتم تحديث جدول المعلومات إلى النمط الجديد';*/
 	
-	$p[2]		=	$MySmartBB->install->AddCreateDateEntry();
-	$msgs[2]	=	($p[2]) ? 'تم اضافه مدخل تاريخ انشاء المنتدى' : 'لم يتم اضافة مدخل تاريخ انشاء المنتدى';
+	/*$p[2]		=	$MySmartBB->install->AddCreateDateEntry();
+	$msgs[2]	=	($p[2]) ? 'تم اضافه مدخل تاريخ انشاء المنتدى' : 'لم يتم اضافة مدخل تاريخ انشاء المنتدى';*/
 	
 	$p[3]		=	$MySmartBB->install->DropNotInIndex();
 	$msgs[3]	=	($p[3]) ? 'تم حذف الحقل' : 'لم يتم حذف الحقل';
