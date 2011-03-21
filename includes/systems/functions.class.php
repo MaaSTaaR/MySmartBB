@@ -318,7 +318,7 @@ class MySmartFunctions
  	
  	/* ... */
  	
-	public function date( $input, $type, $format = 'j/n/Y' )
+	public function date( $input, $type = null, $format = 'j/n/Y' )
 	{
 		$input = date( $format, $input );
 		

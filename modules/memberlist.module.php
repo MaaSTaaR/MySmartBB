@@ -39,7 +39,7 @@ class MySmartMemberlistMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$MySmartBB->member->getMemberNumber();
+		//$MySmartBB->rec->pager['total']		= 	$MySmartBB->member->getMemberNumber();
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=member_list&amp;show=1&amp;id=' . $this->Section['id'];

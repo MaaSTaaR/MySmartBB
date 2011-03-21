@@ -12,19 +12,6 @@ require_once('database_struct.php');
 	var $_TempArr 	= 	array();
 	var $_Masseges	=	array();
 	
-	function CheckPermissions(&$msgs)
-	{
-		$msgs[] = (!is_writable('../../download')) ? 'خطأ : يجب اعطاء المجلد download التصريح 777' : 'تصريح المجلد download صحيح';
-		
-		$msgs[] = (!is_writable('../../download/avatar')) ? 'خطأ : يجب اعطاء المجلد download/avatar التصريح 777' : 'تصريح المجلد download/avatar صحيح';
-		
-		$msgs[] = (!is_writable('../../download/contact')) ? 'خطأ : يجب اعطاء المجلد download/contact التصريح 777' : 'تصريح المجلد download/contact صحيح';
-		
-		$msgs[] = (!is_writable('../../modules/styles/main/compiler')) ? 'خطأ : يجب اعطاء المجلد modules/styles/main/compiler التصريح 777' : 'تصريح المجلد modules/styles/main/compiler صحيح';
-		
-		$msgs[] = (!is_writable('../../modules/styles/main/templates')) ? 'خطأ : يجب اعطاء المجلد modules/styles/main/templates التصريح 777' : 'تصريح المجلد modules/styles/main/templates صحيح';
-	}
-	
 	function CreateTables(&$msgs)
 	{
 		global $MySmartBB;
@@ -174,15 +161,7 @@ $MySmartBB->html->cells($logo,'header_logo_side');
 
 // ... //
 
-$MySmartBB->html->cells('اولاً : رسالة الترحيب','main1');
-$MySmartBB->html->close_table();
-
-$installer->createTables();
-
-// ... //
-
-
-/*if (empty($MySmartBB->_GET['step']))
+if (empty($MySmartBB->_GET['step']))
 {
 	$MySmartBB->html->cells('اولاً : رسالة الترحيب','main1');
 	$MySmartBB->html->close_table();
@@ -197,12 +176,27 @@ if ($MySmartBB->_GET['step'] == 1)
 	$MySmartBB->html->cells('الخطوه الاولى : التحقق من تصاريح المجلدات','main1');
 	$MySmartBB->html->close_table();
 	
-	$p = $MySmartBB->install->CheckPermissions($MySmartBB->install->_Masseges);
+	// ... //
 	
-	foreach ($MySmartBB->install->_Masseges as $msg)
+	$directories = array(	'../../download', 
+							'../../download/avatar', 
+							'../../download/contact', // TODO : delete me please!
+							'../../modules/styles/main/compiler', 
+							'../../modules/styles/main/templates' );
+	
+	foreach ( $directories as $directory )
 	{
-		$MySmartBB->html->msg($msg);
+		if ( !is_writable( $directory ) )
+		{
+			$MySmartBB->html->msg( 'تصريح المجلد ' . $directory . ' غير صحيح' );
+		}
+		else
+		{
+			$MySmartBB->html->msg( 'تصريح الملجد ' . $directory . ' صحيح' );
+		}
 	}
+	
+	// ... //
 	
 	$MySmartBB->html->make_link('الخطوه التاليه -> انشاء الجداول','?step=2');
 }
@@ -211,12 +205,7 @@ elseif ($MySmartBB->_GET['step'] == 2)
 	$MySmartBB->html->cells('الخطوه الثانيه : إنشاء الجداول','main1');
 	$MySmartBB->html->close_table();
 	
-	$p = $MySmartBB->install->CreateTables($MySmartBB->install->_Masseges);
-	
-	foreach ($MySmartBB->install->_Masseges as $msg)
-	{
-		$MySmartBB->html->msg($msg);
-	}
+	$installer->createTables();
 	
 	$MySmartBB->html->make_link('الخطوه التاليه -> إدخال المعلومات','?step=3');
 }
@@ -225,12 +214,7 @@ elseif ($MySmartBB->_GET['step'] == 3)
 	$MySmartBB->html->cells('الخطوه الثالثه : إدخال المعلومات','main1');
 	$MySmartBB->html->close_table();
 	
-	$p = $MySmartBB->install->InsertInformation($MySmartBB->install->_Masseges);
-	
-	foreach ($MySmartBB->install->_Masseges as $msg)
-	{
-		$MySmartBB->html->msg($msg);
-	}
+	$installer->insertInformation();
 	
 	$MySmartBB->html->make_link('الخطوه التاليه -> إدخال معلومات المنتدى','?step=4');
 }
@@ -331,6 +315,6 @@ elseif ($MySmartBB->_GET['step'] == 5)
 	$MySmartBB->html->msg('تهانينا! تم تثبيت المنتدى بنجاح. يرجى التأكد من حذفك لهذا المجلد','center');
 	$MySmartBB->html->msg('للذهاب إلى الصفحه الرئيسيه للمنتدى : ') . $MySmartBB->html->make_link('هنا','../../index.php');
 	$MySmartBB->html->msg('للذهاب إلى لوحة التحكم : ') . $MySmartBB->html->make_link('هنا','../../admin.php');
-}*/
+}
 
 ?>

@@ -1,1 +1,1 @@
-INSERT INTO MySBB_usertitle SET usertitle='عضو', posts='0'
+INSERT INTO #table# SET usertitle='عضو', posts='0'

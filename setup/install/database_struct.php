@@ -5,14 +5,18 @@ include('../common.php');
 class MySmartInstaller
 {
 	private $tables = array();
+	private $rows = array();
 	private $tables_path = 'tables/';
+	private $rows_path = 'info/';
 	private $engine;
 	
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
 		
+		// Prepare $tables and $rows
 		$this->_addTables();
+		$this->_addRows();
 	}
 	
 	public function createTables()
@@ -72,6 +76,68 @@ class MySmartInstaller
 		}
 	}
 	
+	public function insertInformation()
+	{
+		if ( is_array( $this->rows ) )
+		{
+			$rows_num = sizeof( $this->rows );
+			$k = 1;
+			$success = array();
+			
+			foreach ( $this->rows as $row )
+			{
+				// ... //
+				
+				$filename = $this->rows_path . $row[ 'filename' ];
+				
+				if ( !file_exists( $filename ) )
+				{
+					$this->engine->func->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
+					die();
+				}
+				
+				// ... //
+				
+				$sqls = file( $filename );
+				$lines = sizeof( $sqls );
+				
+				// ... //
+				
+				if ( is_array( $sqls ) )
+				{
+					$x = 1;
+					
+					foreach ( $sqls as $sql )
+					{
+						$sql = str_replace( '#table#', $row[ 'tablename' ], $sql );
+						
+						$query = $this->engine->db->sql_query( $sql );
+						
+						if ( $query )
+						{
+							$this->engine->func->msg( 'تمت العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+						}
+						else
+						{
+							$this->engine->func->msg( 'لم تتم العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+						}
+						
+						$x += 1;
+					}
+				}
+				
+				// ... //
+				
+				$k += 1;
+			}
+		}
+		else
+		{
+			$this->engine->func->msg( 'هناك خطأ في مصفوفة الجداول' );
+			die();
+		}
+	}
+	
 	private function _addTables()
 	{
 		$this->_addTable( 'ads', $this->engine->table[ 'ads' ] );
@@ -108,10 +174,29 @@ class MySmartInstaller
 		$this->_addTable( 'vote', $this->engine->table[ 'vote' ] );
 	}
 	
+	private function _addRows()
+	{
+		$this->_addRow( 'email_msg', $this->engine->table[ 'email_msg' ] );
+		$this->_addRow( 'extension', $this->engine->table[ 'extension' ] );
+		$this->_addRow( 'group', $this->engine->table[ 'group' ] );
+		$this->_addRow( 'icons', $this->engine->table[ 'smiles' ] );
+		$this->_addRow( 'info', $this->engine->table[ 'info' ] );
+		$this->_addRow( 'smiles', $this->engine->table[ 'smiles' ] );
+		$this->_addRow( 'style', $this->engine->table[ 'style' ] );
+		$this->_addRow( 'toolbox', $this->engine->table[ 'toolbox' ] );
+		$this->_addRow( 'usertitle', $this->engine->table[ 'usertitle' ] );
+	}
+	
 	private function _addTable( $filename, $tablename )
 	{
 		$this->tables[] = array(	'filename'	=>	$filename,
 									'tablename'	=>	$tablename	);
+	}
+	
+	private function _addRow( $filename, $tablename )
+	{
+		$this->rows[] = array(	'filename'	=>	$filename,
+								'tablename'	=>	$tablename	);
 	}
 }
 

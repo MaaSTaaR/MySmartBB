@@ -17,12 +17,12 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
-		// Normal login //
+		// Normal login
 		if ( $MySmartBB->_GET[ 'login' ] )
 		{
 			$this->_startLogin();
 		}
-		// Login after register //
+		// Login after register
 		elseif ( $MySmartBB->_GET[ 'register_login' ] )
 		{
 			$this->_startLogin( true );
@@ -112,18 +112,18 @@ class MySmartLoginMOD
       				or empty( $url ) 
       				or $url != 'page=login' )
            		{
-       				$MySmartBB->func->goto( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+       				$MySmartBB->func->move( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       			}
       			elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
       					or $url == 'page=logout' 
       					or $url == 'page=login' )
            		{
-       				$MySmartBB->func->goto( 'index.php' );
+       				$MySmartBB->func->move( 'index.php' );
       			}
       		}
       		else
       		{
-      			$MySmartBB->func->goto( 'index.php' );
+      			$MySmartBB->func->move( 'index.php' );
       		}
 		}
 		else
