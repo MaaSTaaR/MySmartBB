@@ -14,16 +14,6 @@ include('../common.php');
 
 require_once( 'MySmartUpgrader.class.php' );
 
-class MySmartSEGMA extends MySmartInstall
-{
-	// The create_date entry
-	function AddCreateDateEntry()
-	{
-
-	}
-	
-}
-
 // Original code By KHALED MAMDOUH (vbzoom.com)
 function convertDate( $date, $format = 'j/n/Y' )
 {
