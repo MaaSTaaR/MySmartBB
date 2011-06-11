@@ -81,11 +81,11 @@ class MySmartSection
  		$this->engine->rec->table = $this->engine->table[ 'section' ];
  		$this->engine->rec->filter = "parent='" . $parent . "'";
  		$this->engine->rec->order = "sort ASC";
-
+ 		
  		$forum_res = &$this->engine->func->setResouce();
  		
  		$this->engine->rec->getList();
- 		 		
+ 		
  		while ( $forum = $this->engine->rec->getInfo( $forum_res ) )
  		{
  			$cache[$x] 							= 	array();
@@ -141,7 +141,7 @@ class MySmartSection
  		{
  			$cache = false;
  		}
- 		 		
+ 		
 		return $cache;
 	}
 	
@@ -174,20 +174,25 @@ class MySmartSection
  	
  	public function updateAllSectionsCache()
  	{
- 		$this->getSectionsList();
+ 		$this->engine->rec->table = $this->engine->table[ 'section' ];
+ 		
+ 		$forum_res = &$this->engine->func->setResouce();
+ 		
+ 		$this->engine->rec->getList();
  		
  		$fail = false;
  		
- 		while ( $row = $this->engine->rec->getInfo() )
+ 		while ( $row = $this->engine->rec->getInfo( $forum_res ) )
  		{
  			if (!empty($row['forums_cache']))
  			{
- 				$this->engine->rec->fields					=	array();
- 				$this->engine->rec->fields['forums_cache'] 	= 	$this->createSectionsCache( $row['id'] );
+ 				$cache = $this->createSectionsCache( $row['id'] );
  				
- 				$this->engine->rec->filter = "id='" . $row[ 'id' ] . "'";
+ 				$this->engine->rec->table 	= 	$this->engine->table[ 'section' ];
+ 				$this->engine->rec->fields 	= 	array(	'forums_cache'	=>	$cache	);
+ 				$this->engine->rec->filter 	= 	"id='" . $row[ 'id' ] . "'";
  				
- 				$update = $this->updateSection();
+ 				$update = $this->engine->rec->update();
  				
  				if (!$update)
  				{

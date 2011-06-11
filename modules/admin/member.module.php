@@ -188,7 +188,7 @@ class MySmartMemberMOD extends _func
 													$MySmartBB->rec->id );
 
 			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
-			$MySmartBB->func->move('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->member->id);
+			$MySmartBB->func->move('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 		}
 	}
 	
@@ -321,23 +321,19 @@ class MySmartMemberMOD extends _func
 		
 		/* ... */
 		
-		
-		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->order = 'id DESC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ];
+		
+		$MySmartBB->func->setResource( 'style_res' );
 		
 		$MySmartBB->rec->getList();
 		
 		/* ... */
 		
-		// Get groups list
-		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = 'id DESC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
+		
+		$MySmartBB->func->setResource( 'group_res' );
 		
 		$MySmartBB->rec->getList();
 		

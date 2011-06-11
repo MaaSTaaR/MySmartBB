@@ -22,9 +22,10 @@ class MySmartModerators
 	
  	public function createModeratorsCache( $section_id )
  	{
+ 		$this->engine->rec->table = $this->engine->table[ 'moderators' ];
  		$this->engine->rec->filter = "section_id='" . $section_id . "'";
  		
-		$this->getModeratorList();
+		$this->engine->rec->getList();
 		
  		$cache 	= 	array();
  		$x		=	0;

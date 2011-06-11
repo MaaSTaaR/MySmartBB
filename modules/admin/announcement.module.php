@@ -104,14 +104,23 @@ class MySmartAnnouncementMOD extends _func
 	{
 		global $MySmartBB;
 		
-		//$AnnArr['proc']['date'] 	= 	array('method'=>'date','store'=>'date');
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->order = 'id DESC';
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->rec->setInfoCallback( 'MySmartAnnouncementMOD::rowsProcessCB' );
+		
 		$MySmartBB->template->display('announcements_main');
+		
+		$MySmartBB->rec->removeInfoCallback();
+	}
+	
+	public function rowsProcessCB( $row )
+	{
+		global $MySmartBB;
+		
+		$row[ 'date' ] = $MySmartBB->func->date( $row[ 'date' ] );
 	}
 	
 	private function _editMain()

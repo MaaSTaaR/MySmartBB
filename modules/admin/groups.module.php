@@ -85,7 +85,7 @@ class MySmartGroupsMOD extends _func
 		}
 		
 		// Enable HTML and (only) HTML
-		$MySmartBB->_POST['style'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['style'],'unhtml');
+		$MySmartBB->_POST['style'] = $MySmartBB->func->cleanVariable( $MySmartBB->_POST['style'], 'unhtml' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		
@@ -108,7 +108,7 @@ class MySmartGroupsMOD extends _func
 		$MySmartBB->rec->fields['del_own_subject'] 			= 	$MySmartBB->_POST['del_own_subject'];
 		$MySmartBB->rec->fields['del_own_reply']			= 	$MySmartBB->_POST['del_own_reply'];
 		$MySmartBB->rec->fields['write_poll'] 				= 	$MySmartBB->_POST['write_poll'];
-		$MySmartBB->rec->fields['no_posts'] 		    	= 	$MySmartBB->_POST['no_posts'];
+		//$MySmartBB->rec->fields['no_posts'] 		    	= 	$MySmartBB->_POST['no_posts'];
 		$MySmartBB->rec->fields['vote_poll'] 				= 	$MySmartBB->_POST['vote_poll'];
 		$MySmartBB->rec->fields['use_pm'] 					= 	$MySmartBB->_POST['use_pm'];
 		$MySmartBB->rec->fields['send_pm'] 					= 	$MySmartBB->_POST['send_pm'];
@@ -184,16 +184,16 @@ class MySmartGroupsMOD extends _func
 				$MySmartBB->rec->fields['section_id'] 			= 	$row['id'];
 				$MySmartBB->rec->fields['group_id'] 			= 	$MySmartBB->group->id;
 				$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['view_section'];
-				$MySmartBB->rec->fields['download_attach'] 	= 	$MySmartBB->_POST['download_attach'];
+				$MySmartBB->rec->fields['download_attach'] 		= 	$MySmartBB->_POST['download_attach'];
 				$MySmartBB->rec->fields['write_subject'] 		= 	$MySmartBB->_POST['write_subject'];
-				$MySmartBB->rec->fields['write_reply'] 		= 	$MySmartBB->_POST['write_reply'];
+				$MySmartBB->rec->fields['write_reply'] 			= 	$MySmartBB->_POST['write_reply'];
 				$MySmartBB->rec->fields['upload_attach'] 		= 	$MySmartBB->_POST['upload_attach'];
 				$MySmartBB->rec->fields['edit_own_subject'] 	= 	$MySmartBB->_POST['edit_own_subject'];
 				$MySmartBB->rec->fields['edit_own_reply'] 		= 	$MySmartBB->_POST['edit_own_reply'];
-				$MySmartBB->rec->fields['del_own_subject'] 	= 	$MySmartBB->_POST['del_own_subject'];
+				$MySmartBB->rec->fields['del_own_subject'] 		= 	$MySmartBB->_POST['del_own_subject'];
 				$MySmartBB->rec->fields['del_own_reply'] 		= 	$MySmartBB->_POST['del_own_reply'];
 				$MySmartBB->rec->fields['write_poll'] 			= 	$MySmartBB->_POST['write_poll'];
-				$MySmartBB->rec->fields['no_posts'] 			= 	$MySmartBB->_POST['no_posts'];
+				//$MySmartBB->rec->fields['no_posts'] 			= 	$MySmartBB->_POST['no_posts'];
 				$MySmartBB->rec->fields['vote_poll'] 			= 	$MySmartBB->_POST['vote_poll'];
 				$MySmartBB->rec->fields['main_section'] 		= 	($row['parent'] == 0) ? 1 : 0;
 				$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['title'];
@@ -217,16 +217,25 @@ class MySmartGroupsMOD extends _func
 
 		// ... //
 		
-		//$GroupArr['proc']['username_style']	=	array('method'=>'replace','search'=>'[username]','replace'=>'rows{title}','store'=>'h_title');
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->rec->setInfoCallback( 'MySmartGroupsMOD::rowProcess' );
+		
 		// ... //
 		
 		$MySmartBB->template->display('groups_main');
+	}
+	
+	public function rowProcess( $row )
+	{
+		global $MySmartBB;
+		
+		$style = $MySmartBB->func->cleanVariable( $row[ 'username_style' ], 'unhtml' );
+		
+		$row[ 'h_title' ] = str_replace( '[username]', $row[ 'title' ], $style );
 	}
 	
 	private function _editMain()
@@ -330,7 +339,7 @@ class MySmartGroupsMOD extends _func
 		$MySmartBB->rec->fields['admincp_avater'] 			= 	$MySmartBB->_POST['admincp_avater'];
 		$MySmartBB->rec->fields['group_order'] 				= 	$MySmartBB->_POST['group_order'];
 		$MySmartBB->rec->fields['admincp_contactus'] 		= 	$MySmartBB->_POST['admincp_contactus'];
-		$MySmartBB->rec->fields['no_posts'] 		    		= 	$MySmartBB->_POST['no_posts'];
+		//$MySmartBB->rec->fields['no_posts'] 		    		= 	$MySmartBB->_POST['no_posts'];
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		

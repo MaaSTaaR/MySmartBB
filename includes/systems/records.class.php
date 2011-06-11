@@ -12,6 +12,7 @@ class MySmartRecords
 	private $func; // Functions class (must implement the function cleanVariable)
 	private $pager_obj; // Pager class
 	private $query;
+	private $info_cb = null;
 	
 	public $filter;
 	public $fields;
@@ -293,6 +294,11 @@ class MySmartRecords
 		 	 */
 		 	 
 			$this->func->cleanArray( $row, 'html' );
+			
+			if ( isset( $this->info_cb ) )
+			{
+				call_user_func( $this->info_cb, &$row );
+			}
 		}
 		
 		// If there is a request of a list and there is no more rows, unset this->query
@@ -366,6 +372,21 @@ class MySmartRecords
 	}
 	
 	/* ... */
+	
+	/**
+	 * Set a function that runs with every row fetch in "getInfo"
+	 */
+	public function setInfoCallback( $cb )
+	{
+		$this->info_cb = $cb;
+	}
+	
+	public function removeInfoCallback()
+	{
+		$this->info_cb = null;
+	}
+	
+	// ... //
 	
 	private function _updateCallBack( $var )
 	{

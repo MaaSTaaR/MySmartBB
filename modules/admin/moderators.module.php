@@ -73,46 +73,11 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
-		//////////
+		// ... //
 		
-		/*$SecArr 						= 	array();
-		$SecArr['get_from']				=	'db';
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
 		
-		$SecArr['proc'] 				= 	array();
-		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$SecArr['order']				=	array();
-		$SecArr['order']['field']		=	'sort';
-		$SecArr['order']['type']		=	'ASC';
-		
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]['name']		= 	'parent';
-		$SecArr['where'][0]['oper']		= 	'=';
-		$SecArr['where'][0]['value']	= 	'0';
-		
-		// Get main sections
-		$cats = $MySmartBB->section->GetSectionsList($SecArr);
-		
-		// We will use forums_list to store list of forums which will view in main page
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
-		// Loop to read the information of main sections
-		foreach ($cats as $cat)
-		{
-			$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
-			
-			if (!empty($cat['forums_cache']))
-			{
-				$forums = unserialize(base64_decode($cat['forums_cache']));
-				
-				foreach ($forums as $forum)
-				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-				}
-			}
-		}*/
-		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "group_mod='1'";
@@ -120,7 +85,7 @@ class MySmartModeratorsMOD extends _func
 		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('moderator_add');
 	}
@@ -241,50 +206,11 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/*$ForumArr 				= 	array();
-		$ForumArr['get_from'] 	=	'cache';
-		$ForumArr['type'] 		= 	'normal';
+		// ... //
 		
-		$forums = $MySmartBB->section->GetSectionsList($ForumArr);
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
 		
-		//////////
-				
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
-		//////////
-		
-		foreach ($forums as $forum)
-		{
-			//////////
-			
-			$MySmartBB->func->CleanVariable($forum,'html');
-			
-			//////////
-
-			if (empty($forum['from_main_section']))
-			{
-				if (isset($forum['moderators'])
-					and $forum['moderators'] != 'a:0:{}')
-				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_m'] = $forum;
-				}
-			}
-			
-			//////////
-			
-			elseif (!empty($forum['from_main_section']))
-			{
-				if (isset($forum['moderators'])
-					and $forum['moderators'] != 'a:0:{}')
-				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-				}
-			}
-			
-			//////////
-		}
-		
-		//////////*/
+		// ... //
 		
 		$MySmartBB->template->display('moderators_main');
 	}
@@ -324,37 +250,21 @@ class MySmartModeratorsMOD extends _func
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		/*//////////
+		// ... //
 		
-		$ForumArr 				= 	array();
-		$ForumArr['get_from'] 	=	'cache';
-		$ForumArr['type'] 		= 	'normal';
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
 		
-		$MySmartBB->_CONF['template']['foreach']['forums'] = $MySmartBB->section->GetSectionsList($ForumArr);
-		
-		//////////*/
-		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "group_mod='1'";
 		$MySmartBB->rec->order = "group_order ASC";
 		
+		$MySmartBB->func->setResouce( 'group_res' );
+		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['section_id'] . "'";
-		
-		$MySmartBB->_CONF['template']['while']['Section'] = $MySmartBB->rec->getInfo();
-		
-		if (!is_array($MySmartBB->_CONF['template']['while']['Section']))
-		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
-		}
-		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('moderator_edit');
 	}

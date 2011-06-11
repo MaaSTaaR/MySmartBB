@@ -61,14 +61,14 @@ class MySmartLogoutMOD
       			or empty( $url )
       			or $url != 'page=login' )
            	{
-       			$MySmartBB->func->goto( $MySmartBB->_SERVER['HTTP_REFERER'] );
+       			$MySmartBB->func->move( $MySmartBB->_SERVER['HTTP_REFERER'] );
       		}
 
       		elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
       				or $url == 'page=logout' 
       				or $url == 'page=login' )
            	{
-       			$MySmartBB->functions->goto( 'index.php' );
+       			$MySmartBB->functions->move( 'index.php' );
       		}
 		}
 	}

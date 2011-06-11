@@ -254,7 +254,7 @@ class MySmartToolboxMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->rec->filter = 'id DESC';
+		$MySmartBB->rec->order = 'id DESC';
 		
 		$MySmartBB->toolbox->getColorsList();
 		

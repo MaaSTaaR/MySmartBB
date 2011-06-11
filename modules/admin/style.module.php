@@ -112,7 +112,7 @@ class MySmartStyleMOD extends _func
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
-		$MySmartBB->rec->filter = 'id DESC';
+		$MySmartBB->rec->order = 'id DESC';
 		
 		$MySmartBB->rec->getList();
 		
