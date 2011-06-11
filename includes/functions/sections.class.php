@@ -71,15 +71,22 @@ class MySmartSection
  			trigger_error('ERROR::NEED_PARAMETER -- FROM createSectionsCache()',E_USER_ERROR);
  		}
  		
- 		$this->engine->rec->filter = "parent='" . $parent . "'";
- 		$this->engine->rec->order = "sort ASC";
- 		
- 		$forums = $this->getSectionsList();
+ 		// ... //
  		
  		$cache = array();
  		$x = 0;
  		
- 		while ( $forum = $this->rec->getInfo() )
+ 		// ... //
+ 		
+ 		$this->engine->rec->table = $this->engine->table[ 'section' ];
+ 		$this->engine->rec->filter = "parent='" . $parent . "'";
+ 		$this->engine->rec->order = "sort ASC";
+
+ 		$forum_res = &$this->engine->func->setResouce();
+ 		
+ 		$this->engine->rec->getList();
+ 		 		
+ 		while ( $forum = $this->engine->rec->getInfo( $forum_res ) )
  		{
  			$cache[$x] 							= 	array();
 			$cache[$x]['id'] 					= 	$forum['id'];
@@ -101,24 +108,27 @@ class MySmartSection
 			$cache[$x]['moderators'] 			= 	$forum['moderators'];
 			$cache[$x]['forums_cache'] 			= 	$forum['forums_cache'];
 			
-			/* ... */
+			// ... //
 			
 			$cache[$x]['groups'] 				= 	array();
 			
+			$this->engine->rec->table = $this->engine->table[ 'section_group' ];
  			$this->engine->rec->filter = "section_id='" . $forum['id'] . "'";
  			$this->engine->rec->order = "id ASC";
  			
-			$this->engine->group->getSectionGroupList();
+ 			$group_res = &$this->engine->func->setResouce();
+ 			
+			$this->engine->rec->getList();
 			
-			while ( $group = $this->rec->getInfo() )
+			while ( $group = $this->engine->rec->getInfo( $group_res ) )
 			{
 				$cache[$x]['groups'][$group['group_id']] 					=	array();
 				$cache[$x]['groups'][$group['group_id']]['view_section'] 	= 	$group['view_section'];
 				$cache[$x]['groups'][$group['group_id']]['main_section'] 	= 	$group['main_section'];
 			}
  			
- 			/* ... */
- 				
+ 			// ... //
+ 			
 			$x += 1;
  		}
  		
@@ -135,7 +145,7 @@ class MySmartSection
 		return $cache;
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function updateSectionsCache( $parent )
  	{
@@ -151,10 +161,11 @@ class MySmartSection
  			$cache = '';
  		}
  		
+ 		$this->engine->rec->table = $this->engine->table[ 'section' ];
  		$this->engine->rec->fields = array(	'forums_cache'	=>	$cache	);
  		$this->engine->rec->filter = "id='" . $parent . "'";
  		
- 		$update = $this->updateSection();
+ 		$update = $this->engine->rec->update();
  		
  		return ($update) ? true : false;
  	}

@@ -17,9 +17,9 @@ require_once( 'MySmartUpgrader.class.php' );
 // Original code By KHALED MAMDOUH (vbzoom.com)
 function convertDate( $date, $format = 'j/n/Y' )
 {
-	$day   = substr( $date, 8, 2);
-	$month = substr( $date, 5, 2);
-	$year  = substr( $date, 0, 4);
+	$day   = substr( $date, 8, 2 );
+	$month = substr( $date, 5, 2 );
+	$year  = substr( $date, 0, 4 );
 	
 	return date( $format, mktime( 0, 0, 0, $month, $day, $year ) );	
 }
@@ -142,7 +142,8 @@ elseif ($MySmartBB->_GET['step'] == 1)
 		$MySmartBB->html->p_msg( 'لم يتم اضافه مدخل تاريخ انشاء المنتدى' );
 	}
 	
-	$Upgrader->addFields();
+	$Upgrader->add();
+	$Upgrader->drop();
 	
 	$MySmartBB->html->close_p();
 	

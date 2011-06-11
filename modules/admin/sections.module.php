@@ -87,14 +87,14 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
 		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 
 		$MySmartBB->template->display('sections_add');		
 	}
@@ -103,14 +103,15 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['name']) 
-			or ($MySmartBB->_POST['order_type'] == 'manual' and empty($MySmartBB->_POST['sort'])))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) 
+			or ( $MySmartBB->_POST[ 'order_type' ] == 'manual' and empty( $MySmartBB->_POST[ 'sort' ] ) ) )
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		/* ... */
+		// ... //
 		
+		// How to sort this section? automatically or manually?
 		$sort = 0;
 		
 		if ($MySmartBB->_POST['order_type'] == 'auto')
@@ -121,12 +122,10 @@ class MySmartSectionMOD extends _func
 			
 			$SortSection = $MySmartBB->rec->getInfo();
 			
-			// No section
-			if (!$SortSection)
+			if ( !$SortSection )
 			{
 				$sort = 1;
 			}
-			// There is a section
 			else
 			{
 				$sort = $SortSection['sort'] + 1;
@@ -137,7 +136,7 @@ class MySmartSectionMOD extends _func
 			$sort = $MySmartBB->_POST['sort'];
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		
@@ -164,7 +163,7 @@ class MySmartSectionMOD extends _func
 				
 				$MySmartBB->rec->fields		=	array();
 				
-				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->section->id;
+				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->rec->id;
 				$MySmartBB->rec->fields['group_id'] 			= 	$row['id'];
 				$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['groups'][$row['id']]['view_section'];
 				$MySmartBB->rec->fields['download_attach'] 		= 	$row['download_attach'];
@@ -185,7 +184,7 @@ class MySmartSectionMOD extends _func
 				$x += 1;
 			}
 			
-			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->section->id );
+			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->rec->id );
 			
 			if ($cache)
 			{
@@ -203,7 +202,7 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
@@ -211,11 +210,11 @@ class MySmartSectionMOD extends _func
 		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('sections_main');
 
-		/* ... */
+		// ... //
 	}
 	
 	private function _editMain()
@@ -231,11 +230,11 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$this->check_by_id($Inf);
 		
-		/* ... */
+		// ... //
 		
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['sort']))
@@ -243,7 +242,7 @@ class MySmartSectionMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		
@@ -256,7 +255,7 @@ class MySmartSectionMOD extends _func
 		
 		$update = $MySmartBB->rec->update();
 		
-		/* ... */
+		// ... //
 		
 		if ($update)
 		{
@@ -264,18 +263,18 @@ class MySmartSectionMOD extends _func
 			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 		}
 		
-		/* ... */
+		// ... //
 	}
 	
 	private function _delMain()
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'sec_res' ] = '';
 		
@@ -286,7 +285,7 @@ class MySmartSectionMOD extends _func
 		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'forum_res' ] = '';
 		
@@ -297,7 +296,7 @@ class MySmartSectionMOD extends _func
 
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('section_del');
 	}
@@ -306,22 +305,22 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$this->check_by_id($Inf);
 		
-		/* ... */
+		// ... //
 				
 		if ($MySmartBB->_POST['choose'] == 'move')
 		{
-			/* ... */
+			// ... //
 			
 			if (empty($MySmartBB->_POST['to']))
 			{
 				$MySmartBB->func->error('يوجد خطأ، لا يمكن إكمال العمليه! لم يتم اختيار القسم');
 			}
 			
-			/* ... */
+			// ... //
 			
 			// Move normal sections to another main section
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
@@ -331,11 +330,11 @@ class MySmartSectionMOD extends _func
 			
 			$update = $MySmartBB->rec->update();
 			
-			/* ... */
+			// ... //
 			
 			if ($update)
 			{
-				/* ... */
+				// ... //
 				
 				$MySmartBB->func->msg('تم نقل المنتديات بنجاح');
 				
@@ -344,22 +343,22 @@ class MySmartSectionMOD extends _func
 				
 				$del = $MySmartBB->rec->delete();
 				
-				/* ... */
+				// ... //
 				
 				if ($del)
 				{
-					/* ... */
+					// ... //
 					
 					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
 					
-					/* ... */
+					// ... //
 					
 					$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
 					
 					$del = $MySmartBB->rec->delete();
 					
-					/* ... */
+					// ... //
 					
 					if ($del)
 					{
@@ -367,7 +366,7 @@ class MySmartSectionMOD extends _func
 						$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 					}
 					
-					/* ... */
+					// ... //
 				}
 			}
 		}
@@ -586,15 +585,15 @@ class MySmartSectionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$this->check_by_id($Inf);
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_GET['group_id'] = (int) $MySmartBB->_GET['group_id'];
 		
-		/* ... */
+		// ... //
 		
 		$success 	= 	array();
 		$fail		=	array();
@@ -622,24 +621,24 @@ class MySmartSectionMOD extends _func
 			unset($update);
 		}
 		
-		/* ... */
+		// ... //
 		
 		$success_size 	= 	sizeof($success);
 		$fail_size		=	sizeof($fail); // Why??
 		
-		/* ... */
+		// ... //
 		
 		if ($success_size == $size)
 		{
-			/* ... */
+			// ... //
 			
 			$MySmartBB->func->msg('تم التحديث بنجاح!');
 			
-			/* ... */
+			// ... //
 			
 			$cache = $MySmartBB->group->updateSectionGroupCache( $Inf['id'] );
 			
-			/* ... */
+			// ... //
 			
 			if ($cache)
 			{
@@ -656,32 +655,32 @@ class _func
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		if ($Inf == false)
 		{
 			$MySmartBB->func->error('القسم المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 	}
 }
 

@@ -254,7 +254,6 @@ class MySmartRecords
 		}
 		else
 		{
-			
 			$this->result = $query;
 			
 			unset( $this->result );
@@ -289,8 +288,8 @@ class MySmartRecords
 		{
 			/* 
 		 	 * Note : This feature is new and important one that comes with the new version of MySmartRecords
-		 	 * the main goal of this feature is improve the performance, instead of clean the array after get
-		 	 * the whole data we clean it immediately after get it from database.
+		 	 * the main goal of this feature is improve the performance, instead of clean the array after getting
+		 	 * the whole data we clean it immediately after getting it from the database.
 		 	 */
 		 	 
 			$this->func->cleanArray( $row, 'html' );

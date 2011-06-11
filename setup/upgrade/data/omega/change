@@ -1,0 +1,4 @@
+ALTER TABLE #member# CHANGE register_date register_date VARCHAR( 100 ) NOT NULL
+ALTER TABLE #pm# CHANGE date date VARCHAR( 100 ) NOT NULL
+ALTER TABLE #announcement# CHANGE date date VARCHAR( 100 ) NOT NULL
+ALTER TABLE #smiles# CHANGE smile_path smile_path VARCHAR( 255 ) NOT NULL

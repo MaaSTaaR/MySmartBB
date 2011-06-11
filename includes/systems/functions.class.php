@@ -2,7 +2,7 @@
 
 class MySmartFunctions
 {
-	/* ... */
+	// ... //
 	
 	/**
 	 * Check if delicious cookie is here or somebody eat it mmmm :)
@@ -14,7 +14,7 @@ class MySmartFunctions
  		return empty( $MySmartBB->_COOKIE[ $cookie_name ] ) ? false : true;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Clean the variable from any dirty :) , we should be thankful for abuamal
@@ -51,7 +51,7 @@ class MySmartFunctions
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
 	/**
 	 * Clean the array from dirty, this function based on "cleanVariable( $var, $type )"
@@ -80,7 +80,7 @@ class MySmartFunctions
 		return true;
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function addressBar( $title )
  	{
@@ -91,7 +91,7 @@ class MySmartFunctions
  		$MySmartBB->template->display('address_bar_part2');
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Show footer and stop the script , footer is like water in the life :)
@@ -152,7 +152,7 @@ class MySmartFunctions
   		$this->stop($no_style);
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	/**
 	 * Check if $email is true email or not
@@ -164,7 +164,7 @@ class MySmartFunctions
         return eregi( "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[_a-z0-9-]+(\.[_a-z0-9-]+)", $email ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	 
  	/**
  	 * Get file extention
@@ -189,7 +189,7 @@ class MySmartFunctions
   		}
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Show the default footer of forum page
@@ -210,7 +210,7 @@ class MySmartFunctions
         $footer_name->run();
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Show the default header of forum page
@@ -228,7 +228,7 @@ class MySmartFunctions
  		$MySmartBB->template->display('header');
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Get the forum's url address
@@ -264,7 +264,7 @@ class MySmartFunctions
  		return $url;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	/**
  	 * Get a strong random code :)
@@ -282,7 +282,7 @@ class MySmartFunctions
   		return $code;
  	}
  	
- 	/* ... */
+ 	// ... //
 
 	/**
 	 * Just send email :)
@@ -316,7 +316,7 @@ class MySmartFunctions
 		return $this->GetFileExtension($filename);
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function date( $input, $type = null, $format = 'j/n/Y' )
 	{
@@ -400,7 +400,7 @@ class MySmartFunctions
 		}		
 	}
 	
-	/* ... */
+	// ... //
 		
 	function time($time,$format='h:i:s A')
 	{
@@ -412,7 +412,7 @@ class MySmartFunctions
 		return $x;		
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getEditorTools()
 	{
@@ -428,7 +428,7 @@ class MySmartFunctions
 			trigger_error( 'ERROR::TOOLBOX_OBJECT_DID_NOT_FOUND', E_USER_ERROR );
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['smile_res'] = '';
 		
@@ -437,7 +437,7 @@ class MySmartFunctions
 		
 		$MySmartBB->icon->getSmileList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['icon_res'] = '';
 		
@@ -446,24 +446,24 @@ class MySmartFunctions
 		
 		$MySmartBB->icon->getIconList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['color_res'] = '';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['color_res'];
 		
 		$MySmartBB->toolbox->getColorsList();
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['font_res'] = '';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['font_res'];
 		
 		$MySmartBB->toolbox->getFontsList();
 		
-		/* ... */
+		// ... //
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function moderatorCheck( $section_id, $username = null )
 	{
@@ -498,11 +498,13 @@ class MySmartFunctions
 		return $Mod;
 	}
 	
-	/* ... */
+	// ... //
 	
-	public function getForumsList( &$forums_list )
+	public function getForumsList( $check_group = true )
 	{
 		global $MySmartBB;
+		
+		$forums_list = array();
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = 'parent=0';
@@ -514,100 +516,124 @@ class MySmartFunctions
 		// Loop to read the information of main sections
 		while ( $cat = $MySmartBB->rec->getInfo() )
 		{
-			/* ... */
+			// ... //
 			
 			// Get the groups information to know view this section or not
-			$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
 			
-			if ( is_array( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
+			if ( $check_group )
 			{
-				if ( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+				$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
+			
+				if ( is_array( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 				{
-					$forums_list[ $cat['id'] . '_m' ] = $cat;
+					if ( $groups[ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+					{
+						$forums_list[ $cat['id'] . '_m' ] = $cat;
+					}
 				}
+			
+				unset($groups);
+			}
+			else
+			{
+				$forums_list[ $cat['id'] . '_m' ] = $cat;
 			}
 			
-			unset($groups);
+			// ... //
 			
-			/* ... */
-			
-			if (!empty($cat['forums_cache']))
+			if ( !empty( $cat[ 'forums_cache' ] ) )
 			{
 				$forums = unserialize( base64_decode( $cat[ 'forums_cache' ] ) );
 				
 				foreach ($forums as $forum)
 				{
-					if ( is_array( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
+					$show_forum = false;
+					
+					if ( $check_group )
 					{
-						if ( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+						// Check if the visitor have the permission to see this forum or not
+						if ( is_array( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
 						{
-							/* ... */
-							
-							// Get the first-level sub forums as a _link_ and store it in $forum['sub']
-							
-							$forum[ 'is_sub' ] 	= 	0;
-							$forum[ 'sub' ]		=	null;
-							
-							if ( !empty( $forum[ 'forums_cache' ] ) )
+							if ( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 							{
-								$subs = unserialize( base64_decode( $forum[ 'forums_cache' ] ) );
-								
-								if ( is_array( $subs ) )
-								{
-									foreach ( $subs as $sub )
-									{
-										if ( is_array( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
-										{
-											if ( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
-											{
-												if ( !$forum[ 'is_sub' ] )
-												{
-													$forum[ 'is_sub' ] = 1;
-												}
-												
-												$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ، ';
-											}
-										}
-									}
-								}
+								$show_forum = true;
 							}
-							
-							/* ... */
-							
-							// Get the moderators list as a _link_ and store it in $forum['moderators_list']
-							
-							$forum['is_moderators'] 		= 	0;
-							$forum['moderators_list']		=	null;
-							
-							if ( !empty( $forum[ 'moderators' ] ) )
-							{
-								$moderators = unserialize( $forum[ 'moderators' ] );
-								
-								if ( is_array( $moderators ) )
-								{
-									foreach ( $moderators as $moderator )
-									{
-										if ( !$forum[ 'is_moderators' ] )
-										{
-											$forum[ 'is_moderators' ] = 1;
-										}
-										
-										$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
-									}
-								}
-							}
-							
-							/* ... */
-							
-							$forums_list[ $forum[ 'id' ] . '_f' ] = $forum;
 						}
-					} // end if is_array
+					}
+					else
+					{
+						$show_forum = true;
+					}
+					
+					// ... //
+					
+					if ( $show_forum )
+					{
+						// Get the first-level sub forums as a _link_ and store it in $forum['sub']	
+						$forum[ 'is_sub' ] 	= 	0;
+						$forum[ 'sub' ]		=	null;
+						
+						if ( !empty( $forum[ 'forums_cache' ] ) )
+						{
+							$subs = unserialize( base64_decode( $forum[ 'forums_cache' ] ) );
+							
+							if ( is_array( $subs ) )
+							{
+								foreach ( $subs as $sub )
+								{
+									if ( is_array( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
+									{
+										if ( $sub[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+										{
+											if ( !$forum[ 'is_sub' ] )
+											{
+												$forum[ 'is_sub' ] = 1;
+											}
+											
+											$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ، ';
+										}
+									}
+								}
+							}
+						}
+							
+						// ... //
+						
+						// Get the moderators list as a _link_ and store it in $forum['moderators_list']
+						
+						$forum['is_moderators'] 		= 	0;
+						$forum['moderators_list']		=	null;
+						
+						if ( !empty( $forum[ 'moderators' ] ) )
+						{
+							$moderators = unserialize( $forum[ 'moderators' ] );
+							
+							if ( is_array( $moderators ) )
+							{
+								foreach ( $moderators as $moderator )
+								{
+									if ( !$forum[ 'is_moderators' ] )
+									{
+										$forum[ 'is_moderators' ] = 1;
+									}
+									
+									$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
+								}
+							}
+						}
+							
+						// ... //
+							
+						$forums_list[ $forum[ 'id' ] . '_f' ] = $forum;
+					} // end if $show_forum
 				} // end foreach ($forums)
 			} // end !empty($forums_cache)
-		}		
+		}
+		
+		return $forums_list;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function replaceWYSIWYG( $text )
 	{
@@ -724,6 +750,31 @@ class MySmartFunctions
 		$text = str_replace('javascript','',$text);
 		
 		return $text;
+	}
+	
+	/**
+	 * Sets the variable which stores the returned "resource" for template.
+	 *
+	 * Use this function only with MySmartRecords->getList();
+	 */
+	public function setResource( $name )
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ] = '';
+		
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ];
+	}
+	
+	public function &setResouce()
+	{
+		global $MySmartBB;
+		
+		$resouce = '';
+
+		$MySmartBB->rec->result = &$resouce;
+		
+		return $resouce;
 	}
 }
 

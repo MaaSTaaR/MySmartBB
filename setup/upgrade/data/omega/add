@@ -1,0 +1,6 @@
+ALTER TABLE #section# ADD forums_cache TEXT
+ALTER TABLE #section# ADD subject_num INT ( 9 )
+ALTER TABLE #section# ADD reply_num INT ( 9 )
+ALTER TABLE #member# ADD style_cache TEXT
+ALTER TABLE #member# ADD style_id_cache INT( 9 )
+ALTER TABLE #member# ADD should_update_style_cache INT( 1 )

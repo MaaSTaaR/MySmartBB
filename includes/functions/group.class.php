@@ -19,10 +19,11 @@ class MySmartGroup
 	
 	public function createSectionGroupCache( $id )
 	{
+		$this->engine->rec->table = $this->engine->table[ 'section_group' ];
 		$this->engine->rec->order = "id ASC";
 		$this->engine->rec->filter = "section_id='" . $id . "'";
 		
-		$groups = $this->getSectionGroupList();
+		$groups = $this->engine->rec->getList();
 		
 		$cache = array();
 		
@@ -53,6 +54,8 @@ class MySmartGroup
 		$this->engine->rec->filter = "id='" . $id . "'";
 		
 		$query = $this->engine->rec->update();
+		
+		return $query;
 	}
 	
 	

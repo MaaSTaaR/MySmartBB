@@ -96,56 +96,20 @@ class MySmartForumsMOD extends _functions
 
 		// ... //
 		
-		/*$SecArr 						= 	array();
-		$SecArr['get_from']				=	'db';
-		
-		$SecArr['proc'] 				= 	array();
-		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$SecArr['order']				=	array();
-		$SecArr['order']['field']		=	'sort';
-		$SecArr['order']['type']		=	'ASC';
-		
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]['name']		= 	'parent';
-		$SecArr['where'][0]['oper']		= 	'=';
-		$SecArr['where'][0]['value']	= 	'0';
-		
-		// Get main sections
-		$cats = $MySmartBB->section->GetSectionsList($SecArr);
-		
-		// We will use forums_list to store list of forums which will view in main page
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
-		// Loop to read the information of main sections
-		foreach ($cats as $cat)
-		{
-			$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
-			
-			if (!empty($cat['forums_cache']))
-			{
-				$forums = unserialize(base64_decode($cat['forums_cache']));
-				
-				foreach ($forums as $forum)
-				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-				}
-			}
-		}*/
-		
-		// ... //
-		
-		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
-		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
+		
+		$MySmartBB->func->setResource( 'group_res' );
 		
 		$MySmartBB->rec->getList();
 		
 		// ... //
 		
-		$MySmartBB->template->display('forum_add');
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
+		
+		// ... //
+		
+		$MySmartBB->template->display( 'forum_add' );
 	}
 	
 	private function _addStart()
@@ -172,12 +136,10 @@ class MySmartForumsMOD extends _functions
 			
 			$SortSection = $MySmartBB->rec->getInfo();
 			
-			// No section
 			if (!$SortSection)
 			{
 				$sort = 1;
 			}
-			// There is a section
 			else
 			{
 				$sort = $SortSection['sort'] + 1;
@@ -204,7 +166,7 @@ class MySmartForumsMOD extends _functions
 		$MySmartBB->rec->fields['subject_order']			=	1;
 		$MySmartBB->rec->fields['sectionpicture_type']		=	2;
 		
-		$MySmartBB->section->get_id = true;
+		$MySmartBB->rec->get_id = true;
 		
 		$insert = $MySmartBB->rec->insert();
 		
@@ -225,7 +187,7 @@ class MySmartForumsMOD extends _functions
 				
 				$MySmartBB->rec->fields	=	array();
 				
-				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->section->id;
+				$MySmartBB->rec->fields['section_id'] 			= 	$MySmartBB->rec->id;
 				$MySmartBB->rec->fields['group_id'] 			= 	$row['id'];
 				$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['groups'][$row['id']]['view_section'];
 				$MySmartBB->rec->fields['download_attach'] 		= 	$row['download_attach'];
@@ -252,7 +214,7 @@ class MySmartForumsMOD extends _functions
 			if ($cache)
 			{
 				$MySmartBB->func->msg('تم اضافة المنتدى بنجاح !');
-				$MySmartBB->func->move('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->section->id);
+				$MySmartBB->func->move('admin.php?page=forums&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 			}
 			else
 			{
@@ -271,43 +233,8 @@ class MySmartForumsMOD extends _functions
 		
 		// ... //
 		
-		/*$SecArr 						= 	array();
-		$SecArr['get_from']				=	'db';
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
 		
-		$SecArr['proc'] 				= 	array();
-		$SecArr['proc']['*'] 			= 	array('method'=>'clean','param'=>'html');
-		
-		$SecArr['order']				=	array();
-		$SecArr['order']['field']		=	'sort';
-		$SecArr['order']['type']		=	'ASC';
-		
-		$SecArr['where']				=	array();
-		$SecArr['where'][0]['name']		= 	'parent';
-		$SecArr['where'][0]['oper']		= 	'=';
-		$SecArr['where'][0]['value']	= 	'0';
-		
-		// Get main sections
-		$cats = $MySmartBB->section->GetSectionsList($SecArr);
-		
-		// We will use forums_list to store list of forums which will view in main page
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
-		// Loop to read the information of main sections
-		foreach ($cats as $cat)
-		{
-			$MySmartBB->_CONF['template']['foreach']['forums_list'][$cat['id'] . '_m'] = $cat;
-			
-			if (!empty($cat['forums_cache']))
-			{
-				$forums = unserialize(base64_decode($cat['forums_cache']));
-				
-				foreach ($forums as $forum)
-				{
-					$MySmartBB->_CONF['template']['foreach']['forums_list'][$forum['id'] . '_f'] = $forum;
-				}
-			}
-		}
-		*/
 		// ... //
 		
 		$MySmartBB->template->display('forums_main');

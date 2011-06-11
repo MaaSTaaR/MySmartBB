@@ -1,0 +1,4 @@
+RENAME TABLE MySBB_avater TO #avatar#
+RENAME TABLE MySBB_emailmsgs TO #email_msg#
+RENAME TABLE MySBB_pmfolder TO #pm_folder#
+RENAME TABLE MySBB_pmlists TO #pm_lists#

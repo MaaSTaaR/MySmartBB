@@ -39,9 +39,7 @@ class MySmartIndexMOD
 		
 		/* ... */
 		
-		$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-		
-		$MySmartBB->func->getForumsList( $MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] );
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList();
 		
 		/* ... */
 	}

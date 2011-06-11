@@ -11,14 +11,24 @@ class MySmartUpgrader
 		$this->path = 'data/' . $version . '/';
 	}
 	
-	public function addFields()
+	public function add()
 	{
-		$this->_executeCommands( $this->path . 'add_fields' );
+		$this->_executeCommands( $this->path . 'add' );
 	}
 	
-	public function dropFields()
+	public function drop()
 	{
-		$this->_executeCommands( $this->path . 'drop_fields' );
+		$this->_executeCommands( $this->path . 'drop' );
+	}
+	
+	public function rename()
+	{
+		$this->_executeCommands( $this->path . 'rename' );
+	}
+	
+	public function change()
+	{
+		$this->_executeCommands( $this->path . 'change' );
 	}
 	
 	private function _executeCommands( $path )

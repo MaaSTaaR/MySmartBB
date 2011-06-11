@@ -1,0 +1,8 @@
+DROP TABLE MySBB_contactus_extensions
+DROP TABLE MySBB_contactus_messages
+ALTER TABLE #reply# DROP write_date
+ALTER TABLE #reply# DROP gmt_time
+ALTER TABLE #subject# DROP reply_time
+ALTER TABLE #subject# DROP wr_date
+ALTER TABLE #subject# DROP gmt_time
+ALTER TABLE #subject# DROP lastreply_date
