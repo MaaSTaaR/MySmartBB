@@ -89,7 +89,7 @@ class MySmartPrivateMassegeMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تحديث البيانات بنجاح');
-			$MySmartBB->func->goto('index.php?page=pm_setting&amp;setting=1&amp;index=1');
+			$MySmartBB->func->move('index.php?page=pm_setting&amp;setting=1&amp;index=1');
 		}
 	}
 }

@@ -52,7 +52,7 @@ class MySmartPM
 	/* ... */
 	
 	/** High-Level functions **/
-	public function getInboxList()
+	public function getInboxList( $username )
 	{
  		$this->engine->rec->table = $this->engine->table[ 'pm' ];
  		

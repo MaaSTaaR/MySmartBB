@@ -252,7 +252,7 @@ class MySmartUserCPMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح');
-			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;info=1&amp;main=1');
+			$MySmartBB->func->move('index.php?page=usercp&amp;control=1&amp;info=1&amp;main=1');
 		}
 	}
 	
@@ -294,7 +294,7 @@ class MySmartUserCPMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح');
-			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;setting=1&amp;main=1',2);
+			$MySmartBB->func->move('index.php?page=usercp&amp;control=1&amp;setting=1&amp;main=1',2);
 		}
 	}
 	
@@ -337,7 +337,7 @@ class MySmartUserCPMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم تحديث التوقيع بنجاح !');
-			$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
+			$MySmartBB->func->move('index.php?page=usercp&amp;control=1&amp;sign=1&amp;main=1');
 		}
 		
 		// ... //
@@ -379,7 +379,7 @@ class MySmartUserCPMOD
 		if ($UpdateSign)
 		{
 			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للمواضيع بنجاح !');
-			$MySmartBB->func->goto('index.php?page=usercp&control=1&subjects=1&main=1');
+			$MySmartBB->func->move('index.php?page=usercp&control=1&subjects=1&main=1');
 		}
 	}
 	
@@ -418,7 +418,7 @@ class MySmartUserCPMOD
 		if ($UpdateSign)
 		{
 			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للردود بنجاح !');
-			$MySmartBB->func->goto('index.php?page=usercp&control=1&replays=1&main=1');
+			$MySmartBB->func->move('index.php?page=usercp&control=1&replays=1&main=1');
 		}
 	}
 	*/
@@ -521,7 +521,7 @@ class MySmartUserCPMOD
 					if ($send)
 					{
 						$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
-						$MySmartBB->func->goto('index.php?page=usercp&index=1');
+						$MySmartBB->func->move('index.php?page=usercp&index=1');
 					}
 				}
 			}
@@ -537,7 +537,7 @@ class MySmartUserCPMOD
 			if ( $update )
 			{
 				$MySmartBB->func->msg('تم التحديث بنجاح !');
-				$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;password=1&amp;main=1');
+				$MySmartBB->func->move('index.php?page=usercp&amp;control=1&amp;password=1&amp;main=1');
 			}
 		}
 	}
@@ -619,7 +619,7 @@ class MySmartUserCPMOD
 					if ( $send )
 					{
 						$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
-						$MySmartBB->func->goto('index.php?page=usercp&index=1');
+						$MySmartBB->func->move('index.php?page=usercp&index=1');
 					}
 				}
 			}
@@ -635,7 +635,7 @@ class MySmartUserCPMOD
 			if ( $update )
 			{
 				$MySmartBB->func->msg('تم التحديث بنجاح !');
-				$MySmartBB->func->goto('index.php?page=usercp&amp;control=1&amp;email=1&amp;main=1');
+				$MySmartBB->func->move('index.php?page=usercp&amp;control=1&amp;email=1&amp;main=1');
 			}
 		}
 	}
@@ -659,7 +659,7 @@ class MySmartUserCPMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		
 		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$MySmartBB->avatar->getAvatarNumber();
+		//$MySmartBB->rec->pager['total']		= 	$MySmartBB->avatar->getAvatarNumber();
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['avatar_perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=usercp&amp;control=1&amp;avatar=1&amp;main=1';
@@ -806,7 +806,7 @@ class MySmartUserCPMOD
 		else
 		{
 			$MySmartBB->func->msg('يرجى الانتظار');
-			$MySmartBB->func->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
+			$MySmartBB->func->move('index.php?page=usercp&control=1&avatar=1&main=1',2);
 			$MySmartBB->func->stop();
 		}
 		
@@ -815,7 +815,7 @@ class MySmartUserCPMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح !');
-			$MySmartBB->func->goto('index.php?page=usercp&control=1&avatar=1&main=1',2);
+			$MySmartBB->func->move('index.php?page=usercp&control=1&avatar=1&main=1',2);
 		}
 	}
 	
@@ -902,7 +902,7 @@ class MySmartUserCPMOD
 		if ($insert)
 		{
 			$MySmartBB->func->msg('تم إضافة الموضوع الى المفضلة');
-			$MySmartBB->func->goto('index.php?page=usercp&bookmark=1&show=1');
+			$MySmartBB->func->move('index.php?page=usercp&bookmark=1&show=1');
 		}
 	}
 	
@@ -927,7 +927,7 @@ class MySmartUserCPMOD
 		if ( $del )
 		{
 			$MySmartBB->func->msg('تم حذف الموضوع');
-			$MySmartBB->func->goto('index.php?page=usercp&bookmark=1&show=1');
+			$MySmartBB->func->move('index.php?page=usercp&bookmark=1&show=1');
 		}
 	}
 	

@@ -52,7 +52,7 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = ($MySmartBB->_GET['folder'] == 'inbox') ? 'user_to' : 'user_from';
@@ -62,9 +62,7 @@ class MySmartPrivateMassegeListMOD
 		
 		$number = $MySmartBB->rec->getNumber();
 		
-		/* ... */
-		
-		//$MsgArr['proc']['date'] 		= 	array('method'=>'date','store'=>'date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['pmlist_res'] = '';
 		
@@ -92,7 +90,18 @@ class MySmartPrivateMassegeListMOD
 				
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
+		$MySmartBB->rec->setInfoCallback( 'MySmartPrivateMassegeListMOD::rowsProcessCB' );
+		
 		$MySmartBB->template->display('pm_list');
+		
+		$MySmartBB->rec->removeInfoCallback();
+	}
+	
+	public function rowsProcessCB( $row )
+	{
+		global $MySmartBB;
+		
+		$row[ 'date' ] = $MySmartBB->func->date( $row[ 'date' ] );
 	}
 }
 

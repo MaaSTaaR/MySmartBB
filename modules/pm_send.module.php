@@ -173,7 +173,7 @@ class MySmartPrivateMassegeSendMOD
 		
 				if ($GetMemberOptions['max_pm'] > 0)
 				{
-					$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
+					$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 					$MySmartBB->rec->filter = "user_to='" . $GetToInfo['username'] . "'";
 					
 					$PrivateMassegeNumber = $MySmartBB->pm->getNumber();
@@ -198,7 +198,7 @@ class MySmartPrivateMassegeSendMOD
 				
 				/* ... */
 				
-				$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
+				$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 													'user_to'	=>	$GetToInfo['username'],
 													'title'	=>	$MySmartBB->_POST['title'],
@@ -208,7 +208,7 @@ class MySmartPrivateMassegeSendMOD
 													'folder'	=>	'inbox'	);
 				
 				$MySmartBB->rec->get_id = true;
-												
+				
 				$Send = $MySmartBB->rec->insert();
 				
 				/* ... */
@@ -349,7 +349,7 @@ class MySmartPrivateMassegeSendMOD
      				
      				//////////
 					
-					$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
+					$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 					$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 														'user_to'	=>	$GetToInfo['username'],
 														'title'	=>	$MySmartBB->_POST['title'],
@@ -365,7 +365,7 @@ class MySmartPrivateMassegeSendMOD
 						/** Auto reply **/
 						if ($GetToInfo['autoreply'])
 						{
-							$MySmartBB->rec->table = $MySamrtBB->table[ 'pm' ];
+							$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 							$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
 																'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
 																'title'	=>	'[الرد الآلي] ' . $GetToInfo['autoreply_title'],
@@ -378,11 +378,11 @@ class MySmartPrivateMassegeSendMOD
 						
 						$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo['username'] );
 		      			
-		      			$MySmartBB->rec->table = $MySamrtBB->table[ 'member' ];
+		      			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 						$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
 						$MySmartBB->rec->filter = "username='" . $GetToInfo['username'] . "'";
 						
-						$Cache = $MySmartBB->member->update();
+						$Cache = $MySmartBB->rec->update();
 						
 						if ($Cache)
 						{
@@ -417,7 +417,7 @@ class MySmartPrivateMassegeSendMOD
      		$MySmartBB->func->msg('تم إرسال الرساله الخاصه إلى البعض');
      	}
      	
-     	$MySmartBB->func->goto('index.php?page=pm_list&amp;list=1&amp;folder=inbox');
+     	$MySmartBB->func->move('index.php?page=pm_list&amp;list=1&amp;folder=inbox');
 	}
 }
 

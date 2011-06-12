@@ -47,7 +47,7 @@ class MySmartStaticMOD
 		$StaticInfo['GetSubjectNumber'] = $MySmartBB->_CONF['info_row']['subject_number'];
 		$StaticInfo['GetReplyNumber']	= $MySmartBB->_CONF['info_row']['reply_number'];
 		// TODO: There is an error here.
-		$StaticInfo['GetActiveMember']	= $MySmartBB->member->getActiveMemberNumber();
+		//$StaticInfo['GetActiveMember']	= $MySmartBB->member->getActiveMemberNumber();
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "parent<>'0'";
