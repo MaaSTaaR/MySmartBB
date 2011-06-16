@@ -76,7 +76,7 @@ class MySmartProfileMOD
 			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
 		} 
 		
-		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['MemberInfo'],'sql');
+		$MySmartBB->func->CleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
 		// ... //
 		

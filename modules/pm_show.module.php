@@ -65,7 +65,7 @@ class MySmartPrivateMassegeShowMOD
 			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
 		}
 		
-		$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['MassegeRow'],'sql');
+		$MySmartBB->func->CleanArray($MySmartBB->_CONF['template']['MassegeRow'],'sql');
 		
 		// ... //
 		

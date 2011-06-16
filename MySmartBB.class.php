@@ -193,6 +193,8 @@ class MySmartBB
 			{			
 				$this->_CONF[ 'info_row' ][ $r[ 'var_name' ] ] = $r[ 'value' ];
 			}
+			
+			$this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] = $this->func->htmlDecode( $this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] );
  		}
  		
 		// ... //

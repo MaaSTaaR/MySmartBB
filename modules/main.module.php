@@ -143,9 +143,18 @@ class MySmartIndexMOD
 		// ... //
 	}
 	
+	public function usernameStyleProcess( $row )
+	{
+		global $MySmartBB;
+		
+		$row[ 'username_style' ] =  $MySmartBB->func->cleanVariable( $row[ 'username_style' ], 'unhtml' );
+	}
+	
 	private function _callTemplate()
 	{
 		global $MySmartBB;
+		
+		$MySmartBB->rec->setInfoCallback( 'MySmartIndexMOD::usernameStyleProcess' );
 		
 		$MySmartBB->template->display( 'main' );
 	}

@@ -108,9 +108,11 @@ class MySmartIcons
      
      /* ... */
 	
-  	function GetCachedSmiles()
+	public function getCachedSmiles()
 	{
 		$cache = $this->engine->_CONF['info_row']['smiles_cache'];
+		
+		$cache = $this->engine->func->htmlDecode( $cache );
 		
 		$cache = unserialize( $cache );
 		

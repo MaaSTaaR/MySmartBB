@@ -227,6 +227,8 @@ class MySmartGroupsMOD extends _func
 		// ... //
 		
 		$MySmartBB->template->display('groups_main');
+		
+		$MySmartBB->rec->removeInfoCallback();
 	}
 	
 	public function rowProcess( $row )

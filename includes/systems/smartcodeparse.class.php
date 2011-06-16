@@ -187,7 +187,8 @@ class MySmartCodeParse
 		{
 			$input = str_replace(array('&lt;?php', '?&gt;'), '', $input);
 			$input = str_replace(array('<?php', '?>'), '', $input);
-		}		
+		}
+		
 		$lines = explode('<br />', $input);
 		$count = count($lines) - 1;
 
@@ -211,16 +212,14 @@ class MySmartCodeParse
 		return $return;		
  	 }
  	 
- 	function replace_smiles(&$text)
+ 	public function replace_smiles( &$text )
 	{
 		global $MySmartBB;
 		
-		$smiles = $MySmartBB->icon->GetCachedSmiles();
+		$smiles = $MySmartBB->icon->getCachedSmiles();
 		
 		foreach ($smiles as $smile)
-		{						
-			$MySmartBB->functions->CleanVariable($smile,'html');
-			
+		{
 			$text = str_replace($smile['smile_short'],'<img src="' . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$text);
 		}
 	}
