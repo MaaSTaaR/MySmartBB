@@ -25,7 +25,7 @@ class MySmartOnlineMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->func->GetFooter();
+		$MySmartBB->func->getFooter();
 	}
 	
 	private function _show()
@@ -37,8 +37,21 @@ class MySmartOnlineMOD
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->rec->setInfoCallback( 'MySmartOnlineMOD::rowProcess' );
+		
 		$MySmartBB->template->display('online');
-	}	
+		
+		$MySmartBB->rec->removeInfoCallback();
+	}
+	
+	public function rowProcess( $row )
+	{
+		global $MySmartBB;
+		
+		$row[ 'username_style' ] = $MySmartBB->func->cleanVariable( $row[ 'username_style' ], 'unhtml' );
+		
+		print_r( $row );
+	}
 }
 
 ?>

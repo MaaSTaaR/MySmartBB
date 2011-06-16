@@ -736,9 +736,18 @@ class MySmartFunctions
 	}
 	
 	public function htmlDecode( $text )
-	{		
-		// PHP5 >= 5.1.0
-		$text = htmlspecialchars_decode( $text );
+	{
+		$text = str_replace('&amp;','&',$text);
+		$text = str_replace('&lt;','<',$text);
+		$text = str_replace('&quot;','"',$text);
+		$text = str_replace('&gt;','>',$text);
+		$text = str_replace("\'","'",$text);
+		
+		$text = str_replace('<script','',$text);
+		$text = str_replace('</script>','',$text);
+		$text = str_replace('document.cookie','',$text);
+		$text = str_replace('document.location','',$text);
+		$text = str_replace('javascript','',$text);
 		
 		return $text;
 	}
