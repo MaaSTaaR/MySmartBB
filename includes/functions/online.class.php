@@ -70,6 +70,19 @@ class MySmartOnline
 		
 		return ($num <= 0) ? false : true;
 	}
+	
+	// ... //
+	
+	public function updateMemberLocation( $location )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
+		$this->engine->rec->fields = array(	'user_location'	=>	$location	);
+		$this->engine->rec->filter = "username='" . $this->engine->_CONF['member_row']['username'] . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		return ( $update ) ? true : false;
+	}
 }
 
 ?>

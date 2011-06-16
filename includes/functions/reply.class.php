@@ -40,7 +40,7 @@ class MySmartReply
 			$this->engine->rec->filter = $statement;
 		}
 		
-		$this->engine->rec->getList();		
+		$this->engine->rec->getList();
 	}
 	
 	

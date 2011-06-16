@@ -751,30 +751,30 @@ class MySmartFunctions
 		
 		return $text;
 	}
-	
+			
 	/**
 	 * Sets the variable which stores the returned "resource" for template.
 	 *
 	 * Use this function only with MySmartRecords->getList();
 	 */
-	public function setResource( $name )
+	public function &setResource( $name = null )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ] = '';
+		if ( isset( $name ) )
+		{
+			$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ] = '';
 		
-		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ];
-	}
-	
-	public function &setResouce()
-	{
-		global $MySmartBB;
-		
-		$resouce = '';
+			$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ $name ];
+		}
+		else
+		{
+			$resource = '';
 
-		$MySmartBB->rec->result = &$resouce;
+			$MySmartBB->rec->result = &$resource;
 		
-		return $resouce;
+			return $resource;
+		}
 	}
 }
 

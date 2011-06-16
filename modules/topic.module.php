@@ -24,25 +24,25 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->ShowHeader('عرض موضوع');
+		$MySmartBB->func->showHeader('عرض موضوع');
 		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_getSubject();
 			$this->_getSection();
 			$this->_moderatorCheck();
-			//$this->_getGroup();
-			//$this->_checkSystem();
-			//$this->_getWriterInfo();
-			/*$this->_checkTags();
+			$this->_getGroup();
+			$this->_checkSystem();
+			$this->_getWriterInfo();
+			$this->_checkTags();
 			$this->_checkPoll();
 			$this->_subjectTextFormat();
 			$this->_subjectEnd();
-			$this->_getReply();*/
+			$this->_getReply();
 		
 			if ($MySmartBB->_CONF['info_row']['samesubject_show'])
 			{
-				//$this->_sameTopics();
+				$this->_sameTopics();
 			}
 		
 			// The End of page
@@ -373,12 +373,13 @@ class MySmartTopicMOD
 		
 		$MySmartBB->rec->filter = "delete_topic<>'1'";
 		
-		$this->RInfo = $MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
+		$MySmartBB->reply->getReplyWriterInfo( $this->Info['subject_id'] );
 		
 		$n = sizeof($this->RInfo);
 		$this->x = 0;
 		
-		while ($n > $this->x)
+		//while ($n > $this->x)
+		while ( $this->RInfo = $MySmartBB->rec->getInfo() )
 		{
 			// Get the replier info
 			$this->__getReplierInfo();
@@ -396,33 +397,33 @@ class MySmartTopicMOD
 		global $MySmartBB;
 		
 		// Make register date in nice format to show it
-		if (is_numeric($this->RInfo[$this->x]['register_date']))
+		if (is_numeric($this->RInfo['register_date']))
 		{
-			$this->RInfo[$this->x]['register_date'] = $MySmartBB->func->date($this->RInfo[$this->x]['register_date']);
+			$this->RInfo['register_date'] = $MySmartBB->func->date($this->RInfo['register_date']);
 		}
 		
 		// Make member gender as a readable text
-		$this->RInfo[$this->x]['user_gender'] 	= 	str_replace('m','ذكر',$this->RInfo[$this->x]['user_gender']);
-		$this->RInfo[$this->x]['user_gender'] 	= 	str_replace('f','انثى',$this->RInfo[$this->x]['user_gender']);
+		$this->RInfo['user_gender'] 	= 	str_replace('m','ذكر',$this->RInfo['user_gender']);
+		$this->RInfo['user_gender'] 	= 	str_replace('f','انثى',$this->RInfo['user_gender']);
 				
-		$CheckOnline = ($this->RInfo[$this->x]['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
+		$CheckOnline = ($this->RInfo['logged'] < $MySmartBB->_CONF['timeout']) ? false : true;
 											
 		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
 		
-		$MySmartBB->smartparse->replace_smiles($this->RInfo[$this->x]['away_msg']);
+		$MySmartBB->smartparse->replace_smiles($this->RInfo['away_msg']);
 		
-		if (empty($this->RInfo[$this->x]['username_style_cache']))
+		if (empty($this->RInfo['username_style_cache']))
 		{
-			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username'];
+			$this->RInfo['display_username'] = $this->RInfo['username'];
 		}
 		else
 		{
-			$this->RInfo[$this->x]['display_username'] = $this->RInfo[$this->x]['username_style_cache'];
+			$this->RInfo['display_username'] = $this->RInfo['username_style_cache'];
 			
-			$this->RInfo[$this->x]['display_username'] = $MySmartBB->func->cleanVariable($this->RInfo[$this->x]['display_username'],'unhtml');
+			$this->RInfo['display_username'] = $MySmartBB->func->cleanVariable($this->RInfo['display_username'],'unhtml');
 		}
 		
-		$this->RInfo[$this->x]['reply_number'] = $this->reply_number;
+		$this->RInfo['reply_number'] = $this->reply_number;
 		
 		$this->reply_number += 1;
 	}
@@ -434,22 +435,22 @@ class MySmartTopicMOD
 		// If the SmartCode is allow , use it
 		if ($this->SectionInfo['usesmartcode_allow'])
 		{
-			$this->RInfo[$this->x]['text'] = $MySmartBB->smartparse->replace($this->RInfo[$this->x]['text']);
+			$this->RInfo['text'] = $MySmartBB->smartparse->replace($this->RInfo['text']);
 		}
 		// It's not allow , don't use it
 		else
 		{
-			$this->RInfo[$this->x]['text'] = nl2br($this->RInfo[$this->x]['text']);
+			$this->RInfo['text'] = nl2br($this->RInfo['text']);
 		}
 		
 		// Convert the smiles to image
-		$MySmartBB->smartparse->replace_smiles($this->RInfo[$this->x]['text']);
+		$MySmartBB->smartparse->replace_smiles($this->RInfo['text']);
 			
 		// Member signture is not empty , show make it nice with SmartCode
-		if (!empty($this->RInfo[$this->x]['user_sig']))
+		if (!empty($this->RInfo['user_sig']))
 		{
-			$this->RInfo[$this->x]['user_sig'] = $MySmartBB->smartparse->replace($this->RInfo[$this->x]['user_sig']);
-			$MySmartBB->smartparse->replace_smiles($this->RInfo[$this->x]['user_sig']);
+			$this->RInfo['user_sig'] = $MySmartBB->smartparse->replace($this->RInfo['user_sig']);
+			$MySmartBB->smartparse->replace_smiles($this->RInfo['user_sig']);
 		}
 	}
 		
@@ -457,18 +458,18 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 					
-		$reply_date = $MySmartBB->func->date($this->RInfo[$this->x]['write_time']);
-		$reply_time = $MySmartBB->func->time($this->RInfo[$this->x]['write_time']);
+		$reply_date = $MySmartBB->func->date($this->RInfo['write_time']);
+		$reply_time = $MySmartBB->func->time($this->RInfo['write_time']);
 		
-		$this->RInfo[$this->x]['write_time'] = $reply_date . ' ; ' . $reply_time;
+		$this->RInfo['write_time'] = $reply_date . ' ; ' . $reply_time;
 		
 		// We have attachment in this reply
-		if ($this->RInfo[$this->x]['attach_reply'])
+		if ($this->RInfo['attach_reply'])
 		{
 			$MySmartBB->_CONF['template']['res']['reply_attach_res'] = '';
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-			$MySmartBB->rec->filter = "subject_id='" . $this->RInfo[$this->x]['reply_id'] . "' AND reply='1'";
+			$MySmartBB->rec->filter = "subject_id='" . $this->RInfo['reply_id'] . "' AND reply='1'";
 			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['reply_attach_res'];
 			
 			// Get the attachment information
@@ -476,7 +477,7 @@ class MySmartTopicMOD
 		}
 		
 		// $RInfo to templates
-		$MySmartBB->template->assign('Info',$this->RInfo[$this->x]);
+		$MySmartBB->template->assign('Info',$this->RInfo);
 		$MySmartBB->template->assign('section',$this->Info['section']);
 		
 		// $x = $x + 1
@@ -490,27 +491,15 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		$MySmartBB->_CONF['template']['res']['same_subjects_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "title LIKE %" . $this->Info['title'] . "% AND delete_topic<>'1' AND id<>'" . $this->Info['subject_id'] . "'";
+		$MySmartBB->rec->filter = "title LIKE '%" . $this->Info['title'] . "%' AND delete_topic<>'1' AND id<>'" . $this->Info['subject_id'] . "'";
 		$MySmartBB->rec->order = 'write_time DESC';
 		$MySmartBB->rec->limit = '5';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['same_subjects_res'];
 		
-		/*$SubjectArr['proc'] 						= 	array();
-		$SubjectArr['proc']['*'] 					= 	array('method'=>'clean','param'=>'html'); 
-		$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
-		
 		$MySmartBB->rec->getList();
-		
-		/*if (!$MySmartBB->_CONF['template']['while']['SameSubject'])
-		{
-			$MySmartBB->_CONF['template']['NO_SAME'] = true;
-		}*/
 	}
 	
 	private function _pageEnd()
@@ -519,7 +508,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
-		//$MySmartBB->func->getEditorTools();
+		$MySmartBB->func->getEditorTools();
 		
      	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
      	

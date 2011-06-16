@@ -279,12 +279,12 @@ class MySmartReplyAddMOD
 
      		// ... //
      		
-     		$MySmartBB->table = $MySmartBB->table[ 'member' ];
-     		$MySmartBB->fields = array(	'posts'	=>	$posts,
+     		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+     		$MySmartBB->rec->fields = array(	'posts'	=>	$posts,
      									'lastpost_time'	=>	$MySmartBB->_CONF['now'],
      									'user_title'	=>	$usertitle	);
      		
-     		$MySmartBB->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+     		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
      		
    			$UpdateMember = $MySmartBB->rec->update();
      		
@@ -483,7 +483,7 @@ class MySmartReplyAddMOD
      		
      		if (!isset($MySmartBB->_POST['ajax']))
      		{
-     			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password']);
+     			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password']);
      		}
      		else
      		{

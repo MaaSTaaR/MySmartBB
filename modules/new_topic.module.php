@@ -332,7 +332,7 @@ class MySmartTopicAddMOD
      		
      		// Upload files
      		if ($MySmartBB->_POST['attach'])
-     		{	
+     		{
      			if ($this->SectionGroup['upload_attach'])
      			{
      				$files_error	=	array();
@@ -522,7 +522,7 @@ class MySmartTopicAddMOD
      												$MySmartBB->rec->id, 
      												$MySmartBB->_CONF['date'], 
      												(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
-     		     		
+     		
      		// ... //
      		
      		// The overall number of subjects
@@ -535,7 +535,7 @@ class MySmartTopicAddMOD
      		$MySmartBB->rec->fields = array(	'subject_num'	=>	$this->SectionInfo['subject_num'] + 1	);
      		$MySmartBB->rec->filter = "id='" . $this->SectionInfo['id'] . "'";
      		
-     		$UpdateSubjectNumber = $MySmartBB->section->update();
+     		$UpdateSubjectNumber = $MySmartBB->rec->update();
      		
      		// ... //
      		
@@ -548,12 +548,12 @@ class MySmartTopicAddMOD
      			or $MySmartBB->_CONF['group_info']['admincp_allow'])
 			{
      			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-     			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->subject->id . $MySmartBB->_CONF['template']['password']);
+     			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
      		}
      		else
      		{
      			$MySmartBB->func->msg('نشكرك لمشاركتك! مشاركتك لن تضاف حتى تتم الموافقة عليها من قبل الإدارة. سيتم الآن إعادتك الى المنتدى.');
-     			$MySmartBB->func->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
+     			$MySmartBB->func->move('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
      		}
      		
      		// ... //

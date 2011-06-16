@@ -12,6 +12,8 @@ class MySmartForumMOD
 {
 	private $Section;
 	private $SectionGroup;
+	private $subject_res;
+	private $stick_subject_res;
 	
 	function run()
 	{
@@ -50,30 +52,6 @@ class MySmartForumMOD
 		$this->_getSubjectList();
 		
 		$this->_callTemplate();
-	}
-	
-	private function _passwordCheck()
-	{
-		global $MySmartBB;
-		
-		if (empty($MySmartBB->_POST['password']))
-		{
-			$MySmartBB->func->error('يجب عليك كتابة الكلمه السريه حتى يتم فحصها');
-		}
-		
-		$this->_generalProcesses( true );
-		
-     	$IsTruePassword = $MySmartBB->section->checkPassword( $MySmartBB->_POST['password'], $this->Section['id'] );
-     																		
-     	if (!$IsTruePassword)
-     	{
-     		$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه');
-     	}
-     	else
-     	{
-     		$MySmartBB->func->msg('يرجى الانتظار ...');
-     		$MySmartBB->func->goto('index.php?page=forum&amp;show=1&amp;id=' . $this->Section['id'] . '&amp;password=' . base64_encode($MySmartBB->_POST['password']));
-     	}
 	}
 	
 	private function _generalProcesses( $check = false )
@@ -125,17 +103,17 @@ class MySmartForumMOD
 			$MySmartBB->func->error('المعذره .. هذا المنتدى قسم رئيسي');
 		}
 		
-		// This section is link , so we should go to another location
+		// This section is a link , so we should go to another location
 		if ($this->Section['linksection'])
 		{
 			$MySmartBB->func->msg('يرجى الانتظار سوف يتم تحويلك إلى ' . $this->Section['linksite']);
-			$MySmartBB->func->goto($this->Section['linksite'],3);
+			$MySmartBB->func->move($this->Section['linksite'],3);
 			$MySmartBB->func->stop();
 		}
 		
 		// ... //
 		
-		// hmmmm , this section protected by a password so request the password
+		// hmmmm , this section is protected by a password so request the password
 		if ( !$check )
 		{
 			if (!empty($this->Section['section_password']) 
@@ -148,7 +126,7 @@ class MySmartForumMOD
      			}
      			else
      			{
-     				$IsTruePassword = $MySmartBB->section->CheckPassword( base64_decode($MySmartBB->_GET['password']), $this->Section['id'] );
+     				$IsTruePassword = $MySmartBB->section->checkPassword( base64_decode($MySmartBB->_GET['password']), $this->Section['id'] );
      																		
      				if (!$IsTruePassword)
      				{
@@ -165,16 +143,12 @@ class MySmartForumMOD
 		// Where is the member now?
 		if ( $MySmartBB->_CONF['member_permission'] )
      	{
-     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على : ' . $this->Section['title']	);
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
-			
-			$update = $MySmartBB->rec->update();
+			$MySmartBB->online->updateMemberLocation( 'يطلع على : ' . $this->Section['title'] );
      	}
 	}
-		
+	
 	/**
-	 * Know who is in section ?
+	 * Know who is reading the section ?
 	 */
 	private function _sectionOnline()
 	{
@@ -182,7 +156,7 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['online_res'] = '';
+		// ~ Get the list of people who read this section ~ //
 		
 		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
 		
@@ -199,11 +173,14 @@ class MySmartForumMOD
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "user_id DESC";
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['online_res'];
+		
+		$MySmartBB->func->setResource( 'online_res' );
 		
 		$MySmartBB->rec->getList();
 		
 		// ... //
+		
+		// ~ Get the number of unregisterd visitors who read this section ~ //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
@@ -211,6 +188,8 @@ class MySmartForumMOD
 		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->rec->getNumber();
 		
 		// ... //
+		
+		// ~ Get the number of members who read this section ~ //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
@@ -224,53 +203,29 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['moderator_res'] = '';
+		// TODO : cache
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "'";
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['moderator_res'];
+		
+		$MySmartBB->func->setResource( 'moderator_res' );
 		
 		$MySmartBB->rec->getList();
-		
-		/*if (is_array($MySmartBB->_CONF['template']['while']['ModeratorsList'])
-			and sizeof($MySmartBB->_CONF['template']['while']['ModeratorsList']) > 0)
-		{			
-			$MySmartBB->template->assign('STOP_MODERATOR_TEMPLATE',false);
-		}
-		else
-		{
-			$MySmartBB->template->assign('STOP_MODERATOR_TEMPLATE',true);
-		}*/
 	}
 	
-	/**
-	 * Get announcement list
-	 */
 	private function _getAnnouncementList()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['announcement_res'] = '';
+		// TODO : Do we really need getList()? getInfo() will do the job :-)
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->order = "id DESC";
 		$MySmartBB->rec->limit = '1';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['announcement_res'];
 		
-		/*$AnnArr['proc'] 			= 	array();
-		$AnnArr['proc']['*'] 		= 	array('method'=>'clean','param'=>'html');
-		$AnnArr['proc']['date'] 	= 	array('method'=>'date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
+		$MySmartBB->func->setResource( 'announcement_res' );
 		
 		$MySmartBB->rec->getList();
-		
-		/*if ($MySmartBB->_CONF['template']['while']['AnnouncementList'] != false)
-		{
-			$MySmartBB->template->assign('STOP_ANNOUNCEMENT_TEMPLATE',false);
-		}
-		else
-		{
-			$MySmartBB->template->assign('STOP_ANNOUNCEMENT_TEMPLATE',true);
-		}*/
 	}
 	
 	private function _getSubSection()
@@ -301,8 +256,19 @@ class MySmartForumMOD
 			$MySmartBB->template->assign('SHOW_SUB_SECTIONS',false);
 		}
 	}
-		
+	
 	private function _getSubjectList()
+	{
+		global $MySmartBB;
+		
+		$this->__getSubjectList();
+		$this->__getStickSubjectList();
+		
+		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
+		$MySmartBB->template->assign('section_id',$this->Section['id']); // TODO : See the line 73
+	}
+	
+	private function __getSubjectList()
 	{
 		global $MySmartBB;
 		
@@ -337,9 +303,6 @@ class MySmartForumMOD
 		}
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
-
-		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		
@@ -350,78 +313,42 @@ class MySmartForumMOD
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=forum&amp;show=1&amp;id=' . $this->Section['id'];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
-		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
-		
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
+		$this->subject_res = &$MySmartBB->func->setResource();
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->rec->setInfoCallback( 'MySmartForumMOD::rowsProcessCB' );
+		
 		// ... //
+	}
+	
+	private function __getStickSubjectList()
+	{
+		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick='1' AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "write_time DESC";
 		
-		/*$StickSubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$StickSubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
-		
-		$MySmartBB->_CONF['template']['res']['stick_subject_res'] = '';
-		
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['stick_subject_res'];
+		$this->stick_subject_res = &$MySmartBB->func->setResource();
 		
 		$MySmartBB->rec->getList();
+	}
+	
+	public function rowsProcessCB( $row )
+	{
+		global $MySmartBB;
 		
-		/*if (sizeof($MySmartBB->_CONF['template']['while']['stick_subject_list']) <= 0)
-		{
-			$MySmartBB->template->assign('NO_STICK_SUBJECTS',true);
-		}
-		else
-		{
-			$MySmartBB->template->assign('NO_STICK_SUBJECTS',false);
-		}*/
-		
-		// ... //
-		
-		// Get the list of subjects that need a review
-		
-		if ( $MySmartBB->func->moderatorCheck( $this->Section['id'] ) )
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-			$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND review_subject='1' AND delete_topic<>'1'";
-			$MySmartBB->rec->order = "write_time DESC";
-		
-			/*$ReviewSubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-			$ReviewSubjectArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
-			
-			$MySmartBB->_CONF['template']['res']['review_subject_res'] = '';
-		
-			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['review_subject_res'];
-		
-			$MySmartBB->rec->getList();
-
-			/*if (sizeof($MySmartBB->_CONF['template']['while']['review_subject_list']) <= 0)
-			{
-				$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',true);
-			}
-			else
-			{
-				$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',false);
-			}*/
-		}
-		else
-		{
-			$MySmartBB->template->assign('NO_REVIEW_SUBJECTS',true);
-		}
-		
-		// ... //
-		
-		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
-		$MySmartBB->template->assign('section_id',$this->Section['id']);
+		$row[ 'write_date' ] = $MySmartBB->func->date( $row[ 'native_write_time' ] );
+		$row[ 'reply_date' ] = $MySmartBB->func->date( $row[ 'write_time' ] );
 	}
 	
 	private function _callTemplate()
 	{
 		global $MySmartBB;
+		
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'subject_res' ] = $this->subject_res;
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'stick_subject_res' ] = $this->stick_subject_res;
 		
 		$MySmartBB->template->display('forum');
 	}

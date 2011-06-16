@@ -50,12 +50,12 @@ class MySmartSection
  		
  		$this->engine->rec->table = $this->engine->table['section'];
  		
- 		$MySmartBB->rec->fields = array(	'last_writer'	=>	$writer,
+ 		$this->engine->rec->fields = array(	'last_writer'	=>	$writer,
  											'last_subject'	=>	$title,
  											'last_subjectid'	=>	$subject_id,
  											'last_date'	=>	$date	);
  		
- 		$MySmartBB->rec->filter = "id='" . $section_id . "'";
+ 		$this->engine->rec->filter = "id='" . $section_id . "'";
  		
 		$query = $this->engine->rec->update();
 		           
@@ -82,7 +82,7 @@ class MySmartSection
  		$this->engine->rec->filter = "parent='" . $parent . "'";
  		$this->engine->rec->order = "sort ASC";
  		
- 		$forum_res = &$this->engine->func->setResouce();
+ 		$forum_res = &$this->engine->func->setResource();
  		
  		$this->engine->rec->getList();
  		
@@ -116,7 +116,7 @@ class MySmartSection
  			$this->engine->rec->filter = "section_id='" . $forum['id'] . "'";
  			$this->engine->rec->order = "id ASC";
  			
- 			$group_res = &$this->engine->func->setResouce();
+ 			$group_res = &$this->engine->func->setResource();
  			
 			$this->engine->rec->getList();
 			

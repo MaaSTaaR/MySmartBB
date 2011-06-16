@@ -13,6 +13,7 @@ class MySmartRecords
 	private $pager_obj; // Pager class
 	private $query;
 	private $info_cb = null;
+	private $debug = true;
 	
 	public $filter;
 	public $fields;
@@ -47,6 +48,13 @@ class MySmartRecords
 	{
 		if ( !isset( $this->table ) )
 		{
+			if ( $this->debug )
+			{
+				echo '<pre dir="ltr">';
+				debug_print_backtrace();
+				echo '</pre>';
+			}
+				
 			trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- table',E_USER_ERROR);
 		}
 		
@@ -112,6 +120,8 @@ class MySmartRecords
 				if ( isset( $this->limit ) )
 				{
 					$statement .= ' LIMIT ' . $this->limit;
+					
+					unset( $this->limit );
 				}
 			}
 		}
@@ -120,6 +130,8 @@ class MySmartRecords
 			if ( isset( $this->limit ) )
 			{
 				$statement .= ' LIMIT ' . $this->limit;
+				
+				unset( $this->limit );
 			}
 		}
 
@@ -194,7 +206,14 @@ class MySmartRecords
 	{
 		if ( !isset( $this->table )
 			or !isset( $this->fields ) )
-		{
+		{		
+			if ( $this->debug )
+			{
+				echo '<pre dir="ltr">';
+				debug_print_backtrace();
+				echo '</pre>';
+			}
+			
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Update() -- TABLE OR FIELD', E_USER_ERROR  );
 		}
 		
@@ -255,7 +274,7 @@ class MySmartRecords
 		}
 		else
 		{
-			$this->result = $query;
+			$this->query = $this->result = $query;
 			
 			unset( $this->result );
 		}
