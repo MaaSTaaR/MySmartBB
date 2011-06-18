@@ -19,6 +19,8 @@ class MySmartIndexMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader();
+				
+		$MySmartBB->plugin->runHooks( 'main_start' );
 		
 		$this->_getSections();
 		$this->_getOnline();

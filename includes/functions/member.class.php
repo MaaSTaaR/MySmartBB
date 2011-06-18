@@ -112,7 +112,7 @@ class MySmartMember
 		// TODO :: store the name of cookie in a variable like username,password cookies.
 		$cookie = setcookie( 'MySmartBB_lastvisit', $last_visit, time()+85200 );
 		
-		$this->engine->rec->table = $this->table[ 'member' ];
+		$this->engine->rec->table = $this->engine->table[ 'member' ];
 		$this->engine->rec->fields = array(	'lastvisit'	=>	$date	);
 		$this->engine->rec->filter = "id='" . $member_id . "'";
 								

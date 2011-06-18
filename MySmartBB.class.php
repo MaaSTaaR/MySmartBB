@@ -91,7 +91,7 @@ class MySmartBB
   		$this->db				= 	new MySmartSQL;
   		$this->pager			=	new MySmartPager;
   		$this->func 			= 	new MySmartFunctions();
-  		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager);  	
+  		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager); 
   		
   		// ... //
   		
@@ -143,6 +143,8 @@ class MySmartBB
   		$this->table['tag']					=	$this->prefix . 'tags';
   		$this->table['tag_subject']			=	$this->prefix . 'tags_subject';
   		$this->table['subjects_bookmark'] 	= 	$this->prefix . 'subjects_bookmark';
+  		$this->table[ 'plugin' ]			=	$this->prefix . 'plugins';
+  		$this->table[ 'hook' ]				=	$this->prefix . 'plugins_hooks';
   		
   		// ... //
   		
@@ -234,7 +236,7 @@ class MySmartBB
 			
   			$this->template		=	new MySmartTemplate( $compiler );
   			$this->smartparse	=	new MySmartCodeParse; // TODO : only call it when we need it
-  			$this->plugin		=	new MySmartPlugins;
+  			$this->plugin		=	new MySmartPlugins( $this );
   		}
   		
   		// ... //
