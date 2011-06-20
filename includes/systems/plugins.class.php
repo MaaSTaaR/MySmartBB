@@ -44,11 +44,12 @@ class MySmartPlugins
 		
 		// Insert the plugin to the active list of plugins
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
-		$this->engine->rec->fields = array(		'title'	=>	$info[ 'title' ],
+		$this->engine->rec->fields = array(		'title'	=>	$plugin_info[ 'title' ],
 												'description'	=>	$plugin_info[ 'description' ],
 												'author'		=>	$plugin_info[ 'author' ],
 												'license'		=>	$plugin_info[ 'license' ],
-												'path'			=>	$path	);
+												'path'			=>	$path,
+												'active'		=>	1	);
 		
 		$this->engine->rec->get_id = true;
 		
@@ -77,6 +78,8 @@ class MySmartPlugins
 			}
 			
 			$this->rebuildHooksCache();
+			
+			$obj->activate();
 			
 			return true;
 		}
@@ -146,6 +149,50 @@ class MySmartPlugins
 		$update = $this->engine->info->updateInfo( 'hooks_cache', $cache );
 		
 		return ( $update ) ? true : false;
+	}
+	
+	public function activatePlugin( $path )
+	{
+		require_once( 'plugins/' . $path . '/plugin.php' );
+		
+		$obj = new PLUGIN_CLASS_NAME;
+		
+		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
+		$this->engine->rec->fields = array( 'active'	=>	1 );
+		$this->engine->rec->filter = "path='" . $path . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			$obj->activate();
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function deactivatePlugin( $path )
+	{
+		require_once( 'plugins/' . $path . '/plugin.php' );
+		
+		$obj = new PLUGIN_CLASS_NAME;
+		
+		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
+		$this->engine->rec->fields = array( 'active'	=>	0 );
+		$this->engine->rec->filter = "path='" . $path . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			$obj->deactivate();
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
 

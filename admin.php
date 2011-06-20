@@ -34,6 +34,7 @@ $modules['moderators']		=	'moderators.module.php';
 $modules['groups']			=	'groups.module.php';
 $modules['logout']			=	'logout.module.php';
 $modules['note'] 			= 	'notes.module.php';
+$modules['plugins'] 		= 	'plugins.module.php';
 
 //////////
 
