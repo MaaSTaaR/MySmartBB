@@ -25,7 +25,7 @@ class MySmartPlugins
 		
 		$obj = new PLUGIN_CLASS_NAME;
 		
-		$info = $obj->info();
+		$plugin_info = $obj->info();
 		$hooks = $obj->hooks();
 		
 		// ... //
@@ -45,9 +45,9 @@ class MySmartPlugins
 		// Insert the plugin to the active list of plugins
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
 		$this->engine->rec->fields = array(		'title'	=>	$info[ 'title' ],
-												'description'	=>	$info[ 'description' ],
-												'author'		=>	$info[ 'author' ],
-												'license'		=>	$info[ 'license' ],
+												'description'	=>	$plugin_info[ 'description' ],
+												'author'		=>	$plugin_info[ 'author' ],
+												'license'		=>	$plugin_info[ 'license' ],
 												'path'			=>	$path	);
 		
 		$this->engine->rec->get_id = true;
@@ -61,41 +61,91 @@ class MySmartPlugins
 			// Insert hooks into database
 			foreach ( $hooks as $key => $hook )
 			{
-				$this->engine->rec->table = $this->engine->table[ 'hook' ];
-				$this->engine->rec->fields = array(	'plugin_id'	=>	$id,
-													'hook'		=>	$key,
-													'function'	=>	$hook,
-													'path'		=>	$path	);
-													
-				$insert = $this->engine->rec->insert();
-				
-				if ( $insert )
+				if ( strstr( $hook, ',' ) != false )
 				{
-					return true;
+					$list = explode( ',', $hook );
+					
+					foreach ( $list as $element )
+					{
+						$this->insertHook( $id, $key, $element, $path );
+					}
+				}
+				else
+				{
+					$this->insertHook( $id, $key, $hook, $path );
 				}
 			}
+			
+			$this->rebuildHooksCache();
+			
+			return true;
 		}
 		
 		// ... //
 	}
 	
+	private function insertHook( $plugin_id, $hook, $func, $path )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'hook' ];
+		$this->engine->rec->fields = array(		'plugin_id'	=>	$plugin_id,
+												'hook'		=>	$hook,
+												'function'	=>	$func,
+												'path'		=>	$path	);
+													
+		$insert = $this->engine->rec->insert();
+		
+		return ( $insert ) ? true : false;
+	}
+	
 	public function runHooks( $hook )
 	{
-		// ~ Get hooks list ~ //
+		// ~ Check if there is any cache, so use it, otherwise get the list from database ~ //
+		
+		$cache = unserialize( $this->engine->func->cleanVariable( $this->engine->_CONF[ 'info_row' ][ 'hooks_cache' ], 'unhtml' ) );
+		
+		if ( is_array( $cache ) )
+		{
+			if ( is_array( $cache[ $hook ] ) )
+			{
+				foreach ( $cache[ $hook ] as $value )
+				{
+					$this->runPlugin( $value[ 'path' ], $value[ 'function' ] );
+				}
+			}
+		}
+		else
+		{
+			$this->rebuildHooksCache();
+		}
+	}
+	
+	private function runPlugin( $path, $func )
+	{
+		require_once( 'plugins/' . $path . '/plugin.php' );
+		
+		$obj = new PLUGIN_CLASS_NAME;
+		
+		call_user_func( array( $obj, $func ) );
+	}
+	
+	public function rebuildHooksCache()
+	{
+		$cache = array();
 		
 		$this->engine->rec->table = $this->engine->table[ 'hook' ];
-		$this->engine->rec->filter = "hook='" . $hook . "'";
 		
 		$this->engine->rec->getList();
 		
 		while ( $row = $this->engine->rec->getInfo() )
 		{
-			require_once( 'plugins/' . $row[ 'path' ] . '/plugin.php' );
-			
-			$obj = new PLUGIN_CLASS_NAME;
-			
-			call_user_func( array( $obj, helloWorld ) );
+			$cache[ $row[ 'hook' ] ][] = $row;
 		}
+		
+		$cache = serialize( $cache );
+		
+		$update = $this->engine->info->updateInfo( 'hooks_cache', $cache );
+		
+		return ( $update ) ? true : false;
 	}
 }
 

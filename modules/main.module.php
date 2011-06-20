@@ -19,8 +19,8 @@ class MySmartIndexMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader();
-				
-		$MySmartBB->plugin->runHooks( 'main_start' );
+		
+		$MySmartBB->plugin->runHooks( 'main_after_header' );
 		
 		$this->_getSections();
 		$this->_getOnline();
@@ -28,6 +28,8 @@ class MySmartIndexMOD
 		
 		// Show the main template
 		$this->_callTemplate();
+		
+		$MySmartBB->plugin->runHooks( 'main_before_footer' );
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -39,11 +41,11 @@ class MySmartIndexMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList();
 		
-		/* ... */
+		// ... //
 	}
 		
 	private function _getOnline()

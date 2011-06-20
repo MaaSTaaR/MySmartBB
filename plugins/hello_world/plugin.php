@@ -16,7 +16,8 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	
 	public function hooks()
 	{
-		return array( 'main_start' => 'HelloWorldPlugin::helloWorld' );
+		return array( 	'main_after_header' 	=> 'helloWorld,helloWorld2',
+						'main_before_footer'	=> 'byeWorld'	);
 	}
 	
 	public function activate()
@@ -30,7 +31,17 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	
 	public function helloWorld()
 	{
-		echo 'Hello World!';
+		echo 'Hello World!<br />';
+	}
+	
+	public function helloWorld2()
+	{
+		echo '2 - Hello World!';
+	}
+	
+	public function byeWorld()
+	{
+		echo 'Bye Bye World!';
 	}
 }
 
