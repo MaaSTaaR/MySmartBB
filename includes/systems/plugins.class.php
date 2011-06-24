@@ -21,9 +21,7 @@ class MySmartPlugins
 	
 	public function installPlugin( $path )
 	{
-		require_once( 'plugins/' . $path . '/plugin.php' );
-		
-		$obj = new PLUGIN_CLASS_NAME;
+		$obj = $this->createPluginObject();
 		
 		$plugin_info = $obj->info();
 		$hooks = $obj->hooks();
@@ -60,24 +58,7 @@ class MySmartPlugins
 		if ( $insert )
 		{
 			// Insert hooks into database
-			foreach ( $hooks as $key => $hook )
-			{
-				if ( strstr( $hook, ',' ) != false )
-				{
-					$list = explode( ',', $hook );
-					
-					foreach ( $list as $element )
-					{
-						$this->insertHook( $id, $key, $element, $path );
-					}
-				}
-				else
-				{
-					$this->insertHook( $id, $key, $hook, $path );
-				}
-			}
-			
-			$this->rebuildHooksCache();
+			$this->insertHooks( $hooks );
 			
 			$obj->activate();
 			
@@ -85,6 +66,36 @@ class MySmartPlugins
 		}
 		
 		// ... //
+	}
+	
+	public function createPluginObject( $path )
+	{
+		require_once( 'plugins/' . $path . '/plugin.php' );
+		
+		return new PLUGIN_CLASS_NAME;
+	}
+	
+	public function insertHooks( $hooks, $rebuild_cache = true )
+	{
+		foreach ( $hooks as $key => $hook )
+		{
+			if ( strstr( $hook, ',' ) != false )
+			{
+				$list = explode( ',', $hook );
+				
+				foreach ( $list as $element )
+				{
+					$this->insertHook( $id, $key, $element, $path );
+				}
+			}
+			else
+			{
+				$this->insertHook( $id, $key, $hook, $path );
+			}
+		}
+		
+		if ( $rebuild_cache )
+			$this->rebuildHooksCache();
 	}
 	
 	private function insertHook( $plugin_id, $hook, $func, $path )

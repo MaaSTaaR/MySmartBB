@@ -24,6 +24,14 @@ class MySmartPluginMOD
 			{
 				$this->_controlMain();
 			}
+			else if ( $MySmartBB->_GET[ 'active' ] )
+			{
+				$this->_pluginActivate();
+			}
+			else if ( $MySmartBB->_GET[ 'deactive' ] )
+			{
+				$this->_pluginDeactive();
+			}
 			
 			$MySmartBB->template->display('footer');
 		}
@@ -39,6 +47,52 @@ class MySmartPluginMOD
 		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('plugin_main');
+	}
+	
+	private function _pluginActivate()
+	{
+		global $MySmartBB;
+		
+		$info = $this->_checkID();
+		
+		$obj = $MySmartBB->plugin->createPluginObject( $info[ 'path' ] );
+		
+		$this->insertHooks( $obj->hooks() );
+			
+		$obj->activate();
+	}
+	
+	private function _pluginDeactive()
+	{
+		global $MySmartBB;
+		
+		$info = $this->_checkID();
+		
+		// ....
+	}
+	
+	private function _checkID()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		{
+			$MySmartBB->func->error( 'المسار المتبع غير صحيح' );
+		}
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$info = $MySmartBB->rec->getInfo();
+		
+		if ( $info == false )
+		{
+			$MySmartBB->func->error( 'الإضافه غير موجوده في قواعد البيانات' );
+		}
+		
+		return $info;
 	}
 }
 

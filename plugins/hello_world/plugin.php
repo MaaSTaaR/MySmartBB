@@ -29,6 +29,10 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	{
 	}
 	
+	public function uninstall()
+	{
+	}
+	
 	public function helloWorld()
 	{
 		echo 'Hello World!<br />';
