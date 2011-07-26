@@ -3,13 +3,12 @@
 /*
  * @package : MySmartPlugins
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start : 30/09/2009 10:18:46 PM (GMT+3)
+ * @started : 30/09/2009 10:18:46 PM (GMT+3)
  * @last update : 
  * @under : GNU LGPL
 */
 
 
-// Next TODO : use cache
 class MySmartPlugins
 {
 	private $engine;
@@ -19,6 +18,10 @@ class MySmartPlugins
 		$this->engine = $engine;
 	}
 	
+	// ... //
+	
+	// We use this function when we want to install a "new" plugin for the first time.
+	// This function will install the plugin by insert its information to plugin table and activate it.
 	public function installPlugin( $path )
 	{
 		$obj = $this->createPluginObject();
@@ -68,6 +71,35 @@ class MySmartPlugins
 		// ... //
 	}
 	
+	// ... //
+	
+	public function uninstallPlugin( $plugin_id, $path )
+	{
+		$obj = $this->createPluginObject( $path );
+		
+		$plugin_info = $obj->info();
+		
+		// ... //
+		
+		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
+		$this->engine->rec->filter = "id='" . (int) $plugin_id . "'";
+		
+		$del = $this->engine->rec->delete();
+		
+		if ( $del )
+		{
+			$this->removeHooks( $plugin_id );
+			
+			$obj->uninstall();
+			
+			return true;
+		}
+		
+		// ... //
+	}
+	
+	// ... //
+	
 	public function createPluginObject( $path )
 	{
 		require_once( 'plugins/' . $path . '/plugin.php' );
@@ -75,7 +107,9 @@ class MySmartPlugins
 		return new PLUGIN_CLASS_NAME;
 	}
 	
-	public function insertHooks( $hooks, $rebuild_cache = true )
+	// ... //
+	
+	public function insertHooks( $hooks, $id, $path, $rebuild_cache = true )
 	{
 		foreach ( $hooks as $key => $hook )
 		{
@@ -96,8 +130,33 @@ class MySmartPlugins
 		
 		if ( $rebuild_cache )
 			$this->rebuildHooksCache();
+		
+		return true;
 	}
 	
+	// ... //
+	
+	public function removeHooks( $plugin_id, $rebuild_cache = true )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'hook' ];
+		$this->engine->rec->filter = "plugin_id='" . (int) $plugin_id . "'";
+		
+		$del = $this->engine->rec->delete();
+		
+		if ( $del )
+		{
+			if ( $rebuild_cache )
+				$this->rebuildHooksCache();
+		
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	// ... //
 	private function insertHook( $plugin_id, $hook, $func, $path )
 	{
 		$this->engine->rec->table = $this->engine->table[ 'hook' ];
@@ -125,6 +184,10 @@ class MySmartPlugins
 				{
 					$this->runPlugin( $value[ 'path' ], $value[ 'function' ] );
 				}
+			}
+			else
+			{
+				$this->rebuildHooksCache();
 			}
 		}
 		else
