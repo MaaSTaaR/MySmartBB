@@ -39,8 +39,12 @@ class MySmartPluginMOD
 					$this->_pluginUninstall();
 				}
 			}
+			else if ( $MySmartBB->_GET[ 'install' ] )
+			{
+				$this->_pluginInstall();
+			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -48,12 +52,58 @@ class MySmartPluginMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
+		// ~ Gets the list of installed plugins ~ //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
 		$MySmartBB->rec->order = "id DESC";
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('plugin_main');
+		// ... //
+		
+		// ~ Get the list of plugins that can be installed ~ //
+		
+		// The array which contains the list of uninstalled plugins
+		$uninstalled_list = array();
+		
+		$path = 'plugins/';
+		
+		$handle = opendir( $path );
+		
+		if ( $handle )
+		{
+			while ( ( $file = readdir( $handle ) ) != false )
+			{
+				if ( $file == '.' 
+					or $file == '..'
+					or $file == '.svn'
+					or is_file( $path . $file ) )
+					continue;
+				
+				// TODO : This is a basic way to do the job, it's better to use cache or another way to improve the performance
+				// It's a bad idea to query the database inside a loop :-( What if we have 100 uninstalled plugins? that's means 100 query!
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
+				$MySmartBB->rec->filter = "path='" . $file . "'";
+				
+				$check = $MySmartBB->rec->getNumber();
+				
+				if ( $check == 0 )
+					$uninstalled_list[] = $file;
+			}
+		}
+		else
+		{
+			$MySmartBB->func->error( 'مجلد الإضافات غير موجود' );
+		}
+		
+		// ... //
+		
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'uninstalled_list' ] = $uninstalled_list;
+		
+		$MySmartBB->template->display( 'plugin_main' );
 	}
 	
 	private function _pluginActivate()
@@ -122,6 +172,50 @@ class MySmartPluginMOD
 		{
 			$MySmartBB->func->msg( 'تم إلغاء تثبيت الإضافه' );
 			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
+		}
+	}
+	
+	private function _pluginInstall()
+	{
+		global $MySmartBB;
+		
+		$path = $MySmartBB->_GET[ 'path' ];
+		
+		$path = str_replace( 'http', '', $path ); // No Please :-(
+		$path = str_replace( '.', '', $path );
+		$path = str_replace( '..', '', $path );
+		$path = str_replace( '/', '', $path );
+		
+		if ( empty( $path ) )
+		{
+			$MySmartBB->func->error( 'المسار غير صحيح' );
+		}
+		
+		if ( !is_dir( 'plugins/' . $path ) )
+		{
+			$MySmartBB->func->error( 'مجلد الإضافة المطلوب تثبيتها غير موجود' );
+		}
+		
+		// ~ We have to check if the plugin already installed or not ~ //
+		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
+		$MySmartBB->rec->filter = "path='" . $path . "'";
+		
+		$check = $MySmartBB->rec->getNumber();
+		
+		if ( $check != 0 )
+		{
+			$MySmartBB->func->error( 'الإضافة مُثبته مُسبقاً' );
+		}
+		
+		// ~ Install the plugin ~ //
+		if ( $MySmartBB->plugin->installPlugin( $path ) )
+		{
+			$MySmartBB->func->msg( 'تم تثبيت و تفعيل الإضافة' );
+			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
+		}
+		else
+		{
+			$MySmartBB->func->msg( 'هناك خطأ لم يتم تثبيت الإضافة' );
 		}
 	}
 	

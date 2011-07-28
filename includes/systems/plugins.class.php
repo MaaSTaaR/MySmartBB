@@ -24,7 +24,7 @@ class MySmartPlugins
 	// This function will install the plugin by insert its information to plugin table and activate it.
 	public function installPlugin( $path )
 	{
-		$obj = $this->createPluginObject();
+		$obj = $this->createPluginObject( $path );
 		
 		$plugin_info = $obj->info();
 		$hooks = $obj->hooks();
@@ -61,7 +61,7 @@ class MySmartPlugins
 		if ( $insert )
 		{
 			// Insert hooks into database
-			$this->insertHooks( $hooks );
+			$this->insertHooks( $hooks, $id, $path );
 			
 			$obj->activate();
 			
