@@ -281,7 +281,7 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1' AND review_subject<>'1'";
+		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1'";
 		
 		if ($this->Section['hide_subject'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])

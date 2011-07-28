@@ -113,10 +113,6 @@ class MySmartManagementMOD
 		{
 			$this->__downStart();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'unreview_subject')
-		{
-			$this->__unReviewSubject();
-		}
 	}
 	
 	private function __stick()
@@ -693,30 +689,6 @@ class MySmartManagementMOD
 		if ($update)
 		{
 	    	$MySmartBB->func->msg('تم إنزال الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
-		}
-	}
-	
-	private function __unReviewSubject()
-	{
-		global $MySmartBB;
-
-	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->fields = array(	'review_subject'	=>	0	);
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
-		
-		$update = $MySmartBB->rec->update();
-		
-		if ($update)
-		{
-			$MySmartBB->func->msg('تمت الموافقه على الموضوع');
 			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}

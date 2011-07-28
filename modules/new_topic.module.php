@@ -217,12 +217,6 @@ class MySmartTopicAddMOD
      										'attach_subject'	=>	0,
      										'tags_cache'	=>	$MySmartBB->_POST['tags']	);
      										
-		if (($this->SectionInfo['review_subject'] or $MySmartBB->_CONF['member_row']['review_subject'])
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
-			$MySmartBB->rec->fields['review_subject'] = 1;
-		}
-		
 		if ( $this->moderator )
 		{
      		if ($MySmartBB->_POST['stick'])
@@ -544,17 +538,8 @@ class MySmartTopicAddMOD
      		
      		// ... //
      		
-     		if ((!$this->SectionInfo['review_subject'] and !$MySmartBB->_CONF['member_row']['review_subject'])
-     			or $MySmartBB->_CONF['group_info']['admincp_allow'])
-			{
-     			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-     			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
-     		}
-     		else
-     		{
-     			$MySmartBB->func->msg('نشكرك لمشاركتك! مشاركتك لن تضاف حتى تتم الموافقة عليها من قبل الإدارة. سيتم الآن إعادتك الى المنتدى.');
-     			$MySmartBB->func->move('index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password']);
-     		}
+			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
      		
      		// ... //
      	}

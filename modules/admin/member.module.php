@@ -421,7 +421,6 @@ class MySmartMemberMOD extends _func
 		$MySmartBB->rec->fields['user_website'] 		= 	$MySmartBB->_POST['user_website'];
 		$MySmartBB->rec->fields['user_country'] 		= 	$MySmartBB->_POST['user_country'];
 		$MySmartBB->rec->fields['usergroup'] 			= 	$MySmartBB->_POST['usergroup'];
-		$MySmartBB->rec->fields['review_subject'] 		= 	$MySmartBB->_POST['review_subject'];
 		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		
 		$MySmartBB->rec->filter = "id='" . $MemInfo['id'] . "'";

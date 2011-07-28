@@ -351,7 +351,6 @@ class MySmartForumsMOD extends _functions
 		$MySmartBB->rec->fields['footer'] 					= 	$MySmartBB->_POST['foot'];
 		$MySmartBB->rec->fields['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
-		$MySmartBB->rec->fields['review_subject']			=	$MySmartBB->_POST['review_subject'];
 
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
