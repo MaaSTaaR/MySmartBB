@@ -3,29 +3,37 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   Tue 08 Feb 2011 11:05:42 AM AST 
+ * @updated 	:   Thu 28 Jul 2011 10:44:31 AM AST 
 */
 
 class MySmartMember
 {
 	private $engine;
+	private $table;
 	
-	public $id;
-	public $get_id;
+	// ... //
 	
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
+		$this->table = $this->engine->table[ 'member' ];
 	}
 	
 	// ... //
 	
+	// ~ ~ //
+	// Description : This function checks the username and password, If they are correct so login the user by registering the cookies.
+	// 
+	// Returns : 
+	//				- false 
+	//				- or array contains the information of the user
+	// ~ ~ //
 	public function loginMember( $username, $password, $expire = null )
 	{
 		if ( empty( $username )
 			or empty( $password ) )
 		{
-			trigger_error( 'ERROR::NEED_PARAMETER -- FROM LoginMember() -- EMPTY username or password', E_USER_ERROR );
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM loginMember() -- EMPTY username or password', E_USER_ERROR );
 		}
 		
 		$checkMember = $this->checkMember( $username, $password );
@@ -36,8 +44,8 @@ class MySmartMember
 		}
 		else
 		{
-			setcookie( $this->engine->_CONF['username_cookie'], $username, $expire );
-			setcookie( $this->engine->_CONF['password_cookie'], $password, $expire );
+			setcookie( $this->engine->_CONF[ 'username_cookie' ], $username, $expire );
+			setcookie( $this->engine->_CONF[ 'password_cookie' ], $password, $expire );
        				
        		return $checkMember;
        	}
@@ -45,19 +53,23 @@ class MySmartMember
 	
 	// ... //
 	
+	// ~ ~ //
+	// Description : This function checks the username and password.
+	// 
+	// Returns : 
+	//				- false 
+	//				- or array contains the information of the user
+	// ~ ~ //
 	public function checkMember( $username, $password )
 	{
-		$this->engine->rec->table = $this->engine->table[ 'member' ];
+		if ( empty( $username )
+			or empty( $password ) )
+		{
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkMember() -- EMPTY username or password', E_USER_ERROR );
+		}
 		
-		if ( !empty( $username )
-			and !empty( $password ) )
-		{
-			$this->engine->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
-		}
-		else
-		{
-			return false;
-		}
+		$this->engine->rec->table = $this->table;
+		$this->engine->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
 		
 		$checkMember = $this->engine->rec->getInfo();
 		
@@ -66,6 +78,12 @@ class MySmartMember
 	
 	// ... //
 	
+	// ~ ~ //
+	// Description : This function logs the user out by deleteing the cookies
+	// 
+	// Returns : 
+	//				- true or false 
+	// ~ ~ //
 	public function logout()
 	{
 		$del = array();	
@@ -77,7 +95,7 @@ class MySmartMember
 	}
 	
 	// ... //
-		        	 
+	
 	public function getUsernameWithStyle( $username, $style )
 	{
 		// These codes are from the first generation of MySmartBB
@@ -106,13 +124,12 @@ class MySmartMember
 			or empty( $date )
 			or empty( $member_id ) )
 		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM LastVisitCookie() -- EMPTY last_visit OR date OR id',E_USER_ERROR);
+			trigger_error('ERROR::NEED_PARAMETER -- FROM lastVisitCookie() -- EMPTY last_visit OR date OR id',E_USER_ERROR);
 		}
 		
-		// TODO :: store the name of cookie in a variable like username,password cookies.
-		$cookie = setcookie( 'MySmartBB_lastvisit', $last_visit, time()+85200 );
+		$cookie = setcookie( $this->engine->_CONF[ 'lastvisit_cookie' ], $last_visit, time() + 85200 );
 		
-		$this->engine->rec->table = $this->engine->table[ 'member' ];
+		$this->engine->rec->table = $this->table;
 		$this->engine->rec->fields = array(	'lastvisit'	=>	$date	);
 		$this->engine->rec->filter = "id='" . $member_id . "'";
 								
@@ -123,7 +140,7 @@ class MySmartMember
 	
 	public function getActiveMemberNumber()
 	{
-		$this->engine->table = $this->engine->table['member'];
+		$this->engine->table = $this->table;
 		$this->engine->filter = "posts>0";
 		
 		return $this->engine->rec->getNumber();
@@ -133,7 +150,7 @@ class MySmartMember
 	
 	public function cleanNewPassword( $id )
 	{
-		$this->engine->rec->table = $this->engine->table['member'];
+		$this->engine->rec->table = $this->table;
 		
 		$this->engine->rec->fields = array(	'new_password'	=>	'' );
 		$this->engine->rec->filter = "id='" . $id . "'";
@@ -145,8 +162,8 @@ class MySmartMember
 	
 	public function checkAdmin( $username, $password )
 	{
- 		if (!isset($username)
- 			or !isset($password))
+ 		if ( empty( $username )
+ 			or empty( $password ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM checkAdmin() -- EMPTY username OR password',E_USER_ERROR);
  		}
@@ -154,7 +171,7 @@ class MySmartMember
 		$CheckMember = $this->checkMember( $username, $password );
 		
 		// Well , (s)he is a member
-		if ($CheckMember != false)
+		if ( $CheckMember != false )
 		{
 			$this->engine->rec->table = $this->engine->table[ 'group' ];
 			$this->engine->rec->filter = "id='" . $CheckMember[ 'usergroup' ] . "'";
@@ -190,8 +207,8 @@ class MySmartMember
 		
 		if ($Check != false)
 		{
-			setcookie($this->engine->_CONF['admin_username_cookie'],$username);
-			setcookie($this->engine->_CONF['admin_password_cookie'],$password);
+			setcookie( $this->engine->_CONF['admin_username_cookie'], $username );
+			setcookie( $this->engine->_CONF['admin_password_cookie'], $password );
        		
        		return true;
 		}

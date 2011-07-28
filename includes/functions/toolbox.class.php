@@ -14,14 +14,14 @@ class MySmartToolbox
 	public $id;
 	public $get_id;
 	
-	/* ... */
+	// ... //
 	
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function insertFont()
  	{	
@@ -46,7 +46,7 @@ class MySmartToolbox
 		return ( $query ) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function getFontsList()
 	{
@@ -66,7 +66,7 @@ class MySmartToolbox
  	 	$this->engine->rec->getList();
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function updateFont()
  	{
@@ -84,7 +84,7 @@ class MySmartToolbox
 		return ( $query ) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function getFontInfo()
 	{
@@ -104,7 +104,7 @@ class MySmartToolbox
 		return $this->engine->rec->getInfo();
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function deleteFont()
 	{
@@ -115,7 +115,7 @@ class MySmartToolbox
  		return ($query) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function insertColor()
  	{
@@ -140,7 +140,7 @@ class MySmartToolbox
 		return ( $query ) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function getColorsList()
 	{
@@ -160,7 +160,7 @@ class MySmartToolbox
  	 	$this->engine->rec->getList();
 	}
  	
- 	/* ... */
+ 	// ... //
  	
   	public function updateColor()
  	{
@@ -178,7 +178,7 @@ class MySmartToolbox
 		return ( $query ) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	public function getColorInfo()
 	{
@@ -198,7 +198,7 @@ class MySmartToolbox
 		return $this->engine->rec->getInfo();
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function deleteColor()
 	{
@@ -209,7 +209,7 @@ class MySmartToolbox
  		return ($query) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 }
 
 ?>

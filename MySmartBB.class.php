@@ -158,6 +158,7 @@ class MySmartBB
  		$this->_CONF['temp']['query_num']		=	0;
  		$this->_CONF['username_cookie']			=	'MySmartBB_username';
  		$this->_CONF['password_cookie']			=	'MySmartBB_password';
+ 		$this->_CONF['lastvisit_cookie']		=	'MySmartBB_lastvisit';
  		$this->_CONF['admin_username_cookie']	=	'MySmartBB_admin_username';
  		$this->_CONF['admin_password_cookie']	=	'MySmartBB_admin_password';
  		$this->_CONF['style_cookie']			=	'MySmartBB_style';

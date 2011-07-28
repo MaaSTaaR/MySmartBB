@@ -4,8 +4,7 @@
  * @package 	: 	MySmartMasseges
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	15/7/2006 , 1:18 AM (kuwait : GMT+3)
- * @end   		: 	15/7/2006 , 1:24 AM (kuwait : GMT+3)
- * @updated 	: 	16/07/2008 11:44:29 PM 
+ * @updated 	: 	Thu 28 Jul 2011 11:23:40 AM AST 
  */
 
 class MySmartMessages
@@ -17,11 +16,6 @@ class MySmartMessages
 		$this->engine = $engine;
 	}
 	
-	/* ... */
-
-	/**
-	 * Proccess a message
-	 */
 	public function messageProccess( $username, $title, $active_url, $change_url, $cancel_url, $text )
 	{		
 		$search_array 		= 	array();

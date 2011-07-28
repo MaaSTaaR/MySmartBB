@@ -3,8 +3,8 @@
 /**
  * @package 	: 	MySmartReply
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	12/3/2006 , 11:57 PM (kuwait : GMT+3)
- * @end   		: 	13/3/2006 , 12:01 AM (kuwait : GMT+3)
+ * @start 		: 	12/3/2006 , 11:57 PM (Kuwait : GMT+3)
+ * @end   		: 	13/3/2006 , 12:01 AM (Kuwait : GMT+3)
  * @updated 	: 	Wed 09 Feb 2011 11:31:27 AM AST 
  */
 
@@ -12,22 +12,25 @@
 class MySmartReply
 {
 	private $engine;
+	private $table;
 		
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
+		$this->table = $this->engine->table[ 'reply' ];
 	}
 	
+	// ... //
 	
 	public function getReplyWriterInfo( $subject_id )
 	{
- 		if ( !isset( $subject_id ) )
+ 		if ( empty( $subject_id ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM getReplyWriterInfo()',E_USER_ERROR);
  		}
  		
 		$this->engine->rec->select = '*,r.id AS reply_id';
-		$this->engine->rec->table = $this->engine->table['reply'] . ' AS r,' . $this->engine->table['member'] . ' AS m';
+		$this->engine->rec->table = $this->table . ' AS r,' . $this->engine->table['member'] . ' AS m';
 		
 		$statement = "r.subject_id='" . $subject_id . "' AND m.username=r.writer";
 		
@@ -43,15 +46,16 @@ class MySmartReply
 		$this->engine->rec->getList();
 	}
 	
+	// ... //
 	
 	public function unTrashReply( $id )
 	{
- 		if ( !isset( $id ) )
+ 		if ( empty( $id ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashReply() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$this->engine->rec->table = $this->engine->table['reply'];
+ 		$this->engine->rec->table = $this->table;
  		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'0'	);
  		
@@ -62,11 +66,16 @@ class MySmartReply
 		return ( $query ) ? true : false;
 	}
 		
-	/* ... */
+	// ... //
 	
 	public function massDeleteReply( $section_id )
 	{
- 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
+ 		if ( empty( $section_id ) )
+ 		{
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM massDeleteReply() -- EMPTY section_id',E_USER_ERROR);
+ 		}
+ 		
+ 		$this->engine->rec->table = $this->table;
  		
  		$this->engine->rec->filter = "section='" . $section_id . "'";
  		
@@ -75,17 +84,17 @@ class MySmartReply
  		return ($query) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function massMoveReply( $to, $from )
 	{
- 		if ( !isset( $to )
- 			or !isset( $from ) )
+ 		if ( empty( $to )
+ 			or empty( $from ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massMoveReply() -- EMPTY to OR from',E_USER_ERROR);
  		}
  		
- 		$this->engine->rec->table = $this->engine->table[ 'reply' ];
+ 		$this->engine->rec->table = $this->table;
  		
  		$this->engine->rec->fields = array(	'section'	=>	$to	);
  		
@@ -96,19 +105,16 @@ class MySmartReply
 		return ( $query ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
-	/**
-	 * Move reply to trash
-	 */
 	public function moveReplyToTrash( $id )
 	{
- 		if ( !isset( $id ) )
+ 		if ( empty( $id ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM moveReplyToTrash() -- EMPTY id',E_USER_ERROR);
  		}
  		
- 		$this->engine->rec->table = $this->engine->table['reply'];
+ 		$this->engine->rec->table = $this->table;
  		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'1'	);
  		
@@ -119,7 +125,7 @@ class MySmartReply
 		return ( $query ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 }
 
 ?>

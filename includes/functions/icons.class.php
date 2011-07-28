@@ -4,28 +4,30 @@
  * @package 	: 	MySmartIcons
  * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start		: 	21/09/2007 10:28:43 PM 
- * @updated 	:	Sat 12 Feb 2011 11:38:36 AM AST 
+ * @updated 	:	Thu 28 Jul 2011 11:00:18 AM AST 
  */
 
 class MySmartIcons
 {
 	private $engine;
+	private $table;
 	
 	public $id;
 	public $get_id;
 	
-	/* ... */
+	// ... //
 	
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
+		$this->table = $this->engine->table[ 'smiles' ];
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function insertSmile()
 	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
 		{
@@ -46,11 +48,11 @@ class MySmartIcons
 		return ( $query ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function updateSmile()
  	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
 		{
@@ -64,11 +66,11 @@ class MySmartIcons
 		return ( $query ) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function deleteSmile()
 	{
- 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+ 		$this->engine->rec->table = $this->table;
  		
 		$statement = "smile_type='0'";
 		
@@ -86,11 +88,11 @@ class MySmartIcons
  		return ($query) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getSmileList()
 	{ 
-     	$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+     	$this->engine->rec->table = $this->table;
 		
 		$statement = "smile_type='0'";
 		
@@ -106,11 +108,11 @@ class MySmartIcons
  	 	$this->engine->rec->getList();
      }
      
-     /* ... */
+     // ... //
 	
 	public function getCachedSmiles()
 	{
-		$cache = $this->engine->_CONF['info_row']['smiles_cache'];
+		$cache = $this->engine->_CONF ['info_row' ][ 'smiles_cache' ];
 		
 		$cache = $this->engine->func->htmlDecode( $cache );
 		
@@ -119,11 +121,11 @@ class MySmartIcons
 		return $cache;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getSmileInfo()
 	{
- 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+ 		$this->engine->rec->table = $this->table;
 				
 		$statement = "smile_type='0'";
 		
@@ -139,7 +141,7 @@ class MySmartIcons
 		return $this->engine->rec->getInfo();
 	}
 	
-	/* ... */
+	// ... //
 	
  	public function createSmilesCache()
  	{	
@@ -163,7 +165,7 @@ class MySmartIcons
 		return $cache;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	public function updateSmilesCache()
  	{
@@ -174,11 +176,11 @@ class MySmartIcons
 		return ($update_cache) ? true : false;
  	}
  	
- 	/* ... */
+ 	// ... //
  	
  	public function getSmilesNumber()
  	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		$statement = "smile_type='0'";
 		
@@ -194,11 +196,11 @@ class MySmartIcons
 		return $this->engine->rec->getNumber();
  	}
 	
- 	/* ... */
+ 	// ... //
 	
 	public function insertIcon()
 	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
 		{
@@ -219,11 +221,11 @@ class MySmartIcons
 		return ( $query ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
   	public function updateIcon()
  	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
 		{
@@ -238,11 +240,11 @@ class MySmartIcons
 
  	}
  	
- 	/* ... */
+ 	// ... //
  	
 	public function deleteIcon()
 	{
- 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+ 		$this->engine->rec->table = $this->table;
  		
 		$statement = "smile_type='1'";
 		
@@ -260,11 +262,11 @@ class MySmartIcons
  		return ($query) ? true : false;
 	}
     
-    /* ... */ 
+    // ... // 
 	
 	public function getIconList()
 	{
-		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+		$this->engine->rec->table = $this->table;
 		
 		$statement = "smile_type<>'0'";
 		
@@ -280,11 +282,11 @@ class MySmartIcons
  	 	$this->engine->rec->getList();
 	}
     
-    /* ... */
+    // ... //
     
 	public function getIconInfo()
 	{
- 		$this->engine->rec->table = $this->engine->table[ 'smiles' ];
+ 		$this->engine->rec->table = $this->table;
 				
 		$statement = "smile_type='1'";
 		

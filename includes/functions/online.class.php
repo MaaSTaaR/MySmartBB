@@ -4,8 +4,7 @@
  * @package	:	MySmartOnline
  * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start		:	4/4/2006 , 11:26 PM
- * @end  		:	4/4/2006 , 11:38 PM
- * @updated		:	Tue 08 Feb 2011 10:51:25 AM AST 
+ * @updated		:	Thu 28 Jul 2011 11:18:47 AM AST 
  */
 
 class MySmartOnline
@@ -28,7 +27,7 @@ class MySmartOnline
 			trigger_error('ERROR::NEED_PARAMETER -- FROM isOnline() -- EMPTY timeout');
 		}
 		
-		$this->engine->rec->table = $this->engine->table['online'];
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
 		
 		$this->engine->rec->filter = "logged>=" . $timeout;
 		
@@ -54,17 +53,14 @@ class MySmartOnline
 	
 	public function isToday( $username, $date )
 	{
-		$this->engine->rec->table = $this->engine->table[ 'today' ];
+		if ( empty( $username )
+			and empty( $date ) )
+		{
+			trigger_error('ERROR::NEED_PARAMETER -- FROM isToday() -- EMPTY username or date');
+		}
 		
-		if ( !empty( $username )
-			and !empty( $date ) )
-		{
-			$MySmartBB->rec->filter = "username='" . $username . "' AND user_date='" . $date . "'";
-		}
-		else
-		{
-			return false;
-		}
+		$this->engine->rec->table = $this->engine->table[ 'today' ];
+		$this->engine->rec->filter = "username='" . $username . "' AND user_date='" . $date . "'";
 		
 		$num = $this->engine->rec->getNumber();
 		
@@ -77,7 +73,7 @@ class MySmartOnline
 	{
 		$this->engine->rec->table = $this->engine->table[ 'online' ];
 		$this->engine->rec->fields = array(	'user_location'	=>	$location	);
-		$this->engine->rec->filter = "username='" . $this->engine->_CONF['member_row']['username'] . "'";
+		$this->engine->rec->filter = "username='" . $this->engine->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$update = $this->engine->rec->update();
 		

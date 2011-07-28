@@ -11,15 +11,16 @@ class MySmartVote
 {
 	private $engine;
 
-	/* ... */
+	// ... //
 	
 	function __construct( $engine )
 	{
 		$this->engine = $engine;
 	}
 	 	
- 	/* ... */
+ 	// ... //
  	
+ 	// TODO : I think we have to rewrite this function
  	public function doVote( $answers, $answer )
  	{	
  		$x 		= 	0;
