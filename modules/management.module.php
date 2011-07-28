@@ -117,14 +117,6 @@ class MySmartManagementMOD
 		{
 			$this->__unReviewSubject();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'special')
-		{
-			$this->_specialStart();
-		}
-		elseif ($MySmartBB->_GET['operator'] == 'unspecial')
-		{
-			$this->_unSpecialStart();
-		}
 	}
 	
 	private function __stick()
@@ -725,54 +717,6 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تمت الموافقه على الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
-		}
-	}
-	
-	private function _specialStart()
-	{
-		global $MySmartBB;
-
-	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->fields = array(	'special'	=>	1	);
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
-		
-		$update = $MySmartBB->rec->update();
-		
-		if ($update)
-		{
-	    	$MySmartBB->func->msg('تم إضافة الموضوع إلى المواضيع المميزة');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
-		}
-	}
-
-	private function _unSpecialStart()
-	{
-		global $MySmartBB;
-
-	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->fields = array(	'special'	=>	0	);
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
-		
-		$update = $MySmartBB->rec->update();
-		
-		if ($update)
-		{
-	    	$MySmartBB->func->msg('تم إلغاء التميز عن الموضوع');
 			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}

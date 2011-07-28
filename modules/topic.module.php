@@ -516,7 +516,6 @@ class MySmartTopicMOD
      	
      	$MySmartBB->template->assign('stick',$this->Info['stick']);
      	$MySmartBB->template->assign('close',$this->Info['close']);
-     	$MySmartBB->template->assign('special',$this->Info['special']);
      	
      	$MySmartBB->template->display('topic_end');
 	}
