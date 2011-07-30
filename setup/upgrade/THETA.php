@@ -293,22 +293,6 @@ class MySmartTHETA extends MySmartInstall
 		return ($add) ? true : false;
 	}
 	
-	function AddHeader()
-	{
-		global $MySmartBB;
-		
-		$this->_TempArr['AddArr'] 			= 	array();
-		$this->_TempArr['AddArr']['table'] 		= 	$MySmartBB->table['section'];
-		$this->_TempArr['AddArr']['field_name'] 	= 	'header';
-		$this->_TempArr['AddArr']['field_des'] 		= 	'text NOT NULL';
-		
-		$add = $this->add_field($this->_TempArr['AddArr']);
-		
-		unset($this->_TempArr['AddArr']);
-		
-		return ($add) ? true : false;
-	}
-	
 	function AddDelReason()
 	{
 		global $MySmartBB;

@@ -74,22 +74,6 @@ class MySmartUserCPMOD
 				{
 					$this->_signChange();
 				}
-				elseif ($MySmartBB->_GET['subject'])
-				{
-					$this->_SignSubjectMain(); // TODO : Kill Me Please
-				}
-				elseif ($MySmartBB->_GET['subject_start'])
-				{
-					$this->_SignSubjectChange(); // TODO : Kill Me Please
-				}
-				elseif ($MySmartBB->_GET['reply'])
-				{
-					$this->_SignReplyMain(); // TODO : Kill Me Please
-				}
-				elseif ($MySmartBB->_GET['reply_start'])
-				{
-					$this->_SignReplyChange(); // TODO : Kill Me Please
-				}
 			}
 			/** **/
 			
@@ -155,37 +139,6 @@ class MySmartUserCPMOD
 				}
 			}
 		}
-		/** **/
-		
-		/** Bookmarks **/
-		elseif ($MySmartBB->_GET['bookmark'])
-		{
-			if (!$MySmartBB->_CONF['info_row']['bookmark_feature'])
-			{
-				$MySmartBB->func->error('المعذره .. خاصية مفضلة المواضيع موقوفة حاليا');
-			}
-			
-			if ($MySmartBB->_GET['add'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_bookmarkAddMain();
-				}
-				elseif ($MySmartBB->_GET['start'])
-				{
-					$this->_bookmarkAddStart();
-				}
-			}
-			elseif ($MySmartBB->_GET['del'])
-			{
-				$this->_bookmarkDelStart();
-			}
-			elseif ($MySmartBB->_GET['show'])
-			{
-				$this->_bookmarkShow();
-			}
-		}
-		/** **/
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -343,85 +296,7 @@ class MySmartUserCPMOD
 		// ... //
 	}
 	
-	/* Kill ME 
-	function _SignSubjectMain()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('تحرير توقيعك الإفتراضي للمواضيع');
-
-		$MySmartBB->func->GetEditorTools();
-
-		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['subject_sig']);
-		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
-
-		$MySmartBB->template->display('usercp_control_signsubject');
-	}
-	
-	function _SignSubjectChange()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('تنفيذ عملية التحديث');
-
-		$MySmartBB->func->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
-
-		$MySmartBB->_POST['text'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['text'],'trim');
-
-		$SignArr = array();
-		$SignArr['field'] = array();
-
-		$SignArr['field']['subject_sig'] = $MySmartBB->_POST['text'];
-		$SignArr['where'] = array('id',$MySmartBB->_CONF['member_row']['id']);
-
-		$UpdateSign = $MySmartBB->member->UpdateMember($SignArr);
-
-		if ($UpdateSign)
-		{
-			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للمواضيع بنجاح !');
-			$MySmartBB->func->move('index.php?page=usercp&control=1&subjects=1&main=1');
-		}
-	}
-	
-	function _SignReplyMain()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('تحرير توقيعك الإفتراضي الخاص بالردود');
-
-		$MySmartBB->func->GetEditorTools();
-
-		$MySmartBB->_CONF['template']['Sign'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['rows']['member_row']['reply_sig']);
-		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Sign']);
-
-		$MySmartBB->template->display('usercp_control_signreply');
-	}
-	
-	function _SignReplyChange()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('تنفيذ عملية التحديث');
-
-		$MySmartBB->func->AddressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
-
-		$MySmartBB->_POST['text'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['text'],'trim');
-
-		$SignArr = array();
-		$SignArr['field'] = array();
-
-		$SignArr['field']['reply_sig'] = $MySmartBB->_POST['text'];
-		$SignArr['where'] = array('id',$MySmartBB->_CONF['member_row']['id']);
-
-		$UpdateSign = $MySmartBB->member->UpdateMember($SignArr);
-
-		if ($UpdateSign)
-		{
-			$MySmartBB->func->msg('تم تحديث التوقيع الإفتراضي للردود بنجاح !');
-			$MySmartBB->func->move('index.php?page=usercp&control=1&replays=1&main=1');
-		}
-	}
-	*/
+	// ... //
 	
 	private function _passwordMain()
 	{
@@ -845,108 +720,6 @@ class MySmartUserCPMOD
 		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('usercp_options_subjects');
-	}
-	
-	private function _bookmarkAddMain()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('لوحة تحكم العضو');
-
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-
-		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
-
-		$MySmartBB->template->display('subject_bookmark_add');
-	}
-
-	private function _bookmarkAddStart()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->showHeader(' إضافة الموضوع الى المفضلة');
-
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
-		
-		$subject = $MySmartBB->rec->getInfo();
-		
-		if (!$subject)
-		{
-			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
-		}
-		
-		// TODO :: please check group information.
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
-		$MySmartBB->rec->fields = array(	'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
-											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
-											'subject_title'	=>	$Subject['title'],
-											'reason'	=>	$MySmartBB->_POST['reason']	);
-		
-		
-		$insert = $MySmartBB->rec->insert();
-
-		if ($insert)
-		{
-			$MySmartBB->func->msg('تم إضافة الموضوع الى المفضلة');
-			$MySmartBB->func->move('index.php?page=usercp&bookmark=1&show=1');
-		}
-	}
-	
-	private function _bookmarkDelStart()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('حذف الموضوع من قائمة المواضيع المفضلة');
-
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
-		}
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
-		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET[ 'id' ] . "'";
-		
-		$del = $MySmartBB->rec->delete();
-		
-		if ( $del )
-		{
-			$MySmartBB->func->msg('تم حذف الموضوع');
-			$MySmartBB->func->move('index.php?page=usercp&bookmark=1&show=1');
-		}
-	}
-	
-	private function _bookmarkShow()
-	{
-		global $MySmartBB;
-
-		$MySmartBB->func->ShowHeader('المواضيع المفضلة الخاصة بي');
-		
-		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'bookmark' ];
-		$MySmartBB->rec->filter = "member_id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
-		$MySmartBB->rec->order = 'id DESC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['subject_res'];
-		
-		$MySmartBB->rec->getList();
-
-		$MySmartBB->template->display('subject_bookmark_show');
 	}
 }
 

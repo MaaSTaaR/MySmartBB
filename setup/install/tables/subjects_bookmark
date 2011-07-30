@@ -1,1 +1,0 @@
-CREATE TABLE #table# (id INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY,member_id int(9) NOT NULL,subject_id int(9) NOT NULL,subject_title varchar(200) NOT NULL,reason varchar(255) NOT NULL) TYPE = MYISAM AUTO_INCREMENT=1

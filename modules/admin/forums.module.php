@@ -347,8 +347,6 @@ class MySmartForumsMOD extends _functions
 		$MySmartBB->rec->fields['subject_order']			=	$MySmartBB->_POST['subject_order'];
 		$MySmartBB->rec->fields['hide_subject']				=	$MySmartBB->_POST['hide_subject'];
 		$MySmartBB->rec->fields['sec_section']				=	$MySmartBB->_POST['sec_section'];
-		$MySmartBB->rec->fields['header'] 					= 	$MySmartBB->_POST['head'];
-		$MySmartBB->rec->fields['footer'] 					= 	$MySmartBB->_POST['foot'];
 		$MySmartBB->rec->fields['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
 

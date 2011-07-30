@@ -223,13 +223,11 @@ class MySmartOptionsMOD
 		$update = array();
 		$update[0] = $MySmartBB->info->updateInfo( 'show_onlineguest', $MySmartBB->_POST['guest_online'] );
 		$update[1] = $MySmartBB->info->updateInfo( 'pm_feature', $MySmartBB->_POST['pm_feature'] );
-		$update[2] = $MySmartBB->info->updateInfo( 'bookmark_feature', $MySmartBB->_POST['bookmark_feature'] );
-		$update[3] = $MySmartBB->info->updateInfo( 'describe_feature', $MySmartBB->_POST['describe_feature'] );
+		$update[2] = $MySmartBB->info->updateInfo( 'describe_feature', $MySmartBB->_POST['describe_feature'] );
 		
 		if ($update[0]
 			and $update[1]
-			and $update[2]
-			and $update[3])
+			and $update[2])
 		{
 			$MySmartBB->functions->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->functions->move('admin.php?page=options&amp;features=1&amp;main=1');

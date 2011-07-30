@@ -319,20 +319,6 @@ class MySmartTopicMOD
 			$MySmartBB->smartparse->replace_smiles($this->Info['user_sig']);
 		}
 		
-		if (!empty($this->Info['subject_sig']))
-		{
-			$this->Info['subject_sig'] = $MySmartBB->smartparse->replace($this->Info['subject_sig']);
-			$MySmartBB->smartparse->replace_smiles($this->Info['subject_sig']);
-		}
-		
-		/** TODO:: Why??? **/
-		if (!empty($this->Info['reply_sig']))
-		{
-			// So , use the SmartCode in it
-			$this->Info['reply_sig'] = $MySmartBB->smartparse->replace($this->Info['reply_sig']);
-			$MySmartBB->smartparse->replace_smiles($this->Info['reply_sig']);
-		}
-		
 		// ... //
 		
 		$topic_date = $MySmartBB->func->date($this->Info['native_write_time']);
