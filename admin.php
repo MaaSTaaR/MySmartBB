@@ -27,7 +27,6 @@ $modules['avatar'] 			= 	'avatar.module.php';
 $modules['fixup'] 			= 	'fixup.module.php';
 $modules['template'] 		= 	'template.module.php';
 $modules['sections'] 		= 	'sections.module.php';
-$modules['forums'] 			= 	'forums.module.php';
 $modules['cp_options'] 		= 	'cp_options.module.php';
 $modules['ajax'] 			= 	'ajax.module.php';
 $modules['moderators']		=	'moderators.module.php';
@@ -35,6 +34,12 @@ $modules['groups']			=	'groups.module.php';
 $modules['logout']			=	'logout.module.php';
 $modules['note'] 			= 	'notes.module.php';
 $modules['plugins'] 		= 	'plugins.module.php';
+$modules['forums'] 			= 	'forums.module.php';
+$modules['forums_add'] 		= 	'forums_add.module.php';
+$modules['forums_edit'] 	= 	'forums_edit.module.php';
+$modules['forums_del'] 		= 	'forums_del.module.php';
+$modules['forums_sort'] 	= 	'forums_sort.module.php';
+$modules['forums_groups'] 	= 	'forums_groups.module.php';
 
 //////////
 
