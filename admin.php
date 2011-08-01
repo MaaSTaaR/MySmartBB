@@ -40,6 +40,9 @@ $modules['forums_edit'] 	= 	'forums_edit.module.php';
 $modules['forums_del'] 		= 	'forums_del.module.php';
 $modules['forums_sort'] 	= 	'forums_sort.module.php';
 $modules['forums_groups'] 	= 	'forums_groups.module.php';
+$modules['groups_add'] 		= 	'groups_add.module.php';
+$modules['groups_edit'] 	= 	'groups_edit.module.php';
+$modules['groups_del'] 		= 	'groups_del.module.php';
 
 //////////
 
