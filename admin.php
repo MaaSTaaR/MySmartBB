@@ -43,6 +43,11 @@ $modules['forums_groups'] 	= 	'forums_groups.module.php';
 $modules['groups_add'] 		= 	'groups_add.module.php';
 $modules['groups_edit'] 	= 	'groups_edit.module.php';
 $modules['groups_del'] 		= 	'groups_del.module.php';
+$modules['sections_add'] 	= 	'sections_add.module.php';
+$modules['sections_edit'] 	= 	'sections_edit.module.php';
+$modules['sections_del'] 	= 	'sections_del.module.php';
+$modules['sections_sort'] 	= 	'sections_sort.module.php';
+$modules['sections_groups'] = 	'sections_groups.module.php';
 
 //////////
 
