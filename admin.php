@@ -48,6 +48,11 @@ $modules['sections_edit'] 	= 	'sections_edit.module.php';
 $modules['sections_del'] 	= 	'sections_del.module.php';
 $modules['sections_sort'] 	= 	'sections_sort.module.php';
 $modules['sections_groups'] = 	'sections_groups.module.php';
+$modules['member_add'] 		= 	'member_add.module.php';
+$modules['member_merge'] 	= 	'member_merge.module.php';
+$modules['member_edit'] 	= 	'member_edit.module.php';
+$modules['member_del'] 		= 	'member_del.module.php';
+$modules['member_search'] 	= 	'member_search.module.php';
 
 //////////
 
