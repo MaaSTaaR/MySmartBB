@@ -96,13 +96,6 @@ class MySmartBB
   		
   		// ... //
   		
-  		$this->db->SetInformation(	$config['db']['server'],
-  									$config['db']['username'],
-  									$config['db']['password'],
-  									$config['db']['name']);
-  									
-  		// ... //
-  		
   		if (!empty($config['db']['prefix']))
   		{
   			$this->prefix = $config['db']['prefix'];
