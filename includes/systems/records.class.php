@@ -184,7 +184,7 @@ class MySmartRecords
 		
 		// ... //
 		
-		$query = $this->db->sql_unbuffered_query( $statement );
+		$query = $this->db->sql_query( $statement, true );
 		
 		// ... //
 		
@@ -257,7 +257,7 @@ class MySmartRecords
 		
 		/* ... */
 		
-		$query = $this->db->sql_unbuffered_query( $statement );
+		$query = $this->db->sql_query( $statement, true );
 		
 		return $query;
 	}
@@ -385,7 +385,7 @@ class MySmartRecords
 		
 		/* ... */
 
-		$query = $this->db->sql_unbuffered_query( $statement );
+		$query = $this->db->sql_query( $statement, true );
 		
 		return ( $query ) ? true : false;
 	}

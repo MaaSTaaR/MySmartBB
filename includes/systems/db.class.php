@@ -1,21 +1,18 @@
 <?php
 
+// Last Update : Fri 26 Aug 2011 10:37:13 PM AST 
+
 class MySmartSQL
 {
-	var $host			=	'localhost';
-	var $db_username	=	'';
-	var $db_password	=	'';
-	var $db_name		=	'';
-	var $use_pconnect	=	true;
-	var $debug			=	false;
-	var $store_queries	=	false;
-	var $queries		=	array();
-	var $number;
-	var $_from;
-	var $_query;
-	var $_x = 0;
-
-	function SetInformation($host,$db_username,$db_password,$db_name)
+	protected $host				=	'localhost';
+	protected $db_username		=	'';
+	protected $db_password		=	'';
+	protected $db_name			=	'';
+	protected $use_pconnect		=	true;
+	private $_from;
+	private $_query;
+	
+	function __construct( $host, $db_username, $db_password, $db_name )
 	{
 		$this->host        = $host;
 		$this->db_username = $db_username;
@@ -23,35 +20,15 @@ class MySmartSQL
 		$this->db_name     = $db_name;
 	}
 	
-	function SetDebug($debug)
+	public function sql_connect()
 	{
-		$this->debug = $debug;
-	}
-	
-	function SetQueriesStore($store)
-	{
-		$this->store_queries = $store;
-	}
+		$function = ( !$this->use_pconnect ) ? 'mysql_connect' : 'mysql_pconnect';
 		
-	function GetQueriesNumber()
-	{
-		return $this->number;
-	}
-	
-	function GetQueriesArray()
-	{
-		return $this->queries;
-	}
-	
-	function sql_connect()
-	{
-		$function = (!$this->use_pconnect) ? 'mysql_connect' : 'mysql_pconnect';
-		
-		$connect = @$function($this->host,$this->db_username,$this->db_password);
+		$connect = @$function( $this->host, $this->db_username, $this->db_password );
 		
 		$this->_from = 'connect';
 		
-		if (!$connect)
+		if ( !$connect )
 		{
 			$this->_error();
 		}
@@ -59,13 +36,13 @@ class MySmartSQL
 		return $connect;
 	}
 
-	function sql_select_db()
+	public function sql_select_db()
 	{
-		$select = @mysql_select_db($this->db_name);
+		$select = @mysql_select_db( $this->db_name );
 		
 		$this->_from = 'select';
 		
-		if (!$select)
+		if ( !$select )
 		{
 			$this->_error();
 		}
@@ -73,7 +50,7 @@ class MySmartSQL
 		return $select;
 	}
 	
-	function sql_close()
+	public function sql_close()
 	{
 		$close = @mysql_close();
 		
@@ -87,9 +64,11 @@ class MySmartSQL
 		return $close;
 	}
 	
-	function sql_query($query)
+	public function sql_query( $query, $unbuffered = false )
 	{
-		$result = @mysql_query($query);
+		$function = ( !$unbuffered ) ? 'mysql_query' : 'mysql_unbuffered_query';
+		
+		$result = @$function( $query );
 		
 		$this->_from = 'query';
 		
@@ -99,80 +78,41 @@ class MySmartSQL
 			
 			$this->_error();
 		}
-		
-		/*$MySmartBB->_CONF['temp']['query_numbers']++;
-		
-		$MySmartBB->_CONF['temp']['queries'][] = $query;
-		
-		if ($this->debug)
-		{
-			if ($this->store_queries)
-			{
-				//$this->queries[$this->_x++] = $query;
-			}
-		}*/
 			
 		return $result;
 	}
 	
-	function sql_unbuffered_query($query)
-	{		
-		$result = @mysql_unbuffered_query($query);
-		
-		$this->_from = 'query';
-		
-		if (!$result)
-		{
-			$this->_query = $query;
-			
-			$this->_error();
-		}
-		
-		/*$MySmartBB->_CONF['temp']['query_numbers']++;
-		
-		$MySmartBB->_CONF['temp']['queries'][] = $query;
-		
-		if ($this->debug)
-		{
-			if ($this->store_queries)
-			{
-				$this->queries[$this->_x++] = $query;
-			}
-		}*/
-			
-		return $result;		
-	}
-	
-	function sql_fetch_array($result)
+	public function sql_fetch_array( $result )
 	{
-		$out = @mysql_fetch_array($result,MYSQL_ASSOC);
+		// Only returns associative array
+		$out = @mysql_fetch_array( $result, MYSQL_ASSOC );
 		
 		return $out;
 	}
 	
-	function sql_num_rows($result)
+	public function sql_num_rows( $result )
 	{
-		$out = @mysql_num_rows($result);
+		$out = @mysql_num_rows( $result );
 		
 		return $out;
 	}
 	
-	function sql_insert_id()
+	public function sql_insert_id()
 	{
 		$out = @mysql_insert_id();
 		
 		return $out;
 	}
 	
-	function check($table)
+	public function check( $table )
 	{
-		$result = @mysql_query("SELECT * FROM " . $table);
+		$result = $this->sql_query( "SELECT * FROM " . $table );
 		
 		if (!$result)
 		{
 			$err = mysql_errno();
 			
-			if ($err = 1146)
+			if ($err == 1146)
 			{
 				return false;
 			}
@@ -187,7 +127,7 @@ class MySmartSQL
 		}
 	}
 	
-	function _error()
+	public function _error()
 	{
 		$error_no  = mysql_errno();
 		$error_msg = mysql_error();

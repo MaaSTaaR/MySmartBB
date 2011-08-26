@@ -88,7 +88,8 @@ class MySmartBB
 		global $config;
 		
 		// General systems
-  		$this->db				= 	new MySmartSQL;
+  		$this->db				= 	new MySmartSQL( $config['db']['server'], $config['db']['username'], 
+  													$config['db']['password'], $config['db']['name'] );
   		$this->pager			=	new MySmartPager;
   		$this->func 			= 	new MySmartFunctions();
   		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager); 
@@ -183,7 +184,7 @@ class MySmartBB
   		
   		// ... //
   		
-  		// Get informations from info table
+  		// Get information from info table
   		if (!defined('NO_INFO'))
   		{
  			// TODO :: Cache me please!
