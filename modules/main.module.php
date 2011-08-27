@@ -141,7 +141,7 @@ class MySmartIndexMOD
 			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 			$MySmartBB->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
 			
-			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->geNumber();
+			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->getNumber();
 		}
 		
 		// ... //

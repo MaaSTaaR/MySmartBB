@@ -25,6 +25,8 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'cache,moderator,section,subject' );
+		
 		$this->_commonCode();
 		
 		if ($MySmartBB->_GET['index'])

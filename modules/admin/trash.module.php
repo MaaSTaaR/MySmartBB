@@ -20,6 +20,8 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		{
 			$MySmartBB->template->display('header');
 			
+			$MySmartBB->load( 'reply,subject' );
+			
 			if ($MySmartBB->_GET['subject'])
 			{
 				if ($MySmartBB->_GET['main'])

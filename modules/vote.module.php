@@ -16,6 +16,8 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'vote' );
+		
 		// Show header with page title
 		$MySmartBB->func->showHeader('التصويت');
 		

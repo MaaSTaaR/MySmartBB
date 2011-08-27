@@ -19,6 +19,8 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'section,subject' );
+		
 		$MySmartBB->template->assign('SECTION_RSS',true);
 		$MySmartBB->template->assign('SECTION_ID',$MySmartBB->_GET['id']);
 		

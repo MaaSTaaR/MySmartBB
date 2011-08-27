@@ -26,6 +26,8 @@ class MySmartTopicMOD
 		
 		$MySmartBB->func->showHeader('عرض موضوع');
 		
+		$MySmartBB->load( 'moderator,reply,subject' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_getSubject();

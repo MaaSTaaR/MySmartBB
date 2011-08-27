@@ -24,6 +24,8 @@ class MySmartUserCPEmailMOD
 			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
 		}
 		
+		$MySmartBB->load( 'massege' );
+		
 		if ( $MySmartBB->_GET[ 'main' ] )				
 		{
 			$this->_emailMain();

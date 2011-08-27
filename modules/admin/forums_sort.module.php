@@ -18,6 +18,8 @@ class MySmartForumsSortMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+			$MySmartBB->load( 'section' );
+			
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'change_sort' ] )

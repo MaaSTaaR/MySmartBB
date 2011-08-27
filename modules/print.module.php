@@ -25,7 +25,9 @@ class MySmartPrintMOD
 	public function run()
 	{
 		global $MySmartBB;
-
+		
+		$MySmartBB->load( 'pm,reply,section' );
+		
 		// Show the topic
 		if ($MySmartBB->_GET['show'])
 		{

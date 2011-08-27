@@ -20,6 +20,8 @@ class MySmartSubjectMOD extends _func
 		{
 			$MySmartBB->template->display('header');
 			
+			$MySmartBB->load( 'reply,subject' );
+			
 			if ($MySmartBB->_GET['close'])
 			{
 				if ($MySmartBB->_GET['main'])

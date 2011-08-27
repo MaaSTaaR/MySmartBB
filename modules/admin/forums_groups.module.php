@@ -18,6 +18,8 @@ class MySmartForumsDeleteMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+			$MySmartBB->load( 'group,section' );
+			
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'index' ] )

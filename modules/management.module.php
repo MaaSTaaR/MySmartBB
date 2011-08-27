@@ -22,6 +22,8 @@ class MySmartManagementMOD
 		
 		if ( $MySmartBB->func->moderatorCheck( $MySmartBB->_GET[ 'section' ] ) )
 		{
+			$MySmartBB->load( 'cache,moderator,pm,reply,section,subject' );
+			
 			if ($MySmartBB->_GET['subject'])
 			{
 				$this->_subject();

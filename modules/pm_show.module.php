@@ -30,7 +30,9 @@ class MySmartPrivateMassegeShowMOD
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-
+		
+		$MySmartBB->load( 'pm' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showMassege();

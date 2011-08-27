@@ -38,6 +38,8 @@ class MySmartRegisterMOD
 		}
 		elseif ($MySmartBB->_GET['start'])
 		{
+			$MySmartBB->load( 'banned,cache,group,massege' );
+			
 			$this->_registerStart();
 		}
 		else

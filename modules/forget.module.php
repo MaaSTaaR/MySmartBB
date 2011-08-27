@@ -14,6 +14,8 @@ class MySmartForgetMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'massege' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_index();

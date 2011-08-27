@@ -18,6 +18,8 @@ class MySmartSectionEditMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+			$MySmartBB->load( 'group,subject' );
+			
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'main' ] )

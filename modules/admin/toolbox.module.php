@@ -22,6 +22,8 @@ class MySmartToolboxMOD extends _func
 		{
 			$MySmartBB->template->display('header');
 			
+			$MySmartBB->load( 'toolbox' );
+			
 			if ($MySmartBB->_GET['fonts'])
 			{
 				if ($MySmartBB->_GET['add'])

@@ -30,7 +30,9 @@ class MySmartPrivateMassegeSendMOD
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-
+		
+		$MySmartBB->load( 'pm' );
+		
 		if ($MySmartBB->_GET['send'])
 		{
 			if ($MySmartBB->_GET['index'])

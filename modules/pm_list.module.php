@@ -30,7 +30,9 @@ class MySmartPrivateMassegeListMOD
 		{
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
-
+		
+		$MySmartBB->load( 'pm' );
+		
 		if ($MySmartBB->_GET['list'])
 		{
 			$this->_showList();

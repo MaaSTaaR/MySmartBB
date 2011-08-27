@@ -17,18 +17,6 @@ require_once( DIR . 'includes/functions/member.class.php');
 require_once( DIR . 'includes/functions/info.class.php');
 require_once( DIR . 'includes/functions/online.class.php');
 require_once( DIR . 'includes/functions/style.class.php');
-require_once( DIR . 'includes/functions/subject.class.php');
-require_once( DIR . 'includes/functions/reply.class.php');
-require_once( DIR . 'includes/functions/pm.class.php');
-require_once( DIR . 'includes/functions/sections.class.php');
-require_once( DIR . 'includes/functions/cache.class.php');
-require_once( DIR . 'includes/functions/banned.class.php');
-require_once( DIR . 'includes/functions/messages.class.php');
-require_once( DIR . 'includes/functions/vote.class.php');
-require_once( DIR . 'includes/functions/group.class.php');
-require_once( DIR . 'includes/functions/moderators.class.php');
-require_once( DIR . 'includes/functions/icons.class.php');
-require_once( DIR . 'includes/functions/toolbox.class.php');
 
 require_once( DIR . 'includes/config.php');
 
@@ -48,22 +36,22 @@ class MySmartBB
 	public $db;
 	
 	// Functions
-	public $member;
-	public $info;
-	public $online;
-	public $style;
-	public $subject;
-	public $reply;
-	public $pm;
-	public $section;
-	public $cache;
-	public $banned;
-	public $massege;
-	public $vote;
-	public $group;
-	public $moderator;
-	public $icon;
-	public $toolbox;
+	public $member = null;
+	public $info = null;
+	public $online = null;
+	public $style = null;
+	public $subject = null;
+	public $reply = null;
+	public $pm = null;
+	public $section = null;
+	public $cache = null;
+	public $banned = null;
+	public $massege = null;
+	public $vote = null;
+	public $group = null;
+	public $moderator = null;
+	public $icon = null;
+	public $toolbox = null;
 	
 	// ... //
 
@@ -82,7 +70,9 @@ class MySmartBB
 	public $table 		= 	array();
 
 	// ... //
-
+	
+	private $func_list = null;
+	
 	function __construct()
 	{
 		global $config;
@@ -95,14 +85,51 @@ class MySmartBB
   		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager); 
   		
   		// ... //
+  		  		
+  		$this->initTableList();
+ 		
+ 		// ... //
+ 		
+ 		$this->initDB();
+  		
+  		// ... //
+  		
+  		$this->initInfo();
+ 		
+		// ... //
+		
+		$this->initPredefinedVars();
+		
+		// ... //
+		
+		$this->initVariables();
+		
+		// ... //
+		
+		$this->initClasses();
+		
+		// ... //
+		
+  		if (!is_bool($e)
+  			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
+  			and !defined('INSTALL'))
+  		{
+  			$this->func->move( './setup/install/', 0 );
+  			$this->func->stop( true );
+  		}
+  	}
+  	
+  	// ... //
+  	
+  	private function initTableList()
+  	{
+  		global $config;
   		
   		if (!empty($config['db']['prefix']))
   		{
   			$this->prefix = $config['db']['prefix'];
   		}
-  		
-  		// ... //
-  		
+
   		$this->table['ads'] 				= 	$this->prefix . 'ads';
   		$this->table['announcement'] 		= 	$this->prefix . 'announcement';
   		$this->table['attach'] 				= 	$this->prefix . 'attach';
@@ -139,12 +166,13 @@ class MySmartBB
   		$this->table['subjects_bookmark'] 	= 	$this->prefix . 'subjects_bookmark';
   		$this->table[ 'plugin' ]			=	$this->prefix . 'plugins';
   		$this->table[ 'hook' ]				=	$this->prefix . 'plugins_hooks';
-  		
-  		// ... //
-  		
+  	}
+  	
+  	// ... //
+  	
+  	private function initVariables()
+  	{
     	$this->_CONF['temp']					=	array();
-    	$this->_CONF['info']					=	array();
-    	$this->_CONF['info_row']				=	array();
     	$this->_CONF['now']						=	time();
  		$this->_CONF['timeout']					=	time()-300;
  		$this->_CONF['date']					=	date('j/n/Y');
@@ -156,9 +184,34 @@ class MySmartBB
  		$this->_CONF['admin_username_cookie']	=	'MySmartBB_admin_username';
  		$this->_CONF['admin_password_cookie']	=	'MySmartBB_admin_password';
  		$this->_CONF['style_cookie']			=	'MySmartBB_style';
- 		
- 		// ... //
- 		
+ 		$this->_CONF['ip'] 						= 	$this->_SERVER['REMOTE_ADDR'];
+  	}
+  	
+  	// ... //
+  	
+  	private function initFuncList()
+  	{
+  		$func_list = array();
+  		
+  		// Library's object name -> Filename, Class name
+  		$this->func_list[ 'banned' ] 		= 	array( 'banned.class.php', 'MySmartBanned' );
+  		$this->func_list[ 'cache' ] 		= 	array( 'cache.class.php', 'MySmartCache' );
+  		$this->func_list[ 'group' ] 		= 	array( 'group.class.php', 'MySmartGroup' );
+  		$this->func_list[ 'icon' ] 			= 	array( 'icons.class.php', 'MySmartIcons' );
+  		$this->func_list[ 'massege' ] 		= 	array( 'messages.class.php', 'MySmartMessages' );
+  		$this->func_list[ 'moderator' ] 	= 	array( 'moderators.class.php', 'MySmartModerators' );
+  		$this->func_list[ 'pm' ] 			= 	array( 'pm.class.php', 'MySmartPM' );
+  		$this->func_list[ 'reply' ] 		= 	array( 'reply.class.php', 'MySmartReply' );
+  		$this->func_list[ 'section' ] 		= 	array( 'sections.class.php', 'MySmartSection' );
+  		$this->func_list[ 'subject' ] 		= 	array( 'subject.class.php', 'MySmartSubject' );
+  		$this->func_list[ 'toolbox' ] 		= 	array( 'toolbox.class.php', 'MySmartToolbox' );
+  		$this->func_list[ 'vote' ] 			= 	array( 'vote.class.php', 'MySmartVote' );
+  	}
+  	
+  	// ... //
+  	
+  	private function initDB()
+  	{
  		// Connect to database
  		$this->db->sql_connect();
   		$this->db->sql_select_db();
@@ -174,28 +227,37 @@ class MySmartBB
   		{
   			return 'ERROR::THE_TABLES_ARE_NOT_INSTALLED';
   		}
-  		
-  		// ... //
-  		
+  	}
+  	
+  	// ... //
+  	
+  	private function initInfo()
+  	{
   		// Get information from info table
   		if (!defined('NO_INFO'))
   		{
  			// TODO :: Cache me please!
+ 			
+ 			$this->_CONF['info']					=	array();
+    		$this->_CONF['info_row']				=	array();
 				
 			$this->rec->table = $this->table[ 'info' ];
 		
 			$this->rec->getList();
 		
 			while ( $r = $this->rec->getInfo() )
-			{			
+			{
 				$this->_CONF[ 'info_row' ][ $r[ 'var_name' ] ] = $r[ 'value' ];
 			}
 			
 			$this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] = $this->func->htmlDecode( $this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] );
  		}
- 		
-		// ... //
-		
+  	}
+  	
+  	// ... //
+  	
+  	private function initPredefinedVars()
+  	{
 		$this->_POST 	= 	$_POST;
 		$this->_GET 	= 	$_GET;
 		$this->_COOKIE 	= 	$_COOKIE;
@@ -218,13 +280,12 @@ class MySmartBB
 				$this->func->cleanArray( $this->$name, 'sql' );
 			}
 		}
-		
-		// ... //
- 		
- 		$this->_CONF['ip'] = $this->_SERVER['REMOTE_ADDR'];
-  		
-		// ... //
-		
+  	}
+  	
+  	// ... //
+  	
+  	private function initClasses()
+  	{
 		if (!defined('INSTALL'))
 		{
 			$compiler = new MySmartTemplateCompiler( $this );
@@ -236,31 +297,11 @@ class MySmartBB
   		
   		// ... //
   		
-  		// TODO : Only call them when need them
-  		$this->member = new MySmartMember( $this );
-  		$this->info = new MySmartInfo( $this );
-  		$this->online = new MySmartOnline( $this );
-  		$this->style = new MySmartStyle( $this );
-  		$this->subject = new MySmartSubject( $this );
-  		$this->reply = new MySmartReply( $this );
-  		$this->pm = new MySmartPM( $this );
-  		$this->section = new MySmartSection( $this );
-  		$this->cache = new MySmartCache( $this );
-  		$this->banned = new MySmartBanned( $this );
-  		$this->massege = new MySmartMessages( $this );
-  		$this->vote = new MySmartVote( $this );
-  		$this->group = new MySmartGroup( $this );
-  		$this->moderator = new MySmartModerators( $this );
-  		$this->icon = new MySmartIcons( $this );
-  		$this->toolbox = new MySmartToolbox( $this );
-  		
-  		if (!is_bool($e)
-  			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
-  			and !defined('INSTALL'))
-  		{
-  			$this->func->move( './setup/install/', 0 );
-  			$this->func->stop( true );
-  		}
+  		// Common classes, So load them without $MySmartBB->load function
+  		$this->member 	= new MySmartMember( $this );
+  		$this->info 	= new MySmartInfo( $this );
+  		$this->online 	= new MySmartOnline( $this );
+  		$this->style 	= new MySmartStyle( $this );
   	}
   	
   	// ... //
@@ -268,6 +309,40 @@ class MySmartBB
   	public function getPrefix()
   	{
   		return $this->prefix;
+  	}
+  	
+  	// ... //
+  	
+  	public function load( $lib )
+  	{
+  		if ( is_null( $this->func_list ) )
+  			$this->initFuncList();
+  		
+  		// Loads multiple libraries
+  		if ( strstr( $lib, ',' ) != false )
+  		{
+  			$list = explode( ',', $lib );
+  			
+  			foreach ( $list as $lib )
+  			{
+  				$this->load( $lib );
+  			}
+  		}
+  		else
+  		{
+  			// The Library doesn't exist
+  			if ( !array_key_exists( $lib, $this->func_list ) )
+  			{
+  				return false;
+  			}
+  			
+  			if ( is_null( $this->$lib ) )
+  			{
+  				require_once( DIR . 'includes/functions/' . $this->func_list[ $lib ][ 0 ] );
+  			
+  				$this->$lib = new $this->func_list[ $lib ][ 1 ]( $this );
+  			}
+  		}
   	}
 }
 

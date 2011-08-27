@@ -21,6 +21,8 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'cache,moderator,reply,section,subject' );
+		
 		$this->_commonCode();
 		
 		if ($MySmartBB->_GET['index'])
