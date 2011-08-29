@@ -14,6 +14,8 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'icon,toolbox' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showAnnouncement();

@@ -26,7 +26,9 @@ class MySmartUserCPSignatureMOD
 		{
 			$MySmartBB->func->error( 'المعذره .. لا يمكنك استخدام هذه الميزه' );
 		}
-			
+		
+		$MySmartBB->load( 'icon,toolbox' );
+		
 		if ( $MySmartBB->_GET[ 'main' ] )
 		{
 			$this->_signMain();

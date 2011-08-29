@@ -45,7 +45,7 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject']
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();

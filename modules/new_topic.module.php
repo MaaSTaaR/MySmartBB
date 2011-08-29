@@ -25,7 +25,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,section,subject' );
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox' );
 		
 		$this->_commonCode();
 		
@@ -477,7 +477,7 @@ class MySmartTopicAddMOD
      		
      		// ... //
      		
-     		if ($this->SectionGroup['no_posts'])
+     		if ( !$this->SectionGroup[ 'no_posts' ] )
      		{
      			$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
      		}
@@ -493,7 +493,7 @@ class MySmartTopicAddMOD
      			
      			$UserTitle = $MySmartBB->rec->getInfo();
      		
-     			if ($UserTitle != false)
+     			if ( $UserTitle != false )
      			{
      				$usertitle = $UserTitle['usertitle'];
      			}

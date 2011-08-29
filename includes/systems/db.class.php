@@ -106,7 +106,7 @@ class MySmartSQL
 	
 	public function check( $table )
 	{
-		$result = $this->sql_query( "SELECT * FROM " . $table );
+		$result = mysql_query( "SELECT * FROM " . $table );
 		
 		if (!$result)
 		{

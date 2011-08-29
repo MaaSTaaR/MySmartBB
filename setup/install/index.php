@@ -1,6 +1,6 @@
 <?php
 
-define('NO_INFO',true); // TODO: huh?
+define( 'NO_INFO', true );
 
 require_once('database_struct.php');
 
@@ -95,6 +95,8 @@ elseif ($MySmartBB->_GET['step'] == 4)
 }
 elseif ($MySmartBB->_GET['step'] == 5)
 {
+	$MySmartBB->load( 'icon' );
+	
 	$MySmartBB->html->cells('الخطوه الاخيره','main1');
 	$MySmartBB->html->close_table();
 	

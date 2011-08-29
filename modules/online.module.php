@@ -49,8 +49,6 @@ class MySmartOnlineMOD
 		global $MySmartBB;
 		
 		$row[ 'username_style' ] = $MySmartBB->func->cleanVariable( $row[ 'username_style' ], 'unhtml' );
-		
-		print_r( $row );
 	}
 }
 

@@ -234,7 +234,7 @@ class MySmartBB
   	private function initInfo()
   	{
   		// Get information from info table
-  		if (!defined('NO_INFO'))
+  		if ( !defined( 'NO_INFO' ) )
   		{
  			// TODO :: Cache me please!
  			

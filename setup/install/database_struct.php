@@ -34,7 +34,7 @@ class MySmartInstaller
 				
 				if ( !file_exists( $filename ) )
 				{
-					$this->engine->func->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
+					$this->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
 					die();
 				}
 				
@@ -56,11 +56,11 @@ class MySmartInstaller
 					
 					if ( $query )
 					{
-						$this->engine->func->msg( $k . '/' . $tables_num . ': تم إنشاء ' . $table[ 'tablename' ] );
+						$this->msg( $k . '/' . $tables_num . ': تم إنشاء ' . $table[ 'tablename' ] );
 					}
 					else
 					{
-						$this->engine->func->msg( $k . '/' . $tables_num . ': فشل في إنشاء إنشاء ' . $table[ 'tablename' ] );
+						$this->msg( $k . '/' . $tables_num . ': فشل في إنشاء ' . $table[ 'tablename' ] );
 					}
 				}
 				
@@ -71,7 +71,7 @@ class MySmartInstaller
 		}
 		else
 		{
-			$this->engine->func->msg( 'هناك خطأ في مصفوفة الجداول' );
+			$this->msg( 'هناك خطأ في مصفوفة الجداول' );
 			die();
 		}
 	}
@@ -92,7 +92,7 @@ class MySmartInstaller
 				
 				if ( !file_exists( $filename ) )
 				{
-					$this->engine->func->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
+					$this->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
 					die();
 				}
 				
@@ -115,11 +115,11 @@ class MySmartInstaller
 						
 						if ( $query )
 						{
-							$this->engine->func->msg( 'تمت العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+							$this->msg( 'تمت العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
 						}
 						else
 						{
-							$this->engine->func->msg( 'لم تتم العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+							$this->msg( 'لم تتم العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
 						}
 						
 						$x += 1;
@@ -133,7 +133,7 @@ class MySmartInstaller
 		}
 		else
 		{
-			$this->engine->func->msg( 'هناك خطأ في مصفوفة الجداول' );
+			$this->msg( 'هناك خطأ في مصفوفة الجداول' );
 			die();
 		}
 	}
@@ -164,7 +164,6 @@ class MySmartInstaller
 		$this->_addTable( 'smiles', $this->engine->table[ 'smiles' ] );
 		$this->_addTable( 'style', $this->engine->table[ 'style' ] );
 		$this->_addTable( 'subject', $this->engine->table[ 'subject' ] );
-		$this->_addTable( 'subjects_bookmark', $this->engine->table[ 'subjects_bookmark' ] );
 		$this->_addTable( 'supermember_logs', $this->engine->table[ 'sm_logs' ] );
 		$this->_addTable( 'tags', $this->engine->table[ 'tag' ] );
 		$this->_addTable( 'tags_subject', $this->engine->table[ 'tag_subject' ] );
@@ -172,6 +171,8 @@ class MySmartInstaller
 		$this->_addTable( 'toolbox', $this->engine->table[ 'toolbox' ] );
 		$this->_addTable( 'usertitle', $this->engine->table[ 'usertitle' ] );
 		$this->_addTable( 'vote', $this->engine->table[ 'vote' ] );
+		$this->_addTable( 'plugins', $this->engine->table[ 'plugin' ] );
+		$this->_addTable( 'hooks', $this->engine->table[ 'hook' ] );
 	}
 	
 	private function _addRows()
@@ -197,6 +198,11 @@ class MySmartInstaller
 	{
 		$this->rows[] = array(	'filename'	=>	$filename,
 								'tablename'	=>	$tablename	);
+	}
+	
+	private function msg( $msg )
+	{
+		echo $msg . '<br />';
 	}
 }
 

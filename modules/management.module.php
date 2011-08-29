@@ -133,7 +133,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم تثبيت الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -153,7 +153,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم إلغاء تثبيت الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -189,7 +189,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم فتح الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -301,7 +301,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم نقل الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -321,7 +321,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم إغلاق الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -375,7 +375,7 @@ class MySmartManagementMOD
 			// ... //
 			
 			$MySmartBB->func->msg('تم حذف الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 
@@ -432,7 +432,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -473,7 +473,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم حذف الرد');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -539,7 +539,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 	
@@ -642,7 +642,7 @@ class MySmartManagementMOD
      			// ... //
      			     			
 				$MySmartBB->func->msg('تم التحديث بنجاح');
-				$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
      		}
 		}
 	}
@@ -667,7 +667,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg('تم رفع الموضوع بنجاح');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 		
@@ -683,7 +683,7 @@ class MySmartManagementMOD
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000')	);
+		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000') ) );
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
@@ -691,7 +691,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 	    	$MySmartBB->func->msg('تم إنزال الموضوع');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
 }

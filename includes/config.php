@@ -13,8 +13,8 @@ $config['db'] 					= array();
 $config['db']['server']			= 	'localhost';
 $config['db']['username']		= 	'root';
 $config['db']['password']		= 	'';
-$config['db']['name']			= 	'MySmartBB_THAT4_new_installer';
-$config['db']['prefix']			=	'MySBB_';				// MySmartBB_ if empty
+$config['db']['name']			= 	'MySmartBB_THETA5';
+$config['db']['prefix']			=	'';				// MySmartBB_ if empty
 
 //=================
 

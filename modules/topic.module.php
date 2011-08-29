@@ -26,7 +26,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->func->showHeader('عرض موضوع');
 		
-		$MySmartBB->load( 'moderator,reply,subject' );
+		$MySmartBB->load( 'moderator,reply,subject,icon,toolbox' );
 		
 		if ($MySmartBB->_GET['show'])
 		{
@@ -76,7 +76,7 @@ class MySmartTopicMOD
 		// Get the subject and the subject's writer information
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 		
-		if (!$this->Info)
+		if ( !$this->Info )
 		{
 			$MySmartBB->func->error('المعذره، الموضوع المطلوب غير موجود');
 		}

@@ -31,7 +31,7 @@ class MySmartPrivateMassegeSendMOD
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		
-		$MySmartBB->load( 'pm' );
+		$MySmartBB->load( 'pm,icon,toolbox' );
 		
 		if ($MySmartBB->_GET['send'])
 		{
@@ -57,11 +57,10 @@ class MySmartPrivateMassegeSendMOD
 		
 		$MySmartBB->func->showHeader('إرسال رساله خاصه');
 		
-		$MySmartBB->func->getEditorTools();
-		
-		if (isset($MySmartBB->_GET['username']))
+		if ( isset( $MySmartBB->_GET['username'] ) )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			$MySmartBB->rec->select = 'username,pm_senders,away,pm_senders_msg,away_msg';
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
 			
 			$GetToInfo = $MySmartBB->rec->getInfo();
@@ -70,14 +69,15 @@ class MySmartPrivateMassegeSendMOD
 			{
 				$MySmartBB->func->error('العضو المطلوب غير موجود');
 			}
-			
-			// TODO : Change the names of variables to something meaningful [Ugly names :(]
-			$MySmartBB->template->assign('SHOW_MSG',$GetToInfo['pm_senders']);
-			$MySmartBB->template->assign('SHOW_MSG1',$GetToInfo['away']);
-			$MySmartBB->template->assign('MSG',$GetToInfo['pm_senders_msg']);
-			$MySmartBB->template->assign('MSG1',$GetToInfo['away_msg']);
+
+			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders']);
+			$MySmartBB->template->assign('away_msg',$GetToInfo['away']);
+			$MySmartBB->template->assign('is_sender_msg',$GetToInfo['pm_senders_msg']);
+			$MySmartBB->template->assign('is_away_msg',$GetToInfo['away_msg']);
 			$MySmartBB->template->assign('to',$GetToInfo['username']);
 		}
+		
+		$MySmartBB->func->getEditorTools();
 		
 		$MySmartBB->template->display('pm_send');
 	}

@@ -139,10 +139,10 @@ class MySmartProfileMOD
 			
 			$GetLastReplyInfo = $MySmartBB->rec->getInfo();
 		
-			$MySmartBB->func->cleanArray($GetLastReplyInfo,'sql');
-			
 			if ($GetLastReplyInfo != false)
 			{
+				$MySmartBB->func->cleanArray($GetLastReplyInfo,'sql');
+				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 				$MySmartBB->rec->filter = "id='" . $GetLastReplyInfo['subject_id'] . "'";
 				

@@ -84,8 +84,8 @@ class MySmartSubject
 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSubjectWriterInfo() -- EMPTY id');
 		}
 		
- 		$this->engine->rec->table = $this->table . ' AS s,' . $this->engine->table['member'] . " AS m";
- 		$this->engine->rec->filter = "s.id='" . $id . "' AND m.username=s.writer";
+ 		$this->engine->rec->table = $this->table . ' AS s,' . $this->engine->table[ 'member' ] . " AS m";
+ 		$this->engine->rec->filter = "s.id='" . $subject_id . "' AND m.username=s.writer";
  		
  		$rows = $this->engine->rec->getInfo();
  		
