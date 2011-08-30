@@ -502,7 +502,7 @@ class MySmartTopicAddMOD
      		// ... //
      		
 			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
      		
      		// ... //
      	}

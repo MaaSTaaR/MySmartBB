@@ -37,7 +37,7 @@ class MySmartPoll
 			if ( !empty( $answer ) )
 			{
 				$list[ $k ][ 0 ] = $answer; // The text of the answer
-				$list[ $k++ ][ 1 ] = '0'; // The number of voters
+				$list[ $k++ ][ 1 ] = 0; // The number of voters
 			}
 			else
 			{
@@ -45,7 +45,7 @@ class MySmartPoll
 			}
 		}
 		
-		$list = serialize( $list );
+		$list = base64_encode( serialize( $list ) ); // To avoid troubling with unserialize(), we have to encode data
 		
 		// ... //
 		

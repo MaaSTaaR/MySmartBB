@@ -223,13 +223,15 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['tags_res'] = '';
+		// TODO : When we enable this function, no poll will show (Oh My Heart :D)
+		
+		/*$MySmartBB->_CONF['template']['res']['tags_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['tags_res'];
 		
-		$MySmartBB->rec->getList();
+		$MySmartBB->rec->getList();*/
 			
 		// Aha, there are tags in this subject
 		/*if ($MySmartBB->_CONF['template']['while']['tags'] != false)
@@ -246,20 +248,23 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
-		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
-		
-		$Poll = $MySmartBB->rec->getInfo();
-		
-		// Aha, there is a poll in this subject
-		if ($Poll != false)
+		if ( $this->Info[ 'poll_subject' ] )
 		{
-			$MySmartBB->template->foreach_array['answers'] = $Poll['answers'];
+			$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
+			$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
+		
+			$Poll = $MySmartBB->rec->getInfo();
 			
-			unset($Poll['answers']);
+			if ($Poll != false)
+			{
+				$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'answers' ] = unserialize( base64_decode( $Poll['answers'] ) );
+				
+				unset($Poll['answers']);
 			
-			$MySmartBB->template->assign('Poll',$Poll);
-			$MySmartBB->template->assign('SHOW_POLL',true);
+				$MySmartBB->template->assign('Poll',$Poll);
+			
+				$MySmartBB->template->assign( 'SHOW_POLL', true );
+			}
 		}
 		else
 		{
