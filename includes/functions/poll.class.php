@@ -80,6 +80,76 @@ class MySmartPoll
      		return false;
      	}
 	}
+	
+	// ... //
+	
+	public function updateResults( $poll, $answer )
+	{
+		if ( empty( $answer ) or ( empty( $poll ) or $poll == 0 ) )
+		{
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM MySmartPoll::updateResults()', E_USER_ERROR  );
+		}
+		
+		$info = null;
+		
+		// If "$poll" is an integer, so fetch poll's data.
+		// $poll can be an array of a specific poll
+		
+		// Fetch data
+		if ( is_int( $poll ) )
+		{
+			$this->engine->rec->table = $this->engine->table[ 'poll' ];
+			$this->engine->rec->filter = "id='" . $poll . "'";
+			
+			$info = $this->engine->rec->getInfo();
+		}
+		elseif ( is_array( $poll ) )
+		{
+			$info = $poll;
+			
+			unset( $poll );
+		}
+		else
+		{
+			return false;
+		}
+		
+		// Start the real work
+		
+		$answers = unserialize( base64_decode( $info[ 'answers' ] ) );
+		
+		// We can't user "array_search()", because our array is a 2D array.
+		$key = null;
+		
+		foreach ( $answers as $k => $value )
+		{
+			if ( $value[ 0 ] == $answer )
+			{
+				$key = $k;
+				
+				break;
+			}
+		}
+		
+		if ( is_null( $key ) )
+			return false;
+		
+		$answers[ $key ][ 1 ]++;
+		
+		$answers = base64_encode( serialize( $answers ) );
+		
+		// Finally update
+		
+		$this->engine->rec->table = $this->engine->table[ 'poll' ];
+		$this->engine->rec->fields = array(	'answers'	=>	$answers );
+		$this->engine->rec->filter = "id='" . $info[ 'id' ] . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		return ( $update ) ? true : false;
+		
+		// Wooow, That was long
+	}
 }
 
 ?>

@@ -16,7 +16,7 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'vote' );
+		$MySmartBB->load( 'poll' );
 		
 		// Show header with page title
 		$MySmartBB->func->showHeader('التصويت');
@@ -33,7 +33,6 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
-		// Clean the id from any strings
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
@@ -57,7 +56,7 @@ class MySmartVoteMOD
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND username='" . $MySmartBB->_CONF['member_row']['username'] .  "'";
+		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET['id'] . "' AND member_id='" . $MySmartBB->_CONF['member_row']['id'] .  "'";
 		
 		$Vote = $MySmartBB->rec->getInfo();
 		
@@ -66,18 +65,23 @@ class MySmartVoteMOD
 			$MySmartBB->func->error('غير مسموح لك بالتصويت اكثر من مرّه');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		$MySmartBB->rec->fields = array(	'poll_id'	=>	$MySmartBB->_GET['id'],
 											'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
 											'username'	=>	$MySmartBB->_CONF['member_row']['username']	);
-											
 		
-		$insert = $MySmartBB->vote->doVote( $Poll['answers'], $MySmartBB->_POST['answer'] );
+		$insert = $MySmartBB->rec->insert();
 		
-		if ($insert)
+		if ( $insert )
 		{
-			$MySmartBB->func->msg('تم احتساب تصويتك');
-			$MySmartBB->func->goto('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
+			$update = $MySmartBB->poll->updateResults( $Poll, $MySmartBB->_POST[ 'answer' ] );
+		
+			if ($update)
+			{
+				$MySmartBB->func->msg('تم احتساب تصويتك');
+				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
+			}
 		}
 	}
 }
