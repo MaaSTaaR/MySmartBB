@@ -235,21 +235,8 @@ class MySmartForumMOD
 		global $MySmartBB;
 		
 		if ( !empty( $this->Section[ 'forums_cache' ] ) )
-		{
-			$forums = unserialize( base64_decode( $this->Section[ 'forums_cache' ] ) );
-			
-			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = array();
-			
-			foreach ( $forums as $forum )
-			{
-				if ( is_array( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ] ) )
-				{
-					if ( $forum[ 'groups' ][ $MySmartBB->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
-					{
-						$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ][ $forum[ 'id' ] . '_f' ] = $forum;
-					}
-				} // end if is_array
-			} // end foreach ($forums)
+		{	
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->fetchForumsFromCache( $this->Section[ 'forums_cache' ] );
 			
 			$MySmartBB->template->assign('SHOW_SUB_SECTIONS',true);
 		}

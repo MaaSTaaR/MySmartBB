@@ -18,6 +18,8 @@ class MySmartForumsMOD
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+			$MySmartBB->load( 'section' );
+			
 			$MySmartBB->template->display('header');
 			
 			if ( $MySmartBB->_GET[ 'control' ] )
@@ -45,7 +47,7 @@ class MySmartForumsMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
 		// ... //
 		
@@ -53,8 +55,8 @@ class MySmartForumsMOD
 	}
 	
 	
-	// TODO :: It's seem this function don't work properly, check it and separate it to another file
-	function _ForumMain()
+	// Fetch sub sections of a specific section
+	private function _forumMain()
 	{
 		global $MySmartBB;
 		
@@ -62,11 +64,11 @@ class MySmartForumsMOD
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		// ... //
 		
-		if (!empty($MySmartBB->_CONF['template']['Inf']['forums_cache']))
+		if ( !empty( $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'forums_cache' ] ) )
 		{
 			$MySmartBB->_CONF['template']['foreach']['forums_list'] = unserialize(base64_decode($MySmartBB->_CONF['template']['Inf']['forums_cache']));
 		
@@ -85,7 +87,29 @@ class MySmartForumsMOD
 		
 		// ... //
 		
-		$MySmartBB->template->display('forums_forum_main');
+		$MySmartBB->template->display('forums_main');
+	}
+	
+	private function checkID( &$Inf )
+	{
+		global $MySmartBB;
+		
+		if (empty($MySmartBB->_GET['id']))
+		{
+			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+		}
+		
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$Inf = $MySmartBB->rec->getInfo();
+		
+		if ($Inf == false)
+		{
+			$MySmartBB->func->error('القسم المطلوب غير موجود');
+		}		
 	}
 }
 

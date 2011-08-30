@@ -20,6 +20,8 @@ class MySmartIndexMOD
 		
 		$MySmartBB->func->showHeader();
 		
+		$MySmartBB->load( 'section' );
+		
 		$MySmartBB->plugin->runHooks( 'main_after_header' );
 		
 		$this->_getSections();
@@ -43,7 +45,7 @@ class MySmartIndexMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList();
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList();
 		
 		// ... //
 	}

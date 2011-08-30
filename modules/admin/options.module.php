@@ -358,11 +358,7 @@ class MySmartOptionsMOD
 		if (!isset($MySmartBB->_POST['post_text_min']) 
 			or !isset($MySmartBB->_POST['post_text_max']) 
 			or !isset($MySmartBB->_POST['post_title_min']) 
-			or !isset($MySmartBB->_POST['post_title_max'])
-			or !isset($MySmartBB->_POST['time_out'])
-			or !isset($MySmartBB->_POST['floodctrl'])
-			or !isset($MySmartBB->_POST['default_imagesW'])
-			or !isset($MySmartBB->_POST['default_imagesH']))
+			or !isset($MySmartBB->_POST['post_title_max']))
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
@@ -372,25 +368,15 @@ class MySmartOptionsMOD
 		$update[1] = $MySmartBB->info->updateInfo( 'post_text_max', $MySmartBB->_POST['post_text_max'] );
 		$update[2] = $MySmartBB->info->updateInfo( 'post_title_min', $MySmartBB->_POST['post_title_min'] );
 		$update[3] = $MySmartBB->info->updateInfo( 'post_title_max', $MySmartBB->_POST['post_title_max'] );
-		$update[4] = $MySmartBB->info->updateInfo( 'time_out', $MySmartBB->_POST['time_out'] );
-		$update[5] = $MySmartBB->info->updateInfo( 'floodctrl', $MySmartBB->_POST['floodctrl'] );
-		$update[6] = $MySmartBB->info->updateInfo( 'samesubject_show', $MySmartBB->_POST['samesubject_show'] );
-		$update[7] = $MySmartBB->info->updateInfo( 'show_subject_all', $MySmartBB->_POST['show_subject_all'] );
-		$update[8] = $MySmartBB->info->updateInfo( 'resize_imagesAllow', $MySmartBB->_POST['resize_imagesAllow'] );
-		$update[9] = $MySmartBB->info->updateInfo( 'default_imagesW', $MySmartBB->_POST['default_imagesW'] );
-		$update[10] = $MySmartBB->info->updateInfo( 'default_imagesH', $MySmartBB->_POST['default_imagesH'] );
+		$update[4] = $MySmartBB->info->updateInfo( 'samesubject_show', $MySmartBB->_POST['samesubject_show'] );
+		$update[5] = $MySmartBB->info->updateInfo( 'show_subject_all', $MySmartBB->_POST['show_subject_all'] );
 		
 		if ($update[0] 
 			and $update[1] 
 			and $update[2] 
 			and $update[3] 
 			and $update[4] 
-			and $update[5] 
-			and $update[6] 
-			and $update[7]
-			and $update[8]
-			and $update[9]
-			and $update[10])
+			and $update[5])
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->func->move('admin.php?page=options&amp;topics=1&amp;main=1');

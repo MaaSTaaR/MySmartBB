@@ -3,7 +3,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	: 	Thu 28 Jul 2011 11:07:02 AM AST 
+ * @updated 	: 	Tue 30 Aug 2011 11:40:34 PM AST 
  */
  
 class MySmartSection
@@ -29,8 +29,8 @@ class MySmartSection
  			trigger_error('ERROR::NEED_PARAMETER -- FROM checkPassword() -- EMPTY id OR password',E_USER_ERROR);
  		}
  		
- 		$MySmartBB->rec->table = $this->table;
- 		$MySmartBB->rec->filter = "id='" . $id . "' AND section_password='" . $password . "'";
+ 		$this->engine->rec->table = $this->table;
+ 		$this->engine->rec->filter = "id='" . $id . "' AND section_password='" . $password . "'";
  		
       	$num = $this->engine->rec->getNumber();
       	
@@ -212,6 +212,165 @@ class MySmartSection
  	}
  	
  	// ... //
+ 	
+	public function getForumsList( $check_group = true )
+	{
+		$forums_list = array();
+		
+		$this->engine->rec->table = $this->engine->table[ 'section' ];
+		$this->engine->rec->filter = 'parent=0';
+		$this->engine->rec->order = 'sort ASC';
+		
+		// Get main sections
+		$this->engine->rec->getList();
+		
+		// Loop to read the information of main sections
+		while ( $cat = $this->engine->rec->getInfo() )
+		{
+			// ... //
+			
+			// Get the groups information to know view this section or not
+			
+			if ( $check_group )
+			{
+				$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
+			
+				if ( is_array( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
+				{
+					if ( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+					{
+						$forums_list[ $cat['id'] . '_m' ] = $cat;
+					}
+				}
+			
+				unset($groups);
+			}
+			else
+			{
+				$forums_list[ $cat['id'] . '_m' ] = $cat;
+			}
+			
+			// ... //
+			
+			if ( !empty( $cat[ 'forums_cache' ] ) )
+			{
+				$forums = $this->fetchForumsFromCache( $cat[ 'forums_cache' ], $check_group );
+				
+				if ( !is_null( $forums ) )
+					$forums_list = array_merge( $forums_list, $forums );
+				
+				
+				// Save some memory
+				unset( $forums );
+				
+				unset( $forums_list[ $cat['id'] . '_m' ][ 'forums_cache' ] );
+				unset( $forums_list[ $cat['id'] . '_m' ][ 'sectiongroup_cache' ] );
+			}
+		}
+		
+		return $forums_list;
+	}
+	
+	// ... //
+	
+	public function fetchForumsFromCache( $cache, $check_group = true )
+	{
+		$forums_list = array();
+		
+		$forums = unserialize( base64_decode( $cache ) );
+	
+		foreach ($forums as $forum)
+		{
+			$show_forum = false;
+	
+			if ( $check_group )
+			{
+				// Check if the visitor have the permission to see this forum or not
+				if ( is_array( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
+				{
+					if ( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+					{
+						$show_forum = true;
+					}
+				}
+			}
+			else
+			{
+				$show_forum = true;
+			}
+	
+			// ... //
+	
+			if ( $show_forum )
+			{
+				// Get the first-level sub forums as a _link_ and store it in $forum['sub']	
+				$forum[ 'is_sub' ] 	= 	0;
+				$forum[ 'sub' ]		=	null;
+	
+				if ( !empty( $forum[ 'forums_cache' ] ) )
+				{
+					$subs = unserialize( base64_decode( $forum[ 'forums_cache' ] ) );
+		
+					if ( is_array( $subs ) )
+					{
+						foreach ( $subs as $sub )
+						{
+							if ( is_array( $sub[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
+							{
+								if ( $sub[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+								{
+									if ( !$forum[ 'is_sub' ] )
+									{
+										$forum[ 'is_sub' ] = 1;
+									}
+	
+									$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ، ';
+								}
+							}
+						}
+					}
+				}
+	
+				// ... //
+	
+				// Get the moderators list as a _link_ and store it in $forum['moderators_list']
+	
+				$forum['is_moderators'] 		= 	0;
+				$forum['moderators_list']		=	null;
+	
+				if ( !empty( $forum[ 'moderators' ] ) )
+				{
+					$moderators = unserialize( $forum[ 'moderators' ] );
+	
+					if ( is_array( $moderators ) )
+					{
+						foreach ( $moderators as $moderator )
+						{
+							if ( !$forum[ 'is_moderators' ] )
+							{
+								$forum[ 'is_moderators' ] = 1;
+							}
+	
+							$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ، ';
+						}
+					}
+				}
+	
+				// ... //
+				
+				unset( $forum[ 'groups' ] );
+				
+				$forums_list[ $forum[ 'id' ] . '_f' ] = $forum;
+				
+				unset( $forum );
+			} // end if $show_forum
+		} // end foreach ($forums)
+		
+		if ( sizeof( $forums_list ) <= 0 )
+			$forums_list = null;
+		
+		return $forums_list;
+	}
 }
  
 ?>
