@@ -118,7 +118,7 @@ class MySmartSendMOD
 		if ($send)
 		{
 			$MySmartBB->func->msg('تم إرسال الرساله بنجاح');
-			$MySmartBB->func->goto('index.php');
+			$MySmartBB->func->move('index.php');
 		}
 		else
 		{

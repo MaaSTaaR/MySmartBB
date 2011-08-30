@@ -1,1 +1,1 @@
-INSERT INTO #table# SET style_title='النمط الافتراضي', style_on='1', style_order='0', style_path='modules/styles/main/css/style.css', image_path='modules/styles/main/images', template_path='modules/styles/main/templates', cache_path='modules/styles/main/compiler'
+INSERT INTO #table# SET style_title='النمط الافتراضي', style_on='1', style_order='1', style_path='modules/styles/main/css/style.css', image_path='modules/styles/main/images', template_path='modules/styles/main/templates', cache_path='modules/styles/main/compiler'

@@ -139,7 +139,7 @@ class MySmartSubject
 	public function updateReplyNumber( $reply_number, $id )
 	{
  		if ( empty( $id )
- 			or empty( $reply_number ) )
+ 			or ( empty( $reply_number ) and $reply_numer != 0 ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM updateReplyNumber() -- EMPTY id or reply_number',E_USER_ERROR);
  		}

@@ -434,7 +434,7 @@ class MySmartCommon
 		$MySmartBB->_CONF['temp']['ads_show'] = false;
 		
 		// Get random ads
-		if ($MySmartBB->_CONF['info_row']['ads_num'] > 0)
+		if ( $MySmartBB->_CONF['info_row']['ads_num'] > 0 )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 			$MySmartBB->rec->order = 'RAND()';

@@ -347,11 +347,9 @@ class MySmartManagementMOD
 			
 			$Subject = $MySmartBB->rec->getInfo();
 			
-			$MySmartBB->func->cleanArray( $Subject, 'sql' );
-			
 			// ... //
 			
-			$MySmartBB->rec->table = $MySmartBB->rec->table[ 'pm' ];
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 												'user_to'	=>	$Subject['writer'],
 												'title'	=>	'تم حذف موضوعك ' . $Subject['title'],
@@ -359,7 +357,7 @@ class MySmartManagementMOD
 												'date'	=>	$MySmartBB->_CONF['now'],
 												'icon'	=>	$Subject['icon'],
 												'folder'	=>	'inbox'	);
-												
+			
 			$send = $MySmartBB->rec->insert();
 			
 			// ... //
@@ -613,11 +611,11 @@ class MySmartManagementMOD
      		{
      			// ... //
      			
-     			$MySmartBB->table = $MySmartBB->table[ 'member' ];
-     			$MySmartBB->fields = array(	'lastpost_time'	=>	$MySmartBB->_CONF['now']	);
-     			$MySmartBB->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+     			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+     			$MySmartBB->rec->fields = array(	'lastpost_time'	=>	$MySmartBB->_CONF['now']	);
+     			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
      			
-   				$UpdateMember = $MySmartBB->member->update();
+   				$UpdateMember = $MySmartBB->rec->update();
    				
    				// ... //
    				
@@ -642,7 +640,7 @@ class MySmartManagementMOD
      			// ... //
      			     			
 				$MySmartBB->func->msg('تم التحديث بنجاح');
-				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+				//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
      		}
 		}
 	}

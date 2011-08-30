@@ -14,16 +14,13 @@ class MySmartReportMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_GET['member'])
+		if ($MySmartBB->_GET['index'])
 		{
-			if ($MySmartBB->_GET['index'])
-			{
-				$this->_memberReportIndex();
-			}
-			elseif ($MySmartBB->_GET['start'])
-			{
-				$this->_memberReportStart();
-			}
+			$this->_memberReportIndex();
+		}
+		elseif ($MySmartBB->_GET['start'])
+		{
+			$this->_memberReportStart();
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -46,7 +43,9 @@ class MySmartReportMOD
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
-				
+		
+		$MySmartBB->template->assign( 'id', $MySmartBB->_GET[ 'id' ] );
+		
 		$MySmartBB->template->display('send_report');
 	}
 	

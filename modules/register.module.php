@@ -201,7 +201,7 @@ class MySmartRegisterMOD
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['def_group'] . "'";
 		
-		$GroupInfo = $MySmartBB->group->getInfo();
+		$GroupInfo = $MySmartBB->rec->getInfo();
 		
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
@@ -236,7 +236,7 @@ class MySmartRegisterMOD
       	{
       		$member_num = $MySmartBB->_CONF['info_row']['member_number'];
       		
-      		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->member->id );
+      		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->rec->id );
       														
       		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
       		{
@@ -281,6 +281,10 @@ class MySmartRegisterMOD
 								$MySmartBB->func->goto('index.php');
 							}
 						}
+					}
+					else
+					{
+						$MySmartBB->func->error( 'تم التسجيل، و لكن النظام فشل في إرسال رسالة التفعيل إلى بريدك الإلكتروني' );
 					}
 				}
 			}

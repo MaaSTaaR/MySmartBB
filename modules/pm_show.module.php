@@ -31,7 +31,7 @@ class MySmartPrivateMassegeShowMOD
 			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
 		}
 		
-		$MySmartBB->load( 'pm' );
+		$MySmartBB->load( 'pm,icon,toolbox' );
 		
 		if ($MySmartBB->_GET['show'])
 		{
@@ -154,8 +154,9 @@ class MySmartPrivateMassegeShowMOD
 				$Cache = $MySmartBB->rec->update();
 			}
 		}
-				
-		$MySmartBB->template->display('usercp_menu');
+		
+		$MySmartBB->template->assign( 'embedded_pm_send_call', true ); // To prevent show the menu of user cp twice
+		
 		$MySmartBB->template->display('pm_show');
 	}
 }

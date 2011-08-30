@@ -45,6 +45,38 @@ class MySmartStyle
 	}
 	
 	// ... //
+	
+	public function deleteStyle( $id )
+	{
+		if ( empty( $id ) )
+ 		{
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM deleteStyle() -- EMPTY id',E_USER_ERROR);
+ 		}
+ 		
+ 		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		$this->engine->rec->filter = "id='" . $id . "'";
+		
+		$del = $this->engine->rec->delete();
+		
+		if ( $del )
+		{
+			// Find members who use the style which deleted and change the id of it to the default one
+			$this->engine->rec->table = $this->engine->table[ 'member' ];
+			$this->engine->rec->fields = array( 'style'	=>	$this->engine->_CONF[ 'info_row' ][ 'def_style' ],
+												'style_id_cache'	=>	$this->engine->_CONF[ 'info_row' ][ 'def_style' ],
+												'should_update_style_cache'	=>	'1'	);
+			
+			$this->engine->rec->filter = "style='" . $id . "'";
+			
+			$update = $this->engine->rec->update();
+			
+			return ( $update ) ? true : false;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 ?>

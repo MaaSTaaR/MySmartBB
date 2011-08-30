@@ -20,6 +20,8 @@ class MySmartStyleMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+			$MySmartBB->load( 'style' );
+			
 			if ($MySmartBB->_GET['add'])
 			{
 				if ($MySmartBB->_GET['main'])
@@ -204,10 +206,7 @@ class MySmartStyleMOD extends _func
 		
 		$this->check_by_id($Inf);
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
-		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
-		
-		$del = $MySmartBB->rec->delete();
+		$del = $MySmartBB->style->deleteStyle( $Inf[ 'id' ] );
 		
 		if ($del)
 		{

@@ -26,7 +26,7 @@ class MySmartPrintMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'pm,reply,section' );
+		$MySmartBB->load( 'pm,reply,section,subject,icon' );
 		
 		// Show the topic
 		if ($MySmartBB->_GET['show'])

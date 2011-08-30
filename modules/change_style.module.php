@@ -29,13 +29,13 @@ class MySmartChangeStyleMOD
 				
 		if ($MySmartBB->_GET['change'])
 		{
-			if ($MySmartBB->_CONF['member_permission'])
+			if ( $MySmartBB->_CONF['member_permission'] )
 			{
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
 				$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_GET[ 'id' ]	);
 				
-				$change = $MySmartBB->member->update();
+				$change = $MySmartBB->rec->update();
 			}
 			else
 			{
@@ -45,13 +45,15 @@ class MySmartChangeStyleMOD
 			if ($change)
 			{
 				$MySmartBB->func->msg('تم تغيير النمط بنجاح');
-				$MySmartBB->func->goto('index.php');
+				$MySmartBB->func->move('index.php');
 			}
 		}
 		else
 		{
 			$MySmartBB->func->error('مسار غير صحيح');
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 }
 

@@ -77,7 +77,7 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->rec->update();
 			
 			$MySmartBB->func->msg('تم حذف الرساله بنجاح !');
-			$MySmartBB->func->goto('index.php?page=pm_list&list=1&folder=inbox');
+			$MySmartBB->func->move('index.php?page=pm_list&list=1&folder=inbox');
 		}
 	}
 }
