@@ -320,17 +320,19 @@ class MySmartFunctions
  	
 	public function date( $input, $type = null, $format = 'j/n/Y' )
 	{
+		global $MySmartBB;
+		
 		$input = date( $format, $input );
 		
 		if ( !isset( $type ) )
 		{
-			if ( !isset( $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ] ) )
+			if ( !isset( $MySmartBB->_CONF[ 'info_row' ][ 'timesystem' ] ) )
 			{
 				$type = 'ty';
 			}
 			else
 			{
-				$type = $MySmartBB->_CONF[ 'info_row' ][ 'time_system' ];
+				$type = $MySmartBB->_CONF[ 'info_row' ][ 'timesystem' ];
 			}
 		}
 		

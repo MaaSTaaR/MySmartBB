@@ -147,28 +147,6 @@ class MySmartOptionsMOD
 					$this->_closeUpdate();
 				}
 			}
-			elseif ($MySmartBB->_GET['ajax'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_ajaxMain();
-				}
-				elseif ($MySmartBB->_GET['update'])
-				{
-					$this->_ajaxUpdate();
-				}
-			}
-			elseif ($MySmartBB->_GET['wysiwyg'])
-			{
-				if ($MySmartBB->_GET['main'])
-				{
-					$this->_WYSIWYGMain();
-				}
-				elseif ($MySmartBB->_GET['update'])
-				{
-					$this->_WYSIWYGUpdate();
-				}
-			}
 			
 			$MySmartBB->template->display('footer');
 		}
@@ -562,59 +540,6 @@ class MySmartOptionsMOD
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->func->move('admin.php?page=options&amp;close=1&amp;main=1');
-		}
-	}
-
-	private function _ajaxMain()
-	{
-		global $MySmartBB;
-		
-		$MySmartBB->template->display('options_ajax');
-	}
-	
-	private function _ajaxUpdate()
-	{
-		global $MySmartBB;
-			
-		$update = array();
-		
-		$update[0] = $MySmartBB->info->updateInfo( 'ajax_search', $MySmartBB->_POST['ajax_search'] );
-		$update[1] = $MySmartBB->info->updateInfo( 'ajax_register', $MySmartBB->_POST['ajax_register'] );
-		$update[2] = $MySmartBB->info->updateInfo( 'ajax_freply', $MySmartBB->_POST['ajax_freply']);
-		$update[3] = $MySmartBB->info->updateInfo( 'ajax_moderator_options', $MySmartBB->_POST['ajax_moderator_options'] );
-				
-		if ($update[0]
-			and $update[1]
-			and $update[2]
-			and $update[3])
-		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->func->move('admin.php?page=options&amp;ajax=1&amp;main=1');
-		}
-	}
-	
-	private function _WYSIWYGMain()
-	{
-		global $MySmartBB;
-		
-		$MySmartBB->template->display('options_wysiwyg');
-	}
-	
-	private function _WYSIWYGUpdate()
-	{
-		global $MySmartBB;
-		
-		$update = array();
-		$update[0] = $MySmartBB->info->updateInfo( 'wysiwyg_topic', $MySmartBB->_POST['wysiwyg_topic'] );
-		$update[1] = $MySmartBB->info->updateInfo( 'wysiwyg_reply', $MySmartBB->_POST['wysiwyg_reply'] );
-		$update[2] = $MySmartBB->info->updateInfo( 'wysiwyg_freply', $MySmartBB->_POST['wysiwyg_freply'] );
-		
-		if ($update[0]
-			and $update[1]
-			and $update[2])
-		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->func->move('admin.php?page=options&amp;wysiwyg=1&amp;main=1');
 		}
 	}
 }

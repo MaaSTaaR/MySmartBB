@@ -19,8 +19,8 @@ class MySmartInfo
 	
  	public function updateInfo( $name, $value )
  	{
- 		if ( !isset( $name )
- 			or !isset( $value ) )
+ 		if ( empty( $name )
+ 			or ( empty( $value ) and $value != 0 ) )
  		{
  			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateInfo() -- EMPTY name or value', E_USER_ERROR );
  		}

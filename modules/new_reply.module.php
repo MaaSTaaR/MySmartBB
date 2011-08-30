@@ -52,7 +52,7 @@ class MySmartReplyAddMOD
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error('المسار المتبع غير صحيح !', false);
 		}
 		
 		// ... //
@@ -64,7 +64,7 @@ class MySmartReplyAddMOD
 
 		if (!$this->SubjectInfo)
 		{
-			$MySmartBB->func->error('المعذره .. الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error('المعذره .. الموضوع المطلوب غير موجود', false);
 		}
 		
 		$MySmartBB->func->cleanArray( $this->SubjectInfo, 'sql' );
@@ -88,7 +88,7 @@ class MySmartReplyAddMOD
 		{
 			if ( $this->SubjectInfo[ 'close' ] )
 			{
-				$MySmartBB->func->error('المعذره .. هذا الموضوع مغلق');
+				$MySmartBB->func->error('المعذره .. هذا الموضوع مغلق', false);
 			}
 		}
 		
@@ -104,7 +104,7 @@ class MySmartReplyAddMOD
 		if ( !$this->SectionGroup['view_section']
 			or !$this->SectionGroup['write_reply'] )
 		{
-			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم');
+			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم', false);
 		}
 		
 		// ... //
@@ -127,7 +127,7 @@ class MySmartReplyAddMOD
      			// Stop ! it's not the true password															
      			if (!$check)
      			{
-     				$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه');
+     				$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه', false);
      			}
      			
      			$MySmartBB->_CONF['template']['password'] = '&amp;password=' . $MySmartBB->_GET['password'];

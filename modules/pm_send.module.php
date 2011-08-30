@@ -18,17 +18,17 @@ class MySmartPrivateMassegeSendMOD
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا', false);
 		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه', false);
 		}
 		
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط', false);
 		}
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
