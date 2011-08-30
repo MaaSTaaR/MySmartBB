@@ -271,8 +271,7 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// The visitor come from search engine , I don't mean Google :/ I mean the local search engine
-		// so highlight the key word
+		// The visitor come from the search page, so highlight the key word
 		if (!empty($MySmartBB->_GET['highlight']))
 		{
 			$this->Info['text'] = str_replace($MySmartBB->_GET['highlight'],"<font class='highlight'>" . $MySmartBB->_GET['highlight'] . "</font>",$this->Info['text']);

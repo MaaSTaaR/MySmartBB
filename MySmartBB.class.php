@@ -52,6 +52,7 @@ class MySmartBB
 	public $moderator = null;
 	public $icon = null;
 	public $toolbox = null;
+	public $poll = null;
 	
 	// ... //
 
@@ -206,6 +207,7 @@ class MySmartBB
   		$this->func_list[ 'subject' ] 		= 	array( 'subject.class.php', 'MySmartSubject' );
   		$this->func_list[ 'toolbox' ] 		= 	array( 'toolbox.class.php', 'MySmartToolbox' );
   		$this->func_list[ 'vote' ] 			= 	array( 'vote.class.php', 'MySmartVote' );
+  		$this->func_list[ 'poll' ] 			= 	array( 'poll.class.php', 'MySmartPoll' );
   	}
   	
   	// ... //

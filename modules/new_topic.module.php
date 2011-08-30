@@ -25,7 +25,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox' );
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll' );
 		
 		$this->_commonCode();
 		
@@ -168,14 +168,7 @@ class MySmartTopicAddMOD
 		}
 		
 		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
-			/*$IsFlood = $MySmartBB->subject->IsFlood(array('last_time'=>$MySmartBB->_CONF['member_row']['lastpost_time']));
-			
-			if ($IsFlood)
-			{
-				$MySmartBB->func->error('المعذره .. لا يمكنك كتابة موضوع جديد إلا بعد ' . $MySmartBB->_CONF['info_row']['floodctrl'] . ' ثانيه');
-			}*/
-		
+		{		
      		if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']}))
      		{
        			$MySmartBB->func->error('عدد حروف عنوان الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_title_max'] . ')');
@@ -195,12 +188,6 @@ class MySmartTopicAddMOD
      		{
       			$MySmartBB->func->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
      		}
-     	}
-     	
-     	// Hello WYSIWYG :)
-     	if ($MySmartBB->_CONF['info_row']['wysiwyg_topic'])
-     	{
-     		$MySmartBB->_POST['text'] = $MySmartBB->func->replaceWYSIWYG($MySmartBB->_POST['text']);
      	}
      	
      	$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
@@ -233,6 +220,7 @@ class MySmartTopicAddMOD
      	}
      	
      	$Insert = $MySmartBB->rec->insert();
+     	$subject_id = $MySmartBB->rec->id;
      				
      	if ($Insert)
      	{
@@ -241,37 +229,10 @@ class MySmartTopicAddMOD
      		if ($MySmartBB->_POST['poll'])
      		{
      			if (isset($MySmartBB->_POST['question'])
-     				and isset($MySmartBB->_POST['answer'][0])
-     				and isset($MySmartBB->_POST['answer'][1]))
+     				and isset($MySmartBB->_POST['answers'][0])
+     				and isset($MySmartBB->_POST['answers'][1]))
      			{
-     				$answers_number = 4;
-     				
-     				if ($MySmartBB->_POST['poll_answers_count'] > 0)
-     				{
-     					$answers_number = $MySmartBB->_POST['poll_answers_count'];
-     				}
-     				
-     				$answers = array();
-     				
-     				$x = 0;
-     				
-     				while ($x < $answers_number)
-     				{
-     					// The text of the answer
-     					$answers[$x][0] = $MySmartBB->_POST['answer'][$x];
-     					
-     					// The result
-     					$answers[$x][1] = 0;
-     					
-     					$x += 1;
-     				}
-     				
-     				$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
-     				$MySmartBB->rec->fields = array(	'qus'	=>	$MySmartBB->_POST['question'],
-     													'answers'	=>	$answers,
-     													'subject_id'	=>	$MySmartBB->subject->id);
-     				
-     				$MySmartBB->rec->insert();
+     				$MySmartBB->poll->insertPoll( $MySmartBB->_POST['question'], $MySmartBB->_POST['answers'], $subject_id, true );
      			}
      		}
      		
@@ -541,7 +502,7 @@ class MySmartTopicAddMOD
      		// ... //
      		
 			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
+			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
      		
      		// ... //
      	}
