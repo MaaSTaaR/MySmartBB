@@ -20,12 +20,13 @@ class MySmartTopicAddMOD
 	private $SectionInfo;
 	private $SectionGroup;
 	private $moderator;
+	private $subject_id;
 	
 	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll' );
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag' );
 		
 		$this->_commonCode();
 		
@@ -220,7 +221,7 @@ class MySmartTopicAddMOD
      	}
      	
      	$Insert = $MySmartBB->rec->insert();
-     	$subject_id = $MySmartBB->rec->id;
+     	$this->subject_id = $MySmartBB->rec->id;
      				
      	if ($Insert)
      	{
@@ -232,7 +233,7 @@ class MySmartTopicAddMOD
      				and isset($MySmartBB->_POST['answers'][0])
      				and isset($MySmartBB->_POST['answers'][1]))
      			{
-     				$MySmartBB->poll->insertPoll( $MySmartBB->_POST['question'], $MySmartBB->_POST['answers'], $subject_id, true );
+     				$MySmartBB->poll->insertPoll( $MySmartBB->_POST['question'], $MySmartBB->_POST['answers'], $this->subject_id, true );
      			}
      		}
      		
@@ -244,45 +245,7 @@ class MySmartTopicAddMOD
      		if ($tags_size > 0
      			and strlen($MySmartBB->_POST['tags'][0]) > 0)
      		{
-     			foreach ($MySmartBB->_POST['tags'] as $tag)
-     			{
-     				$tag_id = 1;
-     				
-     				$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
-     				$MySmartBB->rec->filter = "tag='" . $tag . "'";
-     				
-     				$Tag = $MySmartBB->rec->getInfo();
-     				
-     				if (!$Tag)
-     				{
-     					$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
-     					$MySmartBB->rec->fields = array(	'tag'	=>	$tag	);
-     					$MySmartBB->rec->get_id = true;
-     					
-     					$insert = $MySmartBB->rec->insert();
-     					
-     					$tag_id = $MySmartBB->rec->id;
-     				}
-     				else
-     				{
-     					$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
-     					$MySmartBB->rec->fields = array(	'number'	=>	$Tag['num'] + 1);
-     					$MySmartBB->rec->filter = "id='" . $Tag['id'] . "'";
-     					
-     					$update = $MySmartBB->rec->update();
-     					
-     					$tag_id = $Tag['id'];
-     				}
-     				
-     				$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
-     				$MySmartBB->rec->fields = array(	'tag_id'	=>	$tag_id,
-     													'subject_id'	=>	$MySmartBB->subject->id,
-     													'tag'	=>	$tag,
-     													'subject_title'	=>	$MySmartBB->_POST['title']);
-     													
-     				// Note, this function is from tag system not subject system
-     				$insert = $MySmartBB->rec->insert();
-     			}
+     			$MySmartBB->tag->taggingSubject( $MySmartBB->_POST['tags'], $this->subject_id, $MySmartBB->_POST[ 'title' ] );
      		}
      		
      		// ... //
@@ -502,7 +465,7 @@ class MySmartTopicAddMOD
      		// ... //
      		
 			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->rec->id . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
      		
      		// ... //
      	}

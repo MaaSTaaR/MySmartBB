@@ -53,6 +53,7 @@ class MySmartBB
 	public $icon = null;
 	public $toolbox = null;
 	public $poll = null;
+	public $tag = null;
 	
 	// ... //
 
@@ -208,6 +209,7 @@ class MySmartBB
   		$this->func_list[ 'toolbox' ] 		= 	array( 'toolbox.class.php', 'MySmartToolbox' );
   		$this->func_list[ 'vote' ] 			= 	array( 'vote.class.php', 'MySmartVote' );
   		$this->func_list[ 'poll' ] 			= 	array( 'poll.class.php', 'MySmartPoll' );
+  		$this->func_list[ 'tag' ] 			= 	array( 'tags.class.php', 'MySmartTags' );
   	}
   	
   	// ... //
