@@ -26,7 +26,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag' );
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach' );
 		
 		$this->_commonCode();
 		
@@ -251,14 +251,11 @@ class MySmartTopicAddMOD
      		// ... //
      		
      		// Upload files
-     		if ($MySmartBB->_POST['attach'])
+     		if ( $MySmartBB->_POST[ 'attach' ] )
      		{
-     			if ($this->SectionGroup['upload_attach'])
+     			if ( $this->SectionGroup[ 'upload_attach' ] )
      			{
-     				$files_error	=	array();
-     				$files_success	=	array();
      				$files_number 	= 	sizeof($MySmartBB->_FILES['files']['name']);
-     				$stop			=	false;
      				
      				if ($files_number > 0)
      				{     					
@@ -268,133 +265,12 @@ class MySmartTopicAddMOD
      						$MySmartBB->func->error('المعذره لا يمكنك رفع اكثر من ' . $this->SectionGroup['upload_attach_num'] . 'ملف');
      					}
      					
-     					// All of these variables use for loop and arrays
-     					$x = 0; // For the main loop
-     					$y = 0; // For error array
-     					$z = 0; // For success array
+     					$succ = array();
+     					$fail = array();
      					
-     					while ($files_number > $x)
-     					{
-     						if (!empty($MySmartBB->_FILES['files']['name'][$x]))
-     						{
-     							//////////
-     							
-     							// Get the extension of the file
-     							$ext = $MySmartBB->func->getFileExtension($MySmartBB->_FILES['files']['name'][$x]);
-     						
-     							// Bad try!
-     							if ($ext == 'MULTIEXTENSION'
-     								or !$ext)
-     							{
-     								$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
-     								
-     								$y += 1;
-     							}
-     							else
-     							{
-     								// Convert the extension to small case
-     								$ext = strtolower($ext);
-     								
-     								//////////
-     								
-     								// Check if the extenstion is allowed or not (TODO : cache me please)
-     								$MySmartBB->rec->filter = "Ex='" . $ext . "'";
-     								
-     								$extension = $MySmartBB->extension->getExtensionInfo();
-     							
-     								// The extension is not allowed
-     								if (!$extension)
-     								{
-     									$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
-     									
-     									$y += 1;
-     								}
-     								else
-     								{
-     									if (!empty($extension['mime_type']))
-     									{
-     										if ($MySmartBB->_FILES['files']['type'][$x] != $extension['mime_type'])
-     										{
-     											$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
-     											
-     											$stop = true;
-     											
-     											$y += 1;
-     										}
-     									}
-     									
-     									//////////
-     								
-     									// Check the size
-     								
-     									// Change the size from bytes to KB
-     									$size = ceil(($MySmartBB->_FILES['files']['size'][$x] / 1024));
-     								
-     									// oooh! the file is very large
-     									if ($size > $extension['max_size'])
-     									{
-     										$files_error[$y] = $MySmartBB->_FILES['files']['name'][$x];
-     										
-     										$stop = true;
-     										
-     										$y += 1;
-     									}
-     								
-     									//////////
-     									
-     									if (!$stop)
-     									{
-     										// Set the name of the file
-     								
-     										$filename = $MySmartBB->_FILES['files']['name'][$x];
-     								
-     										// There is a file which has same name, so change the name of the new file
-     										if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename))
-     										{
-     											$filename = $MySmartBB->_FILES['files']['name'][$x] . '-' . $MySmartBB->func->randomCode();
-     										}
-     									
-     										//////////
-     									
-     										// Copy the file to download dirctory
-     										$copy = copy($MySmartBB->_FILES['files']['tmp_name'][$x],$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename);		
-     									
-     										// Success
-     										if ($copy)
-     										{
-     											// Add the file to the success array 
-     											$files_success[$z] = $MySmartBB->_FILES['files']['name'][$x];
-     										
-     											// Insert the attachment to the database
-     											$MySmartBB->rec->fields = array(	'filename'	=>	$MySmartBB->_FILES['files']['name'][$x],
-     																				'filepath'	=>	$MySmartBB->_CONF['info_row']['download_path'] . '/' . $filename,
-     																				'filesize'	=>	$MySmartBB->_FILES['files']['size'][$x],
-     																				'subject_id'	=>	$MySmartBB->subject->id);
-     											
-     											$InsertAttach = $MySmartBB->attach->insertAttach();
-     											
-     											if ($InsertAttach)
-     											{
-     												$MySmartBB->rec->fields = array(	'attach_subject'	=>	'1'	);
-     												$MySmartBB->rec->filter = "id='" . $MySmartBB->subject->id . "'";
-     												
-     												$update = $MySmartBB->subject->updateSubject();
-     											}
-     										
-     											$z += 1;
-     										} // End of if ($copy)
-     									
-     										//////////
-     									
-     									} // End of if (!$stop)
-     								
-     									//////////
-     								} // End of else
-     							}
-     							
-     							$x += 1;	
-     						}
-     					}
+     					$MySmartBB->attach->addAttach( $MySmartBB->_FILES[ 'files' ], $this->subject_id, true, $succ, $fail  );
+     					
+     					unset( $MySmartBB->_FILES[ 'files' ] );
      				}
      			}
      		}

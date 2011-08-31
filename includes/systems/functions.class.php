@@ -165,32 +165,7 @@ class MySmartFunctions
 	}
 	
 	// ... //
-	 
- 	/**
- 	 * Get file extention
- 	 */
- 	public function getFileExtension( $filename )
-    {
-  		$ex = explode('.',$filename);
-  		
-  		$size = sizeof($ex);
-  		
-  		if ($size == 2)
-  		{
-  			return '.' . $ex[1];
-  		}
-  		elseif ($size > 2)
-  		{
-  			return 'MULTIEXTENSION';
-  		}
-  		else
-  		{
-  			return false;
-  		}
- 	}
- 	
- 	// ... //
- 	
+	
  	/**
  	 * Show the default footer of forum page
  	 */

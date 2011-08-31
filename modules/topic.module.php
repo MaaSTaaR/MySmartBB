@@ -309,13 +309,6 @@ class MySmartTopicMOD
 			
 			// Get the attachment information
 			$MySmartBB->rec->getList();
-			
-			/*if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
-			{
-				$MySmartBB->template->assign('ATTACH_SHOW',true);
-				
-				$MySmartBB->func->CleanVariable($MySmartBB->_CONF['template']['while']['AttachList'],'html');
-			}*/
 		}
 			
 		// The writer signture isn't empty 

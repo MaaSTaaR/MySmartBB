@@ -187,7 +187,7 @@ class MySmartDownloadMOD
 		//////////
 		
 		// File content
-		file('./' . $AttachInfo['filepath']);
+		echo file_get_contents('./' . $AttachInfo['filepath']);
 		
 		//////////
 	}
