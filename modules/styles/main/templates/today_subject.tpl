@@ -1,0 +1,56 @@
+<table border="1" class="t_style_b" width="98%" align="center">
+	<tr>
+		<td width="30%" class="main1 rows_space small_text" align="center" colspan="2">
+			عنوان الموضوع
+		</td>
+		<td width="20%" class="main1 rows_space small_text" align="center">
+			الكاتب
+		</td>
+		<td width="10%" class="main1 rows_space small_text" align="center">
+			عدد الردود
+		</td>
+		<td width="10%" class="main1 rows_space small_text" align="center">
+			عدد الزوار
+		</td>
+		<td width="28%" class="main1 rows_space small_text" align="center">
+			آخر رد
+		</td>
+	</tr>
+	{DB::getInfo}{$subject_list}
+	<tr>
+		<td width="3%" class="row1" align="center">
+			<img src="{$subject_list['icon']}" alt="" />
+		</td>
+		<td width="30%" class="row2">
+			<a href="index.php?page=topic&show=1&id={$subject_list['id']}{$password}">
+				{$subject_list['title']}
+			</a>
+			{if {$subject_list['close']}}
+			<small>(مغلق)</small>
+			{/if}
+			<br />
+			<font class="small">{$subject_list['subject_describe']}</font>
+		</td>
+		<td width="20%" class="row1" align="center">
+			<a href="index.php?page=profile&show=1&username={$subject_list['writer']}">{$subject_list['writer']}</a><br />
+			{$subject_list['write_date']}
+		</td>
+		<td width="8%" class="row2" align="center">
+			{$subject_list['reply_number']}
+		</td>
+		<td width="8%" class="row1" align="center">
+			{$subject_list['visitor']}
+		</td>
+		<td width="28%" class="row2" align="center">
+			{if {$subject_list['reply_number']} <= 0}
+			لا يوجد ردود
+			{else}
+			<a href="index.php?page=profile&show=1&username={$subject_list['last_replier']}">{$subject_list['last_replier']}</a><br />
+			{$subject_list['reply_date']}
+			{/if}
+		</td>
+	</tr>	
+{/DB::getInfo}
+</table>
+
+<br />
