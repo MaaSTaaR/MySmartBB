@@ -26,15 +26,6 @@ class MySmartUserCPMOD
 		{
 			$this->_index();
 		}
-		
-		/** Options **/
-		elseif ( isset( $MySmartBB->_GET['options'] ) )
-		{
-			if ($MySmartBB->_GET['subject'])
-			{
-
-			}
-		}
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
@@ -49,11 +40,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->func->showHeader('لوحة تحكم العضو');
 		
-		/* ... */
-		
-		// [MaaSTaaR] TODO
-		/*$ReplyArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$ReplyArr['proc']['write_time'] 		= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['reply_res'] = '';
 		
@@ -65,7 +52,7 @@ class MySmartUserCPMOD
 		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		// ... //
 		
       	$MySmartBB->template->display('usercp_index');
 	}

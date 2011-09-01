@@ -39,7 +39,7 @@ class MySmartRecords
 	{
 		$this->db = $db;
 		$this->func = $func;
-		$this->pager = $pager;
+		$this->pager_obj = $pager;
 	}
 	
 	/* ... */

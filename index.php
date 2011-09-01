@@ -53,7 +53,6 @@ $modules['usercp_control_signature'] 	=  	'usercp_control_signature.module.php';
 $modules['usercp_control_password'] 	=  	'usercp_control_password.module.php';
 $modules['usercp_control_email'] 		=  	'usercp_control_email.module.php';
 $modules['usercp_control_avatar'] 		=  	'usercp_control_avatar.module.php';
-$modules['usercp_option_reply'] 		=  	'usercp_option_reply.module.php';
 $modules['usercp_option_subject'] 		=  	'usercp_option_subject.module.php';
 
 

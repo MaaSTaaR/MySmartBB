@@ -270,20 +270,24 @@ class MySmartForumMOD
 		
 		// ... //
 		
+		$filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1'";
+		
+		if ($this->Section['hide_subject'] 
+			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
+		{
+			$filter .= " AND writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		}
+		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "section='" . $this->Section[ 'id' ] . "'";
+		$MySmartBB->rec->filter = $filter;
 		
 		$subject_total = $MySmartBB->rec->getNumber();
 		
 		// ... //
 		
-		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1'";
-		
-		if ($this->Section['hide_subject'] 
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
-			$MySmartBB->rec->filter .= " AND writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
-		}
+		$MySmartBB->rec->filter = $filter;
 		
 		if ($this->Section['subject_order'] == 2)
 		{
@@ -306,7 +310,7 @@ class MySmartForumMOD
 		$MySmartBB->rec->pager['total']		= 	$subject_total;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['subject_perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=forum&amp;show=1&amp;id=' . $this->Section['id'];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=forum&amp;show=1&amp;id=' . $this->Section['id'] . '#subject_table';
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
 		$this->subject_res = &$MySmartBB->func->setResource();

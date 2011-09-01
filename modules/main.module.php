@@ -153,6 +153,9 @@ class MySmartIndexMOD
 	{
 		global $MySmartBB;
 		
+		if ( !empty( $row[ 'title' ] ) )
+			$row[ 'username_style' ] = str_replace( '[username]', $row[ 'title' ], $row[ 'username_style' ] );
+		
 		$row[ 'username_style' ] =  $MySmartBB->func->cleanVariable( $row[ 'username_style' ], 'unhtml' );
 	}
 	
