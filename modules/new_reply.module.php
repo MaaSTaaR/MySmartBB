@@ -253,14 +253,7 @@ class MySmartReplyAddMOD
      	{
      		// ... //
      		
-     		if ($this->SectionGroup['no_posts'])
-     		{
-     			$posts = $MySmartBB->_CONF['member_row']['posts'] + 1;
-     		}
-     		else
-     		{
-     			$posts = $MySmartBB->_CONF['member_row']['posts'];
-     		}
+     		$posts = ( !$this->SectionGroup[ 'no_posts' ] ) ? $MySmartBB->_CONF['member_row']['posts'] + 1 : $MySmartBB->_CONF['member_row']['posts'];
      		
      		// ... //
      		

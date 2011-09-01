@@ -55,6 +55,7 @@ class MySmartBB
 	public $poll = null;
 	public $tag = null;
 	public $attach = null;
+	public $usertitle = null;
 	
 	// ... //
 
@@ -212,6 +213,7 @@ class MySmartBB
   		$this->func_list[ 'poll' ] 			= 	array( 'poll.class.php', 'MySmartPoll' );
   		$this->func_list[ 'tag' ] 			= 	array( 'tags.class.php', 'MySmartTags' );
   		$this->func_list[ 'attach' ] 		= 	array( 'attach.class.php', 'MySmartAttach' );
+  		$this->func_list[ 'usertitle' ] 	= 	array( 'usertitle.class.php', 'MySmartUsertitle' );
   	}
   	
   	// ... //

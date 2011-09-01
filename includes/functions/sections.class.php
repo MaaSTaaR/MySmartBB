@@ -3,7 +3,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	: 	Tue 30 Aug 2011 11:40:34 PM AST 
+ * @updated 	: 	Thu 01 Sep 2011 05:48:05 AM AST 
  */
  
 class MySmartSection
@@ -370,6 +370,27 @@ class MySmartSection
 			$forums_list = null;
 		
 		return $forums_list;
+	}
+	
+	// ... //
+	
+	public function forumPassword( $section_id, $section_password, $password )
+	{
+		if ( !empty( $section_password ) and !$this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+		{
+			if ( empty( $password ) )
+	   		{
+	 			$this->engine->template->display( 'forum_password' );
+	 			$this->engine->func->stop();
+			}
+			else
+			{												
+				if (! $this->checkPassword( $password, $section_id ) )
+					$this->engine->func->error( 'المعذره .. كلمة المرور غير صحيحه' );
+				else
+					$this->engine->_CONF[ 'template' ][ 'password' ] = '&amp;password=' . $password;
+			}
+		}
 	}
 }
  
