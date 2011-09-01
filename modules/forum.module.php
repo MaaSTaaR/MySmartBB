@@ -206,20 +206,22 @@ class MySmartForumMOD
 		global $MySmartBB;
 		
 		// TODO : cache
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "'";
 		
 		$MySmartBB->func->setResource( 'moderator_res' );
 		
 		$MySmartBB->rec->getList();
+		
+		$moderators_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'moderator_res' ] );
+		
+		if ( $moderator_num > 0 )
+			$MySmartBB->template->assign( 'SHOW_MODERATORS', true );
 	}
 	
 	private function _getAnnouncementList()
 	{
 		global $MySmartBB;
-		
-		// TODO : Do we really need getList()? getInfo() will do the job :-)
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->order = "id DESC";
@@ -228,6 +230,11 @@ class MySmartForumMOD
 		$MySmartBB->func->setResource( 'announcement_res' );
 		
 		$MySmartBB->rec->getList();
+		
+		$announcement_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'announcement_res' ] );
+		
+		if ( $announcement_num > 0 )
+			$MySmartBB->template->assign( 'SHOW_ANNOUNCEMENT', true );
 	}
 	
 	private function _getSubSection()
@@ -322,6 +329,11 @@ class MySmartForumMOD
 		$this->stick_subject_res = &$MySmartBB->func->setResource();
 		
 		$MySmartBB->rec->getList();
+		
+		$stick_num = $MySmartBB->rec->getNumber( $this->stick_subject_res );
+		
+		if ( $stick_num > 0 )
+			$MySmartBB->template->assign( 'SHOW_STICK', true );
 	}
 	
 	public function rowsProcessCB( $row )

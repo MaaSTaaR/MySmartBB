@@ -332,9 +332,16 @@ class MySmartRecords
 	
 	/* ... */
 	
-	public function getNumber()
+	public function getNumber( $result = null )
 	{
-		$query = $this->select();
+		if ( !isset( $result ) )
+		{
+			$query = $this->select();
+		}
+		else
+		{
+			$query = $result;
+		}
 		
 		$num = $this->db->sql_num_rows( $query );
 		
