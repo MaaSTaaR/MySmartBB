@@ -22,22 +22,6 @@ class MySmartSubject
 	
 	// ... //
 	
-/* 	public function updateSubject()
- 	{		
- 		$this->engine->rec->table = $this->table;
-
- 		if ( isset( $this->engine->fields[ 'tags_cache' ] ) )
- 		{
- 			$this->engine->fields[ 'tags_cache' ] = serialize( $this->engine->fields[ 'tags_cache' ] );
- 		}
-	
-		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
- 	}*/
-	
-	// ... //
-	
 	public function massDeleteSubject( $section_id )
 	{
  		if ( empty( $section_id ) )
@@ -85,6 +69,7 @@ class MySmartSubject
 		}
 		
  		$this->engine->rec->table = $this->table . ' AS s,' . $this->engine->table[ 'member' ] . " AS m";
+ 		$this->engine->rec->select = '*,s.visitor AS subject_visitor';
  		$this->engine->rec->filter = "s.id='" . $subject_id . "' AND m.username=s.writer";
  		
  		$rows = $this->engine->rec->getInfo();
