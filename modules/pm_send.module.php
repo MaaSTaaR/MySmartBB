@@ -356,7 +356,7 @@ class MySmartPrivateMassegeSendMOD
 														'user_to'	=>	$GetToInfo['username'],
 														'title'	=>	$MySmartBB->_POST['title'],
 														'text'	=>	$MySmartBB->_POST['text'],
-														'date'	=>	$MySmartBB->_CONF['date'],
+														'date'	=>	$MySmartBB->_CONF['now'],
 														'icon'	=>	$MySmartBB->_POST['icon'],
 														'folder'	=>	'sent'	);
 													

@@ -52,21 +52,41 @@ class MySmartPrivateMassegeCPMOD
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الحذف');
 		
-		if (empty($MySmartBB->_GET['id']))
+		if ( !is_array( $MySmartBB->_POST[ 'delete_list' ] ) )
 		{
-			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح .');
+			$MySmartBB->func->error('المعذره لا يمكن إتمام العمليه.');
+		}
+		
+		$k = 1;
+		$array_size = sizeof( $MySmartBB->_POST[ 'delete_list' ] );
+		
+		$filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND (";
+		
+		foreach ( $MySmartBB->_POST[ 'delete_list' ] as $key => $id )
+		{
+			$id = (int) $id;
+			
+			if ( empty( $id ) )
+				continue;
+				
+			$filter .= "id='" . $id . "'";
+			
+			if ( $k++ != $array_size )
+				$filter .= ' OR ';
+			else
+				$filter .= ')';
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-		$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = $filter;
 		
 		$del = $MySmartBB->rec->delete();
-		
+			
 		if ($del)
 		{
 			// Recount the number of new messages after delete this message
 			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-			$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='inobx' AND user_read='0'";
+			$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='inbox' AND user_read<>'1'";
 			
 			$Number = $MySmartBB->rec->getNumber();
 			
@@ -76,7 +96,7 @@ class MySmartPrivateMassegeCPMOD
 			
 			$MySmartBB->rec->update();
 			
-			$MySmartBB->func->msg('تم حذف الرساله بنجاح !');
+			$MySmartBB->func->msg('تم الحذف بنجاح !');
 			$MySmartBB->func->move('index.php?page=pm_list&list=1&folder=inbox');
 		}
 	}

@@ -21,7 +21,7 @@
         	</td>
       	</tr>
       	<tr>
-      	<td class="row1" width="25%" valign="top">
+      	<td class="row1" width="25%" align="center">
       		{template}writer_info{/template}
       	</td>
 		<td class="row1" width="50%">

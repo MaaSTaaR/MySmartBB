@@ -85,6 +85,16 @@ class MySmartPrivateMassegeShowMOD
 			$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['Info']['register_date']);
 		}
 		
+		if (empty($MySmartBB->_CONF['template']['Info']['username_style_cache']))
+		{
+			$this->Info['display_username'] = $MySmartBB->_CONF['template']['Info']['username'];
+		}
+		else
+		{
+			$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->_CONF['template']['Info']['username_style_cache'];
+			$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->func->htmlDecode($MySmartBB->_CONF['template']['Info']['display_username']);
+		}
+		
 		$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['template']['Info']['user_gender']);
 		$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Info']['user_gender']);
 		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace('رد :','',$MySmartBB->_CONF['template']['MassegeRow']['title']);

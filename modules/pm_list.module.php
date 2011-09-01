@@ -83,10 +83,14 @@ class MySmartPrivateMassegeListMOD
 		
 		if ($MySmartBB->_GET['folder'] == 'sent')
 		{
+			$MySmartBB->template->assign( 'SENT_FOLDER', true );
+			
 			$GetMassegeList = $MySmartBB->pm->getSentList( $MySmartBB->_CONF['member_row']['username'] );
 		}
 		else
 		{
+			$MySmartBB->template->assign( 'INBOX_FOLDER', true );
+			
 			$GetMassegeList = $MySmartBB->pm->getInboxList( $MySmartBB->_CONF['member_row']['username'] );
 		}
 				
