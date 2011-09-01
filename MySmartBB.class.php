@@ -147,8 +147,6 @@ class MySmartBB
   		$this->table['online'] 				= 	$this->prefix . 'online';
   		$this->table['pages'] 				= 	$this->prefix . 'pages';
   		$this->table['pm'] 					= 	$this->prefix . 'pm';
-  		$this->table['pm_folder'] 			= 	$this->prefix . 'pm_folder';
-  		$this->table['pm_lists'] 			= 	$this->prefix . 'pm_lists';
   		$this->table['poll'] 				= 	$this->prefix . 'poll';
   		$this->table['reply'] 				= 	$this->prefix . 'reply';
   		$this->table['requests'] 			= 	$this->prefix . 'requests';
@@ -285,7 +283,7 @@ class MySmartBB
 		{
 			if ( !$magic )
 			{
-				$this->func->cleanArray( $this->$name, 'sql' );
+				$this->func->cleanArray( $this->$name, 'sql' ); // TODO : Why not from xss also?
 			}
 		}
   	}

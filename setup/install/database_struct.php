@@ -154,8 +154,6 @@ class MySmartInstaller
 		$this->_addTable( 'online', $this->engine->table[ 'online' ] );
 		$this->_addTable( 'pages', $this->engine->table[ 'pages' ] );
 		$this->_addTable( 'pm', $this->engine->table[ 'pm' ] );
-		$this->_addTable( 'pm_folder', $this->engine->table[ 'pm_folder' ] );
-		$this->_addTable( 'pm_lists', $this->engine->table[ 'pm_lists' ] );
 		$this->_addTable( 'poll', $this->engine->table[ 'poll' ] );
 		$this->_addTable( 'reply', $this->engine->table[ 'reply' ] );
 		$this->_addTable( 'requests', $this->engine->table[ 'requests' ] );

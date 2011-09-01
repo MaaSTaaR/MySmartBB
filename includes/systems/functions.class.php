@@ -2,6 +2,7 @@
 
 class MySmartFunctions
 {
+	private $header_showed = false;
 	// ... //
 	
 	/**
@@ -139,11 +140,11 @@ class MySmartFunctions
 	/**
 	 * Show error massege and stop script
 	 */
- 	function error($msg,$no_header = true,$no_style = false)
+ 	function error( $msg, $no_header = true, $no_style = false )
     {
     	global $MySmartBB;
     	
-    	if (!$no_header)
+    	if ( !$no_header or !$this->header_showed )
     	{
     		$this->ShowHeader('خطأ');
     	}
@@ -201,6 +202,8 @@ class MySmartFunctions
  		$MySmartBB->template->assign('title',$title);
  		
  		$MySmartBB->template->display('header');
+ 		
+ 		$this->header_showed = true;
  	}
  	
  	// ... //

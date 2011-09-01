@@ -29,12 +29,6 @@
      			<a href="index.php?page=pm_list&amp;list=1&amp;folder=sent">الرسائل الصادرة</a>
      		</td>
      	</tr>
-     	
-     	<tr>
-     		<td class="row1" align="center">
-     			<a href="index.php?page=pm_list&amp;send_list=1&amp;index=1">قائمة المراسلات</a>
-     		</td>
-     	</tr>
      	<tr>
      		<td class="row1" align="center">
      			<a href="index.php?page=pm_setting&amp;setting=1&amp;index=1">اعدادات الرسائل الخاصه</a>

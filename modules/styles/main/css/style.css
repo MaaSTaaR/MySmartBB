@@ -353,3 +353,9 @@ a.unreadpm, .unreadpm
 {
 	color: #000000;
 }
+
+option.main_section
+{
+	font-weight: bold;
+	font-style: italic;
+}
