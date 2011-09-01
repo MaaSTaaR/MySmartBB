@@ -69,6 +69,13 @@ class MySmartForumsAddMOD
 		
 		// ... //
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_POST['parent'] . "'";
+		
+		$parent_info = $MySmartBB->rec->getInfo();
+		
+		// ... //
+		
 		$sort = 0;
 		
 		if ($MySmartBB->_POST['order_type'] == 'auto')
@@ -156,6 +163,11 @@ class MySmartForumsAddMOD
 				
 			if ( $cache )
 			{
+				// The parent is not a category, It's a forum so we have to update the cache of this forum
+				// because we want to show the sub-forums of that forum in the index page
+				if ( $parent_info[ 'parent' ] != 0 )
+					$cache = $MySmartBB->section->updateSectionsCache( $parent_info[ 'parent' ] );
+				
 				$MySmartBB->func->msg('تم اضافة المنتدى بنجاح !');
 				$MySmartBB->func->move('admin.php?page=forums_edit&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 			}

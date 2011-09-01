@@ -1,7 +1,4 @@
 <script src="includes/js/jquery.js"></script>
-{if {$_CONF['info_row']['wysiwyg_topic']}}
-<script src="includes/js/jquery.wysiwyg.js"></script>
-{/if}
 
 <script language="javascript">                
 function ShowPollTable()
@@ -184,9 +181,3 @@ $(document).ready(Ready);
 </form>
 
 <br />
-
-{if {$_CONF['info_row']['wysiwyg_topic']}}
-<script language="javascript">
-$("#text_id").wysiwyg();
-</script>
-{/if}

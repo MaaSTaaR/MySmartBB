@@ -49,6 +49,10 @@ class MySmartAdsPageMOD
 			$MySmartBB->func->error('الصفحه المطلوبه غير متوفره');
 		}
 		
+		$MySmartBB->_CONF['template']['GetPage'][ 'html_code'] = $MySmartBB->func->htmlDecode( $MySmartBB->_CONF['template']['GetPage'][ 'html_code' ] );
+		
+		$MySmartBB->func->addressBar( $MySmartBB->_CONF['template']['GetPage'][ 'title' ] );
+		
 		$MySmartBB->template->display('show_page');
 	}
 }

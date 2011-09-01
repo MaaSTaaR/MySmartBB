@@ -86,7 +86,12 @@ class MySmartMember
 	// ~ ~ //
 	public function logout()
 	{
-		$del = array();	
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
+		$this->engine->rec->filter = "user_id='" . (int) $this->engine->_CONF[ 'member_row' ][ 'id' ] . "'";
+		
+		$this->engine->rec->delete();
+		
+		$del = array();
 
 		$del[ 1 ] = setcookie( $this->engine->_CONF[ 'username_cookie' ], '' );
      	$del[ 2 ] = setcookie( $this->engine->_CONF[ 'password_cookie' ], '' );

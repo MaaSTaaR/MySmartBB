@@ -205,8 +205,9 @@ class MySmartManagementMOD
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
-
+		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
+		$MySmartBB->template->assign('section',$MySmartBB->_GET['section']);
 		$MySmartBB->template->display('subject_delete_reason');
 	}
 	
@@ -287,7 +288,7 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
+		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
 
 		if ($update)
 		{

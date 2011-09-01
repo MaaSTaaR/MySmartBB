@@ -132,21 +132,7 @@ class MySmartIndexMOD
 		
 		$MySmartBB->rec->getList();
 		
-		// ... //
-		
-		if ( !empty( $MySmartBB->_CONF[ 'info_row' ][ 'today_number_cache' ] ) )
-		{
-			$MySmartBB->_CONF[ 'template' ][ 'TodayNumber' ] = $MySmartBB->_CONF[ 'info_row' ][ 'today_number_cache' ];
-		}
-		else
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
-			$MySmartBB->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
-			
-			$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->getNumber();
-		}
-		
-		// ... //
+		$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['today_res'] );
 	}
 	
 	public function usernameStyleProcess( $row )

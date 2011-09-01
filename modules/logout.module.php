@@ -32,15 +32,6 @@ class MySmartLogoutMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "user_id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
-		
-		$MySmartBB->rec->delete();
-		
-		// ... //
-		
 		$logout = $MySmartBB->member->logout();
 								
 		$MySmartBB->func->showHeader( 'تسجيل خروج' );

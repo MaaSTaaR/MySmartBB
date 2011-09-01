@@ -33,19 +33,11 @@ class MySmartCommon
  		
  		// Delete not important rows in today table
  		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
- 		$MySmartBB->rec->filter = 'user_date<>' . $MySmartBB->_CONF['date'];
+ 		$MySmartBB->rec->filter = "user_date<>'" . $MySmartBB->_CONF['date'] . "'";
  	 	
  	 	$MySmartBB->rec->delete();
  	 	
  	 	// ... //
- 	 	
-		if ( $MySmartBB->_CONF[ 'info_row' ][ 'today_date_cache' ] != $MySmartBB->_CONF[ 'date' ] )
-		{
-			$MySmartBB->info->updateInfo( 'today_number_cache', '1' );
-			$MySmartBB->info->updateInfo( 'today_date_cache', $MySmartBB->_CONF[ 'date' ] );
-		}
-		
-		// ... //
 	}
 		
 	private function _checkMember()
@@ -212,7 +204,7 @@ class MySmartCommon
 		
 		// ... //
 		
-		// Ok , now we check if this member is exists in today list
+		// Ok , now we check if this member in today list
 		$IsToday = $MySmartBB->online->isToday( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_CONF[ 'date' ] );
 		
 		// ... //
@@ -243,15 +235,6 @@ class MySmartCommon
 				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 				
 				$MySmartBB->rec->update();
-				
-				// ... //
-				
-				if ( $MySmartBB->_CONF[ 'info_row' ][ 'today_date_cache' ] == $MySmartBB->_CONF[ 'date' ] )
-				{
-					$number = $MySmartBB->_CONF['info_row']['today_number_cache'] + 1;
-					
-					$MySmartBB->info->updateInfo( 'today_number_cache', $number );
-				}
 				
 				// ... //
 			}

@@ -125,9 +125,3 @@ $(document).ready(Ready);
 </form>
 
 <br />
-
-{if {$_CONF['info_row']['wysiwyg_reply']}}
-<script language="javascript">
-$("#text_id").wysiwyg();
-</script>
-{/if}

@@ -212,7 +212,7 @@ class MySmartTopicAddMOD
 			// ... //
 			
 			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
+			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
 		}
@@ -316,18 +316,8 @@ class MySmartTopicAddMOD
 													(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
 			
 		// ... //
-			
-		// The overall number of subjects
-		$MySmartBB->cache->updateSubjectNumber( $MySmartBB->_CONF['info_row']['subject_number'] );
-			
-		// ... //
-			
-		// The number of section's subjects number
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->fields = array(	'subject_num'	=>	$this->SectionInfo['subject_num'] + 1	);
-		$MySmartBB->rec->filter = "id='" . $this->SectionInfo['id'] . "'";
 		
-		$UpdateSubjectNumber = $MySmartBB->rec->update();
+		$MySmartBB->section->updateSubjectNumber( $this->SectionInfo['id'], $this->SectionInfo['subject_num'] );
 		
 		// ... //
 		

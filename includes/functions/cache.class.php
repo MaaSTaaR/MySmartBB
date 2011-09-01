@@ -38,14 +38,22 @@ class MySmartCache
 	
 	// ... //
 	
-	public function updateSubjectNumber( $subject_num )
+	// Update the total of subjects in the bb.
+	public function updateSubjectNumber( $value = null, $operation = 'add', $operand = 1 )
 	{
-		if ( !isset( $subject_num ) )
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSubjectNumber() -- EMPTY subject_num',E_USER_ERROR);
-		}
+		$val = $this->engine->_CONF['info_row']['subject_number'];
 		
-		$val = $subject_num + 1;
+		if ( is_null( $value ) )
+		{
+			if ( $operation == 'add' )
+				$val += $operand;
+			else
+				$val -= $operand;
+		}
+		else
+		{
+			$val = $value;
+		}
 		
 		$update = $this->engine->info->updateInfo( 'subject_number', $val );
 		

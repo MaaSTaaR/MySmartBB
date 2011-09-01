@@ -225,9 +225,9 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function moveSubjectToTrash( $reason, $id )
+	public function moveSubjectToTrash( $reason, $subject_id, $section_id )
 	{
- 		if ( empty( $id ) )
+ 		if ( empty( $subject_id ) or empty( $section_id ) )
  		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id',E_USER_ERROR);
  		}
@@ -237,9 +237,12 @@ class MySmartSubject
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'1',
  											'delete_reason'	=>	$reason	);
  		
- 		$this->engine->rec->filter = "id='" . $id . "'";
+ 		$this->engine->rec->filter = "id='" . $subject_id . "'";
  		
 		$query = $this->engine->rec->update();
+		
+		if ( $query )
+			$this->engine->section->updateSubjectNumber( $section_id, null, 'delete' );
 		           
 		return ( $query ) ? true : false;
 	}

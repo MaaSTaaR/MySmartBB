@@ -105,7 +105,7 @@
          			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">لا يوجد لديك رسالة خاصة جديدة !</a>
          		{/if}
          		{if {$_CONF['member_row']['unread_pm']} > 0}
-         			<a class="new_pm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">يوجد لديك {$_CONF['member_row']['unread_pm']} رساله جديده</a>
+         			<a class="unreadpm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">يوجد لديك {$_CONF['member_row']['unread_pm']} رساله جديده</a>
          		{/if}
          		{/if}
           	{/if}

@@ -392,6 +392,46 @@ class MySmartSection
 			}
 		}
 	}
+	
+	// ... //
+	
+	public function updateSubjectNumber( $section_id, $subject_number = null, $operation = 'add', $operand = 1 )
+	{
+		if ( !is_null( $subject_number) )
+		{
+			$val = $subject_number;
+		}
+		else
+		{
+			$this->engine->rec->table = $this->engine->table[ 'section' ];
+			$this->engine->rec->select = 'subject_num';
+			$this->engine->rec->filter = "id='" . $section_id . "'";
+			
+			$section_info = $this->engine->rec->getInfo();
+			
+			$val = $section_info[ 'subject_num' ];
+		}
+		
+		if ( !is_null( $operation ) )
+		{
+			if ( $operation == 'add' )
+				$val += $operand;
+			else
+				$val -= $operand;
+		}
+		
+		$this->engine->rec->table = $this->table;
+		$this->engine->rec->fields = array(	'subject_num'	=>	$val	);
+		$this->engine->rec->filter = "id='" . $section_id . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			// Update the total of subjects
+			$this->engine->cache->updateSubjectNumber( $val );
+		}
+	}
 }
  
 ?>

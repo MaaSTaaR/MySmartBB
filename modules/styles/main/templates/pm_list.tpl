@@ -35,9 +35,9 @@
 			<a href="index.php?page=pm_show&amp;show=1&amp;id={$MassegeList['id']}">{$MassegeList['title']}</a>
 			<br />
 			{if {$MassegeList['user_read']} == 1}
-			<font class="readpm">رسالة مقروءه</font>
+			<span class="readpm">رسالة مقروءه</span>
 			{else}
-			<font class="unreadpm">رساله جديده</font>
+			<span class="unreadpm">رساله جديده</span>
 			{/if}
 		</td>
 		<td class="row1" width="20%">

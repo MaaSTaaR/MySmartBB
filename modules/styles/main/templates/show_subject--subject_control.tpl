@@ -1,55 +1,9 @@
-{if {$_CONF['info_row']['ajax_moderator_options']}}
-
-<script src="includes/js/jquery.js"></script>
-
-<script language="javascript">
-function AjaxModerator()
-{
-	var AjaxState = {ajaxSend : $("#status").html("{$image_path}/loading.gif")};
-	
-	var data = {};
-	
-	data['section']		=	$("#section_i").val();
-	data['subject']		=	$("#subject_i").val();
-	data['oper']		=	$("#operator_i").val();
-
-	$.post("index.php?page=ajax&management=1",data,function Success(xml) { $("#status").html(xml); });	
-}
-
-function AjaxClose()
-{
-	var AjaxState = {ajaxSend : $("#status").html("{$image_path}/loading.gif")};
-	
-	var data = {};
-	
-	data['section']		=	$("#section_i").val();
-	data['subject']		=	$("#subject_i").val();
-	data['reason']		=	$("#reason").val();
-	data['oper']		=	'close';
-
-	$.post("index.php?page=ajax&management=1&second=1",data,function Success(xml) { $("#status").html(xml); });	
-}
-
-function Ready()
-{
-	$("#control_id").click(AjaxModerator);
-	$("#close_id").click(AjaxClose);
-}
-
-$(document).ready(Ready);
-
-</script>
-
-{/if}
-
-{if !{$_CONF['info_row']['ajax_moderator_options']}}
 <form method="get" action="index.php">
-{/if}
 
 <input type="hidden" name="page" value="management" />
 <input type="hidden" name="subject" value="1" />
-<input type="hidden" name="section" id="section_i" value="{$Info['section']}" />
-<input type="hidden" name="subject_id" id="subject_i" value="{$Info['subject_id']}" />
+<input type="hidden" name="section" value="{$Info['section']}" />
+<input type="hidden" name="subject_id" value="{$Info['subject_id']}" />
 
 <table align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="50%">
 	<tr align="center">
@@ -82,19 +36,10 @@ $(document).ready(Ready);
 				<option value="unreview_subject">الموافقه على الموضوع</option>
 				{/if}
 			</select>
-			{if {$_CONF['info_row']['ajax_moderator_options']}}
-			<input type="button" name="control" id="control_id" value="موافق" />
-			{else}
 			<input type="submit" value="موافق" />
-			{/if}
 		</td>
 	</tr>
 </table>
-
-{if {$_CONF['info_row']['ajax_moderator_options']}}
-<br />
-<div align="center" id="status"></div>
-{/if}
 
 </form>
 
