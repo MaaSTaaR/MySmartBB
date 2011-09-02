@@ -445,41 +445,6 @@ class MySmartFunctions
 	
 	// ... //
 	
-	public function moderatorCheck( $section_id, $username = null )
-	{
-		global $MySmartBB;
-		
-		$Mod = false;
-		$user = null;
-		
-		if ( $MySmartBB->_CONF['member_permission'] )
-		{
-			if ( !isset( $username ) )
-			{
-				if ($MySmartBB->_CONF['group_info']['admincp_allow'] 
-					or $MySmartBB->_CONF['group_info']['vice'])
-				{
-					$Mod = true;
-				}
-				else
-				{
-					$user = $MySmartBB->_CONF['member_row']['username'];
-				}
-			}
-			else
-			{
-				$user = $username;
-			}
-			
-			if ( !$Mod )
-				$Mod = $MySmartBB->moderator->isModerator( $user, $section_id );
-		}
-				
-		return $Mod;
-	}
-	
-	// ... //
-	
 	public function htmlDecode( $text )
 	{
 		$text = str_replace('&amp;','&',$text);
@@ -488,6 +453,7 @@ class MySmartFunctions
 		$text = str_replace('&gt;','>',$text);
 		$text = str_replace("\'","'",$text);
 		
+		// TODO : letter case
 		$text = str_replace('<script','',$text);
 		$text = str_replace('</script>','',$text);
 		$text = str_replace('document.cookie','',$text);

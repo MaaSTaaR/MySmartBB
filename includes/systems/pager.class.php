@@ -4,7 +4,7 @@
  * @package : MySmartPager
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @started : 24-8-2007 6:53 AM
- * @last update : Thu 01 Sep 2011 08:22:31 AM AST 
+ * @last update : Fri 02 Sep 2011 03:23:52 AM AST 
  * @under : GNU LGPL
 */
 
@@ -20,7 +20,7 @@ class MySmartPager
 	private $print_style = array();	// The style of print
 	private $limit;					// How many of pages will print?
 	private $i;						// Will use it in loop
-	private $page;					// The current page (Inside the loop)
+	private $page = 1;					// The current page (Inside the loop)
 	private $p;
 	
 	function SetInformation($style)
@@ -41,7 +41,7 @@ class MySmartPager
 		$this->limit		=	3;
 		
 		// We want integer only in pages number, so we use ceil();
-		$this->pages_number = 	ceil($this->total/$this->rows_perpage);
+		$this->pages_number = 	ceil( $this->total / $this->rows_perpage );
 		
 		if ( strstr( $this->location, '#' ) != false )
 		{
@@ -61,74 +61,87 @@ class MySmartPager
 	 */
 	public function show()
 	{
-		$this->i = 0;
-		$this->page = 1;
+		$output = $this->print_style[ 0 ];
 		
-		if ($this->total > $this->rows_perpage)
+		if ( $this->total > $this->rows_perpage )
 		{
-			$output = $this->print_style[0];
-			
-			while ( $this->page <= $this->pages_number )
+			if ( $this->pages_number > $this->limit )
 			{
-				if ( $this->pages_number > $this->limit )
+				$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
+				
+				$this->page = $current_page;
+				$this->i = $this->count;
+				
+				
+				$k = ( $this->page + $this->limit );
+
+				while ( $this->page <= $k )
 				{
-					$last 	= 	$this->pages_number;
-					$i 		= 	( $this->pages_number * $this->rows_perpage ) - $this->rows_perpage;
-					
-					if ( $this->page <= $this->limit )
+					if ( $this->page < $this->pages_number )
 					{
-						if ($this->count == $this->i)
-						{
-							$output .= $this->_proc($this->print_style[1]);
-						}
+						if ( $current_page == $this->page )
+							$output .= $this->_proc( $this->print_style[ 1 ] );
 						else
-						{
-							$output .= $this->_proc($this->print_style[2]);
-						}
+							$output .= $this->_proc( $this->print_style[ 2 ] );
+					
+				
+						$this->i += $this->rows_perpage;
+						$this->page++;
 					}
 					else
 					{
-						$this->i = $i;
-						$this->page = $last;
-						
-						//$output .= '...';
-						
-						if ($this->count == $this->i)
-						{
-							$output .= $this->_proc($this->print_style[1]);
-						}
-						else
-						{
-							$output .= $this->_proc($this->print_style[2]);
-						}
-						
 						break;
 					}
 				}
-				else
-				{
-					if ( $this->count == $this->i )
-					{
-						$output .= $this->_proc($this->print_style[1]);
-					}
-					else
-					{
-						$output .= $this->_proc($this->print_style[2]);
-					}
-				}
 				
-				$this->i = $this->i + $this->rows_perpage;
-				$this->page += 1;
+				// ~ The last page ~ //
+				$this->i = ( $this->pages_number * $this->rows_perpage ) - $this->rows_perpage;
+				$this->page = $this->pages_number;
+				
+				if ( $current_page == $this->page )
+					$output .= $this->_proc( $this->print_style[ 1 ] );
+				else
+					$output .= $this->_proc( $this->print_style[ 2 ] );
+			}
+			else
+			{
+				$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
+			
+				$this->page = $current_page;
+				$this->i = $this->count;
+			
+				while ( $this->page <= $this->pages_number )
+				{
+					if ( $current_page == $this->page )
+						$output .= $this->_proc( $this->print_style[ 1 ] );
+					else
+						$output .= $this->_proc( $this->print_style[ 2 ] );
+			
+					$this->i += $this->rows_perpage;
+					$this->page++;
+				}
 			}
 		}
 		else
 		{
-			$output = $this->print_style[0];
+			$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
 			
-			$output .= $this->_proc($this->print_style[1]);
+			$this->page = $current_page;
+			$this->i = $this->count;
+			
+			while ( $this->page <= $this->pages_number )
+			{
+				if ( $current_page == $this->page )
+					$output .= $this->_proc( $this->print_style[ 1 ] );
+				else
+					$output .= $this->_proc( $this->print_style[ 2 ] );
+			
+				$this->i += $this->rows_perpage;
+				$this->page++;
+			}
 		}
 		
-		$output .= $this->print_style[3];
+		$output .= $this->print_style[ 3 ];
 		
 		return $output;
 	}

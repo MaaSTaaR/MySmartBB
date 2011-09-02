@@ -26,7 +26,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach,usertitle' );
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach,usertitle,moderator' );
 		
 		$this->_commonCode();
 		
@@ -97,7 +97,7 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
-		$this->moderator = $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['id'] );
+		$this->moderator = $MySmartBB->moderator->moderatorCheck( $MySmartBB->_GET['id'] );
 		
 		// ... //
 		

@@ -132,7 +132,7 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$this->moderator = $MySmartBB->func->moderatorCheck( $MySmartBB->_GET['id'] );
+		$this->moderator = $MySmartBB->moderator->moderatorCheck( $MySmartBB->_GET['id'] );
 		
 		$MySmartBB->template->assign('Mod',$this->moderator);
 	}

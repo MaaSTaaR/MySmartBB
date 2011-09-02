@@ -22,7 +22,7 @@ class MySmartManagementMOD
 		
 		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET[ 'section' ];
 		
-		if ( $MySmartBB->func->moderatorCheck( $MySmartBB->_GET[ 'section' ] ) )
+		if ( $MySmartBB->moderator->moderatorCheck( $MySmartBB->_GET[ 'section' ] ) )
 		{
 			$MySmartBB->load( 'cache,moderator,pm,reply,section,subject' );
 			
