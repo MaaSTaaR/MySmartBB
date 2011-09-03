@@ -23,7 +23,31 @@ class MySmartAttach
 	
 	// ... //
 	
-	public function addAttach( $files, $subject_id, $update_subject_state = false, &$succeed = null, &$failed = null )
+	// The most high-level function
+	public function uploadAttachments( $upload_permission, $files_limit, $id, $field, $type, &$succeed = null, &$failed = null )
+	{
+		if ( $upload_permission)
+		{
+			$files_number = sizeof( $this->engine->_FILES[ $field ][ 'name' ] );
+			
+			if ( $files_number > 0 )
+			{
+				if ( $files_number > $files_limit
+					and !$this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+				{
+					$this->engine->func->error('المعذره لا يمكنك رفع اكثر من ' . $files_limit . 'ملف');
+				}
+				
+				$this->engine->attach->addAttach( $this->engine->_FILES[ $field ], $type, $id, true, $succ, $fail  );
+					
+				unset( $this->engine->_FILES[ $field ] );
+			}
+		}
+	}
+	
+	// ... //
+	
+	public function addAttach( $files, $type, $id, $update_db_state = false, &$succeed = null, &$failed = null )
 	{
 		if ( !is_null( $succeed ) and !is_array( $succeed ) )
 			$succeed = null;
@@ -56,17 +80,28 @@ class MySmartAttach
 					$this->engine->rec->fields = array(	'filename'		=>	$files[ 'name' ][ $k ],
 														'filepath'		=>	$path,
 														'filesize'		=>	$files[ 'size' ][ $k ],
-														'subject_id'	=>	$subject_id);
-     											
+														'subject_id'	=>	$id);
+     				
+     				$this->engine->rec->fields[ 'reply' ] = ( $type == 'reply' ) ? '1' : '0';
+     				
 					$insert = $this->engine->rec->insert();
      										
 					if ( $insert )
 					{
-						if (  $update_subject_state )
+						if (  $update_db_state )
 						{
-							$this->engine->rec->table = $this->engine->table[ 'subject' ];
-							$this->engine->rec->fields = array(	'attach_subject'	=>	'1'	);
-							$this->engine->rec->filter = "id='" . $subject_id . "'";
+							if ( $type == 'subject' )
+							{
+								$this->engine->rec->table = $this->engine->table[ 'subject' ];
+								$this->engine->rec->fields = array(	'attach_subject'	=>	'1'	);
+							}
+							elseif ( $type == 'reply' )
+							{
+								$this->engine->rec->table = $this->engine->table[ 'attach' ];
+								$this->engine->rec->fields = array(	'attach_reply'	=>	'1'	);
+							}
+							
+							$this->engine->rec->filter = "id='" . $id . "'";
      											
 							$update = $this->engine->rec->update();
 						}

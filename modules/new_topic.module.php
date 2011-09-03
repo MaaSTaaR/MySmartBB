@@ -281,26 +281,8 @@ class MySmartTopicAddMOD
 		
 		if ( $MySmartBB->_POST[ 'attach' ] )
 		{
-			if ( $this->SectionGroup[ 'upload_attach' ] )
-			{
-				$files_number 	= 	sizeof($MySmartBB->_FILES['files']['name']);
-				
-				if ($files_number > 0)
-				{
-					if ($files_number > $this->SectionGroup['upload_attach_num']
-						and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-					{
-						$MySmartBB->func->error('المعذره لا يمكنك رفع اكثر من ' . $this->SectionGroup['upload_attach_num'] . 'ملف');
-					}
-					
-					$succ = array(); // This array will contain the name of files that uploaded successfully
-					$fail = array(); // This array will contain the name of files that failed
-					
-					$MySmartBB->attach->addAttach( $MySmartBB->_FILES[ 'files' ], $this->subject_id, true, $succ, $fail  );
-						
-					unset( $MySmartBB->_FILES[ 'files' ] );
-				}
-			}
+			$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], $this->SectionGroup['upload_attach_num'], 
+													$this->subject_id, 'files', 'subject' );			
 		}
 	}
 	

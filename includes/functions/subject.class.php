@@ -100,13 +100,14 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function updateWriteTime( $write_time, $id )
+	public function updateWriteTime( $id, $write_time = null )
 	{
- 		if ( empty( $id )
- 			or empty( $write_time ) )
+ 		if ( empty( $id ) )
  		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateWriteTime() -- EMPTY id or write_time',E_USER_ERROR);
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateWriteTime() -- EMPTY id',E_USER_ERROR);
  		}
+ 		
+ 		$write_time = ( is_null( $write_time ) ) ? $this->engine->_CONF[ 'now' ] : $write_time;
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -121,23 +122,45 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function updateReplyNumber( $reply_number, $id )
+	public function updateReplyNumber( $subject_id, $section_id, $reply_number = null, $operation = 'add', $operand = 1 )
 	{
- 		if ( empty( $id )
- 			or ( empty( $reply_number ) and $reply_numer != 0 ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateReplyNumber() -- EMPTY id or reply_number',E_USER_ERROR);
- 		}
- 		
- 		$this->engine->rec->table = $this->table;
- 		
- 		$this->engine->rec->fields = array(	'reply_number'	=>	$reply_number + 1	);
- 		
- 		$this->engine->rec->filter = "id='" . $id . "'";
- 		
-		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
+		if ( !is_null( $reply_number) )
+		{
+			$val = $reply_number;
+		}
+		else
+		{
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->select = 'reply_number';
+			$this->engine->rec->filter = "id='" . $subject_id . "'";
+			
+			$subject_info = $this->engine->rec->getInfo();
+			
+			$val = $section_info[ 'reply_number' ];
+		}
+		
+		if ( !is_null( $operation ) )
+		{
+			if ( $operation == 'add' )
+				$val += $operand;
+			else
+				$val -= $operand;
+		}
+		
+		$this->engine->rec->table = $this->table;
+		$this->engine->rec->fields = array(	'reply_number'	=>	$val	);
+		$this->engine->rec->filter = "id='" . $subject_id . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			// Update the total of replies in the section
+			$this->engine->section->updateReplyNumber( $section_id, $val, null );
+			
+			// Update the total of replies
+			$this->engine->cache->updateReplyNumber( $val );
+		}
 	}
 	
 	// ... //

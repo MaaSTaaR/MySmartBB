@@ -309,6 +309,11 @@ class MySmartTopicMOD
 			
 			// Get the attachment information
 			$MySmartBB->rec->getList();
+			
+			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['attach_res'] );
+			
+			if ( $attach_num > 0 )
+				$MySmartBB->template->assign( 'ATTACH_SHOW', true );
 		}
 			
 		// The writer signture isn't empty 

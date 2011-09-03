@@ -71,13 +71,20 @@ class MySmartOnline
 	
 	public function updateMemberLocation( $location )
 	{
-		$this->engine->rec->table = $this->engine->table[ 'online' ];
-		$this->engine->rec->fields = array(	'user_location'	=>	$location	);
-		$this->engine->rec->filter = "username='" . $this->engine->_CONF[ 'member_row' ][ 'username' ] . "'";
+		if ( $this->engine->_CONF[ 'member_permission' ] )
+		{
+			$this->engine->rec->table = $this->engine->table[ 'online' ];
+			$this->engine->rec->fields = array(	'user_location'	=>	$location	);
+			$this->engine->rec->filter = "username='" . $this->engine->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
-		$update = $this->engine->rec->update();
+			$update = $this->engine->rec->update();
 		
-		return ( $update ) ? true : false;
+			return ( $update ) ? true : false;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
 

@@ -4,7 +4,7 @@
  * @package 	: 	MySmartCache
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	15/6/2006 , 10:46 PM
- * @updated 	: 	Thu 28 Jul 2011 11:20:03 AM AST 
+ * @updated 	: 	Sat 03 Sep 2011 03:36:43 AM AST 
  */
 
 class MySmartCache
@@ -62,18 +62,25 @@ class MySmartCache
 	
 	// ... //
 	
-	public function updateReplyNumber( $reply_num )
+	public function updateReplyNumber( $value = null, $operation = 'add', $operand = 1 )
 	{
-		if ( !isset( $reply_num ) )
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM updateReplyNumber() -- EMPTY reply_num',E_USER_ERROR);
-		}
+		$val = $this->engine->_CONF['info_row']['reply_number'];
 		
-		$val = $reply_num + 1;
+		if ( is_null( $value ) )
+		{
+			if ( $operation == 'add' )
+				$val += $operand;
+			else
+				$val -= $operand;
+		}
+		else
+		{
+			$val = $value;
+		}
 		
 		$update = $this->engine->info->updateInfo( 'reply_number', $val );
 		
-		return ($update) ? true : false;
+		return ($update) ? true : false;		
 	}
 	
 	// ... //

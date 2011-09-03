@@ -3,7 +3,7 @@
 /**
  * @package 	: 	MySmartSection
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	: 	Thu 01 Sep 2011 05:48:05 AM AST 
+ * @updated 	: 	Sat 03 Sep 2011 03:36:57 AM AST 
  */
  
 class MySmartSection
@@ -432,6 +432,48 @@ class MySmartSection
 			$this->engine->cache->updateSubjectNumber( $val );
 		}
 	}
+	
+	// ... //
+	
+	public function updateReplyNumber( $section_id, $reply_number = null, $operation = 'add', $operand = 1 )
+	{
+		if ( !is_null( $reply_number) )
+		{
+			$val = $reply_number;
+		}
+		else
+		{
+			$this->engine->rec->table = $this->engine->table[ 'section' ];
+			$this->engine->rec->select = 'reply_num';
+			$this->engine->rec->filter = "id='" . $section_id . "'";
+			
+			$section_info = $this->engine->rec->getInfo();
+			
+			$val = $section_info[ 'reply_num' ];
+		}
+		
+		if ( !is_null( $operation ) )
+		{
+			if ( $operation == 'add' )
+				$val += $operand;
+			else
+				$val -= $operand;
+		}
+		
+		$this->engine->rec->table = $this->table;
+		$this->engine->rec->fields = array(	'reply_num'	=>	$val	);
+		$this->engine->rec->filter = "id='" . $section_id . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			// Update the total of subjects
+			$this->engine->cache->updateSubjectNumber( $val );
+		}
+	}
+	
+	// ... //
 }
  
 ?>

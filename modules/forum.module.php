@@ -24,8 +24,6 @@ class MySmartForumMOD
 		$MySmartBB->template->assign('SECTION_RSS',true);
 		$MySmartBB->template->assign('SECTION_ID',$MySmartBB->_GET['id']);
 		
-		$MySmartBB->func->showHeader('تصفح منتدى');
-		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_browseForum();
@@ -86,6 +84,10 @@ class MySmartForumMOD
 		}
 		
 		// ... //
+		
+		$MySmartBB->func->showHeader( $this->Section[ 'title' ] );
+		
+		// .. //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
