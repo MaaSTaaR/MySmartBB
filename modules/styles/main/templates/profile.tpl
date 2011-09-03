@@ -86,14 +86,6 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="20%">
-		الوقت لديه الآن
-		</td>
-		<td class="row1" width="30%">
-		 {$MemberInfo['user_time']}
-		</td>
-	</tr>
-	<tr align="center">
-		<td class="row1" width="20%">
 		مجموعته
 		</td>
 		<td class="row1" width="30%">

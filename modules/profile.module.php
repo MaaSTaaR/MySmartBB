@@ -115,7 +115,7 @@ class MySmartProfileMOD
 			
 		$MySmartBB->_CONF['template']['MemberInfo']['usergroup'] = $GroupInfo['title'];
 			
-		$IsOnline = $MySmartBB->online->isOnline( $MySmartBB->_CONF['timeout'], 'username', $MySmartBB->_CONF['template']['MemberInfo']['username'] );
+		$IsOnline = $MySmartBB->online->isOnline( 'username', $MySmartBB->_CONF['template']['MemberInfo']['username'] );
 		
 		$MySmartBB->_CONF['template']['MemberInfo']['IsOnline'] = $IsOnline; 
 		

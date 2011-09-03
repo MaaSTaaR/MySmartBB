@@ -20,11 +20,14 @@ class MySmartPager
 	private $print_style = array();	// The style of print
 	private $limit;					// How many of pages will print?
 	private $i;						// Will use it in loop
-	private $page = 1;					// The current page (Inside the loop)
+	private $page = 1;				// The current page (Inside the loop)
 	private $p;
 	
-	function SetInformation($style)
+	public function setOutput( $style )
 	{
+		if ( !is_array( $style ) )
+			return false;
+		
 		$this->print_style = $style;
 	}
 	

@@ -222,6 +222,100 @@ class MySmartMember
 			return false;
 		}
 	}
+	
+	// ... //
+	
+	// ~ ~ //
+	// Description : 	This function returns and array that contains the information of a style of a specific member,
+	//					in the begin it tries to retrieve the information from cache, if there is no cache it queries
+	//					the database, and gets style's information then creates cache.
+	//
+	// Parameters :
+	//				- $member_info : 	null or an array that contains member's information as stored in database.
+	//									if it's null the function gets member's information from MySmartBB::_CONF[ 'member_row' ]
+	// Returns : 
+	//				- false 
+	//				- or array that contains the information of the style
+	// ~ ~ //
+	public function getMemberStyle( $member_info = null )
+	{
+		if ( is_null( $member_info ) )
+			$member_info = $this->engine->_CONF[ 'member_row' ];
+		
+		$style_info = array();
+		
+		// Is there any cache?
+		// Note : If the field should_update_style_cache is true, so we have to update the current cache
+		if ( $member_info[ 'style_id_cache' ] == $member_info[ 'style' ]
+			and !$member_info[ 'should_update_style_cache' ] )
+		{
+			$cache = unserialize( base64_decode( $member_info[ 'style_cache' ] ) );
+			
+			$style_info[ 'style_path' ] 		= 	$cache[ 'style_path' ];
+			$style_info[ 'image_path' ] 		= 	$cache[ 'image_path' ];
+			$style_info[ 'template_path' ] 		= 	$cache[ 'template_path' ];
+			$style_info[ 'cache_path' ] 		= 	$cache[ 'cache_path' ];			
+			$style_info[ 'id' ] 				= 	$member_info[ 'style' ];
+		}
+		else if ( $member_info[ 'style_id_cache' ] != $member_info[ 'style' ] 
+				or ( $member_info['should_update_style_cache'] ) )
+		{
+			// ... //
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
+			$MySmartBB->rec->filter = "id='" . (int) $member_info['style']  . "'";
+			
+			$style_info = $MySmartBB->rec->getInfo();
+			
+			// ... //
+			
+			$style_cache = $MySmartBB->style->createStyleCache( $style_info );
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			$MySmartBB->rec->fields = array(	'style_cache'	=>	$style_cache,
+												'style_id_cache'	=>	$member_info['style']	);
+			
+			if ( $member_info[ 'should_update_style_cache' ] )
+			{
+				$MySmartBB->rec->fields['should_update_style_cache'] = 0;
+			}
+			
+			$MySmartBB->rec->filter = "id='" . (int) $member_info['id'] . "'";
+			
+			$update_cache = $MySmartBB->rec->update();
+			
+			// ... //
+		}
+		else
+		{
+			return false;
+		}
+		
+		return $style_info;
+	}
+	
+	// ... //
+	
+	// ~ ~ //
+	// Description : 	This function converts the information of member that stored as unreadable format to a readable format
+	//
+	// Parameters :
+	//				- $member_info : 	an array that contains member's information as stored in database.
+	// Returns : 
+	//				- Nothing, it gets the array as a reference.
+	//				- or array that contains the information of the style
+	// ~ ~ //
+	public function convertMemberInfo( &$member_info )
+	{
+		if ( is_numeric( $member_info['register_date'] ) )
+		{
+			$member_info['register_date'] = $this->engine->func->date( $member_info['register_date'] );
+		}
+		
+		// Convert the writer's gender to a readable text
+		$member_info['user_gender'] 	= 	str_replace( 'm', 'ذكر', $member_info['user_gender'] );
+		$member_info['user_gender'] 	= 	str_replace( 'f', 'انثى', $member_info['user_gender'] );
+	}
 }
 
 ?>

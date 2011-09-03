@@ -18,17 +18,33 @@ class MySmartStyle
 		
 	// ... //
 	
-	public function createStyleCache()
+	public function createStyleCache( $value )
 	{
-		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		$id = null;
+		$style_info = null;
+		$cache = array();
 		
-		$style	=	$this->engine->rec->getInfo();
-		$cache	=	'';
+		// $value is the style's id.
+		if ( is_int( $value ) )
+			$id = $value;
+		// $value is the style's information.
+		elseif ( is_array( $value ) )
+			$style_info = $value;
+		else
+			return false;
 		
-		if ( $style != false )
+		unset( $value );
+		
+		if ( !is_null( $id ) )
 		{
-			$cache = array();
+			$this->engine->rec->table = $this->engine->table[ 'style' ];
+			$this->engine->rec->filter = "id='" . $id . "'";
 			
+			$style_info = $this->engine->rec->getInfo();
+		}
+		
+		if ( $style_info != false )
+		{
 			$cache[ 'style_path' ]		=	$style[ 'style_path' ];
 			$cache[ 'image_path' ]		=	$style[ 'image_path' ];
 			$cache[ 'template_path' ]	=	$style[ 'template_path' ];

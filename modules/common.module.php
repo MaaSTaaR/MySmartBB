@@ -21,9 +21,8 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		// ... //
+		// ~ Delete unnecessary rows ~ //
 		
- 		// Delete not important rows in online table
  		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
  		$MySmartBB->rec->filter = 'logged<' . $MySmartBB->_CONF['timeout'];
  		
@@ -31,40 +30,31 @@ class MySmartCommon
  		
  		// ... //
  		
- 		// Delete not important rows in today table
  		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
  		$MySmartBB->rec->filter = "user_date<>'" . $MySmartBB->_CONF['date'] . "'";
  	 	
  	 	$MySmartBB->rec->delete();
- 	 	
- 	 	// ... //
 	}
 		
 	private function _checkMember()
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		if ( $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'username_cookie' ] ) 
 			and $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'password_cookie' ] ) )
 		{
 			// ... //
 			
-			$username = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'username_cookie' ] ];
-			$password = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'password_cookie' ] ];
+			$username = trim( $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'username_cookie' ] ] );
+			$password = trim ( $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'password_cookie' ] ] );
 			
 			// ... //
-		
-			// Check if the visitor is a member or not ?
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
 			
-			// If the information isn't valid CheckMember's value will be false
+			// ~ Check if the visitor is a member or not ? ~ //
+			
+			// If the information does'nt valid CheckMember's value will be false
 			// otherwise the value will be an array
-			$this->CheckMember = $MySmartBB->rec->getInfo();
-			
-			// ... //
+			$this->CheckMember = $MySmartBB->member->checkMember( $username, $password );
 			
 			// This is a member :)										
 			if ($this->CheckMember != false)
@@ -81,8 +71,6 @@ class MySmartCommon
 		{
 			$this->__visitorProcesses();
 		}
-		
-		// ... //
 	}
 		
 	/**
@@ -96,6 +84,8 @@ class MySmartCommon
 		
 		$MySmartBB->_CONF[ 'member_row' ] 			= 	$this->CheckMember;	
 		$MySmartBB->_CONF[ 'member_permission' ]	= 	true;
+		
+		unset( $this->CheckMember );
 		
 		// ... //
 		
@@ -118,129 +108,11 @@ class MySmartCommon
 		
 		// ... //
 		
-		// Check if the member is already online
-		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "logged>='" . $MySmartBB->_CONF['timeout'] . "' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		// Insert the member into online table
+		$MySmartBB->online->onlineMember();
 		
-		$IsOnline = $MySmartBB->rec->getInfo();
-		
-		// ... //
-		
-		// Where is the member now ?
-		$MemberLocation = 'الصفحه الرئيسيه';
-		
-		$page = empty($MySmartBB->_GET['page']) ? 'index' : $MySmartBB->_GET['page'];
-		
-		$locations 					= 	array();
-		$locations['index'] 		= 	'الصفحه الرئيسيه';
-		$locations['forum'] 		= 	'يطلع على منتدى';
-		$locations['profile'] 		= 	'يطلع على ملف عضو';
-		$locations['static'] 		= 	'يطلع على صفحة الاحصائيات';
-		$locations['member_list'] 	= 	'يطلع على قائمة الاعضاء';
-		$locations['search'] 		= 	'يطلع على صفحة البحث';
-		$locations['announcement'] 	= 	'يطلع على إعلان اداري';
-		$locations['team'] 			= 	'يطلع على صفحة المسؤولين';
-		$locations['login'] 		= 	'يسجل دخوله';
-		$locations['logout'] 		= 	'يسجل خروجه';
-		$locations['usercp'] 		= 	'يطلع على لوحة تحكمه';
-		$locations['pm'] 			= 	'يطلع على الرسائل الخاصه';
-		$locations['topic'] 		= 	'يطّلع على موضوع';
-		$locations['new_topic'] 	= 	'يكتب موضوع جديد';
-		$locations['new_reply'] 	= 	'يكتب رد جديد';
-		$locations['vote'] 			= 	'يضع تصويت';
-		$locations['tags'] 			= 	'يطلع على العلامات';
-		$locations['online'] 		= 	'يطلع على المتواجدين حالياً';
-		
-		if (array_key_exists($page,$locations))
-		{
-			$MemberLocation = $locations[$page];
-		}
-		
-		// Get username with group style
-		$username_style = $MySmartBB->member->getUsernameWithStyle( $MySmartBB->_CONF['member_row']['username'], 
-																	$MySmartBB->_CONF['group_info']['username_style']  );
-		
-		// ... //
-		
-		if (!$IsOnline)
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_CONF['member_row']['username'],
-												'username_style'	=>	$username_style,
-												'logged'	=>	$MySmartBB->_CONF['now'],
-												'path'	=>	$MySmartBB->_SERVER['QUERY_STRING'],
-												'user_ip'	=>	$MySmartBB->_CONF['ip'],
-												'hide_browse'	=>	$MySmartBB->_CONF['member_row']['hide_online'],
-												'user_location'	=>	$MemberLocation,
-												'user_id'	=>	$MySmartBB->_CONF['member_row']['id']	);
-												
-			$insert = $MySmartBB->rec->insert();
-		}
-		// Member is already online , just update information
-		else
-		{
-			$username_style_fi = str_replace('\\','',$username_style);
-			
-			if ($IsOnline['logged'] < $MySmartBB->_CONF['timeout'] 
-				or $IsOnline['path'] != $MySmartBB->_SERVER['QUERY_STRING'] 
-				or $IsOnline['username_style'] != $username_style_fi 
-				or $IsOnline['hide_browse'] != $MySmartBB->_CONF['rows']['member_row']['hide_online'])
-			{
-				$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-				$MySmartBB->rec->fields = array(	'username'			=>	$MySmartBB->_CONF['member_row']['username'],
-													'username_style'	=>	$username_style,
-													'logged'			=>	$MySmartBB->_CONF['now'],
-													'path'				=>	$MySmartBB->_SERVER['QUERY_STRING'],
-													'user_ip'			=>	$MySmartBB->_CONF['ip'],
-													'hide_browse'		=>	$MySmartBB->_CONF['member_row']['hide_online'],
-													'user_location'		=>	$MemberLocation,
-													'user_id'			=>	$MySmartBB->_CONF['member_row']['id']	);
-				
-				$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
-				
-				$update = $MySmartBB->rec->update();
-			}
-		}
-		
-		// ... //
-		
-		// Ok , now we check if this member in today list
-		$IsToday = $MySmartBB->online->isToday( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_CONF[ 'date' ] );
-		
-		// ... //
-		
-		// Member isn't exists in today table , so insert the member								  
-		if (!$IsToday)
-		{
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
-			
-			$MySmartBB->rec->fields = array(	'username'			=>	$MySmartBB->_CONF['member_row']['username'],
-												'user_id'			=>	$MySmartBB->_CONF['member_row']['id'],
-												'user_date'			=>	$MySmartBB->_CONF['date'],
-												'hide_browse'		=>	$MySmartBB->_CONF['member_row']['hide_online'],
-												'username_style'	=>	$username_style	);
-			
-			$InsertToday = $MySmartBB->rec->insert();
-			
-			// ... //
-			
-			if ($InsertToday)
-			{
-				// ... //
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-				$MySmartBB->rec->fields = array(	'visitor'	=>	$MySmartBB->_CONF['member_row']['visitor'] + 1	);
-				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
-				
-				$MySmartBB->rec->update();
-				
-				// ... //
-			}
-			
-			// ... //
-		}
+		// Insert the member into today's visitor table
+		$MySmartBB->online->todayMember();
 		
 		// ... //
 		
@@ -255,54 +127,11 @@ class MySmartCommon
 		// ... //
 		
 		// Get member style
-		if ( $MySmartBB->_CONF['member_row']['style_id_cache'] == $MySmartBB->_CONF['member_row']['style']
-			and !$MySmartBB->_CONF['member_row']['should_update_style_cache'] )
-		{
-			$cache = unserialize( base64_decode( $MySmartBB->_CONF[ 'member_row' ][ 'style_cache' ] ) );
-			
-			$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ] 		= 	$cache[ 'style_path' ];
-			$MySmartBB->_CONF[ 'style_info' ][ 'image_path' ] 		= 	$cache[ 'image_path' ];
-			$MySmartBB->_CONF[ 'style_info' ][ 'template_path' ] 	= 	$cache[ 'template_path' ];
-			$MySmartBB->_CONF[ 'style_info' ][ 'cache_path' ] 		= 	$cache[ 'cache_path' ];			
-			$MySmartBB->_CONF[ 'style_info' ][ 'id' ] 				= 	$MySmartBB->_CONF[ 'member_row' ][ 'style' ];
-		}
-		else if ( $MySmartBB->_CONF[ 'member_row' ][ 'style_id_cache' ] != $MySmartBB->_CONF[ 'member_row' ][ 'style' ] 
-				or ( $MySmartBB->_CONF['member_row']['should_update_style_cache'] ) )
-		{
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
-			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
-			
-			$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
-			
-			// ... //
-			
-			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['style']  . "'";
-			
-			$style_cache = $MySmartBB->style->createStyleCache();
-			
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->fields = array(	'style_cache'	=>	$style_cache,
-												'style_id_cache'	=>	$MySmartBB->_CONF['member_row']['style']	);
-			
-			if ( $MySmartBB->_CONF[ 'member_row' ][ 'should_update_style_cache' ] )
-			{
-				$MySmartBB->rec->fields['should_update_style_cache'] = 0;
-			}
-			
-			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
-			
-			$update_cache = $MySmartBB->rec->update();
-			
-			// ... //
-		}
+		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->member->getMemberStyle();
 				
 		// ... //
 		
-		if ($MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'])
+		if ( $MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'] )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			
@@ -336,44 +165,25 @@ class MySmartCommon
 		
 		// ... //
 		
-		// Check if the visitor is already online
-		$isOnline = $MySmartBB->online->isOnline($MySmartBB->_CONF['timeout'], 'ip', $MySmartBB->_CONF['ip']);
-								
-		// The visitor is already online , just update information										
-		if ( $isOnline )
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'username'	=>	'Guest',
-												'logged'	=>	$MySmartBB->_CONF['now'],
-												'path'		=>	$MySmartBB->_SERVER['QUERY_STRING'],
-												'user_ip'	=>	$MySmartBB->_CONF['ip']	);
-			
-			$MySmartBB->rec->filter = "username='Guest'";
-			
-			$update = $MySmartBB->rec->update();
-		}
-		// The visitor is not exist in online table , so we insert his info
-		else
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'username'			=>	'Guest',
-												'username_style'	=>	'Guest',
-												'logged'			=>	$MySmartBB->_CONF['now'],
-												'path'				=>	$MySmartBB->_SERVER['QUERY_STRING'],
-												'user_ip'			=>	$MySmartBB->_CONF['ip'],
-												'user_id'			=>	-1	);
-			
-			$insert = $MySmartBB->rec->insert(); 
-		}
+		// Insert the visitor into online table
+		$MySmartBB->online->onlineVisitor();
 		
-		// Get visitor's style		
+		// ... //
+				
+		// Get visitor's style
+		// Check first if the visitor chose a specific style, otherwise set the default style to show.
 		$style_id = (int) ( $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'style_cookie' ] ) ) ? $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'style_cookie' ] ] : $MySmartBB->_CONF[ 'info_row' ][ 'def_style' ];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $style_id . "'";
 		
 		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
-										  
+		
+		if ( !$MySmartBB->_CONF[ 'style_info' ] )
+			die();
+		
+		// ... //
+		
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
    		{
@@ -385,10 +195,9 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		if (!isset($MySmartBB->_CONF[ 'style_info' ])
-			or !is_array($MySmartBB->_CONF[ 'style_info' ])
+		if ( !is_array($MySmartBB->_CONF[ 'style_info' ])
 			or empty($MySmartBB->_CONF[ 'style_info' ]['template_path'])
-			or empty($MySmartBB->_CONF[ 'style_info' ]['cache_path']))
+			or empty($MySmartBB->_CONF[ 'style_info' ]['cache_path']) )
 		{
 			$MySmartBB->func->error('لم يتم ايجاد معلومات النمط');
 		}
@@ -404,7 +213,7 @@ class MySmartCommon
   		$pager_html[2] 	= 	$MySmartBB->template->content('pager_style_part3');
   		$pager_html[3] 	= 	$MySmartBB->template->content('pager_style_part4');
   		
-		$MySmartBB->pager->SetInformation($pager_html);
+		$MySmartBB->pager->setOutput( $pager_html );
 	}	
 		
 	/**
@@ -423,7 +232,7 @@ class MySmartCommon
 			$MySmartBB->rec->order = 'RAND()';
 		
 			$MySmartBB->_CONF['rows']['AdsInfo'] = $MySmartBB->rec->getInfo();
-		
+			
 			$MySmartBB->_CONF['temp']['ads_show'] = true;
 		}
 	}
@@ -436,9 +245,9 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		if (!strstr($MySmartBB->_CONF[ 'style_info' ]['style_path'],'http://www.'))
+		if ( !strstr( $MySmartBB->_CONF[ 'style_info' ][ 'style_path' ], 'http://www.' ) )
 		{
-			$filename = explode('/',$MySmartBB->_CONF[ 'style_info' ]['style_path']);
+			$filename = explode( '/', $MySmartBB->_CONF[ 'style_info' ]['style_path'] );
 			
 			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ]);
 		}
@@ -456,13 +265,13 @@ class MySmartCommon
 		global $MySmartBB;
 			
 		// if the forum close by admin , stop the page
-		if ($MySmartBB->_CONF['info_row']['board_close'])
+		if ( $MySmartBB->_CONF['info_row']['board_close'] )
     	{
-  			if ($MySmartBB->_CONF['group_info']['admincp_allow'] != 1
-  				and !defined('LOGIN'))
+  			if ( $MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] != 1
+  				and !defined( 'LOGIN' ) )
         	{
         		$MySmartBB->func->showHeader('مغلق');
-    			$MySmartBB->func->error($MySmartBB->_CONF['info_row']['board_msg']);
+    			$MySmartBB->func->error( $MySmartBB->_CONF[ 'info_row' ][ 'board_msg' ] );
   			}
  		}
 	}
@@ -477,10 +286,7 @@ class MySmartCommon
 		$MySmartBB->template->assign('image_path',$MySmartBB->_CONF[ 'style_info' ]['image_path']);
 		
 		$MySmartBB->template->assign('_CONF',$MySmartBB->_CONF);
-		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);	
-		
-		/** For debug only **/
-		$MySmartBB->template->assign('_SERVER',$MySmartBB->_SERVER);
+		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);
 	}
 }
 	

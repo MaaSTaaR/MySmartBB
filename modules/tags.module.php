@@ -14,9 +14,6 @@ class MySmartTagsMOD
 	{
 		global $MySmartBB;
 		
-		// Show header with page title
-		$MySmartBB->func->showHeader('العلامات');
-		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_show();
@@ -37,14 +34,24 @@ class MySmartTagsMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tag' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$tag_info = $MySmartBB->rec->getInfo();
+		
+		if ( !$tag_info )
+			$MySmartBB->func->error( 'العلامه المطلوبه غير موجوده' );
+		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$number = $MySmartBB->rec->getNumber();
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'tags' ];
+		$MySmartBB->func->showHeader( 'العلامات' );
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$number;
@@ -53,16 +60,12 @@ class MySmartTagsMOD
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=tags&amp;show=1&amp;id=' . $MySmartBB->_GET['id'];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
+		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
+		
 		$MySmartBB->rec->getList();
 		
-		/*if (!$MySmartBB->_CONF['template']['while']['Subject'])
-		{
-			$MySmartBB->func->error('العلامه المطلوبه غير موجوده');
-		}*/
-		
-		//$MySmartBB->template->assign('tag',$MySmartBB->_CONF['template']['while']['Subject'][0]['tag']);
-		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
+		$MySmartBB->template->assign( 'tag', $tag_info[ 'tag' ] );
 		
 		$MySmartBB->template->display('tags_show_subject');
 	}

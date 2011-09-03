@@ -284,7 +284,7 @@ class MySmartRecords
 	
 	public function getInfo( $result = null )
 	{
-		if ( !isset( $result ) )
+		if ( is_null( $result ) )
 		{
 			// There is no request to a list, so we just need one row
 			if ( !isset( $this->query ) )
@@ -295,6 +295,10 @@ class MySmartRecords
 			{
 				$query = $this->query;
 			}
+		}
+		elseif ( $result == false )
+		{
+			$query = $this->select();
 		}
 		else
 		{

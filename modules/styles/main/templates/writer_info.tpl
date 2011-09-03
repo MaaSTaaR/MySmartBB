@@ -38,7 +38,11 @@
 				الحاله :
 			</td>
 			<td width="40%">
-				{$status}
+				{if {$status} == 'online'}
+				<span class='online'>متصل</span>
+				{else}
+				<span class='offline'>غير متصل</span>
+				{/if}
 			</td>
 		</tr>
 		<tr align="center">

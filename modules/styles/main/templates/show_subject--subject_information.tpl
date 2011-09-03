@@ -47,10 +47,12 @@
 	{if {$SHOW_TAGS}}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
+			<strong>
 			علامات الموضوع : 
 			{DB::getInfo}{$tags_res}{$tags}
 			<a href="index.php?page=tags&amp;show=1&amp;id={$tags['tag_id']}">{$tags['tag']}</a>،
 			{/DB::getInfo}
+			</strong>
 		</td>
 	</tr>
 	{/if}

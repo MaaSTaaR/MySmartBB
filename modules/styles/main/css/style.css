@@ -359,3 +359,20 @@ option.main_section
 	font-weight: bold;
 	font-style: italic;
 }
+
+.online
+{
+	color: #2e8b57;
+}
+
+.offline
+{
+	color: #FF0000;
+}
+
+.highlight
+{
+	color: #FF0000;
+	font-weight: bold;
+	font-style: italic;
+}

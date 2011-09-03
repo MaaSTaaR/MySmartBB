@@ -4,7 +4,7 @@
  * @package 	: 	MySmartSubject
  * @author 		: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
  * @start 		: 	11/3/2006 , 8:18 PM
- * @updated 	: 	Thu 28 Jul 2011 10:58:08 AM AST 
+ * @updated 	: 	Sat 03 Sep 2011 06:55:00 AM AST 
  */
  
 class MySmartSubject
@@ -68,9 +68,21 @@ class MySmartSubject
 			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSubjectWriterInfo() -- EMPTY id');
 		}
 		
- 		$this->engine->rec->table = $this->table . ' AS s,' . $this->engine->table[ 'member' ] . " AS m";
- 		$this->engine->rec->select = '*,s.visitor AS subject_visitor';
- 		$this->engine->rec->filter = "s.id='" . $subject_id . "' AND m.username=s.writer";
+		// Fields to retrieve from member table
+		// That helps us to keep the returned array as small as possible, and prevent the member's password to retrieve
+		$member_select = array( 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
+								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache' );
+		
+		$select = 'subject.*,subject.visitor AS subject_visitor';
+		
+		foreach ( $member_select as $key => $field )
+		{
+			$select .= ',member.' . $field;
+		}
+		
+ 		$this->engine->rec->table = $this->table . ' AS subject,' . $this->engine->table[ 'member' ] . " AS member";
+ 		$this->engine->rec->select = $select; 		
+ 		$this->engine->rec->filter = "subject.id='" . $subject_id . "'";
  		
  		$rows = $this->engine->rec->getInfo();
  		

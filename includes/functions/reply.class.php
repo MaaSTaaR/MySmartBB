@@ -29,19 +29,22 @@ class MySmartReply
  			trigger_error('ERROR::NEED_PARAMETER -- FROM getReplyWriterInfo()',E_USER_ERROR);
  		}
  		
-		$this->engine->rec->select = '*,r.id AS reply_id';
-		$this->engine->rec->table = $this->table . ' AS r,' . $this->engine->table['member'] . ' AS m';
+ 		// Fields to retrieve from member table
+		// That helps us to keep the returned array as small as possible, and prevent the member's password to retrieve
+		$member_select = array( 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
+								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache' );
 		
-		$statement = "r.subject_id='" . $subject_id . "' AND m.username=r.writer";
+		$select = 'reply.*,reply.id AS reply_id';
 		
-		if ( isset( $this->engine->rec->filter ) )
+		foreach ( $member_select as $key => $field )
 		{
-			$this->engine->rec->filter .= ' AND ' . $statement;
+			$select .= ',member.' . $field;
 		}
-		else
-		{
-			$this->engine->rec->filter = $statement;
-		}
+		
+		$this->engine->rec->select = $select;
+		$this->engine->rec->table = $this->table . ' AS reply,' . $this->engine->table['member'] . ' AS member';
+		
+		$this->engine->rec->filter .= "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
 		
 		$this->engine->rec->getList();
 	}
