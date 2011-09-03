@@ -154,7 +154,6 @@ class MySmartBB
   		$this->table['smiles'] 				= 	$this->prefix . 'smiles';
   		$this->table['style'] 				= 	$this->prefix . 'style';
   		$this->table['subject'] 			= 	$this->prefix . 'subject';
-  		$this->table['sm_logs'] 			= 	$this->prefix . 'supermemberlogs';
   		$this->table['today'] 				= 	$this->prefix . 'today';
   		$this->table['toolbox'] 			= 	$this->prefix . 'toolbox';
   		$this->table['usertitle'] 			= 	$this->prefix . 'usertitle';

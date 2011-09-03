@@ -162,7 +162,6 @@ class MySmartInstaller
 		$this->_addTable( 'smiles', $this->engine->table[ 'smiles' ] );
 		$this->_addTable( 'style', $this->engine->table[ 'style' ] );
 		$this->_addTable( 'subject', $this->engine->table[ 'subject' ] );
-		$this->_addTable( 'supermember_logs', $this->engine->table[ 'sm_logs' ] );
 		$this->_addTable( 'tags', $this->engine->table[ 'tag' ] );
 		$this->_addTable( 'tags_subject', $this->engine->table[ 'tag_subject' ] );
 		$this->_addTable( 'today', $this->engine->table[ 'today' ] );
