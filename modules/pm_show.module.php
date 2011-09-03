@@ -48,9 +48,7 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إرسال رساله خاصه');
-		
-		if (empty($MySmartBB->_GET['id']))		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )		
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
@@ -61,13 +59,25 @@ class MySmartPrivateMassegeShowMOD
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
 		$MySmartBB->_CONF['template']['MassegeRow'] = $MySmartBB->rec->getInfo();
-																		
+
+		// ... //
+		
 		if (!$MySmartBB->_CONF['template']['MassegeRow'])
 		{
 			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
 		}
 		
-		$MySmartBB->func->CleanArray($MySmartBB->_CONF['template']['MassegeRow'],'sql');
+		// ... //
+		
+		$MySmartBB->func->cleanArray($MySmartBB->_CONF['template']['MassegeRow'],'sql');
+		
+		// ... //
+		
+		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['MassegeRow'][ 'title' ] );
+		
+		// ... //
+		
+		$MySmartBB->template->assign('send_text','[quote]' . $MySmartBB->_CONF['template']['MassegeRow']['text'] . '[/quote]');
 		
 		// ... //
 		
@@ -78,25 +88,39 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
-		$send_text = $MySmartBB->_CONF['template']['MassegeRow']['text'];
+		$MySmartBB->member->processMemberInfo( $MySmartBB->_CONF['template']['Info'] );
 		
-		if (is_numeric($MySmartBB->_CONF['template']['Info']['register_date']))
-		{
-			$MySmartBB->_CONF['template']['Info']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['Info']['register_date']);
-		}
+		// ... //
 		
-		if (empty($MySmartBB->_CONF['template']['Info']['username_style_cache']))
-		{
-			$this->Info['display_username'] = $MySmartBB->_CONF['template']['Info']['username'];
-		}
-		else
-		{
-			$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->_CONF['template']['Info']['username_style_cache'];
-			$MySmartBB->_CONF['template']['Info']['display_username'] = $MySmartBB->func->htmlDecode($MySmartBB->_CONF['template']['Info']['display_username']);
-		}
+		$this->formatMessageContext();
+
+		// ... //
 		
-		$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('m','ذكر',$MySmartBB->_CONF['template']['Info']['user_gender']);
-		$MySmartBB->_CONF['template']['Info']['user_gender'] 	= 	str_replace('f','انثى',$MySmartBB->_CONF['template']['Info']['user_gender']);
+		$this->getAttachments();
+		
+		// ... //
+		
+		$this->markAsRead();
+		
+		// ... //
+		
+		$MySmartBB->template->assign('send_title','رد : ' . $MySmartBB->_CONF['template']['MassegeRow']['title']);
+		
+		$MySmartBB->template->assign('to',$MySmartBB->_CONF['template']['MassegeRow']['user_from']);
+		
+		$MySmartBB->template->assign( 'embedded_pm_send_call', true ); // To prevent show the menu of user cp twice
+		
+		// ... //
+		
+		$MySmartBB->func->getEditorTools();
+		
+		$MySmartBB->template->display('pm_show');
+	}
+	
+	private function formatMessageContext()
+	{
+		global $MySmartBB;
+		
 		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace('رد :','',$MySmartBB->_CONF['template']['MassegeRow']['title']);
 		$MySmartBB->_CONF['template']['MassegeRow']['text'] 	=	$MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['MassegeRow']['text']);
 		
@@ -109,8 +133,11 @@ class MySmartPrivateMassegeShowMOD
 			
 			$MySmartBB->_CONF['template']['MassegeRow']['date'] = $MassegeDate . ' ; ' . $MassegeTime;
 		}
-		
-		// ... //
+	}
+	
+	private function getAttachments()
+	{
+		global $MySmartBB;
 		
 		$MySmartBB->_CONF['template']['res']['attach_res'] = '';
 		
@@ -120,32 +147,15 @@ class MySmartPrivateMassegeShowMOD
 		
 		$MySmartBB->rec->getList();
 		
-		/*if ($MySmartBB->_CONF['template']['while']['AttachList'] != false)
-		{
+		$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['attach_res'] );
+		
+		if ( $attach_num > 0 )
 			$MySmartBB->template->assign('ATTACH_SHOW',true);
-		}*/
-		
-		// The writer signture isn't empty 
-		if (!empty($MySmartBB->_CONF['template']['Info']['user_sig']))
-		{
-			// So , use the SmartCode in it
-			$MySmartBB->_CONF['template']['Info']['user_sig'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['Info']['user_sig']);
-			$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['Info']['user_sig']);
-		}
-		
-		$MySmartBB->template->assign('send_title','رد : ' . $MySmartBB->_CONF['template']['MassegeRow']['title']);
-		$MySmartBB->template->assign('send_text','[quote]' . $send_text . '[/quote]');
-		$MySmartBB->template->assign('to',$MySmartBB->_CONF['template']['MassegeRow']['user_from']);
-				
-		$MySmartBB->func->getEditorTools();
-		
-		// ... //
-		
-		$CheckOnline = $MySmartBB->online->isOnline( $MySmartBB->_CONF['timeout'], 'username', $MySmartBB->_CONF['template']['MassegeRow']['user_from'] );
-											
-		($CheckOnline) ? $MySmartBB->template->assign('status',"<font class='online'>متصل</font>") : $MySmartBB->template->assign('status',"<font class='offline'>غير متصل</font>");
-		
-		// ... //
+	}
+	
+	private function markAsRead()
+	{
+		global $MySmartBB;
 		
 		if (!$MySmartBB->_CONF['template']['MassegeRow']['user_read'])
 		{
@@ -164,10 +174,6 @@ class MySmartPrivateMassegeShowMOD
 				$Cache = $MySmartBB->rec->update();
 			}
 		}
-		
-		$MySmartBB->template->assign( 'embedded_pm_send_call', true ); // To prevent show the menu of user cp twice
-		
-		$MySmartBB->template->display('pm_show');
 	}
 }
 

@@ -297,16 +297,17 @@ class MySmartMember
 	// ... //
 	
 	// ~ ~ //
-	// Description : 	This function converts the information of member that stored as unreadable format to a readable format
+	// Description : 	This function formats the information of member to show it in pages.
 	//
 	// Parameters :
 	//				- $member_info : 	an array that contains member's information as stored in database.
 	// Returns : 
 	//				- Nothing, it gets the array as a reference.
-	//				- or array that contains the information of the style
-	// ~ ~ //
-	public function convertMemberInfo( &$member_info )
+	// ~ ~ //	
+	public function processMemberInfo( &$member_info )
 	{
+		// ... //
+		
 		if ( is_numeric( $member_info['register_date'] ) )
 		{
 			$member_info['register_date'] = $this->engine->func->date( $member_info['register_date'] );
@@ -315,6 +316,44 @@ class MySmartMember
 		// Convert the writer's gender to a readable text
 		$member_info['user_gender'] 	= 	str_replace( 'm', 'ذكر', $member_info['user_gender'] );
 		$member_info['user_gender'] 	= 	str_replace( 'f', 'انثى', $member_info['user_gender'] );
+		
+		// ... //
+		
+		// The status of the member (online or offline)
+		if ( $member_info['logged'] < $this->engine->_CONF['timeout'] )
+			$this->engine->template->assign( 'status', 'online' );
+		else
+			$this->engine->template->assign( 'status', 'offline' );
+		
+		// ... //
+		
+		// Format the away message
+		if ( !empty( $member_info['away_msg'] ) )
+			$this->engine->smartparse->replace_smiles( $member_info[ 'away_msg' ] );
+		
+		// ... //
+		
+		// The username to show
+		if ( empty( $member_info[ 'username_style_cache' ] ) )
+		{
+			$member_info['display_username'] = $member_info['username'];
+		}
+		else
+		{
+			$member_info['display_username'] = $member_info['username_style_cache'];
+			$member_info['display_username'] = $this->engine->func->htmlDecode( $member_info['display_username'] );
+		}
+		
+		// ... //
+		
+		// The writer's signture does'nt empty 
+		if ( !empty( $member_info[ 'user_sig' ] ) )
+		{
+			$member_info['user_sig'] = $this->engine->smartparse->replace($member_info['user_sig']);
+			$this->engine->smartparse->replace_smiles($member_info['user_sig']);
+		}
+		
+		// ... //
 	}
 }
 

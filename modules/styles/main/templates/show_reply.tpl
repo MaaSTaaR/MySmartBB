@@ -19,7 +19,7 @@
 		<td class="row2" width="70%"  colspan="2" align="right">
 			{$Info['text']}
 			
-			{if {$Info['attach_reply']}}
+			{if {$SHOW_REPLY_ATTACH}}
 				{template}attach_show{/template}
 			{/if}
 			

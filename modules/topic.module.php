@@ -216,13 +216,13 @@ class MySmartTopicMOD
 		
 	private function _subjectTextFormat()
 	{
-		global $MySmartBB;
-		
 		$this->_baseFormat();
 	}
 	
 	private function _getAttachments()
 	{
+		global $MySmartBB;
+		
 		// We have attachments in this subject
 		if ( $this->Info['attach_subject'] )
 		{
@@ -286,6 +286,7 @@ class MySmartTopicMOD
 		{
 			$this->__getReplierInfo();
 			$this->__replyFormat();
+			$this->__getReplyAttachments();
 			$this->__replyEnd();
 		}
 	}
@@ -310,17 +311,24 @@ class MySmartTopicMOD
 	
 	private function __getReplyAttachments()
 	{
+		global $MySmartBB;
+		
 		// We have attachment in this reply
-		if ($this->RInfo['attach_reply'])
+		if ( $this->Info['attach_reply'] )
 		{
-			$MySmartBB->_CONF['template']['res']['reply_attach_res'] = '';
+			$MySmartBB->_CONF['template']['res']['attach_res'] = '';
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-			$MySmartBB->rec->filter = "subject_id='" . $this->RInfo['reply_id'] . "' AND reply='1'";
-			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['reply_attach_res'];
+			$MySmartBB->rec->filter = "subject_id='" . $this->Info['reply_id'] . "' AND reply='1'";
+			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
 			
 			// Get the attachment information
 			$MySmartBB->rec->getList();
+			
+			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['attach_res'] );
+			
+			if ( $attach_num > 0 )
+				$MySmartBB->template->assign( 'SHOW_REPLY_ATTACH', true );
 		}
 	}
 	
@@ -380,46 +388,8 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		// Convert some information to a readable text
-		$MySmartBB->member->convertMemberInfo( $this->Info );
-		
-		// .... //
-		
-		// The status of the member (online or offline)
-		if ( $this->Info['logged'] < $MySmartBB->_CONF['timeout'] )
-			$MySmartBB->template->assign( 'status', 'online' );
-		else
-			$MySmartBB->template->assign( 'status', 'offline' );
-		
-		// ... //
-		
-		// Format the away message
-		if ( !empty( $this->Info['away_msg'] ) )
-			$MySmartBB->smartparse->replace_smiles( $this->Info[ 'away_msg' ] );
-		
-		// ... //
-		
-		// The username to show
-		if ( empty( $this->Info[ 'username_style_cache' ] ) )
-		{
-			$this->Info['display_username'] = $this->Info['username'];
-		}
-		else
-		{
-			$this->Info['display_username'] = $this->Info['username_style_cache'];
-			$this->Info['display_username'] = $MySmartBB->func->htmlDecode( $this->Info['display_username'] );
-		}
-		
-		// ... //
-		
-		// The writer's signture does'nt empty 
-		if ( !empty( $this->Info[ 'user_sig' ] ) )
-		{
-			$this->Info['user_sig'] = $MySmartBB->smartparse->replace($this->Info['user_sig']);
-			$MySmartBB->smartparse->replace_smiles($this->Info['user_sig']);
-		}
+		// Convert some information to a formatted info
+		$MySmartBB->member->processMemberInfo( $this->Info );
 	}
 	
 	private function _baseFormat()

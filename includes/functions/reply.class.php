@@ -41,8 +41,9 @@ class MySmartReply
 			$select .= ',member.' . $field;
 		}
 		
-		$this->engine->rec->select = $select;
+		
 		$this->engine->rec->table = $this->table . ' AS reply,' . $this->engine->table['member'] . ' AS member';
+		$this->engine->rec->select = $select;
 		
 		$this->engine->rec->filter .= "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
 		

@@ -79,10 +79,18 @@ class MySmartAttach
 					$this->engine->rec->table = $this->engine->table[ 'attach' ];
 					$this->engine->rec->fields = array(	'filename'		=>	$files[ 'name' ][ $k ],
 														'filepath'		=>	$path,
-														'filesize'		=>	$files[ 'size' ][ $k ],
-														'subject_id'	=>	$id);
+														'filesize'		=>	$files[ 'size' ][ $k ] );
      				
-     				$this->engine->rec->fields[ 'reply' ] = ( $type == 'reply' ) ? '1' : '0';
+     				if ( $type != 'pm' )
+     				{
+     					$this->engine->rec->fields[ 'subject_id' ] = $id;
+     					$this->engine->rec->fields[ 'reply' ] = ( $type == 'reply' ) ? '1' : '0';
+     				}
+     				else
+     				{
+     					$this->engine->rec->fields[ 'pm_id' ] = $id;
+     				}
+     				
      				
 					$insert = $this->engine->rec->insert();
      										
@@ -97,7 +105,7 @@ class MySmartAttach
 							}
 							elseif ( $type == 'reply' )
 							{
-								$this->engine->rec->table = $this->engine->table[ 'attach' ];
+								$this->engine->rec->table = $this->engine->table[ 'reply' ];
 								$this->engine->rec->fields = array(	'attach_reply'	=>	'1'	);
 							}
 							

@@ -9,7 +9,7 @@
 			مرات التحميل
 		</td>
 	</tr>
-	{DB::getInfo}{$AttachList}
+	{DB::getInfo}{$attach_res}{$AttachList}
 	<tr align="center">
 		<td width="30%" class="row1">
 			<a href="index.php?page=download&amp;attach=1&amp;id={$AttachList['id']}">{$AttachList['filename']}</a>

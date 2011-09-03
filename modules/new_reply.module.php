@@ -22,7 +22,9 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,reply,section,subject' );
+		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach' );
+		
+		$MySmartBB->func->showHeader('اضافة رد');
 		
 		$this->_commonCode();
 		
@@ -130,8 +132,6 @@ class MySmartReplyAddMOD
 		$MySmartBB->func->getEditorTools();
 		
 		$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
-		
-		$MySmartBB->func->showHeader('اضافة رد');
 				
 		// Instead of send a whole version of $this->SectionGroup to template engine
 		// We just send options which we really need, we use this way to save memory
@@ -253,6 +253,8 @@ class MySmartReplyAddMOD
 	
 	private function _updateInformation()
 	{
+		global $MySmartBB;
+		
 		$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $this->SubjectInfo[ 'id' ] );
 			
 		// ... //
