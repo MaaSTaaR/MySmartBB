@@ -117,29 +117,10 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		// hmmmm , this section is protected by a password so request the password
 		if ( !$check )
 		{
-			if (!empty($this->Section['section_password']) 
-				and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-			{
-     			if (empty($MySmartBB->_GET['password']))
-        		{
-      				$MySmartBB->template->display('forum_password');
-      				$MySmartBB->func->stop();
-     			}
-     			else
-     			{
-     				$IsTruePassword = $MySmartBB->section->checkPassword( base64_decode($MySmartBB->_GET['password']), $this->Section['id'] );
-     																		
-     				if (!$IsTruePassword)
-     				{
-     					$MySmartBB->func->error('المعذره .. كلمة المرور غير صحيحه');
-     				}
-     				
-     				$MySmartBB->_CONF['template']['password'] = '&amp;password=' . $MySmartBB->_GET['password'];
-     			}
-     		}
+			// Check if the section has been protected with a password
+			$MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
      	}
      	
      	// ... //

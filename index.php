@@ -45,7 +45,6 @@ $modules['pm_list'] 					= 	'pm_list.module.php';
 $modules['pm_show'] 					= 	'pm_show.module.php';
 $modules['pm_cp'] 						= 	'pm_cp.module.php';
 $modules['pm_setting'] 					= 	'pm_setting.module.php';
-$modules['print'] 		        		=  	'print.module.php';
 $modules['usercp_control_info'] 		=  	'usercp_control_info.module.php';
 $modules['usercp_control_setting'] 		=  	'usercp_control_setting.module.php';
 $modules['usercp_control_signature'] 	=  	'usercp_control_signature.module.php';

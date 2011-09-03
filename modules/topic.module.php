@@ -39,20 +39,26 @@ class MySmartTopicMOD
 			$this->_getAttachments();
 			$this->_subjectEnd();
 			$this->_getReply();
-		
-			if ($MySmartBB->_CONF['info_row']['samesubject_show'])
-			{
-				$this->_sameTopics();
-			}
 			
-			$this->_pageEnd();
+			if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+			{
+				if ($MySmartBB->_CONF['info_row']['samesubject_show'])
+				{
+					$this->_sameTopics();
+				}
+			
+				$this->_pageEnd();
+			}
 		}
 		else
 		{
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
-		$MySmartBB->func->getFooter();
+		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		{
+			$MySmartBB->func->getFooter();
+		}
 	}
 	
 	private function _getSubject()
@@ -94,7 +100,10 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
+		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		{
+			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
+		}
 		
 		// ... //
 		
@@ -253,7 +262,10 @@ class MySmartTopicMOD
 		$this->_baseEnd();
 				
 		// Show subject
-		$MySmartBB->template->display('show_subject');
+		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+			$MySmartBB->template->display('show_subject');
+		else
+			$MySmartBB->template->display('print_subject');
 	}
 	
 	private function _getReply()
@@ -344,7 +356,10 @@ class MySmartTopicMOD
 		$this->_baseEnd();
 		
 		// Show the reply :)
-		$MySmartBB->template->display('show_reply');
+		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+			$MySmartBB->template->display('show_reply');
+		else
+			$MySmartBB->template->display('print_reply');
 	}
 	
 	// ... //

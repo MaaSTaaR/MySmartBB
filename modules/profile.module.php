@@ -80,21 +80,12 @@ class MySmartProfileMOD
 		
 		// ... //
 		
-		// Where is the member now?
-		if ($MySmartBB->_CONF['member_permission'])
-     	{
-     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username']	);
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
-			
-			$update = $MySmartBB->rec->update();			
-     	}
+		// Where is the member now?     	
+     	$MySmartBB->online->updateMemberLocation( 'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username'] );
      	
      	// ... //
      	
 		$MySmartBB->_CONF['template']['MemberInfo']['user_gender'] 	= 	($MySmartBB->_CONF['template']['MemberInfo']['user_gender'] == 'm') ? 'ذكر' : 'انثى';
-		//$MemberInfo['user_time']		=	$MySmartBB->member->GetMemberTime($MemberInfo['user_time']);
-		
 		if (is_numeric($MySmartBB->_CONF['template']['MemberInfo']['register_date']))
 		{
 			$MySmartBB->_CONF['template']['MemberInfo']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['MemberInfo']['register_date']);

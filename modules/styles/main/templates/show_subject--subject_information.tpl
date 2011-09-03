@@ -63,7 +63,7 @@
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=print&amp;show=1&amp;id={$Info['subject_id']}">عرض نسخة صالحة للطباعة</a>
+			<a href="index.php?page=topic&amp;show=1&amp;id={$Info['subject_id']}&amp;print=1">عرض نسخة صالحة للطباعة</a>
 		</td>
 	</tr>
 </table>
