@@ -1,7 +1,5 @@
 <?php
 
-// TODO :: Audit this file
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_func',true);
@@ -23,8 +21,6 @@ class MySmartUserCPEmailMOD
 		{
 			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
 		}
-		
-		$MySmartBB->load( 'massege' );
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
 		{
@@ -62,12 +58,30 @@ class MySmartUserCPEmailMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST[ 'new_email' ]. "'";
 		
-		$EmailExists = $MySmartBB->member->isMember();
+		$EmailExists = $MySmartBB->rec->getNumber();
 		
-		if (empty($MySmartBB->_POST['new_email']))
+		if ( empty($MySmartBB->_POST['new_email']) 
+			or empty($MySmartBB->_POST['password']) )
 		{
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
+		
+		// ... //
+		
+		$MySmartBB->_POST['password'] = md5( trim( $MySmartBB->_POST[ 'password' ] ) );
+		
+		// ... //
+
+		// Ensure if the password is correct or not
+		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_POST[ 'password' ] );
+		
+		if ( !$checkPasswordCorrect )
+		{
+			$MySmartBB->func->error( 'المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه' );
+		}
+		
+		// ... //
+		
 		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['new_email']))
 		{
 			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
@@ -79,60 +93,16 @@ class MySmartUserCPEmailMOD
 		
 		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
 		
-		// We will send a confirm message, The confirm message will help user protect himself from crack
-		if ($MySmartBB->_CONF['info_row']['confirm_on_change_mail'])
-		{
-			$adress	= 	$MySmartBB->func->getForumAdress();
-			$code	=	$MySmartBB->func->randomCode();
-		
-			$ChangeAdress = $adress . 'index.php?page=new_email&index=1&code=' . $code;
-			$CancelAdress = $adress . 'index.php?page=cancel_requests&index=1&type=2&code=' . $code;
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-			$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
-												'username'	=>	$MySmartBB->_CONF['member_rows']['username'],
-												'request_type'	=>	'2'	);
-		
-			$insert = $MySmartBB->rec->insert();
-		
-			if ( $insert )
-			{
-				$UpdateArr = array();
-			
-				$UpdateArr['email'] 	= 	$MySmartBB->_POST['new_email'];
-				$UpdateArr['where'] 	= 	array('id',$MySmartBB->_CONF['member_row']['id']);
-			
-				$UpdateNewEmail = $MySmartBB->member->UpdateNewEmail($UpdateArr); /* TODO : may you tell me please, where is this function? */
-			
-				if ($UpdateNewEmail)
-				{
-					$MassegeInfo = $MySmartBB->massege->GetMessageInfo(array('id'	=>	2));
-					
-					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( $MySmartBB->_CONF['member_row']['username'], $MySmartBB->_CONF['info_row']['title'], null, $ChangeAdress, $CancelAdress, $MassegeInfo['text'] );
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->fields = array(	'email'	=>	$MySmartBB->_POST['new_email']	);
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
 				
-					$send = $MySmartBB->func->mail($MySmartBB->_CONF['rows']['member_row']['email'],$MassegeInfo['title'],$MassegeInfo['text'],$MySmartBB->_CONF['info_row']['send_email']);
-				
-					if ( $send )
-					{
-						$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني , يرجى مراجعته');
-						$MySmartBB->func->move('index.php?page=usercp&index=1');
-					}
-				}
-			}
-		}
-		// Confirm message is off, so change email direct
-		else
-		{
-			$MySmartBB->rec->fields = array(	'new_email'	=>	$MySmartBB->_POST['new_email']	);
-			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
-					
-			$update = $MySmartBB->member->updateMember();
+		$update = $MySmartBB->rec->update();
 		
-			if ( $update )
-			{
-				$MySmartBB->func->msg( 'تم التحديث بنجاح !' );
-				$MySmartBB->func->move( 'index.php?page=usercp_control_email&amp;main=1' );
-			}
+		if ( $update )
+		{
+			$MySmartBB->func->msg( 'تم التحديث بنجاح !' );
+			$MySmartBB->func->move( 'index.php?page=usercp_control_email&amp;main=1' );
 		}
 	}
 }

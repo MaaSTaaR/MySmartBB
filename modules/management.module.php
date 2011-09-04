@@ -18,7 +18,7 @@ class MySmartManagementMOD
 		
 		$MySmartBB->func->showHeader('ادارة المواضيع');
 		
-		$MySmartBB->load( 'section' );
+		$MySmartBB->load( 'section,moderator,icon,toolbox' );
 		
 		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET[ 'section' ];
 		
@@ -442,8 +442,6 @@ class MySmartManagementMOD
 		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply_id'] . '&amp;section=' . $MySmartBB->_GET['section'] . '&amp;subject_id=' . $MySmartBB->_GET['subject_id']);
 		
-		$MySmartBB->func->getEditorTools();
-		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
@@ -452,6 +450,8 @@ class MySmartManagementMOD
 		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->rec->getInfo();
 		
 		// ... //
+		
+		$MySmartBB->func->getEditorTools();
 		
 		$MySmartBB->template->display('reply_edit');
 	}

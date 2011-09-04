@@ -1,5 +1,7 @@
 <?php
 
+// TODO : Audit this file
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');

@@ -74,7 +74,7 @@ class MySmartForgetMOD
 		
 		$ForgetMemberInfo = $MySmartBB->rec->getInfo();
 		
-		$MySmartBB->func->CleanArray($ForgetMemberInfo,'sql');
+		$MySmartBB->func->cleanArray($ForgetMemberInfo,'sql');
 		
 		$Adress = 	$MySmartBB->func->getForumAdress();
 		$Code	=	$MySmartBB->func->randomCode();

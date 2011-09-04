@@ -23,7 +23,6 @@ $modules['login'] 						= 	'login.module.php';
 $modules['logout'] 						= 	'logout.module.php';
 $modules['usercp'] 						= 	'usercp.module.php';
 $modules['new_password'] 				= 	'new_password.module.php';
-$modules['new_email'] 					= 	'new_email.module.php';
 $modules['active_member'] 				= 	'active_member.module.php';
 $modules['forget'] 						= 	'forget.module.php';
 $modules['cancel_requests'] 			= 	'cancel_requests.module.php';

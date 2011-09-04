@@ -426,13 +426,9 @@ class MySmartOptionsMOD
 		global $MySmartBB;
 		
 		$update = array();
-		$update[0] = $MySmartBB->info->updateInfo( 'confirm_on_change_mail', $MySmartBB->_POST['confirm_on_change_mail'] );
-		$update[1] = $MySmartBB->info->updateInfo( 'confirm_on_change_pass', $MySmartBB->_POST['confirm_on_change_pass'] );
-		$update[2] = $MySmartBB->info->updateInfo( 'allow_apsent', $MySmartBB->_POST['allow_apsent'] );
+		$update[0] = $MySmartBB->info->updateInfo( 'allow_apsent', $MySmartBB->_POST['allow_apsent'] );
 		
-		if ($update[0] 
-			and $update[1]
-			and $update[2])
+		if ( $update[0] )
 		{
 			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
 			$MySmartBB->func->move('admin.php?page=options&amp;member=1&amp;main=1');

@@ -34,10 +34,8 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
-		// Clean id from any string, that will protect us
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		// If the id is empty, so stop the page
 		if (empty($MySmartBB->_GET['id']))
 		{
 			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
@@ -184,12 +182,12 @@ class MySmartDownloadMOD
 		
 		$update = $MySmartBB->rec->update();
 		
-		//////////
+		// ... //
 		
 		// File content
 		echo file_get_contents('./' . $AttachInfo['filepath']);
 		
-		//////////
+		// ... //
 	}
 	
 	private function _downloadPM()
@@ -218,7 +216,7 @@ class MySmartDownloadMOD
 		$filename = str_replace(' ','_',$MsgInfo['title']);
 		$filename .= '.txt';
 		
-		//////////
+		// ... //
 		
 		// Send headers
 		
@@ -228,7 +226,7 @@ class MySmartDownloadMOD
 		// MIME
 		header('Content-type: text/plain');
 		
-		//////////
+		// ... //
 		
 		echo 'عنوان الرساله : ' . $MsgInfo['title'] . '
 المرسل : ' . $MsgInfo['user_from'] . '

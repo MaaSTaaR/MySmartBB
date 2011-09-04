@@ -284,6 +284,8 @@ class MySmartTopicMOD
 		
 		// ... //
 		
+		$reply_res = '';
+		
 		// Pager setup
 		$MySmartBB->rec->pager 				= 	array();
 		$MySmartBB->rec->pager['total']		= 	$reply_number;
@@ -292,9 +294,11 @@ class MySmartTopicMOD
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['subject_id'];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
+		$MySmartBB->rec->result = &$reply_res;
+		
 		$MySmartBB->reply->getReplyWriterInfo( $this->subject_id );
 		
-		while ( $this->Info = $MySmartBB->rec->getInfo() )
+		while ( $this->Info = $MySmartBB->rec->getInfo( $reply_res ) )
 		{
 			$this->__getReplierInfo();
 			$this->__replyFormat();

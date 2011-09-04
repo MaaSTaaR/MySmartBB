@@ -14,6 +14,14 @@
 			تغيير بريدك الالكتروني
 			</td>
 		</tr>
+	<tr align="center">
+		<td width="30%" class="row1">
+			كلمة مرورك
+		</td>
+		<td width="30%" class="row1">
+			<input type="password" name="password" />
+		</td>
+	</tr>
 		<tr align="center">
 			<td width="30%" class="row1">
 			البريد الالكتروني الجديد

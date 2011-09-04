@@ -51,25 +51,18 @@ class MySmartAnnouncementMOD
 			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 		
 		// Where is the member now?
-		if ($MySmartBB->_CONF['member_permission'])
-     	{
-     		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-			$MySmartBB->rec->fields = array(	'user_location'	=>	'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title']	);
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
-			
-			$update = $MySmartBB->rec->update();
-     	}
+     	$MySmartBB->online->updateMemberLocation( 'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
      	
-     	/* ... */
+     	// ... //
      	
      	// Change text format
 		$MySmartBB->_CONF['template']['AnnInfo']['text'] = $MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['AnnInfo']['text']);
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['AnnInfo']['text']);
 		
-     	/* ... */
+     	// ... //
      	
 		// We check if the "date" is saved as Unix stamptime, if true proccess it otherwise do nothing
 		// We wrote these lines to ensure MySmartBB 2.x is compatible with MySmartBB's 1.x time save method
@@ -78,11 +71,11 @@ class MySmartAnnouncementMOD
 			$MySmartBB->_CONF['template']['AnnInfo']['date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['AnnInfo']['date']);
 		}
 
-     	/* ... */
+     	// ... //
      			
 		$MySmartBB->template->display('announcement');
 		
-     	/* ... */
+     	// ... //
 	}
 }
 	
