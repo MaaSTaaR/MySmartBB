@@ -1,7 +1,4 @@
 <script src="includes/js/jquery.js"></script>
-{if {$_CONF['info_row']['wysiwyg_reply']}}
-<script src="includes/js/jquery.wysiwyg.js"></script>
-{/if}
 
 <script language="javascript">
 function AddMoreAttach(x)
@@ -48,13 +45,13 @@ $(document).ready(Ready);
 </script>
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=forum&amp;show=1&amp;id={$id}
-{$password} "> {$section_info['title']} </a> 
-{$_CONF['info_row']['adress_bar_separate']} 
-<a href="index.php?page=topic&amp;show=1&amp;id={$id}
-{$password} ">
+<a href="index.php?page=forum&amp;show=1&amp;id={$section_info['id']}{$password}">
+{$section_info['title']}
+</a> {$_CONF['info_row']['adress_bar_separate']}
+<a href="index.php?page=topic&amp;show=1&amp;id={$id}{$password}">
 {$subject_info['title']}
-</a> {$_CONF['info_row']['adress_bar_separate']} اضافة رد جديد
+</a> {$_CONF['info_row']['adress_bar_separate']}
+ اضافة رد جديد
 {template}address_bar_part2{/template}
 
 <br />

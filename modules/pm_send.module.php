@@ -69,11 +69,11 @@ class MySmartPrivateMassegeSendMOD
 			{
 				$MySmartBB->func->error('العضو المطلوب غير موجود');
 			}
-
-			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders']);
-			$MySmartBB->template->assign('away_msg',$GetToInfo['away']);
-			$MySmartBB->template->assign('is_sender_msg',$GetToInfo['pm_senders_msg']);
-			$MySmartBB->template->assign('is_away_msg',$GetToInfo['away_msg']);
+			
+			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders_msg']);
+			$MySmartBB->template->assign('away_msg',$GetToInfo['away_msg']);
+			$MySmartBB->template->assign('is_sender_msg',$GetToInfo['pm_senders']);
+			$MySmartBB->template->assign('is_away_msg',$GetToInfo['away']);
 			$MySmartBB->template->assign('to',$GetToInfo['username']);
 		}
 		

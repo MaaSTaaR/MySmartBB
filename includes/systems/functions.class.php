@@ -324,7 +324,7 @@ class MySmartFunctions
 		
 			$date_list = array();
 		
-			$date_list['today'] 			= 	$time - (0 * 24 * 60 * 60);
+			$date_list['today'] 			= 	$time;
 			$date_list['today'] 			= 	date($format,$date_list['today']);
 		
 			$date_list['yesterday'] 		= 	$time - (1 * 24 * 60 * 60);

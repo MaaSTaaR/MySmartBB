@@ -13,7 +13,7 @@
 		الاسم المستعار
 		</td>
 		<td class="row1" width="30%">
-		 {$MemberInfo['username']}
+		 {$MemberInfo['display_username']}
 		</td>
 	</tr>
 	<tr align="center">
@@ -97,10 +97,10 @@
 		الحاله
 		</td>
 		<td class="row1" width="30%">
-		 {if {$MemberInfo['IsOnline']}}
-		 متصل
+		 {if {$status} == 'online'}
+		 <span class="online">متصل</span>
 		 {else}
-		 غير متصل
+		 <span class="offline">غير متصل</span>
 		 {/if}
 		</td>
 	</tr>
@@ -116,6 +116,40 @@
 	{/if}
 </table>
 <br />
+
+{if {$MemberInfo['away']}}
+<table align="center" class="t_style_b" border="1" width="60%">
+	<tr align="center">
+		<td class="main1 rows_space" width="60%">
+		العضو غائب حالياً
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="row1" width="30%">
+		 {$MemberInfo['away_msg']}
+		</td>
+	</tr>
+</table>
+{/if}
+
+{if {$MemberInfo['user_sig']} != ''}
+<br />
+<table align="center" class="t_style_b" border="1" width="60%">
+	<tr align="center">
+		<td class="main1 rows_space" width="60%">
+		التوقيع
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="row1" width="30%">
+		 {$MemberInfo['user_sig']}
+		</td>
+	</tr>
+</table>
+{/if}
+
+<br />
+
 <table align="center" class="t_style_b" border="1" width="80%">
 	<tr align="center">
 		<td width="60%" class="main1 rows_space" colspan="4">

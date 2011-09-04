@@ -48,12 +48,20 @@ class MySmartUserCPAvatarMOD
 			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام هذه الميزه');
 		}
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		
+		$avatar_num = $MySmartBB->rec->getNumber();
+		
+		// ... //
+		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		
 		$MySmartBB->rec->pager 				= 	array();
-		//$MySmartBB->rec->pager['total']		= 	$MySmartBB->avatar->getAvatarNumber();
+		$MySmartBB->rec->pager['total']		= 	$avatar_num;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['avatar_perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=usercp&amp;control=1&amp;avatar=1&amp;main=1';

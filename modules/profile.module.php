@@ -38,6 +38,8 @@ class MySmartProfileMOD
 		
 		// ... //
 		
+		$MySmartBB->load( 'icon' );
+		
 		$do_query = true;
 		
 		if (!empty($MySmartBB->_GET['id']))
@@ -85,11 +87,9 @@ class MySmartProfileMOD
      	
      	// ... //
      	
-		$MySmartBB->_CONF['template']['MemberInfo']['user_gender'] 	= 	($MySmartBB->_CONF['template']['MemberInfo']['user_gender'] == 'm') ? 'ذكر' : 'انثى';
-		if (is_numeric($MySmartBB->_CONF['template']['MemberInfo']['register_date']))
-		{
-			$MySmartBB->_CONF['template']['MemberInfo']['register_date'] = $MySmartBB->func->date($MySmartBB->_CONF['template']['MemberInfo']['register_date']);
-		}
+     	$MySmartBB->member->processMemberInfo( $MySmartBB->_CONF['template']['MemberInfo'] );
+		
+		// ... //
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] 
 			and $MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
@@ -105,10 +105,6 @@ class MySmartProfileMOD
 		}
 			
 		$MySmartBB->_CONF['template']['MemberInfo']['usergroup'] = $GroupInfo['title'];
-			
-		$IsOnline = $MySmartBB->online->isOnline( 'username', $MySmartBB->_CONF['template']['MemberInfo']['username'] );
-		
-		$MySmartBB->_CONF['template']['MemberInfo']['IsOnline'] = $IsOnline; 
 		
 		if ($MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0)
 		{

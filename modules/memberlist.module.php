@@ -34,12 +34,20 @@ class MySmartMemberlistMOD
 		
 		$MySmartBB->func->showHeader('قائمة الاعضاء');
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		
+		$members_num = $MySmartBB->rec->getNumber();
+		
+		// ... //
+		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->rec->pager 				= 	array();
-		//$MySmartBB->rec->pager['total']		= 	$MySmartBB->member->getMemberNumber();
+		$MySmartBB->rec->pager['total']		= 	$members_num;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=member_list&amp;show=1&amp;id=' . $this->Section['id'];

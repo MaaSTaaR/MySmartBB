@@ -78,20 +78,37 @@ $(document).ready(Ready);
 
 <br />
 
-{if {$is_sender_msg}}
-<div align="center"><strong>{$senders_msg}</strong></div>
+{if {$is_sender_msg} or {$is_away_msg}}
+<table border="1" width="50%" class="t_style_b" align="center">
+	<tr>
+		<td class="main1 rows_space" colspan="2">
+		معلومات
+		</td>
+	</tr>
+	{if {$is_away_msg}}
+	<tr>
+		<td class="row1 rows_space">
+		{$to} غائب حالياً
+		</td>
+		<td class="row2 rows_space">
+		{$away_msg}
+		</td>
+	</tr>
+	{/if}
+	{if {$is_sender_msg}}
+	<tr>
+		<td class="row1 rows_space">
+		رساله من {$to}
+		</td>
+		<td class="row2 rows_space">
+		{$senders_msg}
+		</td>
+	</tr>
+	{/if}
+</table>
 {/if}
 
 <br />
-
-{if {$is_away_msg}}
-<div align="center">
-<strong>{$to} غائب حاليا
-<br />
-سبب الغياب: {$away_msg}</strong>
-</div>
-<br />
-{/if}
 
 <table id="resivers" border="1" width="50%" class="t_style_b" align="center">
 	<tr>
