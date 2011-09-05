@@ -14,7 +14,9 @@ class MySmartActiveMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تفعيل العضويه');
+		$MySmartBB->loadLanguage( 'activate_member' );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'activate_membership' ] );
 		
 		// The index page for active
 		if ($MySmartBB->_GET['index'])
@@ -23,7 +25,7 @@ class MySmartActiveMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 			
 		$MySmartBB->func->getFooter();
@@ -33,17 +35,17 @@ class MySmartActiveMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->addressBar('تفعيل العضويه');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'activate_membership' ] );
 		
 		// No code !
 		if (empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->func->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		// This isn't member
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('يرجى تسجيل دخولك اول');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_login' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
@@ -55,7 +57,7 @@ class MySmartActiveMOD
 		// No request , so stop the page
 		if (!$RequestInfo)
 		{
-			$MySmartBB->func->error('المعذره الطلب غير موجود !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'request_doesnt_exist' ] );
 		}
 		
       	/* ... */
@@ -84,7 +86,7 @@ class MySmartActiveMOD
 		// The active is success
 		if ($UpdateGroup)
 		{	
-			$MySmartBB->func->msg('تم تفعيل عضويتك بنجاح , شكراً لك  !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
 			$MySmartBB->func->goto('index.php');
 		}
 	}

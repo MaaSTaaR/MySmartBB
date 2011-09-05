@@ -14,13 +14,15 @@ class MySmartAdsPageMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'ads' );
+		
 		if ($MySmartBB->_GET['goto'])
 		{
 			$this->_goToSite();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -30,15 +32,15 @@ class MySmartAdsPageMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('الانتقال إلى موقع');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'move_to_site' ] );
 
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->func->addressBar('الانتقال');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'move_to_site' ] );
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الرابط المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
@@ -48,7 +50,7 @@ class MySmartAdsPageMOD
 		
 		if (!$AdsRows)
 		{
-			$MySmartBB->func->error('الاعلان المطلوب غير موجود !');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'ads_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table['ads'];
@@ -57,7 +59,7 @@ class MySmartAdsPageMOD
 		
 		$query = $MySmartBB->rec->update();
 		
-		$MySmartBB->func->msg('يرجى الانتظار سوف يتم نقلك إلى الموقع التالي : ' . $AdsRows['sitename']);
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $AdsRows['sitename'] );
 		$MySmartBB->func->move($AdsRows['site']);
 	}
 }
