@@ -103,7 +103,7 @@ class MySmartCommon
 		
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. لا يمكنك الدخول للمنتدى' );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_show_board' ] );
 		}
 		
 		// ... //
@@ -187,7 +187,7 @@ class MySmartCommon
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
    		{
-   			$MySmartBB->func->error( 'المعذره .. هذا اليوم غير مخصص للزوار' );
+   			$MySmartBB->func->error( $MySmartBB->lang_common[ 'visitor_pervented' ] );
    		}
 	}
 	
@@ -199,7 +199,7 @@ class MySmartCommon
 			or empty($MySmartBB->_CONF[ 'style_info' ]['template_path'])
 			or empty($MySmartBB->_CONF[ 'style_info' ]['cache_path']) )
 		{
-			$MySmartBB->func->error('لم يتم ايجاد معلومات النمط');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_find_style' ] );
 		}
 		
 		$MySmartBB->template->setInformation(	$MySmartBB->_CONF[ 'style_info' ]['template_path'] . '/',
@@ -270,7 +270,7 @@ class MySmartCommon
   			if ( $MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] != 1
   				and !defined( 'LOGIN' ) )
         	{
-        		$MySmartBB->func->showHeader('مغلق');
+        		$MySmartBB->func->showHeader( $MySmartBB->lang_common[ 'closed' ] );
     			$MySmartBB->func->error( $MySmartBB->_CONF[ 'info_row' ][ 'board_msg' ] );
   			}
  		}

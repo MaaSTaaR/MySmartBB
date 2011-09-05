@@ -14,6 +14,8 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load$MySmartBB->language( 'announcement' );
+		
 		$MySmartBB->load( 'icon,toolbox' );
 		
 		if ($MySmartBB->_GET['show'])
@@ -22,7 +24,7 @@ class MySmartAnnouncementMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->$MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 			
 		$MySmartBB->func->getFooter();
@@ -32,13 +34,11 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('عرض الاعلان الاداري');
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->$MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
@@ -48,13 +48,15 @@ class MySmartAnnouncementMOD
 		
 		if (!$MySmartBB->_CONF['template']['AnnInfo'])
 		{
-			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error( $$MySmartBB->lang[ 'announcement_doesnt_exist' ] );
 		}
+		
+		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['AnnInfo'][ 'title' ] );
 		
 		// ... //
 		
 		// Where is the member now?
-     	$MySmartBB->online->updateMemberLocation( 'يطلع على الاعلان الاداري : ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
+     	$MySmartBB->online->updateMemberLocation( $$MySmartBB->lang[ 'reading_announcement' ] . ' ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
      	
      	// ... //
      	

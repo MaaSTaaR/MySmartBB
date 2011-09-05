@@ -23,5 +23,9 @@ $lang[ 'common' ][ 'visitor' ] = 'زائر';
 $lang[ 'common' ][ 'and' ] = 'و';
 $lang[ 'common' ][ 'wrong_path' ] = 'المسار المتبع غير صحيح !';
 $lang[ 'common' ][ 'please_login' ] = 'يرجى تسجيل دخولك';
+$lang[ 'common' ][ 'cant_show_board' ] = 'المعذره .. لا يمكنك الدخول للمنتدى';
+$lang[ 'common' ][ 'visitor_pervented' ] = 'المعذره .. هذا اليوم غير مخصص للزوار';
+$lang[ 'common' ][ 'cant_find_style' ] = 'لم يتم ايجاد معلومات النمط';
+$lang[ 'common' ][ 'closed' ] = 'مغلق';
 
 ?>

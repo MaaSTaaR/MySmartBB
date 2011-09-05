@@ -14,13 +14,15 @@ class MySmartCReqMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'cancel_requests' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_index();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 			
 		$MySmartBB->func->getFooter();
@@ -31,14 +33,14 @@ class MySmartCReqMOD
 		global $MySmartBB;
 		
 		// Show header with page title
-		$MySmartBB->func->showHeader('إلغاء الطلب');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'cancel_request' ] );
 		
-		$MySmartBB->func->addressBar('إلغاء الطلب');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'cancel_request' ] );
 		
 		if (empty($MySmartBB->_GET['type']) 
 			or empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->func->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['type'] = (int) $MySmartBB->_GET['type'];
@@ -51,7 +53,7 @@ class MySmartCReqMOD
 			
 		if ($CleanReq)
 		{
-			$MySmartBB->func->msg('تم الغاء الطلب بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'request_canceled' ] );
 			$MySmartBB->func->goto('index.php');
 		}
 	}

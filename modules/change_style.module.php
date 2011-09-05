@@ -16,15 +16,17 @@ class MySmartChangeStyleMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تغيير النمط');
+		$MySmartBB->loadLanguage( 'change_style' );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_style' ] );
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->func->addressBar('تغيير النمط');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'change_style' ] );
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المُتبع غير صحيح!');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 				
 		if ($MySmartBB->_GET['change'])
@@ -44,13 +46,13 @@ class MySmartChangeStyleMOD
 			
 			if ($change)
 			{
-				$MySmartBB->func->msg('تم تغيير النمط بنجاح');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'style_changed' ] );
 				$MySmartBB->func->move('index.php');
 			}
 		}
 		else
 		{
-			$MySmartBB->func->error('مسار غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
