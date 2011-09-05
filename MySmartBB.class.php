@@ -72,9 +72,13 @@ class MySmartBB
 	// Tables
 	private $prefix 	= 	'MySmartBB_';
 	public $table 		= 	array();
-
+	
 	// ... //
 	
+	public $lang;
+	public $lang_common;
+	public $lang_info;
+	private $lang_dir;
 	private $func_list = null;
 	
 	function __construct()
@@ -89,7 +93,19 @@ class MySmartBB
   		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager); 
   		
   		// ... //
-  		  		
+  		
+  		$this->lang_dir = 'languages/' . $config[ 'lang_dir' ] . '/';
+  		
+  		require( $this->lang_dir . 'language.php' );
+  		
+  		$this->lang_common = $lang[ 'common' ];
+  		$this->lang_info = &$lang_info;
+  		
+  		unset( $lang[ 'common' ] );
+  		unset( $lang_info );
+  		
+  		// ... //
+  		
   		$this->initTableList();
  		
  		// ... //
@@ -348,6 +364,17 @@ class MySmartBB
   				$this->$lib = new $this->func_list[ $lib ][ 1 ]( $this );
   			}
   		}
+  	}
+  	
+  	// ... //
+  	
+  	public function loadLanguage( $file )
+  	{
+  	    require( $this->lang_dir . $file . '.lang.php' );
+  	    
+  	    $this->lang = $lang;
+  	    
+  	    unset( $lang );
   	}
 }
 

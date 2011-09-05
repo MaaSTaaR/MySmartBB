@@ -46,7 +46,7 @@ class MySmartTemplateCompiler
 		//////////
 		
 		/* We need to avoid PHP's Warning and Notice messages */
-		if ( preg_match( '~\{\$([^[<].*?)\}~', $string )
+		/*if ( preg_match( '~\{\$([^[<].*?)\}~', $string )
 			or preg_match( '~\{\$([^[<].*?)\[([^[<].*?)\]\}~', $string )
 			or preg_match( '~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~', $string ) )
 		{
@@ -65,9 +65,16 @@ class MySmartTemplateCompiler
 			preg_replace( $vars_search, $vars_replace, $string );
 			
 			$string = $this->_defineVariables( $string );
-		}
+		}*/
 		
 		/* ... */
+		
+		/** I18n **/
+		$string = preg_replace( '~\{\$lang_info\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_info[\\1]; ?>', $string );
+		$string = preg_replace( '~\{\$lang\[\'common\'\]\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_common[\\1]; ?>', $string );
+		$string = preg_replace( '~\{\$lang\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang[\'template\'][\\1]; ?>', $string );
+				
+		// ... //
 		
 		// A new syntax for the new way of get information from database ($engine->rec->getInfo())
 		if ( preg_match( '~\{DB::getInfo}{([^[<].*?)}~', $string ) )
@@ -102,7 +109,7 @@ class MySmartTemplateCompiler
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
 		
-		/* ... */
+		// ... //
 		
 		/** Array **/
 		

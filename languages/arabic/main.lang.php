@@ -1,7 +1,5 @@
 <?php
 
-require_once( 'language.php' );
-
 $lang[ 'template' ][ 'main_page' ] = 'الصفحة الرئيسية';
 
 // Statistics table

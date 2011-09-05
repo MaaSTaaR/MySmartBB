@@ -7,7 +7,7 @@ $CALL_SYSTEM['SECTION'] 	= 	true;
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
-include('common.php');
+require( 'common.php' );
 
 define('CLASS_NAME','MySmartIndexMOD');
 
@@ -17,6 +17,8 @@ class MySmartIndexMOD
 	{
 		// Who can live without $MySmartBB ? ;)
 		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'main' );
 		
 		$MySmartBB->func->showHeader();
 		
