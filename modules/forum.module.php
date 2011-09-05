@@ -198,7 +198,7 @@ class MySmartForumMOD
 		
 		$moderators_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'moderator_res' ] );
 		
-		if ( $moderator_num > 0 )
+		if ( $moderators_num > 0 )
 			$MySmartBB->template->assign( 'SHOW_MODERATORS', true );
 	}
 	

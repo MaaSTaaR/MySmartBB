@@ -247,9 +247,19 @@ class MySmartMember
 		// Is there any cache?
 		// Note : If the field should_update_style_cache is true, so we have to update the current cache
 		if ( $member_info[ 'style_id_cache' ] == $member_info[ 'style' ]
-			and !$member_info[ 'should_update_style_cache' ] )
+			and !$member_info[ 'should_update_style_cache' ]
+			and !empty( $member_info[ 'style_cache' ] ) )
 		{
 			$cache = unserialize( base64_decode( $member_info[ 'style_cache' ] ) );
+			
+			if ( !is_array( $cache ) 
+			    or empty( $cache[ 'style_path' ] )
+			    or empty( $cache[ 'image_path' ] )
+			    or empty( $cache[ 'template_path' ] )
+			    or empty( $cache[ 'cache_path' ] ) )
+			{
+			    $this->updateMemberStyleCache( $member_info[ 'style' ] );
+			}
 			
 			$style_info[ 'style_path' ] 		= 	$cache[ 'style_path' ];
 			$style_info[ 'image_path' ] 		= 	$cache[ 'image_path' ];
@@ -257,34 +267,19 @@ class MySmartMember
 			$style_info[ 'cache_path' ] 		= 	$cache[ 'cache_path' ];			
 			$style_info[ 'id' ] 				= 	$member_info[ 'style' ];
 		}
+		// TODO : Just use else?
 		else if ( $member_info[ 'style_id_cache' ] != $member_info[ 'style' ] 
-				or ( $member_info['should_update_style_cache'] ) )
+				or ( $member_info['should_update_style_cache'] )
+				or empty( $member_info[ 'style_cache' ] ) )
 		{
 			// ... //
 			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
-			$MySmartBB->rec->filter = "id='" . (int) $member_info['style']  . "'";
+			$this->engine->rec->table = $this->engine->table[ 'style' ];
+			$this->engine->rec->filter = "id='" . (int) $member_info['style']  . "'";
 			
-			$style_info = $MySmartBB->rec->getInfo();
+			$style_info = $this->engine->rec->getInfo();
 			
-			// ... //
-			
-			$style_cache = $MySmartBB->style->createStyleCache( $style_info );
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->fields = array(	'style_cache'	=>	$style_cache,
-												'style_id_cache'	=>	$member_info['style']	);
-			
-			if ( $member_info[ 'should_update_style_cache' ] )
-			{
-				$MySmartBB->rec->fields['should_update_style_cache'] = 0;
-			}
-			
-			$MySmartBB->rec->filter = "id='" . (int) $member_info['id'] . "'";
-			
-			$update_cache = $MySmartBB->rec->update();
-			
-			// ... //
+			$this->updateMemberStyleCache( $style_info );
 		}
 		else
 		{
@@ -292,6 +287,31 @@ class MySmartMember
 		}
 		
 		return $style_info;
+	}
+	
+	// ... //
+	
+	public function updateMemberStyleCache( $style_info, $member_info = null )
+	{
+		if ( is_null( $member_info ) )
+			$member_info = $this->engine->_CONF[ 'member_row' ];
+		
+	    $style_cache = $this->engine->style->createStyleCache( $style_info );
+	    
+	    $this->engine->rec->table = $this->engine->table[ 'member' ];
+		$this->engine->rec->fields = array(	'style_cache'	=>	$style_cache,
+											'style_id_cache'	=>	$member_info['style']	);
+		
+		if ( $member_info[ 'should_update_style_cache' ] )
+		{
+			$this->engine->rec->fields['should_update_style_cache'] = 0;
+		}
+		
+		$this->engine->rec->filter = "id='" . (int) $member_info['id'] . "'";
+		
+		$update_cache = $this->engine->rec->update();
+		
+		return ( $update_cache ) ? true : false;
 	}
 	
 	// ... //

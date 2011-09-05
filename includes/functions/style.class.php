@@ -45,10 +45,10 @@ class MySmartStyle
 		
 		if ( $style_info != false )
 		{
-			$cache[ 'style_path' ]		=	$style[ 'style_path' ];
-			$cache[ 'image_path' ]		=	$style[ 'image_path' ];
-			$cache[ 'template_path' ]	=	$style[ 'template_path' ];
-			$cache[ 'cache_path' ]		=	$style[ 'cache_path' ];
+			$cache[ 'style_path' ]		=	$style_info[ 'style_path' ];
+			$cache[ 'image_path' ]		=	$style_info[ 'image_path' ];
+			$cache[ 'template_path' ]	=	$style_info[ 'template_path' ];
+			$cache[ 'cache_path' ]		=	$style_info[ 'cache_path' ];
 			
 			$cache = base64_encode( serialize( $cache ) );
 		}

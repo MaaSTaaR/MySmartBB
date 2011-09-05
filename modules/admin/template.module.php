@@ -70,10 +70,11 @@ class MySmartTemplateMOD extends _func
 	private function _addMain()
 	{
 		global $MySmartBB;
-
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->order = "id DESC";
 		
-		$MySmartBB->style->getStyleList();
+		$MySmartBB->rec->getList();
 
 		$MySmartBB->template->display('template_add');
 	}
@@ -89,9 +90,10 @@ class MySmartTemplateMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['style'] . "'";
 		
-		$StyleInfo = $MySmartBB->style->getStyleInfo();
+		$StyleInfo = $MySmartBB->rec->getInfo();
 
 		if (!$StyleInfo)
 		{
@@ -117,9 +119,10 @@ class MySmartTemplateMOD extends _func
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->order = "style_order ASC";
 		
-		$MySmartBB->style->getStyleList();
+		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display('templates_main');
 	}
@@ -135,9 +138,10 @@ class MySmartTemplateMOD extends _func
 			$MySmartBB->func->error('المسار المتبع غير صحيح !');
 		}
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$StyleInfo = $MySmartBB->style->getStyleInfo();
+		$StyleInfo = $MySmartBB->rec->getInfo();
 
 		if (!$StyleInfo)
 		{
@@ -307,10 +311,11 @@ class _func
 		}
 
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$StyleInfo = $MySmartBB->style->getStyleInfo();
+		$StyleInfo = $MySmartBB->rec->getInfo();
 
 		if ($StyleInfo == false)
 		{

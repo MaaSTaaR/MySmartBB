@@ -129,7 +129,7 @@ class MySmartMemberMOD
 													$MySmartBB->rec->id );
 
 			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
-			$MySmartBB->func->move('admin.php?page=member&amp;edit=1&amp;main=1&amp;id=' . $MySmartBB->rec->id);
+			$MySmartBB->func->move('admin.php?page=member_edit&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 		}
 	}
 }

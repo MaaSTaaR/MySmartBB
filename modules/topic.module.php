@@ -96,7 +96,7 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		$MySmartBB->func->CleanArray( $this->Info, 'sql' );
+		$MySmartBB->func->cleanArray( $this->Info, 'sql' );
 		
 		// ... //
 		

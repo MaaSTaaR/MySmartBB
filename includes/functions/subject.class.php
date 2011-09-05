@@ -82,7 +82,7 @@ class MySmartSubject
 		
  		$this->engine->rec->table = $this->table . ' AS subject,' . $this->engine->table[ 'member' ] . " AS member";
  		$this->engine->rec->select = $select; 		
- 		$this->engine->rec->filter = "subject.id='" . $subject_id . "'";
+ 		$this->engine->rec->filter = "subject.id='" . $subject_id . "' AND subject.writer=member.username";
  		
  		$rows = $this->engine->rec->getInfo();
  		
@@ -134,7 +134,7 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function updateReplyNumber( $subject_id, $section_id, $reply_number = null, $operation = 'add', $operand = 1 )
+	public function updateReplyNumber( $subject_id, $reply_number = null, $operation = 'add', $operand = 1 )
 	{
 		if ( !is_null( $reply_number) )
 		{
@@ -148,7 +148,7 @@ class MySmartSubject
 			
 			$subject_info = $this->engine->rec->getInfo();
 			
-			$val = $section_info[ 'reply_number' ];
+			$val = $subject_info[ 'reply_number' ];
 		}
 		
 		if ( !is_null( $operation ) )
@@ -166,12 +166,9 @@ class MySmartSubject
 		$update = $this->engine->rec->update();
 		
 		if ( $update )
-		{
-			// Update the total of replies in the section
-			$this->engine->section->updateReplyNumber( $section_id, $val, null );
-			
+		{			
 			// Update the total of replies
-			$this->engine->cache->updateReplyNumber( $val );
+			$this->engine->cache->updateReplyNumber();
 		}
 	}
 	

@@ -77,7 +77,7 @@ class MySmartModeratorsMOD extends _func
 		
 		// ... //
 		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
 		// ... //
 		
@@ -102,14 +102,14 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
 		}
 		
-		$IsModerator = $MySmartBB->moderator->isModerator( $MySmartBB->_POST['username'], $MySmartBB->_POST['section'] );
+		$IsModerator = $MySmartBB->moderator->isModerator( $MySmartBB->_POST['username'], 'username', $MySmartBB->_POST['section'] );
 		
 		if ($IsModerator)
 		{
 			$MySmartBB->func->error('المعذره .. لا يمكنك اضافة نفس العضو مشرفاً على القسم مرتين');
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['section'] . "'";
@@ -121,7 +121,7 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->error('القسم المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
@@ -130,73 +130,13 @@ class MySmartModeratorsMOD extends _func
 		
 		if ($Member != false)
 		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-			
-			$MySmartBB->rec->fields	=	array();
-			
-			$MySmartBB->rec->fields['username'] 	= 	$MySmartBB->_POST['username'];
-			$MySmartBB->rec->fields['section_id'] 	= 	$MySmartBB->_POST['section'];
-			$MySmartBB->rec->fields['member_id'] 	= 	$Member['id'];
-			
-			$insert = $MySmartBB->rec->insert();
-			
-			if ($insert)
-			{
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-				$MySmartBB->rec->filter = "id='" . (int) $Member['group'] . "'";
-				
-				$Group = $MySmartBB->rec->getInfo();
-				
-				// If the user isn't admin, so change the group
-				if (!$Group['admincp_allow']
-					and !$Group['vice']
-					and !$Group['group_mod'])
-				{
-					$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-					
-					$MySmartBB->rec->fields	= array();
-					
-					$MySmartBB->rec->fields['usergroup'] = $MySmartBB->_POST['group'];
-					
-					if (!empty($MySmartBB->_POST['usertitle']))
-					{
-						$MySmartBB->rec->fields['user_title'] = $MySmartBB->_POST['usertitle'];
-					}
-					else
-					{
-						$MySmartBB->rec->fields['user_title'] = 'مشرف على ' . $SectionInfo['title'];
-					}
-					
-					$MySmartBB->rec->filter = "id='" . $Member[ 'id' ] . "'";
-					
-					$change = $MySmartBB->rec->update();
-				}
-				
-				/* ... */
-				
-				$cache = $MySmartBB->moderator->createModeratorsCache( $MySmartBB->_POST['section'] );
-				
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-				$MySmartBB->rec->fields	= array();
-				$MySmartBB->rec->fields['moderators'] = $cache;
-				
-				$update = $MySmartBB->rec->update();
-			
-				if ($update)
-				{
-					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
-				
-					if ($cache)
-					{
-						$MySmartBB->func->msg('تم اضافة المشرف بنجاح !');
-						$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;main=1');
-					}
-				}
-			}
+		    $set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $MySmartBB->_POST[ 'usertitle' ] );
+		    
+		    if ( $set )
+		    {
+		        $MySmartBB->func->msg( 'تم إضافة العضو إلى قائمة المشرفين' );
+		        $MySmartBB->func->move( 'admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $SectionInfo[ 'id' ] );
+		    }
 		}
 		else
 		{
@@ -210,7 +150,7 @@ class MySmartModeratorsMOD extends _func
 		
 		// ... //
 		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
 		// ... //
 		
@@ -245,115 +185,14 @@ class MySmartModeratorsMOD extends _func
 		
 		$MySmartBB->template->display('moderators_section_control');
 	}
-	
-	private function _editMain()
-	{
-		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
-		
-		// ... //
-		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
-		
-		// ... //
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "group_mod='1'";
-		$MySmartBB->rec->order = "group_order ASC";
-		
-		$MySmartBB->func->setResouce( 'group_res' );
-		
-		$MySmartBB->rec->getList();
-		
-		// ... //
-		
-		$MySmartBB->template->display('moderator_edit');
-	}
-	
-	private function _editStart()
-	{
-		global $MySmartBB;
-		
-		$this->check_by_id($ModInfo);
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
-		
-		$Member = $MySmartBB->rec->getInfo();
-		
-		if ($Member != false)
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-			$MySmartBB->rec->fields = 	array();
-			
-			$MySmartBB->rec->fields['username'] 	= 	$MySmartBB->_POST['username'];
-			$MySmartBB->rec->fields['section_id'] 	= 	$MySmartBB->_POST['section'];
-			$MySmartBB->rec->fields['member_id'] 	= 	$Member['id'];
-			
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
-			
-			$update = $MySmartBB->rec->update();
-			
-			if ($update)
-			{
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-				$MySmartBB->rec->filter = "id='" . $Member['group'] . "'";
-				
-				$Group = $MySmartBB->rec->getInfo();
-				
-				// If the user isn't an admin, so change the group
-				if (!$Group['admincp_allow'])
-				{
-					$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-					$MySmartBB->rec->fields					=	array();
-					$MySmartBB->rec->fields['usergroup']	=	$MySmartBB->_POST['group'];
-					
-					$MySmartBB->rec->filter = "id='" . $Member[ 'id' ] . "'";
-					
-					$change = $MySmartBB->rec->update();
-				}
-				
-				/* ... */
-				
-				$cache = $MySmartBB->moderator->createModeratorsCache( $MySmartBB->_POST['section'] );
-				
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-				$MySmartBB->rec->fields					=	array();
-				$MySmartBB->rec->fields['moderators'] 	= 	$cache;
-			
-				$update = $MySmartBB->rec->update();
-			
-				if ($update)
-				{
-					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
-				
-					if ($cache)
-					{
-						$MySmartBB->func->msg('تم تحديث المشرف بنجاح !');
-						$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;main=1');
-					}
-				}
-			}
-		}
-		else
-		{
-			$MySmartBB->func->error('المستخدم غير موجود');
-		}
-
-	}
-	
 	private function _delMain()
 	{
 		global $MySmartBB;
 		
 		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['section_id'] . "'";
@@ -365,7 +204,7 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->error('القسم المطلوب غير موجود');
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('moderator_del');
 	}
@@ -376,63 +215,17 @@ class MySmartModeratorsMOD extends _func
 		
 		$this->check_by_id($ModInfo);
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "id='" . $ModInfo['member_id'] . "'";
 		
-		$del = $MySmartBB->rec->delete();
+		$member_info = $MySmartBB->rec->getInfo();
 		
-		if ($del)
+		$unset = $MySmartBB->moderator->unsetModerator( $ModInfo, $member_info );
+				
+		if ( $unset )
 		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-			$MySmartBB->rec->filter = "username='" . $ModInfo['username'] . "'";
-			
-			$IsMod = $MySmartBB->rec->getInfo();
-			
-			if (!$IsMod)
-			{
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-				$MySmartBB->rec->filter = "id='" . $Member['group'] . "'";
-				
-				$Group = $MySmartBB->rec->getInfo();
-				
-				// If the user isn't an admin, so change the group
-				if (!$Group['admincp_allow']
-					and !$Group['vice'])
-				{
-					$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-					$MySmartBB->rec->fields					=	array();
-					$MySmartBB->rec->fields	['usergroup']	=	'7';
-					
-					$MySmartBB->rec->filter = "id='" . $ModInfo['member_id'] . "'";
-					
-					$change = $MySmartBB->rec->update();
-				}
-				
-				/* ... */
-				
-				$cache = $MySmartBB->moderator->createModeratorsCache( $ModInfo['section_id'] );
-				
-				/* ... */
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-				$MySmartBB->rec->fields					=	array();
-				$MySmartBB->rec->fields['moderators'] 	= 	$cache;
-			
-				$update = $MySmartBB->rec->update();
-			
-				if ($update)
-				{
-					$cache = $MySmartBB->section->updateSectionsCache(array('type'=>'normal'));
-				
-					if ($cache)
-					{
-						$MySmartBB->func->msg('تم إلغاء الاشراف بنجاح');
-						$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $ModInfo['section_id']);
-					}
-				}
-			}
+			$MySmartBB->func->msg('تم إلغاء الاشراف بنجاح');
+			$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $ModInfo['section_id']);
 		}
 	}
 }

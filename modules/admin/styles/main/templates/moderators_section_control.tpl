@@ -10,7 +10,7 @@
 		المشرف
 		</td>
 		<td class="main1 rows_space" width="20%">
-		تحرير
+		تحرير العضويه
 		</td>
 		<td class="main1 rows_space" width="20%">
 		إلغاء الاشراف
@@ -22,7 +22,7 @@
 			<a href="index.php?page=profile&show=1&id={$ModeratorsList['member_id']}" target="_blank">{$ModeratorsList['username']}</a>
 		</td>
 		<td class="row1" width="20%">
-			<a href="admin.php?page=moderators&amp;edit=1&amp;main=1&amp;id={$ModeratorsList['id']}">تحرير</a>
+			<a href="admin.php?page=member_edit&amp;main=1&amp;id={$ModeratorsList['member_id']}">تحرير العضويه</a>
 		</td>
 		<td class="row1" width="20%">
 			<a href="admin.php?page=moderators&amp;del=1&amp;main=1&amp;id={$ModeratorsList['id']}">إلغاء الاشراف</a>

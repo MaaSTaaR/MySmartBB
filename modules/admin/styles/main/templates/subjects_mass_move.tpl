@@ -17,9 +17,13 @@
 			</td>
 			<td class="row2">
 				<select name="from" id="select_from">
-				{DB::getInfo}{$SectionList}
-					<option value="{$SectionList['id']}">{$SectionList['title']}</option>
-				{/DB::getInfo}
+				{Des::foreach}{forums_list}{forum}
+    			{if {$forum['parent']} == 0}
+					<option value="{$forum['id']}" class="main_section" disabled="disabled">- {$forum['title']}</option>
+				{else}
+					<option value="{$forum['id']}">-- {$forum['title']}</option>
+				{/if}
+				{/Des::foreach}
 				</select>
 			</td>
 		</tr>
@@ -29,9 +33,13 @@
 			</td>
 			<td class="row2">
 				<select name="to" id="select_to">
-				{DB::getInfo}{$SectionList}
-					<option value="{$SectionList['id']}">{$SectionList['title']}</option>
-				{/DB::getInfo}
+				{Des::foreach}{forums_list}{forum}
+    			{if {$forum['parent']} == 0}
+					<option value="{$forum['id']}" class="main_section" disabled="disabled">- {$forum['title']}</option>
+				{else}
+					<option value="{$forum['id']}">-- {$forum['title']}</option>
+				{/if}
+				{/Des::foreach}
 				</select>
 			</td>
 		</tr>

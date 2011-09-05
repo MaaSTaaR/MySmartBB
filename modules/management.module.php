@@ -418,7 +418,7 @@ class MySmartManagementMOD
 			$MySmartBB->func->error('المسار المتبع غير صحيح');
 		}
 		
-		$update = $MySmartBB->reply->moveReplyToTrash( $MySmartBB->_GET['reply_id'] );
+		$update = $MySmartBB->reply->moveReplyToTrash( $MySmartBB->_GET['reply_id'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
 		
 		if ($update)
 		{

@@ -23,20 +23,20 @@ class MySmartNotesMOD
 		// No changes
 		if ($MySmartBB->_POST['note'] == $MySmartBB->_CONF['info_row']['admin_notes'])
 		{
-			$MySmartBB->functions->move('admin.php?page=index&left=1');
+			$MySmartBB->func->move('admin.php?page=index&left=1');
 		}
 		
 		if (empty($MySmartBB->_POST['note']))
 		{
-			$MySmartBB->functions->error('يرجى تعبئة كافة المعلومات !');
+			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات !');
 		}
 		
 		$update = $MySmartBB->info->updateInfo( 'admin_notes', $MySmartBB->_POST['note'] );
 		
 		if ($update)
 		{
-			$MySmartBB->functions->msg('تم تحديث المذكرة بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
-			$MySmartBB->functions->move('admin.php?page=index&left=1');
+			$MySmartBB->func->msg('تم تحديث المذكرة بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->move('admin.php?page=index&left=1');
 		}
 		
 		$MySmartBB->template->display('footer');

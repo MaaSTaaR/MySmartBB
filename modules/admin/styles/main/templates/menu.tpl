@@ -26,11 +26,6 @@
 			<a href="admin.php?page=options&amp;index=1" target="main">إعدادات المنتدى</a>
 		</td>
 	</tr>
-	<tr align="center">
-		<td class="row1" colspan="2">
-			<a href="admin.php?page=cp_options&amp;index=1" target="main">إعدادات لوحة تحكم المدير</a>
-		</td>
-	</tr>
 </table>
 
 <br />
@@ -235,18 +230,3 @@
 	<td class="row1" colspan="2">الصور الشخصيه : <a href="admin.php?page=avatar&amp;add=1&amp;main=1" target="main">اضافة</a> - <a href="admin.php?page=avatar&amp;control=1&amp;main=1" target="main">تحكم</a></td>
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
-<tr align="center">
-	<td class="main1" colspan="2">قواعد البيانات</td>
-</tr>
-
-</table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
-<tr align="center">
-	<td class="main1" colspan="2">صيانه</td>
-</tr>
-<tr align="center">
-	<td class="row1" colspan="2"><a href="admin.php?page=fixup&amp;repair=1&amp;main=1" target="main">اصلاح جداول قواعد البيانات</a></td>
-</tr>
-</table><br />
-

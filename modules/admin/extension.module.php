@@ -245,11 +245,11 @@ class MySmartExtensionMOD extends _func
 		
 		if ( $field == 'filename' )
 		{
-			$MySmartBB->rec->filter .= " LIKE %" . $MySmartBB->_POST['keyword'] . "%";
+			$MySmartBB->rec->filter .= " filename LIKE %" . $MySmartBB->_POST['keyword'] . "%";
 		}
 		else
 		{
-			$MySmartBB->rec->filter = "='" . $MySmartBB->_POST['keyword'] . "'";
+			$MySmartBB->rec->filter .= "='" . $MySmartBB->_POST['keyword'] . "'";
 		}
 		
 		$MySmartBB->_CONF['template']['Inf'] = $MySmartBB->rec->getInfo();

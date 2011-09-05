@@ -22,7 +22,7 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach' );
+		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach,usertitle' );
 		
 		$MySmartBB->func->showHeader('اضافة رد');
 		
@@ -259,8 +259,12 @@ class MySmartReplyAddMOD
 			
 		// ... //
 		
-		$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $this->SubjectInfo['reply_number'], $this->SectionInfo['id'], $this->SubjectInfo['id'] );
-			
+		$MySmartBB->subject->updateReplyNumber( $this->SubjectInfo['id'], $this->SubjectInfo['reply_number'] );
+		
+		// Update the total of replies in the section
+		$MySmartBB->section->updateReplyNumber( $this->SectionInfo['id'], $this->SectionInfo['reply_num'] );
+		
+		
 		// ... //
 
 		$UpdateLast = $MySmartBB->section->updateLastSubject( 	$MySmartBB->_CONF['member_row']['username'], 

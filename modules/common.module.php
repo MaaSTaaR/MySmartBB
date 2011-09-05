@@ -128,7 +128,7 @@ class MySmartCommon
 		
 		// Get member style
 		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->member->getMemberStyle();
-				
+		
 		// ... //
 		
 		if ( $MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'] )

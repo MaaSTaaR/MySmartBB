@@ -20,7 +20,7 @@ class MySmartSubjectMOD extends _func
 		{
 			$MySmartBB->template->display('header');
 			
-			$MySmartBB->load( 'reply,subject' );
+			$MySmartBB->load( 'reply,subject,section' );
 			
 			if ($MySmartBB->_GET['close'])
 			{
@@ -97,10 +97,7 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->order = 'id DESC';
-		
-		$MySmartBB->rec->getList();
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
 		$MySmartBB->template->display('subjects_mass_del');
 	}
@@ -140,11 +137,7 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "parent<>'0'";
-		$MySmartBB->rec->order = 'id DESC';
-		
-		$MySmartBB->rec->getList();
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
 		$MySmartBB->template->display('subjects_mass_move');
 	}

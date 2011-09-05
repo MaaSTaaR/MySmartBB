@@ -166,7 +166,6 @@ class MySmartTopicAddMOD
 											'sec_subject'	=>	$this->SectionInfo['sec_section'],
 											'poll_subject'	=>	0,
 											'attach_subject'	=>	0,
-											'tags_cache'	=>	$MySmartBB->_POST['tags'],
 											'visitor'		=>	0	);
 											
 		if ( $this->moderator )

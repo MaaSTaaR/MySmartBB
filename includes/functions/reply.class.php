@@ -111,7 +111,7 @@ class MySmartReply
 	
 	// ... //
 	
-	public function moveReplyToTrash( $id )
+	public function moveReplyToTrash( $id, $subject_id, $section_id )
 	{
  		if ( empty( $id ) )
  		{
@@ -125,8 +125,18 @@ class MySmartReply
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
+		
+		if ( $query )
+		{
+			$this->engine->subject->updateReplyNumber( $subject_id, null, 'delete' );
+			$this->engine->section->updateReplyNumber( $section_id, null, 'delete' );
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	// ... //
