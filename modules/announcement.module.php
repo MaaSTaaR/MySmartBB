@@ -14,7 +14,7 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->load$MySmartBB->language( 'announcement' );
+		$MySmartBB->loadLanguage( 'announcement' );
 		
 		$MySmartBB->load( 'icon,toolbox' );
 		
@@ -24,7 +24,7 @@ class MySmartAnnouncementMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( $MySmartBB->$MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 			
 		$MySmartBB->func->getFooter();
@@ -38,7 +38,7 @@ class MySmartAnnouncementMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error( $MySmartBB->$MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
@@ -56,7 +56,7 @@ class MySmartAnnouncementMOD
 		// ... //
 		
 		// Where is the member now?
-     	$MySmartBB->online->updateMemberLocation( $$MySmartBB->lang[ 'reading_announcement' ] . ' ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
+     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'reading_announcement' ] . ' ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
      	
      	// ... //
      	

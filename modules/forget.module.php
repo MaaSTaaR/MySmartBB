@@ -14,6 +14,8 @@ class MySmartForgetMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'forget' );
+		
 		$MySmartBB->load( 'massege' );
 		
 		if ($MySmartBB->_GET['index'])
@@ -26,7 +28,7 @@ class MySmartForgetMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -36,7 +38,7 @@ class MySmartForgetMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('استرجاع كلمة المرور');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'forget_password' ] );
 				
 		$MySmartBB->template->display('forget_password_form');
 	}
@@ -45,18 +47,18 @@ class MySmartForgetMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية استرجاع كلمة المرور');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'do_retrieve_password' ] );
 		
-		$MySmartBB->func->addressBar('تنفيذ عملية استرجاع كلمة المرور');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'do_retrieve_password' ] );
 		
 		if (empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -66,7 +68,7 @@ class MySmartForgetMOD
 		
 		if ( $CheckEmail > 0 )
 		{
-			$MySmartBB->func->error('البريد الالكتروني غير موجود في قواعد بياناتنا !');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -119,12 +121,12 @@ class MySmartForgetMOD
 				
 				if ($Send)
 				{
-					$MySmartBB->func->msg('تم ارسال رسالة التأكيد إلى بريدك الالكتروني، يرجى مراجعته');
-					$MySmartBB->func->goto('index.php',2);
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'email_sent' ] );
+					$MySmartBB->func->move('index.php',2);
 				}
 				else
 				{
-					$MySmartBB->func->error('لم يتم الارسال');
+					$MySmartBB->func->error( $MySmartBB->lang[ 'email_didnt_send' ] );
 				}
 			}
 		}

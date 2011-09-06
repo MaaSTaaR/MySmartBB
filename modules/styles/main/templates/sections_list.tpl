@@ -3,15 +3,15 @@
 	<table width="98%" border="1" width="98%" class="t_style_b" align="center">
 		<tr align="right">
 			<td class="main1 rows_space" colspan="3" align="center">
-				المنتديات الفرعيه
+				{$lang['common']['subforums']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="main2 rows_space small_text" width="55%" colspan="2">
-				المنتدى
+				{$lang['common']['forum']}
 			</td>
 			<td class="main2 rows_space small_text" width="45%">
-				التفاصيل
+				{$lang['common']['details']}
 			</td>
 		</tr>
 {/if}
@@ -29,10 +29,10 @@
 		</tr>
 		<tr align="center">
 			<td class="main2 rows_space small_text" width="55%" colspan="2">
-				المنتدى
+				{$lang['common']['forum']}
 			</td>
 			<td class="main2 rows_space small_text" width="45%">
-				التفاصيل
+				{$lang['common']['details']}
 			</td>
 		</tr>
 	{/if}
@@ -65,44 +65,41 @@
 					<br />
 					{/if}
 					{/if}
-							المواضيع : {$forum['subject_num']}
-							 ، الردود : {$forum['reply_num']}
+							{$lang['common']['topics']} : {$forum['subject_num']}
+							{$lang['common']['comma']} {$lang['common']['replies']} : {$forum['reply_num']}
 					</td>
 					<td class="row1 rows_space" width="45%">
 					
 					{if {$forum['last_subject']} != ''}
-												آخر مشاركه : 
-												
+					{$lang['common']['last_post']}							
 					<a href="index.php?page=topic&amp;show=1&amp;id={$forum['last_subjectid']}">{$forum['last_subject']}</a> 
 												
-												بواسطة 
+					{$lang['common']['written_by']}
+					<a href="index.php?page=profile&amp;show=1&amp;username={$forum['last_writer']}">{$forum['last_writer']}</a> 
 												
-												<a href="index.php?page=profile&amp;show=1&amp;username={$forum['last_writer']}">{$forum['last_writer']}</a> 
-												
-												بتاريخ 
-												
-												{$forum['last_date']}
-						<br />
+					{$lang['common']['on_date']} 
+					{$forum['last_date']}
+					<br />
 						
 					{else}
-					لا توجد مشاركات
+					{$lang['common']['no_posts']}
 					{/if}
 					</td>
 				</tr>
 				<tr>
 					<td class="row1 rows_space" colspan="2">
-						<strong>منتديات فرعيه :</strong>
+						<strong>{$lang['common']['subforums']} {$lang['common']['colon']}</strong>
 						{if {$forum['is_sub']}}
 							{$forum['sub']}
 						{else}
-							لا يوجد
+							{$lang['common']['na']}
 						{/if}
 						<br />
-						<strong>المشرفون :</strong>
+						<strong>{$lang['common']['moderators']} {$lang['common']['colon']}</strong>
 						{if {$forum['is_moderators']}}
 							{$forum['moderators_list']}
 						{else}
-							لا يوجد
+							{$lang['common']['na']}
 						{/if}
 					</td>
 				</tr>
@@ -133,7 +130,7 @@
 				{/if}
 			</td>
 			<td width="50%" align="center" class="row1" colspan="3">
-				عدد الزيارات : {$forum['linkvisitor']}
+				{$lang['common']['visit_number']} {$lang['common']['colon']} {$forum['linkvisitor']}
 			</td>
 		</tr>
 		{/if}

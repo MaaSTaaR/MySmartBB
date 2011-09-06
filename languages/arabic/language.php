@@ -27,5 +27,30 @@ $lang[ 'common' ][ 'cant_show_board' ] = 'المعذره .. لا يمكنك ال
 $lang[ 'common' ][ 'visitor_pervented' ] = 'المعذره .. هذا اليوم غير مخصص للزوار';
 $lang[ 'common' ][ 'cant_find_style' ] = 'لم يتم ايجاد معلومات النمط';
 $lang[ 'common' ][ 'closed' ] = 'مغلق';
+$lang[ 'common' ][ 'submit' ] = 'موافق';
+$lang[ 'common' ][ 'please_fill_information' ] = 'يرجى تعبئة كافة المعلومات';
+
+$lang[ 'common' ][ 'subforums' ] = 'المنتديات الفرعيه';
+$lang[ 'common' ][ 'forum' ] = 'المنتدى';
+$lang[ 'common' ][ 'details' ] = 'تفاصيل';
+$lang[ 'common' ][ 'topics' ] = 'المواضيع';
+$lang[ 'common' ][ 'replies' ] = 'الردود';
+$lang[ 'common' ][ 'last_post' ] = 'آخر مشاركه :';
+$lang[ 'common' ][ 'written_by' ] = 'بواسطة';
+$lang[ 'common' ][ 'on_date' ] = 'بتاريخ';
+$lang[ 'common' ][ 'no_posts' ] = 'لا توجد مشاركات';
+$lang[ 'common' ][ 'moderators' ] = 'المشرفون';
+$lang[ 'common' ][ 'na' ] = 'لا يوجد';
+$lang[ 'common' ][ 'visit_number' ] = 'عدد الزيارات';
+
+$lang[ 'common' ][ 'comma' ] = '،';
+$lang[ 'common' ][ 'colon' ] = ':';
+
+// ... //
+
+// Footer
+
+$lang[ 'common' ][ 'todays_topics' ] = 'مواضيع اليوم';
+$lang[ 'common' ][ 'control_panel' ] = 'لوحة الإدارة';
 
 ?>

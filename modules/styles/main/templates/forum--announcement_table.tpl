@@ -1,7 +1,7 @@
 <table border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="98%" align="center" class="main1 rows_space">
-			الاعلانات الاداريه
+			{$lang['announcements']}
 		</td>
 	</tr>
 	<tr>
@@ -10,12 +10,12 @@
 			<a href="index.php?page=announcement&amp;show=1&amp;id={$AnnouncementList['id']}">
 			{$AnnouncementList['title']}
 			</a> 
-			بواسطة 
+		    {$lang['common']['written_by']}
 			<a href="index.php?page=profile&amp;show=1&amp;username={$AnnouncementList['writer']}">
 			{$AnnouncementList['writer']}
 			</a> 
 			
-			بتاريخ {$AnnouncementList['date']}
+			{$lang['common']['on_date']} {$AnnouncementList['date']}
 		</td>
 		{/DB::getInfo}
 	</tr>

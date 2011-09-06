@@ -14,6 +14,8 @@ class MySmartDownloadMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'download' );
+		
 		if ($MySmartBB->_GET['subject'])
 		{
 			$this->_downloadSubject();
@@ -38,7 +40,7 @@ class MySmartDownloadMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -51,7 +53,7 @@ class MySmartDownloadMOD
 		if ($SubjectInfo['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
 		}
 		
 		// ... //
@@ -70,7 +72,7 @@ class MySmartDownloadMOD
 		
 		if (!$SectionGroup['view_section'])
 		{
-			$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 		}
 		
 		// ... //
@@ -81,8 +83,8 @@ class MySmartDownloadMOD
 		header('Content-Disposition: attachment;filename=' . $filename);
 		header('Content-type: text/plain');
 		
-		echo 'موضوع بعنوان : ' . $SubjectInfo['title'] . '
-الكاتب : ' . $SubjectInfo['writer'] . '
+		echo $MySmartBB->lang[ 'topic_title' ] . ' ' . $SubjectInfo['title'] . '
+ ' . $MySmartBB->lang[ 'topic_writer' ] . ' ' . $SubjectInfo['writer'] . '
 
 ' . $SubjectInfo['text'];
 	}
@@ -97,7 +99,7 @@ class MySmartDownloadMOD
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -120,7 +122,7 @@ class MySmartDownloadMOD
 		if ($SubjectInfo['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
 		}
 		
 		// ... //
@@ -140,13 +142,13 @@ class MySmartDownloadMOD
 			// The user can't show this subject
 			if (!$SectionGroup['view_section'])
 			{
-				$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 			}
 		
 			// The user can't download this attachment
 			if (!$SectionGroup['download_attach'])
 			{
-				$MySmartBB->func->error('المعذره لا يمكنك تحميل هذا المرفق');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
 			}
 			
 			// These checks are special for members	
@@ -155,7 +157,7 @@ class MySmartDownloadMOD
 				// No enough posts
 				if ($MySmartBB->_CONF['group_info']['download_attach_number'] > $MySmartBB->_CONF['member_row']['posts'])
 				{
-					$MySmartBB->func->error('يجب ان تكون عدد مشاركاتك ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
+					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
 				}
 			}
 		}
@@ -196,7 +198,7 @@ class MySmartDownloadMOD
 		
 		if (empty($MySmartBB->_GET['id']))		
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -208,7 +210,7 @@ class MySmartDownloadMOD
 																		
 		if (!$MsgInfo)
 		{
-			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
 		}
 		
 		$MsgInfo['title'] = $MySmartBB->func->cleanVariable($MsgInfo['title'],'html');
@@ -228,8 +230,8 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
-		echo 'عنوان الرساله : ' . $MsgInfo['title'] . '
-المرسل : ' . $MsgInfo['user_from'] . '
+		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $MsgInfo['title'] . '
+ ' . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $MsgInfo['user_from'] . '
 
 ';
 		echo $MsgInfo['text'];

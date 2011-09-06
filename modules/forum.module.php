@@ -19,6 +19,8 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'forum' );
+		
 		$MySmartBB->load( 'section,subject' );
 		
 		$MySmartBB->template->assign('SECTION_RSS',true);
@@ -34,7 +36,7 @@ class MySmartForumMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -64,7 +66,7 @@ class MySmartForumMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -80,7 +82,7 @@ class MySmartForumMOD
 		
 		if (!$this->Section)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -98,20 +100,20 @@ class MySmartForumMOD
 		
 		if ($this->SectionGroup['view_section'] != 1)
 		{
-			$MySmartBB->func->error('المعذره ... غير مسموح لك بعرض هذا القسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_forum' ] );
 		}
 			
 		if ( isset( $this->Section[ 'main_section' ] )
 			and $this->Section[ 'main_section' ] )
 		{
-			$MySmartBB->func->error('المعذره .. هذا المنتدى قسم رئيسي');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cat_section' ] );
 		}
 		
 		// This section is a link , so we should go to another location
 		if ($this->Section['linksection'])
 		{
-			$MySmartBB->func->msg('يرجى الانتظار سوف يتم تحويلك إلى ' . $this->Section['linksite']);
-			$MySmartBB->func->move($this->Section['linksite'],3);
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section['linksite'] );
+			$MySmartBB->func->move( $this->Section['linksite'], 3 );
 			$MySmartBB->func->stop();
 		}
 		
@@ -128,7 +130,7 @@ class MySmartForumMOD
 		// Where is the member now?
 		if ( $MySmartBB->_CONF['member_permission'] )
      	{
-			$MySmartBB->online->updateMemberLocation( 'يطلع على : ' . $this->Section['title'] );
+			$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Section['title'] );
      	}
 	}
 	

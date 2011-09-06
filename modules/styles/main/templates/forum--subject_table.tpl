@@ -5,25 +5,25 @@
 <table id="subject_table" border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="30%" class="main1 rows_space small_text" align="center" colspan="2">
-			عنوان الموضوع
+			{$lang['topic_title']}
 		</td>
 		<td width="20%" class="main1 rows_space small_text" align="center">
-			الكاتب
+			{$lang['topic_writer']}
 		</td>
 		<td width="10%" class="main1 rows_space small_text" align="center">
-			عدد الردود
+			{$lang['replies_number']}
 		</td>
 		<td width="10%" class="main1 rows_space small_text" align="center">
-			عدد الزوار
+			{$lang['visits_number']}
 		</td>
 		<td width="28%" class="main1 rows_space small_text" align="center">
-			آخر رد
+			{$lang['last_post']}
 		</td>
 	</tr>
 	{if {$SHOW_STICK}}
 	<tr>
 		<td width="98%" colspan="6" class="main2" align="center">
-			المواضيع المثبته
+			{$lang['stick_topics']}
 		</td>
 	</tr>
 	{DB::getInfo}{$stick_subject_res}{$stick_subject_list}
@@ -36,7 +36,7 @@
 				{$stick_subject_list['title']}
 			</a> 
 			{if {$stick_subject_list['close']}}
-			<small>(مغلق)</small>
+			<small>{$lang['closed']}</small>
 			{/if}
 			<br />
 			<font class="small">{$stick_subject_list['subject_describe']}</font>
@@ -53,7 +53,7 @@
 		</td>
 		<td width="28%" class="row2" align="center">
 			{if {$stick_subject_list['reply_number']} <= 0}
-			لا يوجد ردود
+			{$lang['no_replies']}
 			{else}
 			<a href="index.php?page=profile&show=1&username={$stick_subject_list['last_replier']}">{$stick_subject_list['last_replier']}</a><br />
 			{$stick_subject_list['reply_date']}
@@ -64,7 +64,7 @@
 	{/if}
 	<tr>
 		<td width="98%" colspan="6" class="main2" align="center">
-			قائمة المواضيع
+			{$lang['topics_list']}
 		</td>
 	</tr>
 	{DB::getInfo}{$subject_res}{$subject_list}
@@ -77,7 +77,7 @@
 				{$subject_list['title']}
 			</a>
 			{if {$subject_list['close']}}
-			<small>(مغلق)</small>
+			<small>{$lang['closed']}</small>
 			{/if}
 			<br />
 			<font class="small">{$subject_list['subject_describe']}</font>
@@ -94,7 +94,7 @@
 		</td>
 		<td width="28%" class="row2" align="center">
 			{if {$subject_list['reply_number']} <= 0}
-			لا يوجد ردود
+			{$lang['no_replies']}
 			{else}
 			<a href="index.php?page=profile&show=1&username={$subject_list['last_replier']}">{$subject_list['last_replier']}</a><br />
 			{$subject_list['reply_date']}

@@ -1,7 +1,7 @@
 <table border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="98%" class="main1 rows_space">
-			المشرفين
+			{$lang['common']['moderators']}
 		</td>
 	</tr>
 	<tr>
