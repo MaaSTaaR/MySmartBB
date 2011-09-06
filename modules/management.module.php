@@ -592,7 +592,7 @@ class MySmartManagementMOD
      			// ... //
      			     			
 				$MySmartBB->func->msg('تم التحديث بنجاح');
-				//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
      		}
 		}
 	}

@@ -17,6 +17,8 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'login' );
+		
 		// Normal login
 		if ( $MySmartBB->_GET[ 'login' ] )
 		{
@@ -29,7 +31,7 @@ class MySmartLoginMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -42,7 +44,7 @@ class MySmartLoginMOD
 		if ( empty( $MySmartBB->_POST[ 'username' ])
 			or empty( $MySmartBB->_POST[ 'password' ] ) )
 		{
-			$MySmartBB->func->error( 'يرجى تعبئة كافة المعلومات', true );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ], true );
 		}
 		
 		if ( !$register_login )
@@ -60,7 +62,7 @@ class MySmartLoginMOD
 		
 		$isMember = $MySmartBB->member->loginMember( $username, $password, $expire );
 		
-		$MySmartBB->func->showHeader('تسجيل دخول');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'login' ] );
 		
 		if ($isMember != false)
 		{
@@ -128,7 +130,7 @@ class MySmartLoginMOD
 		}
 		else
 		{
-			$MySmartBB->func->msg('كلمة المرور او اسم المستخدم غير صحيحين');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'login_failed' ] );
 		}
 	}
 }

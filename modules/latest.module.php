@@ -14,13 +14,15 @@ class MySmartLatestMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'latest' );
+		
 		if ($MySmartBB->_GET['today'])
 		{
 			$this->_todaySubject();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -30,7 +32,7 @@ class MySmartLatestMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('مواضيع اليوم');
+		$MySmartBB->func->showHeader( $MySmartBB->lang_common[ 'todays_topics' ] );
 		
 		$day 	= 	date('j');
 		$month 	= 	date('n');

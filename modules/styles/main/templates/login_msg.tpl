@@ -1,7 +1,7 @@
 <div align="center">
 	<div id="login_box">
-      			السلام عليكم و رحمة الله و بركاته يا {$username}
-      			<br /><br />
-      			تم تسجيل دخولك بنجاح، يرجى الانتظار حتى يتم تحويلك
+	    {$lang['login_msg_hello']} {$username}
+	    <br /><br />
+	    {$lang['login_msg_success']}
 	</div>
 </div>

@@ -22,7 +22,7 @@ class MySmartLogoutMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -34,7 +34,7 @@ class MySmartLogoutMOD
 		
 		$logout = $MySmartBB->member->logout();
 								
-		$MySmartBB->func->showHeader( 'تسجيل خروج' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'logout' ] );
 		
 		if ( $logout )
 		{
