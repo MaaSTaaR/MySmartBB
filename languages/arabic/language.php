@@ -29,6 +29,7 @@ $lang[ 'common' ][ 'cant_find_style' ] = 'لم يتم ايجاد معلومات 
 $lang[ 'common' ][ 'closed' ] = 'مغلق';
 $lang[ 'common' ][ 'submit' ] = 'موافق';
 $lang[ 'common' ][ 'please_fill_information' ] = 'يرجى تعبئة كافة المعلومات';
+$lang[ 'common' ][ 'here' ] = 'هنا';
 
 $lang[ 'common' ][ 'subforums' ] = 'المنتديات الفرعيه';
 $lang[ 'common' ][ 'forum' ] = 'المنتدى';

@@ -13,15 +13,15 @@
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
-		محتوى الموضوع
+		{$lang['subject_context']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space">
-			عنوان الموضوع : <input name="title" type="text" value="{$SubjectInfo['title']}" />
+			{$lang['subject_title']} {$lang['common']['colon']} <input name="title" type="text" value="{$SubjectInfo['title']}" />
 		</td>
 		<td class="row1 rows_space">
-			وصف الموضوع <small>(اختياري)</small> : <input name="describe" type="text" value="{$SubjectInfo['describe']}" />
+			{$lang['subject_description']} <small>{$lang['optional']}</small> {$lang['common']['colon']} <input name="describe" type="text" value="{$SubjectInfo['describe']}" />
 		</td>
 	</tr>
 	<tr align="center">
@@ -29,7 +29,7 @@
 			<textarea rows="12" name="text" cols="69">{$SubjectInfo['text']}</textarea>
 			<br />
 			<br />
-			<input name="insert" type="submit" value="موافق" />
+			<input name="insert" type="submit" value="{$lang['common']['submit']}" />
 		</td>
 	</tr>
 </table>

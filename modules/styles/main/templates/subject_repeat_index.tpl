@@ -2,12 +2,12 @@
 <table align="center" border="1" class="t_style_b" width="40%">
 	<tr align="center">
 		<td class="main1 rows_space" width="20%" colspan="2">
-			موضوع مكرر
+			{$lang['repeated_subject']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1 rows_space" width="20%">
-			وصلة الموضوع الاصلي
+			{$lang['repeated_subject_link']}
 		</td>
 		<td class="row2 rows_space" width="20%">
 			<input name="url" type="text" />
@@ -18,7 +18,7 @@
 <br />
 
 <div align="center">
-	<input type="submit" value="موافق" />
+	<input type="submit" value="{$lang['common']['submit']}" />
 </div>
 
 </form>

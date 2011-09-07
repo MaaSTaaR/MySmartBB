@@ -16,7 +16,9 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('ادارة المواضيع');
+		$MySmartBB->loadLanguage( 'management' );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'subjects_management' ] );
 		
 		$MySmartBB->load( 'section,moderator,icon,toolbox' );
 		
@@ -61,7 +63,7 @@ class MySmartManagementMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('غير مسموح لك بالوصول إلى هذه الصفحه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -74,7 +76,7 @@ class MySmartManagementMOD
 		if (!isset($MySmartBB->_GET['operator'])
 			or !isset($MySmartBB->_GET['section']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		if ($MySmartBB->_GET['operator'] == 'stick')
@@ -127,14 +129,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تثبيت الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_sticked' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -147,14 +149,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->unStickSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم إلغاء تثبيت الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_unsticked' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -167,7 +169,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -183,14 +185,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->openSubject( $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم فتح الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_opened' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -203,7 +205,7 @@ class MySmartManagementMOD
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -221,13 +223,12 @@ class MySmartManagementMOD
 		if (empty($MySmartBB->_GET['subject_id'])
 			or empty($MySmartBB->_GET['section']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
 		
-		// TODO : false parameter will show all sections for the moderator even if (s)he have no permission
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList( false );
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList();
 		
 		// ... //
 		
@@ -245,14 +246,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->moveSubject( $MySmartBB->_POST['section'], $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم نقل الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_moved' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -265,14 +266,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم إغلاق الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_closed' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -285,7 +286,7 @@ class MySmartManagementMOD
 
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
@@ -304,7 +305,7 @@ class MySmartManagementMOD
 			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 												'user_to'	=>	$Subject['writer'],
-												'title'	=>	'تم حذف موضوعك ' . $Subject['title'],
+												'title'	=>	$MySmartBB->lang[ 'your_subject_deleted' ] . ' ' . $Subject['title'],
 												'text'	=>	$MySmartBB->_POST['reason'],
 												'date'	=>	$MySmartBB->_CONF['now'],
 												'icon'	=>	$Subject['icon'],
@@ -324,7 +325,7 @@ class MySmartManagementMOD
 			
 			// ... //
 			
-			$MySmartBB->func->msg('تم حذف الموضوع');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_deleted' ] );
 			$MySmartBB->func->move('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -337,7 +338,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
@@ -360,13 +361,13 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		if (!isset($MySmartBB->_POST['title'])
 			or !isset($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
@@ -381,7 +382,7 @@ class MySmartManagementMOD
 		
 		if ( $update )
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -394,7 +395,7 @@ class MySmartManagementMOD
 			or !isset($MySmartBB->_GET['section'])
 			or !isset($MySmartBB->_GET['reply']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		elseif ($MySmartBB->_GET['operator'] == 'delete')
@@ -415,14 +416,14 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$update = $MySmartBB->reply->moveReplyToTrash( $MySmartBB->_GET['reply_id'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم حذف الرد');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_deleted' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -435,7 +436,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -464,13 +465,13 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['reply_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		if (!isset($MySmartBB->_POST['title'])
 			or !isset($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -488,7 +489,7 @@ class MySmartManagementMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -501,7 +502,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
@@ -517,7 +518,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -529,7 +530,7 @@ class MySmartManagementMOD
 		
 		if (!$Subject)
 		{
-			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'subject_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -541,15 +542,15 @@ class MySmartManagementMOD
 		
 		if (!isset($MySmartBB->_POST['url']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
-		$update = $MySmartBB->subject->closeSubject( 'موضوع مُكرر', $MySmartBB->_GET['subject_id'] );
+		$update = $MySmartBB->subject->closeSubject( $MySmartBB->lang[ 'repeated_subject' ], $MySmartBB->_GET['subject_id'] );
 		
 		if ($update)
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-     		$MySmartBB->rec->fields = array(	'text'	=>	'هذا الموضوع مكرر، راجع الاصل [url=' . $MySmartBB->_POST['url'] . ']هنا[/url]',
+     		$MySmartBB->rec->fields = array(	'text'	=>	$MySmartBB->lang[ 'repeated_subject_see_original' ] . " [url=" . $MySmartBB->_POST['url'] . "]" . $MySmartBB->lang_common[ 'here' ] . '[/url]',
      											'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
      											'subject_id'	=>	$MySmartBB->_GET['subject_id'],
      											'write_time'	=>	$MySmartBB->_CONF['now'],
@@ -591,7 +592,7 @@ class MySmartManagementMOD
      			
      			// ... //
      			     			
-				$MySmartBB->func->msg('تم التحديث بنجاح');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
      		}
 		}
@@ -605,7 +606,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
@@ -616,7 +617,7 @@ class MySmartManagementMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم رفع الموضوع بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_raised' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}
@@ -629,7 +630,7 @@ class MySmartManagementMOD
 		
 		if (empty($MySmartBB->_GET['subject_id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
@@ -640,7 +641,7 @@ class MySmartManagementMOD
 		
 		if ($update)
 		{
-	    	$MySmartBB->func->msg('تم إنزال الموضوع');
+	    	$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_downed' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
 		}
 	}

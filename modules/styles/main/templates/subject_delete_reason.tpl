@@ -4,12 +4,12 @@
 <table align="center" border="1" class="t_style_b" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%" colspan="2">
-			حذف الموضوع
+			{$lang['delete_subject']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1 rows_space" width="30%">
-			سبب حذف الموضوع (يمكن تركه فارغاً)
+			{$lang['delete_subject_reason']}
 		</td>
 		<td class="row2 rows_space" width="30%">
 			<input name="reason" type="text" />
@@ -20,7 +20,7 @@
 <br />
 
 <div align="center">
-	<input type="submit" value="موافق" />
+	<input type="submit" value="{$lang['common']['submit']}" />
 </div>
 
 </form>
