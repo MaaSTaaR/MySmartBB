@@ -23,6 +23,8 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'topic' );
+		
 		if ( $MySmartBB->_GET[ 'show' ] )
 		{
 			$MySmartBB->load( 'moderator,reply,subject,icon,toolbox,section' );
@@ -52,7 +54,7 @@ class MySmartTopicMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
@@ -71,7 +73,7 @@ class MySmartTopicMOD
 
 		if ( empty( $MySmartBB->_GET['id'] ) )
 		{
-			$MySmartBB->func->error('المعذره المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //

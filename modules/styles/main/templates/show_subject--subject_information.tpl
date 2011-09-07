@@ -1,22 +1,22 @@
 <table align="center" border="1" class="t_style_b" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="50%" colspan="2">
-			معلومات عن الموضوع
+			{$lang['subject_information']}
 		</td>
 	</tr>
 	{if {$Info['stick']} or {$Info['close']} or {$Info['delete_topic']}}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			حالة الموضوع : 
+			{$lang['subject_state']} {$lang['common']['colon']}
 			<strong>
 			{if {$Info['stick']}}
-			مُثبّت
+			{$lang['sticked']}
 			{/if}
 			{if {$Info['close']}}
-			مُغلق
+			{$lang['closed']}
 			{/if}
 			{if {$Info['delete_topic']}}
-			محذوف
+			{$lang['deleted']}
 			{/if}
 			</strong>
 		</td>
@@ -25,30 +25,30 @@
 	{if {$Info['close_reason']} != '' and {$Info['close']} }
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			سبب الاغلاق : <strong>{$Info['close_reason']}</strong>
+			{$lang['close_reason']} {$lang['common']['colon']} <strong>{$Info['close_reason']}</strong>
 		</td>
 	</tr>
 	{/if}
 	{if {$Info['delete_reason']} != '' and {$Info['delete_topic']} }
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			سبب الحذف : <strong>{$Info['delete_reason']}</strong>
+			{$lang['delete_reason']} {$lang['common']['colon']} <strong>{$Info['delete_reason']}</strong>
 		</td>
 	</tr>
 	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="25%">
-			عدد الردود : {$Info['reply_number']}
+			{$lang['replies_number']} {$lang['common']['colon']} {$Info['reply_number']}
 		</td>
 		<td class="row1 rows_space" width="25%">
-			عدد الزوار : {$Info['subject_visitor']}
+			{$lang['visits_number']} {$lang['common']['colon']} {$Info['subject_visitor']}
 		</td>
 	</tr>
 	{if {$SHOW_TAGS}}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
 			<strong>
-			علامات الموضوع : 
+			{$lang['subject_tags']} {$lang['common']['colon']}
 			{DB::getInfo}{$tags_res}{$tags}
 			<a href="index.php?page=tags&amp;show=1&amp;id={$tags['tag_id']}">{$tags['tag']}</a>،
 			{/DB::getInfo}
@@ -58,12 +58,12 @@
 	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['subject_id']}">تحميل محتوى الموضوع</a>
+			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['subject_id']}">{$lang['download_subject']}</a>
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=topic&amp;show=1&amp;id={$Info['subject_id']}&amp;print=1">عرض نسخة صالحة للطباعة</a>
+			<a href="index.php?page=topic&amp;show=1&amp;id={$Info['subject_id']}&amp;print=1">{$lang['printable_version']}</a>
 		</td>
 	</tr>
 </table>

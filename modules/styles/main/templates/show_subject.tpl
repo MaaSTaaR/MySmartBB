@@ -24,10 +24,10 @@
 <table align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="95%">
 	<tr align="center">
 		<td class="main1 rows_space" width="15%">
-			معلومات الكاتب
+			{$lang['writer_information']}
 		</td>
 		<td class="main1 rows_space" width="80%">
-			محتوى الموضوع
+			{$lang['subject_context']}
 		</td>
 	</tr>
 	<tr align="center">
@@ -49,7 +49,9 @@
 	<tr align="center">
 		<td class="row2" width="15%">
 			{$Info['native_write_time']}
-			<a title="ابلاغ عن مشاركة مخالفة" href="index.php?page=report&amp;index=1&amp;id={$Info['subject_id']}"><img alt="ابلاغ عن مشاركة مخالفة" border="0" src="{$image_path}/report.gif"></a>
+			<a title="{$lang['report_abuse']}" href="index.php?page=report&amp;index=1&amp;id={$Info['subject_id']}">
+			    <img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.gif">
+			</a>
 		</td>
 		<td class="row2" width="80%">
 			
