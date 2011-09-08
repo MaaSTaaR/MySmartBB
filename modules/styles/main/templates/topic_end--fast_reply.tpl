@@ -1,46 +1,4 @@
-{if {$_CONF['info_row']['ajax_freply']}}
-
 <script src="includes/js/jquery.js"></script>
-
-{if {$_CONF['info_row']['wysiwyg_freply']}}
-<script src="includes/js/jquery.wysiwyg.js"></script>
-{/if}
-
-<script language="javascript">
-function AjaxReply()
-{
-	var AjaxState = {ajaxSend : Wait};
-	
-	var data = {};
-	
-	data['title']	=	$("#title_id").val();
-	data['text']	=	$("#text_id").val();
-	data['ajax']	=	true;
-		
-	$.post("index.php?page=new_reply&start=1&id={$id}{$password}",data,Success);
-}
-
-function Wait()
-{
-	$("#status").html("جاري تنفيذ العمليه");
-}
-
-function Success(xml)
-{
-	$("#result").append(xml);
-	$("#result").fadeIn("slow");
-}
-
-function Ready()
-{
-	$("#reply_id").click(AjaxReply);
-}
-
-$(document).ready(Ready);
-
-</script>
-
-{/if}
 
 <br />
 
@@ -61,14 +19,14 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
-		محتوى الرد
+		{$lang['reply_context']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space">
-			عنوان الرد :
+			{$lang['reply_title']} {$lang['common']['colon']}
 			<input name="title" id="title_id" type="text" {if {$_CONF['info_row']['title_quote']}} 
-			value="رد : {$Info['title']}" {/if} />
+			value="{$lang['reply']} {$lang['common']['colon']} {$Info['title']}" {/if} />
 		</td>
 	</tr>
 	<tr align="center">
@@ -77,11 +35,7 @@ $(document).ready(Ready);
 			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
-			{if {$_CONF['info_row']['ajax_freply']}}
-			<input name="insert" type="button" id="reply_id" value="موافق" />
-			{else}
-			<input name="insert" type="submit" value="موافق" />
-			{/if}
+			<input name="insert" type="submit" value="{$lang['common']['submit']}" />
 		</td>
 	</tr>
 </table>
@@ -93,14 +47,14 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
-		خيارات إدارة الموضوع
+		{$lang['management_options']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="stick" id="stick_id" type="checkbox" {if {$stick}}checked="checked"{/if} /> <label for="stick_id">تثبيت الموضوع</label>
+			<input name="stick" id="stick_id" type="checkbox" {if {$stick}}checked="checked"{/if} /> <label for="stick_id">{$lang['stick_subject']}</label>
 			<br />
-			<input name="close" id="close_id" type="checkbox" {if {$close}}checked="checked"{/if} /> <label for="close_id">إغلاق الموضوع</label>
+			<input name="close" id="close_id" type="checkbox" {if {$close}}checked="checked"{/if} /> <label for="close_id">{$lang['close_subject']}</label>
 		</td>
 	</tr>
 </table>
@@ -115,9 +69,3 @@ $(document).ready(Ready);
 </form>
 
 <br />
-
-{if {$_CONF['info_row']['wysiwyg_freply']}}
-<script language="javascript">
-$("#text_id").wysiwyg();
-</script>
-{/if}

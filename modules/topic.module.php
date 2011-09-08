@@ -83,7 +83,7 @@ class MySmartTopicMOD
 		
 		if ( !$this->Info )
 		{
-			$MySmartBB->func->error('المعذره، الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
 		}
 
 		$this->Info['subject_id'] = $this->subject_id = $MySmartBB->_GET['id'];
@@ -93,7 +93,7 @@ class MySmartTopicMOD
 		if ($this->Info['delete_topic'] 
 			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
-			$MySmartBB->func->error('الموضوع المطلوب منقول إلى سلّة المحذوفات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_trashed' ] );
 		}
 		
 		// ... //
@@ -114,7 +114,7 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-     	$MySmartBB->online->updateMemberLocation( 'يطلع على الموضوع : ' . $this->Info['title'] );
+     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_topic' ] . ' ' . $MySmartBB->lang_common['colon'] . '' . $this->Info['title'] );
      	
      	// ... //
 	}
@@ -158,7 +158,7 @@ class MySmartTopicMOD
 		
 		if (!$this->SectionGroup['view_section'])
 		{
-			$MySmartBB->func->error('المعذره لا يمكنك عرض هذا الموضوع');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 		}
 		
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
@@ -262,7 +262,7 @@ class MySmartTopicMOD
 		$this->Info['native_write_time'] = $topic_date . ' ; ' . $topic_time;
 		
 		$this->_baseEnd();
-				
+		
 		// Show subject
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->template->display('show_subject');

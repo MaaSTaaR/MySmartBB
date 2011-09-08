@@ -1,7 +1,3 @@
-{if {$_CONF['info_row']['ajax_freply']}}
-<div id="result"></div>
-{/if}
-
 {$pager}
 
 {if {$_CONF['info_row']['samesubject_show']}}

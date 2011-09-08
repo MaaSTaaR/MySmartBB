@@ -33,7 +33,44 @@ $lang[ 'template' ][ 'writer_information' ] = 'معلومات الكاتب';
 $lang[ 'template' ][ 'subject_context' ] = 'محتوى الموضوع';
 $lang[ 'template' ][ 'report_abuse' ] = 'ابلاغ عن مشاركة مخالفة';
 
+$lang[ 'template' ][ 'member_avatar' ] = 'الصورة الشخصية لـ ';
+$lang[ 'template' ][ 'member_profile' ] = 'الهوية الشخصية';
+$lang[ 'template' ][ 'member_id' ] = 'رقم العضوية';
+$lang[ 'template' ][ 'register_date' ] = 'تاريخ التسجيل';
+$lang[ 'template' ][ 'status' ] = 'الحالة';
+$lang[ 'template' ][ 'online' ] = 'متصل';
+$lang[ 'template' ][ 'offline' ] = 'غير متصل';
+$lang[ 'template' ][ 'posts' ] = 'المشاركات';
+$lang[ 'template' ][ 'country' ] = 'الدولة';
+$lang[ 'template' ][ 'gender' ] = 'الجنس';
+$lang[ 'template' ][ 'visits' ] = 'الزيارات';
+$lang[ 'template' ][ 'member_is_away' ] = 'العضو غائب';
+
+$lang[ 'template' ][ 'poll' ] = 'التصويت';
+
+$lang[ 'template' ][ 'filename' ] = 'إسم الملف';
+$lang[ 'template' ][ 'download_times' ] = 'مرات التحميل';
+
+$lang[ 'template' ][ 'member_signature' ] = 'التوقيع';
+
+$lang[ 'template' ][ 'on_date' ] = 'بتاريخ';
+$lang[ 'template' ][ 'original_view' ] = 'إضغط هنا لمشاهدة الموضوع بهيئته الأصلية';
+
+$lang[ 'template' ][ 'same_topics' ] = 'المواضيع المتشابهه';
+
+$lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
+$lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
+$lang[ 'template' ][ 'reply' ] = 'رد';
+$lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
+$lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
+$lang[ 'template' ][ 'close_subject' ] = '';
 
 // ... //
+
+$lang[ 'topic_doesnt_exist' ] = 'المعذره، الموضوع المطلوب غير موجود';
+$lang[ 'topic_trashed' ] = 'الموضوع المطلوب منقول إلى سلّة المحذوفات';
+$lang[ 'viewing_topic' ] = 'يطلع على الموضوع';
+$lang[ 'cant_view_topic' ] = 'المعذره لا يمكنك عرض هذا الموضوع';
+
 
 ?>

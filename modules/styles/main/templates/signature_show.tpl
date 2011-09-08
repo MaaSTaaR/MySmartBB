@@ -2,7 +2,7 @@
 <table align="center" border="1" cellpadding="2" cellspacing="2" width="80%" class="t_style_b">
 	<tr align="center">
 		<td class="main1">
-			التوقيع		
+			{$lang['signature']}		
 		</td>
 	</tr>
 	<tr align="center">

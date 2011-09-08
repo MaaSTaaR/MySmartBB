@@ -1,7 +1,7 @@
 <table border="1" class="t_style_b" width="40%" align="center">
 	<tr align="center">
 		<td width="40%" class="main1 rows_space">
-			المواضيع المتشابهه
+			{$lang['same_topics']}
 		</td>
 	</tr>
 	{DB::getInfo}{$same_subjects_res}{$SameSubject}

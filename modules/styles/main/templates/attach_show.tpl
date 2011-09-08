@@ -3,10 +3,10 @@
 <table border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="50%" align="center">
 	<tr align="center">
 		<td width="30%" class="main1">
-			اسم الملف
+			{$lang['filename']}
 		</td>
 		<td width="20%" class="main1">
-			مرات التحميل
+			{$lang['download_times']}
 		</td>
 	</tr>
 	{DB::getInfo}{$attach_res}{$AttachList}

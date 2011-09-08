@@ -4,22 +4,24 @@
 <br />
 {if {$Info['avater_path']} != ''}
 	<br />
-	<img src="{$Info['avater_path']}" border="0" align="center" alt="صوره {$Info['username']} الشخصيه" />
+	<img src="{$Info['avater_path']}" border="0" align="center" alt="{$lang['member_avatar']} {$Info['username']}" />
 {else}
 	{if {$_CONF['info_row']['default_avatar']} != '' and {$_CONF['info_row']['default_avatar']} != 'http://'}
-	<img src="{$_CONF['info_row']['default_avatar']}" border="0" align="center" alt="صوره {$Info['username']} الشخصيه" />
+	<img src="{$_CONF['info_row']['default_avatar']}" border="0" align="center" alt="{$lang['member_avatar']} {$Info['username']}" />
 	{/if}
 {/if}
 
 <br /><br />
 
 <fieldset>
-	<legend><a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">الهويه الشخصيه</a></legend>
+	<legend>
+	<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$lang['member_profile']}</a>
+	</legend>
 	
 	<table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
 		<tr align="center">
 			<td width="60%">
-				رقم العضويه :
+				{$lang['member_id']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['id']}
@@ -27,7 +29,7 @@
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				تاريخ التسجيل :
+				{$lang['register_date']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['register_date']}
@@ -35,19 +37,19 @@
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				الحاله :
+				{$lang['status']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{if {$status} == 'online'}
-				<span class='online'>متصل</span>
+				<span class='online'>{$lang['online']}</span>
 				{else}
-				<span class='offline'>غير متصل</span>
+				<span class='offline'>{$lang['offline']}</span>
 				{/if}
 			</td>
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				المشاركات :
+				{$lang['posts']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['posts']}
@@ -55,7 +57,7 @@
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				الدوله :
+				{$lang['country']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['user_country']}
@@ -63,7 +65,7 @@
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				الجنس :
+				{$lang['gender']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['user_gender']}
@@ -71,7 +73,7 @@
 		</tr>
 		<tr align="center">
 			<td width="60%">
-				الزيارات :
+				{$lang['visits']} {$lang['common']['colon']}
 			</td>
 			<td width="40%">
 				{$Info['visitor']}
@@ -83,7 +85,7 @@
 {if {$Info['away']}}
 	<br />
 	<fieldset>
-		<legend>العضو غائب</legend>
+		<legend>{$lang['member_is_away']}</legend>
 		{$Info['away_msg']}
 	</fieldset>
 {/if}

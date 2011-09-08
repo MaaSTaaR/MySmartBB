@@ -22,16 +22,16 @@
 	</a> {$_CONF['info_row']['adress_bar_separate']} <a href="{$Info['reply_id']}">{$Info['title']}</a>
 	{template}address_bar_part2{/template}
 	
-	<a href="index.php?page=topic&show=1&id={$Info['subject_id']}">إضغط هنا لمشاهدة الموضوع بهيئته الأصلية</a>
+	<a href="index.php?page=topic&show=1&id={$Info['subject_id']}">{$lang['original_view']}</a>
 	
 	<div align="center">
 		<table border="0" cellpadding="0" class="print-table" width="95%">
 			<tr align="center">
 				<td width="30%" class="print-td" style="font-size:14pt">
-			كاتب الموضوع: {$Info['display_username']}
+			    {$lang['writer_information']} {$lang['common']['colon']} {$Info['display_username']}
 				</td>
 				<td width="60%" class="print-td">
-			بتاريخ: {$Info['native_write_time']}
+			    {$lang['in_date']} {$lang['common']['colon']} {$Info['native_write_time']}
 				</td>
 			</tr> 
 			<tr>
