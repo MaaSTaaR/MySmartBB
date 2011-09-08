@@ -16,12 +16,12 @@ class MySmartRegisterMOD
 		
 		if ($MySmartBB->_CONF['info_row']['reg_close'])
 		{
-			$MySmartBB->func->error('المعذره .. التسجيل مغلق');
+			$MySmartBB->func->error( $lang[ 'register_closed' ] );
 		}
 		
 		if (!$MySmartBB->_CONF['info_row']['reg_' . $MySmartBB->_CONF['day']])
    		{
-   			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل اليوم');
+   			$MySmartBB->func->error( $lang[ 'cant_register_today' ] );
    		}
    		
 		if ($MySmartBB->_GET['index'])
@@ -44,16 +44,10 @@ class MySmartRegisterMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
 		}
 		
-		if (!$MySmartBB->_CONF['info_row']['ajax_register'])
-		{
-			if (!isset($MySmartBB->_POST['ajax']))
-			{
-				$MySmartBB->func->getFooter();
-			}
-		}
+	    $MySmartBB->func->getFooter();
 	}
 	
 	/**
@@ -63,7 +57,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('شروط التسجيل');
+		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'register_rules' ] );
 		
 		$MySmartBB->template->display('register_rules');
 	}
@@ -75,7 +69,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('التسجيل');
+		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'registering' ] );
 		
 		$MySmartBB->template->display('register');
 	}
@@ -87,7 +81,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية التسجيل');
+		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'registering' ] );
 		
 		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
 		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
@@ -102,25 +96,25 @@ class MySmartRegisterMOD
 			or empty($MySmartBB->_POST['password']) 
 			or empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
 		}
 		
 		// Ensure the email is equal the confirm of email
 		if ($MySmartBB->_POST['email'] != $MySmartBB->_POST['email_confirm'])
 		{
-			$MySmartBB->func->error('تأكيد البريد الالكتروني غير صحيح');
+			$MySmartBB->func->error( $lang[ 'email_confirmation_not_identical' ] );
 		}
 		
 		// Ensure the password is equal the confirm of password
 		if ($MySmartBB->_POST['password'] != $MySmartBB->_POST['password_confirm']) 
 		{
-			$MySmartBB->func->error('تأكيد كلمة المرور غير صحيح');
+			$MySmartBB->func->error( $lang[ 'password_confirmation_not_identical' ] );
 		}
 		
 		// Check if the email is valid, This line will prevent any false email
 		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error( $lang[ 'please_write_correct_email' ] );
 		}
 		
 		// Ensure there is no person used the same username
@@ -131,7 +125,7 @@ class MySmartRegisterMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error('المعذره اسم المستخدم موجود مسبقاً يرجى اختيار اسم آخر');
+			$MySmartBB->func->error( $lang[ 'username_does_exist' ] );
 		}
 		
 		// Ensure there is no person used the same email
@@ -142,47 +136,47 @@ class MySmartRegisterMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً , يرجى كتابة غيره');
+			$MySmartBB->func->error( $lang[ 'email_does_exist' ] );
 		}
 		
 		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم لانه ممنوع من قبل الاداره');
+			$MySmartBB->func->error( $lang[ 'banned_username' ] );
 		}
 		
 		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد الالكتروني لانه ممنوع من قبل الاداره');
+			$MySmartBB->func->error( $lang[ 'banned_email' ] );
 		}
 		
 		if ($MySmartBB->banned->isProviderBanned( $EmailProvider ))
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا البريد لان مزود البريد ممنوع من التسجيل');
+			$MySmartBB->func->error( $lang[ 'banned_provider' ] );
 		}
 		
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذا الاسم');
+			$MySmartBB->func->error( $lang[ 'cant_register_this_username' ] );
 		}
 
    		if (!isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_less_num']}))
    		{
-   			$MySmartBB->func->error('عدد حروف إسم المستخدم أقل من (' . $MySmartBB->_CONF['info_row']['reg_less_num'] . ')');
+   			$MySmartBB->func->error( $lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_less_num'] );
       	}
       	
       	if (isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_max_num']+1}))
       	{
-       	 	$MySmartBB->func->error('عدد حروف اسم المستخدم أكبر من  (' . $MySmartBB->_CONF['info_row']['reg_max_num'] . ')');
+       	 	$MySmartBB->func->error( $lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_max_num'] );
       	}
 
       	if (isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_max_num']+1}))
       	{
-            $MySmartBB->func->error('عدد حروف كلمة المرور أكبر من (' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] . ')');
+            $MySmartBB->func->error( $lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] );
       	}
 
       	if (!isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_min_num']-1}))
       	{
-        	$MySmartBB->func->error('عدد حروف كلمة المرور أقل من (' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] . ')');
+        	$MySmartBB->func->error( $lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] );
       	}
       		
 		if (strstr($MySmartBB->_POST['username'],'"') 
@@ -190,7 +184,7 @@ class MySmartRegisterMOD
 			or strstr($MySmartBB->_POST['username'],'>') 
 			or strstr($MySmartBB->_POST['username'],'<'))
       	{
-      		$MySmartBB->func->error('المعذره .. لا يمكنك التسجيل بهذه الرموز');
+      		$MySmartBB->func->error( $lang[ 'forbidden_symbols' ] );
       	}
       		
       	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
@@ -222,14 +216,6 @@ class MySmartRegisterMOD
       	$MySmartBB->rec->get_id = true;
       	
       	$insert = $MySmartBB->rec->insert();
-      	
-      	if (!$MySmartBB->_CONF['info_row']['ajax_register'])
-      	{
-      		if (!isset($MySmartBB->_POST['ajax']))
-      		{
-      			$MySmartBB->func->addressBar('تنفيذ عملية التسجيل');
-      		}
-      	}
       	
       	// Ouf finally , but we still have work in this module
       	if ($insert)
@@ -272,33 +258,19 @@ class MySmartRegisterMOD
 					
 					if ($Send)
 					{
-						$MySmartBB->func->msg('تم التسجيل بنجاح، و تم ارسال بريد التفعيل إلى بريدك الالكتروني');
-						
-						if (!$MySmartBB->_CONF['info_row']['ajax_register'])
-						{
-							if (!isset($MySmartBB->_POST['ajax']))
-							{
-								$MySmartBB->func->goto('index.php');
-							}
-						}
+						$MySmartBB->func->msg( $lang[ 'register_succeed_email' ] );
+						$MySmartBB->func->move('index.php',2);
 					}
 					else
 					{
-						$MySmartBB->func->error( 'تم التسجيل، و لكن النظام فشل في إرسال رسالة التفعيل إلى بريدك الإلكتروني' );
+						$MySmartBB->func->error( $lang[ 'send_failed' ]  );
 					}
 				}
 			}
 			else
       		{
-      			$MySmartBB->func->msg('تم التسجيل بنجاح');
-      			
-      			if (!$MySmartBB->_CONF['info_row']['ajax_register'])
-      			{
-      				if (!isset($MySmartBB->_POST['ajax']))
-      				{
-      					$MySmartBB->func->goto('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
-      				}
-      			}
+      			$MySmartBB->func->msg( $lang[ 'register_succeed' ] );
+      			$MySmartBB->func->move('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
       		}
       	}
 	}
