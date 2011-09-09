@@ -91,7 +91,7 @@ $(document).ready(Ready);
 {template}address_bar_part1{/template}
 <a href="index.php?page=forum&amp;show=1&amp;id={$id}{$password}">
 	{$section_info['title']}
-</a> {$_CONF['info_row']['adress_bar_separate']} اضافة موضوع جديد
+</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['add_new_topic']}
 {template}address_bar_part2{/template}
 
 <br />
@@ -109,15 +109,15 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
-		محتوى الموضوع
+		{$lang['topic_context']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space">
-			عنوان الموضوع : <input name="title" type="text" />
+			{$lang['topic_title']} {$lang['common']['colon']} <input name="title" type="text" />
 		</td>
 		<td class="row1 rows_space">
-			وصف الموضوع <small>(اختياري)</small> : <input name="describe" type="text" />
+			{$lang['topic_description']} <small>{$lang['optional']}</small> : <input name="describe" type="text" />
 		</td>
 	</tr>
 	<tr align="center">
@@ -125,18 +125,18 @@ $(document).ready(Ready);
 			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
-			<input name="insert" type="submit" value="موافق" />
+			<input name="insert" type="submit" value="{$lang['common']['submit']}" />
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="poll" id="poll_id" type="checkbox" /> <label for="poll_id">اضافة تصويت</a>
+			<input name="poll" id="poll_id" type="checkbox" /> <label for="poll_id">{$lang['add_poll']}</a>
 		</td>
 	</tr>
 	{if {$upload_attach}}
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">اضافة مرفقات</a>
+			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">{$lang['add_attachments']}</a>
 		</td>
 	</tr>
 	{/if}
@@ -148,14 +148,14 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
-		خيارات إدارة الموضوع
+		{$lang['management_options']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="stick" id="stick_id" type="checkbox" /> <label for="stick_id">تثبيت الموضوع</label>
+			<input name="stick" id="stick_id" type="checkbox" /> <label for="stick_id">{$lang['stick_subject']}</label>
 			<br />
-			<input name="close" id="close_id" type="checkbox" /> <label for="close_id">إغلاق الموضوع</label>
+			<input name="close" id="close_id" type="checkbox" /> <label for="close_id">{$lang['close_subject']}</label>
 		</td>
 	</tr>
 </table>

@@ -63,7 +63,7 @@ $lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
 $lang[ 'template' ][ 'reply' ] = 'رد';
 $lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
-$lang[ 'template' ][ 'close_subject' ] = '';
+$lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
 
 // ... //
 

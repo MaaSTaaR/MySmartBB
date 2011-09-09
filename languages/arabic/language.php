@@ -43,6 +43,8 @@ $lang[ 'common' ][ 'no_posts' ] = 'لا توجد مشاركات';
 $lang[ 'common' ][ 'moderators' ] = 'المشرفون';
 $lang[ 'common' ][ 'na' ] = 'لا يوجد';
 $lang[ 'common' ][ 'visit_number' ] = 'عدد الزيارات';
+$lang[ 'common' ][ 'emoticons' ] = 'التعابير';
+$lang[ 'common' ][ 'view_all_emoticons' ] = '[عرض كل الابتسامات]';
 
 $lang[ 'common' ][ 'comma' ] = '،';
 $lang[ 'common' ][ 'colon' ] = ':';

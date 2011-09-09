@@ -26,6 +26,8 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'new_topic' );
+		
 		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach,usertitle,moderator' );
 		
 		$this->_commonCode();
@@ -40,7 +42,7 @@ class MySmartTopicAddMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -56,7 +58,7 @@ class MySmartTopicAddMOD
 		
 		if ( empty( $MySmartBB->_GET['id'] ) )
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -70,7 +72,7 @@ class MySmartTopicAddMOD
 		
 		if (!$this->SectionInfo)
 		{
-			$MySmartBB->func->error('المعذره .. القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
 		// Kill SQL Injection
@@ -87,7 +89,7 @@ class MySmartTopicAddMOD
 		if (!$this->SectionGroup['view_section'] 
 			or !$this->SectionGroup['write_subject'])
 		{
-			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );
 		}
 		
 		// ... //
@@ -110,7 +112,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('اضافة موضوع');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
 		
 		$MySmartBB->func->getEditorTools();
 		
@@ -133,7 +135,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية اضافة الموضوع');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
 		
 		$MySmartBB->_POST['title'] 	= 	trim( $MySmartBB->_POST['title'] );
 		$MySmartBB->_POST['text'] 	= 	trim( $MySmartBB->_POST['text'] );
@@ -143,7 +145,7 @@ class MySmartTopicAddMOD
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -210,7 +212,7 @@ class MySmartTopicAddMOD
 			
 			// ... //
 			
-			$MySmartBB->func->msg('تم طرح موضوعك "' . $MySmartBB->_POST['title'] . '" بنجاح , يرجى الانتظار حتى يتم نقلك إليه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
@@ -227,22 +229,22 @@ class MySmartTopicAddMOD
 		{
 			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']}))
 			{
-	  			$MySmartBB->func->error('عدد حروف عنوان الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_title_max'] . ')');
+	  			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_max'] );
     		}
 
 	   		if  (!isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_min']}))
 			{
-	 			$MySmartBB->func->error('عدد حروف عنوان الموضوع أقل من  (' . $MySmartBB->_CONF['info_row']['post_title_min'] . ')');
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_min'] );
 			}
 
 	  	 	if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']}))
 			{
-	 			$MySmartBB->func->error('عدد حروف الموضوع أكبر من (' . $MySmartBB->_CONF['info_row']['post_text_max'] . ')');
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
 			}
 
 			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
 			{
-	 			$MySmartBB->func->error('عدد حروف الموضوع أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
 			}
 		}
 	}
