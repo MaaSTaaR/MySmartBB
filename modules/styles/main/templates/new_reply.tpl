@@ -10,8 +10,8 @@ function AddMoreAttach(x)
 	if (x <= up_max)
 	{
 		$(".more_attach_tr").hide();	
-		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
-		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">{$lang['file']} #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="{$lang['add_another_file']}" /></td></tr>');
 		
 		$(".more_attach_class").click(function() { AddMoreAttach(x) });
 		
@@ -51,7 +51,7 @@ $(document).ready(Ready);
 <a href="index.php?page=topic&amp;show=1&amp;id={$id}{$password}">
 {$subject_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']}
- اضافة رد جديد
+{$lang['add_new_reply']}
 {template}address_bar_part2{/template}
 
 <br />
@@ -69,12 +69,12 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
-		محتوى الرد
+		{$lang['reply_context']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space">
-			عنوان الرد : <input name="title" type="text" />
+			{$lang['reply_title']} {$lang['common']['colon']} <input name="title" type="text" />
 		</td>
 	</tr>
 	<tr align="center">
@@ -82,12 +82,12 @@ $(document).ready(Ready);
 			<textarea rows="12" name="text" id="text_id" cols="69"></textarea>
 			<br />
 			<br />
-			<input name="insert" type="submit" value="موافق" />
+			<input name="insert" type="submit" value="{$lang['common']['submit']} " />
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">اضافة مرفقات</a>
+			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">{$lang['add_attachments']}</a>
 		</td>
 	</tr>
 </table>
@@ -98,14 +98,14 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
-		خيارات إدارة الموضوع
+		{$lang['management_options']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="stick" id="stick_id" type="checkbox" {if {$subject_info['stick']}}checked="checked"{/if} /> <label for="stick_id">تثبيت الموضوع</label>
+			<input name="stick" id="stick_id" type="checkbox" {if {$subject_info['stick']}}checked="checked"{/if} /> <label for="stick_id">{$lang['stick_subject']}</label>
 			<br />
-			<input name="close" id="close_id" type="checkbox" {if {$subject_info['close']}}checked="checked"{/if} /> <label for="close_id">إغلاق الموضوع</label>
+			<input name="close" id="close_id" type="checkbox" {if {$subject_info['close']}}checked="checked"{/if} /> <label for="close_id">{$lang['close_subject']}</label>
 		</td>
 	</tr>
 </table>

@@ -22,9 +22,11 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'new_reply' );
+		
 		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach,usertitle' );
 		
-		$MySmartBB->func->showHeader('اضافة رد');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
 		
 		$this->_commonCode();
 		
@@ -38,13 +40,10 @@ class MySmartReplyAddMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
-		if (!isset($MySmartBB->_POST['ajax']))
-		{
-			$MySmartBB->func->getFooter();
-		}
+		$MySmartBB->func->getFooter();
 	}
 	
 	private function _commonCode()
@@ -55,7 +54,7 @@ class MySmartReplyAddMOD
 
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !', false);
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -67,7 +66,7 @@ class MySmartReplyAddMOD
 
 		if ( !$this->SubjectInfo )
 		{
-			$MySmartBB->func->error( 'المعذره .. الموضوع المطلوب غير موجود', false );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doent_exist' ] );
 		}
 		
 		$MySmartBB->func->cleanArray( $this->SubjectInfo, 'sql' );
@@ -91,7 +90,7 @@ class MySmartReplyAddMOD
 		{
 			if ( $this->SubjectInfo[ 'close' ] )
 			{
-				$MySmartBB->func->error('المعذره .. هذا الموضوع مغلق', false);
+				$MySmartBB->func->error( $MySmartBB->lang[ 'topic_closed' ] );
 			}
 		}
 		
@@ -107,7 +106,7 @@ class MySmartReplyAddMOD
 		if ( !$this->SectionGroup['view_section']
 			or !$this->SectionGroup['write_reply'] )
 		{
-			$MySmartBB->func->error('المعذره لا يمكنك الكتابه في هذا القسم', false);
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );
 		}
 		
 		// ... //
@@ -117,7 +116,7 @@ class MySmartReplyAddMOD
 		// ... //
 		
 		// Where is the member now?
-		$MySmartBB->online->updateMemberLocation( 'يكتب رداً على : ' . $this->SubjectInfo['title'] );
+		$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'writing_reply' ] . ' ' . $this->SubjectInfo['title'] );
 		
 		// ... //
 		
@@ -149,11 +148,11 @@ class MySmartReplyAddMOD
 		$MySmartBB->_POST['title'] = trim( $MySmartBB->_POST[ 'title' ] );
 		$MySmartBB->_POST['text'] = trim( $MySmartBB->_POST[ 'text' ] );
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SubjectInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية اضافة الرد');
+		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SubjectInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ]);
 		
 		if (empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$this->_checkContextLength();
@@ -219,7 +218,7 @@ class MySmartReplyAddMOD
 			
 			// ... //
 			
-			$MySmartBB->func->msg( 'تم طرح الرد بنجاح' );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_published' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password']);
 		}
 	}
@@ -234,17 +233,17 @@ class MySmartReplyAddMOD
 		{
 			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']+1}))
 			{
-				$MySmartBB->func->error('عدد حروف عنوان الرد أكبر من (' . $info_row['post_text_max'] . ')');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $info_row['post_text_max'] );
 			}
 			
 			if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']+1}))
 			{
-				$MySmartBB->func->error('عدد حروف الرد أكبر من (' . $MySmartBB->_CONF['info_row']['post_text_max'] . ')');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
 			}
 
 			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
 			{
-				$MySmartBB->func->error('عدد حروف الرد أصغر من (' . $MySmartBB->_CONF['info_row']['post_text_min'] . ')');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
 			}
 		}
 	}

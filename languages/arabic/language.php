@@ -46,6 +46,26 @@ $lang[ 'common' ][ 'visit_number' ] = 'عدد الزيارات';
 $lang[ 'common' ][ 'emoticons' ] = 'التعابير';
 $lang[ 'common' ][ 'view_all_emoticons' ] = '[عرض كل الابتسامات]';
 
+$lang[ 'common' ][ 'icons' ] = 'الأيقونات';
+$lang[ 'common' ][ 'no_icon' ] = 'بدون أيقونى';
+
+$lang[ 'common' ][ 'toolbox' ] = 'صندوق الأدوات';
+$lang[ 'common' ][ 'bold' ] = 'عريض';
+$lang[ 'common' ][ 'italic' ] = 'مائل';
+$lang[ 'common' ][ 'underline' ] = 'تحته خط';
+$lang[ 'common' ][ 'url' ] = 'وصلة';
+$lang[ 'common' ][ 'image' ] = 'صوره';
+$lang[ 'common' ][ 'code' ] = 'شيفره';
+$lang[ 'common' ][ 'quote' ] = 'اقتباس';
+$lang[ 'common' ][ 'font' ] = 'الخط';
+$lang[ 'common' ][ 'size' ] = 'الحجم';
+$lang[ 'common' ][ 'too_small' ] = 'صغير جداً';
+$lang[ 'common' ][ 'small' ] = 'صغير';
+$lang[ 'common' ][ 'medium' ] = 'متوسط';
+$lang[ 'common' ][ 'large' ] = 'كبير';
+$lang[ 'common' ][ 'too_large' ] = 'كبير جداً';
+$lang[ 'common' ][ 'color' ] = 'اللون';
+
 $lang[ 'common' ][ 'comma' ] = '،';
 $lang[ 'common' ][ 'colon' ] = ':';
 
