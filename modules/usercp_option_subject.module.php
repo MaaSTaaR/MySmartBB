@@ -17,9 +17,11 @@ class MySmartUserCPSubjectMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_option_subject' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )
@@ -34,7 +36,7 @@ class MySmartUserCPSubjectMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->ShowHeader('مواضيعك');
+		$MySmartBB->func->ShowHeader( $MySmartBB->lang[ 'your_subjects' ] );
 		
 		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
 		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/

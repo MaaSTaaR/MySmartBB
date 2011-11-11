@@ -17,14 +17,16 @@ class MySmartUserCPSignatureMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_signature' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $lang[ 'member_zone' ] );
 		}
 		
 		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'sig_allow' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. لا يمكنك استخدام هذه الميزه' );
+			$MySmartBB->func->error( $lang[ 'cant_use_this_feature' ] );
 		}
 		
 		$MySmartBB->load( 'icon,toolbox' );
@@ -45,7 +47,7 @@ class MySmartUserCPSignatureMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( 'تحرير توقيعك الخاص' );
+		$MySmartBB->func->showHeader( $lang[ 'compose_signature' ] );
 		
 		$MySmartBB->func->getEditorTools();
 		
@@ -62,9 +64,9 @@ class MySmartUserCPSignatureMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader( $lang[ 'update_process' ] );
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $lang[ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $lang[ 'update_process' ] );
 		
 		// ... //
 		
@@ -80,7 +82,7 @@ class MySmartUserCPSignatureMOD
 		
 		if ( $update )
 		{
-			$MySmartBB->func->msg('تم تحديث التوقيع بنجاح !');
+			$MySmartBB->func->msg( $lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=usercp_control_signature&amp;main=1');
 		}
 		

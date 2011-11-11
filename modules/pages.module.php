@@ -20,7 +20,7 @@ class MySmartAdsPageMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -34,7 +34,7 @@ class MySmartAdsPageMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
@@ -44,7 +44,7 @@ class MySmartAdsPageMOD
 		
 		if (!$MySmartBB->_CONF['template']['GetPage'])
 		{
-			$MySmartBB->func->error('الصفحه المطلوبه غير متوفره');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'page_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['GetPage'][ 'title' ] );
