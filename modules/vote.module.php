@@ -16,10 +16,12 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'vote' );
+		
 		$MySmartBB->load( 'poll' );
 		
 		// Show header with page title
-		$MySmartBB->func->showHeader('التصويت');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
 		if ($MySmartBB->_GET['start'])
 		{
@@ -37,7 +39,7 @@ class MySmartVoteMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
@@ -47,12 +49,12 @@ class MySmartVoteMOD
 		
 		if (!$Poll)
 		{
-			$MySmartBB->func->error('الاقتراع المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'vote_doesnt_exist' ] );
 		}
 		
 		if (!isset($MySmartBB->_POST['answer']))
 		{
-			$MySmartBB->func->error('يجب عليك الاختيار من اجل قبول اقتراعك');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_answer' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
@@ -62,7 +64,7 @@ class MySmartVoteMOD
 		
 		if ($Vote != false)
 		{
-			$MySmartBB->func->error('غير مسموح لك بالتصويت اكثر من مرّه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_vote_multi' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
@@ -79,7 +81,7 @@ class MySmartVoteMOD
 		
 			if ($update)
 			{
-				$MySmartBB->func->msg('تم احتساب تصويتك');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'vote_succeed' ] );
 				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
 			}
 		}

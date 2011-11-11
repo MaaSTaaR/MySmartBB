@@ -16,13 +16,15 @@ class MySmartMemberlistMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'memberlist' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_getMemberList();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -32,7 +34,7 @@ class MySmartMemberlistMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('قائمة الاعضاء');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'memberlist' ] );
 		
 		// ... //
 		

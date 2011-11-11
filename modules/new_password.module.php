@@ -16,13 +16,15 @@ class MySmartPasswordMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'new_password' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_index();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -32,17 +34,17 @@ class MySmartPasswordMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إتمام عملية تغيير كلمة المرور');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_password_process' ] );
 		
-		$MySmartBB->func->addressBar('إتمام عملية تغيير كلمة المرور');
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'change_password_process' ] );
 		
 		if (empty($MySmartBB->_GET['code']))
 		{
-			$MySmartBB->func->error('الرابط المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('يرجى تسجيل دخولك اولاً');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_login' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
@@ -52,7 +54,7 @@ class MySmartPasswordMOD
 		
 		if (!$RequestInfo)
 		{
-			$MySmartBB->func->error('المعذره الطلب غير موجود !');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'request_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -65,7 +67,7 @@ class MySmartPasswordMOD
 		
 		if ($UpdatePassword)
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->goto('index.php');
 		}
 	}

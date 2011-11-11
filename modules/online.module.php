@@ -14,7 +14,9 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('المتواجدون حالياً');
+		$MySmartBB->loadLanguage( 'online' );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'online' ] );
 		
 		if ($MySmartBB->_GET['show'])
 		{
@@ -22,7 +24,7 @@ class MySmartOnlineMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();

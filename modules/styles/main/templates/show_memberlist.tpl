@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-قائمة الاعضاء
+{$lang['memberlist']}
 {template}address_bar_part2{/template}
 
 <br />
@@ -11,16 +11,16 @@
 <table border="1" width="60%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="20%">
-		اسم المستخدم
+		{$lang['username']}
 		</td>
 		<td class="main1 rows_space" width="20%">
-		مسمى العضو
+		{$lang['usertitle']}
 		</td>
 		<td class="main1 rows_space" width="10%">
-		المشاركات
+		{$lang['posts']}
 		</td>
 		<td class="main1 rows_space" width="10%">
-		الزيارات
+		{$lang['visits']}
 		</td>
 	</tr>
 	{DB::getInfo}{$MemberList}
