@@ -17,9 +17,11 @@ class MySmartUserCPSettingMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_setting' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
@@ -32,7 +34,7 @@ class MySmartUserCPSettingMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( 'المسار المتبع غير صحيح !' );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -42,7 +44,7 @@ class MySmartUserCPSettingMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( 'تحرير خياراتك الخاصه' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'edit_options' ] );
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'style_res' ] = '';
 		
@@ -59,9 +61,9 @@ class MySmartUserCPSettingMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( 'تنفيذ عملية التحديث' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		
-		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث' );
+		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_POST['style'],
@@ -75,7 +77,7 @@ class MySmartUserCPSettingMOD
 		
 		if ( $update )
 		{
-			$MySmartBB->func->msg( 'تم التحديث بنجاح' );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'index.php?page=usercp_control_setting&amp;main=1', 2 );
 		}
 	}

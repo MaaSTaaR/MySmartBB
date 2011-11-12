@@ -3,19 +3,19 @@
 <div class="usercp_context">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} خياراتك الخاصه
+<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['your_options']}
 {template}address_bar_part2{/template}
 
 <form name="info" method="post" action="index.php?page=usercp_control_setting&amp;start=1">
 	<table align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
-			خياراتك الخاصه
+			{$lang['your_options']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1" width="30%">
-			الستايل
+			{$lang['style']}
 			</td>
 			<td class="row1" width="30%">
 				<select name="style">
@@ -27,23 +27,24 @@
 		</tr>
 		<tr align="center">
 			<td class="row2" width="30%">
-			التصفح الخفي
+			{$lang['hidden_browsing']}
 			</td>
 			<td class="row2" width="30%">
 				<select name="hide_online" size="1">
 				{if {$_CONF['member_row']['hide_online']} == 0}
-					<option value="1">نعم</option>
-					<option selected="selected" value="0">لا</option>
+					<option value="1">{$lang['yes']}</option>
+					<option selected="selected" value="0">{$lang['no']}
+					{$lang['']}</option>
 				{else}
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['yes']}</option>
+					<option value="0">{$lang['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1" width="30%">
-			الوقت
+			{$lang['time']}
 			</td>
 			<td class="row1" width="30%">
 				GMT <select size="1" name="user_time" dir="ltr">
@@ -79,16 +80,16 @@
 		</tr>
 		<tr align="center">
 			<td class="row2" width="30%">
-			السماح للاعضاء بمراسلتك بريدياً
+			{$lang['send_permission']}
 			</td>
 			<td class="row2" width="30%">
 				<select name="send_allow" size="1">
 				{if {$_CONF['member_row']['send_allow']} == 0}
-					<option value="1">نعم</option>
-					<option selected="selected" value="0">لا</option>
+					<option value="1">{$lang['yes']}</option>
+					<option selected="selected" value="0">{$lang['no']}</option>
 				{else}
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['yes']}</option>
+					<option value="0">{$lang['no']}</option>
 				{/if}
 				</select>
 			</td>
@@ -98,7 +99,7 @@
 	<br />
 	
 	<div align="center">
-		<input name="send" type="submit" value="موافق" />
+		<input name="send" type="submit" value="{$lang['common']['submit']}" />
 	</div>
 </form>
 
