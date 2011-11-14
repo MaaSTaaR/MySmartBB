@@ -16,19 +16,21 @@ class MySmartPrivateMassegeSendMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pm_send' );
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا', false);
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ], false );
 		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه', false);
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ], false );
 		}
 		
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط', false);
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ], false );
 		}
 		
 		$MySmartBB->load( 'pm,icon,toolbox,attach' );
@@ -55,7 +57,7 @@ class MySmartPrivateMassegeSendMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إرسال رساله خاصه');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_pm' ] );
 		
 		if ( isset( $MySmartBB->_GET['username'] ) )
 		{
@@ -67,7 +69,7 @@ class MySmartPrivateMassegeSendMOD
 															
 			if (!$GetToInfo)
 			{
-				$MySmartBB->func->error('العضو المطلوب غير موجود');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 			}
 			
 			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders_msg']);
@@ -90,23 +92,23 @@ class MySmartPrivateMassegeSendMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية الارسال');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_send_process' ] );
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الارسال');
+		$MySmartBB->func->addressBar( '<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'pm_send_process' ] );
 		
 		if (empty($MySmartBB->_POST['to'][0]))
 		{
-			$MySmartBB->func->error('يجب كتابة اسم المستخدم الذي تريد الارسال إليه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_username' ] );
 		}
 		
 		if (empty($MySmartBB->_POST['title']))
 		{
-			$MySmartBB->func->error('يجب كتابة عنوان الرساله');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_title' ] );
 		}
 		
 		if (empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يجب كتابة الرساله الخاصه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_message' ] );
 		}
 		
 		$size = sizeof($MySmartBB->_POST['to']);
@@ -148,7 +150,7 @@ class MySmartPrivateMassegeSendMOD
 				elseif (!$GetToInfo
 						and $size == 1)
 				{
-					$MySmartBB->func->error('العضو المطلوب غير موجود');
+					$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 				}
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
@@ -170,7 +172,7 @@ class MySmartPrivateMassegeSendMOD
 				elseif (!$GetMemberOptions['resive_pm']
 						and $size == 1)
 				{
-					$MySmartBB->func->error('المعذره , هذا العضو لا يمكن ان يستقبل الرسائل الخاصه');
+					$MySmartBB->func->error( $MySmartBB->lang[ 'member_cant_receive' ] );
 				}
 		
 				if ($GetMemberOptions['max_pm'] > 0)
@@ -194,7 +196,7 @@ class MySmartPrivateMassegeSendMOD
 					elseif ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
 							and $size == 1)
 					{
-						$MySmartBB->func->error('المعذره .. استهلك هذا العضو الحد الاقصى لرسائله , لذلك لا يمكنه استقبال رسائل جديده');
+						$MySmartBB->func->error( $MySmartBB->lang[ 'member_max_inbox' ] );
 					}
 				}
 				
@@ -245,7 +247,7 @@ class MySmartPrivateMassegeSendMOD
 							$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 							$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
 																'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
-																'title'	=>	'[الرد الآلي] ' . $GetToInfo['autoreply_title'],
+																'title'	=>	$MySmartBB->lang[ 'auto_reply' ] . ' ' . $GetToInfo['autoreply_title'],
 																'text'	=>	$GetToInfo['autoreply_msg'],
 																'date'	=>	$MySmartBB->_CONF['now'],
 																'folder'	=>	'inbox'	);
@@ -275,7 +277,7 @@ class MySmartPrivateMassegeSendMOD
      	}
      	else
      	{
-     		$MySmartBB->func->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
      	}
      	
      	$sucess_number 	= 	sizeof($success);
@@ -283,15 +285,15 @@ class MySmartPrivateMassegeSendMOD
 
      	if ($sucess_number == $size)
      	{
-     		$MySmartBB->func->msg('تم إرسال الرساله الخاصه بنجاح');	
+     		$MySmartBB->func->msg( $MySmartBB->lang[ 'message_sent' ] );	
      	}
      	elseif ($fail_number == $size)
      	{
-     		$MySmartBB->func->msg('لم يتم إرسال الرساله الخاصه');
+     		$MySmartBB->func->msg( $MySmartBB->lang[ 'sent_fail' ] );
      	}
      	elseif ($sucess_number < $size)
      	{
-     		$MySmartBB->func->msg('تم إرسال الرساله الخاصه إلى البعض');
+     		$MySmartBB->func->msg( $MySmartBB->lang[ 'sent_for_some' ] );
      	}
      	
      	$MySmartBB->func->move('index.php?page=pm_list&amp;list=1&amp;folder=inbox');

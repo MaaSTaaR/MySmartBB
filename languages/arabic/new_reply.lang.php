@@ -1,5 +1,7 @@
 <?php
 
+include( 'attachments.lang.php' );
+
 // ... //
 
 // ~ Templates ~ //
@@ -11,10 +13,6 @@ $lang[ 'template' ][ 'add_attachments' ] = 'اضافة مرفقات';
 $lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
-
-$lang[ 'template' ][ 'attachments_limited' ] = 'عدد الملفات المرفقه التي يمكنك اضافتها';
-$lang[ 'template' ][ 'file' ] = 'ملف';
-$lang[ 'template' ][ 'add_another_file' ] = 'اضف ملف آخر';
 
 // ... //
 

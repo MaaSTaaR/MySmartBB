@@ -1,5 +1,7 @@
 <?php
 
+include( 'attachments.lang.php' );
+
 // ... //
 
 // ~ Templates ~ //
@@ -10,7 +12,6 @@ $lang[ 'template' ][ 'topic_title' ] = 'عنوان الموضوع';
 $lang[ 'template' ][ 'topic_description' ] = 'وصف الموضوع';
 $lang[ 'template' ][ 'optional' ] = '(اختياري)';
 $lang[ 'template' ][ 'add_poll' ] = 'اضافة تصويت';
-$lang[ 'template' ][ 'add_attachments' ] = 'اضافة مرفقات';
 $lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
@@ -22,10 +23,6 @@ $lang[ 'template' ][ 'add_another_tag' ] = 'اضف علامه اخرى';
 $lang[ 'template' ][ 'poll_question' ] = 'السؤال';
 $lang[ 'template' ][ 'poll_answer' ] = 'الجواب';
 $lang[ 'template' ][ 'add_another_answer' ] = 'اضف جواب آخر';
-
-$lang[ 'template' ][ 'attachments_limited' ] = 'عدد الملفات المرفقه التي يمكنك اضافتها';
-$lang[ 'template' ][ 'file' ] = 'ملف';
-$lang[ 'template' ][ 'add_another_file' ] = 'اضف ملف آخر';
 
 // ... //
 

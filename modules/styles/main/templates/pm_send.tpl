@@ -6,8 +6,8 @@ function AddMoreResiver(x)
 	x += 1;
 	
 	$(".more_tr").hide();	
-	$("#resivers").append('<tr><td class="row1 rows_space">المُستقبل # ' + x + '</td><td class="row2 rows_space"><input name="to[]" class="to' + x + '" value="" type="text" /></td></tr>');
-	$("#resivers").append('<tr class="more_tr"><td class="row1 rows_space" colspan="2" align="center"><button name="more_resiver" class="more_resiver_id" type="button">اضف المزيد من المُستقبلين</button></td></tr>');
+	$("#resivers").append('<tr><td class="row1 rows_space">{$lang['receiver_number']}' + x + '</td><td class="row2 rows_space"><input name="to[]" class="to' + x + '" value="" type="text" /></td></tr>');
+	$("#resivers").append('<tr class="more_tr"><td class="row1 rows_space" colspan="2" align="center"><button name="more_resiver" class="more_resiver_id" type="button">{$lang['add_more_receiver']}</button></td></tr>');
 	
 	$(".more_resiver_id").click(function() { AddMoreResiver(x) });
 	
@@ -23,8 +23,8 @@ function AddMoreAttach(x)
 	if (x <= up_max)
 	{
 		$(".more_attach_tr").hide();	
-		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
-		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">{$lang['file']} #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="{$lang['add_another_file']}" /></td></tr>');
 		
 		$(".more_attach_class").click(function() { AddMoreAttach(x) });
 		
@@ -64,7 +64,7 @@ $(document).ready(Ready);
 <div class="usercp_context">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> {$_CONF['info_row']['adress_bar_separate']} إرسال رساله خاصه
+<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['send_pm']}
 {template}address_bar_part2{/template}
 {/if}
 
@@ -82,13 +82,13 @@ $(document).ready(Ready);
 <table border="1" width="50%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
-		معلومات
+		{$lang['information']}
 		</td>
 	</tr>
 	{if {$is_away_msg}}
 	<tr>
 		<td class="row1 rows_space">
-		{$to} غائب حالياً
+		{$to} {$lang['away']}
 		</td>
 		<td class="row2 rows_space">
 		{$away_msg}
@@ -98,7 +98,7 @@ $(document).ready(Ready);
 	{if {$is_sender_msg}}
 	<tr>
 		<td class="row1 rows_space">
-		رساله من {$to}
+		{$lang['message_from']} {$to}
 		</td>
 		<td class="row2 rows_space">
 		{$senders_msg}
@@ -113,12 +113,12 @@ $(document).ready(Ready);
 <table id="resivers" border="1" width="50%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
-		بيانات الارسال
+		{$lang['send_information']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1 rows_space">
-			 المُستقبل
+			{$lang['receiver']}
 		</td>
 		<td class="row2 rows_space">
 			<input name="to[]" value="{$to}" type="text" />
@@ -126,7 +126,7 @@ $(document).ready(Ready);
 	</tr>
 	<tr class="more_tr">
 		<td class="row1 rows_space" colspan="2" align="center">
-			 <button name="more_resiver" class="more_resiver_id" type="button">اضف المزيد من المُستقبلين</button>
+			 <button name="more_resiver" class="more_resiver_id" type="button">{$lang['add_more_receiver']}</button>
 		</td>
 	</tr>
 </table>
@@ -136,12 +136,12 @@ $(document).ready(Ready);
 <table border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
-		محتوى الرساله
+		{$lang['message_context']}
 		</td>
 	</tr>
 	</tr>
 		<td class="row1 rows_space">
-			عنوان الرسالة 
+			{$lang['message_title']}
 		</td>
 		<td class="row2 rows_space">
 			<input name="title" value="{$send_title}" type="text" />
@@ -152,12 +152,12 @@ $(document).ready(Ready);
 			<textarea rows="12" name="text" cols="69">{$send_text}</textarea>
 			<br />
 			<br />
-			<input name="insert" type="submit" value="موافق" />
+			<input name="insert" type="submit" value="{$lang['common']['submit']}" />
 		</td>
 	</tr>
 	<tr>
 		<td class="row2 rows_space" colspan="2">
-			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">اضافة مرفقات</a>
+			<input name="attach" id="attach_id" type="checkbox" /> <label for="attach_id">{$lang['add_attachments']}</a>
 		</td>
 	</tr>
 </table>
