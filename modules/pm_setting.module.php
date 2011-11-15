@@ -16,22 +16,24 @@ class MySmartPrivateMassegeMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pm_setting' );
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		}
 		
 		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
 		}
 		/** **/
 		
 		/** Visitor can't use the private massege system **/
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		/** **/
 				
@@ -48,7 +50,7 @@ class MySmartPrivateMassegeMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 					
 		$MySmartBB->func->getFooter();
@@ -58,7 +60,7 @@ class MySmartPrivateMassegeMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إعدادات الرسائل الخاصه');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
 		
 		$MySmartBB->template->display('pm_setting');
 	}
@@ -67,12 +69,12 @@ class MySmartPrivateMassegeMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إعدادات الرسائل الخاصه');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
 		
 		if ($MySmartBB->_POST['autoreply']
 			and (!isset($MySmartBB->_POST['title']) or !isset($MySmartBB->_POST['msg'])))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -88,7 +90,7 @@ class MySmartPrivateMassegeMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث البيانات بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=pm_setting&amp;setting=1&amp;index=1');
 		}
 	}
