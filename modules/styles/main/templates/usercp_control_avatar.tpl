@@ -44,19 +44,19 @@ $(document).ready(Ready);
 <div class="usercp_context">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} الصوره الشخصيه
+<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['avatar']}
 {template}address_bar_part2{/template}
 
 {if {$_CONF['member_row']['avater_path']} != ''}
 	<table align="center" border="1" width="50%" class="t_style_b">
 		<tr align="center">
 			<td width="50%" class="main1">
-			صورتك الحاليه
+			{$lang['your_avatar']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td width="50%" class="row1">
-				<img border="0" alt="صورتك الحاليه" src="{$_CONF['member_row']['avater_path']}" />
+				<img border="0" alt="{$lang['your_avatar']}" src="{$_CONF['member_row']['avater_path']}" />
 			</td>
 		</tr>
 	</table>
@@ -66,14 +66,14 @@ $(document).ready(Ready);
 	<table align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space">
-				الخيارات
+				{$lang['options']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td width="80%" class="row1">
 				<input name="options" type="radio" value="list" id="option1" />
 				<label for="option1">
-				اختيار صوره شخصيه من القائمه
+				{$lang['avatar_from_list']}
 				</label>
 			</td>
 		</tr>
@@ -81,7 +81,7 @@ $(document).ready(Ready);
 			<td width="80%" class="row2">
 				<input name="options" type="radio" value="site" id="option2">
 				<label for="option2">
-				صوره شخصيه من موقع خارجي
+				{$lang['avatar_from_website']}
 				</label>
 			</td>
 		</tr>
@@ -90,7 +90,7 @@ $(document).ready(Ready);
 			<td width="80%" class="row1">
 				<input name="options" type="radio" value="upload" id="option3" />
 				<label for="option3">
-				صوره شخصيه من حاسوبك الشخصي
+				{$lang['avatar_from_pc']}
 				</label>
 			</td>
 		</tr>
@@ -99,7 +99,7 @@ $(document).ready(Ready);
 			<td width="80%" class="row2">
 				<input name="options" type="radio" value="no" id="option4"/>
 				<label for="option4">
-				بدون صوره شخصيه
+				{$lang['no_avatar']}
 				</label>
 			</td>
 		</tr>
@@ -120,7 +120,7 @@ $(document).ready(Ready);
 	</div>
 	
 	<div align="center">
-		<input type="submit" name="change_avatar" value="موافق" />
+		<input type="submit" name="change_avatar" value="{$lang['common']['submit']}" />
 	</div>
 </form>
 

@@ -1,5 +1,7 @@
 <?php
 
+// TODO : Audit this file
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_func',true);
@@ -17,9 +19,11 @@ class MySmartUserCPAvatarMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_avatar' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
@@ -41,11 +45,11 @@ class MySmartUserCPAvatarMOD
 		// This line will include jQuery (Javascript library)
 		$MySmartBB->template->assign('JQUERY',true);
 		
-		$MySmartBB->func->showHeader('الصوره الشخصيه');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'avatar' ] );
 		
 		if (!$MySmartBB->_CONF['info_row']['allow_avatar'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام هذه الميزه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
 		}
 		
 		// ... //
@@ -82,9 +86,9 @@ class MySmartUserCPAvatarMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية التحديث');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية التحديث');
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
 		
 		$allowed_array = array('.jpg','.gif','.png');
 		
@@ -100,7 +104,7 @@ class MySmartUserCPAvatarMOD
 		{
 			if (empty($MySmartBB->_POST['avatar_list']))
 			{
-				$MySmartBB->func->error('يرجى اختيار الصوره المطلوبه');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
 			}
 			
 			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar_list'];
@@ -110,30 +114,30 @@ class MySmartUserCPAvatarMOD
 			if (empty($MySmartBB->_POST['avatar'])
 				or $MySmartBB->_POST['avatar'] == 'http://')
 			{
-				$MySmartBB->func->error('يرجى اختيار الصوره المطلوبه');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
 			}
 			elseif (!$MySmartBB->func->IsSite($MySmartBB->_POST['avatar']))
 			{
-				$MySmartBB->func->error('الموقع الذي قمت بكتابته غير صحيح !');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_website' ] );
 			}
 				
 			$extension = $MySmartBB->func->GetURLExtension($MySmartBB->_POST['avatar']);
 				
 			if (!in_array($extension,$allowed_array))
 			{
-				$MySmartBB->func->error('امتداد الصوره غير مسموح به !');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_extension' ] );
 			}
 			
 			$size = @getimagesize($MySmartBB->_POST['avatar']);
 
 			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
 			{
-				$MySmartBB->func->error('عرض الصورة غير مقبول');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_width' ] );
 			}
 			
 			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
 			{
-				$MySmartBB->func->error('طول الصورة غير مقبول');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
 			}
 			
 			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar'];
@@ -146,12 +150,12 @@ class MySmartUserCPAvatarMOD
 
 			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
 			{
-				$MySmartBB->func->error('عرض الصورة غير مقبول');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_width' ] );
 			}
 
 			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
 			{
-				$MySmartBB->func->error('طول الصورة غير مقبول');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
 			}
 			
      		if (!empty($MySmartBB->_FILES['upload']['name']))
@@ -174,7 +178,7 @@ class MySmartUserCPAvatarMOD
     	 			// The extension is not allowed
     	 			if (!in_array($ext,$allowed_array))
 					{
-						$MySmartBB->func->error('امتداد الصوره غير مسموح به !');
+						$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_extension' ] );
 					}
     	 			else
     	 			{
@@ -207,7 +211,7 @@ class MySmartUserCPAvatarMOD
     	}
 		else
 		{
-			$MySmartBB->func->msg('يرجى الانتظار');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] );
 			$MySmartBB->func->move('index.php?page=usercp&control=1&avatar=1&main=1',2);
 			$MySmartBB->func->stop();
 		}
@@ -216,7 +220,7 @@ class MySmartUserCPAvatarMOD
 			
 		if ( $update )
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=usercp_control_avatar&main=1',2);
 		}
 	}
