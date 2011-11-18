@@ -82,7 +82,7 @@
 	<br />
 	
 	<div align="center">
-		<input name="send" type="submit" value="{$lang['submit']}" />
+		<input name="send" type="submit" value="{$lang['common']['submit']}" />
 	</div>
 
 </div>

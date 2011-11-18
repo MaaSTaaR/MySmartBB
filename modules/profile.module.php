@@ -14,13 +14,15 @@ class MySmartProfileMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'profile' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showProfile();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 					
 		$MySmartBB->func->getFooter();
@@ -34,7 +36,7 @@ class MySmartProfileMOD
 		
 		// Show the header
 
-		$MySmartBB->func->showHeader('عرض معلومات العضو');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'view_member_info' ] );
 		
 		// ... //
 		
@@ -64,7 +66,7 @@ class MySmartProfileMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('مسار غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -75,7 +77,7 @@ class MySmartProfileMOD
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
-			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		} 
 		
 		$MySmartBB->func->CleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
@@ -83,7 +85,7 @@ class MySmartProfileMOD
 		// ... //
 		
 		// Where is the member now?     	
-     	$MySmartBB->online->updateMemberLocation( 'يطلع على الملف الشخصي للعضو : ' . $MySmartBB->_CONF['template']['MemberInfo']['username'] );
+     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_member_profile' ] . $MySmartBB->MySmartBB->lang_common[ 'colon' ] . ' ' . $MySmartBB->_CONF['template']['MemberInfo']['username'] );
      	
      	// ... //
      	
