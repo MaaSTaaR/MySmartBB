@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-الاحصائيات
+{$lang['statistics']}
 {template}address_bar_part2{/template}
 
 <br />
@@ -7,30 +7,30 @@
 <table border="1" width="95%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="10%" class="main1 rows_space">
-		عمر المنتدى بالايام
+		{$lang['board_age']}
 		</td>
 		<td width="20%" class="main1 rows_space">
-		تاريخ انشاء المنتدى
+		{$lang['creation_date']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد الاعضاء
+		{$lang['member_number']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد المواضيع
+		{$lang['subject_number']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد الردود
+		{$lang['reply_number']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد الاعضاء النشيطين
+		{$lang['active_member_number']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد المنتديات
+		{$lang['forum_number']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td width="10%" class="row1">
-		{$StaticInfo['Age']} يوم
+		{$StaticInfo['Age']} {$lang['day']}
 		</td>
 		<td width="20%" class="row1">
 		{$StaticInfo['InstallDate']}
@@ -58,13 +58,13 @@
 <table border="1" width="95%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space1">
-		كاتب اقدم موضوع
+		{$lang['older_subject_writer']}
 		</td>
 		<td class="main1 rows_space">
-		كاتب احدث موضوع
+		{$lang['newer_subject_writer']}
 		</td>
 		<td class="main1 rows_space">
-		كاتب اكثر المواضيع ردوداً
+		{$lang['most_reply_writer']}
 		</td>
 	</tr>
 	<tr align="center">
@@ -85,7 +85,7 @@
 <table border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
-		انشط الكتّاب من حيث عدد المشاركات
+		{$lang['most_active_writer']}
 		</td>
 	</tr>
 	{DB::getInfo}{$topten_res}{$TopTenList}
@@ -105,15 +105,15 @@
 <table border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
-		انشط المواضيع من حيث عدد الردود
+		{$lang['most_active_subject']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td width="30%" class="row1">
-		عنوان الموضوع
+		{$lang['subject_title']}
 		</td>
 		<td width="20%" class="row1">
-		عدد الردود
+		{$lang['reply_number']}
 		</td>
 	</tr>
 	{DB::getInfo}{$topsubject_res}{$TopSubject}
@@ -133,15 +133,15 @@
 <table border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
-		انشط المواضيع من حيث عدد الزيارات
+		{$lang['most_active_subject_visits']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td width="30%" class="row1">
-		عنوان الموضوع
+		{$lang['subject_title']}
 		</td>
 		<td width="20%" class="row1">
-		عدد الزوار
+		{$lang['visit_number']}
 		</td>
 	</tr>
 	{DB::getInfo}{$topvisit_res}{$TopSubjectVisitor}

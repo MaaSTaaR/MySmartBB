@@ -14,13 +14,15 @@ class MySmartStaticMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'static' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_showStatic();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter(); 
@@ -30,7 +32,7 @@ class MySmartStaticMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('الاحصائيات');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'statistics' ] );
 		
 		$StaticInfo = array();
 		
