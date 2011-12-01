@@ -14,6 +14,8 @@ class MySmartSearchEngineMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'search' );
+		
 		if ($MySmartBB->_GET['index'])
 		{
 			$this->_searchForm();
@@ -24,7 +26,7 @@ class MySmartSearchEngineMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -38,7 +40,7 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader('البحث');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'the_search' ] );
 		
 		// ... //
 		
@@ -53,7 +55,7 @@ class MySmartSearchEngineMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('نتائج البحث');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'search_result' ] );
 		
 		// ... //
 		
@@ -65,7 +67,7 @@ class MySmartSearchEngineMOD
 		
 		if (empty($keyword))
 		{
-			$MySmartBB->func->error('يرجى كتابة كلمة البحث المطلوبه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_keyword' ] );
 		}
 		
 		// ... //

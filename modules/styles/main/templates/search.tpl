@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-البحث
+{$lang['the_search']}
 {template}address_bar_part2{/template}
 
 <form name="search" method="get">
@@ -10,12 +10,12 @@
 <table border="1" width="60%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%" colspan="2">
-		محرك البحث
+		{$lang['search_engine']}
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1" width="25%">
-		الكلمة البحث
+		{$lang['keyword']}
 		</td>
 
         <td class="row1" width="25%">
@@ -24,7 +24,7 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="50%">
-		بمعرّف معين
+		{$lang['by_username']}
 		</td>
         <td class="row1" width="50%">
         	<input type="text" name="username" id="username_id" />
@@ -32,12 +32,12 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="50%">
-		المنتدى
+		{$lang['the_forum']}
 		</td>
 
         <td class="row1" width="50%">
         	<select size="1" name="section" id="section_id">
-        		<option selected="selected" value="all">[جميع المنتديات]</option>
+        		<option selected="selected" value="all">{$lang['all_forums']}</option>
         		{Des::foreach}{forums_list}{forum}
         		{if {$forum['parent']} == 0}
 				<option value="{$forum['id']}" class="main_section">- {$forum['title']}</option>
@@ -53,17 +53,7 @@
 <br />
 
 <div align="center">
-{if {$_CONF['info_row']['ajax_search']}}
-	<input type="button" value="بحث" name="search" id="search_id">
-{else}
-	<input type="submit" value="بحث" name="search">
-{/if}
+	<input type="submit" value="{$lang['search']}" name="search">
 </div>
 
 </form>
-
-{if {$_CONF['info_row']['ajax_search']}}
-<br />
-<div id="result">
-</div>
-{/if}
