@@ -26,7 +26,7 @@ class MySmartAttach
 	// The most high-level function
 	public function uploadAttachments( $upload_permission, $files_limit, $id, $field, $type, &$succeed = null, &$failed = null )
 	{
-		if ( $upload_permission)
+		if ( $upload_permission )
 		{
 			$files_number = sizeof( $this->engine->_FILES[ $field ][ 'name' ] );
 			

@@ -16,19 +16,21 @@ class MySmartPrivateMassegeListMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pm_list' );
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
 		}
 
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		$MySmartBB->load( 'pm' );
@@ -45,11 +47,11 @@ class MySmartPrivateMassegeListMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('قائمة الرسائل');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_list' ] );
 		
 		if (empty($MySmartBB->_GET['folder']))
 		{
-			$MySmartBB->func->error('المعذره .. المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
