@@ -1,5 +1,7 @@
 <?php
 
+// TODO : Audit this file
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
@@ -13,6 +15,8 @@ class MySmartSendMOD
 	public function run()
 	{
 		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'send' );
 		
 		if ($MySmartBB->_GET['member'])
 		{
@@ -33,37 +37,37 @@ class MySmartSendMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إرسال رساله بريديه إلى عضو');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'send_email' ] );
 		
 		if (!$MySmartBB->_CONF['member_permission'])
      	{
-     		$MySmartBB->func->error('لا يمكن للزوار إرسال رساله بريديه');
+     		$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_for_visitors' ] );
      	}
      	
      	$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
      	
      	if (empty($MySmartBB->_GET['id']))
      	{
-     		$MySmartBB->func->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
      	}
      	
-     	/* ... */
+     	// ... //
      	
      	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$MySmartBB->_CONF['template']['MemberInfo'] = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
-			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		} 
 		
 		$MySmartBB->func->cleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->template->display('send_email');
 	}
@@ -72,42 +76,42 @@ class MySmartSendMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('إرسال رساله بريديه إلى عضو');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'send_email' ] );
 		
 		if (!$MySmartBB->_CONF['member_permission'])
      	{
-     		$MySmartBB->func->error('لا يمكن للزوار إرسال رساله بريديه');
+     		$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_for_visitors' ] );
      	}
      	
      	$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
      	
      	if (empty($MySmartBB->_GET['id']))
      	{
-     		$MySmartBB->func->error('المسار المتبع غير صحيح');
+     		$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
      	}
      	
-     	/* ... */
+     	// ... //
      	
      	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$MemberInfo = $MySmartBB->rec->getInfo();
 		
-		/* ... */
+		// ... //
 		
 		if (!$MemberInfo)
 		{
-			$MySmartBB->func->error('المعذره .. العضو المطلوب غير موجود في سجلاتنا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		} 
 		
 		$MySmartBB->func->cleanArray($MemberInfo,'sql');
 		
-		/* ... */
+		// ... //
 		
 		if (empty($MySmartBB->_POST['title'])
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$send = $MySmartBB->func->mail(	$MemberInfo['email'],
@@ -117,12 +121,12 @@ class MySmartSendMOD
 		
 		if ($send)
 		{
-			$MySmartBB->func->msg('تم إرسال الرساله بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_succeed' ] );
 			$MySmartBB->func->move('index.php');
 		}
 		else
 		{
-			$MySmartBB->func->msg('هناك خطأ، لم يتم الارسال');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
 		}
 	}
 }
