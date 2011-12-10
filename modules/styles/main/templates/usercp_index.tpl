@@ -2,27 +2,27 @@
 
 <div class="usercp_context">
 	{template}address_bar_part1{/template}
-	<a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} الرئيسيه
+	<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['usercp_main']}
 	{template}address_bar_part2{/template}
   	
   	<table border="1" class="t_style_b" width="80%" align="center">
   		<tr align="center">
   			<td class="main1 rows_space" colspan="5">
-     		آخر المواضيع التي كتبتها
+     		{$lang['latest_own_subject']}
      		</td>
     	</tr>
 		<tr>
 			<td width="30%" class="main1 rows_space small_text" align="center" colspan="2">
-			عنوان الموضوع
+			{$lang['title']}
 			</td>
 			<td width="10%" class="main1 rows_space small_text" align="center">
-			عدد الردود
+			{$lang['replies_number']}
 			</td>
 			<td width="10%" class="main1 rows_space small_text" align="center">
-			عدد الزوار
+			{$lang['visitors_number']}
 			</td>
 			<td width="28%" class="main1 rows_space small_text" align="center">
-			آخر رد
+			{$lang['last_reply']}
 			</td>
 		</tr>
     	{DB::getInfo}{$last_subjects_res}{$subject}
@@ -35,7 +35,7 @@
 					{$subject['title']}
 				</a> 
 				{if {$subject['close']}}
-				<small>(مغلق)</small>
+				<small>({$lang['closed']})</small>
 				{/if}
 				<br />
 				<font class="small">{$subject['subject_describe']}</font>
@@ -48,9 +48,9 @@
 			</td>
 			<td width="28%" class="row2" align="center">
 				{if {$subject['reply_number']} <= 0}
-			لا يوجد ردود
+			    {$lang['no_replies']}
 				{else}
-				{$subject['reply_date']} بواسطة <a href="index.php?page=profile&show=1&username={$subject['last_replier']}">{$subject['last_replier']}</a>
+				{$subject['reply_date']} {$lang['written_by']} <a href="index.php?page=profile&show=1&username={$subject['last_replier']}">{$subject['last_replier']}</a>
 				{/if}
 			</td>
 		</tr>

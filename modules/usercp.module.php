@@ -17,9 +17,11 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_main' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( isset( $MySmartBB->_GET[ 'index' ] ) )
@@ -28,7 +30,7 @@ class MySmartUserCPMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter();
@@ -38,7 +40,7 @@ class MySmartUserCPMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('لوحة تحكم العضو');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'usercp' ] );
 		
 		// ... //
 		
