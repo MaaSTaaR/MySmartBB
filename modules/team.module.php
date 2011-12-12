@@ -14,13 +14,15 @@ class MySmartTeamMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'team' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showTeam();
 		}
 		else
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->func->getFooter(); 
@@ -33,7 +35,7 @@ class MySmartTeamMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('المسؤولون');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'moderators' ] );
 		
 		//$MySmartBB->member->getTeamList();
 		

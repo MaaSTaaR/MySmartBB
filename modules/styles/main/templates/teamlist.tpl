@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-المسؤولين
+{$lang['moderators']}
 {template}address_bar_part2{/template}
 
 <br />
@@ -7,10 +7,10 @@
 <table cellpadding="2" cellspacing="2" border="1" align="center" class="t_style_b" width="50%">
 	<tr align="center">
 		<td class="tcat1" width="30%">
-		اسم المستخدم
+		{$lang['username']}
 		</td>
 		<td class="tcat1" width="20%">
-		المسمى
+		{$lang['usertitle']}
 		</td>
 	</tr>
 {DB::getInfo}{$GetTeamList}

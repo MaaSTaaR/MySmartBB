@@ -17,9 +17,11 @@ class MySmartUserCPEmailMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_email' ) ;
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
@@ -38,7 +40,7 @@ class MySmartUserCPEmailMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( 'تغيير البريد الالكتروني' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_email' ] );
 		
 		$MySmartBB->template->display( 'usercp_control_email' );
 	}
@@ -49,9 +51,9 @@ class MySmartUserCPEmailMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader( 'تنفيذ العمليه' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'execute_process' ] );
 		
-		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه' );
+		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
 		
 		// ... //
 		
@@ -63,7 +65,7 @@ class MySmartUserCPEmailMOD
 		if ( empty($MySmartBB->_POST['new_email']) 
 			or empty($MySmartBB->_POST['password']) )
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -77,18 +79,18 @@ class MySmartUserCPEmailMOD
 		
 		if ( !$checkPasswordCorrect )
 		{
-			$MySmartBB->func->error( 'المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_password' ] );
 		}
 		
 		// ... //
 		
 		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['new_email']))
 		{
-			$MySmartBB->func->error('يرجى كتابة بريدك الالكتروني الصحيح');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_email' ] );
 		}
 		if ( $EmailExists > 0 )
 		{
-			$MySmartBB->func->error('المعذره .. البريد الالكتروني موجود مسبقاً');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'exist_email' ] );
 		}
 		
 		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
@@ -101,7 +103,7 @@ class MySmartUserCPEmailMOD
 		
 		if ( $update )
 		{
-			$MySmartBB->func->msg( 'تم التحديث بنجاح !' );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'index.php?page=usercp_control_email&amp;main=1' );
 		}
 	}
