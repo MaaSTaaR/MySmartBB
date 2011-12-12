@@ -16,19 +16,21 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pm_show' );
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
 		}
 		
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
@@ -50,7 +52,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )		
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -64,7 +66,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		if (!$MySmartBB->_CONF['template']['MassegeRow'])
 		{
-			$MySmartBB->func->error('الرساله المطلوبه غير موجوده');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -104,7 +106,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
-		$MySmartBB->template->assign('send_title','رد : ' . $MySmartBB->_CONF['template']['MassegeRow']['title']);
+		$MySmartBB->template->assign('send_title', $MySmartBB->lang[ 'reply' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $MySmartBB->_CONF['template']['MassegeRow']['title']);
 		
 		$MySmartBB->template->assign('to',$MySmartBB->_CONF['template']['MassegeRow']['user_from']);
 		
@@ -121,7 +123,7 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace('رد :','',$MySmartBB->_CONF['template']['MassegeRow']['title']);
+		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace( $MySmartBB->lang[ 'reply' ] . ' ' . $MySmartBB->lang_common[ 'colon' ],'',$MySmartBB->_CONF['template']['MassegeRow']['title']);
 		$MySmartBB->_CONF['template']['MassegeRow']['text'] 	=	$MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['MassegeRow']['text']);
 		
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['MassegeRow']['text']);
