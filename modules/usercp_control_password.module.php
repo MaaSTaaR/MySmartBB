@@ -17,9 +17,11 @@ class MySmartUserCPPasswordMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_password' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			$MySmartBB->func->error( 'المعذره .. هذه المنطقه للاعضاء فقط' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
@@ -38,7 +40,7 @@ class MySmartUserCPPasswordMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( 'تغيير كلمة السر' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_password' ] );
 		
 		$MySmartBB->template->display( 'usercp_control_password' );
 	}
@@ -49,16 +51,16 @@ class MySmartUserCPPasswordMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader( 'تنفيذ العمليه' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'execute_process' ] );
 		
-		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">لوحة تحكم العضو</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ العمليه' );
+		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
 		
 		// ... //
 		
 		if ( empty( $MySmartBB->_POST[ 'old_password' ] ) 
 			or empty( $MySmartBB->_POST[ 'new_password'] ) )
 		{
-			$MySmartBB->func->error( 'يرجى تعبئة كافة المعلومات' );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -73,7 +75,7 @@ class MySmartUserCPPasswordMOD
 		
 		if ( !$checkPasswordCorrect )
 		{
-			$MySmartBB->func->error( 'المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_password' ] );
 		}
 		
 		// ... //
@@ -86,7 +88,7 @@ class MySmartUserCPPasswordMOD
 
 		if ( $update )
 		{
-			$MySmartBB->func->msg( 'تم التحديث بنجاح !' );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'index.php?page=usercp_control_password&amp;main=1' );
 		}
 	}

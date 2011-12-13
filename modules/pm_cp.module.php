@@ -16,19 +16,21 @@ class MySmartPrivateMassegeCPMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pm_cp' );
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
 		{
-			$MySmartBB->func->error('المعذره .. خاصية الرسائل الخاصة موقوفة حاليا');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		}
 
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك استخدام الرسائل الخاصه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
 		}
 
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			$MySmartBB->func->error('المعذره .. هذه المنطقه للاعضاء فقط');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		}
 
 		if ($MySmartBB->_GET['cp'])
@@ -46,15 +48,15 @@ class MySmartPrivateMassegeCPMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader('تنفيذ عملية الحذف');
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'delete_process' ] );
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">الرسائل الخاصه</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' تنفيذ عملية الحذف');
+		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'delete_process' ] );
 		
 		if ( !is_array( $MySmartBB->_POST[ 'delete_list' ] ) )
 		{
-			$MySmartBB->func->error('المعذره لا يمكن إتمام العمليه.');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_complete_process' ] );
 		}
 		
 		$k = 1;
@@ -96,7 +98,7 @@ class MySmartPrivateMassegeCPMOD
 			
 			$MySmartBB->rec->update();
 			
-			$MySmartBB->func->msg('تم الحذف بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 			$MySmartBB->func->move('index.php?page=pm_list&list=1&folder=inbox');
 		}
 	}
