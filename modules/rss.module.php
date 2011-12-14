@@ -14,12 +14,14 @@ class MySmartRSSMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'rss' );
+		
 		echo '<?xml version="1.0"?>';
 		echo '<rss version="2.0">';
 		echo '<channel>';
 		echo '<title>' . $MySmartBB->_CONF['info_row']['title'] . '</title>';
 		echo '<link>' . $MySmartBB->func->getForumAdress() . '</link>';
-		echo '<description>خلاصات آخر المواضيع النشطه في ' . $MySmartBB->_CONF['info_row']['title'] . '</description>';
+		echo '<description>' $MySmartBB->lang[ 'latest_subjects_rss' ] . ' ' . $MySmartBB->_CONF['info_row']['title'] . '</description>';
 		
 		if ($MySmartBB->_GET['subject'])
 		{
@@ -66,7 +68,7 @@ class MySmartRSSMOD
 		if (empty($MySmartBB->_GET['id']))
 		{
 			echo '<item>';
-			echo '<title>المسار المتبع غير صحيح</title>';
+			echo '<title>' . $MySmartBB->lang_common[ 'wrong_path' ] . '</title>';
 			echo '</item>';
 		}
 		else
@@ -78,7 +80,7 @@ class MySmartRSSMOD
 			
 			if (!$Section)
 			{
-				$MySmartBB->func->error('القسم المطلوب غير موجود');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
 			}	
 
 			/* ... */
@@ -95,7 +97,7 @@ class MySmartRSSMOD
 			if ($SectionGroup['view_section'] != 1)
 			{
 				echo '<item>';
-				echo '<title>غير مسموح لك الاطلاع على محتويات هذا المنتدى</title>';
+				echo '<title>' . $MySmartBB->lang[ 'cant_view_section' ] . '</title>';
 				echo '</item>';
 				
 				return 0;
@@ -105,7 +107,7 @@ class MySmartRSSMOD
 			if ($Section['main_section'])
 			{
 				echo '<item>';
-				echo '<title>هذا المنتدى قسم رئيسي</title>';
+				echo '<title>' . $MySmartBB->lang[ 'this_is_main_section' ] . '</title>';
 				echo '</item>';
 				
 				return 0;
@@ -114,7 +116,7 @@ class MySmartRSSMOD
 			if (!empty($Section['section_password']))
 			{
 				echo '<item>';
-				echo '<title>هذا المنتدى محمي بكلمة مرور</title>';
+				echo '<title>' . $MySmartBB->lang[ 'section_protected' ] . '</title>';
 				echo '</item>';
 				
 				return 0;

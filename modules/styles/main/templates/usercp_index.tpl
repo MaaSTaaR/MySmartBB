@@ -50,7 +50,8 @@
 				{if {$subject['reply_number']} <= 0}
 			    {$lang['no_replies']}
 				{else}
-				{$subject['reply_date']} {$lang['written_by']} <a href="index.php?page=profile&show=1&username={$subject['last_replier']}">{$subject['last_replier']}</a>
+				{$subject['reply_date']} 
+				{$lang['written_by']} <a href="index.php?page=profile&show=1&username={$subject['last_replier']}">{$subject['last_replier']}</a>
 				{/if}
 			</td>
 		</tr>

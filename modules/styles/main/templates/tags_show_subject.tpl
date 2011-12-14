@@ -1,9 +1,10 @@
 {template}address_bar_part1{/template}
-العلامات
+{$lang['tags']}
 {template}address_bar_part2{/template}
 
 <div align="center">
-	<strong>المواضيع التي تستخدم <em>{$tag}</em> كعلامه</strong>
+	<strong>
+	{$lang['topic_that_used']} <em>{$tag}</em> {$lang['as_tag']}</strong>
 </div>
 
 <br />
@@ -15,7 +16,7 @@
 <table border="1" class="t_style_b" width="60%" align="center">
 	<tr align="center">
 		<td width="80%" class="main1 rows_space" colspan="2">
-		عناوين المواضيع
+		{$lang['topics_title']}
 		</td>
 	</tr>
 	{DB::getInfo}{$Subject}

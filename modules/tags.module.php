@@ -14,6 +14,8 @@ class MySmartTagsMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'tags' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_show();
@@ -31,7 +33,7 @@ class MySmartTagsMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag' ];
@@ -40,7 +42,7 @@ class MySmartTagsMOD
 		$tag_info = $MySmartBB->rec->getInfo();
 		
 		if ( !$tag_info )
-			$MySmartBB->func->error( 'العلامه المطلوبه غير موجوده' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'tag_doesnt_exist' ] );
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
@@ -49,7 +51,7 @@ class MySmartTagsMOD
 		
 		$number = $MySmartBB->rec->getNumber();
 		
-		$MySmartBB->func->showHeader( 'العلامات' );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'tags' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		
