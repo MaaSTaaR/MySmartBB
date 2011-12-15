@@ -94,15 +94,7 @@ class MySmartBB
   		
   		// ... //
   		
-  		$this->lang_dir = 'languages/' . $config[ 'lang_dir' ] . '/';
-  		
-  		require( $this->lang_dir . 'language.php' );
-  		
-  		$this->lang_common = $lang[ 'common' ];
-  		$this->lang_info = &$lang_info;
-  		
-  		unset( $lang[ 'common' ] );
-  		unset( $lang_info );
+  		$this->initLanguage( $config[ 'lang_dir' ] );
   		
   		// ... //
   		
@@ -137,6 +129,21 @@ class MySmartBB
   			$this->func->move( './setup/install/', 0 );
   			$this->func->stop( true );
   		}
+  	}
+  	
+  	// ... //
+  	
+  	private function initLanguage( $dir )
+  	{
+  		$this->lang_dir = 'languages/' . $dir . '/';
+  		
+  		require( $this->lang_dir . 'language.php' );
+  		
+  		$this->lang_common = $lang[ 'common' ];
+  		$this->lang_info = &$lang_info;
+  		
+  		unset( $lang[ 'common' ] );
+  		unset( $lang_info );
   	}
   	
   	// ... //

@@ -46,7 +46,7 @@ class MySmartCommon
 			// ... //
 			
 			$username = trim( $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'username_cookie' ] ] );
-			$password = trim ( $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'password_cookie' ] ] );
+			$password = trim( $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'password_cookie' ] ] );
 			
 			// ... //
 			
