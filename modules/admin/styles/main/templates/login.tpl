@@ -2,12 +2,12 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
-			تسجيل الدخول
+			{$lang['common']['login']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			اسم المستخدم
+			{$lang['common']['username']}
 			</td>
 			<td class="row1">
 				<input type="text" name="username" />
@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			كلمة المرور
+			{$lang['common']['password']}
 			</td>
 			<td class="row2">
 				<input type="password" name="password" />
@@ -26,7 +26,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 
 </form>

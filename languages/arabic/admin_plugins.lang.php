@@ -10,6 +10,7 @@ $lang[ 'plugin_installed_enabled' ] = 'تم تثبيت و تفعيل الإضا�
 $lang[ 'install_failed' ] = 'هناك خطأ لم يتم تثبيت الإضافة';
 $lang[ 'plugin_doesnt_exist' ] = 'الإضافه غير موجوده في قواعد البيانات';
 
+$lang[ 'template' ][ 'plugins_system' ] = 'نظام الإضافات';
 $lang[ 'template' ][ 'installed_plugins' ] = 'الإضافات المُثبته'; // plugin_main
 $lang[ 'template' ][ 'plugin_name' ] = 'اسم الإضافة'; // plugin_main
 $lang[ 'template' ][ 'enable_disable' ] = 'تعطيل\تفعيل'; // plugin_main

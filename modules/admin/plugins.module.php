@@ -18,6 +18,8 @@ class MySmartPluginMOD
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_plugins' );
+		    
 			$MySmartBB->template->display('header');
 			
 			if ( $MySmartBB->_GET[ 'control' ] )
@@ -70,7 +72,7 @@ class MySmartPluginMOD
 		
 		$path = 'plugins/';
 		
-		$handle = opendir( $path );
+		$handle = @opendir( $path ); // Please PHP be quiet a little bit :-)
 		
 		if ( $handle )
 		{
@@ -96,7 +98,7 @@ class MySmartPluginMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( 'مجلد الإضافات غير موجود' );
+			$MySmartBB->func->error( $lang[ 'plugins_dir_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -130,7 +132,7 @@ class MySmartPluginMOD
 			
 			if ( $activate )
 			{
-				$MySmartBB->func->msg( 'تم تفعيل الإضافة' );
+				$MySmartBB->func->msg( $lang[ 'plugin_enabled' ] );
 				$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 			}
 		}
@@ -156,7 +158,7 @@ class MySmartPluginMOD
 			
 			if ( $deactivate )
 			{
-				$MySmartBB->func->msg( 'تم تعطيل الإضافة' );
+				$MySmartBB->func->msg( $lang[ 'plugin_disabled' ] );
 				$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 			}
 		}
@@ -170,7 +172,7 @@ class MySmartPluginMOD
 		
 		if ( $MySmartBB->plugin->uninstallPlugin( $info[ 'id' ], $info[ 'path' ] ) )
 		{
-			$MySmartBB->func->msg( 'تم إلغاء تثبيت الإضافه' );
+			$MySmartBB->func->msg( $lang[ 'plugin_uninstalled' ] );
 			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 		}
 	}
@@ -188,12 +190,12 @@ class MySmartPluginMOD
 		
 		if ( empty( $path ) )
 		{
-			$MySmartBB->func->error( 'المسار غير صحيح' );
+			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
 		}
 		
 		if ( !is_dir( 'plugins/' . $path ) )
 		{
-			$MySmartBB->func->error( 'مجلد الإضافة المطلوب تثبيتها غير موجود' );
+			$MySmartBB->func->error( $lang[ 'plugin_dir_doesnt_exist' ] );
 		}
 		
 		// ~ We have to check if the plugin already installed or not ~ //
@@ -204,18 +206,18 @@ class MySmartPluginMOD
 		
 		if ( $check != 0 )
 		{
-			$MySmartBB->func->error( 'الإضافة مُثبته مُسبقاً' );
+			$MySmartBB->func->error( $lang[ 'plugin_already_installed' ] );
 		}
 		
 		// ~ Install the plugin ~ //
 		if ( $MySmartBB->plugin->installPlugin( $path ) )
 		{
-			$MySmartBB->func->msg( 'تم تثبيت و تفعيل الإضافة' );
+			$MySmartBB->func->msg( $lang[ 'plugin_installed_enabled' ] );
 			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 		}
 		else
 		{
-			$MySmartBB->func->msg( 'هناك خطأ لم يتم تثبيت الإضافة' );
+			$MySmartBB->func->msg( $lang[ 'install_failed' ] );
 		}
 	}
 	
@@ -227,7 +229,7 @@ class MySmartPluginMOD
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 		{
-			$MySmartBB->func->error( 'المسار المتبع غير صحيح' );
+			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
@@ -237,7 +239,7 @@ class MySmartPluginMOD
 		
 		if ( $info == false )
 		{
-			$MySmartBB->func->error( 'الإضافه غير موجوده في قواعد البيانات' );
+			$MySmartBB->func->error( $lang[ 'plugin_doesnt_exist' ] );
 		}
 		
 		return $info;
