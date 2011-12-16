@@ -19,6 +19,8 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'admin_login' );
+		
 		if ($MySmartBB->_GET['login'])
 		{
 			$this->_startLogin();

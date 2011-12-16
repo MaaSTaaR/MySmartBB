@@ -18,6 +18,8 @@ class MySmartSectionSortMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_sections_sort' );
+		    
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'start' ] )

@@ -20,6 +20,8 @@ class MySmartToolboxMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_toolbox' );
+		    
 			$MySmartBB->template->display('header');
 			
 			$MySmartBB->load( 'toolbox' );

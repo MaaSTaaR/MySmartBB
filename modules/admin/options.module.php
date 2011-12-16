@@ -18,6 +18,8 @@ class MySmartOptionsMOD
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_options' );
+		    
 			$MySmartBB->load( 'group' );
 			
 			$MySmartBB->template->display('header');

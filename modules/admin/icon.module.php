@@ -18,6 +18,8 @@ class MySmartIconMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_icon' );
+		    
 			$MySmartBB->load( 'icon' );
 			
 			$MySmartBB->template->display('header');

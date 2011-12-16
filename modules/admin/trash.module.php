@@ -18,6 +18,8 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_trash' );
+		    
 			$MySmartBB->template->display('header');
 			
 			$MySmartBB->load( 'reply,subject' );

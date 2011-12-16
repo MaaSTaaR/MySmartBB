@@ -18,6 +18,8 @@ class MySmartModeratorsMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_moderators' );
+		    
 			$MySmartBB->load( 'moderator,section' );
 			
 			$MySmartBB->template->display('header');

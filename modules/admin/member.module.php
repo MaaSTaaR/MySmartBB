@@ -18,6 +18,8 @@ class MySmartMemberMOD
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_member' );
+		    
 			$MySmartBB->template->display('header');
 			
 			if ($MySmartBB->_GET['control'])

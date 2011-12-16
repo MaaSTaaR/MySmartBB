@@ -18,6 +18,8 @@ class MySmartAvatarMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_avatar' );
+		    
 			$MySmartBB->template->display('header');
 		
 			if ($MySmartBB->_GET['add'])
@@ -182,6 +184,7 @@ class MySmartAvatarMOD extends _func
 	}
 }
 
+// TODO : KILL ME
 class _func
 {
 	function check_by_id(&$Inf)

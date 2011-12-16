@@ -18,6 +18,8 @@ class MySmartSectionEditMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_sections_del' );
+		    
 			$MySmartBB->load( 'group,subject' );
 			
 			$MySmartBB->template->display( 'header' );

@@ -18,6 +18,8 @@ class MySmartSectionMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_sections' );
+		    
 			$MySmartBB->template->display('header');
 			
 			if ( $MySmartBB->_GET[ 'control' ] )
@@ -29,7 +31,7 @@ class MySmartSectionMOD
 			}
 			elseif ($MySmartBB->_GET['groups'])
 			{
-
+			    // TODO : what?
 			}
 			
 			$MySmartBB->template->display('footer');

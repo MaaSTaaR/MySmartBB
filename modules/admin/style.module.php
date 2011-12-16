@@ -20,6 +20,8 @@ class MySmartStyleMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_style' );
+		    
 			$MySmartBB->load( 'style' );
 			
 			if ($MySmartBB->_GET['add'])

@@ -18,6 +18,8 @@ class MySmartForumsEditMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_forums_edit' );
+		    
 			$MySmartBB->load( 'section' );
 			
 			$MySmartBB->template->display( 'header' );

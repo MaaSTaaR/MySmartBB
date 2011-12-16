@@ -18,6 +18,8 @@ class MySmartGroupsEditMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_groups_edit' );
+		    
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'main' ] )

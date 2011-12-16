@@ -18,6 +18,8 @@ class MySmartSmileMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_smile' );
+		    
 			$MySmartBB->load( 'icon' );
 			
 			$MySmartBB->template->display('header');

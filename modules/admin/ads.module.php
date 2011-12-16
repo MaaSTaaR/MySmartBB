@@ -18,6 +18,8 @@ class MySmartAdsMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_ads' );
+		    
 			$MySmartBB->template->display('header');
 		
 			if ($MySmartBB->_GET['add'])
@@ -213,6 +215,7 @@ class MySmartAdsMOD extends _func
 	}
 }
 
+// TODO : KILL ME
 class _func
 {	
 	function check_by_id(&$AdsInfo)

@@ -18,6 +18,8 @@ class MySmartMemberDelMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_member_del' );
+		    
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'main' ] )

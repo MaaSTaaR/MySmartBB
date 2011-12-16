@@ -18,6 +18,8 @@ class MySmartMainMOD
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_main' );
+		    
 			if (empty($MySmartBB->_GET['top']) 
 				and empty($MySmartBB->_GET['right']) 
 				and empty($MySmartBB->_GET['left']))

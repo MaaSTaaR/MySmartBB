@@ -18,6 +18,8 @@ class MySmartNotesMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'admin_notes' );
+		
 		$MySmartBB->template->display('header');
 		
 		// No changes

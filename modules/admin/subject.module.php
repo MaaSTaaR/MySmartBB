@@ -18,6 +18,8 @@ class MySmartSubjectMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->loadLanguage( 'admin_subject' );
+		    
 			$MySmartBB->template->display('header');
 			
 			$MySmartBB->load( 'reply,subject,section' );

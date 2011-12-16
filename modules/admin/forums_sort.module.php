@@ -18,6 +18,8 @@ class MySmartForumsSortMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+		    $MySmartBB->loadLanguage( 'admin_forums_sort' );
+		    
 			$MySmartBB->load( 'section' );
 			
 			$MySmartBB->template->display( 'header' );
