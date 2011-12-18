@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=avatar&amp;control=1&amp;main=1">الصور الشخصيه</a></div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=avatar&amp;control=1&amp;main=1">{$lang['avatars']}</a></div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
-			اضافة صوره جديده
+			{$lang['add_avatar']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			مسار الصوره
+			{$lang['path']}
 			</td>
 			<td class="row1">
 				<input type="text" name="path" />
@@ -24,7 +24,7 @@
 	<br />
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

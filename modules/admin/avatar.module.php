@@ -80,7 +80,7 @@ class MySmartAvatarMOD extends _func
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
@@ -93,7 +93,7 @@ class MySmartAvatarMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الصوره بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'avatar_added' ] );
 			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
@@ -131,7 +131,7 @@ class MySmartAvatarMOD extends _func
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
@@ -146,7 +146,7 @@ class MySmartAvatarMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الصوره بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'avatar_updated' ] );
 			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
@@ -172,13 +172,13 @@ class MySmartAvatarMOD extends _func
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الصوره بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'avatar_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
@@ -193,7 +193,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -206,7 +206,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الصوره المطلوبه غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'avatar_doesnt_exit' ] );
 		}
 	}
 }

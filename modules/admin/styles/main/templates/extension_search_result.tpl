@@ -1,6 +1,6 @@
 ﻿<br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=extension&amp;search=1&amp;main=1">البحث بالمرفقات</a> &raquo; <a href="admin.php?page=extension&amp;search=1&amp;main=1">بحث</a> &raquo; نتيجة البحث</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=extension&amp;search=1&amp;main=1">{$lang['search_attachments']}</a> &raquo; <a href="admin.php?page=extension&amp;search=1&amp;main=1">{$lang['search']}</a> &raquo; {$lang['search_result']}</div>
 
 <br />
 
@@ -9,16 +9,16 @@
 	<table width="90%" class="t_style_b" border="1">
 		<tr align="center">
 			<td class="main1">
-			اسم الملف
+			{$lang['filename']}
 			</td>
 			<td class="main1">
-			مرات التحميل
+			{$lang['downloads']}
 			</td>
 			<td class="main1">
-			حجم الملف
+			{$lang['filesize']}
 			</td>
 			<td class="main1">
-			مشاهدة المشاركة
+			{$lang['see_topic']}
 			</td>
 		</tr>
 		<tr align="center">
@@ -32,7 +32,7 @@
 				{$Inf['filesize']}
 			</td>
 			<td class="row1">
-				<a href="./index.php?page=topic&amp;show=1&amp;id={$Inf['subject_id']}" target="_blank">[مشاهدة المشاركة‎]‏</a>
+				<a href="./index.php?page=topic&amp;show=1&amp;id={$Inf['subject_id']}" target="_blank">[{$lang['see_topic']}‎]‏</a>
 			</td>
 		</tr>
 	</table>

@@ -66,7 +66,7 @@ class MySmartForumsAddMOD
  		if (empty($MySmartBB->_POST['name'])
  			or ($MySmartBB->_POST['order_type'] == 'manual' and empty($MySmartBB->_POST['sort'])))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -170,17 +170,17 @@ class MySmartForumsAddMOD
 				if ( $parent_info[ 'parent' ] != 0 )
 					$cache = $MySmartBB->section->updateSectionsCache( $parent_info[ 'parent' ] );
 				
-				$MySmartBB->func->msg('تم اضافة المنتدى بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'forum_added' ] );
 				$MySmartBB->func->move('admin.php?page=forums_edit&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 			}
 			else
 			{
-				$MySmartBB->func->error('هناك مشكله، لا يمكنه تحديث المعلومات المخبأه');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cache_update_failed' ] );
 			}
 		}
 		else
 		{
-			$MySmartBB->func->error('هناك مشكله، لم يتمكن من اضافة القسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'add_failed' ] );
 		}
 	}
 }

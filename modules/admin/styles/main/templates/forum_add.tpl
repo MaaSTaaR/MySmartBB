@@ -38,7 +38,7 @@ $(document).ready(Ready);
 
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">المنتديات</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">{$lang['forums']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -46,12 +46,12 @@ $(document).ready(Ready);
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			المعلومات الاساسيه
+			{$lang['basic_information']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			اسم المنتدى
+			{$lang['forum_name']}
 			</td>
 			<td class="row1">
 				<input type="text" name="name" id="input_name" value="" size="30" />
@@ -59,19 +59,19 @@ $(document).ready(Ready);
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			ترتيبه
+			{$lang['sort']}
 			</td>
 			<td class="row2">
 				<select name="order_type" id="order_type_id">
-					<option value="auto" selected="selected">ترتيب آلي</option>
-					<option value="manual">ترتيب يدوي</option>
+					<option value="auto" selected="selected">{$lang['automatic_sort']}</option>
+					<option value="manual">{$lang['manual_sort']}</option>
 				</select>
 				<input type="text" name="sort" id="sort_id" value="" size="5" />
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			تواجد المنتدى
+			{$lang['position']}
 			</td>
 			<td class="row2">
 				<select name="parent" id="select_parent">
@@ -91,7 +91,7 @@ $(document).ready(Ready);
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			وصف المنتدى
+			{$lang['description']}
 			</td>
 		</tr>
 		<tr align="center">
@@ -106,21 +106,21 @@ $(document).ready(Ready);
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="4">
-			الصلاحيات المختصره
+			{$lang['permissions_shorcut']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="main2">
-			المجموعه
+			{$lang['group']}
 			</td>
 			<td class="main2">
-			امكانية عرض الاقسام
+			{$lang['can_view_sections']}
 			</td>
 			<td class="main2">
-			كتابة موضوع
+			{$lang['write_topic']}
 			</td>
 			<td class="main2">
-			كتابة رد
+			{$lang['write_reply']}
 			</td>
 		</tr>
 		{DB::getInfo}{$group_res}{$groups}
@@ -129,38 +129,38 @@ $(document).ready(Ready);
 				{$groups['title']}
 			</td>
 			<td class="row2">
-				امكانية عرض الاقسام : 
+				{$lang['can_view_sections']} : 
 				<select name="groups[{$groups['id']}][view_section]" id="select_view_section">
 					{if {$groups['view_section']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 			<td class="row1">
-				كتابة موضوع : 
+				{$lang['write_topic']} : 
 				<select name="groups[{$groups['id']}][write_subject]" id="select_write_subject">
 				{if {$groups['write_subject']}}
-				<option value="1" selected="selected">نعم</option>
-				<option value="0">لا</option>
+				<option value="1" selected="selected">{$lang['common']['yes']}</option>
+				<option value="0">{$lang['common']['no']}</option>
 				{else}
-				<option value="1">نعم</option>
-				<option value="0" selected="selected">لا</option>
+				<option value="1">{$lang['common']['yes']}</option>
+				<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 			<td class="row2">
-				كتابة رد : 
+				{$lang['write_reply']} : 
 				<select name="groups[{$groups['id']}][write_reply]" id="select_write_reply">
 				{if {$groups['write_reply']}}
-				<option value="1" selected="selected">نعم</option>
-				<option value="0">لا</option>
+				<option value="1" selected="selected">{$lang['common']['yes']}</option>
+				<option value="0">{$lang['common']['no']}</option>
 				{else}
-				<option value="1">نعم</option>
-				<option value="0" selected="selected">لا</option>
+				<option value="1">{$lang['common']['yes']}</option>
+				<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
@@ -171,6 +171,6 @@ $(document).ready(Ready);
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 </form>

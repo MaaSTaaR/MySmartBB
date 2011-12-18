@@ -92,7 +92,7 @@ class MySmartExtensionMOD extends _func
 		if (empty($MySmartBB->_POST['extension']) 
 			or empty($MySmartBB->_POST['max_size']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		if (!strstr($MySmartBB->_POST['extension'],'.'))
@@ -113,7 +113,7 @@ class MySmartExtensionMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الامتداد بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'extension_added' ] );
 			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
@@ -153,7 +153,7 @@ class MySmartExtensionMOD extends _func
 		if (empty($MySmartBB->_POST['extension']) 
 			or empty($MySmartBB->_POST['max_size']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
@@ -170,7 +170,7 @@ class MySmartExtensionMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الامتداد بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'extension_updated' ] );
 			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
@@ -201,7 +201,7 @@ class MySmartExtensionMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الامتداد بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'extension_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=extension&amp;control=1&amp;main=1');
 		}
 	}
@@ -220,7 +220,7 @@ class MySmartExtensionMOD extends _func
 		
 		if (empty($MySmartBB->_POST['keyword']))
 		{
-			$MySmartBB->func->error('يرجى كتابة كلمة البحث المطلوبه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_keyword' ] );
 		}
 		
 		$field = 'filename';
@@ -247,7 +247,7 @@ class MySmartExtensionMOD extends _func
 		
 		if ( $field == 'filename' )
 		{
-			$MySmartBB->rec->filter .= " filename LIKE %" . $MySmartBB->_POST['keyword'] . "%";
+			$MySmartBB->rec->filter .= " LIKE '%" . $MySmartBB->_POST['keyword'] . "%'";
 		}
 		else
 		{
@@ -258,7 +258,7 @@ class MySmartExtensionMOD extends _func
 		
 		if ($MySmartBB->_CONF['template']['Inf'] == false)
 		{
-			$MySmartBB->func->error('لا يوجد نتائج');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_results' ] );
 		}
 		
 		$MySmartBB->template->display('extension_search_result');
@@ -274,7 +274,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -286,7 +286,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الامتداد المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'extension_doesnt_exist' ] );
 		}
 	}
 }

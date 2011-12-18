@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=extension&amp;control=1&amp;main=1">الامتدادات</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=extension&amp;control=1&amp;main=1">{$lang['extensions']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 		<tr valign="top" align="center">
 			<td class="main1" colspan="2">
-			اضافة إمتداد جديد
+			{$lang['add_extension']}
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			الامتداد
+			{$lang['extension']}
 			</td>
 			<td class="row1">
 				<input type="text" name="extension" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			اقصى حجم (بالكيلوبايت)
+			{$lang['max_size']} ({$lang['kilobyte']})
 			</td>
 			<td class="row2">
 				<input type="text" name="max_size" />
@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			نوع MIME
+			{$lang['mime']}
 			</td>
 			<td class="row2">
 				<input type="text" name="mime_type" />
@@ -40,7 +40,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

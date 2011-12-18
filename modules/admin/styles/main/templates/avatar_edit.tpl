@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=avatar&amp;control=1&amp;main=1">الصور الشخصيه</a> &raquo; تحرير : {$Inf['avatar_path']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=avatar&amp;control=1&amp;main=1">{$lang['avatars']}</a> &raquo; {$lang['common']['edit']} : {$Inf['avatar_path']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			تحرير صوره شخصيه
+			{$lang['edit_avatar']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			مسار الصوره
+			{$lang['path']}
 			</td>
 			<td class="row1">
 				<input type="text" name="path" value="{$Inf['avatar_path']}" />
@@ -24,7 +24,7 @@
 	<br />
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 
 	<br />

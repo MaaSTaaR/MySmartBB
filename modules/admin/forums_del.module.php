@@ -70,13 +70,13 @@ class MySmartForumsDeleteMOD
 			
 			if ($del)
 			{
-				$MySmartBB->func->msg('تم حذف المنتدى بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 				
 				$move = $MySmartBB->subject->massMoveSubject( (int) $MySmartBB->_POST['to'], $MySmartBB->_CONF['template']['Inf']['id'] );
 				
 				if ($move)
 				{
-					$MySmartBB->func->msg('تم نقل المواضيع بنجاح');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
 					
 					// ... //
 					
@@ -106,7 +106,7 @@ class MySmartForumsDeleteMOD
 						
 						if ($cache)
 						{
-							$MySmartBB->func->msg('تم تحديث المعلومات بنجاح !');
+							$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 							
 							$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 							$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
@@ -115,7 +115,7 @@ class MySmartForumsDeleteMOD
 							
 							if ($del)
 							{
-								$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+								$MySmartBB->func->msg( $MySmartBB->lang[ 'section_group_delete_succeed' ] );
 								$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 							}
 						}
@@ -132,7 +132,7 @@ class MySmartForumsDeleteMOD
 				
 			if ($del)
 			{
-				$MySmartBB->func->msg('تم حذف المنتدى بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 				$MySmartBB->rec->filter = "section='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
@@ -141,13 +141,13 @@ class MySmartForumsDeleteMOD
 				
 				if ($del)
 				{
-					$MySmartBB->func->msg('تم حذف المواضيع بنجاح');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_delete_succeed' ] );
 					
 					$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 					
 					if ($cache)
 					{
-						$MySmartBB->func->msg('تم تحديث المعلومات بنجاح !');
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 						
 						$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 						$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
@@ -156,7 +156,7 @@ class MySmartForumsDeleteMOD
 						
 						if ($del)
 						{
-							$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+							$MySmartBB->func->msg( $MySmartBB->lang[ 'section_group_delete_succeed' ] );
 							$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 						}
 					}
@@ -165,7 +165,7 @@ class MySmartForumsDeleteMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('الاختيار غير صحيح!');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_choice' ] );
 		}
 	}
 	
@@ -175,7 +175,7 @@ class MySmartForumsDeleteMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -187,7 +187,7 @@ class MySmartForumsDeleteMOD
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exit' ] );
 		}		
 	}
 }

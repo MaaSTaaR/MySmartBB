@@ -110,6 +110,7 @@ class MySmartForumMOD
 		}
 		
 		// This section is a link , so we should go to another location
+		// TODO :: count visits number
 		if ($this->Section['linksection'])
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section['linksite'] );

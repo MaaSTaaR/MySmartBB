@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">المنتديات</a> &raquo; تحرير : {$Inf['title']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">{$lang['forums']}</a> &raquo; {$lang['common']['edit']} : {$Inf['title']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			المعلومات الاساسيه
+			{$lang['basic_info']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			اسم المنتدى
+			{$lang['forum_title']}
 			</td>
 			<td class="row1">
 				<input type="text" name="name" value="{$Inf['title']}" size="30" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			ترتيبه
+			{$lang['sort']}
 			</td>
 			<td class="row2">
 				<input type="text" name="sort" value="{$Inf['sort']}" size="5" />
@@ -29,7 +29,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			تواجد المنتدى
+			{$lang['position']}
 			</td>
 			<td class="row2">
 				<select name="parent" id="select_parent">
@@ -58,7 +58,7 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			الوصف
+			{$lang['description']}
 			</td>
 		</tr>
 		<tr align="center">
@@ -73,28 +73,28 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			صورة المنتدى
+			{$lang['forum_image']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			السماح بظهور صوره للمنتدى
+			{$lang['show_image']}
 			</td>
 			<td class="row1">
 				<select name="use_section_picture">
 				{if {$Inf['use_section_picture']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			صورة المنتدى
+			{$lang['forum_image']}
 			</td>
 			<td class="row2">
 				<input type="text" name="section_picture" value="{$Inf['section_picture']}" />
@@ -102,16 +102,16 @@
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			مكان صورة المنتدى
+			{$lang['image_position']}
 			</td>
 			<td class="row1">
 				<select name="sectionpicture_type">
 				{if {$Inf['sectionpicture_type']} == 1}
-					<option value="1" selected="selected">مكان ايقونة المنتدى</option>
-					<option value="2">فوق الوصف الخاص بالمنتدى</option>
+					<option value="1" selected="selected">{$lang['icon_position']}</option>
+					<option value="2">{$lang['description_upper']}</option>
 				{elseif {$Inf['sectionpicture_type']} == 2}
-					<option value="1">مكان ايقونة المنتدى</option>
-					<option value="2" selected="selected">فوق الوصف الخاص بالمنتدى</option>
+					<option value="1">{$lang['icon_position']}</option>
+					<option value="2" selected="selected">{$lang['description_upper']}</option>
 				{/if}
 				</select>
 			</td>
@@ -123,28 +123,28 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			نوع المنتدى
+			{$lang['type']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			المنتدى عباره عن وصله
+			{$lang['link_forum']}
 			</td>
 			<td class="row1">
 				<select name="linksection">
 				{if {$Inf['linksection']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row2">
-			الوصله
+			{$lang['link']}
 			</td>
 			<td class="row2">
 				<input type="text" name="linksite" value="{$Inf['linksite']}" />
@@ -157,12 +157,12 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			خيارات
+			{$lang['options']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			كلمه سريه للمنتدى
+			{$lang['forum_password']}
 			</td>
 			<td class="row1">
 				<input type="text" name="section_password" value="{$Inf['section_password']}" />
@@ -170,97 +170,97 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			عرض التواقيع في المنتدى
+			{$lang['show_signature']}
 			</td>
 			<td class="row2">
 				<select name="show_sig">
 				{if {$Inf['show_sig']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			منع تكرار التواقيع في المنتدى
+			{$lang['stop_signature_repeat']}
 			</td>
 			<td class="row1">
 				<select name="sig_iteration">
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row2">
-			امكانية استخدام SmartCode
+			{$lang['smartcode_allow']}
 			</td>
 			<td class="row2">
 				<select name="usesmartcode_allow">
 				{if {$Inf['usesmartcode_allow']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			حالة عرض الموضوع
+			{$lang['topic_view_state']}
 			</td>
 			<td class="row1">
 				<select name="subject_order">
 				{if {$Inf['subject_order']} == 1}
-					<option value="1" selected="selected">صاحب الردود الجديده في الاعلى</option>
-					<option value="2">الموضوع الجديد في الاعلى</option>
-					<option value="3">الموضوع القديم في الاعلى</option>
+					<option value="1" selected="selected">{$lang['new_replies_up']}</option>
+					<option value="2">{$lang['new_topic_up']}</option>
+					<option value="3">{$lang['old_topic_up']}</option>
 				{elseif {$Inf['subject_order']} == 2}
-					<option value="1">صاحب الردود الجديده في الاعلى</option>
-					<option value="2" selected="selected">الموضوع الجديد في الاعلى</option>
-					<option value="3">الموضوع القديم في الاعلى</option>
+					<option value="1">{$lang['new_replies_up']}</option>
+					<option value="2" selected="selected">{$lang['new_topic_up']}</option>
+					<option value="3">{$lang['old_topic_up']}</option>
 				{elseif {$Inf['subject_order']} == 3}
-					<option value="1">صاحب الردود الجديده في الاعلى</option>
-					<option value="2">الموضوع الجديد في الاعلى</option>
-					<option value="3" selected="selected">الموضوع القديم في الاعلى</option>
+					<option value="1">{$lang['new_replies_up']}</option>
+					<option value="2">{$lang['new_topic_up']}</option>
+					<option value="3" selected="selected">{$lang['old_topic_up']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row2">
-			إخفاء المواضيع عن غير اصحابها
+			{$lang['hide_from_non_writer']}
 			</td>
 			<td class="row2">
 				<select name="hide_subject">
 				{if {$Inf['hide_subject']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			قسم سرّي اي لا يتم عرض مواضيع هذا القسم في الاماكن العامّه
+			{$lang['secret_forum']}
 			</td>
 			<td class="row1">
 				<select name="sec_section">
 				{if {$Inf['hide_subject']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				{/if}
 				</select>
 			</td>
@@ -270,6 +270,6 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 </form>
