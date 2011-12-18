@@ -5,6 +5,7 @@ $lang[ 'announcement_updated' ] = 'تم تحديث الاعلان بنجاح !';
 $lang[ 'announcement_deleted' ] = 'تم حذف الاعلان بنجاح !';
 $lang[ 'announcement_doesnt_exist' ] = 'الاعلان المطلوب غير موجود';
 
+$lang[ 'template' ][ 'announcements' ] = 'الاعلانات الاداريه';
 $lang[ 'template' ][ 'title' ] = 'العنوان';
 
 $lang[ 'template' ][ 'add_announcement' ] = 'اضافة إعلان جديد'; // announcement_add

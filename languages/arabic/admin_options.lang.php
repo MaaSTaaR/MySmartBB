@@ -2,16 +2,19 @@
 
 $lang[ 'update_succeed' ] = 'تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه';
 
-$lang[ 'template' ][ 'general_options' ] = 'اعدادات عامه'; // options_main
-$lang[ 'template' ][ 'feature_options' ] = 'اعدادات الميزات'; // options_main
-$lang[ 'template' ][ 'time_options' ] = 'اعدادات الوقت'; // options_main
-$lang[ 'template' ][ 'page_options' ] = 'اعدادات الصفحات'; // options_main
-$lang[ 'template' ][ 'register_options' ] = 'اعدادات التسجيل'; // options_main
-$lang[ 'template' ][ 'posts_options' ] = 'اعدادات المواضيع و الردود'; // options_main
-$lang[ 'template' ][ 'fast_reply_options' ] = 'اعدادات الرد السريع'; // options_main
-$lang[ 'template' ][ 'membership_options' ] = 'اعدادات العضويه'; // options_main
-$lang[ 'template' ][ 'avatar_options' ] = 'اعدادات الصور الشخصيه'; // options_main
-$lang[ 'template' ][ 'visitors_allowed_options' ] = 'الايام المسموح للزوار الدخول بها'; // options_main
+$lang[ 'template' ][ 'close_message' ] = 'الرساله التي تظهر عند اغلاق المنتدى'; // options_close
+
+$lang[ 'template' ][ 'board_setting' ] = 'إعدادات المنتدى';
+$lang[ 'template' ][ 'general_options' ] = 'إعدادات عامه'; // options_main
+$lang[ 'template' ][ 'feature_options' ] = 'إعدادات الميزات'; // options_main
+$lang[ 'template' ][ 'time_options' ] = 'إعدادات الوقت'; // options_main
+$lang[ 'template' ][ 'page_options' ] = 'إعدادات الصفحات'; // options_main
+$lang[ 'template' ][ 'register_options' ] = 'إعدادات التسجيل'; // options_main
+$lang[ 'template' ][ 'posts_options' ] = 'إعدادات المواضيع و الردود'; // options_main
+$lang[ 'template' ][ 'fast_reply_options' ] = 'إعدادات الرد السريع'; // options_main
+$lang[ 'template' ][ 'membership_options' ] = 'إعدادات العضويه'; // options_main
+$lang[ 'template' ][ 'avatar_options' ] = 'إعدادات الصور الشخصيه'; // options_main
+$lang[ 'template' ][ 'visitors_allowed_options' ] = 'الايام المسموح للزوار دخول المنتدى بها'; // options_main
 $lang[ 'template' ][ 'close_options' ] = 'اغلاق المنتدى'; // options_main
 
 
@@ -63,7 +66,7 @@ $lang[ 'template' ][ 'activate_topic_control' ] = 'تفعيل (إغلاق/تثب
 $lang[ 'template' ][ 'activate_away_feature' ] = 'تفعيل خاصية الغياب'; // options_member
 
 $lang[ 'template' ][ 'activate_avatar' ] = 'تفعيل الصور الشخصية'; // options_avatar
-$lang[ 'template' ][ 'allow_avatar_update' ] = 'السماح بتحميل الصور من حاسوب المستخدم'; // options_avatar
+$lang[ 'template' ][ 'allow_avatar_upload' ] = 'السماح بتحميل الصور من حاسوب المستخدم'; // options_avatar
 $lang[ 'template' ][ 'avatar_width' ] = 'اقصى عرض للصور الشخصية'; // options_avatar
 $lang[ 'template' ][ 'avatar_height' ] = 'اقصى ارتفاع للصور الشخصية'; // options_avatar
 $lang[ 'template' ][ 'default_avatar' ] = 'الصورة الشخصية الأفتراضية'; // options_avatar
@@ -75,7 +78,5 @@ $lang[ 'template' ][ 'tue' ] = 'الثلاثاء'; // options_register
 $lang[ 'template' ][ 'wed' ] = 'الاربعاء'; // options_register
 $lang[ 'template' ][ 'thu' ] = 'الخميس'; // options_register
 $lang[ 'template' ][ 'fri' ] = 'الجمعه'; // options_register
-
-$lang[ 'template' ][ 'close_message' ] = 'الرساله التي تظهر عند اغلاق المنتدى'; // options_close
 
 ?>

@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;topics=1&amp;update=1"  name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1" colspan="2">اعدادات المواضيع و الردود</td>
+	<td class="main1" colspan="2">إعدادات المواضيع و الردود</td>
 </tr>
 <tr valign="top">
 		<td class="row1">أقل عدد من الحروف في الموضوع او الرد</td>

@@ -5,6 +5,7 @@ $lang[ 'ad_updated' ] = 'تم تحديث الاعلان بنجاح !';
 $lang[ 'ad_deleted' ] = 'تم حذف الاعلان بنجاح !';
 $lang[ 'ad_doesnt_exist' ] = 'الاعلان المطلوب غير موجود';
 
+$lang[ 'template' ][ 'ads' ] = 'الاعلانات التجاريه';
 $lang[ 'template' ][ 'site_name' ] = 'اسم الموقع';
 
 $lang[ 'template' ][ 'add_ad' ] = 'اضافة إعلان جديد'; // ads_add

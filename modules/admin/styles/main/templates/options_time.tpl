@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;time=1&amp;update=1" name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1" colspan="2">اعدادات الوقت</td>
+	<td class="main1" colspan="2">إعدادات الوقت</td>
 </tr>
 <tr valign="top">
 		<td class="row1">توقيت المنتدى</td>

@@ -82,7 +82,7 @@ class MySmartAdsMOD extends _func
 			or empty($MySmartBB->_POST['link']) 
 			or empty($MySmartBB->_POST['picture']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
@@ -108,7 +108,7 @@ class MySmartAdsMOD extends _func
 			
 			if ($update)
 			{
-				$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'ad_added' ] );
 				$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
@@ -149,7 +149,7 @@ class MySmartAdsMOD extends _func
 			or empty($MySmartBB->_POST['link']) 
 			or empty($MySmartBB->_POST['picture']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
@@ -169,7 +169,7 @@ class MySmartAdsMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'ad_updated' ] );
 			$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 		}
 	}
@@ -208,7 +208,7 @@ class MySmartAdsMOD extends _func
 			
 			if ($update)
 			{
-				$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'ad_deleted' ] );
 				$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 			}
 		}
@@ -224,7 +224,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -236,7 +236,7 @@ class _func
 		
 		if ($AdsInfo == false)
 		{
-			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'ad_doesnt_exist' ] );
 		}
 	}
 }

@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=ads&amp;control=1&amp;main=1">الاعلانات التجاريه</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=ads&amp;control=1&amp;main=1">{$lang['ads']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
-			اضافة إعلان جديد
+			{$lang['add_ad']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			اسم الموقع
+			{$lang['site_name']}
 			</td>
 			<td class="row1">
 				<input type="text" name="name" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			الوصله
+			{$lang['link']}
 			</td>
 			<td class="row2">
 				<input type="text" name="link" />
@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td class="row1">
-			وصلة الصوره
+			{$lang['image_url']}
 			</td>
 			<td class="row1">
 				<input type="text" name="picture" />
@@ -37,7 +37,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			طول الصوره - غير ضروري
+			{$lang['height']}
 			</td>
 			<td class="row2">
 				<input type="text" name="width" />
@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td class="row1">
-			عرض الصوره - غير ضروري
+			{$lang['width']}
 			</td>
 			<td class="row1">
 				<input type="text" name="height" />
@@ -56,7 +56,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 
 	

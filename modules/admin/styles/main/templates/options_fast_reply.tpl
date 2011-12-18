@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;fast_reply=1&amp;update=1"  name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="40%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1" colspan="2">اعدادات الرد السريع</td>
+	<td class="main1" colspan="2">إعدادات الرد السريع</td>
 </tr>
 <tr valign="top">
 		<td class="row1">امكانية استخدام الرد السريع</td>

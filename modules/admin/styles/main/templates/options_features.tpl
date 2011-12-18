@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;features=1&amp;update=1" method="post">
 	<table width="60%" class="t_style_b rows_spaces" border="1" align="center">
 		<tr align="center">
-			<td class="main1" colspan="2">اعدادات الميزات</td>
+			<td class="main1" colspan="2">إعدادات الميزات</td>
 				<tr>
 			<td class="row2">إظهار اسماء الزوار في قائمة المتواجدين</td>
 			<td class="row2">

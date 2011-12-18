@@ -81,7 +81,7 @@ class MySmartAnnouncementMOD extends _func
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
@@ -97,7 +97,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الاعلان بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'announcement_added' ] );
 			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
@@ -147,7 +147,7 @@ class MySmartAnnouncementMOD extends _func
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
@@ -165,7 +165,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'announcement_updated' ] );
 			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
@@ -196,7 +196,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الاعلان بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'announcement_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
@@ -211,7 +211,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -223,7 +223,7 @@ class _func
 		
 		if ($AnnInfo == false)
 		{
-			$MySmartBB->func->error('الاعلان المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'announcement_doesnt_exist' ] );
 		}
 	}
 }

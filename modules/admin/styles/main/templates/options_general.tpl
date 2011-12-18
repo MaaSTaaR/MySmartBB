@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;general=1&amp;update=1" method="post">
 	<table width="60%" class="t_style_b rows_spaces" border="1" align="center">
 		<tr align="center">
-			<td class="main1" colspan="2">اعدادات عامه</td>
+			<td class="main1" colspan="2">إعدادات عامه</td>
 		</tr>
 		<tr>
 			<td class="row1">اسم المنتدى</td>

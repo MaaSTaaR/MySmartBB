@@ -7,7 +7,7 @@
 <form action="admin.php?page=options&amp;member=1&amp;update=1"  name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="40%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1" colspan="2">اعدادات العضويه</td>
+	<td class="main1" colspan="2">إعدادات العضويه</td>
 </tr>
 <tr valign="top">
 		<td class="row1">تفعيل خاصية الغياب</td>

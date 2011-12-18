@@ -20,8 +20,8 @@ $lang_info[ 'mysmartbb_version' ]   = '2.0.0 ALPHA 5';
 
 $lang[ 'common' ][ 'member' ] = 'عضو';
 $lang[ 'common' ][ 'visitor' ] = 'زائر';
-$lang[ 'common' ][ 'and' ] = 'و';
 $lang[ 'common' ][ 'wrong_path' ] = 'المسار المتبع غير صحيح !';
+$lang[ 'common' ][ 'wrong_path' ] = 'المعذره .. الطلب غير صحيح'; // TO DELETE
 $lang[ 'common' ][ 'please_login' ] = 'يرجى تسجيل دخولك';
 $lang[ 'common' ][ 'cant_show_board' ] = 'المعذره .. لا يمكنك الدخول للمنتدى';
 $lang[ 'common' ][ 'visitor_pervented' ] = 'المعذره .. هذا اليوم غير مخصص للزوار';
@@ -66,8 +66,8 @@ $lang[ 'common' ][ 'large' ] = 'كبير';
 $lang[ 'common' ][ 'too_large' ] = 'كبير جداً';
 $lang[ 'common' ][ 'color' ] = 'اللون';
 
-$lang[ 'common' ][ 'comma' ] = '،';
-$lang[ 'common' ][ 'colon' ] = ':';
+//$lang[ 'common' ][ 'comma' ] = '،';
+//$lang[ 'common' ][ 'colon' ] = ':';
 
 // ... //
 
@@ -82,14 +82,19 @@ $lang[ 'common' ][ 'control_panel' ] = 'لوحة الإدارة';
 $lang[ 'common' ][ 'cp' ] = 'لوحة التحكم';
 $lang[ 'common' ][ 'yes' ] = 'نعم';
 $lang[ 'common' ][ 'no' ] = 'لا';
+$lang[ 'common' ][ 'not_allowed' ] = 'غير مسموح';
 $lang[ 'common' ][ 'allowed' ] = 'مسموح';
-$lang[ 'common' ][ 'not_allowrd' ] = 'غير مسموح';
 $lang[ 'common' ][ 'edit' ] = 'تحرير';
-$lang[ 'common' ][ 'delete' ] = 'حذف';
 $lang[ 'common' ][ 'delete_confirm' ] = 'تأكيد الحذف';
 $lang[ 'common' ][ 'are_you_sure_delete' ] = 'هل انت متأكد من رغبتك بالحذف؟';
+$lang[ 'common' ][ 'delete' ] = 'حذف';
 $lang[ 'common' ][ 'login' ] = 'تسجيل الدخول';
 $lang[ 'common' ][ 'username' ] = 'اسم المستخدم';
 $lang[ 'common' ][ 'password' ] = 'كلمة المرور';
+
+// ... //
+
+$lang[ 'common' ][ 'and' ] = 'و';
+$lang[ 'common' ][ 'add' ] = 'اضافه';
 
 ?>

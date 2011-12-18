@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=announcement&amp;control=1&amp;main=1">الاعلانات الاداريه</a> &raquo; تحرير : {$AnnInfo['title']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=announcement&amp;control=1&amp;main=1">{$lang['announcements']}</a> &raquo; {$lang['common']['edit']} : {$AnnInfo['title']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
-			تحرير اعلان
+			{$lang['edit_announcement']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			العنوان
+			{$lang['title']}
 			</td>
 			<td class="row1">
 				<input type="text" name="title" value="{$AnnInfo['title']}" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			النص
+			{$lang['text']}
 			</td>
 			<td class="row2">
 				<textarea name="text" id="textarea_text" rows="10" cols="40" wrap="virtual" dir="rtl">{$AnnInfo['text']}</textarea>
@@ -32,7 +32,7 @@
 	<br />
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 
 	<br />

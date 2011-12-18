@@ -8,7 +8,7 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			اعدادات الصور الشخصيه
+			إعدادات الصور الشخصيه
 			</td>
 		</tr>
 		<tr>
