@@ -61,7 +61,7 @@ class MySmartMemberDelMOD
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف العضو بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
@@ -72,7 +72,7 @@ class MySmartMemberDelMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -84,7 +84,7 @@ class MySmartMemberDelMOD
 		
 		if ($MemInfo == false)
 		{
-			$MySmartBB->func->error('العضو المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		}
 	}
 }

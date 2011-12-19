@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="">نقل جماعي</a></div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="">{$lang['mass_move']}</a></div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="40%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			نقل جماعي
+			{$lang['mass_move']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			من القسم
+			{$lang['from_forum']}
 			</td>
 			<td class="row2">
 				<select name="from" id="select_from">
@@ -29,7 +29,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row1">
-			الى القسم
+			{$lang['to_forum']}
 			</td>
 			<td class="row2">
 				<select name="to" id="select_to">
@@ -48,7 +48,7 @@
 	<br />
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

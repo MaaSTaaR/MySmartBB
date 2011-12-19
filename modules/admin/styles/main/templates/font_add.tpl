@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1">الخطوط</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1">{$lang['fonts']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			اضافة خط جديد
+			{$lang['add_font']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			اسم الخط
+			{$lang['font_name']}
 			</td>
 			<td class="row1">
 				<input type="text" name="name" />
@@ -24,7 +24,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

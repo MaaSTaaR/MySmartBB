@@ -81,7 +81,7 @@ class MySmartPagesMOD extends _func
 		if (empty($MySmartBB->_POST['text']) 
 			or empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
@@ -95,7 +95,7 @@ class MySmartPagesMOD extends _func
 		
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الصفحه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_added' ] );
 			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
@@ -132,7 +132,7 @@ class MySmartPagesMOD extends _func
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['text']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
@@ -148,7 +148,7 @@ class MySmartPagesMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الاعلان بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_updated' ] );
 			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
@@ -175,7 +175,7 @@ class MySmartPagesMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الصفحه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
@@ -190,7 +190,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -202,7 +202,7 @@ class _func
 		
 		if ($PageInfo == false)
 		{
-			$MySmartBB->func->error('الصفحه المطلوبه غير موجوده');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'page_doesnt_exist' ] );
 		}
 	}
 }

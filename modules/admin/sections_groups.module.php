@@ -102,7 +102,7 @@ class MySmartSectionGroupsMOD
 		{
 			// ... //
 			
-			$MySmartBB->func->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			
 			// ... //
 			
@@ -112,7 +112,7 @@ class MySmartSectionGroupsMOD
 			
 			if ($cache)
 			{
-				$MySmartBB->func->msg('تم تحديث المعلومات المخبأه');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'cache_updated' ] );
 				$MySmartBB->func->move('admin.php?page=sections_groups&amp;index=1&amp;id=' . $Inf['id']);
 			}
 		}
@@ -126,7 +126,7 @@ class MySmartSectionGroupsMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -144,7 +144,7 @@ class MySmartSectionGroupsMOD
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
 		}
 		
 		// ... //

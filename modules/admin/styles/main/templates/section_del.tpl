@@ -52,26 +52,26 @@ $(document).ready(Ready);
 
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=sections&amp;control=1&amp;main=1">الاقسام الرئيسيه</a> &raquo; تأكيد حذف : {$Inf['title']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=sections&amp;control=1&amp;main=1">{$lang['sections']}</a> &raquo; {$lang['section_del_confirmation']} : {$Inf['title']}</div>
 
 <br />
 
 <form action="admin.php?page=sections_del&amp;start=1&amp;id={$Inf['id']}" method="post">
 
-<p align="center">انت الآن مُقدم على حذف قسم رئيسي</p>
+<p align="center">{$lang['youre_going_delete']}</p>
 
 <table width="60%" class="t_style_b" border="1" align="center">
 	<tr>
 		<td class="main1 rows_space">
-		ما الذي تريد فعله؟
+		{$lang['what_to_do']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1">
 			<select name="choose" id="choose_id">
-				<option value="move">نقل جميع المنتديات التي تحته إلى قسم رئيسي آخر</option>
-				<option value="del">حذف جميع المنتديات و مواضيعهم</option>
-				<option value="move_subjects">حذف جميع المنتديات مع نقل المواضيع إلى منتدى آخر</option>
+				<option value="move">{$lang['move_forums']}</option>
+				<option value="del">{$lang['delete_forums_topics']}</option>
+				<option value="move_subjects">{$lang['delete_forums_move_topics']}</option>
 			</select>
 		</td>
 	</tr>
@@ -83,7 +83,7 @@ $(document).ready(Ready);
 <table width="60%" class="t_style_b" border="1" align="center">
 	<tr>
 		<td class="main1 rows_space">
-		نقل إلى
+		{$lang['move_to']}
 		</td>
 	</tr>
 		<td class="row2">
@@ -103,7 +103,7 @@ $(document).ready(Ready);
 <table width="60%" class="t_style_b" border="1" align="center">
 	<tr>
 		<td class="main1 rows_space">
-		نقل المواضيع إلى
+		{$lang['move_topics_to']}
 		</td>
 	</tr>
 	<tr>
@@ -121,7 +121,7 @@ $(document).ready(Ready);
 <br />
 
 <div align="center">
-	<input type="submit" value="موافق" name="submit" />
+	<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 </div>
 
 <br />

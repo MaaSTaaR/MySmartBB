@@ -7,6 +7,7 @@ $lang[ 'member_doesnt_exist' ] = 'المستخدم غير موجود';
 $lang[ 'moderator_deleted' ] = 'تم إلغاء الاشراف بنجاح';
 $lang[ 'moderator_doesnt_exist' ] = 'المشرف المطلوب غير موجود';
 
+$lang[ 'template' ][ 'moderators' ] = 'المشرفين';
 $lang[ 'template' ][ 'add_moderator' ] = 'اضافة مشرف جديد'; // moderator_add
 $lang[ 'template' ][ 'username' ] = 'اسم المستخدم'; // moderator_add
 $lang[ 'template' ][ 'forum' ] = 'مشرف على'; // moderator_add
@@ -17,9 +18,12 @@ $lang[ 'template' ][ 'forum_title' ] = 'اسم المنتدى'; // moderators_ma
 
 $lang[ 'template' ][ 'moderator' ] = 'المشرف'; // moderators_section_control
 $lang[ 'template' ][ 'edit_member' ] = 'تحرير العضويه'; // moderators_section_control
+$lang[ 'template' ][ 'confirm_cancel_moderator' ] = 'تأكيد إلغاء الاشراف';
 $lang[ 'template' ][ 'cancel_moderator' ] = 'إلغاء الاشراف'; // moderators_section_control
 
 $lang[ 'template' ][ 'confirm_cancel' ] = 'تأكيد إلغاء الاشراف'; // moderator_del
 $lang[ 'template' ][ 'are_you_sure' ] = 'هل انت متأكد من رغبتك بإلغاء اشراف'; // moderator_del
+
+$lang[ 'template' ][ 'cancel' ] = 'إلغاء';
 
 ?>

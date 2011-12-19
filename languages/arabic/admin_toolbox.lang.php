@@ -8,6 +8,9 @@ $lang[ 'color_updated' ] = 'تم تحديث اللون بنجاح !';
 $lang[ 'color_deleted' ] = 'تم حذف اللون بنجاح !';
 $lang[ 'font_doesnt_exist' ] = 'الخط المطلوب غير موجود';
 
+$lang[ 'template' ][ 'colors' ] = 'الالوان';
+$lang[ 'template' ][ 'fonts' ] = 'الخطوط';
+
 $lang[ 'template' ][ 'font_name' ] = 'اسم الخط';
 $lang[ 'template' ][ 'color_code' ] = 'رمز اللون';
 
@@ -16,5 +19,7 @@ $lang[ 'template' ][ 'edit_font' ] = 'تحرير خط'; // font_edit
 
 $lang[ 'template' ][ 'add_color' ] = 'اضافة لون جديد'; // color_add
 $lang[ 'template' ][ 'edit_color' ] = 'تحرير لون'; // color_edit
+
+$lang[ 'template' ][ 'color_font_del_confirmation' ] = 'تأكيد حذف';
 
 ?>

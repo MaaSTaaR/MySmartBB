@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=moderators&amp;control=1&amp;main=1">المشرفين</a> &raquo; تحكم</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=moderators&amp;control=1&amp;main=1">{$lang['moderators']}</a></div>
 
 <br />
 
@@ -8,7 +8,7 @@
 <table width="40%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1 rows_space">
-		اسم المنتدى
+		{$lang['forum_title']}
 		</td>
 	</tr>
 	{Des::foreach}{forums_list}{forum}

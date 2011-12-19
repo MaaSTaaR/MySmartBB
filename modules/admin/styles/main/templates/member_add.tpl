@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">الاعضاء</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">{$lang['members']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
-		اضافة عضو جديد
+		{$lang['add_member']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1">
-		اسم المستخدم
+		{$lang['username']}
 		</td>
 		<td class="row1">
 			<input type="text" name="username" />
@@ -21,7 +21,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		كلمة السر
+		{$lang['password']}
 		</td>
 		<td class="row2">
 			<input type="password" name="password" />
@@ -29,7 +29,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		البريد الالكتروني
+		{$lang['email']}
 		</td>
 		<td class="row1">
 			<input type="text" name="email" />
@@ -37,12 +37,12 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		الجنس
+		{$lang['gender']}
 		</td>
 		<td class="row2">
 			<select name="gender">
-				<option value="m">ذكر</option>
-				<option value="f">انثى</option>
+				<option value="m">{$lang['male']}</option>
+				<option value="f">{$lang['female']}</option>
 			</select>
 		</td>
 	</tr>
@@ -51,7 +51,7 @@
 	<br />
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 </form>

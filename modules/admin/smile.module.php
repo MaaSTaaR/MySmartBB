@@ -83,7 +83,7 @@ class MySmartSmileMOD extends _func
 		if (empty($MySmartBB->_POST['short'])	
 			or empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields	=	array();
@@ -105,7 +105,7 @@ class MySmartSmileMOD extends _func
 				
 				if ($number)
 				{
-					$MySmartBB->func->msg('تم اضافة الابتسامه بنجاح !');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_added' ] );
 					$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 				}
 			}
@@ -141,7 +141,7 @@ class MySmartSmileMOD extends _func
 		if (empty($MySmartBB->_POST['short']) 
 			or empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 
 		$MySmartBB->rec->fields	=	array();
@@ -159,7 +159,7 @@ class MySmartSmileMOD extends _func
 			
 			if ($cache)
 			{
-				$MySmartBB->func->msg('تم تحديث الابتسامه بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_updated' ] );
 				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
@@ -190,7 +190,7 @@ class MySmartSmileMOD extends _func
 			
 			if ($cache)
 			{
-				$MySmartBB->func->msg('تم حذف الابتسامه بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_deleted' ] );
 				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 			}
 		}
@@ -205,7 +205,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -216,7 +216,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الابتسامه المطلوبه غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'smile_doesnt_exist' ] );
 		}
 	}
 }

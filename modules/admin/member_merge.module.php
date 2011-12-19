@@ -56,7 +56,7 @@ class MySmartMemberMOD
 		if (empty($MySmartBB->_POST['user_get'])
 			or empty($MySmartBB->_POST['user_to']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -66,7 +66,7 @@ class MySmartMemberMOD
 		
 		if ( $isMember <= 0 )
 		{
-			$MySmartBB->func->error('اسم العضو المراد اخذ بياناته غير موجود في قاعدة البيانات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'from_member_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -76,7 +76,7 @@ class MySmartMemberMOD
 		
 		if ( $isMember <= 0 )
 		{
-			$MySmartBB->func->error('اسم العضو المراد نقل البيانات له غير موجود في قاعدة البيانات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'to_member_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -137,7 +137,7 @@ class MySmartMemberMOD
 			and $u_member
 			and $del)
 		{
-			$MySmartBB->func->msg('تم دمج بيانات العضو بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'member_merged' ] );
 			$MySmartBB->func->move('admin.php?page=member&control=1&main=1');
 		}
 	}

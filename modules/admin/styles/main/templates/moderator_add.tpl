@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=moderators&amp;control=1&amp;main=1">المشرفين</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=moderators&amp;control=1&amp;main=1">{$lang['moderators']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -9,12 +9,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
-			اضافة مشرف جديد
+			{$lang['add_moderator']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			اسم المستخدم
+			{$lang['username']}
 			</td>
 			<td class="row1">
 				<input type="text" name="username" value="" size="30" />
@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			مشرف على
+			{$lang['forum']}
 			</td>
 			<td class="row2">
 				<select size="1" name="section" id="section_id">
@@ -38,7 +38,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			مجموعة الاشراف
+			{$lang['group']}
 			</td>
 			<td class="row2">
 				<select size="1" name="group" id="group_id">
@@ -50,7 +50,7 @@
 		</tr>
 		<tr>
 			<td class="row1">
-			المسمى الجديد (يمكن تركه فارغاً)
+			{$lang['usertitle']}
 			</td>
 			<td class="row1">
 				<input type="text" name="usertitle" value="" size="30" />
@@ -63,7 +63,7 @@
 	<div align="center">
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" value="موافق" name="submit" />
+				<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 			</td>
 		</tr>
 	</table>

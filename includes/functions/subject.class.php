@@ -31,7 +31,7 @@ class MySmartSubject
  		
  		$this->engine->rec->table = $this->table;
  		
- 		$this->engine->rec->filter = "section_id='" . $section_id . "'";
+ 		$this->engine->rec->filter = "section='" . $section_id . "'";
  		
  		$query = $this->engine->rec->delete();
  		

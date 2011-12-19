@@ -98,7 +98,7 @@ class MySmartPluginMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( $lang[ 'plugins_dir_doesnt_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'plugins_dir_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -132,7 +132,7 @@ class MySmartPluginMOD
 			
 			if ( $activate )
 			{
-				$MySmartBB->func->msg( $lang[ 'plugin_enabled' ] );
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'plugin_enabled' ] );
 				$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 			}
 		}
@@ -158,7 +158,7 @@ class MySmartPluginMOD
 			
 			if ( $deactivate )
 			{
-				$MySmartBB->func->msg( $lang[ 'plugin_disabled' ] );
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'plugin_disabled' ] );
 				$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 			}
 		}
@@ -172,7 +172,7 @@ class MySmartPluginMOD
 		
 		if ( $MySmartBB->plugin->uninstallPlugin( $info[ 'id' ], $info[ 'path' ] ) )
 		{
-			$MySmartBB->func->msg( $lang[ 'plugin_uninstalled' ] );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'plugin_uninstalled' ] );
 			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 		}
 	}
@@ -190,12 +190,12 @@ class MySmartPluginMOD
 		
 		if ( empty( $path ) )
 		{
-			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		if ( !is_dir( 'plugins/' . $path ) )
 		{
-			$MySmartBB->func->error( $lang[ 'plugin_dir_doesnt_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'plugin_dir_doesnt_exist' ] );
 		}
 		
 		// ~ We have to check if the plugin already installed or not ~ //
@@ -206,18 +206,18 @@ class MySmartPluginMOD
 		
 		if ( $check != 0 )
 		{
-			$MySmartBB->func->error( $lang[ 'plugin_already_installed' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'plugin_already_installed' ] );
 		}
 		
 		// ~ Install the plugin ~ //
 		if ( $MySmartBB->plugin->installPlugin( $path ) )
 		{
-			$MySmartBB->func->msg( $lang[ 'plugin_installed_enabled' ] );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'plugin_installed_enabled' ] );
 			$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 		}
 		else
 		{
-			$MySmartBB->func->msg( $lang[ 'install_failed' ] );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'install_failed' ] );
 		}
 	}
 	
@@ -229,7 +229,7 @@ class MySmartPluginMOD
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 		{
-			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
@@ -239,7 +239,7 @@ class MySmartPluginMOD
 		
 		if ( $info == false )
 		{
-			$MySmartBB->func->error( $lang[ 'plugin_doesnt_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'plugin_doesnt_exist' ] );
 		}
 		
 		return $info;

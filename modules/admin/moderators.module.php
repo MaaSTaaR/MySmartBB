@@ -101,14 +101,14 @@ class MySmartModeratorsMOD extends _func
 		if (empty($MySmartBB->_POST['username']) 
 			or empty($MySmartBB->_POST['section']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$IsModerator = $MySmartBB->moderator->isModerator( $MySmartBB->_POST['username'], 'username', $MySmartBB->_POST['section'] );
 		
 		if ($IsModerator)
 		{
-			$MySmartBB->func->error('المعذره .. لا يمكنك اضافة نفس العضو مشرفاً على القسم مرتين');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'duplicate_addition' ] );
 		}
 		
 		// ... //
@@ -120,7 +120,7 @@ class MySmartModeratorsMOD extends _func
 		
 		if ($SectionInfo == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -136,13 +136,13 @@ class MySmartModeratorsMOD extends _func
 		    
 		    if ( $set )
 		    {
-		        $MySmartBB->func->msg( 'تم إضافة العضو إلى قائمة المشرفين' );
+		        $MySmartBB->func->msg(  $MySmartBB->lang[ 'moderator_added' ]  );
 		        $MySmartBB->func->move( 'admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $SectionInfo[ 'id' ] );
 		    }
 		}
 		else
 		{
-			$MySmartBB->func->error('المستخدم غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		}
 	}
 	
@@ -165,7 +165,7 @@ class MySmartModeratorsMOD extends _func
 		
 		if (!isset($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -177,7 +177,7 @@ class MySmartModeratorsMOD extends _func
 		
 		if (!is_array($MySmartBB->_CONF['template']['Section']))
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
@@ -203,7 +203,7 @@ class MySmartModeratorsMOD extends _func
 		
 		if (!is_array($MySmartBB->_CONF['template']['while']['Section']))
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
 		// ... //
@@ -226,7 +226,7 @@ class MySmartModeratorsMOD extends _func
 				
 		if ( $unset )
 		{
-			$MySmartBB->func->msg('تم إلغاء الاشراف بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'moderator_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $ModInfo['section_id']);
 		}
 	}
@@ -240,7 +240,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -252,7 +252,7 @@ class _func
 		
 		if ($ModeratorInfo == false)
 		{
-			$MySmartBB->func->error('المشرف المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'moderator_doesnt_exist' ] );
 		}
 	}
 }

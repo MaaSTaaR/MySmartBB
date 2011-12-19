@@ -80,12 +80,12 @@ class MySmartMemberMOD
 			or empty($MySmartBB->_POST['user_title'])
 			or !isset($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->func->error('يرجى كتابة بريد إلكتروني صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
 		}
 		
 		// Ensure there is no person used the same username
@@ -96,12 +96,12 @@ class MySmartMemberMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'username_exists' ] );
 		}
 
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->func->error('لا يمكن التسجيل بهذا الاسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
 		}
 		
 		// ... //
@@ -159,7 +159,7 @@ class MySmartMemberMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث بيانات العضو بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=member&amp;control=1&amp;main=1');
 		}
 	}
@@ -170,7 +170,7 @@ class MySmartMemberMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -182,7 +182,7 @@ class MySmartMemberMOD
 		
 		if ($MemInfo == false)
 		{
-			$MySmartBB->func->error('العضو المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		}
 	}
 }

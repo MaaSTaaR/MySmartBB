@@ -48,7 +48,7 @@ class MySmartMemberSearchMOD
 		
 		if (empty($MySmartBB->_POST['keyword']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		if ($MySmartBB->_POST['search_by'] == 'username')
@@ -71,7 +71,7 @@ class MySmartMemberSearchMOD
 		
 		if ($MySmartBB->_CONF['template']['MemInfo'] == false)
 		{
-			$MySmartBB->func->error('لا يوجد نتائج');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_result' ] );
 		}
 				
 		$MySmartBB->template->display('member_search_result');

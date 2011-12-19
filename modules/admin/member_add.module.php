@@ -55,12 +55,12 @@ class MySmartMemberMOD
 			or empty($MySmartBB->_POST['password']) 
 			or empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->func->error('يرجى كتابة بريد إلكتروني صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
 		}
 		
 		// Ensure there is no person used the same username
@@ -71,7 +71,7 @@ class MySmartMemberMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error('اسم المستخدم موجود مسبقاً');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'username_exists' ] );
 		}
 		
 		// Ensure there is no person used the same email
@@ -82,12 +82,12 @@ class MySmartMemberMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error('البريد الالكتروني مسجل مسبقاً');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_exists' ] );
 		}
 		
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->func->error('لا يمكن التسجيل بهذا الاسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
 		}
 		
 		$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
@@ -116,7 +116,7 @@ class MySmartMemberMOD
 		$MySmartBB->rec->fields['usergroup']			= 	4;
 		$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
 		$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
-		$MySmartBB->rec->fields['user_title']			= 	'عضو';
+		$MySmartBB->rec->fields['user_title']			= 	 $MySmartBB->lang[ 'member' ] ;
 		$MySmartBB->rec->fields['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
 		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		
@@ -130,7 +130,7 @@ class MySmartMemberMOD
 													$MySmartBB->_POST['username'], 
 													$MySmartBB->rec->id );
 
-			$MySmartBB->func->msg('تم اضافة العضو بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'add_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=member_edit&amp;main=1&amp;id=' . $MySmartBB->rec->id);
 		}
 	}

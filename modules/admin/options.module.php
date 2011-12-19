@@ -174,7 +174,7 @@ class MySmartOptionsMOD
 		
 		if (empty($MySmartBB->_POST['title']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$update = array();
@@ -186,7 +186,7 @@ class MySmartOptionsMOD
 			and $update[1] 
 			and $update[2])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;general=1&amp;main=1');
 		}
 	}
@@ -211,7 +211,7 @@ class MySmartOptionsMOD
 			and $update[1]
 			and $update[2])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;features=1&amp;main=1');
 		}
 	}
@@ -233,7 +233,7 @@ class MySmartOptionsMOD
 		
 		if ($update[0] and $update[1])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;time=1&amp;main=1');
 		}
 	}
@@ -254,7 +254,7 @@ class MySmartOptionsMOD
 			or empty($MySmartBB->_POST['reply_perpage'])
 			or empty($MySmartBB->_POST['avatar_perpage']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$update = array();
@@ -269,7 +269,7 @@ class MySmartOptionsMOD
 			and $update[2]
 			and $update[3])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;pages=1&amp;main=1');
 		}
 	}
@@ -305,7 +305,7 @@ class MySmartOptionsMOD
 			or empty($MySmartBB->_POST['reg_pass_min_num']) 
 			or empty($MySmartBB->_POST['reg_pass_max_num']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$update = array();
@@ -341,7 +341,7 @@ class MySmartOptionsMOD
 			and $update[13]
 			and $update[14])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;register=1&amp;main=1');
 		}
 	}
@@ -362,7 +362,7 @@ class MySmartOptionsMOD
 			or !isset($MySmartBB->_POST['post_title_min']) 
 			or !isset($MySmartBB->_POST['post_title_max']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$update = array();
@@ -380,7 +380,7 @@ class MySmartOptionsMOD
 			and $update[4] 
 			and $update[5])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;topics=1&amp;main=1');
 		}
 	}
@@ -411,7 +411,7 @@ class MySmartOptionsMOD
 			and $update[4] 
 			and $update[5])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;fast_reply=1&amp;main=1');
 		}
 	}
@@ -432,7 +432,7 @@ class MySmartOptionsMOD
 		
 		if ( $update[0] )
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;member=1&amp;main=1');
 		}
 	}
@@ -451,7 +451,7 @@ class MySmartOptionsMOD
 		if (empty($MySmartBB->_POST['max_avatar_width'])
 			and empty($MySmartBB->_POST['max_avatar_height']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 			
 		$update = array();
@@ -467,7 +467,7 @@ class MySmartOptionsMOD
 			and $update[3]
 			and $update[4])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;avatar=1&amp;main=1');
 		}
 	}
@@ -500,7 +500,7 @@ class MySmartOptionsMOD
 			and $update[5]
 			and $update[6])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;close_days=1&amp;main=1');
 		}
 	}
@@ -522,7 +522,7 @@ class MySmartOptionsMOD
 				
 		if ($update[0] and $update[1])
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;close=1&amp;main=1');
 		}
 	}

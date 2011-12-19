@@ -13,6 +13,8 @@ $lang[ 'sections_groups_delete_failed' ] = 'خطأ، لم تتم عملية حذ
 $lang[ 'wrong_choice' ] = 'الاختيار غير صحيح!';
 $lang[ 'section_doesnt_exist' ] = 'القسم المطلوب غير موجود';
 
+$lang[ 'template' ][ 'sections' ] = 'الاقسام الرئيسيه';
+$lang[ 'template' ][ 'section_del_confirmation' ] = 'تأكيد حذف';
 $lang[ 'template' ][ 'youre_going_delete' ] = 'انت الآن مُقدم على حذف قسم رئيسي'; // section_del
 $lang[ 'template' ][ 'what_to_do' ] = 'ما الذي تريد فعله؟'; // section_del
 $lang[ 'template' ][ 'move_forums' ] = 'نقل جميع المنتديات التي تحته إلى قسم رئيسي آخر'; // section_del

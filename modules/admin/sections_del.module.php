@@ -88,7 +88,7 @@ class MySmartSectionEditMOD
 			
 			if (empty($MySmartBB->_POST['to']))
 			{
-				$MySmartBB->func->error('يوجد خطأ، لا يمكن إكمال العمليه! لم يتم اختيار القسم');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_complete_the_process' ] );
 			}
 			
 			// ... //
@@ -107,7 +107,7 @@ class MySmartSectionEditMOD
 			{
 				// ... //
 				
-				$MySmartBB->func->msg('تم نقل المنتديات بنجاح');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'move_succeed' ] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
@@ -120,7 +120,7 @@ class MySmartSectionEditMOD
 				{
 					// ... //
 					
-					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
 					
 					// ... //
 					
@@ -133,7 +133,7 @@ class MySmartSectionEditMOD
 					
 					if ($del)
 					{
-						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');						
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );						
 						$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 					}
 					
@@ -173,11 +173,11 @@ class MySmartSectionEditMOD
 			
 			if (in_array('false',$s))
 			{
-				$MySmartBB->func->msg('خطأ، لم تتم عملية حذف صلاحيات المجموعات و المواضيع بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_topics_delete_failed' ] );
 			}
 			else
 			{
-				$MySmartBB->func->msg('تم حذف صلاحيات المجموعات للمنتديات');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_groups_delete_succeed' ] );
 			}
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
@@ -187,7 +187,7 @@ class MySmartSectionEditMOD
 			
 			if ($del)
 			{
-				$MySmartBB->func->msg('تم حذف المنتديات بنجاح');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_delete_succeed' ] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
@@ -196,7 +196,7 @@ class MySmartSectionEditMOD
 				
 				if ($del)
 				{
-					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
 					
 					$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
@@ -205,13 +205,13 @@ class MySmartSectionEditMOD
 					
 					if ($del)
 					{
-						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
 						
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
 						{
-							$MySmartBB->func->msg('تمت الخطوه النهائيه بنجاح');
+							$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
 							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 						}
 					}
@@ -247,11 +247,11 @@ class MySmartSectionEditMOD
 			
 			if (in_array('false',$s))
 			{
-				$MySmartBB->func->msg('خطأ، لم تتم عملية حذف صلاحيات المجموعات بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'sections_groups_delete_failed' ] );
 			}
 			else
 			{
-				$MySmartBB->func->msg('تم حذف صلاحيات المجموعات للمنتديات');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_groups_delete_succeed' ] );
 			}
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
@@ -261,7 +261,7 @@ class MySmartSectionEditMOD
 			
 			if ($del)
 			{
-				$MySmartBB->func->msg('تم حذف المنتديات بنجاح');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_delete_succeed' ] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 				$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
@@ -270,7 +270,7 @@ class MySmartSectionEditMOD
 				
 				if ($del)
 				{
-					$MySmartBB->func->msg('تم حذف القسم بنجاح !');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
 					
 					$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
@@ -279,13 +279,13 @@ class MySmartSectionEditMOD
 						
 					if ($del)
 					{
-						$MySmartBB->func->msg('تم حذف صلاحيات المجموعات بنجاح');
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
 						
 						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
 						
 						if ($cache)
 						{
-							$MySmartBB->func->msg('تمت الخطوه النهائيه بنجاح');
+							$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
 							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 						}
 					}
@@ -294,7 +294,7 @@ class MySmartSectionEditMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('الاختيار غير صحيح!');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_choice' ] );
 		}
 	}
 	
@@ -306,7 +306,7 @@ class MySmartSectionEditMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -324,7 +324,7 @@ class MySmartSectionEditMOD
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
 		}
 		
 		// ... //

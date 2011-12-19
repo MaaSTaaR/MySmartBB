@@ -5,6 +5,7 @@ $lang[ 'update_succeed' ] = 'تم تحديث النمط بنجاح !';
 $lang[ 'delete_succeed' ] = 'تم حذف النمط بنجاح !';
 $lang[ 'style_doesnt_exist' ] = 'النمط المطلوب غير موجود';
 
+$lang[ 'template' ][ 'styles' ] = 'الانماط';
 $lang[ 'template' ][ 'style_title' ] = 'اسم النمط';
 
 $lang[ 'template' ][ 'add_style' ] = 'اضافة نمط جديد'; // style_add

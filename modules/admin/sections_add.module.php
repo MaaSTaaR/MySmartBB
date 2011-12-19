@@ -60,7 +60,7 @@ class MySmartSectionAddMOD
 		if ( empty( $MySmartBB->_POST[ 'name' ] ) 
 			or ( $MySmartBB->_POST[ 'order_type' ] == 'manual' and empty( $MySmartBB->_POST[ 'sort' ] ) ) )
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -142,13 +142,13 @@ class MySmartSectionAddMOD
 			
 			if ($cache)
 			{
-				$MySmartBB->func->msg('تم اضافة القسم بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_added' ] );
 				$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 			}
 		}
 		else
 		{
-			$MySmartBB->func->error('هناك مشكله، لم يتمكن من اضافة القسم');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'add_failed' ] );
 		}
 	}
 }

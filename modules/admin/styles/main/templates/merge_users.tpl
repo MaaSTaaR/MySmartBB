@@ -1,6 +1,6 @@
 ﻿<br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">دمج الاعضاء</a> </div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">{$lang['members_merge']}</a> </div>
 
 <br />
 
@@ -8,11 +8,11 @@
 
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
-			<td class="main1 rows_space" colspan="2">دمج الاعضاء</td>
+			<td class="main1 rows_space" colspan="2">{$lang['members_merge']}</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			اسم العضو المراد اخذ بياناته
+			{$lang['from_member']}
 			</td>
 			<td class="row1">
 				<input type="text" name="user_get" size="30" />
@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			العضو المراد نقل البيانات له
+			{$lang['to_member']}
 			</td>
 			<td class="row2">
 				<input type="text" name="user_to" size="30" />
@@ -31,7 +31,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

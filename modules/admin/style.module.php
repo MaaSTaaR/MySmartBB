@@ -87,7 +87,7 @@ class MySmartStyleMOD extends _func
 			or empty($MySmartBB->_POST['image_path']) 
 			or empty($MySmartBB->_POST['template_path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
@@ -106,7 +106,7 @@ class MySmartStyleMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة النمط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'add_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
@@ -145,7 +145,7 @@ class MySmartStyleMOD extends _func
 			or empty($MySmartBB->_POST['image_path']) 
 			or empty($MySmartBB->_POST['template_path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		/* ... */
@@ -184,7 +184,7 @@ class MySmartStyleMOD extends _func
 			
 			/* ... */
 			
-			$MySmartBB->func->msg('تم تحديث النمط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 			
 			/* ... */
@@ -212,7 +212,7 @@ class MySmartStyleMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف النمط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
@@ -226,7 +226,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -238,7 +238,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('النمط المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'style_doesnt_exist' ] );
 		}
 	}
 }

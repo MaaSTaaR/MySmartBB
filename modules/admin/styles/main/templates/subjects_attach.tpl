@@ -1,13 +1,13 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="">المواضيع المحتويه على مرفقات</a></div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="">{$lang['topics_with_attachments']}</a></div>
 
 <br />
 
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1">عنوان الموضوع</td>
-	<td class="main1">الكاتب</td>
+	<td class="main1">{$lang['topic_title']}</td>
+	<td class="main1">{$lang['writer']}</td>
 </tr>
 {DB::getInfo}{$AttachList}
 <tr valign="top" align="center">

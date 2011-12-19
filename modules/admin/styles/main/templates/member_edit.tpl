@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">الاعضاء</a> &raquo; تحرير : {$Inf['username']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=member&amp;control=1&amp;main=1">{$lang['members']}</a> &raquo; {$lang['common']['edit']} : {$Inf['username']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
-		تحرير عضو
+		{$lang['common']['edit']} {$lang['common']['member']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1">
-		اسم المستخدم
+		{$lang['username']}
 		</td>
 		<td class="row1">
 			<input type="text" name="username" value="{$Inf['username']}" readonly="readonly" />
@@ -21,7 +21,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		البريد الالكتروني
+		{$lang['email']}
 		</td>
 		<td class="row2">
 			<input type="text" name="email" value="{$Inf['email']}" />
@@ -29,23 +29,23 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		الجنس
+		{$lang['gender']}
 		</td>
 		<td class="row1">
 			<select name="gender" id="select_gender">
 			{if {$Inf['user_gender']} == 'm'}
-				<option value="m" selected="selected">ذكر</option>
-				<option value="f">انثى</option>
+				<option value="m" selected="selected">{$lang['male']}</option>
+				<option value="f">{$lang['female']}</option>
 			{else}
-				<option value="m">ذكر</option>
-				<option value="f" selected="selected">انثى</option>
+				<option value="m">{$lang['male']}</option>
+				<option value="f" selected="selected">{$lang['female']}</option>
 			{/if}
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="row2">
-		النمط
+		{$lang['style']}
 		</td>
 		<td class="row2">
 			<select name="style" id="select_style">
@@ -61,7 +61,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		الصوره الرمزيه
+		{$lang['avatar']}
 		</td>
 		<td class="row1">
 			<input type="text" name="avater_path" value="{$Inf['avatar_path']}" />
@@ -69,7 +69,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		نبذه
+		{$lang['about_member']}
 		</td>
 		<td class="row2">
 			<input type="text" name="user_info" value="{$Inf['user_info']}" />
@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		لقب العضو
+		{$lang['usertitle']}
 		</td>
 		<td class="row1">
 			<input type="text" name="user_title" value="{$Inf['user_title']}" />
@@ -85,7 +85,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		عدد المشاركات
+		{$lang['posts_count']}
 		</td>
 		<td class="row2">
 			<input type="text" name="posts" value="{$Inf['posts']}" />
@@ -93,7 +93,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		عنوان الموقع
+		{$lang['member_website']}
 		</td>
 		<td class="row1">
 			<input type="text" name="user_website" value="{$Inf['user_website']}" />
@@ -101,7 +101,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		الدوله
+		{$lang['country']}
 		</td>
 		<td class="row2">
 			<input type="text" name="user_country" value="{$Inf['user_country']}" />
@@ -109,7 +109,7 @@
 	</tr>
 	<tr>
 		<td class="row1">
-		المجموعه
+		{$lang['group']}
 		</td>
 		<td class="row1">
 			<select name="usergroup" id="select_usergroup">
@@ -125,7 +125,7 @@
 	</tr>
 	<tr>
 		<td class="row2">
-		IP العضو
+		IP {$lang['member']}
 		</td>
 		<td class="row2">
 			<input type="text" name="ip" value="{$Inf['member_ip']}" readonly="readonly" />
@@ -138,12 +138,12 @@
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
-		تغيير اسم المستخدم
+		{$lang['change_username']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row2">
-		اسم المستخدم الجديد
+		{$lang['new_username']}
 		</td>
 		<td class="row2">
 			<input type="text" name="new_username" />
@@ -156,12 +156,12 @@
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
-		تغيير كلمة المرور
+		{$lang['change_password']}
 		</td>
 	</tr>
 	<tr>
 		<td class="row1">
-		كلمة المرور الجديده
+		{$lang['new_password']}
 		</td>
 		<td class="row1">
 			<input type="password" name="new_password" />
@@ -172,7 +172,7 @@
 <br />
 
 <div align="center">
-	<input type="submit" value="موافق" name="submit" />
+	<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 </div>
 
 </form>

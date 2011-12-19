@@ -1,10 +1,10 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="">حذف جماعي</a></div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="">{$lang['mass_delete']}</a></div>
 
 <br />
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
-<p align="center">يرجى اختيار المنتدى الذي سوف يتم الحذف منه</p>
+<p align="center">{$lang['choose_forum_mass_delete']}</p>
 <br />
 {Des::foreach}{forums_list}{forum}
 <tr valign="top" align="center">

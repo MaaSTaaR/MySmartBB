@@ -57,7 +57,7 @@ class MySmartSectionEditMOD
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['sort']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
@@ -77,7 +77,7 @@ class MySmartSectionEditMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث القسم بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'section_updated' ] );
 			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 		}
 		
@@ -92,7 +92,7 @@ class MySmartSectionEditMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// ... //
@@ -110,7 +110,7 @@ class MySmartSectionEditMOD
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
 		}
 		
 		// ... //

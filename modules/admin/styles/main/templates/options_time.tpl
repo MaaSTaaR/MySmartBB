@@ -1,16 +1,16 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=options&amp;index=1">إعدادات المنتدى</a> &raquo; <a href="admin.php?page=options&amp;time=1&amp;main=1">إعدادات الوقت</a></div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=options&amp;index=1">{$lang['board_setting']}</a> &raquo; <a href="admin.php?page=options&amp;time=1&amp;main=1">{$lang['time_options']}</a></div>
 
 <br />
 
 <form action="admin.php?page=options&amp;time=1&amp;update=1" name="myform" method="post">
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 <tr valign="top" align="center">
-	<td class="main1" colspan="2">إعدادات الوقت</td>
+	<td class="main1" colspan="2">{$lang['time_options']}</td>
 </tr>
 <tr valign="top">
-		<td class="row1">توقيت المنتدى</td>
+		<td class="row1">{$lang['board_time']}</td>
 		<td class="row1">
 <select name="time_stamp" id="select_time_stamp">
 	<option {if {$_CONF['info_row']['timestamp']} == '-43200'} selected="selected" {/if} value="-43200" >GMT 12</option>
@@ -42,15 +42,15 @@
 </td>
 </tr>
 <tr valign="top">
-		<td class="row2">نظام الوقت</td>
+		<td class="row2">{$lang['time_system']}</td>
 		<td class="row2">
 <select name="time_system" id="select_time_system">
 		{if {$_CONF['info_row']['timesystem']} == 'ty'}
-			<option value="ty" selected="selected">نظام اليوم/الامس</option>
-			<option value="n" >النظام العادي</option>
+			<option value="ty" selected="selected">{$lang['textual_system']}</option>
+			<option value="n" >{$lang['normal_system']}</option>
 		{elseif {$_CONF['info_row']['timesystem']} == 'n'}
-			<option value="ty">نظام اليوم/الامس</option>
-			<option value="n" selected="selected">النظام العادي</option>
+			<option value="ty">{$lang['textual_system']}</option>
+			<option value="n" selected="selected">{$lang['normal_system']}</option>
 		{/if}
 </select>
 
@@ -59,7 +59,7 @@
 </table><br />
 <div align="center"><tr>
 	<td class="submit-buttons" colspan="2" align="center">
-	<input class="submit" type="submit" value="موافق" name="submit" accesskey="s" /></td>
+	<input class="submit" type="submit" value="{$lang['common']['submit']}" name="submit" accesskey="s" /></td>
 </tr>
 </table><br />
 </form>

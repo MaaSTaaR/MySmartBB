@@ -134,7 +134,7 @@ class MySmartToolboxMOD extends _func
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields	=	array();
@@ -145,7 +145,7 @@ class MySmartToolboxMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الخط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'font_added' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -178,7 +178,7 @@ class MySmartToolboxMOD extends _func
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields	=	array();
@@ -191,7 +191,7 @@ class MySmartToolboxMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الخط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'font_updated' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -217,7 +217,7 @@ class MySmartToolboxMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الخط بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'font_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;fonts=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -238,7 +238,7 @@ class MySmartToolboxMOD extends _func
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields	=	array();
@@ -249,7 +249,7 @@ class MySmartToolboxMOD extends _func
 		
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة اللون بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'color_added' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -282,7 +282,7 @@ class MySmartToolboxMOD extends _func
 		
 		if (empty($MySmartBB->_POST['name']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields	=	array();
@@ -295,7 +295,7 @@ class MySmartToolboxMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث اللون بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'color_updated' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -321,7 +321,7 @@ class MySmartToolboxMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف اللون بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'color_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
@@ -335,7 +335,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -346,7 +346,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الخط المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 		}
 	}
 	
@@ -356,7 +356,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
@@ -365,7 +365,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الخط المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 		}
 	}
 }

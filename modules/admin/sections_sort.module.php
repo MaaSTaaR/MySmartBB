@@ -62,11 +62,11 @@ class MySmartSectionSortMOD
 		
 		if (in_array('false',$s))
 		{
-			$MySmartBB->func->error('المعذره، لم تنجح العمليه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'process_failed' ] );
 		}
 		else
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 		}
 	}

@@ -129,7 +129,7 @@ class MySmartSubjectMOD extends _func
 			
 			if ($del[1])
 			{
-				$MySmartBB->func->msg('تم حذف المواضيع بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_deleted' ] );
 				$MySmartBB->func->move('admin.php?page=subject&amp;mass_del=1&amp;main=1');
 			}
 		}
@@ -160,7 +160,7 @@ class MySmartSubjectMOD extends _func
 			
 			if ($move[1])
 			{
-				$MySmartBB->func->msg('تم نقل المواضيع بنجاح !');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
 				$MySmartBB->func->move('admin.php?page=subject&amp;mass_move=1&amp;main=1');
 			}
 		}
@@ -177,7 +177,7 @@ class _func
 		{
 			if (empty($MySmartBB->_GET['id']))
 			{
-				$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 			}
 		
 			$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -189,7 +189,7 @@ class _func
 			
 			if ($Inf == false)
 			{
-				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 			}
 		}
 		else
@@ -197,29 +197,29 @@ class _func
 			if (empty($MySmartBB->_POST['from'])
 				or empty($MySmartBB->_POST['to']))
 			{
-				$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 			}
 		
 			$MySmartBB->_POST['from'] = (int) $MySmartBB->_POST['from'];
 			$MySmartBB->_POST['to'] = (int) $MySmartBB->_POST['to'];
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['from'] . "'";
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['from'] . "'";
 			
 			$Inf = $MySmartBB->rec->getInfo();
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['to'] . "'";
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['to'] . "'";
 			
 			$ToInf = $MySmartBB->rec->getInfo();
 			
 			if ($Inf == false)
 			{
-				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 			}
 			elseif ($ToInf == false)
 			{
-				$MySmartBB->func->error('المنتدى المطلوب غير موجود');
+				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 			}
 		}
 	}
