@@ -5,6 +5,8 @@ $lang[ 'cache_update_succeed' ] = 'تم تحديث المعلومات المخب
 $lang[ 'final_step_succeed' ] = 'تمّت الخطوه النهائيه';
 $lang[ 'forum_doesnt_exist' ] = 'القسم المطلوب غير موجود';
 
+$lang[ 'template' ][ 'forums' ] = 'المنتديات';
+$lang[ 'template' ][ 'control_forum_permission' ] = 'التحكم في صلاحيات المجموعات للقسم';
 $lang[ 'template' ][ 'view_forum' ] = 'إمكانية عرض القسم'; // forums_groups_control_main
 $lang[ 'template' ][ 'download_attachments' ] = 'تحميل المرفقات'; // forums_groups_control_main
 $lang[ 'template' ][ 'upload_attachments' ] = 'رفع المرفقات'; // forums_groups_control_main

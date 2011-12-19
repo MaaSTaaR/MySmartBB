@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=groups&amp;control=1&amp;main=1">المجموعات</a> &raquo; اضافه</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=groups&amp;control=1&amp;main=1">{$lang['groups']}</a> &raquo; {$lang['common']['add']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="70%" class="t_style_b" border="1" align="center">
 		<tr>
 			<td class="main1 rows_space" colspan="2">
-			اضافة مجموعه جديده
+			{$lang['add_group']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			اسم المجموعه
+			{$lang['group_title']}
 			</td>
 			<td class="row1" width="50%">
 				<input type="text" name="name" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			شكل اسم المستخدم في المجموعه
+			{$lang['name_style']}
 			</td>
 			<td class="row2" width="50%">
 				<input type="text" dir="ltr" value="[username]" name="style" />
@@ -29,7 +29,7 @@
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			مسمى العضو
+			{$lang['usertitle']}
 			</td>
 			<td class="row1" width="50%">
 				<input type="text" name="usertitle" />
@@ -37,7 +37,7 @@
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			الترتيب
+			{$lang['sort']}
 			</td>
 			<td class="row2" width="50%">
 				<input name="group_order" type="text" size="9" />
@@ -45,56 +45,56 @@
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			الظهور في قسم (المسؤولين عن المنتدى)
+			{$lang['show_in_teamwork']}
 			</td>
 			<td class="row1" width="50%">
 				<select size="1" name="forum_team">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			هل هذه المجموعه موقوفه
+			{$lang['banned_group']}
 			</td>
 			<td class="row2" width="50%">
 				<select size="1" name="banned">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="main1 rows_space" colspan="2">
-			خصائص الاقسام
+			{$lang['sections_setting']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			إمكانية الإطلاع على الأقسام
+			{$lang['view_section']}
 			</td>
 			<td class="row1" width="50%">
 				<select size="1" name="view_section">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			تحميل المرفقات
+			{$lang['download_attachments']}
 			</td>
 			<td class="row2" width="50%">
 		 		<select size="1" name="download_attach">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 		 		</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			عدد المشاركات حتى يستطيع تحميل المرفق
+			{$lang['post_number_to_download']}
 			</td>
 			<td class="row1" width="50%">
 				<input name="download_attach_number" type="text" value="0" size="5" />
@@ -102,18 +102,18 @@
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			رفع المرفقات
+			{$lang['upload_attachments']}
 			</td>
 			<td class="row2" width="50%">
 				<select size="1" name="upload_attach">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="row1" width="50%">
-			عدد المرفقات بالرد او الموضوع الواحد
+			{$lang['attachments_limit']}
 			</td>
 			<td class="row1" width="50%">
 				<input name="upload_attach_num" type="text" value="0" size="5">
@@ -121,573 +121,520 @@
 		</tr>
 		<tr>
 			<td class="row2" width="50%">
-			كتابة موضوع
+			{$lang['write_topic']}
 			</td>
 			<td class="row2" width="50%">
 				<select size="1" name="write_subject">
-					<option selected="selected" value="1">نعم</option>
-					<option value="0">لا</option>
+					<option selected="selected" value="1">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 				</select>
 			</td>
 
 		</tr>
 		<tr>
-		<td class="row1" width="50%">كتابة رد</td>
+		<td class="row1" width="50%">{$lang['write_reply']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="write_reply">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">تحرير موضوعه الخاص</td>
+		<td class="row2" width="50%">{$lang['edit_own_topic']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="edit_own_subject">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">تحرير رده الخاص</td>
+		<td class="row1" width="50%">{$lang['edit_own_reply']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="edit_own_reply">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">حذف موضوعه الخاصه</td>
+		<td class="row2" width="50%">{$lang['delete_own_topic']}</td>
 
 		<td class="row2" width="50%">
 		 <select size="1" name="del_own_subject">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">حذف رده الخاص</td>
+		<td class="row1" width="50%">{$lang['delete_own_reply']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="del_own_reply">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">كتابة استفتاء</td>
+		<td class="row2" width="50%">{$lang['write_poll']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="write_poll">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">تصويت في الاستفتاء</td>
+		<td class="row1" width="50%">{$lang['vote_poll']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="vote_poll">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="main1 rows_space" colspan="2">خصائص الرسائل الخاصه</td>
+		<td class="main1 rows_space" colspan="2">{$lang['pm_settings']}</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية استخدام الرسائل الخاصه</td>
+		<td class="row1" width="50%">{$lang['use_pm_feature']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="use_pm">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية ارسال رساله خاصه</td>
+		<td class="row2" width="50%">{$lang['send_pm']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="send_pm">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية استقبال رساله خاصه</td>
+		<td class="row1" width="50%">{$lang['receive_pm']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="resive_pm">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">حجم الصندوق (بالعدد)</td>
+		<td class="row2" width="50%">{$lang['inbox_size']}</td>
 		<td class="row2" width="50%"><input type="text" name="max_pm" value="70" size="5"></td>
 		</tr>
 
 		<tr>
-		<td class="row1" width="50%">اقل عدد مشاركات لإستخدام الرسائل الخاصة</td>
+		<td class="row1" width="50%">{$lang['posts_number_to_pm']}</td>
 		<td class="row1" width="50%"><input type="text" name="min_send_pm" value="0" size="5"></td>
 		</tr>
 		<tr>
-		<td class="main1 rows_space" colspan="2">خصائص التوقيع</td>
+		<td class="main1 rows_space" colspan="2">{$lang['signature_settings']}</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية استخدام التوقيع</td>
+		<td class="row1" width="50%">{$lang['use_signature']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="sig_allow">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">طول التوقيع</td>
+		<td class="row2" width="50%">{$lang['signature_length']}</td>
 		<td class="row2" width="50%"><input type="text" name="sig_len" value="1000" size="5"></td>
 		</tr>
 
 		<tr>
-		<td class="main1 rows_space" colspan="2">خصائص الاشراف</td>
+		<td class="main1 rows_space" colspan="2">{$lang['moderate_setting']}</td>
 
 		</tr>
 		<tr>
-		<td class="row1" width="50%">مجموعة مشرفين</td>
+		<td class="row1" width="50%">{$lang['moderaters_group']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="group_mod">
-		  <option value="1">نعم</option>
-		  <option selected="selected" value="0">لا</option>
+		  <option value="1">{$lang['common']['yes']}</option>
+		  <option selected="selected" value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">مجموعة نائب عام</td>
+		<td class="row2" width="50%">{$lang['supervisor_group']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="group_vice">
-		  <option value="1">نعم</option>
+		  <option value="1">{$lang['common']['yes']}</option>
 
-		  <option selected="selected" value="0">لا</option>
+		  <option selected="selected" value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية تحرير المواضيع</td>
+		<td class="row1" width="50%">{$lang['can_edit_topics']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="edit_subject">
 
-		  <option value="1">نعم</option>
-		  <option selected="selected" value="0">لا</option>
+		  <option value="1">{$lang['common']['yes']}</option>
+		  <option selected="selected" value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية تحرير الردود</td>
+		<td class="row2" width="50%">{$lang['can_edit_replies']}</td>
 
 		<td class="row2" width="50%">
 		 <select size="1" name="edit_reply">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية حذف المواضيع</td>
+		<td class="row1" width="50%">{$lang['can_delete_topics']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="del_subject">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية حذف الردود</td>
+		<td class="row2" width="50%">{$lang['can_delete_replies']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="del_reply">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية تثبيت موضوع</td>
+		<td class="row1" width="50%">{$lang['can_stick_topics']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="stick_subject">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية إلغاء تثبيت</td>
+		<td class="row2" width="50%">{$lang['can_unstick_topics']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="unstick_subject">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية نقل موضوع</td>
+		<td class="row1" width="50%">{$lang['can_move_topics']}</td>
 
 		<td class="row1" width="50%">
 		 <select size="1" name="move_subject">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row2" width="50%">امكانية اغلاق الردود</td>
+		<td class="row2" width="50%">{$lang['can_close_topics']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="close_subject">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="main1 rows_space" colspan="2">خصائص الاداره</td>
+		<td class="main1 rows_space" colspan="2">{$lang['admin_setting']}</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية استخدام لوحة تحكم المدير</td>
+		<td class="row1" width="50%">{$lang['can_use_admin_cp']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_allow">
 
-		  <option value="1">نعم</option>
-		  <option selected="selected" value="0">لا</option>
+		  <option value="1">{$lang['common']['yes']}</option>
+		  <option selected="selected" value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الاقسام</td>
+		<td class="row2" width="50%">{$lang['can_control_sections']}</td>
 
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_section">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية التحكم بـ الاعدادات</td>
+		<td class="row1" width="50%">{$lang['can_control_options']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_option">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الاعضاء</td>
+		<td class="row2" width="50%">{$lang['can_control_members']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_member">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ مجموعات الاعضاء</td>
+		<td class="row1" width="50%">{$lang['can_control_groups']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_membergroup">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ مسميات الاعضاء</td>
+		<td class="row2" width="50%">{$lang['can_control_usertitles']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_membertitle">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ المشرفين</td>
+		<td class="row1" width="50%">{$lang['can_control_moderators']}</td>
 
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_admin">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-
-		<td class="row2" width="50%">امكانية التحكم بـ متابعة المشرفين</td>
-		<td class="row2" width="50%">
-		 <select size="1" name="admincp_adminstep">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
-		 </select>
-		</td>
-
-		</tr>
-		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ المواضيع</td>
+		<td class="row1" width="50%">{$lang['can_control_topics']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_subject">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ قواعد البيانات</td>
-		<td class="row2" width="50%">
-		 <select size="1" name="admincp_database">
-		  <option selected="selected" value="1">نعم</option>
-
-		  <option value="0">لا</option>
-		 </select>
-		</td>
-		</tr>
-		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ صيانه</td>
-		<td class="row1" width="50%">
-		 <select size="1" name="admincp_fixup">
-
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
-		 </select>
-		</td>
-		</tr>
-		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الاعلانات</td>
+		<td class="row2" width="50%">{$lang['can_control_ads']}</td>
 
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_ads">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية التحكم بـ القوالب</td>
+		<td class="row1" width="50%">{$lang['can_control_templates']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_template">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الاعلانات الاداريه</td>
+		<td class="row2" width="50%">{$lang['can_control_announcements']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_adminads">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ الملفات المرفقه</td>
+		<td class="row1" width="50%">{$lang['can_control_attachments']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_attach">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الصفحات</td>
+		<td class="row2" width="50%">{$lang['can_control_pages']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_page">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ الحظر</td>
+		<td class="row1" width="50%">{$lang['can_control_banned']}</td>
 
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_block">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row2" width="50%">امكانية التحكم بـ الستايلات</td>
+		<td class="row2" width="50%">{$lang['can_control_styles']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_style">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ صندوق الادوات</td>
+		<td class="row1" width="50%">{$lang['can_control_toolbox']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_toolbox">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الابتسامات</td>
+		<td class="row2" width="50%">{$lang['can_control_smiles']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_smile">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية التحكم بـ الايقونات</td>
+		<td class="row1" width="50%">{$lang['can_control_icons']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="admincp_icon">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية التحكم بـ الصور الشخصيه</td>
+		<td class="row2" width="50%">{$lang['can_control_avatars']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="admincp_avater">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
+		
 		<tr>
-
-		<td class="row1" width="50%">امكانية التحكم بـ مراسلة الإدارة</td>
-		<td class="row1" width="50%">
-		 <select size="1" name="admincp_contactus">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
-		 </select>
-		</td>
-
-		</tr>
-
-
-		<tr>
-		<td class="main1 rows_space" colspan="2">اخرى</td>
+		<td class="main1 rows_space" colspan="2">{$lang['other']}</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">امكانية استخدام خاصية البحث</td>
+		<td class="row1" width="50%">{$lang['can_use_search']}</td>
 		<td class="row1" width="50%">
 
 		 <select size="1" name="search_allow">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية الاطلاع على قائمة الاعضاء</td>
+		<td class="row2" width="50%">{$lang['can_view_memberlist']}</td>
 
 		<td class="row2" width="50%">
 		 <select size="1" name="memberlist_allow">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
 
-		<td class="row1" width="50%">امكانية مشاهدة الاعضاء المتخفين</td>
+		<td class="row1" width="50%">{$lang['can_see_hidden_members']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="show_hidden">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 
 		</tr>
 		<tr>
-		<td class="row2" width="50%">ظهور اسم المجموعه ضمن اسماء المجموعات الاخرى في جدول المتواجدين</td>
+		<td class="row2" width="50%">{$lang['show_group_title']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="view_usernamestyle">
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row1" width="50%">تغيير مسمى العضو عند زيادة المشاركات</td>
+		<td class="row1" width="50%">{$lang['usertitle_change_post_count']}</td>
 		<td class="row1" width="50%">
 		 <select size="1" name="usertitle_change">
-		  <option selected="selected" value="1">نعم</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
 
-		  <option value="0">لا</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
 		<tr>
-		<td class="row2" width="50%">امكانية الاطلاع على المتواجدين</td>
+		<td class="row2" width="50%">{$lang['can_view_online']}</td>
 		<td class="row2" width="50%">
 		 <select size="1" name="onlinepage_allow">
 
-		  <option selected="selected" value="1">نعم</option>
-		  <option value="0">لا</option>
-		 </select>
-		</td>
-		</tr>
-		<tr>
-		<td class="row1">إمكانية رؤية الانماط المعطلة</td>
-
-		<td class="row1">
-		 <select size="1" name="allow_see_offstyles">
-		  <option value="1">نعم</option>
-		  <option selected="selected" value="0">لا</option>
+		  <option selected="selected" value="1">{$lang['common']['yes']}</option>
+		  <option value="0">{$lang['common']['no']}</option>
 		 </select>
 		</td>
 		</tr>
     </table>
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 </form>

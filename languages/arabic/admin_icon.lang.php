@@ -5,6 +5,7 @@ $lang[ 'icon_updated' ] = 'تم تحديث الايقونه بنجاح !';
 $lang[ 'icon_deleted' ] = 'تم حذف الايقونه بنجاح !';
 $lang[ 'icon_doesnt_exist' ] = 'الايقونه المطلوبه غير موجوده';
 
+$lang[ 'template' ][ 'icons' ] = 'الايقونات';
 $lang[ 'template' ][ 'add_icon' ] = 'اضافة ايقونه جديده'; // icon_add
 $lang[ 'template' ][ 'icon_path' ] = 'مسار الصوره'; // icon_add
 $lang[ 'template' ][ 'icon' ] = 'الايقونه'; // icons_main

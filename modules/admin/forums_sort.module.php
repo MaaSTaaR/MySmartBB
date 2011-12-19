@@ -39,9 +39,11 @@ class MySmartForumsSortMOD
 		$MySmartBB->rec->filter = "parent<>'0'";
 		$MySmartBB->rec->order = "sort ASC";
 		
+		$forums_res = &$MySmartBB->func->setResource();
+		
 		$MySmartBB->rec->getList();
 		
-		while ( $row = $MySmartBB->rec->getInfo() )
+		while ( $row = $MySmartBB->rec->getInfo( $forums_res ) )
 		{
 			$name = 'order-' . $row['id'];
 			
@@ -66,11 +68,11 @@ class MySmartForumsSortMOD
 		
 		if ( in_array( 'false', $s ) )
 		{
-			$MySmartBB->func->error('المعذره، لم تنجح العمليه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'process_failed' ] );
 		}
 		else
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
 		}
 	}

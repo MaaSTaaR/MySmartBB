@@ -61,7 +61,7 @@ class MySmartGroupsDelMOD
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف المجموعه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'group_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}
 	}
@@ -72,7 +72,7 @@ class MySmartGroupsDelMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -84,7 +84,7 @@ class MySmartGroupsDelMOD
 		
 		if ($GroupInfo == false)
 		{
-			$MySmartBB->func->error('المجموعه المطلوبه غير موجوده');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'group_doesnt_exist' ] );
 		}
 	}
 }

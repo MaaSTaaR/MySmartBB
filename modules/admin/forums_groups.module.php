@@ -103,19 +103,19 @@ class MySmartForumsDeleteMOD
 		
 		if ($success_size == $size)
 		{
-			$MySmartBB->func->msg('تم التحديث بنجاح!');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			
 			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->_CONF['template']['Inf']['id'] );
 			
 			if ($cache)
 			{
-				$MySmartBB->func->msg('تم تحديث المعلومات المخبأه');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'cache_update_succeed' ] );
 				
 				$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
 				
 				if ($cache)
 				{
-					$MySmartBB->func->msg('تمّت الخطوه النهائيه');
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
 					$MySmartBB->func->move('admin.php?page=forums_groups&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
 				}
 			}
@@ -128,7 +128,7 @@ class MySmartForumsDeleteMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -140,7 +140,7 @@ class MySmartForumsDeleteMOD
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('القسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}		
 	}
 }

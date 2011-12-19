@@ -178,7 +178,7 @@ class MySmartSection
  	{
  		$this->engine->rec->table = $this->table;
  		
- 		$forum_res = &$this->engine->func->setResouce();
+ 		$forum_res = &$this->engine->func->setResource();
  		
  		$this->engine->rec->getList();
  		

@@ -1,5 +1,7 @@
 <?php
 
+$lang[ 'template' ][ 'show_group_title' ] = 'ظهور اسم المجموعه ضمن اسماء المجموعات الاخرى في جدول المتواجدين'; // group_edit
+$lang[ 'template' ][ 'usertitle_change_post_count' ] = 'تغيير مسمى العضو عند زيادة المشاركات'; // group_edit
 $lang[ 'template' ][ 'group_title' ] = 'اسم المجموعه'; // group_edit
 $lang[ 'template' ][ 'name_style' ] = 'شكل اسم المستخدم في المجموعه'; // group_edit
 $lang[ 'template' ][ 'usertitle' ] = 'مسمى العضو'; // group_edit
@@ -49,8 +51,9 @@ $lang[ 'template' ][ 'can_control_groups' ] = 'امكانية التحكم بـ 
 $lang[ 'template' ][ 'can_control_usertitles' ] = 'امكانية التحكم بـ مسميات الاعضاء'; // group_edit
 $lang[ 'template' ][ 'can_control_moderators' ] = 'امكانية التحكم بـ المشرفين'; // group_edit
 $lang[ 'template' ][ 'can_control_topics' ] = 'امكانية التحكم بـ المواضيع'; // group_edit
-$lang[ 'template' ][ 'can_control_ads' ] = 'امكانية التحكم بـ الاعلانات'; // group_edit
 $lang[ 'template' ][ 'can_control_announcements' ] = 'امكانية التحكم بـ الاعلانات الاداريه'; // group_edit
+$lang[ 'template' ][ 'can_control_ads' ] = 'امكانية التحكم بـ الاعلانات'; // group_edit
+$lang[ 'template' ][ 'can_control_templates' ] = 'امكانية التحكم بـ القوالب';
 $lang[ 'template' ][ 'can_control_attachments' ] = 'امكانية التحكم بـ الملفات المرفقه'; // group_edit
 $lang[ 'template' ][ 'can_control_pages' ] = 'امكانية التحكم بـ الصفحات'; // group_edit
 $lang[ 'template' ][ 'can_control_banned' ] = 'امكانية التحكم بـ الحظر'; // group_edit
@@ -63,8 +66,6 @@ $lang[ 'template' ][ 'other' ] = 'اخرى'; // group_edit
 $lang[ 'template' ][ 'can_use_search' ] = 'امكانية استخدام خاصية البحث'; // group_edit
 $lang[ 'template' ][ 'can_view_memberlist' ] = 'امكانية الاطلاع على قائمة الاعضاء'; // group_edit
 $lang[ 'template' ][ 'can_see_hidden_members' ] = 'امكانية مشاهدة الاعضاء المتخفين'; // group_edit
-$lang[ 'template' ][ 'show_group_title' ] = 'ظهور اسم المجموعه ضمن اسماء المجموعات الاخرى في جدول المتواجدين'; // group_edit
-$lang[ 'template' ][ 'usertitle_change_post_count' ] = 'تغيير مسمى العضو عند زيادة المشاركات'; // group_edit
 $lang[ 'template' ][ 'can_view_online' ] = 'امكانية الاطلاع على المتواجدين'; // group_edit
 
 ?>

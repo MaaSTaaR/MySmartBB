@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">المنتديات</a> &raquo; التحكم في صلاحيات المجموعات للقسم : {$Inf['title']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=forums&amp;control=1&amp;main=1">{$lang['forums']}</a> &raquo; {$lang['control_forum_permission']} : {$Inf['title']}</div>
 
 <br />
 
@@ -15,192 +15,192 @@
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			إمكانية عرض القسم
+			{$lang['view_forum']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][view_section]" id="select_view_section">
 					{if {$SecGroupList['view_section']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			تحميل المرفقات
+			{$lang['download_attachments']}
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][download_attach]" id="select_download_attach">
 					{if {$SecGroupList['download_attach']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			رفع المرفقات
+			{$lang['upload_attachments']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][upload_attach]" id="select_upload_attach">
 					{if {$SecGroupList['upload_attach']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			كتابة موضوع
+			{$lang['write_topic']}
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][write_subject]" id="select_write_subject">
 					{if {$SecGroupList['write_subject']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			كتابة رد
+			{$lang['write_reply']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][write_reply]" id="select_write_reply">
 					{if {$SecGroupList['write_reply']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			تحرير موضوعه الخاص
+			{$lang['edit_own_topic']}
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][edit_own_subject]" id="select_edit_own_subject">
 					{if {$SecGroupList['edit_own_subject']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			تحرير رده الخاص
+			{$lang['edit_own_reply']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][edit_own_reply]" id="select_edit_own_reply">
 					{if {$SecGroupList['edit_own_reply']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			حذف موضوعه الخاص
+			{$lang['delete_own_topic']}
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][del_own_subject]" id="select_del_own_subject">
 					{if {$SecGroupList['del_own_subject']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			حذف رده الخاص
+			{$lang['delete_own_reply']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][del_own_reply]" id="select_del_own_reply">
 					{if {$SecGroupList['del_own_reply']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row2">
-			كتابة استفتاء
+			{$lang['write_poll']}
 			</td>
 			<td class="row2">
 				<select name="groups[{$SecGroupList['group_id']}][write_poll]" id="select_write_poll">
 					{if {$SecGroupList['write_poll']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>	
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			تصويت في استفتاء
+			{$lang['vote_poll']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][vote_poll]" id="select_vote_poll">
 					{if {$SecGroupList['vote_poll']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			احتساب المشاركات
+			{$lang['count_posts_number']}
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][no_posts]" id="select_no_posts">
 					{if {$SecGroupList['no_posts']}}
-					<option value="1" selected="selected">نعم</option>
-					<option value="0">لا</option>
+					<option value="1" selected="selected">{$lang['common']['yes']}</option>
+					<option value="0">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">نعم</option>
-					<option value="0" selected="selected">لا</option>
+					<option value="1">{$lang['common']['yes']}</option>
+					<option value="0" selected="selected">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
@@ -211,7 +211,7 @@
 	{/DB::getInfo}
 
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

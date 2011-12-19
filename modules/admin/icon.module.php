@@ -82,7 +82,7 @@ class MySmartIconMOD extends _func
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->fields		=	array();
@@ -93,7 +93,7 @@ class MySmartIconMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة الايقونه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_added' ] );
 			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
@@ -130,7 +130,7 @@ class MySmartIconMOD extends _func
 		
 		if (empty($MySmartBB->_POST['path']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 
 		$MySmartBB->rec->fields	=	array();
@@ -143,7 +143,7 @@ class MySmartIconMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث الايقونه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_updated' ] );
 			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
@@ -173,7 +173,7 @@ class MySmartIconMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الايقونه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
@@ -187,7 +187,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -198,7 +198,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الايقونه المطلوبه غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'icon_doesnt_exist' ] );
 		}
 	}
 }

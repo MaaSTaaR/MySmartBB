@@ -34,7 +34,7 @@ class MySmartLoginMOD
 		if (empty($MySmartBB->_POST['username'])
 			or empty($MySmartBB->_POST['password']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$username = trim( $MySmartBB->_POST['username'] );
@@ -48,7 +48,7 @@ class MySmartLoginMOD
 		}
 		else
 		{
-			$MySmartBB->func->error('المعلومات غير صحيحه');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_information' ] );
 		}
 	}
 }

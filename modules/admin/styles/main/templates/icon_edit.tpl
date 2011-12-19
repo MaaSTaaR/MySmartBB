@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=icon&amp;control=1&amp;main=1">الايقونات</a> &raquo; تحرير : {$Inf['smile_path']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=icon&amp;control=1&amp;main=1">{$lang['icons']}</a> &raquo; {$lang['common']['edit']} : {$Inf['smile_path']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 		<tr valign="top" align="center">
 			<td class="main1" colspan="2">
-			تحرير ايقونه
+			{$lang['edit_icon']}
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			مسار الصوره
+			{$lang['icon_path']}
 			</td>
 			<td class="row1">
 				<input type="text" name="path" id="input_path" value="{$Inf['smile_path']}" />
@@ -24,6 +24,6 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 </form>

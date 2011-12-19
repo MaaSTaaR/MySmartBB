@@ -60,7 +60,7 @@ class MySmartGroupsEditMOD
 			or empty($MySmartBB->_POST['style'])
 			or empty($MySmartBB->_POST['usertitle']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// Enable HTML and (only) HTML
@@ -113,17 +113,17 @@ class MySmartGroupsEditMOD
 		$MySmartBB->rec->fields['view_usernamestyle'] 		= 	$MySmartBB->_POST['view_usernamestyle'];
 		$MySmartBB->rec->fields['usertitle_change'] 			= 	$MySmartBB->_POST['usertitle_change'];
 		$MySmartBB->rec->fields['onlinepage_allow'] 			= 	$MySmartBB->_POST['onlinepage_allow'];
-		$MySmartBB->rec->fields['allow_see_offstyles'] 		= 	$MySmartBB->_POST['allow_see_offstyles'];
+		//$MySmartBB->rec->fields['allow_see_offstyles'] 		= 	$MySmartBB->_POST['allow_see_offstyles'];
 		$MySmartBB->rec->fields['admincp_section'] 			= 	$MySmartBB->_POST['admincp_section'];
 		$MySmartBB->rec->fields['admincp_option'] 			= 	$MySmartBB->_POST['admincp_option'];
 		$MySmartBB->rec->fields['admincp_member'] 			= 	$MySmartBB->_POST['admincp_member'];
 		$MySmartBB->rec->fields['admincp_membergroup'] 		= 	$MySmartBB->_POST['admincp_membergroup'];
 		$MySmartBB->rec->fields['admincp_membertitle'] 		= 	$MySmartBB->_POST['admincp_membertitle'];
 		$MySmartBB->rec->fields['admincp_admin'] 			= 	$MySmartBB->_POST['admincp_admin'];
-		$MySmartBB->rec->fields['admincp_adminstep'] 		= 	$MySmartBB->_POST['admincp_adminstep'];
+		//$MySmartBB->rec->fields['admincp_adminstep'] 		= 	$MySmartBB->_POST['admincp_adminstep']; REMOVED FEATURE
 		$MySmartBB->rec->fields['admincp_subject'] 			= 	$MySmartBB->_POST['admincp_subject'];
-		$MySmartBB->rec->fields['admincp_database'] 			= 	$MySmartBB->_POST['admincp_database'];
-		$MySmartBB->rec->fields['admincp_fixup'] 			= 	$MySmartBB->_POST['admincp_fixup'];
+		//$MySmartBB->rec->fields['admincp_database'] 			= 	$MySmartBB->_POST['admincp_database']; REMOVED FEATURE
+		//$MySmartBB->rec->fields['admincp_fixup'] 			= 	$MySmartBB->_POST['admincp_fixup']; REMOVED FEATURE
 		$MySmartBB->rec->fields['admincp_ads'] 				= 	$MySmartBB->_POST['admincp_ads'];
 		$MySmartBB->rec->fields['admincp_template'] 			= 	$MySmartBB->_POST['admincp_template'];
 		$MySmartBB->rec->fields['admincp_adminads'] 			= 	$MySmartBB->_POST['admincp_adminads'];
@@ -145,7 +145,7 @@ class MySmartGroupsEditMOD
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث المجموعه بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}
 	}
@@ -156,7 +156,7 @@ class MySmartGroupsEditMOD
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -168,7 +168,7 @@ class MySmartGroupsEditMOD
 		
 		if ($GroupInfo == false)
 		{
-			$MySmartBB->func->error('المجموعه المطلوبه غير موجوده');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'group_doesnt_exist' ] );
 		}
 	}
 }
