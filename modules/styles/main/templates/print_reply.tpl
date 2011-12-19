@@ -2,10 +2,10 @@
 	<table border="0" cellpadding="0" class="print-table" width="95%">
 		<tr align="center">
 			<td width="30%" class="print-td" style="font-size:14pt">
-			كاتب الرد: {$Info['display_username']}
+			{$lang['reply_writer']} : {$Info['display_username']}
 			</td>
 			<td width="60%" class="print-td">
-			بتاريخ: {$Info['write_time']}
+			{$lang['on_date']} : {$Info['write_time']}
 			</td>
 		</tr> 
 		<tr>

@@ -19,5 +19,8 @@ $lang[ 'template' ][ 'avatar_from_list' ] = 'اختيار صوره شخصيه م
 $lang[ 'template' ][ 'avatar_from_website' ] = 'صوره شخصيه من موقع خارجي';
 $lang[ 'template' ][ 'avatar_from_pc' ] = 'صوره شخصيه من حاسوبك الشخصي';
 $lang[ 'template' ][ 'no_avatar' ] = 'بدون صوره شخصيه';
+$lang[ 'template' ][ 'choose_image' ] = 'يرجى اختيار الصوره';
+$lang[ 'template' ][ 'max_size_avatar' ] = 'ملاحظة : الحد الأقصى لحجم الصورة الرمزية هو';
+$lang[ 'template' ][ 'image_url' ] = 'عنوان الصوره';
 
 ?>

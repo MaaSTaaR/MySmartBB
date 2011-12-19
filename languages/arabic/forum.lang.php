@@ -20,6 +20,9 @@ $lang[ 'template' ][ 'closed' ] = '(مغلق)';
 $lang[ 'template' ][ 'no_replies' ] = 'لا يوجد ردود';
 $lang[ 'template' ][ 'topics_list' ] = 'قائمة المواضيع';
 
+$lang[ 'template' ][ 'add_new_topic' ] = 'إضافة موضوع جديد';
+$lang[ 'template' ][ 'password_proctected' ] = 'هذا المنتدى محمي بكلمة مرور، يرجى ادخالها حتى تستطيع عرض هذا المنتدى';
+
 // ... //
 
 $lang[ 'forum_doesnt_exist' ] = 'القسم المطلوب غير موجود';

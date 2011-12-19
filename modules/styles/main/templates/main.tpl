@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-الصفحه الرئيسيه
+{$lang['main_page']}
 {template}address_bar_part2{/template}
 
 {template}sections_list{/template}

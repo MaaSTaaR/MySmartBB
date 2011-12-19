@@ -65,6 +65,11 @@ $lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة المو�
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
 
+$lang[ 'template' ][ 'add_new_topic' ] = 'إضافة موضوع جديد';
+$lang[ 'template' ][ 'add_new_reply' ] = 'إضافة رد جديد';
+
+$lang[ 'template' ][ 'reply_writer' ] = 'كاتب الرد';
+
 // ... //
 
 $lang[ 'topic_doesnt_exist' ] = 'المعذره، الموضوع المطلوب غير موجود';
