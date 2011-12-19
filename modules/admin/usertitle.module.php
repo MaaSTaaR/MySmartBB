@@ -81,7 +81,7 @@ class MySmartUsertitleMOD extends _func
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
@@ -95,7 +95,7 @@ class MySmartUsertitleMOD extends _func
 		
 		if ($insert)
 		{
-			$MySmartBB->func->msg('تم اضافة المسمى بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'usertitle_added' ] );
 			$MySmartBB->func->move('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
@@ -130,7 +130,7 @@ class MySmartUsertitleMOD extends _func
 		if (empty($MySmartBB->_POST['title']) 
 			or empty($MySmartBB->_POST['posts']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
@@ -146,7 +146,7 @@ class MySmartUsertitleMOD extends _func
 		
 		if ($update)
 		{
-			$MySmartBB->func->msg('تم تحديث المسمى بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'usertitle_updated' ] );
 			$MySmartBB->func->move('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
@@ -173,7 +173,7 @@ class MySmartUsertitleMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف المسمى بنجاح !');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'usertitle_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
@@ -188,7 +188,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -200,7 +200,7 @@ class _func
 		
 		if ($UTInfo == false)
 		{
-			$MySmartBB->func->error('الاسم المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'usertitle_doesnt_exist' ] );
 		}
 	}
 }

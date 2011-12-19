@@ -14,4 +14,6 @@ $lang[ 'template' ][ 'writer' ] = 'الكاتب'; // trash_subjects
 
 $lang[ 'template' ][ 'reply_id' ] = 'رقم الرد'; // trash_replies
 
+$lang[ 'template' ][ 'trash' ] = 'سلة المحذوفات';
+
 ?>

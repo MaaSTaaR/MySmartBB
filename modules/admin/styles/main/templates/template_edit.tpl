@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=template&amp;control=1&amp;main=1">القوالب</a> &raquo; تحرير : {$filename}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=template&amp;control=1&amp;main=1">{$lang['templates']}</a> &raquo; {$lang['common']['edit']} : {$filename}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 		<tr valign="top" align="center">
 			<td class="main1" colspan="2">
-			تحرير القالب
+			{$lang['edit_template']}
 			</td>
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			اسم القالب
+			{$lang['template_name']}
 			</td>
 			<td class="row1">
 				{$filename}
@@ -21,7 +21,7 @@
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			نمط القالب
+			{$lang['style_of_template']}
 			</td>
 			<td class="row1">
 				{$Inf['style_title']}
@@ -29,7 +29,7 @@
 		</tr>
 		<tr valign="top">
 			<td class="row1">
-			حُرر في
+			{$lang['last_edit']}
 			</td>
 			<td class="row1">
 				{$last_edit}
@@ -45,6 +45,6 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="حفظ" name="submit" />
+		<input type="submit" value="{$lang['save']}" name="submit" />
 	</div>
 </form>

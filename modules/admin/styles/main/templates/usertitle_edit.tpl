@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">لوحة التحكم &raquo; <a href="admin.php?page=usertitle&amp;control=1&amp;main=1">مسميات الاعضاء</a> &raquo; تحرير : {$Inf['usertitle']}</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; <a href="admin.php?page=usertitle&amp;control=1&amp;main=1">{$lang['usertitles']}</a> &raquo; {$lang['common']['edit']} : {$Inf['usertitle']}</div>
 
 <br />
 
@@ -8,12 +8,12 @@
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr align="center">
 			<td class="main1" colspan="2">
-			تحرير مسمى
+			{$lang['edit_usertitle']}
 			</td>
 		</tr>
 		<tr>
 			<td class="row1">
-			المسمى
+			{$lang['usertitle']}
 			</td>
 			<td class="row1">
 				<input type="text" name="title" value="{$Inf['usertitle']}" />
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			المشاركات
+			{$lang['posts_number']}
 			</td>
 			<td class="row2">
 				<input type="text" name="posts" value="{$Inf['posts']}" />
@@ -32,7 +32,7 @@
 	<br />
 	
 	<div align="center">
-		<input type="submit" value="موافق" name="submit" />
+		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
 	<br />

@@ -11,4 +11,5 @@ $lang[ 'template' ][ 'posts_number' ] = 'عدد المشاركات';
 $lang[ 'template' ][ 'add_usertitle' ] = 'اضافة مسمى جديد'; // usertitle_add
 $lang[ 'template' ][ 'edit_usertitle' ] = 'تحرير مسمى'; // usertitle_edit
 
+$lang[ 'template' ][ 'usertitles' ] = 'مسميات الاعضاء';
 ?>

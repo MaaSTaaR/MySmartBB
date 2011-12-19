@@ -89,7 +89,7 @@ class MySmartTemplateMOD extends _func
 			or empty($MySmartBB->_POST['style'])
 			or empty($MySmartBB->_POST['context']))
 		{
-			$MySmartBB->func->error('يرجى تعبئة كافة المعلومات');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
@@ -99,7 +99,7 @@ class MySmartTemplateMOD extends _func
 
 		if (!$StyleInfo)
 		{
-			$MySmartBB->func->error('النمط المطلوب غير مسجل في قواعد البيانات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'style_doesnt_exist' ] );
 		}
 
 	     $MySmartBB->_POST['context'] = $MySmartBB->func->cleanVariable($MySmartBB->_POST['context'],'unhtml');
@@ -112,7 +112,7 @@ class MySmartTemplateMOD extends _func
 	     
 	     if ($fw)
 	     {
-	     	$MySmartBB->func->msg('تم اضافة القالب بنجاح !');
+	     	$MySmartBB->func->msg( $MySmartBB->lang[ 'template_added' ] );
 	     	$MySmartBB->func->move('admin.php?page=template&amp;&amp;control=1&amp;main=1');
 	     }
 	}
@@ -137,7 +137,7 @@ class MySmartTemplateMOD extends _func
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المسار المتبع غير صحيح !');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
@@ -147,7 +147,7 @@ class MySmartTemplateMOD extends _func
 
 		if (!$StyleInfo)
 		{
-			$MySmartBB->func->error('النمط غير موجود في السجلات');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'style_doesnt_exist' ] );
 		}
 		
 		$TemplatesList = array();
@@ -191,7 +191,7 @@ class MySmartTemplateMOD extends _func
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->func->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
     	}
     	
     	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
@@ -200,7 +200,7 @@ class MySmartTemplateMOD extends _func
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->func->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error( $MySmartBB->lang[ 'template_doesnt_exist' ] );
     	}
     	
     	$lines = file($path);
@@ -232,7 +232,7 @@ class MySmartTemplateMOD extends _func
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->func->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
     	}
     	
     	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
@@ -241,13 +241,13 @@ class MySmartTemplateMOD extends _func
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->func->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error( $MySmartBB->lang[ 'template_doesnt_exist' ] );
     	}
     	
     	// To be more advanced :D
     	if (!is_writable($path))
     	{
-    		$MySmartBB->func->error('المعذره .. هذا القالب غير قابل للكتابه');
+    		$MySmartBB->func->error( $MySmartBB->lang[ 'template_unwritable' ] );
     	}
     	
     	$MySmartBB->_POST['context'] = stripslashes($MySmartBB->_POST['context']);
@@ -263,7 +263,7 @@ class MySmartTemplateMOD extends _func
     		// Simply we can't ensure we have $compiled_filename in $StyleInfo['cache_path'] or not
     		$del = @unlink('./' . $StyleInfo['cache_path'] . '/' . $compiled_filename);
     		
-    		$MySmartBB->func->msg('تم تحديث القالب بنجاح');
+    		$MySmartBB->func->msg( $MySmartBB->lang[ 'template_updated' ] );
 			$MySmartBB->func->move('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
     	}
     }
@@ -279,7 +279,7 @@ class MySmartTemplateMOD extends _func
     	
     	if (empty($MySmartBB->_GET['filename']))
     	{
-    		$MySmartBB->func->error('المسار المتبع غير صحيح');
+    		$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
     	}
     	
     	$MySmartBB->_GET['filename'] = $MySmartBB->func->cleanVariable($MySmartBB->_GET['filename'],'html');
@@ -288,14 +288,14 @@ class MySmartTemplateMOD extends _func
 
     	if (!file_exists($path))
     	{
-    		$MySmartBB->func->error('القالب المطلوب غير موجود');
+    		$MySmartBB->func->error( $MySmartBB->lang[ 'template_doesnt_exist' ] );
     	}
     	
     	$del = unlink($path);
 
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم الحذف بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=template&amp;control=1&amp;show=1&amp;id=' . $StyleInfo['id']);
 		}
 	}
@@ -309,7 +309,7 @@ class _func
 
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -321,7 +321,7 @@ class _func
 
 		if ($StyleInfo == false)
 		{
-			$MySmartBB->func->error('الستايل المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'style_doesnt_exist' ] );
 		}
 	}
 }

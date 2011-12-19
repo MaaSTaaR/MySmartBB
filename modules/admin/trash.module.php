@@ -92,7 +92,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('طلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -101,7 +101,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if ($UnTrash)
 		{
-			$MySmartBB->func->msg('تم إعادة الموضوع بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_restored' ] );
 			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
@@ -128,7 +128,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الموضوع بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
 		}
 	}
@@ -152,7 +152,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('طلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -161,7 +161,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if ($UnTrash)
 		{
-			$MySmartBB->func->msg('تم إعادة الرد بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_restored' ] );
 			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
@@ -188,7 +188,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg('تم حذف الرد بنجاح');
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
@@ -202,7 +202,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -214,7 +214,7 @@ class _func
 		
 		if ($Inf == false)
 		{
-			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
 		}
 	}
 	
@@ -224,7 +224,7 @@ class _func
 		
 		if (empty($MySmartBB->_GET['id']))
 		{
-			$MySmartBB->func->error('المعذره .. الطلب غير صحيح');
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
@@ -236,7 +236,7 @@ class _func
 		
 		if ($ReplyInf == false)
 		{
-			$MySmartBB->func->error('الموضوع المطلوب غير موجود');
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
 		}
 	}
 }
