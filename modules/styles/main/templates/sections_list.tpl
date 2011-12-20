@@ -1,7 +1,7 @@
-<div align="center" dir="rtl">
+<div align="center" dir="{$lang_info['direction']}">
 {if {$SHOW_SUB_SECTIONS}}
 	<table width="98%" border="1" width="98%" class="t_style_b" align="center">
-		<tr align="right">
+		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$lang['common']['subforums']}
 			</td>
@@ -22,7 +22,7 @@
 		<br />
 		{/if}
 		<table width="98%" border="1" width="98%" class="t_style_b" align="center">
-		<tr align="right">
+		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$forum['title']}
 			</td>
@@ -38,7 +38,7 @@
 	{/if}
 	{if {$forum['parent']} != 0}
 		{if {$forum['linksection']} != '1'}
-			<tr align="right">
+			<tr>
 				<td class="row1" rowspan="2" width="5%" align="center">
 				{if {$forum['use_section_picture']} == 1}
 					{if {$forum['sectionpicture_type']} == 1}
@@ -116,7 +116,7 @@
 					<img src="{$image_path}/icon-67_new.gif" alt="" />
 				{/if}
 			</td>
-			<td width="40%" align="right" class="row1">
+			<td width="40%" class="row1">
 				<a href="index.php?page=forum&amp;show=1&amp;id={$forum['id']}">{$forum['title']}</a>
 				<br />
 				{if {$forum['use_section_picture']} == 1}

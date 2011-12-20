@@ -5,19 +5,19 @@
 						{$lang['statistics']}
 						</td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td class="main2 rows_space small_text">
 							<strong><a href="index.php?page=online&amp;show=1">{$lang['online']}</a> : </strong> ({$MemberNumber}) {$lang['common']['member']} {$lang['common']['and']} ({$GuestNumber}) {$lang['common']['visitor']}
 						</td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td class="row1">
 							{DB::getInfo}{$group_res}{$group}
 								{$group['username_style']}،
 							{/DB::getInfo}
 						</td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td class="row2">
 						{DB::getInfo}{$online_res}{$online}
 							<a href="index.php?page=profile&show=1&id={$online['user_id']}">{$online['username_style']}</a>،
@@ -34,12 +34,12 @@
 						{/if}
 						</td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td class="main2 rows_space small_text">
 							<strong>{$lang['today']}</strong> : ({$TodayNumber}) {$lang['common']['member']}
 						</td>
 					</tr>
-					<tr align="right">
+					<tr>
 						<td class="row1">
 						{if {$TodayNumber} > 0}
 							{DB::getInfo}{$today_res}{$today}

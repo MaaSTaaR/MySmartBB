@@ -18,7 +18,7 @@ $config['db']['prefix']			=	'';				// MySmartBB_ if empty
 
 //=================
 
-$config[ 'lang_dir' ] = 'arabic'; // The language directory
+$config[ 'lang_dir' ] = 'english';//'arabic'; // The language directory
 
 
 ?>
