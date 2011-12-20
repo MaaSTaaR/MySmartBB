@@ -21,7 +21,7 @@ class MySmartRSSMOD
 		echo '<channel>';
 		echo '<title>' . $MySmartBB->_CONF['info_row']['title'] . '</title>';
 		echo '<link>' . $MySmartBB->func->getForumAdress() . '</link>';
-		echo '<description>' $MySmartBB->lang[ 'latest_subjects_rss' ] . ' ' . $MySmartBB->_CONF['info_row']['title'] . '</description>';
+		echo '<description>' . $MySmartBB->lang[ 'latest_subjects_rss' ] . ' ' . $MySmartBB->_CONF['info_row']['title'] . '</description>';
 		
 		if ($MySmartBB->_GET['subject'])
 		{

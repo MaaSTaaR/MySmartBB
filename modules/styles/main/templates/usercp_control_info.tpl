@@ -3,19 +3,19 @@
 <div class="usercp_context">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">لوحة تحكم العضو</a> {$_CONF['info_row']['adress_bar_separate']} معلوماتك الشخصيه
+<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['personal_info']}
 {template}address_bar_part2{/template}
 
 <form name="info" method="post" action="index.php?page=usercp_control_info&amp;start=1">
 	<table align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
-			معلوماتك الشخصيه
+			{$lang['personal_info']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1" width="30%">
-			الدوله
+			{$lang['country']}
 			</td>
 			<td class="row1" width="30%">
 				<input name="country" type="text" value="{$_CONF['member_row']['user_country']}" />
@@ -23,7 +23,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row2" width="30%">
-			موقعك الشخصي
+			{$lang['website']}
 			</td>
 			<td class="row2" width="30%">
 				<input name="website" type="text" value="{$_CONF['member_row']['user_website']}" />
@@ -31,7 +31,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row1" width="30%">
-			معلومات عنك
+			{$lang['about_you']}
 			</td>
 			<td class="row1" width="30%">
 				<input name="info" type="text" value="{$_CONF['member_row']['user_info']}" />
@@ -45,21 +45,21 @@
 	<table align="center" border="1" cellpadding="2" cellspacing="2" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
-			اعدادات الغياب
+			{$lang['away_setting']}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row1" width="30%">
-			هل تريد الغياب ؟
+			{$lang['away_state']}
 			</td>
 			<td class="row1" width="30%">
 				<select name="away" size="1">	
 					{if {$_CONF['member_row']['away']} == 0}
-						<option value="1">نعم</option>
-						<option selected="selected" value="0">لا</option>
+						<option value="1">{$lang['common']['yes']}</option>
+						<option selected="selected" value="0">{$lang['common']['no']}</option>
 					{else}
-						<option selected="selected" value="1">نعم</option>
-						<option value="0">لا</option>
+						<option selected="selected" value="1">{$lang['common']['yes']}</option>
+						<option value="0">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>
@@ -71,17 +71,17 @@
 		</tr>
 		<tr align="center">
 			<td class="row1" width="60%" colspan="2">
-				انت الآن : 
+				{$lang['youre_now']}
 				{if {$_CONF['member_row']['away']} == 0}
-					<strong>غير غائب</strong>
+					<strong>{$lang['not_away']}</strong>
 				{else}
-					<strong>غائب</strong>
+					<strong>{$lang['away']}</strong>
 				{/if}
 			</td>
 		</tr>
 		<tr align="center">
 			<td class="row2" width="60%" colspan="2">
-				ملاحظه : عند تشغيل اعدادات الغياب فان السبب سوف يظهر في ملفك الشخصي بالاضافه إلى مواضيعك و ردودك
+				{$lang['away_reason_will_be_show']}
 			</td>
 		</tr>
 	</table>
@@ -90,7 +90,7 @@
 	<br />
 	
 	<div align="center">
-		<input name="send" type="submit" value="موافق" />
+		<input name="send" type="submit" value="{$lang['common']['submit']}" />
 	</div>
 
 </div>

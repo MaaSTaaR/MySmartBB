@@ -40,7 +40,7 @@ class MySmartUserCPPasswordMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_password' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_password' ] );
 		
 		$MySmartBB->template->display( 'usercp_control_password' );
 	}

@@ -40,7 +40,7 @@ class MySmartUserCPEmailMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_email' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_email' ] );
 		
 		$MySmartBB->template->display( 'usercp_control_email' );
 	}

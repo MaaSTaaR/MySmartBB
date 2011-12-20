@@ -9,10 +9,10 @@
 
 	<link rel="stylesheet" href="{$style_path}" type="text/css" />
 	
-	<link rel="alternate" type="application/rss+xml" title="خلاصة آخر المواضيع النشيطه" href="index.php?page=rss&amp;subject=1" />
+	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['latest_topics_rss']}" href="index.php?page=rss&amp;subject=1" />
 	
 	{if {$SECTION_RSS}}
-	<link rel="alternate" type="application/rss+xml" title="خلاصة آخر المواضيع في هذا القسم" href="index.php?page=rss&amp;section=1&amp;id={$SECTION_ID}" />
+	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['forum_rss']}" href="index.php?page=rss&amp;section=1&amp;id={$SECTION_ID}" />
 	{/if}
 	
 	<title>{$title} - (Powered By MySmartBB)</title>
@@ -39,42 +39,42 @@
 			
 			<div class="left_side">
 				<div class="menu_box main2">
-					<a href="index.php">الرئيسيه</a>
+					<a href="index.php">{$lang['common']['home']}</a>
 				</div>
 				
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
 					{if {$_CONF['member_permission']}}
-						<a href="index.php?page=usercp&amp;index=1">لوحة التحكم</a>
+						<a href="index.php?page=usercp&amp;index=1">{$lang['common']['conrol_panel']}</a>
 					{else}
-						<a href="index.php?page=register&amp;index=1">التسجيل</a>
+						<a href="index.php?page=register&amp;index=1">{$lang['common']['register']}</a>
 					{/if}
 				</div>
 				
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=static&amp;index=1">احصائيات</a>
+					<a href="index.php?page=static&amp;index=1">{$lang['common']['statistics']}</a>
 				</div>
 				
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=member_list&amp;index=1">قائمة الاعضاء</a>
+					<a href="index.php?page=member_list&amp;index=1">{$lang['common']['memberlist']}</a>
 				</div>
 				
 				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=search&amp;index=1">بحث</a>
+					<a href="index.php?page=search&amp;index=1">{$lang['common']['search']}</a>
 				</div>
 				
 				{if {$_CONF['member_permission']}}
 					<div class="menu_space"></div>
 					
 					<div class="menu_box main2">
-						<a href="index.php?page=logout&amp;index=1">تسجيل خروج</a>
+						<a href="index.php?page=logout&amp;index=1">{$lang['common']['logout']}</a>
 					</div>
 				{/if}
 			</div>
@@ -85,27 +85,27 @@
 		<div id="info_bar" align="center">
 			{if !{$_CONF['member_permission']}}
 			<form method="post" action="index.php?page=login&amp;login=1">
-			اسم المستخدم 
+		    {$lang['common']['username']} 
 			<input type="text" name="username" />
-          		كلمة المرور 
+          	{$lang['common']['password']}
           	<input type="password" name="password" />
           		
           		<input type="checkbox" name="temporary" value="on" id="fp1" />
-          		<label for="fp1">دخول مؤقت </label>
+          		<label for="fp1">{$lang['common']['temporary_login']}</label>
           			
-          		<input type="submit" value="دخول" />
+          		<input type="submit" value="{$lang['common']['common']['submit']}" />
           		،
-          		<a href="index.php?page=forget&amp;index=1">استرجاع كلمة المرور</a>
+          		<a href="index.php?page=forget&amp;index=1">{$lang['common']['forgot_password']}</a>
           	</form>
           	{else}
-          		مرحباً بك يا <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | آخر زياره لك بتاريخ  {$_COOKIE['MySmartBB_lastvisit']} 
+          		{$lang['common']['hello_member']} <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | {$lang['common']['your_last_visit']}  {$_COOKIE['MySmartBB_lastvisit']} 
           		{if {$_CONF['info_row']['pm_feature']}}
           		|
           		{if {$_CONF['member_row']['unread_pm']} == 0}
-         			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">لا يوجد لديك رسالة خاصة جديدة !</a>
+         			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['no_new_pm']}</a>
          		{/if}
          		{if {$_CONF['member_row']['unread_pm']} > 0}
-         			<a class="unreadpm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">يوجد لديك {$_CONF['member_row']['unread_pm']} رساله جديده</a>
+         			<a class="unreadpm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
          		{/if}
          		{/if}
           	{/if}

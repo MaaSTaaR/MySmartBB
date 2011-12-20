@@ -95,6 +95,28 @@ $lang[ 'common' ][ 'password' ] = 'كلمة المرور';
 
 // ... //
 
+// Header
+$lang[ 'common' ][ 'latest_topics_rss' ] = 'خلاصة آخر المواضيع النشيطه';
+$lang[ 'common' ][ 'forum_rss' ] = 'خلاصة آخر المواضيع في هذا القسم';
+$lang[ 'common' ][ 'home' ] = 'الرئيسيه';
+$lang[ 'common' ][ 'conrol_panel' ] = 'لوحة التحكم';
+$lang[ 'common' ][ 'register' ] = 'التسجيل';
+$lang[ 'common' ][ 'statistics' ] = 'احصائيات';
+$lang[ 'common' ][ 'memberlist' ] = 'قائمة الاعضاء';
+$lang[ 'common' ][ 'search' ] = 'بحث';
+$lang[ 'common' ][ 'logout' ] = 'تسجيل خروج';
+$lang[ 'common' ][ 'username' ] = 'اسم المستخدم';
+$lang[ 'common' ][ 'password' ] = 'كلمة المرور';
+$lang[ 'common' ][ 'temporary_login' ] = 'دخول مؤقت';
+$lang[ 'common' ][ 'forgot_password' ] = 'استرجاع كلمة المرور';
+$lang[ 'common' ][ 'hello_member' ] = 'مرحباً بك يا';
+$lang[ 'common' ][ 'your_last_visit' ] = 'آخر زياره لك بتاريخ';
+$lang[ 'common' ][ 'no_new_pm' ] = 'لا يوجد لديك رسالة خاصة جديدة !';
+$lang[ 'common' ][ 'you_have' ] = 'يوجد لديك';
+$lang[ 'common' ][ 'new_pm' ] = 'رساله جديده';
+
+// ... //
+
 $lang[ 'common' ][ 'and' ] = 'و';
 $lang[ 'common' ][ 'add' ] = 'اضافه';
 

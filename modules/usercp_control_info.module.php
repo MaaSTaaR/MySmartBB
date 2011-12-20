@@ -17,6 +17,8 @@ class MySmartUserCPInfoMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'usercp_control_info' );
+		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );

@@ -31,7 +31,7 @@ $lang[ 'template' ][ 'printable_version' ] = 'عرض نسخة صالحة للط�
 
 $lang[ 'template' ][ 'writer_information' ] = 'معلومات الكاتب';
 $lang[ 'template' ][ 'subject_context' ] = 'محتوى الموضوع';
-$lang[ 'template' ][ 'report_abuse' ] = 'ابلاغ عن مشاركة مخالفة';
+$lang[ 'template' ][ 'report_abuse' ] = 'التبليغ عن مشاركة مخالفة';
 
 $lang[ 'template' ][ 'member_avatar' ] = 'الصورة الشخصية لـ ';
 $lang[ 'template' ][ 'member_profile' ] = 'الهوية الشخصية';
@@ -61,6 +61,7 @@ $lang[ 'template' ][ 'same_topics' ] = 'المواضيع المتشابهه';
 $lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
 $lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
 $lang[ 'template' ][ 'reply' ] = 'رد';
+$lang[ 'template' ][ 'reply_number' ] = 'الرد رقم';
 $lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
@@ -69,6 +70,9 @@ $lang[ 'template' ][ 'add_new_topic' ] = 'إضافة موضوع جديد';
 $lang[ 'template' ][ 'add_new_reply' ] = 'إضافة رد جديد';
 
 $lang[ 'template' ][ 'reply_writer' ] = 'كاتب الرد';
+
+$lang[ 'template' ][ 'delete_reply' ] = 'حذف الرد';
+$lang[ 'template' ][ 'edit_reply' ] = 'تحرير الرد';
 
 // ... //
 
