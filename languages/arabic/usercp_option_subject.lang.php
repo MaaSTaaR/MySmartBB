@@ -1,5 +1,7 @@
 <?php
 
+include( 'usercp.lang.php' );
+
 $lang[ 'member_zone' ] = 'المعذره .. هذه المنطقه للاعضاء فقط';
 $lang[ 'your_subjects' ] = 'مواضيعك';
 

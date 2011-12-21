@@ -1,5 +1,6 @@
 <?php
 
+include( 'usercp.lang.php' );
 include( 'pm.lang.php' );
 
 $lang[ 'delete_process' ] = 'تنفيذ عملية الحذف';

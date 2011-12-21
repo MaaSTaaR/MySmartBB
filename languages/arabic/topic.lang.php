@@ -51,7 +51,7 @@ $lang[ 'template' ][ 'poll' ] = 'التصويت';
 $lang[ 'template' ][ 'filename' ] = 'إسم الملف';
 $lang[ 'template' ][ 'download_times' ] = 'مرات التحميل';
 
-$lang[ 'template' ][ 'member_signature' ] = 'التوقيع';
+$lang[ 'template' ][ 'signature' ] = 'التوقيع';
 
 $lang[ 'template' ][ 'on_date' ] = 'بتاريخ';
 $lang[ 'template' ][ 'original_view' ] = 'إضغط هنا لمشاهدة الموضوع بهيئته الأصلية';

@@ -1,5 +1,6 @@
 <?php
 
+include( 'usercp.lang.php' );
 include( 'attachments.lang.php' );
 include( 'pm.lang.php' );
 

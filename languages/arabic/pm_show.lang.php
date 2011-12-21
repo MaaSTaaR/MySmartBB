@@ -1,5 +1,6 @@
 <?php
 
+include( 'usercp.lang.php' );
 include( 'pm.lang.php' );
 
 $lang[ 'pm_doesnt_exist' ] = 'الرساله المطلوبه غير موجوده';

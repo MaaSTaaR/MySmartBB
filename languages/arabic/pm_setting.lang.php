@@ -1,5 +1,6 @@
 <?php
 
+include( 'usercp.lang.php' );
 include( 'pm.lang.php' );
 
 $lang[ 'update_succeed' ] = 'تم تحديث البيانات بنجاح';
