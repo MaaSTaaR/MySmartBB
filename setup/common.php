@@ -22,7 +22,7 @@ $MySmartBB->html = new MySmartDisplay;
 @header('Content-Type: text/html; charset=utf-8');
 
 $MySmartBB->html->lang 					= 	array();
-$MySmartBB->html->lang['direction']		=	'rtl';
+$MySmartBB->html->lang['direction']		=	$MySmartBB->lang_info[ 'direction' ];
 $MySmartBB->html->lang['languagecode']	=	'ar';
 $MySmartBB->html->lang['charset']		=	'utf-8';
 $MySmartBB->html->lang['yes']			=	'نعم';

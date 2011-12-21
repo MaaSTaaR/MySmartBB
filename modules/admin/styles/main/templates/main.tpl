@@ -7,9 +7,15 @@
 </head>
 <frameset rows="5%,95%">
 	<frame src="admin.php?page=index&amp;top=1" name="top" />
+	{if {$_CONF['align']} == 'right'}
 	<frameset cols="75%,25%">
 		<frame src="admin.php?page=index&amp;left=1" name="main" />
 		<frame src="admin.php?page=index&amp;right=1" name="menu" />
+	{else}
+	<frameset cols="25%,75%">
+		<frame src="admin.php?page=index&amp;right=1" name="menu" />
+		<frame src="admin.php?page=index&amp;left=1" name="main" />
+	{/if}
 	</frameset>
 </frameset>
 </html>

@@ -358,6 +358,13 @@ class MySmartBB
   	
   	// ... //
   	
+  	public function getLanguageDir()
+  	{
+  	    return $this->lang_dir;
+  	}
+  	
+  	// ... //
+  	
   	public function load( $lib )
   	{
   		if ( is_null( $this->func_list ) )

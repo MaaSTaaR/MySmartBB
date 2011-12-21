@@ -554,25 +554,16 @@ class MySmartDisplay
 		echo '<br />';
 	}
 	
-	function make_path($path)
+	function msg($msg)
 	{
-		echo '<p>لوحة التحكم -> ' . $path . '</p>';
-	}
-	
-	function msg($msg,$align=null)
-	{
-		$tag = '<p align="';
-		$tag .= (!empty($align)) ? $align : 'right';
-		$tag .= '">' . $msg . '</p>';
+		$tag = '<p>' . $msg . '</p>';
 		
 		echo $tag;
 	}
 	
 	function open_p($align=null)
 	{
-		$tag = '<p align="';
-		$tag .= (!empty($align)) ? $align : 'right';
-		$tag .= '">';
+		$tag = '<p>';
 		
 		echo $tag;
 	}

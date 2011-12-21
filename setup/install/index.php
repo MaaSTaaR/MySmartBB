@@ -4,13 +4,13 @@ define( 'NO_INFO', true );
 
 require_once('database_struct.php');
 
-include( '../../languages/arabic/setup/setup.lang.php' );
+include( '../../' . $MySmartBB->getLanguageDir() . 'setup/setup.lang.php' );
 
 $installer = new MySmartInstaller( $MySmartBB, $lang[ 'struct' ] );
 
 $MySmartBB->html->page_header( $lang[ 'installation_wizard' ] );
 
-$logo = $MySmartBB->html->create_image(array('align'=>'right','alt'=>'MySmartBB','src'=>'../logo.jpg','return'=>true));
+$logo = $MySmartBB->html->create_image(array('align'=>$MySmartBB->_CONF[ 'align' ],'alt'=>'MySmartBB','src'=>'../logo.jpg','return'=>true));
 $MySmartBB->html->open_table('100%',true);
 $MySmartBB->html->cells($logo,'header_logo_side');
 
