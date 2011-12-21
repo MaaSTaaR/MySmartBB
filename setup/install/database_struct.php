@@ -9,10 +9,12 @@ class MySmartInstaller
 	private $tables_path = 'tables/';
 	private $rows_path = 'info/';
 	private $engine;
+	private $lang; // Language array
 	
-	function __construct( $engine )
+	function __construct( $engine, $lang )
 	{
 		$this->engine = $engine;
+		$this->lang = $lang;
 		
 		// Prepare $tables and $rows
 		$this->_addTables();
@@ -34,7 +36,7 @@ class MySmartInstaller
 				
 				if ( !file_exists( $filename ) )
 				{
-					$this->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
+					$this->msg( $this->lang[ 'file_doesnt_exist' ] . ' ' . $filename );
 					die();
 				}
 				
@@ -56,11 +58,11 @@ class MySmartInstaller
 					
 					if ( $query )
 					{
-						$this->msg( $k . '/' . $tables_num . ': تم إنشاء ' . $table[ 'tablename' ] );
+						$this->msg( $k . '/' . $tables_num . ' ' . $this->lang[ 'created' ] . ' ' . $table[ 'tablename' ] );
 					}
 					else
 					{
-						$this->msg( $k . '/' . $tables_num . ': فشل في إنشاء ' . $table[ 'tablename' ] );
+						$this->msg( $k . '/' . $tables_num . ' ' . $this->lang[ 'create_failed' ] . ' ' . $table[ 'tablename' ] );
 					}
 				}
 				
@@ -71,7 +73,7 @@ class MySmartInstaller
 		}
 		else
 		{
-			$this->msg( 'هناك خطأ في مصفوفة الجداول' );
+			$this->msg( $this->lang[ 'error_in_tables_array' ] );
 			die();
 		}
 	}
@@ -92,7 +94,7 @@ class MySmartInstaller
 				
 				if ( !file_exists( $filename ) )
 				{
-					$this->msg( 'خطأ : الملف التالي غير موجود ' . $filename );
+					$this->msg( $this->lang[ 'file_doesnt_exist' ] . ' ' . $filename );
 					die();
 				}
 				
@@ -109,17 +111,26 @@ class MySmartInstaller
 					
 					foreach ( $sqls as $sql )
 					{
+					    $matches = array();
+					    
 						$sql = str_replace( '#table#', $row[ 'tablename' ], $sql );
+						
+						preg_match_all( '/lang\((.*?)\)/', $sql, &$matches );
+						
+						foreach ( $matches[ 1 ] as $idx => $key )
+						{
+						    $sql = str_replace( 'lang(' . $key . ')', $this->lang[ 'data' ][ $key ], $sql );
+						}
 						
 						$query = $this->engine->db->sql_query( $sql );
 						
 						if ( $query )
 						{
-							$this->msg( 'تمت العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+							$this->msg( $this->lang[ 'process_succeed' ] . ' ' . $x . '/' . $lines . '::' . $filename );
 						}
 						else
 						{
-							$this->msg( 'لم تتم العملية ' . $x . ' من ' . $lines . ' للملف ' . $filename );
+							$this->msg( $this->lang[ 'process_failed' ] . ' ' . $x . '/' . $lines . '::' . $filename );
 						}
 						
 						$x += 1;
@@ -133,7 +144,7 @@ class MySmartInstaller
 		}
 		else
 		{
-			$this->msg( 'هناك خطأ في مصفوفة الجداول' );
+			$this->msg( $this->lang[ 'error_in_tables_array' ] );
 			die();
 		}
 	}

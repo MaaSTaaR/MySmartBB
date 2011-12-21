@@ -1,1 +1,1 @@
-INSERT INTO #table# SET usertitle='عضو', posts='0'
+INSERT INTO #table# SET usertitle='lang(member)', posts='0'

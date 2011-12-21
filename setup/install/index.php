@@ -6,7 +6,7 @@ require_once('database_struct.php');
 
 include( '../../languages/arabic/setup/setup.lang.php' );
 
-$installer = new MySmartInstaller( $MySmartBB );
+$installer = new MySmartInstaller( $MySmartBB, $lang[ 'struct' ] );
 
 $MySmartBB->html->page_header( $lang[ 'installation_wizard' ] );
 
@@ -121,7 +121,7 @@ elseif ($MySmartBB->_GET['step'] == 5)
 	$MySmartBB->rec->fields['usergroup']			= 	1;
 	$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
 	$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
-	$MySmartBB->rec->fields['user_title']			= 	 $lang[ 'admin' ] ;
+	$MySmartBB->rec->fields['user_title']			= 	$lang[ 'admin' ];
 	$MySmartBB->rec->fields['style']				=	1;
 	$MySmartBB->rec->fields['username_style_cache']	=	'<strong><em><span style="color: #800000;">' . $MySmartBB->_POST['username'] . '</span></em></strong>';
 	

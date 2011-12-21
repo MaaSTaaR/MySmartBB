@@ -13,7 +13,7 @@ $config['db'] 					= array();
 $config['db']['server']			= 	'localhost';
 $config['db']['username']		= 	'root';
 $config['db']['password']		= 	'';
-$config['db']['name']			= 	'MySmartBB_THETA5';
+$config['db']['name']			= 	'MySmartBB_THETA5_installer_test';
 $config['db']['prefix']			=	'';				// MySmartBB_ if empty
 
 //=================
