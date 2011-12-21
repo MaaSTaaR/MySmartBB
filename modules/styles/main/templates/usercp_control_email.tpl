@@ -1,6 +1,6 @@
 {template}usercp_menu{/template}
 
-<div class="usercp_context">
+<div class="usercp_context {$_CONF['opp_align']}_side">
 
 	{template}address_bar_part1{/template}
 	<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['change_email']}

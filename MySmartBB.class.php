@@ -122,6 +122,10 @@ class MySmartBB
 		
 		// ... //
 		
+		$this->initPageAlign();
+		
+		// ... //
+		
   		if (!is_bool($e)
   			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
   			and !defined('INSTALL'))
@@ -330,6 +334,19 @@ class MySmartBB
   		$this->info 	= new MySmartInfo( $this );
   		$this->online 	= new MySmartOnline( $this );
   		$this->style 	= new MySmartStyle( $this );
+  	}
+  	
+  	// ... //
+  	
+  	private function initPageAlign()
+  	{
+  	    // We will use these two variables in the templates to make the convert of page direction easy (For i18n)
+  	    
+  	    // The default align of the language in use (left or right)
+  	    $this->_CONF[ 'align' ] = ( $this->lang_info[ 'direction' ] == 'rtl' ) ? 'right' : 'left';
+  	    
+  	    // The opposite align of default align
+  	    $this->_CONF[ 'opp_align' ] = ( $this->lang_info[ 'direction' ] == 'rtl' ) ? 'left' : 'right';
   	}
   	
   	// ... //

@@ -18,25 +18,12 @@ function AddMoreAnswers(x)
 	x += 1;
 	
 	$(".more_tr").hide();	
-	$("#poll_question_answers").append('<tr align="center"><td class="row1 rows_space">الجواب #' + x + '</td><td class="row1 rows_space"><input name="answers[]" type="text" id="answer' + x + '" /></td></tr>');
-	$("#poll_question_answers").append('<tr align="center" class="more_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_answers" class="more_answers_class" value="اضف جواب آخر" /></td></tr>');
+	$("#poll_question_answers").append('<tr align="center"><td class="row1 rows_space">{$lang['poll_answer']} #' + x + '</td><td class="row1 rows_space"><input name="answers[]" type="text" id="answer' + x + '" /></td></tr>');
+	$("#poll_question_answers").append('<tr align="center" class="more_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_answers" class="more_answers_class" value="{$lang['add_another_answer']}" /></td></tr>');
 	
 	$("#answer" + x).focus();
 	
 	$(".more_answers_class").click(function() { AddMoreAnswers(x) });
-}
-
-function AddMoreTags(x)
-{
-	x += 1;
-	
-	$(".more_tag_tr").hide();	
-	$("#add_tags_table").append('<tr align="center"><td class="row1 rows_space">العلامه #' + x + '</td><td class="row1 rows_space"><input name="tags[]" type="text" id="tag' + x + '" size="40" /></td></tr>');
-	$("#add_tags_table").append('<tr align="center" class="more_tag_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_tags" class="more_tags_class" value="اضف علامه اخرى" /></td></tr>');
-		
-	$("#tag" + x).focus();
-	
-	$(".more_tags_class").click(function() { AddMoreTags(x) });
 }
 
 function AddMoreAttach(x)
@@ -48,8 +35,8 @@ function AddMoreAttach(x)
 	if (x <= up_max)
 	{
 		$(".more_attach_tr").hide();	
-		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">ملف #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
-		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="اضف ملف آخر" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">{$lang['file']} #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="{$lang['add_another_file']}" /></td></tr>');
 		
 		$(".more_attach_class").click(function() { AddMoreAttach(x) });
 		
@@ -58,6 +45,19 @@ function AddMoreAttach(x)
 			$(".more_attach_tr").hide();
 		}
 	}
+}
+
+function AddMoreTags(x)
+{
+	x += 1;
+	
+	$(".more_tag_tr").hide();	
+	$("#add_tags_table").append('<tr align="center"><td class="row1 rows_space">{$lang['tag']} #' + x + '</td><td class="row1 rows_space"><input name="tags[]" type="text" id="tag' + x + '" size="40" /></td></tr>');
+	$("#add_tags_table").append('<tr align="center" class="more_tag_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_tags" class="more_tags_class" value="{$lang['add_another_tag']}" /></td></tr>');
+		
+	$("#tag" + x).focus();
+	
+	$(".more_tags_class").click(function() { AddMoreTags(x) });
 }
 
 function ShowAttachTable()

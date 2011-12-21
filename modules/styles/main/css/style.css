@@ -1,6 +1,8 @@
 body
 {
 	background: #e7e7e7;
+	font-family: Tahoma;
+    font-size: 9pt;
 }
 
 #main
@@ -31,7 +33,6 @@ body
 	width: 120px;
 	border-width: 0;
 	text-align: center;
-	font-family: Tahoma;
     font-size: 8pt;
 }
 
@@ -54,9 +55,6 @@ body
 	padding-right: 1%;
 	padding-left: 1%;
 	padding-bottom: 0.5%;
-	
-	font-family: Tahoma;
-    font-size: 9pt;
 }
 
 #context
@@ -80,9 +78,6 @@ body
 	padding-right: 1%;
 	padding-left: 1%;
 	padding-bottom: 0.5%;
-	
-	font-family: Tahoma;
-    font-size: 9pt;
 }
 
 #info_bar
@@ -107,9 +102,6 @@ body
 	padding-right: 1%;
 	padding-left: 1%;
 	padding-bottom: 0.5%;
-	
-	font-family: Tahoma;
-    font-size: 9pt;
     
     clear: both;
 }
@@ -134,7 +126,6 @@ body
 	padding-right: 1%;
 	padding-left: 1%;
 	
-	font-family: Tahoma;
     font-size: 8pt;
     color: #545A83;
     text-align: center;
@@ -166,15 +157,11 @@ body
 
 .usercp_menu
 {
-	clear: right;
-	float: right;
 }
 
 .usercp_context
 {
 	width: 87%;
-	clear: left;
-	float: left;
 }
 
 .box
@@ -189,7 +176,6 @@ body
 	border-left-style: solid;
 	border-left-color: #ccc;
 	border-bottom-width: 0;
-	
 		
 	background: #fff;
 	
@@ -198,9 +184,6 @@ body
 	padding-left: 1%;
 	padding-bottom: 0.5%;
 	
-	font-family: Tahoma;
-    font-size: 9pt;
-    
     clear: both;
 }
 

@@ -128,6 +128,6 @@
 		</div>
 		{/if}
 		
-		<div id="context">
+		<div id="context" class="{$_CONF['align']}_side">
 			
 			<br />

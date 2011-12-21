@@ -15,18 +15,17 @@
 				</select>
 			</div>
 			<div class="left_side">
-				
 				<a href="index.php?page=latest&amp;today=1">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} ، <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
 			</div>
 		</div>
 
 		<!-- -->
 		
-		<div id="footer">
+	<div id="footer">
 		Powered By <a href="">MySmartBB</a> {$_CONF['info_row']['MySBB_version']} <br />
 		Copyleft for MySmartBB team 2005, 2011
-		</div>
 	</div>
-
+	
+	</div>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-<div class="usercp_menu">
+<div class="usercp_menu {$_CONF['align']}_side">
 	<table border="1" class="t_style_b">
 		<tr align="center">
      		<td class="main1 rows_space">
