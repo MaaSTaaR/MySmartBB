@@ -93,7 +93,7 @@
           		<input type="checkbox" name="temporary" value="on" id="fp1" />
           		<label for="fp1">{$lang['common']['temporary_login']}</label>
           			
-          		<input type="submit" value="{$lang['common']['common']['submit']}" />
+          		<input type="submit" value="{$lang['common']['submit']}" />
           		،
           		<a href="index.php?page=forget&amp;index=1">{$lang['common']['forgot_password']}</a>
           	</form>
