@@ -1,14 +1,14 @@
 <?php
 
-$lang[ 'avatar_added' ] = 'تم اضافة الصوره بنجاح !';
-$lang[ 'avatar_updated' ] = 'تم تحديث الصوره بنجاح !';
-$lang[ 'avatar_deleted' ] = 'تم حذف الصوره بنجاح !';
-$lang[ 'avatar_doesnt_exit' ] = 'الصوره المطلوبه غير موجود';
+$lang[ 'avatar_added' ] = 'The avatar has been added';
+$lang[ 'avatar_updated' ] = 'The avatar has been updated';
+$lang[ 'avatar_deleted' ] = 'The avatar has been deleted';
+$lang[ 'avatar_doesnt_exit' ] = 'The avatar doesn\'t exist';
 
-$lang[ 'template' ][ 'avatars' ] = 'الصور الشخصيه';
-$lang[ 'template' ][ 'add_avatar' ] = 'اضافة صوره جديده'; // avatar_add
-$lang[ 'template' ][ 'edit_avatar' ] = 'تحرير صوره شخصيه';
-$lang[ 'template' ][ 'path' ] = 'مسار الصوره'; // avatar_edit
-$lang[ 'template' ][ 'avatar' ] = 'الصوره'; // avatars_main
+$lang[ 'template' ][ 'avatars' ] = 'Avatars';
+$lang[ 'template' ][ 'add_avatar' ] = 'Add new Avatar'; // avatar_add
+$lang[ 'template' ][ 'edit_avatar' ] = 'Edit Avatar';
+$lang[ 'template' ][ 'path' ] = 'Image path'; // avatar_edit
+$lang[ 'template' ][ 'avatar' ] = 'Avatar'; // avatars_main
 
 ?>

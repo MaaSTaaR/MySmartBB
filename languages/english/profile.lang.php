@@ -1,30 +1,30 @@
 <?php
 
-$lang[ 'view_member_info' ] = 'عرض معلومات العضو';
-$lang[ 'member_doesnt_exist' ] = 'المعذره .. العضو المطلوب غير موجود في سجلاتنا';
-$lang[ 'viewing_member_profile' ] = 'يطلع على الملف الشخصي للعضو';
+$lang[ 'view_member_info' ] = 'Member Profile';
+$lang[ 'member_doesnt_exist' ] = 'The member doesn\'t exist';
+$lang[ 'viewing_member_profile' ] = 'Viewing the profile of';
 
-$lang[ 'template' ][ 'view_member_profile' ] = 'عرض الملف الشخصي للعضو';
-$lang[ 'template' ][ 'username' ] = 'الاسم المستعار';
-$lang[ 'template' ][ 'usertitle' ] = 'المسمى';
-$lang[ 'template' ][ 'register_date' ] = 'تاريخ التسجيل';
-$lang[ 'template' ][ 'post_number' ] = 'عدد المشاركات';
-$lang[ 'template' ][ 'visit_number' ] = 'عدد الزيارات';
-$lang[ 'template' ][ 'country' ] = 'الدوله';
-$lang[ 'template' ][ 'gender' ] = 'الجنس';
-$lang[ 'template' ][ 'website' ] = 'الموقع الشخصي';
-$lang[ 'template' ][ 'last_visit' ] = 'آخر زياره';
-$lang[ 'template' ][ 'member_group' ] = 'مجموعته';
-$lang[ 'template' ][ 'member_state' ] = 'الحاله';
-$lang[ 'template' ][ 'online' ] = 'متصل';
-$lang[ 'template' ][ 'offline' ] = 'غير متصل';
-$lang[ 'template' ][ 'member_location' ] = 'مكان تواجده';
-$lang[ 'template' ][ 'member_away' ] = 'العضو غائب حالياً';
-$lang[ 'template' ][ 'signature' ] = 'التوقيع';
-$lang[ 'template' ][ 'details' ] = 'تفاصيل اخرى';
-$lang[ 'template' ][ 'last_topic' ] = 'آخر موضوع ';
-$lang[ 'template' ][ 'last_reply' ] = 'آخر رد في';
-$lang[ 'template' ][ 'send_pm' ] = 'رساله خاصه ';
-$lang[ 'template' ][ 'send_email' ] = 'رساله بريديه ';
+$lang[ 'template' ][ 'view_member_profile' ] = 'View the profile of';
+$lang[ 'template' ][ 'username' ] = 'Username';
+$lang[ 'template' ][ 'usertitle' ] = 'Usertitle';
+$lang[ 'template' ][ 'register_date' ] = 'Register Date';
+$lang[ 'template' ][ 'post_number' ] = 'Posts Number';
+$lang[ 'template' ][ 'visit_number' ] = 'Visits';
+$lang[ 'template' ][ 'country' ] = 'Country';
+$lang[ 'template' ][ 'gender' ] = 'Gender';
+$lang[ 'template' ][ 'website' ] = 'Website';
+$lang[ 'template' ][ 'last_visit' ] = 'Last Visit';
+$lang[ 'template' ][ 'member_group' ] = 'Group';
+$lang[ 'template' ][ 'member_state' ] = 'Status';
+$lang[ 'template' ][ 'online' ] = 'Online';
+$lang[ 'template' ][ 'offline' ] = 'Offline';
+$lang[ 'template' ][ 'member_location' ] = 'Location';
+$lang[ 'template' ][ 'member_away' ] = 'The member is away';
+$lang[ 'template' ][ 'signature' ] = 'Signature';
+$lang[ 'template' ][ 'details' ] = 'Other Details';
+$lang[ 'template' ][ 'last_topic' ] = 'Last Topic';
+$lang[ 'template' ][ 'last_reply' ] = 'Last Reply In';
+$lang[ 'template' ][ 'send_pm' ] = 'Send Private Message';
+$lang[ 'template' ][ 'send_email' ] = 'Send Email';
 
 ?>

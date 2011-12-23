@@ -1,13 +1,13 @@
 <?php
 
-$lang[ 'send_email' ] = 'إرسال رساله بريديه إلى عضو';
-$lang[ 'no_permission_for_visitors' ] = 'لا يمكن للزوار إرسال رساله بريديه';
-$lang[ 'member_doesnt_exist' ] = 'المعذره .. العضو المطلوب غير موجود في سجلاتنا';
-$lang[ 'send_succeed' ] = 'تم إرسال الرساله بنجاح';
-$lang[ 'send_failed' ] = 'هناك خطأ، لم يتم الارسال';
+$lang[ 'send_email' ] = 'Send an email to a member';
+$lang[ 'no_permission_for_visitors' ] = 'Sorry, only members can use this page';
+$lang[ 'member_doesnt_exist' ] = 'The member doesn\'t exist';
+$lang[ 'send_succeed' ] = 'The message has been sent';
+$lang[ 'send_failed' ] = 'Sending process failed';
 
-$lang[ 'template' ][ 'send_email_to' ] = 'إرسال رساله بريديه إلى';
-$lang[ 'template' ][ 'message_context' ] = 'محتوى الرساله';
-$lang[ 'template' ][ 'message_title' ] = 'عنوان الرسالة ';
+$lang[ 'template' ][ 'send_email_to' ] = 'Send an email to';
+$lang[ 'template' ][ 'message_context' ] = 'Message';
+$lang[ 'template' ][ 'message_title' ] = 'Title';
 
 ?>

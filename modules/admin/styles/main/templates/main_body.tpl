@@ -3,7 +3,7 @@
 		<td class="main1" colspan="2">{$lang['statistics']}</td>
 	</tr>
 	<tr align="center">
-		<td class="row1" width="40%">{$lang['version']} MySmartBB</td>
+		<td class="row1" width="40%">{$lang['version']}</td>
 		<td class="row2" width="40%" dir="ltr"><strong>{$_CONF['info_row']['MySBB_version']}</strong></td>
 	</tr>
 	<tr align="center">

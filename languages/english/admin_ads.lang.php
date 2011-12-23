@@ -1,20 +1,20 @@
 <?php
 
-$lang[ 'ad_added' ] = 'تم اضافة الاعلان بنجاح !';
-$lang[ 'ad_updated' ] = 'تم تحديث الاعلان بنجاح !';
-$lang[ 'ad_deleted' ] = 'تم حذف الاعلان بنجاح !';
-$lang[ 'ad_doesnt_exist' ] = 'الاعلان المطلوب غير موجود';
+$lang[ 'ad_added' ] = 'The advertisment has been added';
+$lang[ 'ad_updated' ] = 'The advertisment has been updated';
+$lang[ 'ad_deleted' ] = 'The advertisment has been deleted';
+$lang[ 'ad_doesnt_exist' ] = 'The advertisment does\'nt exist';
 
-$lang[ 'template' ][ 'ads' ] = 'الاعلانات التجاريه';
-$lang[ 'template' ][ 'site_name' ] = 'اسم الموقع';
+$lang[ 'template' ][ 'ads' ] = 'Advertisments';
+$lang[ 'template' ][ 'site_name' ] = 'Site name';
 
-$lang[ 'template' ][ 'add_ad' ] = 'اضافة إعلان جديد'; // ads_add
-$lang[ 'template' ][ 'edit_ad' ] = 'تحرير الإعلان'; // ads_edit
-$lang[ 'template' ][ 'link' ] = 'الوصله'; // ads_add
-$lang[ 'template' ][ 'image_url' ] = 'وصلة الصوره'; // ads_add
-$lang[ 'template' ][ 'height' ] = 'طول الصوره - غير ضروري'; // ads_add
-$lang[ 'template' ][ 'width' ] = 'عرض الصوره - غير ضروري'; // ads_add
+$lang[ 'template' ][ 'add_ad' ] = 'Add new Advertisment'; // ads_add
+$lang[ 'template' ][ 'edit_ad' ] = 'Edit Advertisment'; // ads_edit
+$lang[ 'template' ][ 'link' ] = 'Link'; // ads_add
+$lang[ 'template' ][ 'image_url' ] = 'Image URL'; // ads_add
+$lang[ 'template' ][ 'height' ] = 'Image Height (Can be blank)'; // ads_add
+$lang[ 'template' ][ 'width' ] = 'Image Width (Can be blank)'; // ads_add
 
-$lang[ 'template' ][ 'visits' ] = 'عدد الزيارات'; // ads_main
+$lang[ 'template' ][ 'visits' ] = 'Visits'; // ads_main
 
 ?>

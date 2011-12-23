@@ -1,15 +1,15 @@
 <?php
 
-$lang[ 'no_result' ] = 'لا يوجد نتائج';
+$lang[ 'no_result' ] = 'Sorry, There is no result';
 
-$lang[ 'template' ][ 'members' ] = 'الاعضاء';
-$lang[ 'template' ][ 'find_member' ] = 'البحث عن عضو'; // member_search_main
-$lang[ 'template' ][ 'keyword' ] = 'كلمة البحث'; // member_search_main
-$lang[ 'template' ][ 'search_result' ] = 'نتيجة البحث';
-$lang[ 'template' ][ 'search' ] = 'بحث';
-$lang[ 'template' ][ 'search_by' ] = 'بدلالة';
-$lang[ 'template' ][ 'username' ] = 'اسم المستخدم'; // member_search_main
-$lang[ 'template' ][ 'member_id' ] = 'رقم العضو'; // member_search_main
-$lang[ 'template' ][ 'email' ] = 'البريد الالكتروني';
+$lang[ 'template' ][ 'members' ] = 'Members';
+$lang[ 'template' ][ 'find_member' ] = 'Find a member'; // member_search_main
+$lang[ 'template' ][ 'keyword' ] = 'Keyword'; // member_search_main
+$lang[ 'template' ][ 'search_result' ] = 'Search Result';
+$lang[ 'template' ][ 'search' ] = 'Search';
+$lang[ 'template' ][ 'search_by' ] = 'Search By';
+$lang[ 'template' ][ 'username' ] = 'Username'; // member_search_main
+$lang[ 'template' ][ 'member_id' ] = 'Member ID'; // member_search_main
+$lang[ 'template' ][ 'email' ] = 'Email';
 
 ?>

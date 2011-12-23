@@ -1,20 +1,20 @@
 <?php
 
-$lang[ 'member_zone' ] = 'المعذره .. هذه المنطقه للاعضاء فقط';
-$lang[ 'template' ][ 'usercp' ] = 'لوحة تحكم العضو';
-$lang[ 'template' ][ 'pms' ] = 'الرسائل الخاصة';
-$lang[ 'template' ][ 'send_pm' ] = 'إرسال رسالة';
-$lang[ 'template' ][ 'inbox' ] = 'صندوق الرسائل';
-$lang[ 'template' ][ 'sent_pms' ] = 'الرسائل الصادرة';
-$lang[ 'template' ][ 'pm_setting' ] = 'اعدادات الرسائل الخاصه';
-$lang[ 'template' ][ 'profile_edit' ] = 'إدارة الملف الشخصي';
-$lang[ 'template' ][ 'personal_info' ] = 'معلوماتك الشخصية';
-$lang[ 'template' ][ 'settings' ] = 'خياراتك الخاصة';
-$lang[ 'template' ][ 'change_sign' ] = 'تغيير التوقيع';
-$lang[ 'template' ][ 'change_password' ] = 'تغيير الكلمة السرية';
-$lang[ 'template' ][ 'change_email' ] = 'تغيير البريد الالكتروني';
-$lang[ 'template' ][ 'change_avatar' ] = 'تغيير الصورة الشخصية';
-$lang[ 'template' ][ 'options' ] = 'الخيارات';
-$lang[ 'template' ][ 'own_topics' ] = 'مواضيعك الخاصة';
+$lang[ 'member_zone' ] = 'Sorry, This is a member zone';
+$lang[ 'template' ][ 'usercp' ] = 'Control Panel';
+$lang[ 'template' ][ 'pms' ] = 'Private Messages';
+$lang[ 'template' ][ 'send_pm' ] = 'Compose Message';
+$lang[ 'template' ][ 'inbox' ] = 'Inbox';
+$lang[ 'template' ][ 'sent_pms' ] = 'Sent Messages';
+$lang[ 'template' ][ 'pm_setting' ] = 'Settings';
+$lang[ 'template' ][ 'profile_edit' ] = 'Profile Edit';
+$lang[ 'template' ][ 'personal_info' ] = 'Personal Information';
+$lang[ 'template' ][ 'settings' ] = 'Settings';
+$lang[ 'template' ][ 'change_sign' ] = 'Signature';
+$lang[ 'template' ][ 'change_password' ] = 'Change Password';
+$lang[ 'template' ][ 'change_email' ] = 'Change Email';
+$lang[ 'template' ][ 'change_avatar' ] = 'Change Avatar';
+$lang[ 'template' ][ 'options' ] = 'Options';
+$lang[ 'template' ][ 'own_topics' ] = 'Your Topics';
 
 ?>

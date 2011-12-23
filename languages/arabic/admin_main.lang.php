@@ -1,7 +1,7 @@
 <?php
 
 $lang[ 'template' ][ 'statistics' ] = 'احصائيات سريعه'; // main_body
-$lang[ 'template' ][ 'version' ] = 'رقم إصدار'; // main_body
+$lang[ 'template' ][ 'version' ] = 'رقم إصدار MySmartBB'; // main_body
 $lang[ 'template' ][ 'active_members_number' ] = 'عدد الأعضاء النشيطين'; // main_body
 $lang[ 'template' ][ 'registration_today' ] = 'عدد الأعضاء الذين اشتركوا اليوم'; // main_body
 $lang[ 'template' ][ 'today_topics' ] = 'عدد المواضيع التي كتبت اليوم'; // main_body

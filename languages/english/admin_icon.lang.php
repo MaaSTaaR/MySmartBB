@@ -1,14 +1,14 @@
 <?php
 
-$lang[ 'icon_added' ] = 'تم اضافة الايقونه بنجاح !';
-$lang[ 'icon_updated' ] = 'تم تحديث الايقونه بنجاح !';
-$lang[ 'icon_deleted' ] = 'تم حذف الايقونه بنجاح !';
-$lang[ 'icon_doesnt_exist' ] = 'الايقونه المطلوبه غير موجوده';
+$lang[ 'icon_added' ] = 'The icon has been added';
+$lang[ 'icon_updated' ] = 'The icon has been updated';
+$lang[ 'icon_deleted' ] = 'The icon has been deleted';
+$lang[ 'icon_doesnt_exist' ] = 'The icon doesn\'t exist';
 
-$lang[ 'template' ][ 'icons' ] = 'الايقونات';
-$lang[ 'template' ][ 'add_icon' ] = 'اضافة ايقونه جديده'; // icon_add
-$lang[ 'template' ][ 'icon_path' ] = 'مسار الصوره'; // icon_add
-$lang[ 'template' ][ 'icon' ] = 'الايقونه'; // icons_main
-$lang[ 'template' ][ 'edit_icon' ] = 'تحرير ايقونه'; // icon_edit
+$lang[ 'template' ][ 'icons' ] = 'Icons';
+$lang[ 'template' ][ 'add_icon' ] = 'Add new icon'; // icon_add
+$lang[ 'template' ][ 'icon_path' ] = 'Image path'; // icon_add
+$lang[ 'template' ][ 'icon' ] = 'The Icon'; // icons_main
+$lang[ 'template' ][ 'edit_icon' ] = 'Edit icon'; // icon_edit
 
 ?>

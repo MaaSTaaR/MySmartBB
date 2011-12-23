@@ -181,13 +181,13 @@
 
 </tr>
 <tr align="center">
-	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;add=1&amp;main=1" target="main">{$lang['add']} امتداد</a></td>
+	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;add=1&amp;main=1" target="main">{$lang['add_extension']}</a></td>
 </tr>
 <tr align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;control=1&amp;main=1" target="main">{$lang['control_extension']}</a></td>
 </tr>
 <tr align="center">
-	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;search=1&amp;main=1" target="main">ال{$lang['search']}</a></td>
+	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;search=1&amp;main=1" target="main">{$lang['search']}</a></td>
 </tr>
 </table><br />
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">

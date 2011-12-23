@@ -2,22 +2,22 @@
 
 include( 'admin_member_addit.lang.php' );
 
-$lang[ 'update_succeed' ] = 'تم تحديث بيانات العضو بنجاح';
-$lang[ 'member_doesnt_exist' ] = 'العضو المطلوب غير موجود';
+$lang[ 'update_succeed' ] = 'The data has been updated';
+$lang[ 'member_doesnt_exist' ] = 'The member doesn\'t exist';
 
-$lang[ 'template' ][ 'change_username' ] = 'تغيير اسم المستخدم'; // member_edit
-$lang[ 'template' ][ 'new_username' ] = 'اسم المستخدم الجديد'; // member_edit
-$lang[ 'template' ][ 'change_password' ] = 'تغيير كلمة المرور'; // member_edit
-$lang[ 'template' ][ 'new_password' ] = 'كلمة المرور الجديده'; // member_edit
-$lang[ 'template' ][ 'members' ] = 'الاعضاء';
-$lang[ 'template' ][ 'style' ] = 'النمط'; // member_edit
-$lang[ 'template' ][ 'avatar' ] = 'الصوره الرمزيه'; // member_edit
-$lang[ 'template' ][ 'about_member' ] = 'نبذه'; // member_edit
-$lang[ 'template' ][ 'usertitle' ] = 'لقب العضو'; // member_edit
-$lang[ 'template' ][ 'posts_count' ] = 'عدد المشاركات'; // member_edit
-$lang[ 'template' ][ 'member_website' ] = 'عنوان الموقع'; // member_edit
-$lang[ 'template' ][ 'country' ] = 'الدوله'; // member_edit
-$lang[ 'template' ][ 'group' ] = 'المجموعه'; // member_edit
-$lang[ 'template' ][ 'member' ] = 'العضو'; // member_edit
+$lang[ 'template' ][ 'change_username' ] = 'Change username'; // member_edit
+$lang[ 'template' ][ 'new_username' ] = 'The new username'; // member_edit
+$lang[ 'template' ][ 'change_password' ] = 'Change password'; // member_edit
+$lang[ 'template' ][ 'new_password' ] = 'The new password'; // member_edit
+$lang[ 'template' ][ 'members' ] = 'Members';
+$lang[ 'template' ][ 'style' ] = 'Style'; // member_edit
+$lang[ 'template' ][ 'avatar' ] = 'Avatar'; // member_edit
+$lang[ 'template' ][ 'about_member' ] = 'About the member'; // member_edit
+$lang[ 'template' ][ 'usertitle' ] = 'Usertitle'; // member_edit
+$lang[ 'template' ][ 'posts_count' ] = 'Posts number'; // member_edit
+$lang[ 'template' ][ 'member_website' ] = 'Website'; // member_edit
+$lang[ 'template' ][ 'country' ] = 'Country'; // member_edit
+$lang[ 'template' ][ 'group' ] = 'Group'; // member_edit
+$lang[ 'template' ][ 'member' ] = 'Member'; // member_edit
 
 ?>
