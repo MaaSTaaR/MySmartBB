@@ -19,9 +19,9 @@
 	<td class="row1">{$installed['title']}</td>
 	<td class="row1">
 		{if {$installed['active']} == 1}
-		<a href="admin.php?page=plugins&amp;deactive=1&amp;id={$installed['id']}">{$lang['enable']}</a>
+		<a href="admin.php?page=plugins&amp;deactive=1&amp;id={$installed['id']}">{$lang['disable']}</a>
 		{else}
-		<a href="admin.php?page=plugins&amp;active=1&amp;id={$installed['id']}">{$lang['disable']}</a>
+		<a href="admin.php?page=plugins&amp;active=1&amp;id={$installed['id']}">{$lang['enable']}</a>
 		{/if}
 	</td>
 	<td class="row1"><a href="admin.php?page=plugins&amp;uninstall=1&amp;main=1&amp;id={$installed['id']}">{$lang['uninstall']}</a></td>

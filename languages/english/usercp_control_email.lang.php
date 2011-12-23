@@ -2,14 +2,14 @@
 
 include( 'usercp.lang.php' );
 
-$lang[ 'execute_process' ] = 'تنفيذ العمليه';
-$lang[ 'wrong_password' ] = 'المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه';
-$lang[ 'wrong_email' ] = 'يرجى كتابة بريدك الالكتروني الصحيح';
-$lang[ 'exist_email' ] = 'المعذره .. البريد الالكتروني موجود مسبقاً';
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح !';
+$lang[ 'execute_process' ] = 'Processing the Request';
+$lang[ 'wrong_password' ] = 'Incorrect password';
+$lang[ 'wrong_email' ] = 'Invalid email';
+$lang[ 'exist_email' ] = 'Sorry, the email already under use by another member';
+$lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'change_email' ] = 'تغيير البريد الالكتروني';
-$lang[ 'template' ][ 'your_password' ] = 'كلمة مرورك';
-$lang[ 'template' ][ 'new_email' ] = 'البريد الالكتروني الجديد';
+$lang[ 'template' ][ 'change_email' ] = 'Change your Email';
+$lang[ 'template' ][ 'your_password' ] = 'Your Password';
+$lang[ 'template' ][ 'new_email' ] = 'The new Email';
 
 ?>

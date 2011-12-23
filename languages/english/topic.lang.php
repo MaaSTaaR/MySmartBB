@@ -4,82 +4,82 @@
 
 // ~ Templates ~ //
 
-$lang[ 'template' ][ 'subject_control' ] = 'التحكم في الموضوع';
-$lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
-$lang[ 'template' ][ 'unstick_subject' ] = 'إلغاء تثبيت الموضوع';
-$lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
-$lang[ 'template' ][ 'open_subject' ] = 'فتح الموضوع';
-$lang[ 'template' ][ 'delete_subject' ] = 'حذف الموضوع';
-$lang[ 'template' ][ 'move_subject' ] = 'نقل الموضوع';
-$lang[ 'template' ][ 'edit_subject' ] = 'تحرير الموضوع';
-$lang[ 'template' ][ 'repeated_subject' ] = 'موضوع مكرر';
-$lang[ 'template' ][ 'raise_subject' ] = 'رفع الموضوع';
-$lang[ 'template' ][ 'down_subject' ] = 'تنزيل الموضوع';
+$lang[ 'template' ][ 'subject_control' ] = 'Topic Management';
+$lang[ 'template' ][ 'stick_subject' ] = 'Mark as Important';
+$lang[ 'template' ][ 'unstick_subject' ] = 'Mark as Normal';
+$lang[ 'template' ][ 'close_subject' ] = 'Close the Topic';
+$lang[ 'template' ][ 'open_subject' ] = 'Open the Topic';
+$lang[ 'template' ][ 'delete_subject' ] = 'Delete the Topic';
+$lang[ 'template' ][ 'move_subject' ] = 'Move the Topic';
+$lang[ 'template' ][ 'edit_subject' ] = 'Edit the Topic';
+$lang[ 'template' ][ 'repeated_subject' ] = 'Mark as Repeated';
+$lang[ 'template' ][ 'raise_subject' ] = 'Raise the Topic';
+$lang[ 'template' ][ 'down_subject' ] = 'Down the Topic';
 
-$lang[ 'template' ][ 'subject_information' ] = 'معلومات عن الموضوع';
-$lang[ 'template' ][ 'subject_state' ] = 'حالة الموضوع';
-$lang[ 'template' ][ 'sticked' ] = 'مُثبّت';
-$lang[ 'template' ][ 'closed' ] = 'مُغلق';
-$lang[ 'template' ][ 'deleted' ] = 'محذوف';
-$lang[ 'template' ][ 'close_reason' ] = 'سبب الاغلاق';
-$lang[ 'template' ][ 'delete_reason' ] = 'سبب الحذف';
-$lang[ 'template' ][ 'replies_number' ] = 'عدد الردود';
-$lang[ 'template' ][ 'visits_number' ] = 'عدد الزوار';
-$lang[ 'template' ][ 'subject_tags' ] = 'علامات الموضوع';
-$lang[ 'template' ][ 'download_subject' ] = 'تحميل محتوى الموضوع';
-$lang[ 'template' ][ 'printable_version' ] = 'عرض نسخة صالحة للطباعة';
+$lang[ 'template' ][ 'subject_information' ] = 'Topic\'s Information';
+$lang[ 'template' ][ 'subject_state' ] = 'Status';
+$lang[ 'template' ][ 'sticked' ] = 'Important';
+$lang[ 'template' ][ 'closed' ] = 'Closed';
+$lang[ 'template' ][ 'deleted' ] = 'Deleted';
+$lang[ 'template' ][ 'close_reason' ] = 'Close Reason';
+$lang[ 'template' ][ 'delete_reason' ] = 'Delete Reason';
+$lang[ 'template' ][ 'replies_number' ] = 'Replies';
+$lang[ 'template' ][ 'visits_number' ] = 'Visits';
+$lang[ 'template' ][ 'subject_tags' ] = 'Tags';
+$lang[ 'template' ][ 'download_subject' ] = 'Download Copy';
+$lang[ 'template' ][ 'printable_version' ] = 'Printable Copy';
 
-$lang[ 'template' ][ 'writer_information' ] = 'معلومات الكاتب';
-$lang[ 'template' ][ 'subject_context' ] = 'محتوى الموضوع';
-$lang[ 'template' ][ 'report_abuse' ] = 'التبليغ عن مشاركة مخالفة';
+$lang[ 'template' ][ 'writer_information' ] = 'Author\'s Information';
+$lang[ 'template' ][ 'subject_context' ] = 'Context';
+$lang[ 'template' ][ 'report_abuse' ] = 'Report Abuse';
 
-$lang[ 'template' ][ 'member_avatar' ] = 'الصورة الشخصية لـ ';
-$lang[ 'template' ][ 'member_profile' ] = 'الهوية الشخصية';
-$lang[ 'template' ][ 'member_id' ] = 'رقم العضوية';
-$lang[ 'template' ][ 'register_date' ] = 'تاريخ التسجيل';
-$lang[ 'template' ][ 'status' ] = 'الحالة';
-$lang[ 'template' ][ 'online' ] = 'متصل';
-$lang[ 'template' ][ 'offline' ] = 'غير متصل';
-$lang[ 'template' ][ 'posts' ] = 'المشاركات';
-$lang[ 'template' ][ 'country' ] = 'الدولة';
-$lang[ 'template' ][ 'gender' ] = 'الجنس';
-$lang[ 'template' ][ 'visits' ] = 'الزيارات';
-$lang[ 'template' ][ 'member_is_away' ] = 'العضو غائب';
+$lang[ 'template' ][ 'member_avatar' ] = 'The Avatar Of';
+$lang[ 'template' ][ 'member_profile' ] = 'Profile';
+$lang[ 'template' ][ 'member_id' ] = 'ID';
+$lang[ 'template' ][ 'register_date' ] = 'Register Date';
+$lang[ 'template' ][ 'status' ] = 'Status';
+$lang[ 'template' ][ 'online' ] = 'Online';
+$lang[ 'template' ][ 'offline' ] = 'Offline';
+$lang[ 'template' ][ 'posts' ] = 'Posts';
+$lang[ 'template' ][ 'country' ] = 'Country';
+$lang[ 'template' ][ 'gender' ] = 'Gender';
+$lang[ 'template' ][ 'visits' ] = 'Visits';
+$lang[ 'template' ][ 'member_is_away' ] = 'The member is away';
 
-$lang[ 'template' ][ 'poll' ] = 'التصويت';
+$lang[ 'template' ][ 'poll' ] = 'The Poll';
 
-$lang[ 'template' ][ 'filename' ] = 'إسم الملف';
-$lang[ 'template' ][ 'download_times' ] = 'مرات التحميل';
+$lang[ 'template' ][ 'filename' ] = 'Filename';
+$lang[ 'template' ][ 'download_times' ] = 'Downloads';
 
-$lang[ 'template' ][ 'signature' ] = 'التوقيع';
+$lang[ 'template' ][ 'signature' ] = 'Signature';
 
-$lang[ 'template' ][ 'on_date' ] = 'بتاريخ';
-$lang[ 'template' ][ 'original_view' ] = 'إضغط هنا لمشاهدة الموضوع بهيئته الأصلية';
+$lang[ 'template' ][ 'on_date' ] = 'Date';
+$lang[ 'template' ][ 'original_view' ] = 'Go to the original view';
 
-$lang[ 'template' ][ 'same_topics' ] = 'المواضيع المتشابهه';
+$lang[ 'template' ][ 'same_topics' ] = 'Similar Topics';
 
-$lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
-$lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
-$lang[ 'template' ][ 'reply' ] = 'رد';
-$lang[ 'template' ][ 'reply_number' ] = 'الرد رقم';
-$lang[ 'template' ][ 'management_options' ] = 'خيارات إدارة الموضوع';
-$lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
-$lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
+$lang[ 'template' ][ 'reply_context' ] = 'Context';
+$lang[ 'template' ][ 'reply_title' ] = 'Title';
+$lang[ 'template' ][ 'reply' ] = 'Reply';
+$lang[ 'template' ][ 'reply_number' ] = 'ID';
+$lang[ 'template' ][ 'management_options' ] = 'Topic Management';
+$lang[ 'template' ][ 'stick_subject' ] = 'Mark as Important';
+$lang[ 'template' ][ 'close_subject' ] = 'Close the Topic';
 
-$lang[ 'template' ][ 'add_new_topic' ] = 'إضافة موضوع جديد';
-$lang[ 'template' ][ 'add_new_reply' ] = 'إضافة رد جديد';
+$lang[ 'template' ][ 'add_new_topic' ] = 'Add new Topic';
+$lang[ 'template' ][ 'add_new_reply' ] = 'Add new Reply';
 
-$lang[ 'template' ][ 'reply_writer' ] = 'كاتب الرد';
+$lang[ 'template' ][ 'reply_writer' ] = 'Writer';
 
-$lang[ 'template' ][ 'delete_reply' ] = 'حذف الرد';
-$lang[ 'template' ][ 'edit_reply' ] = 'تحرير الرد';
+$lang[ 'template' ][ 'delete_reply' ] = 'Delete the Reply';
+$lang[ 'template' ][ 'edit_reply' ] = 'Edit the Reply';
 
 // ... //
 
-$lang[ 'topic_doesnt_exist' ] = 'المعذره، الموضوع المطلوب غير موجود';
-$lang[ 'topic_trashed' ] = 'الموضوع المطلوب منقول إلى سلّة المحذوفات';
-$lang[ 'viewing_topic' ] = 'يطلع على الموضوع';
-$lang[ 'cant_view_topic' ] = 'المعذره لا يمكنك عرض هذا الموضوع';
+$lang[ 'topic_doesnt_exist' ] = 'The topic doesn\'t exist';
+$lang[ 'topic_trashed' ] = 'The topic has been deleted';
+$lang[ 'viewing_topic' ] = 'Viewing the topic';
+$lang[ 'cant_view_topic' ] = 'Sorry, you have no permission to view this topic';
 
 
 ?>

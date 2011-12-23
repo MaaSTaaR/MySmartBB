@@ -2,12 +2,12 @@
 
 include( 'usercp.lang.php' );
 
-$lang[ 'execute_process' ] = 'تنفيذ العمليه';
-$lang[ 'wrong_password' ] = 'المعذره .. كلمة المرور التي قمت بكتابتها غير صحيحه';
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح !';
+$lang[ 'execute_process' ] = 'Processing The Request';
+$lang[ 'wrong_password' ] = 'Incorrect Password';
+$lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'change_password' ] = 'تغيير كلمة السر';
-$lang[ 'template' ][ 'current_password' ] = 'كلمة مرورك الحاليه';
-$lang[ 'template' ][ 'new_password' ] = 'كلمة المرور الجديده';
+$lang[ 'template' ][ 'change_password' ] = 'Change Your Password';
+$lang[ 'template' ][ 'current_password' ] = 'Your Current Password';
+$lang[ 'template' ][ 'new_password' ] = 'The New Password';
 
 ?>

@@ -1,15 +1,15 @@
 <?php
 
-$lang[ 'smile_added' ] = 'تم اضافة الابتسامه بنجاح !';
-$lang[ 'smile_updated' ] = 'تم تحديث الابتسامه بنجاح !';
-$lang[ 'smile_deleted' ] = 'تم حذف الابتسامه بنجاح !';
-$lang[ 'smile_doesnt_exist' ] = 'الابتسامه المطلوبه غير موجود';
+$lang[ 'smile_added' ] = 'The emoticon has been added';
+$lang[ 'smile_updated' ] = 'The emoticon has been updated';
+$lang[ 'smile_deleted' ] = 'The emoticon has been deleted';
+$lang[ 'smile_doesnt_exist' ] = 'The emoticon doesn\'t exist';
 
-$lang[ 'template' ][ 'smiles' ] = 'الابتسامات';
-$lang[ 'template' ][ 'edit_smile' ] = 'تحرير ابتسامه';
-$lang[ 'template' ][ 'add_smile' ] = 'اضافة ابتسامه جديده'; // smile_add
-$lang[ 'template' ][ 'smile_shorcut' ] = 'اختصار الابتسامه'; // smile_add
-$lang[ 'template' ][ 'smile_path' ] = 'مسار الصوره'; // smile_add
-$lang[ 'template' ][ 'smile' ] = 'الابتسامه'; // smiles_main
+$lang[ 'template' ][ 'smiles' ] = 'Emoticons';
+$lang[ 'template' ][ 'edit_smile' ] = 'Edit Emoticon';
+$lang[ 'template' ][ 'add_smile' ] = 'Add new Emoticon'; // smile_add
+$lang[ 'template' ][ 'smile_shorcut' ] = 'Shortcut'; // smile_add
+$lang[ 'template' ][ 'smile_path' ] = 'Image Path'; // smile_add
+$lang[ 'template' ][ 'smile' ] = 'Emoticon'; // smiles_main
 
 ?>

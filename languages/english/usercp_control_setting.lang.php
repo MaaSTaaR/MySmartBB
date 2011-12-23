@@ -2,17 +2,17 @@
 
 include( 'usercp.lang.php' );
 
-$lang[ 'member_zone' ] = 'المعذره .. هذه المنطقه للاعضاء فقط';
-$lang[ 'edit_options' ] = 'تحرير خياراتك الخاصه';
-$lang[ 'update_process' ] = 'تنفيذ عملية التحديث';
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح';
+$lang[ 'member_zone' ] = 'Sorry, This is a member zone';
+$lang[ 'edit_options' ] = 'Settings';
+$lang[ 'update_process' ] = 'Processing the Request';
+$lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'your_options' ] = 'خياراتك الخاصه';
-$lang[ 'template' ][ 'style' ] = 'الستايل';
-$lang[ 'template' ][ 'hidden_browsing' ] = 'التصفح الخفي';
-$lang[ 'template' ][ 'yes' ] = 'نعم';
-$lang[ 'template' ][ 'no' ] = 'لا';
-$lang[ 'template' ][ 'time' ] = 'الوقت';
-$lang[ 'template' ][ 'send_permission' ] = 'السماح للاعضاء بمراسلتك بريدياً';
+$lang[ 'template' ][ 'your_options' ] = 'Your Settings';
+$lang[ 'template' ][ 'style' ] = 'Style';
+$lang[ 'template' ][ 'hidden_browsing' ] = 'Hidden Browsing';
+$lang[ 'template' ][ 'yes' ] = 'yes';
+$lang[ 'template' ][ 'no' ] = 'no';
+$lang[ 'template' ][ 'time' ] = 'Time';
+$lang[ 'template' ][ 'send_permission' ] = 'Allow members to send you emails';
 
 ?>
