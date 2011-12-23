@@ -2,19 +2,19 @@
 
 include( 'usercp.lang.php' );
 
-$lang[ 'edit_information' ] = 'تحرير المعلومات الشخصيه';
-$lang[ 'update_process' ] = 'تنفيذ عملية التحديث';
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح';
+$lang[ 'edit_information' ] = 'Edit Your Personal Information';
+$lang[ 'update_process' ] = 'Processing the Request';
+$lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'personal_info' ] = 'معلوماتك الشخصيه';
-$lang[ 'template' ][ 'country' ] = 'الدوله';
-$lang[ 'template' ][ 'website' ] = 'موقعك الشخصي';
-$lang[ 'template' ][ 'about_you' ] = 'معلومات عنك';
-$lang[ 'template' ][ 'away_setting' ] = 'اعدادات الغياب';
-$lang[ 'template' ][ 'away_state' ] = 'هل تريد الغياب ؟';
-$lang[ 'template' ][ 'now_youre' ] = 'انت الآن :';
-$lang[ 'template' ][ 'not_away' ] = 'غير غائب';
-$lang[ 'template' ][ 'away' ] = 'غائب';
-$lang[ 'template' ][ 'away_reason_will_be_show' ] = 'ملاحظه : عند تشغيل اعدادات الغياب فان السبب سوف يظهر في ملفك الشخصي بالاضافه إلى مواضيعك و ردودك';
+$lang[ 'template' ][ 'personal_info' ] = 'Your Personal Information';
+$lang[ 'template' ][ 'country' ] = 'Country';
+$lang[ 'template' ][ 'website' ] = 'Website';
+$lang[ 'template' ][ 'about_you' ] = 'About You';
+$lang[ 'template' ][ 'away_setting' ] = 'Away Setting';
+$lang[ 'template' ][ 'away_state' ] = 'Enable Away?';
+$lang[ 'template' ][ 'now_youre' ] = 'You Are :';
+$lang[ 'template' ][ 'not_away' ] = 'Not Away';
+$lang[ 'template' ][ 'away' ] = 'Away';
+$lang[ 'template' ][ 'away_reason_will_be_show' ] = 'Note : By enable away the reason will show in your profile and your posts';
 
 ?>

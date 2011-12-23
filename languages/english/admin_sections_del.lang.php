@@ -1,26 +1,26 @@
 <?php
 
-$lang[ 'cant_complete_the_process' ] = 'يوجد خطأ، لا يمكن إكمال العمليه! لم يتم اختيار القسم';
-$lang[ 'move_succeed' ] = 'تم نقل المنتديات بنجاح';
-$lang[ 'section_delete_succeed' ] = 'تم حذف القسم بنجاح !';
-$lang[ 'groups_delete_succeed' ] = 'تم حذف صلاحيات المجموعات بنجاح';
-$lang[ 'groups_topics_delete_failed' ] = 'خطأ، لم تتم عملية حذف صلاحيات المجموعات و المواضيع بنجاح !';
-$lang[ 'forums_groups_delete_succeed' ] = 'تم حذف صلاحيات المجموعات للمنتديات';
-$lang[ 'forums_delete_succeed' ] = 'تم حذف المنتديات بنجاح';
-$lang[ 'sections_groups_delete_succeed' ] = 'تم حذف صلاحيات المجموعات بنجاح';
-$lang[ 'final_step_succeed' ] = 'تمت الخطوه النهائيه بنجاح';
-$lang[ 'sections_groups_delete_failed' ] = 'خطأ، لم تتم عملية حذف صلاحيات المجموعات بنجاح !';
-$lang[ 'wrong_choice' ] = 'الاختيار غير صحيح!';
-$lang[ 'section_doesnt_exist' ] = 'القسم المطلوب غير موجود';
+$lang[ 'cant_complete_the_process' ] = 'Please choose the category';
+$lang[ 'move_succeed' ] = 'The forums has been moved';
+$lang[ 'section_delete_succeed' ] = 'The category has been deleted';
+$lang[ 'groups_delete_succeed' ] = 'The permissions has been deleted';
+$lang[ 'groups_topics_delete_failed' ] = 'The deletion of permissions and topics failed';
+$lang[ 'forums_groups_delete_succeed' ] = 'The permissions of forums has been deleted';
+$lang[ 'forums_delete_succeed' ] = 'The forums has been deleted';
+$lang[ 'sections_groups_delete_succeed' ] = 'The permissions has been deleted';
+$lang[ 'final_step_succeed' ] = 'The final step succeed';
+$lang[ 'sections_groups_delete_failed' ] = 'The deletion of permission failed';
+$lang[ 'wrong_choice' ] = 'Invalid Choice';
+$lang[ 'section_doesnt_exist' ] = 'The category doesn\'t exist';
 
-$lang[ 'template' ][ 'sections' ] = 'الاقسام الرئيسيه';
-$lang[ 'template' ][ 'section_del_confirmation' ] = 'تأكيد حذف';
-$lang[ 'template' ][ 'youre_going_delete' ] = 'انت الآن مُقدم على حذف قسم رئيسي'; // section_del
-$lang[ 'template' ][ 'what_to_do' ] = 'ما الذي تريد فعله؟'; // section_del
-$lang[ 'template' ][ 'move_forums' ] = 'نقل جميع المنتديات التي تحته إلى قسم رئيسي آخر'; // section_del
-$lang[ 'template' ][ 'delete_forums_topics' ] = 'حذف جميع المنتديات و مواضيعهم'; // section_del
-$lang[ 'template' ][ 'delete_forums_move_topics' ] = 'حذف جميع المنتديات مع نقل المواضيع إلى منتدى آخر'; // section_del
-$lang[ 'template' ][ 'move_to' ] = 'نقل إلى'; // section_del
-$lang[ 'template' ][ 'move_topics_to' ] = 'نقل المواضيع إلى'; // section_del
+$lang[ 'template' ][ 'sections' ] = 'Categories';
+$lang[ 'template' ][ 'section_del_confirmation' ] = 'Delete Confirmation';
+$lang[ 'template' ][ 'youre_going_delete' ] = 'You are going to delete a category';
+$lang[ 'template' ][ 'what_to_do' ] = 'What do you want to do?';
+$lang[ 'template' ][ 'move_forums' ] = 'Move all child forums to another category';
+$lang[ 'template' ][ 'delete_forums_topics' ] = 'Delete all child forums and delete all topics and replies';
+$lang[ 'template' ][ 'delete_forums_move_topics' ] = 'Delete all child forums and move the topics to another forum';
+$lang[ 'template' ][ 'move_to' ] = 'Move to';
+$lang[ 'template' ][ 'move_topics_to' ] = 'Move topics to';
 
 ?>
