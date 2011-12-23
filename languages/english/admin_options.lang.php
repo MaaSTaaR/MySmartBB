@@ -1,82 +1,82 @@
 <?php
 
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح .. يرجى الانتظار حتى يتم ارجاعك إلى الصفحه';
+$lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'close_message' ] = 'الرساله التي تظهر عند اغلاق المنتدى'; // options_close
+$lang[ 'template' ][ 'close_message' ] = 'The close message'; // options_close
 
-$lang[ 'template' ][ 'board_setting' ] = 'إعدادات المنتدى';
-$lang[ 'template' ][ 'general_options' ] = 'إعدادات عامه'; // options_main
-$lang[ 'template' ][ 'feature_options' ] = 'إعدادات الميزات'; // options_main
-$lang[ 'template' ][ 'time_options' ] = 'إعدادات الوقت'; // options_main
-$lang[ 'template' ][ 'page_options' ] = 'إعدادات الصفحات'; // options_main
-$lang[ 'template' ][ 'register_options' ] = 'إعدادات التسجيل'; // options_main
-$lang[ 'template' ][ 'posts_options' ] = 'إعدادات المواضيع و الردود'; // options_main
-$lang[ 'template' ][ 'fast_reply_options' ] = 'إعدادات الرد السريع'; // options_main
-$lang[ 'template' ][ 'membership_options' ] = 'إعدادات العضويه'; // options_main
-$lang[ 'template' ][ 'avatar_options' ] = 'إعدادات الصور الشخصيه'; // options_main
-$lang[ 'template' ][ 'visitors_allowed_options' ] = 'الايام المسموح للزوار دخول المنتدى بها'; // options_main
-$lang[ 'template' ][ 'close_options' ] = 'اغلاق المنتدى'; // options_main
-
-
-$lang[ 'template' ][ 'board_title' ] = 'اسم المنتدى'; // options_general
-$lang[ 'template' ][ 'send_email_address' ] = 'بريد الارسال'; // options_general
-$lang[ 'template' ][ 'receive_email_address' ] = 'بريد الاستقبال'; // options_general
+$lang[ 'template' ][ 'board_setting' ] = 'Board Settings';
+$lang[ 'template' ][ 'general_options' ] = 'General Settings'; // options_main
+$lang[ 'template' ][ 'feature_options' ] = 'Features Settings'; // options_main
+$lang[ 'template' ][ 'time_options' ] = 'Times Settings'; // options_main
+$lang[ 'template' ][ 'page_options' ] = 'Pagination Settings'; // options_main
+$lang[ 'template' ][ 'register_options' ] = 'Registration Settings'; // options_main
+$lang[ 'template' ][ 'posts_options' ] = 'Topics and Replies Settings'; // options_main
+$lang[ 'template' ][ 'fast_reply_options' ] = 'Quick Reply Settings'; // options_main
+$lang[ 'template' ][ 'membership_options' ] = 'Membership Settings'; // options_main
+$lang[ 'template' ][ 'avatar_options' ] = 'Avatar Settings'; // options_main
+$lang[ 'template' ][ 'visitors_allowed_options' ] = 'The Days That The Visitors Allowed To View The Board'; // options_main
+$lang[ 'template' ][ 'close_options' ] = 'Close Board'; // options_main
 
 
-$lang[ 'template' ][ 'show_guests_online' ] = 'إظهار اسماء الزوار في قائمة المتواجدين'; // options_features
-$lang[ 'template' ][ 'show_section_description' ] = 'إظهار وصف اسفل كل قسم'; // options_features
-$lang[ 'template' ][ 'activate_pm' ] = 'تفعيل خاصية الرسائل الخاصة'; // options_features
+$lang[ 'template' ][ 'board_title' ] = 'Board Name'; // options_general
+$lang[ 'template' ][ 'send_email_address' ] = 'Sending Email Address'; // options_general
+$lang[ 'template' ][ 'receive_email_address' ] = 'Receiving Email Address'; // options_general
 
 
-$lang[ 'template' ][ 'board_time' ] = 'توقيت المنتدى'; // options_time
-$lang[ 'template' ][ 'time_system' ] = 'نظام الوقت'; // options_time
-$lang[ 'template' ][ 'textual_system' ] = 'نظام اليوم/الامس'; // options_time
-$lang[ 'template' ][ 'normal_system' ] = 'النظام العادي'; // options_time
+$lang[ 'template' ][ 'show_guests_online' ] = 'Show Visitors In Online List'; // options_features
+$lang[ 'template' ][ 'show_section_description' ] = 'Show Forums Descition'; // options_features
+$lang[ 'template' ][ 'activate_pm' ] = 'Enable Private Messages'; // options_features
 
 
-$lang[ 'template' ][ 'page_counts' ] = 'عدد الصفحات التي تظهر في الصفحه الاول'; // options_page
-$lang[ 'template' ][ 'max_topics' ] = 'الحد الاقصى لعدد المواضيع في القسم'; // options_page
-$lang[ 'template' ][ 'max_replies' ] = 'الحد الاقصى لعدد الردود في الصفحه'; // options_page
-$lang[ 'template' ][ 'max_avatar' ] = 'الحد الاقصى للصور الشخصيه في الصفحه'; // options_page
+$lang[ 'template' ][ 'board_time' ] = 'Board Time'; // options_time
+$lang[ 'template' ][ 'time_system' ] = 'Time System'; // options_time
+$lang[ 'template' ][ 'textual_system' ] = 'Textual System'; // options_time
+$lang[ 'template' ][ 'normal_system' ] = 'Normal System'; // options_time
 
-$lang[ 'template' ][ 'close_register' ] = 'اغلاق التسجيل'; // options_register
-$lang[ 'template' ][ 'default_group' ] = 'المجموعه الافتراضيه عند التسجيل'; // options_register
-$lang[ 'template' ][ 'default_activate_group' ] = 'المجموعه الافتراضيه عند التفعيل'; // options_register
-$lang[ 'template' ][ 'activate_register_rules' ] = 'تفعيل شروط التسجيل'; // options_register
-$lang[ 'template' ][ 'min_length_username' ] = 'أقل عدد من حروف إسم العضو'; // options_register
-$lang[ 'template' ][ 'max_length_username' ] = 'أقصى عدد من حروف إسم العضو'; // options_register
-$lang[ 'template' ][ 'min_length_password' ] = 'أقل عدد حروف كلمة المرور'; // options_register
-$lang[ 'template' ][ 'max_length_password' ] = 'أقصى عدد من الحروف كلمة المرور'; // options_register
-$lang[ 'template' ][ 'allowed_visit_days' ] = 'الايام المسموح للزوار التسجيل بها'; // options_register
 
-$lang[ 'template' ][ 'min_length_context' ] = 'أقل عدد من الحروف في الموضوع او الرد'; // options_topics
-$lang[ 'template' ][ 'max_length_context' ] = 'أقصى عدد من الحروف في الموضوع او الرد'; // options_topics
-$lang[ 'template' ][ 'min_length_title' ] = 'اقل عدد من الحروف لعنوان الموضوع او الرد'; // options_topics
-$lang[ 'template' ][ 'max_length_title' ] = 'اقصى عدد من الحروف لعنوان الموضوع او الرد'; // options_topics
-$lang[ 'template' ][ 'activate_similar_topics' ] = 'تفعيل خاصية المواضيع المتشابهه'; // options_topics
-$lang[ 'template' ][ 'show_topic_context_pages' ] = 'عرض محتوى الموضوع في جميع الصفحات'; // options_topics
+$lang[ 'template' ][ 'page_counts' ] = 'The Pagination Number Per Page'; // options_page
+$lang[ 'template' ][ 'max_topics' ] = 'Maximum Number Of Topics Per Page In Forum Page'; // options_page
+$lang[ 'template' ][ 'max_replies' ] = 'Maximum Number Of Replies Per Page'; // options_page
+$lang[ 'template' ][ 'max_avatar' ] = 'Maximum Number Of Avatars Per Page'; // options_page
 
-$lang[ 'template' ][ 'can_use_fast_reply' ] = 'امكانية استخدام الرد السريع'; // options_fast_reply
-$lang[ 'template' ][ 'activate_toolbox' ] = 'تفعيل صندوق الأدوات'; // options_fast_reply
-$lang[ 'template' ][ 'activate_smiles' ] = 'تفعيل الابتسامات'; // options_fast_reply
-$lang[ 'template' ][ 'activate_icons' ] = 'تفعيل الأيقونات'; // options_fast_reply
-$lang[ 'template' ][ 'auto_title_quote' ] = 'اقتباس عنوان الموضوع تلقائياً في عنوان الرد'; // options_fast_reply
-$lang[ 'template' ][ 'activate_topic_control' ] = 'تفعيل (إغلاق/تثبيت الموضوع) في الرد السريع'; // options_fast_reply
+$lang[ 'template' ][ 'close_register' ] = 'Registeration Close'; // options_register
+$lang[ 'template' ][ 'default_group' ] = 'The Default Group After Register'; // options_register
+$lang[ 'template' ][ 'default_activate_group' ] = 'The Default Group After Activation'; // options_register
+$lang[ 'template' ][ 'activate_register_rules' ] = 'Register Rules'; // options_register
+$lang[ 'template' ][ 'min_length_username' ] = 'Minimum Length Of Username'; // options_register
+$lang[ 'template' ][ 'max_length_username' ] = 'Maximum Length Of Username'; // options_register
+$lang[ 'template' ][ 'min_length_password' ] = 'Minimum Length Of Password'; // options_register
+$lang[ 'template' ][ 'max_length_password' ] = 'Maximum Length Of Password'; // options_register
+$lang[ 'template' ][ 'allowed_visit_days' ] = 'The Days That The Register is Open'; // options_register
 
-$lang[ 'template' ][ 'activate_away_feature' ] = 'تفعيل خاصية الغياب'; // options_member
+$lang[ 'template' ][ 'min_length_context' ] = 'Minimum Length Of Post Context'; // options_topics
+$lang[ 'template' ][ 'max_length_context' ] = 'Maximum Length Of Post Context'; // options_topics
+$lang[ 'template' ][ 'min_length_title' ] = 'Minimum Length Of Post Title'; // options_topics
+$lang[ 'template' ][ 'max_length_title' ] = 'Maximum Length Of Post Title'; // options_topics
+$lang[ 'template' ][ 'activate_similar_topics' ] = 'Enable Similar Topics Feature'; // options_topics
+$lang[ 'template' ][ 'show_topic_context_pages' ] = 'Show The Context Of Topic In All Pages'; // options_topics
 
-$lang[ 'template' ][ 'activate_avatar' ] = 'تفعيل الصور الشخصية'; // options_avatar
-$lang[ 'template' ][ 'allow_avatar_upload' ] = 'السماح بتحميل الصور من حاسوب المستخدم'; // options_avatar
-$lang[ 'template' ][ 'avatar_width' ] = 'اقصى عرض للصور الشخصية'; // options_avatar
-$lang[ 'template' ][ 'avatar_height' ] = 'اقصى ارتفاع للصور الشخصية'; // options_avatar
-$lang[ 'template' ][ 'default_avatar' ] = 'الصورة الشخصية الأفتراضية'; // options_avatar
+$lang[ 'template' ][ 'can_use_fast_reply' ] = 'Enable Quick Reply'; // options_fast_reply
+$lang[ 'template' ][ 'activate_toolbox' ] = 'Show Toolbox'; // options_fast_reply
+$lang[ 'template' ][ 'activate_smiles' ] = 'Show Emoticons'; // options_fast_reply
+$lang[ 'template' ][ 'activate_icons' ] = 'Show Icons'; // options_fast_reply
+$lang[ 'template' ][ 'auto_title_quote' ] = 'Quote The Topic Title Automatically'; // options_fast_reply
+$lang[ 'template' ][ 'activate_topic_control' ] = 'Show Topic Management Options'; // options_fast_reply
 
-$lang[ 'template' ][ 'sat' ] = 'السبت'; // options_register
-$lang[ 'template' ][ 'sun' ] = 'الاحد'; // options_register
-$lang[ 'template' ][ 'mon' ] = 'الاثنين'; // options_register
-$lang[ 'template' ][ 'tue' ] = 'الثلاثاء'; // options_register
-$lang[ 'template' ][ 'wed' ] = 'الاربعاء'; // options_register
-$lang[ 'template' ][ 'thu' ] = 'الخميس'; // options_register
-$lang[ 'template' ][ 'fri' ] = 'الجمعه'; // options_register
+$lang[ 'template' ][ 'activate_away_feature' ] = 'Enable Away Feature'; // options_member
+
+$lang[ 'template' ][ 'activate_avatar' ] = 'Enable use Avatar'; // options_avatar
+$lang[ 'template' ][ 'allow_avatar_upload' ] = 'Allow to upload avatar from PC'; // options_avatar
+$lang[ 'template' ][ 'avatar_width' ] = 'Maximum Width Of The Avatar'; // options_avatar
+$lang[ 'template' ][ 'avatar_height' ] = 'Maximum Height Of The Avatar'; // options_avatar
+$lang[ 'template' ][ 'default_avatar' ] = 'The Default Avatar'; // options_avatar
+
+$lang[ 'template' ][ 'sat' ] = 'Saturday'; // options_register
+$lang[ 'template' ][ 'sun' ] = 'Sunday'; // options_register
+$lang[ 'template' ][ 'mon' ] = 'Monday'; // options_register
+$lang[ 'template' ][ 'tue' ] = 'Tuesday'; // options_register
+$lang[ 'template' ][ 'wed' ] = 'Wednesday'; // options_register
+$lang[ 'template' ][ 'thu' ] = 'Thursday'; // options_register
+$lang[ 'template' ][ 'fri' ] = 'Friday'; // options_register
 
 ?>

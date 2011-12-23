@@ -2,16 +2,16 @@
 
 include( 'admin_sections_addit.lang.php' );
 
-$lang[ 'section_added' ] = 'تم اضافة القسم بنجاح !';
-$lang[ 'add_failed' ] = 'هناك مشكله، لم يتمكن من اضافة القسم';
+$lang[ 'section_added' ] = 'The category has been added';
+$lang[ 'add_failed' ] = 'The add process failed';
 
-$lang[ 'template' ][ 'sections' ] = 'الاقسام الرئيسيه';
-$lang[ 'template' ][ 'add_section' ] = 'اضافة قسم رئيسي جديد'; // sections_add
-$lang[ 'template' ][ 'auto_sort' ] = 'ترتيب آلي'; // sections_add
-$lang[ 'template' ][ 'manual_sort' ] = 'ترتيب يدوي'; // sections_add
-$lang[ 'template' ][ 'group' ] = 'المجموعه'; // sections_add
+$lang[ 'template' ][ 'sections' ] = 'Categories';
+$lang[ 'template' ][ 'add_section' ] = 'Add new Category'; // sections_add
+$lang[ 'template' ][ 'auto_sort' ] = 'Sort Automatically'; // sections_add
+$lang[ 'template' ][ 'manual_sort' ] = 'Sort Manually'; // sections_add
+$lang[ 'template' ][ 'group' ] = 'Group'; // sections_add
 
-$lang[ 'template' ][ 'permissions_shorcut' ] = 'الصلاحيات المختصره';
-$lang[ 'template' ][ 'can_view_sections' ] = 'امكانية عرض الاقسام';
+$lang[ 'template' ][ 'permissions_shorcut' ] = 'Permissions Shortcut';
+$lang[ 'template' ][ 'can_view_sections' ] = 'Can View The Category';
 
 ?>

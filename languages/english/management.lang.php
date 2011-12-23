@@ -5,48 +5,48 @@
 // ~ Templates ~ //
 
 // Close subject
-$lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
-$lang[ 'template' ][ 'close_subject_reason' ] = 'سبب إغلاق الموضوع (يمكن تركه فارغاً)';
+$lang[ 'template' ][ 'close_subject' ] = 'Close The Topic';
+$lang[ 'template' ][ 'close_subject_reason' ] = 'Reason (Can Be Blank)';
 
 // Delete subject
-$lang[ 'template' ][ 'delete_subject' ] = 'حذف الموضوع';
-$lang[ 'template' ][ 'delete_subject_reason' ] = 'سبب حذف الموضوع (يمكن تركه فارغاً)';
+$lang[ 'template' ][ 'delete_subject' ] = 'Delete The Topic';
+$lang[ 'template' ][ 'delete_subject_reason' ] = 'Reason (Can Be Blank)';
 
 // Move subject
-$lang[ 'template' ][ 'move_subject_to' ] = 'نقل الموضوع إلى';
+$lang[ 'template' ][ 'move_subject_to' ] = 'Move The Topic To';
 
 // Edit subject
-$lang[ 'template' ][ 'subject_context' ] = 'محتوى الموضوع';
-$lang[ 'template' ][ 'subject_title' ] = 'عنوان الموضوع';
-$lang[ 'template' ][ 'subject_description' ] = 'وصف الموضوع';
-$lang[ 'template' ][ 'optional' ] = '(اختياري)';
+$lang[ 'template' ][ 'subject_context' ] = 'Context';
+$lang[ 'template' ][ 'subject_title' ] = 'Title';
+$lang[ 'template' ][ 'subject_description' ] = 'Description';
+$lang[ 'template' ][ 'optional' ] = '(Optional)';
 
 // Edit reply
-$lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
-$lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
+$lang[ 'template' ][ 'reply_context' ] = 'Context';
+$lang[ 'template' ][ 'reply_title' ] = 'Title';
 
 // Repeated subject
-$lang[ 'template' ][ 'repeated_subject' ] = 'موضوع مكرر';
-$lang[ 'template' ][ 'repeated_subject_link' ] = 'وصلة الموضوع الاصلي';
+$lang[ 'template' ][ 'repeated_subject' ] = 'Repeated Topic';
+$lang[ 'template' ][ 'repeated_subject_link' ] = 'The link of the original topic';
 
 // ... //
 
-$lang[ 'subjects_management' ] = 'ادارة المواضيع';
-$lang[ 'no_permission' ] = 'غير مسموح لك بالوصول إلى هذه الصفحه';
+$lang[ 'subjects_management' ] = 'Topic Management';
+$lang[ 'no_permission' ] = 'You have no permission to show this page';
 
-$lang[ 'subject_sticked' ] = 'تم تثبيت الموضوع';
-$lang[ 'subject_unsticked' ] = 'تم إلغاء تثبيت الموضوع';
-$lang[ 'subject_opened' ] = 'تم فتح الموضوع';
-$lang[ 'subject_moved' ] = 'تم نقل الموضوع';
-$lang[ 'subject_closed' ] = 'تم إغلاق الموضوع';
-$lang[ 'your_subject_deleted' ] = 'تم حذف موضوعك';
-$lang[ 'subject_deleted' ] = 'تم حذف الموضوع';
-$lang[ 'update_succeed' ] = 'تم التحديث بنجاح';
-$lang[ 'reply_deleted' ] = 'تم حذف الرد';
-$lang[ 'subject_doesnt_exist' ] = 'الموضوع المطلوب غير موجود';
-$lang[ 'repeated_subject' ] = 'موضوع مُكرر';
-$lang[ 'repeated_subject_see_original' ] = 'هذا الموضوع مكرر، راجع الاصل';
-$lang[ 'subject_raised' ] = 'تم رفع الموضوع بنجاح';
-$lang[ 'subject_downed' ] = 'تم إنزال الموضوع';
+$lang[ 'subject_sticked' ] = 'The topic has been marked as important topic';
+$lang[ 'subject_unsticked' ] = 'The topic has been marked as normal topic';
+$lang[ 'subject_opened' ] = 'The topic has been opened';
+$lang[ 'subject_moved' ] = 'The topic has been moved';
+$lang[ 'subject_closed' ] = 'The topic has been closed';
+$lang[ 'your_subject_deleted' ] = 'Your topic has been deleted';
+$lang[ 'subject_deleted' ] = 'The topic has been deleted';
+$lang[ 'update_succeed' ] = 'The data has been updated';
+$lang[ 'reply_deleted' ] = 'The reply has been deleted';
+$lang[ 'subject_doesnt_exist' ] = 'The topic doesn\'t exist';
+$lang[ 'repeated_subject' ] = 'Repeated Topic';
+$lang[ 'repeated_subject_see_original' ] = 'This topic is a repeated topic';
+$lang[ 'subject_raised' ] = 'The topic has been raised';
+$lang[ 'subject_downed' ] = 'The topic has been downed';
 
 ?>

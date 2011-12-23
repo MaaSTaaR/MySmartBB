@@ -1,25 +1,25 @@
 <?php
 
-$lang[ 'font_added' ] = 'تم اضافة الخط بنجاح !';
-$lang[ 'font_updated' ] = 'تم تحديث الخط بنجاح !';
-$lang[ 'font_deleted' ] = 'تم حذف الخط بنجاح !';
-$lang[ 'color_added' ] = 'تم اضافة اللون بنجاح !';
-$lang[ 'color_updated' ] = 'تم تحديث اللون بنجاح !';
-$lang[ 'color_deleted' ] = 'تم حذف اللون بنجاح !';
-$lang[ 'font_doesnt_exist' ] = 'الخط المطلوب غير موجود';
+$lang[ 'font_added' ] = 'The font has been added';
+$lang[ 'font_updated' ] = 'The font has been updated';
+$lang[ 'font_deleted' ] = 'The font has been deleted';
+$lang[ 'color_added' ] = 'The color has been added';
+$lang[ 'color_updated' ] = 'The color has been updated';
+$lang[ 'color_deleted' ] = 'The color has been deleted';
+$lang[ 'font_doesnt_exist' ] = 'The font doesn\'t exist';
 
-$lang[ 'template' ][ 'colors' ] = 'الالوان';
-$lang[ 'template' ][ 'fonts' ] = 'الخطوط';
+$lang[ 'template' ][ 'colors' ] = 'Colors';
+$lang[ 'template' ][ 'fonts' ] = 'Fonts';
 
-$lang[ 'template' ][ 'font_name' ] = 'اسم الخط';
-$lang[ 'template' ][ 'color_code' ] = 'رمز اللون';
+$lang[ 'template' ][ 'font_name' ] = 'Font Name';
+$lang[ 'template' ][ 'color_code' ] = 'Color Code';
 
-$lang[ 'template' ][ 'add_font' ] = 'اضافة خط جديد'; // font_add
-$lang[ 'template' ][ 'edit_font' ] = 'تحرير خط'; // font_edit
+$lang[ 'template' ][ 'add_font' ] = 'Add new Font'; // font_add
+$lang[ 'template' ][ 'edit_font' ] = 'Edit Font'; // font_edit
 
-$lang[ 'template' ][ 'add_color' ] = 'اضافة لون جديد'; // color_add
-$lang[ 'template' ][ 'edit_color' ] = 'تحرير لون'; // color_edit
+$lang[ 'template' ][ 'add_color' ] = 'Add new Color'; // color_add
+$lang[ 'template' ][ 'edit_color' ] = 'Edit Color'; // color_edit
 
-$lang[ 'template' ][ 'color_font_del_confirmation' ] = 'تأكيد حذف';
+$lang[ 'template' ][ 'color_font_del_confirmation' ] = 'Delete Confirmation';
 
 ?>

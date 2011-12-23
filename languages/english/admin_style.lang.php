@@ -1,20 +1,20 @@
 <?php
 
-$lang[ 'add_succeed' ] = 'تم اضافة النمط بنجاح !';
-$lang[ 'update_succeed' ] = 'تم تحديث النمط بنجاح !';
-$lang[ 'delete_succeed' ] = 'تم حذف النمط بنجاح !';
-$lang[ 'style_doesnt_exist' ] = 'النمط المطلوب غير موجود';
+$lang[ 'add_succeed' ] = 'The style has been added';
+$lang[ 'update_succeed' ] = 'The style has been updated';
+$lang[ 'delete_succeed' ] = 'The style has been deleted';
+$lang[ 'style_doesnt_exist' ] = 'The style doesn\'t exist';
 
-$lang[ 'template' ][ 'styles' ] = 'الانماط';
-$lang[ 'template' ][ 'style_title' ] = 'اسم النمط';
+$lang[ 'template' ][ 'styles' ] = 'Styles';
+$lang[ 'template' ][ 'style_title' ] = 'Style Title';
 
-$lang[ 'template' ][ 'add_style' ] = 'اضافة نمط جديد'; // style_add
-$lang[ 'template' ][ 'active_style' ] = 'هل تود تنشيط النمط؟'; // style_add
-$lang[ 'template' ][ 'order' ] = 'ترتيب النمط'; // style_add
-$lang[ 'template' ][ 'css_path' ] = 'مسار ملف النمط (.css)'; // style_add
-$lang[ 'template' ][ 'images_path' ] = 'مسار مجلد الصور'; // style_add
-$lang[ 'template' ][ 'templates_path' ] = 'مسار ملفات القوالب'; // style_add
-$lang[ 'template' ][ 'compiled_path' ] = 'مسار الملفات المؤقته'; // style_add
-$lang[ 'template' ][ 'edit_style' ] = 'تحرير نمط'; // style_edit
+$lang[ 'template' ][ 'add_style' ] = 'Add new Style'; // style_add
+$lang[ 'template' ][ 'active_style' ] = 'Active Style?'; // style_add
+$lang[ 'template' ][ 'order' ] = 'Order'; // style_add
+$lang[ 'template' ][ 'css_path' ] = 'CSS File Path'; // style_add
+$lang[ 'template' ][ 'images_path' ] = 'Images Path'; // style_add
+$lang[ 'template' ][ 'templates_path' ] = 'Templates Path'; // style_add
+$lang[ 'template' ][ 'compiled_path' ] = 'Compiled Files Path'; // style_add
+$lang[ 'template' ][ 'edit_style' ] = 'Edit Style'; // style_edit
 
 ?>
