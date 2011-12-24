@@ -6,7 +6,7 @@
 			{$lang['writer_information']}
 		</td>
 		<td class="main1 rows_space" width="80%">
-			<img src="{$Info['icon']}" align="right" alt="" /> {$Info['title']}
+			<img src="{$Info['icon']}" alt="" /> {$Info['title']}
 		</td>
 		<td class="main1 rows_space" width="80%">
 			<a title="{$lang['reply_number']} ({$Info['reply_id']})" name="{$Info['reply_id']}" href="#{$Info['reply_id']}">#{$Info['reply_number']}</a>
@@ -16,7 +16,7 @@
 		<td class="row2" width="25%" valign="top">
 			{template}writer_info{/template}
 		</td>
-		<td class="row2" width="70%"  colspan="2" align="right">
+		<td class="row2" width="70%"  colspan="2">
 			{$Info['text']}
 			
 			{if {$SHOW_REPLY_ATTACH}}

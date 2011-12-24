@@ -31,11 +31,11 @@
 			    {$lang['writer_information']} {$lang['common']['colon']} {$Info['display_username']}
 				</td>
 				<td width="60%" class="print-td">
-			    {$lang['in_date']} {$lang['common']['colon']} {$Info['native_write_time']}
+			    {$lang['on_date']} {$lang['common']['colon']} {$Info['native_write_time']}
 				</td>
 			</tr> 
 			<tr>
-				<td width="95%" valign="top" colspan="2" class="print-td" align="right">
+				<td width="95%" valign="top" colspan="2" class="print-td">
 					<hr />
 					{$Info['text']}
 	           	</td>		

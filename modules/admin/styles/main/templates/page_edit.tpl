@@ -19,7 +19,7 @@
 <tr valign="top">
 		<td class="row2">{$lang['page_code']}</td>
 		<td class="row2">
-<textarea name="text" id="textarea_text" rows="10" cols="40" wrap="virtual" dir="rtl">{$Inf['html_code']}</textarea>&nbsp;
+<textarea name="text" id="textarea_text" rows="10" cols="40" wrap="virtual">{$Inf['html_code']}</textarea>&nbsp;
 </td>
 </tr>
 </table><br />

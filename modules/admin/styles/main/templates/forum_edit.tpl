@@ -63,7 +63,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row1" colspan="2">
-				<textarea name="describe" rows="5" cols="40" wrap="virtual" dir="rtl">{$Inf['section_describe']}</textarea>
+				<textarea name="describe" rows="5" cols="40" wrap="virtual">{$Inf['section_describe']}</textarea>
 			</td>
 		</tr>
 	</table>

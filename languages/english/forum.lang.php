@@ -15,7 +15,7 @@ $lang[ 'template' ][ 'visits_number' ] = 'Visits';
 $lang[ 'template' ][ 'last_post' ] = 'Last Reply';
 
 
-$lang[ 'template' ][ 'stick_topics' ] = 'المواضيع المثبتة';
+$lang[ 'template' ][ 'stick_topics' ] = 'Important Topics';
 $lang[ 'template' ][ 'closed' ] = '(Closed)';
 $lang[ 'template' ][ 'no_replies' ] = 'No replies';
 $lang[ 'template' ][ 'topics_list' ] = 'Topics List';

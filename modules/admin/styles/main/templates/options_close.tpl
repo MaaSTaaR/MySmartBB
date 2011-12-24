@@ -28,7 +28,7 @@
 </tr>
 <tr valign="top" align="center">
 	<td class="row1" colspan="2">
-<textarea name="board_msg" id="textarea_board_msg" rows="10" cols="40" wrap="virtual" dir="rtl">{$_CONF['info_row']['board_msg']}</textarea>&nbsp;
+<textarea name="board_msg" id="textarea_board_msg" rows="10" cols="40" wrap="virtual">{$_CONF['info_row']['board_msg']}</textarea>&nbsp;
 </td>
 
 </tr>

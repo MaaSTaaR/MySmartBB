@@ -24,7 +24,7 @@
 			{$lang['text']}
 			</td>
 			<td class="row2">
-				<textarea name="text" id="textarea_text" rows="10" cols="40" wrap="virtual" dir="rtl">{$AnnInfo['text']}</textarea>
+				<textarea name="text" id="textarea_text" rows="10" cols="40" wrap="virtual">{$AnnInfo['text']}</textarea>
 			</td>
 		</tr>
 	</table>

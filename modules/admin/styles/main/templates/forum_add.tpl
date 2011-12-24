@@ -96,7 +96,7 @@ $(document).ready(Ready);
 		</tr>
 		<tr align="center">
 			<td class="row1" colspan="2">
-				<textarea name="describe" id="textarea_describe" rows="5" cols="40" wrap="virtual" dir="rtl"></textarea>
+				<textarea name="describe" id="textarea_describe" rows="5" cols="40" wrap="virtual"></textarea>
 			</td>
 		</tr>
 	</table>

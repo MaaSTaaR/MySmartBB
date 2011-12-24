@@ -119,7 +119,7 @@ class MySmartInstaller
 						
 						foreach ( $matches[ 1 ] as $idx => $key )
 						{
-						    $sql = str_replace( 'lang(' . $key . ')', $this->lang[ 'data' ][ $key ], $sql );
+						    $sql = str_replace( 'lang(' . $key . ')', addslashes( $this->lang[ 'data' ][ $key ] ), $sql );
 						}
 						
 						$query = $this->engine->db->sql_query( $sql );

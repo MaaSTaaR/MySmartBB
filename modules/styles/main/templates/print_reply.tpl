@@ -9,7 +9,7 @@
 			</td>
 		</tr> 
 		<tr>
-			<td width="95%" valign="top" colspan="2" class="print-td" align="right">
+			<td width="95%" valign="top" colspan="2" class="print-td">
 				<hr />
 				{$Info['text']}
 			</td>		

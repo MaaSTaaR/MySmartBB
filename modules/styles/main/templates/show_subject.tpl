@@ -34,7 +34,7 @@
 		<td class="row2" width="25%" valign="top">
 			{template}writer_info{/template}
 		</td>
-		<td class="row2" width="70%" align="right">
+		<td class="row2" width="70%">
 			{$Info['text']}
 
 			{if {$ATTACH_SHOW}}

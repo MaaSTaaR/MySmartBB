@@ -46,8 +46,8 @@ $lang[ 'struct' ] = array();
 $lang[ 'struct' ][ 'data' ] = array();
 
 $lang[ 'struct' ][ 'file_doesnt_exist' ] = 'Error : The following file doesn\'t exist';
-$lang[ 'struct' ][ 'created' ] = 'Created';
-$lang[ 'struct' ][ 'create_failed' ] = 'Failed in create';
+$lang[ 'struct' ][ 'created' ] = 'The following table has been created :';
+$lang[ 'struct' ][ 'create_failed' ] = 'The creation of the following table failed :';
 $lang[ 'struct' ][ 'error_in_tables_array' ] = 'There is an error in tables array';
 $lang[ 'struct' ][ 'process_succeed' ] = 'Process Succeed';
 $lang[ 'struct' ][ 'process_failed' ] = 'Process Failed';
