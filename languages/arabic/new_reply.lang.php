@@ -27,6 +27,7 @@ $lang[ 'title_length_lesser' ] = 'عدد حروف عنوان الموضوع أق
 $lang[ 'context_length_greater' ] = 'عدد حروف الرد أكبر من';
 $lang[ 'context_length_lesser' ] = 'عدد حروف الرد أصغر من';
 
+$lang[ 'incorrect_password' ] = 'المعذرة .. كلمة المرور غير صحيحة';
 // ... //
 
 ?>

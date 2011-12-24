@@ -81,5 +81,8 @@ $lang[ 'topic_trashed' ] = 'The topic has been deleted';
 $lang[ 'viewing_topic' ] = 'Viewing the topic';
 $lang[ 'cant_view_topic' ] = 'Sorry, you have no permission to view this topic';
 
+$lang[ 'male' ] = 'Male';
+$lang[ 'female' ] = 'Female';
+$lang[ 'incorrect_password' ] = 'Incorrect Password';
 
 ?>

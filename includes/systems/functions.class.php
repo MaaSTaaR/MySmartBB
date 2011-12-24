@@ -3,6 +3,7 @@
 class MySmartFunctions
 {
 	private $header_showed = false;
+	
 	// ... //
 	
 	/**
@@ -347,31 +348,31 @@ class MySmartFunctions
 		
 			if ($input == $date_list['today'])
 			{
-				return 'اليوم';
+				return $MySmartBB->lang_common[ 'today' ];
 			}
 			elseif ($input == $date_list['yesterday'])
 			{
-				return 'امس';
+				return $MySmartBB->lang_common[ 'yesterday' ];
 			}
 			elseif ($input == $date_list['before_yesterday'])
 			{
-				return 'امس الاول';
+				return $MySmartBB->lang_common[ 'two_days_ago' ];
 			}
 			elseif ($input == $date_list['last_week'])
 			{
-				return 'قبل اسبوع';
+				return $MySmartBB->lang_common[ 'last_week' ];
 			}
 			elseif ($input == $date_list['last_two_weeks'])
 			{
-				return 'قبل اسبوعين';
+				return $MySmartBB->lang_common[ 'two_weeks_ago' ];
 			}
 			elseif ($input == $date_list['last_three_weeks'])
 			{
-				return 'قبل ثلاث اسابيع';
+				return $MySmartBB->lang_common[ 'three_weeks_ago' ];
 			}
 			elseif ($input == $date_list['last_month'])
 			{
-				return 'قبل شهر';
+				return $MySmartBB->lang_common[ 'last_month' ];
 			}
 			else
 			{
@@ -382,12 +383,14 @@ class MySmartFunctions
 	
 	// ... //
 		
-	function time($time,$format='h:i:s A')
+	public function time( $time, $format='h:i:s A' )
 	{
-		$x = date($format,$time);
-		$x = strtolower($x);
-		$x = str_replace('pm','مساء',$x);
-		$x = str_replace('am','صباحا',$x);
+	    global $MySmartBB;
+	    
+		$x = date( $format, $time );
+		$x = strtolower( $x );
+		$x = str_replace( 'pm', $MySmartBB->lang_common[ 'pm' ], $x );
+		$x = str_replace( 'am', $MySmartBB->lang_common[ 'am' ], $x );
 				
 		return $x;		
 	}

@@ -70,6 +70,20 @@ $lang[ 'common' ][ 'pages' ] = 'الصفحات';
 $lang[ 'common' ][ 'comma' ] = '،';
 $lang[ 'common' ][ 'colon' ] = ':';
 
+$lang[ 'common' ][ 'today' ] = 'اليوم';
+$lang[ 'common' ][ 'yesterday' ] = 'أمس';
+$lang[ 'common' ][ 'two_days_ago' ] = 'أمس الأول';
+$lang[ 'common' ][ 'last_week' ] = 'قبل إسبوع';
+$lang[ 'common' ][ 'two_weeks_ago' ] = 'قبل إسبوعين';
+$lang[ 'common' ][ 'three_weeks_ago' ] = 'قبل ثلاث أسابيع';
+$lang[ 'common' ][ 'last_month' ] = 'قبل شهر';
+
+$lang[ 'common' ][ 'pm' ] = 'مساء';
+$lang[ 'common' ][ 'am' ] = 'صباحا';
+
+$lang[ 'common' ][ 'quote' ] = 'إقتباس';
+$lang[ 'common' ][ 'code' ] = 'شيفرة برمجية';
+
 // ... //
 
 // Footer

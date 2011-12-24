@@ -30,5 +30,6 @@ $lang[ 'cant_view_forum' ] = 'المعذره ... غير مسموح لك بعرض
 $lang[ 'cat_section' ] = 'المعذره .. هذا المنتدى قسم رئيسي';
 $lang[ 'please_wait_to_move' ] = 'يرجى الانتظار سوف يتم تحويلك إلى';
 $lang[ 'viewing' ] = 'يطلع على';
+$lang[ 'incorrect_password' ] = 'المعذرة .. كلمة المرور غير صحيحة';
 
 ?>

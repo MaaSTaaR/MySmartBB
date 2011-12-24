@@ -34,6 +34,7 @@ $lang[ 'title_length_lesser' ] = 'عدد حروف عنوان الموضوع أق
 $lang[ 'context_length_greater' ] = 'عدد حروف الموضوع أكبر من';
 $lang[ 'context_length_lesser' ] = 'عدد حروف الموضوع أصغر من';
 
+$lang[ 'incorrect_password' ] = 'المعذرة .. كلمة المرور غير صحيحة';
 // ... //
 
 ?>

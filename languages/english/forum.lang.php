@@ -31,4 +31,6 @@ $lang[ 'cat_section' ] = 'Sorry, This is a category';
 $lang[ 'please_wait_to_move' ] = 'Please wait while move you to';
 $lang[ 'viewing' ] = 'Viewing';
 
+$lang[ 'incorrect_password' ] = 'Incorrect Password';
+
 ?>

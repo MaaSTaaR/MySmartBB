@@ -35,7 +35,7 @@ class MySmartAttach
 				if ( $files_number > $files_limit
 					and !$this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 				{
-					$this->engine->func->error('المعذره لا يمكنك رفع اكثر من ' . $files_limit . 'ملف');
+					$this->engine->func->error( $this->engine->lang[ 'cant_upload_more_than' ] . ' ' . $files_limit );
 				}
 				
 				$this->engine->attach->addAttach( $this->engine->_FILES[ $field ], $type, $id, true, $succ, $fail  );

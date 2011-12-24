@@ -81,5 +81,9 @@ $lang[ 'topic_trashed' ] = 'الموضوع المطلوب منقول إلى سل
 $lang[ 'viewing_topic' ] = 'يطلع على الموضوع';
 $lang[ 'cant_view_topic' ] = 'المعذره لا يمكنك عرض هذا الموضوع';
 
+$lang[ 'male' ] = 'ذكر';
+$lang[ 'female' ] = 'انثى';
+
+$lang[ 'incorrect_password' ] = 'المعذرة .. كلمة المرور غير صحيحة';
 
 ?>

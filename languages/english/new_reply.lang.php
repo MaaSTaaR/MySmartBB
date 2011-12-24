@@ -27,6 +27,8 @@ $lang[ 'title_length_lesser' ] = 'The title length is lesser than';
 $lang[ 'context_length_greater' ] = 'The text length is greater than';
 $lang[ 'context_length_lesser' ] = 'The text length is lesser than';
 
+$lang[ 'incorrect_password' ] = 'Incorrect Password';
+
 // ... //
 
 ?>

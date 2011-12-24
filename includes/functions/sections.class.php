@@ -386,7 +386,7 @@ class MySmartSection
 			else
 			{												
 				if (! $this->checkPassword( $password, $section_id ) )
-					$this->engine->func->error( 'المعذره .. كلمة المرور غير صحيحه' );
+					$this->engine->func->error( $this->engine->lang[ 'incorrect_password' ] );
 				else
 					$this->engine->_CONF[ 'template' ][ 'password' ] = '&amp;password=' . $password;
 			}

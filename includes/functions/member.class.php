@@ -334,8 +334,8 @@ class MySmartMember
 		}
 		
 		// Convert the writer's gender to a readable text
-		$member_info['user_gender'] 	= 	str_replace( 'm', 'ذكر', $member_info['user_gender'] );
-		$member_info['user_gender'] 	= 	str_replace( 'f', 'انثى', $member_info['user_gender'] );
+		$member_info['user_gender'] 	= 	str_replace( 'm', $this->engine->lang[ 'male' ], $member_info['user_gender'] );
+		$member_info['user_gender'] 	= 	str_replace( 'f', $this->engine->lang[ 'female' ], $member_info['user_gender'] );
 		
 		// ... //
 		

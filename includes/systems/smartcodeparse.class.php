@@ -71,10 +71,10 @@ class MySmartCodeParse
  			$replace_array[] = '<div style="color:\\1">\\2</div>';
  			
  			$search_array[] = '~\[quote](.*?)\[/quote]~';
- 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>اقتباس :</td></tr><tr><td align="right">\\1</tr></td></table>';
+ 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>' . $MySmartBB->lang_common[ 'quote' ] . '</td></tr><tr><td align="right">\\1</tr></td></table>';
  			
  			$search_array[] = '~\[qu](.*?)\[/qu]~';
- 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>اقتباس :</td></tr><tr><td align="right">\\1</tr></td></table>';
+ 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>' . $MySmartBB->lang_common[ 'quote' ] . '</td></tr><tr><td align="right">\\1</tr></td></table>';
  			
  			$search_array[] = '~\[code](.*?)\[/code]~ise';
  			$replace_array[] = '$this->code_tag(\'\\1\',0)';
@@ -147,7 +147,9 @@ class MySmartCodeParse
  	 *				is_php	->	if the code wrote in php this variable should value true to highlight the code
  	 */
  	 function code_tag($code,$is_php)
- 	 {	
+ 	 {
+ 	    global $MySmartBB;
+ 	    
  	 	$input = stripslashes(base64_decode($code));
  	 	
 		if (substr($input, 0, 1) != "\r") 
@@ -205,7 +207,7 @@ class MySmartCodeParse
 		}
 
 		$return = "<table align='center' border='1' width='90%' cellpadding='0' cellspacing='0' class='t_style_a' dir='ltr'>";
-		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>شيفره برمجيه:</b></td></tr>";
+		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>" . $MySmartBB->lang_common[ 'code' ] . "</b></td></tr>";
 		$return .= "<tr><td width='1%'><br />$col1</td>";
 		$return .= "<td>" . $this->strip_smiles($col2) . "</td></tr></table>";
 

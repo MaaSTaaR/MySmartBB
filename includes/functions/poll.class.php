@@ -118,7 +118,7 @@ class MySmartPoll
 		
 		$answers = unserialize( base64_decode( $info[ 'answers' ] ) );
 		
-		// We can't user "array_search()", because our array is a 2D array.
+		// We can't use "array_search()", because our array is a 2D array.
 		$key = null;
 		
 		foreach ( $answers as $k => $value )

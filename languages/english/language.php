@@ -70,6 +70,20 @@ $lang[ 'common' ][ 'pages' ] = 'Pages';
 $lang[ 'common' ][ 'comma' ] = ',';
 $lang[ 'common' ][ 'colon' ] = ':';
 
+$lang[ 'common' ][ 'today' ] = 'Today';
+$lang[ 'common' ][ 'yesterday' ] = 'Yesterday';
+$lang[ 'common' ][ 'two_days_ago' ] = '2 Days Ago';
+$lang[ 'common' ][ 'last_week' ] = 'Last Week';
+$lang[ 'common' ][ 'two_weeks_ago' ] = '2 Weeks Ago';
+$lang[ 'common' ][ 'three_weeks_ago' ] = '3 Weeks Ago';
+$lang[ 'common' ][ 'last_month' ] = 'Last Month';
+
+$lang[ 'common' ][ 'pm' ] = 'PM';
+$lang[ 'common' ][ 'am' ] = 'AM';
+
+$lang[ 'common' ][ 'quote' ] = 'Quote';
+$lang[ 'common' ][ 'code' ] = 'Code';
+
 // ... //
 
 // Footer
