@@ -324,7 +324,7 @@ class MySmartSection
 										$forum[ 'is_sub' ] = 1;
 									}
 	
-									$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ' . $this->engine->lang[ 'common' ][ 'comma' ];
+									$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ' . $this->engine->lang_common[ 'comma' ];
 								}
 							}
 						}
@@ -351,7 +351,7 @@ class MySmartSection
 								$forum[ 'is_moderators' ] = 1;
 							}
 	
-							$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ' . $this->engine->lang[ 'common' ][ 'comma' ];
+							$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ' . $this->engine->lang_common[ 'comma' ];
 						}
 					}
 				}

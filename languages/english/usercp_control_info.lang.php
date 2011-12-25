@@ -6,7 +6,7 @@ $lang[ 'edit_information' ] = 'Edit Your Personal Information';
 $lang[ 'update_process' ] = 'Processing the Request';
 $lang[ 'update_succeed' ] = 'The data has been updated';
 
-$lang[ 'template' ][ 'personal_info' ] = 'Your Personal Information';
+$lang[ 'template' ][ 'personal_info' ] = 'Personal Information';
 $lang[ 'template' ][ 'country' ] = 'Country';
 $lang[ 'template' ][ 'website' ] = 'Website';
 $lang[ 'template' ][ 'about_you' ] = 'About You';

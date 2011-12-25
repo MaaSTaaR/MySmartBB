@@ -13,14 +13,14 @@
 					<tr>
 						<td class="row1">
 							{DB::getInfo}{$group_res}{$group}
-								{$group['username_style']}،
+								{$group['username_style']}{$lang['common']['comma']}
 							{/DB::getInfo}
 						</td>
 					</tr>
 					<tr>
 						<td class="row2">
 						{DB::getInfo}{$online_res}{$online}
-							<a href="index.php?page=profile&show=1&id={$online['user_id']}">{$online['username_style']}</a>،
+							<a href="index.php?page=profile&show=1&id={$online['user_id']}">{$online['username_style']}</a>{$lang['common']['comma']}
 						{/DB::getInfo}
 			
 						{if {$_CONF['info_row']['show_onlineguest']} == 1}
@@ -43,7 +43,7 @@
 						<td class="row1">
 						{if {$TodayNumber} > 0}
 							{DB::getInfo}{$today_res}{$today}
-							<a href="index.php?page=profile&amp;show=1&amp;id={$today['user_id']}">{$today['username_style']}</a>،
+							<a href="index.php?page=profile&amp;show=1&amp;id={$today['user_id']}">{$today['username_style']}</a>{$lang['common']['comma']}
 							{/DB::getInfo}
 						{elseif {$TodayNumber} <= 0}
 						{$lang['no_today']}

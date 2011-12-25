@@ -12,7 +12,7 @@
 			<a title="{$lang['reply_number']} ({$Info['reply_id']})" name="{$Info['reply_id']}" href="#{$Info['reply_id']}">#{$Info['reply_number']}</a>
 		</td>
 	</tr>
-	<tr align="center">
+	<tr>
 		<td class="row2" width="25%" valign="top">
 			{template}writer_info{/template}
 		</td>

@@ -23,15 +23,15 @@
 
 <table align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="95%">
 	<tr align="center">
-		<td class="main1 rows_space" width="15%">
+		<td class="main1 rows_space" width="25%">
 			{$lang['writer_information']}
 		</td>
-		<td class="main1 rows_space" width="80%">
+		<td class="main1 rows_space" width="70%">
 			{$lang['subject_context']}
 		</td>
 	</tr>
-	<tr align="center">
-		<td class="row2" width="25%" valign="top">
+	<tr>
+		<td class="row2" width="25%">
 			{template}writer_info{/template}
 		</td>
 		<td class="row2" width="70%">

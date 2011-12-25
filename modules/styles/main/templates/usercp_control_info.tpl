@@ -71,7 +71,7 @@
 		</tr>
 		<tr align="center">
 			<td class="row1" width="60%" colspan="2">
-				{$lang['youre_now']}
+				{$lang['now_youre']}
 				{if {$_CONF['member_row']['away']} == 0}
 					<strong>{$lang['not_away']}</strong>
 				{else}

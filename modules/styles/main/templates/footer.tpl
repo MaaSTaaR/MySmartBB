@@ -15,7 +15,7 @@
 				</select>
 			</div>
 			<div class="left_side">
-				<a href="index.php?page=latest&amp;today=1">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} ، <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
+				<a href="index.php?page=latest&amp;today=1">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
 			</div>
 		</div>
 

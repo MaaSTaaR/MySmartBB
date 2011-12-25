@@ -1,3 +1,4 @@
+<div align="center">
 <a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$Info['display_username']}</a>
 <br />
 {$Info['user_title']}
@@ -11,6 +12,7 @@
 	<img src="{$_CONF['info_row']['default_avatar']}" border="0" align="center" alt="{$lang['member_avatar']} {$Info['username']}" />
 	{/if}
 {/if}
+</div>
 
 <br /><br />
 
