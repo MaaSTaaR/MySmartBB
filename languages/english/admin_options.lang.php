@@ -14,8 +14,8 @@ $lang[ 'template' ][ 'posts_options' ] = 'Topics and Replies Settings'; // optio
 $lang[ 'template' ][ 'fast_reply_options' ] = 'Quick Reply Settings'; // options_main
 $lang[ 'template' ][ 'membership_options' ] = 'Membership Settings'; // options_main
 $lang[ 'template' ][ 'avatar_options' ] = 'Avatar Settings'; // options_main
-$lang[ 'template' ][ 'visitors_allowed_options' ] = 'The Days That The Visitors Allowed To View The Board'; // options_main
-$lang[ 'template' ][ 'close_options' ] = 'Close Board'; // options_main
+$lang[ 'template' ][ 'visitors_allowed_options' ] = 'The Days That The Visitors Are Allowed To View The Board'; // options_main
+$lang[ 'template' ][ 'close_options' ] = 'Closing The Board'; // options_main
 
 
 $lang[ 'template' ][ 'board_title' ] = 'Board Name'; // options_general
@@ -23,8 +23,8 @@ $lang[ 'template' ][ 'send_email_address' ] = 'Sending Email Address'; // option
 $lang[ 'template' ][ 'receive_email_address' ] = 'Receiving Email Address'; // options_general
 
 
-$lang[ 'template' ][ 'show_guests_online' ] = 'Show Visitors In Online List'; // options_features
-$lang[ 'template' ][ 'show_section_description' ] = 'Show Forums Descition'; // options_features
+$lang[ 'template' ][ 'show_guests_online' ] = 'Show Visitors In The Online List'; // options_features
+$lang[ 'template' ][ 'show_section_description' ] = 'Show Forums Description'; // options_features
 $lang[ 'template' ][ 'activate_pm' ] = 'Enable Private Messages'; // options_features
 
 

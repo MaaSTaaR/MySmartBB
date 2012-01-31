@@ -88,7 +88,7 @@ $lang[ 'common' ][ 'code' ] = 'Code';
 
 // Footer
 
-$lang[ 'common' ][ 'todays_topics' ] = 'Topics of Today';
+$lang[ 'common' ][ 'todays_topics' ] = 'Today\'s Topics';
 $lang[ 'common' ][ 'control_panel' ] = 'Admin CP';
 
 // ... //

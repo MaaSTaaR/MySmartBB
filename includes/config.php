@@ -1,6 +1,6 @@
 <?php
 
-// MySmartBB 2.0.0
+// MySmartBB 2.0.0 ALPHA 5
 // http://www.MySmartBB.com
 
 
@@ -13,12 +13,12 @@ $config['db'] 					= array();
 $config['db']['server']			= 	'localhost';
 $config['db']['username']		= 	'root';
 $config['db']['password']		= 	'';
-$config['db']['name']			= 	'MySmartBB_THETA5_installer_test';
+$config['db']['name']			= 	'MySmartBB_THETA5';
 $config['db']['prefix']			=	'';				// MySmartBB_ if empty
 
 //=================
 
-$config[ 'lang_dir' ] = 'english'; // The language directory
+$config[ 'lang_dir' ] = 'english'; // The language directory (Note : arabic and english are available now)
 
 
 ?>

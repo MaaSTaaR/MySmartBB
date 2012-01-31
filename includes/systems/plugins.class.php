@@ -8,6 +8,7 @@
  * @under : GNU LGPL
 */
 
+require( 'plugins/interface.class.php' );
 
 class MySmartPlugins
 {
