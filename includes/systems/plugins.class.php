@@ -64,6 +64,10 @@ class MySmartPlugins
 			// Insert hooks into database
 			$this->insertHooks( $hooks, $id, $path );
 			
+			$obj->install();
+			
+			// Because we activate the plugin by default when the user request to install it
+			// so we have to call the activate function.
 			$obj->activate();
 			
 			return true;

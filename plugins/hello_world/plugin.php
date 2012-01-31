@@ -11,7 +11,7 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 		return array(	'title'			=>	'Hello World Plugin',
 						'description'	=>	'The first plugin of MySmartBB',
 						'author'		=>	'Mohammed Q. Hussain',
-						'license'		=>	'GNU/GPL'	);
+						'license'		=>	'GNU GPL'	);
 	}
 	
 	public function hooks()
@@ -26,6 +26,10 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	}
 	
 	public function deactivate()
+	{
+	}
+	
+	public function install()
 	{
 	}
 	
