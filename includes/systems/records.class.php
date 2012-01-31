@@ -1,9 +1,12 @@
 <?php
+
 /*
-Started : 19-4-2007 11:55 AM
-End : 19-4-2007 12:03 PM
-Updated : Wed 02 Feb 2011 05:03:43 PM AST 
-Version : 2.0.2
+ * @package : MySmartRecords
+ * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @started : 19/4/2007 11:55 AM
+ * @update : Tue 31 Jan 2012 06:57:16 AM AST 
+ * @license : GNU LGPL
+ * @version : 2.0.2
 */
 
 class MySmartRecords
@@ -381,13 +384,61 @@ class MySmartRecords
 	
 	// ... //
 	
-	/**
-	 * Set a function that runs with every row fetch in "getInfo"
-	 */
+	public function createTable()
+	{
+	    if ( !isset( $this->table ) or !is_array( $this->fields ) )
+	        trigger_error( 'MySmartRecords::createTable() -> empty table or fields', E_USER_ERROR );
+	    
+	    $statement = 'CREATE TABLE ' . $this->table . ' (';
+	    
+	    $fields_num = sizeof( $this->fields );
+	    $k = 1;
+	    
+	    foreach ( $this->fields as $name => $def )
+	    {
+	        $statement .= $name . ' ' . $def;
+	        
+	        if ( $k < $fields_num )
+	            $statement .= ',';
+	        
+	        $k++;
+	    }
+	    
+	    $statement .= ')';
+	    
+	    $query = $this->db->sql_query( $statement );
+	    
+	    unset( $this->table, $this->fields );
+	    
+	    return ( $query ) ? true : false;
+	}
+	
+	// ... //
+	
+	public function dropTable()
+	{
+	    if ( !isset( $this->table ) )
+	        trigger_error( 'MySmartRecords::dropTable() -> empty table', E_USER_ERROR );
+	    
+	    $query = $this->db->sql_query( "DROP TABLE " . $this->table );
+	    
+	    unset( $this->table );
+	    
+	    return ( $query ) ? true : false;
+	}
+	
+	// ... //
+	
+	/*
+	 * setInfoCallback() :
+	 *      Set a function that runs with every row fetch in "getInfo"
+	**/
 	public function setInfoCallback( $cb )
 	{
 		$this->info_cb = $cb;
 	}
+	
+	// ... //
 	
 	public function removeInfoCallback()
 	{
