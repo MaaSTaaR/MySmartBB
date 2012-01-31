@@ -6,8 +6,16 @@
  * @started : 19/4/2007 11:55 AM
  * @update : Tue 31 Jan 2012 06:57:16 AM AST 
  * @license : GNU LGPL
- * @version : 2.0.2
+ * @version : 2.1.0
 */
+
+/**
+ * History
+ * 2.1.0 :
+ *          - Add createTable() and dropTable()
+ *          - Add addFields() and dropFields()
+ *
+ */
 
 class MySmartRecords
 {
@@ -423,6 +431,64 @@ class MySmartRecords
 	    $query = $this->db->sql_query( "DROP TABLE " . $this->table );
 	    
 	    unset( $this->table );
+	    
+	    return ( $query ) ? true : false;
+	}
+	
+	// ... //
+	
+	public function addFields()
+	{
+	    if ( !isset( $this->table ) or !is_array( $this->fields ) )
+	        trigger_error( 'MySmartRecords::addFields() -> empty table or fields', E_USER_ERROR );
+
+	    $statement = 'ALTER TABLE ' . $this->table . ' ';
+	    
+	    $fields_num = sizeof( $this->fields );
+	    $k = 1;
+	    
+	    foreach ( $this->fields as $name => $def )
+	    {
+	        $statement .= 'ADD ' . $name . ' ' . $def;
+	        
+	        if ( $k < $fields_num )
+	            $statement .= ',';
+	        
+	        $k++;
+	    }
+	    
+	    $query = $this->db->sql_query( $statement );
+	    
+	    unset( $this->table, $this->fields );
+	    
+	    return ( $query ) ? true : false;
+	}
+	
+	// ... //
+	
+	public function dropFields()
+	{
+	    if ( !isset( $this->table ) or !is_array( $this->fields ) )
+	        trigger_error( 'MySmartRecords::dropFields() -> empty table or fields', E_USER_ERROR );
+
+	    $statement = 'ALTER TABLE ' . $this->table . ' ';
+	    
+	    $fields_num = sizeof( $this->fields );
+	    $k = 1;
+	    
+	    foreach ( $this->fields as $key => $name )
+	    {
+	        $statement .= 'DROP ' . $name;
+	        
+	        if ( $k < $fields_num )
+	            $statement .= ',';
+	        
+	        $k++;
+	    }
+	    
+	    $query = $this->db->sql_query( $statement );
+	    
+	    unset( $this->table, $this->fields );
 	    
 	    return ( $query ) ? true : false;
 	}
