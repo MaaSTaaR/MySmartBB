@@ -33,7 +33,7 @@ class MySmartRecords
 	public $get_id;
 	public $id;
 	
-	/* ... */
+	// ... //
 	
 	function __construct( $db, $func, $pager )
 	{
@@ -42,7 +42,7 @@ class MySmartRecords
 		$this->pager_obj = $pager;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function select()
 	{
@@ -58,7 +58,7 @@ class MySmartRecords
 			trigger_error('ERROR::NEED_PARAMETER -- FROM Select() -- table',E_USER_ERROR);
 		}
 		
-		/* ... */
+		// ... //
 		
 		$statement 	= 	'SELECT ';
 		$statement	.=	( isset( $this->select ) ) ? $this->select : '*'; // Choose fields to fetch, or fetch all of them
@@ -66,7 +66,7 @@ class MySmartRecords
 		
 		unset( $this->select, $this->table );
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->join ) )
 		{
@@ -75,7 +75,7 @@ class MySmartRecords
 			unset( $this->join );
 		}
 		
-		/* ... */
+		// ... //
 				
 		if ( isset( $this->filter ) )
 		{
@@ -84,7 +84,7 @@ class MySmartRecords
 			unset( $this->filter );
 		}
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->order ) )
 		{
@@ -93,68 +93,64 @@ class MySmartRecords
 			unset( $this->order );
 		}
 		
-		/* ... */
+		// ... //
 		
-		if ( is_object( $this->pager_obj ) )
+		if ( is_object( $this->pager_obj ) and is_array( $this->pager ) )
 		{
-			if ( is_array( $this->pager ) )
-			{
-				if (!isset( $this->pager[ 'total' ] )
-					or !isset( $this->pager[ 'perpage' ] )
-					or !isset( $this->pager[ 'count' ] )
-					or empty( $this->pager[ 'location' ] )
-					or empty( $this->pager[ 'var' ] ) )
-				{
-					trigger_error( 'ERROR::NEED_PARAMETER -- FROM Select() -- PAGER', E_USER_ERROR );
-				}
-				
-				$this->pager[ 'perpage' ] 	= ( $this->pager[ 'perpage' ] < 0 ) ? 10 : $this->pager[ 'perpage' ];
-				$this->pager[ 'count' ] 	= ( $this->pager[ 'count' ] < 0 ) ? 0 : $this->pager[ 'count' ];
-		
-				$this->pager_obj->start($this->pager[ 'total' ], $this->pager[ 'perpage' ], $this->pager[ 'count' ], $this->pager[ 'location' ], $this->pager[ 'var' ]);
-			
-				$statement .= ' LIMIT ' . $this->pager['count'] . ',' . $this->pager['perpage'];
-			}
-			else
-			{
-				if ( isset( $this->limit ) )
-				{
-					$statement .= ' LIMIT ' . $this->limit;
-					
-					unset( $this->limit );
-				}
-			}
+			$statement = $this->initPager( $statement );
 		}
-		else
+		
+		// ... //
+		
+		// We can only use "LIMIT" in our statement when the user didn't request to use pagination system
+	    if ( isset( $this->limit ) and !is_array( $this->pager ) )
 		{
-			if ( isset( $this->limit ) )
-			{
-				$statement .= ' LIMIT ' . $this->limit;
+			$statement .= ' LIMIT ' . $this->limit;
 				
-				unset( $this->limit );
-			}
+			unset( $this->limit );
 		}
 
-		
-		/* ... */
+		// ... //
 		
 		$query = $this->db->sql_query( $statement );
 		
 		return $query;
 	}
 	
-	/* ... */
+	// ... //
+	
+	private function initPager( $statement )
+	{
+	    if (!isset( $this->pager[ 'total' ] ) or !isset( $this->pager[ 'perpage' ] ) 
+	        or !isset( $this->pager[ 'count' ] ) or empty( $this->pager[ 'location' ] )
+	        or empty( $this->pager[ 'var' ] ) )
+	    {
+	        trigger_error( 'ERROR::NEED_PARAMETER -- FROM initPager() -- PAGER', E_USER_ERROR );
+	    }
+	    
+	    $this->pager[ 'perpage' ] 	= ( $this->pager[ 'perpage' ] < 0 ) ? 10 : $this->pager[ 'perpage' ];
+	    $this->pager[ 'count' ] 	= ( $this->pager[ 'count' ] < 0 ) ? 0 : $this->pager[ 'count' ];
+	    
+	    $this->pager_obj->start(    $this->pager[ 'total' ], 
+	                                $this->pager[ 'perpage' ], 
+	                                $this->pager[ 'count' ], 
+	                                $this->pager[ 'location' ], 
+	                                $this->pager[ 'var' ] );
+	    
+	    $statement .= ' LIMIT ' . $this->pager['count'] . ',' . $this->pager['perpage'];
+	    
+	    return $statement;
+	}
+	
+	// ... //
 	
 	// This function adds slashes to input automatically.
 	public function insert()
 	{
 		// ... //
 			
-		if ( empty( $this->table )
-			or empty( $this->fields ) )
-		{
+		if ( empty( $this->table ) or empty( $this->fields ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Insert() -- TABLE OR FIELD', E_USER_ERROR );
-		}
 		
 		// ... //
 		
@@ -200,7 +196,7 @@ class MySmartRecords
 		return $query;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function update()
 	{
@@ -217,13 +213,13 @@ class MySmartRecords
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM Update() -- TABLE OR FIELD', E_USER_ERROR  );
 		}
 		
-		/* ... */
+		// ... //
 				
 		$statement = "UPDATE " . $this->table . " SET ";
 		
 		unset( $this->table );
 		
-		/* ... */
+		// ... //
 		
 		$f = array_filter( $this->fields, array( 'MySmartRecords', '_updateCallBack' ) ); // TODO :: explain why?
 		
@@ -246,7 +242,7 @@ class MySmartRecords
 		
 		unset( $this->fields );
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->filter ) )
 		{
@@ -255,14 +251,14 @@ class MySmartRecords
 			unset( $this->filter );
 		}
 		
-		/* ... */
+		// ... //
 		
 		$query = $this->db->sql_query( $statement, true );
 		
 		return $query;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getList()
 	{
@@ -280,7 +276,7 @@ class MySmartRecords
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getInfo( $result = null )
 	{
@@ -288,13 +284,9 @@ class MySmartRecords
 		{
 			// There is no request to a list, so we just need one row
 			if ( !isset( $this->query ) )
-			{
 				$query = $this->select();
-			}
 			else
-			{
 				$query = $this->query;
-			}
 		}
 		elseif ( $result == false )
 		{
@@ -312,62 +304,48 @@ class MySmartRecords
 		{
 			/* 
 		 	 * Note : This feature is new and important one that comes with the new version of MySmartRecords
-		 	 * the main goal of this feature is improve the performance, instead of clean the array after getting
+		 	 * the main goal of this feature is improving the performance, instead of clean the array after getting
 		 	 * the whole data we clean it immediately after getting it from the database.
 		 	 */
 		 	 
 			$this->func->cleanArray( $row, 'html' );
 			
 			if ( isset( $this->info_cb ) )
-			{
 				call_user_func( $this->info_cb, &$row );
-			}
 		}
 		
 		// If there is a request of a list and there is no more rows, unset this->query
-		if ( isset( $this->query )
-			and $row == false )
-		{
+		if ( isset( $this->query ) and $row == false )
 			unset( $this->query );
-		}
 		
 		return $row;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getNumber( $result = null )
 	{
-		if ( !isset( $result ) )
-		{
-			$query = $this->select();
-		}
-		else
-		{
-			$query = $result;
-		}
+	    $query = ( !isset( $result ) ) ? $this->select() : $result;
 		
 		$num = $this->db->sql_num_rows( $query );
 		
 		return is_numeric( $num ) ? $num : $query;
 	}
 
-	/* ... */
+	// ... //
 		
 	public function delete()
 	{
 		if ( !isset( $this->table ) )
-		{
 			trigger_error('ERROR::NEED_PARAMETER -- FROM delete() -- TABLE',E_USER_ERROR);
-		}
 		
-		/* ... */
+		// ... //
 		
 		$statement = 'DELETE FROM ' . $this->table;
 		
 		unset( $this->table );
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->filter ) )
 		{
@@ -376,7 +354,7 @@ class MySmartRecords
 			unset( $this->filter );
 		}
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->order ) )
 		{
@@ -385,7 +363,7 @@ class MySmartRecords
 			unset( $this->order );
 		}
 		
-		/* ... */
+		// ... //
 		
 		if ( isset( $this->limit ) )
 		{
@@ -394,14 +372,14 @@ class MySmartRecords
 			unset( $this->limit );
 		}
 		
-		/* ... */
+		// ... //
 
 		$query = $this->db->sql_query( $statement, true );
 		
 		return ( $query ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 	
 	/**
 	 * Set a function that runs with every row fetch in "getInfo"
@@ -423,7 +401,7 @@ class MySmartRecords
 		return ( ( isset( $var ) or !empty( $var ) ) ) ? true : false;
 	}
 	
-	/* ... */
+	// ... //
 }
 
 ?>
