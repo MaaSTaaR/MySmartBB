@@ -16,6 +16,7 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	
 	public function hooks()
 	{
+	    return array( 	'show_profile_end' 	=> 'getLastPost'	);
 	}
 	
 	public function activate()
@@ -48,7 +49,11 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	    $html .= '</tr>' . "\n";
 	    $html .= '<tr align="center">' . "\n";
 		$html .= '<td class="row1" width="30%">' . "\n";
-		$html .= 'مثال' . "\n";
+		$html .= '{if {$mysmartmicroblog_no_posts} == \'true\'}' . "\n";
+		$html .= 'لا توجد تدوينات' . "\n";
+		$html .= '{else}' . "\n";
+		$html .= '{$mysmartmicroblog_post[\'context\']}' . "\n";
+		$html .= '{/if}' . "\n";
 		$html .= '</td>' . "\n";
 	    $html .= '</tr>' . "\n";
         $html .= '</table><br id="plugin_mysmartmicroblog_last_post_br"></br>' . "\n";
@@ -145,6 +150,29 @@ class PLUGIN_CLASS_NAME implements PluginInterface
         {
             $MySmartBB->func->msg( 'تم إنشاء الجدول MySmartMicroblog_posts' );
         }
+	}
+	
+	// ~ Hooks ~ //
+	
+	public function getLastPost()
+	{
+	    global $MySmartBB;
+	    
+	    $MySmartBB->rec->table = $MySmartBB->getPrefix() . 'MySmartMicroblog_posts';
+	    $MySmartBB->rec->filter = "member_id='" . $MySmartBB->_CONF[ 'template' ][ 'MemberInfo' ][ 'id' ] . "'";
+	    $MySmartBB->rec->order = "id DESC";
+	    
+	    $post_info = $MySmartBB->rec->getInfo();
+	    
+	    if ( !$post_info )
+	    {
+	        $MySmartBB->template->assign( 'mysmartmicroblog_no_posts', 'true' );
+	    }
+	    else
+	    {
+	        $MySmartBB->template->assign( 'mysmartmicroblog_no_posts', 'false' );
+	        $MySmartBB->template->assign( 'mysmartmicroblog_post', $post_info );
+	    }
 	}
 }
 

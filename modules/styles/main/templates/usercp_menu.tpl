@@ -90,6 +90,26 @@
      		</td>
      	</tr>
      	{hook}end_of_member_options{/hook}
+<tr id="plugin_mysmartmicroblog_options_head">
+<td class="main2 rows_space" align="center">
+مدونتك المُصغّرة
+</td>
+</tr>
+<tr id="plugin_mysmartmicroblog_options_add">
+<td class="row1" align="center">
+<a href="">تدوينة جديدة</a>
+</td>
+</tr>
+<tr id="plugin_mysmartmicroblog_options_show">
+<td class="row1" align="center">
+<a href="">المدونة</a>
+</td>
+</tr>
+
+
+
+
+
 
 
 

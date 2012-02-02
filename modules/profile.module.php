@@ -42,6 +42,8 @@ class MySmartProfileMOD
 		
 		$MySmartBB->load( 'icon' );
 		
+		$MySmartBB->plugin->runHooks( 'show_profile_start' );
+		
 		$do_query = true;
 		
 		if (!empty($MySmartBB->_GET['id']))
@@ -143,6 +145,8 @@ class MySmartProfileMOD
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['template']['MemberInfo']['username'] . "'";
 		
 		$MySmartBB->_CONF['template']['Location'] = $MySmartBB->rec->getInfo();
+		
+		$MySmartBB->plugin->runHooks( 'show_profile_end' );
 		
 		$MySmartBB->template->display('profile');
 	}

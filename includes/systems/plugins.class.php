@@ -90,11 +90,21 @@ class MySmartPlugins
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
 		$this->engine->rec->filter = "id='" . (int) $plugin_id . "'";
 		
+		$info = $this->engine->rec->getInfo();
+		
+		// ... //
+		
+		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
+		$this->engine->rec->filter = "id='" . (int) $plugin_id . "'";
+		
 		$del = $this->engine->rec->delete();
 		
 		if ( $del )
 		{
 			$this->removeHooks( $plugin_id );
+			
+			if ( $info[ 'active' ] )
+			    $obj->deactivate();
 			
 			$obj->uninstall();
 			

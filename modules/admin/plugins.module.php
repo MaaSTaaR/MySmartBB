@@ -133,7 +133,7 @@ class MySmartPluginMOD
 			if ( $activate )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'plugin_enabled' ] );
-				//$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
+				$MySmartBB->func->move( 'admin.php?page=plugins&amp;control=1' );
 			}
 		}
 	}
