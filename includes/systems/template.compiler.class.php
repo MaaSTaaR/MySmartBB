@@ -73,6 +73,11 @@ class MySmartTemplateCompiler
 		$string = preg_replace( '~\{\$lang_info\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_info[\\1]; ?>', $string );
 		$string = preg_replace( '~\{\$lang\[\'common\'\]\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_common[\\1]; ?>', $string );
 		$string = preg_replace( '~\{\$lang\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang[\'template\'][\\1]; ?>', $string );
+		
+		// ... //
+		
+		// Hooks
+		$string = preg_replace( '~\{hook\}(.*?)\{\/hook\}~', '', $string );
 				
 		// ... //
 		

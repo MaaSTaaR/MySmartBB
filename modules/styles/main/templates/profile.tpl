@@ -2,7 +2,9 @@
 {$lang['view_member_profile']} {$MemberInfo['username']}
 {template}address_bar_part2{/template}
 
-<table align="center" class="t_style_b" border="1" width="60%">
+{hook}after_address_bar{/hook}
+
+<table id="profile_main_table" align="center" class="t_style_b" border="1" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%" colspan="2">
 		{$lang['view_member_profile']} {$MemberInfo['username']}
@@ -114,11 +116,17 @@
 		</td>
 	</tr>
 	{/if}
+
+
 </table>
 <br />
 
+{hook}after_main_table{/hook}
+
+
+
 {if {$MemberInfo['away']}}
-<table align="center" class="t_style_b" border="1" width="60%">
+<table id="profile_away_table" align="center" class="t_style_b" border="1" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%">
 		{$lang['member_away']}
@@ -132,9 +140,11 @@
 </table>
 {/if}
 
+{hook}after_away_table{/hook}
+
 {if {$MemberInfo['user_sig']} != ''}
 <br />
-<table align="center" class="t_style_b" border="1" width="60%">
+<table id="profile_signature_table" align="center" class="t_style_b" border="1" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%">
 		{$lang['signature']}
@@ -150,7 +160,9 @@
 
 <br />
 
-<table align="center" class="t_style_b" border="1" width="80%">
+{hook}after_signature_table{/hook}
+
+<table id="profile_details_table" align="center" class="t_style_b" border="1" width="80%">
 	<tr align="center">
 		<td width="60%" class="main1 rows_space" colspan="4">
 		{$lang['details']}
@@ -185,4 +197,7 @@
 		</td>
 	</tr>
 </table>
+
+{hook}after_details_table{/hook}
+
 <br />

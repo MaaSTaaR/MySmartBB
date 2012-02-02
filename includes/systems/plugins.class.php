@@ -4,8 +4,8 @@
  * @package : MySmartPlugins
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @started : 30/09/2009 10:18:46 PM (GMT+3)
- * @last update : 
- * @under : GNU LGPL
+ * @update : Tue 31 Jan 2012 07:55:10 AM AST 
+ * @license : GNU LGPL
 */
 
 require( 'plugins/interface.class.php' );
@@ -62,7 +62,8 @@ class MySmartPlugins
 		if ( $insert )
 		{
 			// Insert hooks into database
-			$this->insertHooks( $hooks, $id, $path );
+			if ( is_array( $hooks ) )
+			    $this->insertHooks( $hooks, $id, $path );
 			
 			$obj->install();
 			
@@ -203,9 +204,7 @@ class MySmartPlugins
 	
 	private function runPlugin( $path, $func )
 	{
-		require_once( 'plugins/' . $path . '/plugin.php' );
-		
-		$obj = new PLUGIN_CLASS_NAME;
+		$obj = $this->createPluginObject( $path );
 		
 		call_user_func( array( $obj, $func ) );
 	}

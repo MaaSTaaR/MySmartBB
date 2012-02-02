@@ -52,6 +52,8 @@ $modules['usercp_control_email'] 		=  	'usercp_control_email.module.php';
 $modules['usercp_control_avatar'] 		=  	'usercp_control_avatar.module.php';
 $modules['usercp_option_subject'] 		=  	'usercp_option_subject.module.php';
 
+$modules[ 'test_plugin' ] = 'test_plugin.php';
+
 
 //////////
 

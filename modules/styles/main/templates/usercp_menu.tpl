@@ -1,5 +1,5 @@
 <div class="usercp_menu {$_CONF['align']}_side">
-	<table border="1" class="t_style_b">
+	<table id="usercp_menu_table" border="1" class="t_style_b">
 		<tr align="center">
      		<td class="main1 rows_space">
      			<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a>
@@ -34,7 +34,9 @@
      			<a href="index.php?page=pm_setting&amp;setting=1&amp;index=1">{$lang['pm_setting']}</a>
      		</td>
      	</tr>
+     	{hook}end_of_pm_options{/hook}
      	{/if}
+     	{hook}before_profile_options{/hook}
      	<tr>
      		<td class="main2 rows_space" align="center">
      		{$lang['profile_edit']}
@@ -76,7 +78,7 @@
      			<a href="index.php?page=usercp_control_avatar&amp;main=1">{$lang['change_avatar']}</a>
      		</td>
      	</tr>
-     	
+     	{hook}end_of_profile_options{/hook}
      	<tr>
      		<td class="main2 rows_space" align="center">
      		{$lang['options']}
@@ -87,6 +89,11 @@
      			<a href="index.php?page=usercp_option_subject&amp;main=1">{$lang['own_topics']}</a>
      		</td>
      	</tr>
+     	{hook}end_of_member_options{/hook}
+
+
+
+
      </table>
 </div>
 <br />

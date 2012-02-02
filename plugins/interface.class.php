@@ -1,5 +1,7 @@
 <?php
 
+// TODO : What about update to a new version of a plugin?
+
 interface PluginInterface
 {
     // ... //

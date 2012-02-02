@@ -55,12 +55,12 @@ class File
 
 class TemplateModifier
 {
-    private $template_paths = array();
-    private $file = array();
-    private $content = array();
-    private $contents_num = 0;
-    private $table = null;
-    private $hook = null;
+    protected $template_paths = array();
+    protected $file = array();
+    protected $content = array();
+    protected $contents_num = 0;
+    protected $table = null;
+    protected $hook = null;
     
     function __construct( $template, $paths )
     {
@@ -70,8 +70,8 @@ class TemplateModifier
         {
             $this->template_paths[ $x ] = $path . '/' . $template . TEMPLATES_EXT;
         
-            $this->file[ $x ] = new File( $this->template_paths[ $x ], 'w+' /*'r'*/ );
-            $this->content[ $x ] = $this->file[ $x ]->read();
+            $this->file[ $x ]       = new File( $this->template_paths[ $x ], 'w+' /*'r'*/ );
+            $this->content[ $x ]    = $this->file[ $x ]->read();
             
             $x++;
         }
@@ -103,7 +103,7 @@ class TemplateModifier
         if ( !is_null( $this->hook ) )
             trigger_error( 'TemplateModifier::openTable -> There is already opened hook', E_USER_ERROR );
         
-        $this->hook = new Hook( $id, $this->content );
+        $this->hook = new Hooks( $id, $this->content );
     }
     
     public function closeHook()
@@ -122,9 +122,11 @@ class TemplateModifier
         for ( $k = 0; $k < $this->contents_num; $k++ )
         {
             $matches = array();
-        
-            $search = preg_match( '/\<' . $tag . '(.*)id="' . $id . '"(.*?)\>(.*?)\<\/' . $tag . '\>/s', $this->content[ $k ], &$matches );
-        
+            
+            // Note : We put "(.)" after ( ' . $tag . ' ) to fix a bug, but with this we have a limitation now
+            // The function now can only find the tags that look like <tag [You can NOT put anything here] id="" [You can put anything here]>
+            $search = preg_match( '/\<' . $tag . '(.)id="' . $id . '"(.*?)\>(.*?)\<\/' . $tag . '\>/s', $this->content[ $k ], &$matches );
+            
             $this->content[ $k ] = str_replace( $matches[ 0 ], '', $this->content[ $k ] );
         }
     }
@@ -138,6 +140,8 @@ class TemplateModifier
         
             $this->file[ $k ]->close();
         }
+        
+        return true;
     }
     
     static public function isValidID( $html )
@@ -150,8 +154,8 @@ class TemplateModifier
 
 class Tables
 {
-    private $tables = array(); // Array of objects
-    private $contents = array();
+    protected $tables = array(); // Array of objects
+    protected $contents = array();
     
     function __construct( $id, $contents )
     {
@@ -211,14 +215,14 @@ class Table
 {
     const NO_SUCH_TABLE = -1;
     
-    private $id;
-    private $content;
-    private $body;
-    private $table;
-    private $rows_num;
-    private $rows;
-    private $cells;
-    private $updated_cells = false;
+    protected $id;
+    protected $content;
+    protected $body;
+    protected $table;
+    protected $rows_num;
+    protected $rows;
+    protected $cells;
+    protected $updated_cells = false;
     
     function __construct( $id, $content )
     {
@@ -413,7 +417,7 @@ class Hooks
     {
         foreach ( $this->hooks as $k => $hook )
         {
-            $this->contents[] = $table->getContent();
+            $this->contents[] = $hook->getContent();
         }
         
         return $this->contents;
@@ -442,6 +446,8 @@ class Hook
         
         if ( !$search )
             return false;
+        else
+            return true;
     }
     
     public function addContent( $html )
