@@ -44,9 +44,20 @@ class PLUGIN_ACTION_CLASS_NAME
         // ... //
         
         if ( $MySmartBB->rec->getNumber( $posts_res ) <= 0 )
-            $MySmartBB->func->error( 'No posts' );
+            $MySmartBB->template->assign( 'NO_POST', 'true' );
         else
-            echo 'Hi';
+            $MySmartBB->template->assign( 'NO_POST', 'false' );
+        
+        // ... //
+        
+        $MySmartBB->func->showHeader( $member_info[ 'username' ] . '\'s Microblog' );
+        
+        // Set the alternative directory of the templates
+        $MySmartBB->template->setAltTemplateDir( 'plugins/MySmartMicroblog/templates' );
+        
+        $MySmartBB->template->display( 'mysmartmicroblog_show_blog', true );
+        
+        $MySmartBB->func->getFooter();
         
         // ... //
     }

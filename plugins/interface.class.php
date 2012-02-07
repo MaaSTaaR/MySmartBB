@@ -19,22 +19,6 @@ interface PluginInterface
 	
 	// ... //
 	
-	/* pages() :
-	 *  Returns an array that contains the list of page(s) that the plugin has.
-	 *
-	 *  If the plugin has no page(s) so the function can be empty or returns null.
-	 *
-	 *  Example :
-	 *              return array(   'show_microblog'    =>  'show.module.php'  );
-	 *
-	 *  The key (show_microblog) is the action name, and (show.module.php) is the file that will
-	 *  be run when the user goes to http://[URL]/index.php?page=plugin&name=[plugin_name]&action=show_microblog
-	 *
-	**/
-	public function pages();
-	
-	// ... //
-	
 	/* hooks() :
 	 *  Returns an array that contains the list of hook(s) that the plugin should register on it
 	 *  and the function that should be called when the hook(s) trigger.
@@ -49,6 +33,22 @@ interface PluginInterface
 	 *  _Note_ : All the functions must be defined on the plugin's main class.
 	**/
 	public function hooks();
+	
+	// ... //
+	
+	/* pages() :
+	 *  Returns an array that contains the list of page(s) that the plugin has.
+	 *
+	 *  If the plugin has no page(s) so the function can be empty or returns null.
+	 *
+	 *  Example :
+	 *              return array(   'show_microblog'    =>  'show.module.php'  );
+	 *
+	 *  The key (show_microblog) is the action name, and (show.module.php) is the file that will
+	 *  be run when the user goes to http://[URL]/index.php?page=plugin&name=[plugin_name]&action=show_microblog
+	 *
+	**/
+	public function pages();
 	
 	// ... //
 	

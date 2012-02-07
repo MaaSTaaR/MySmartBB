@@ -53,6 +53,8 @@ class MySmartPluginMOD
 	    $obj = new PLUGIN_ACTION_CLASS_NAME;
 	    
 	    $obj->run();
+	    
+	    $MySmartBB->template->unsetAltTemplateDir();
 	}
 }
 	

@@ -20,6 +20,11 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 						'main_before_footer'	=> 'byeWorld'	);
 	}
 	
+	public function pages()
+	{
+	    return null;
+	}
+	
 	public function activate()
 	{
 		global $MySmartBB;

@@ -23,6 +23,7 @@ class MySmartTemplate
 	protected $templates_dir;
 	protected $compiler_dir;
 	protected $templates_ex;
+	protected $alt_templates_dir = null; // Alternative templates directory, We need it when we have more than one directory of templates
 	private $compiler; // An object for the compiler which we have to use
 	private $method	= 'file';
 	
@@ -39,7 +40,7 @@ class MySmartTemplate
 	 * Public functions
 	 */
 	
-	/* ... */
+	// ... //
 	 
 	public function setInformation( $templates_dir, $compiler_dir, $templates_ex, $method )
 	{
@@ -59,39 +60,58 @@ class MySmartTemplate
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getTemplateDir()
 	{
 		return $this->templates_dir;
 	}
 	
-	/* ... */
+	// ... //
 		
 	public function getCompilerDir()
 	{
 		return $this->compilter_dir;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function getTemplateExtention()
 	{
 		return $this->templates_ex;
 	}
 	
-	/* ... */
+	// ... //
+	
+	public function setAltTemplateDir( $dir )
+	{
+	    $this->alt_templates_dir = $dir;
+	    
+		if ( $this->alt_templates_dir[ strlen( $this->alt_templates_dir ) - 1 ] != '/' )
+		{
+			$this->alt_templates_dir .= '/';
+		}
+	}
+	
+	// ... //
+	
+	public function unsetAltTemplateDir()
+	{
+	    $this->alt_templates_dir = null;
+	}
+	
+	// ... //
 	
 	/**
 	 * Display the template after compile it
 	 */
-	public function display( $template_name )
+	public function display( $template_name, $alt_path = false )
 	{
 		if ( $this->method == 'file' )
 		{
 			try
 			{
-				$this->_getTemplateFromFile( $template_name );
+				$this->_getTemplateFromFile( $template_name, false, $alt_path );
 			}
 			catch ( Exception $e )
 			{
@@ -104,15 +124,15 @@ class MySmartTemplate
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
-	public function content( $template_name )
+	public function content( $template_name, $alt_path = false )
 	{
 		if ($this->method == 'file')
 		{
 			try
 			{
-				return $this->_getTemplateFromFile( $template_name, true );
+				return $this->_getTemplateFromFile( $template_name, true, $alt_path );
 			}
 			catch ( Exception $e )
 			{
@@ -125,7 +145,7 @@ class MySmartTemplate
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function assign( $varname, $value )
 	{
@@ -136,26 +156,30 @@ class MySmartTemplate
 	 * Private functions
 	 */
 	
-	/* ... */
+	// ... //
 
-	private function _getTemplateFromFile( $template_name, $content = false )
+	private function _getTemplateFromFile( $template_name, $content = false, $alt_path )
 	{
-		//////////
+		// ... //
 		
-		// Make life easier
-		$template_file = $this->templates_dir . $template_name . $this->templates_ex;
+		if ( $alt_path and !is_null( $this->alt_templates_dir ) )
+		    $template_file = $this->alt_templates_dir;
+		else
+		    $template_file = $this->templates_dir;
+		
+		$template_file .= $template_name . $this->templates_ex;
 		$compiled_file = $this->compiler_dir . $template_name . '-compiler.php';
 		
-		//////////
+		// ... //
 		
 		// The template's size should be bigger than 0 byte
 		if ( filesize( $template_file ) > 0 )
 		{
-			//////////
+			// ... //
 			
 			// Compile the templete in these cases
 			// 1- There is no previous compiled file.
-			// 2- There is one but original template file which has new modifications, so update the compiled file.
+			// 2- There is one but the original template file has new modifications, so update the compiled file.
 			// 3- The operating system is Windows, so we can't use filectime() function
 			if ( !( file_exists( $compiled_file ) )
 				or ( file_exists( $compiled_file )
@@ -165,18 +189,14 @@ class MySmartTemplate
 				$this->_createCompiledFile( $template_file, $compiled_file );
 			}
 			
-			//////////
+			// ... //
 			
 			if ( !$content )
-			{
 				$this->_getCompiledFile( $template_name, $content );
-			}
 			else
-			{
 				return $this->_getCompiledFile( $template_name, $content );
-			}
 			
-			//////////
+			// ... //
 		}
 		else
 		{
@@ -184,11 +204,11 @@ class MySmartTemplate
 		}
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _createCompiledFile( $template_file, $compiled_file )
 	{
-		//////////
+		// ... //
 		
 		// Get the content of template
 		$fp = fopen( $template_file, 'r' );
@@ -202,34 +222,30 @@ class MySmartTemplate
 		
 		fclose( $fp );
 		
-		//////////
+		// ... //
 		
 		// Compile the template
 		$string = $this->compiler->compile( $fr );
 		
-		//////////
+		// ... //
 		
 		// Create compiled file
 		$create = fopen( $compiled_file, 'w+' );
  		
  		if ( !$create )
- 		{
  			throw new Exception( 'ERROR::CAN_NOT_OPEN_THE_FILE' );
- 		}
  		
- 		$write = fwrite($create,$string);
+ 		$write = fwrite( $create, $string );
  		
  		if ( !$write )
- 		{
  			throw new Exception( 'ERROR::CAN_NOT_WRITE_TO_THE_FILE' );
- 		}
  		
- 		fclose($create);
+ 		fclose( $create );
  					
- 		//////////
+ 		// ... //
 	}
 	
-	/* ... */
+	// ... //
 	
 	/**
 	 * If the template is already compiled , so include it
@@ -258,23 +274,19 @@ class MySmartTemplate
 				$fp = fopen( $compiled_name, 'r' );
 		
 				if ( !$fp )
-				{
 					trigger_error( 'ERROR::CAN_NOT_OPEN_THE_FILE', E_USER_ERROR );
-				}
 		
 				$fr = fread( $fp, filesize( $template_name ) );
 				
 				if ( !$fr )
-				{
 					trigger_error( 'ERROR::CAN_NOT_READ_FROM_THE_FILE', E_USER_ERROR );
-				}
 				
 				fclose($fp);
 				
 				return $fr;
 			}
 		}
-		// it's not here , so return false
+		// The file is not here , so return false
 		else
 		{
 			return false;
