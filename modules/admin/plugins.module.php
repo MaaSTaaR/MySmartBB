@@ -113,10 +113,10 @@ class MySmartPluginMOD
 		global $MySmartBB;
 		
 		// ... //
-		// Step 1 : Inserts hooks into plugin_hooks table, that's indicates the plugin is active.
+		// Step 1 : Inserts hooks into plugin_hooks table, that indicates the plugin is active.
 		// Step 2 : Calls "activate()" method of the plugin
 		// Step 3 : Activates the plugin by set the value 1 to "active" field in "plugins" table
-		//			This field is useful to show to the user the plugin is active, but out work actually
+		//			This field is useful to show to the user the plugin is active, but our work actually
 		//			relies on "plugin_hooks" table.
 		// ... //
 		
@@ -143,7 +143,7 @@ class MySmartPluginMOD
 		global $MySmartBB;
 		
 		// ... //
-		// Step 1 : Removes hooks from plugin_hooks table, that's indicates the plugin is not active.
+		// Step 1 : Removes hooks from plugin_hooks table, that indicates the plugin is not active.
 		// Step 2 : Calls "deactivate()" method of the plugin
 		// Step 3 : Deactivates the plugin by set the value 0 to "active" field in "plugins" table
 		// ... //

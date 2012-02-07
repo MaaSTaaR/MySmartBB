@@ -60,7 +60,7 @@ class MySmartTable extends Table
         parent::addRow( $html, $pos, $row_id );
         
         // If there is {/if} or {/Des::while} (for example) under the row
-        // Ensure that we add the new row under the template's syntax
+        // Ensure that we add the new row under the template's syntax and not inside it
         $matches = array();
         
         $search = str_replace( array( '<', '>', '/' ), array( '\\<', '\\>', '\\/' ), $html );

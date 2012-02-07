@@ -19,6 +19,11 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	    return array( 	'show_profile_end' 	=> 'getLastPost'	);
 	}
 	
+	public function pages()
+	{
+	    return array(   'show'    =>  'show.module.php'  );
+	}
+	
 	public function activate()
 	{
 	    require_once( 'includes/systems/MySmartTemplateModifier.class.php' );

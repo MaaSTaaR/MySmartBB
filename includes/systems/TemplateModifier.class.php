@@ -125,6 +125,7 @@ class TemplateModifier
             
             // Note : We put "(.)" after ( ' . $tag . ' ) to fix a bug, but with this we have a limitation now
             // The function now can only find the tags that look like <tag [You can NOT put anything here] id="" [You can put anything here]>
+            // So id attribute _should_ be the first attribute inside the tag
             $search = preg_match( '/\<' . $tag . '(.)id="' . $id . '"(.*?)\>(.*?)\<\/' . $tag . '\>/s', $this->content[ $k ], &$matches );
             
             $this->content[ $k ] = str_replace( $matches[ 0 ], '', $this->content[ $k ] );
