@@ -4,7 +4,7 @@ define( 'PLUGIN_CLASS_NAME', 'HelloWorldPlugin' );
 
 require_once( 'plugins/interface.class.php' );
 
-class PLUGIN_CLASS_NAME implements PluginInterface
+class HelloWorldPlugin implements PluginInterface
 {
 	public function info()
 	{

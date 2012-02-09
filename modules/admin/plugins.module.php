@@ -26,24 +26,28 @@ class MySmartPluginMOD
 			{
 				$this->_controlMain();
 			}
-			else if ( $MySmartBB->_GET[ 'active' ] )
+			elseif ( $MySmartBB->_GET[ 'active' ] )
 			{
 				$this->_pluginActivate();
 			}
-			else if ( $MySmartBB->_GET[ 'deactive' ] )
+			elseif ( $MySmartBB->_GET[ 'deactive' ] )
 			{
 				$this->_pluginDeactive();
 			}
-			else if ( $MySmartBB->_GET[ 'uninstall' ] )
+			elseif ( $MySmartBB->_GET[ 'uninstall' ] )
 			{
 				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_pluginUninstall();
 				}
 			}
-			else if ( $MySmartBB->_GET[ 'install' ] )
+			elseif ( $MySmartBB->_GET[ 'install' ] )
 			{
 				$this->_pluginInstall();
+			}
+			elseif ( $MySmartBB->_GET[ 'setting' ] )
+			{
+			    $this->_pluginSetting();
 			}
 			
 			$MySmartBB->template->display( 'footer' );
@@ -219,6 +223,45 @@ class MySmartPluginMOD
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'install_failed' ] );
 		}
+	}
+	
+	private function _pluginSetting()
+	{
+	    global $MySmartBB;
+	    
+	    // ... //
+	    
+		if ( empty( $MySmartBB->_GET[ 'name' ] ) )
+		{
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		}
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
+		$MySmartBB->rec->filter = "path='" . $MySmartBB->_GET[ 'name' ] . "'";
+		
+		$info = $MySmartBB->rec->getInfo();
+		
+		if ( $info == false )
+		{
+			$MySmartBB->func->error( $MySmartBB->lang[ 'plugin_doesnt_exist' ] );
+		}
+		
+		// ... //
+	    
+	    if ( !$info[ 'setting_page' ] )
+	        $MySmartBB->func->error( $MySmartBB->lang[ 'no_setting_page' ] );
+	        
+	    include( 'plugins/' . $info[ 'path' ] . '/setting.module.php' );
+	    
+	    unset( $info );
+	    
+	    $class_name = PLUGIN_SETTING_CLASS_NAME;
+	    
+	    $obj = new $class_name;
+	    
+	    $obj->run();
+	    
+	    $MySmartBB->template->unsetAltTemplateDir();
 	}
 	
 	private function _checkID()

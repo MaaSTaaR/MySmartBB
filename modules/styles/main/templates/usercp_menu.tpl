@@ -97,14 +97,30 @@
 </tr>
 <tr id="plugin_mysmartmicroblog_options_add">
 <td class="row1" align="center">
-<a href="">تدوينة جديدة</a>
+<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=add&amp;main=1">تدوينة جديدة</a>
 </td>
 </tr>
 <tr id="plugin_mysmartmicroblog_options_show">
 <td class="row1" align="center">
-<a href="">المدونة</a>
+<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$_CONF['member_row']['id']}">المدونة</a>
 </td>
 </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

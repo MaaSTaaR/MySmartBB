@@ -5,7 +5,7 @@
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @version : 1.0.0
  * @start : 20/4/2006 , 7:00 PM (GMT+3)
- * @update : 13/02/2010 11:46:04 AM 
+ * @update : 7/02/2012
  * @license : GNU LGPL
 */
 
@@ -15,7 +15,7 @@
  * 1- PHP5 Object Orinted Programming
  * 2- Changes functions name from (G)etTemplateDir to (g)etTemplateDir
  * 3- Uses Exception system
- * 4- There are two classes MySmartTemplate (the main one), MySmartCompiler which can be any class and its object stores in $this->compiler
+ * 4- There are two classes MySmartTemplate (the main one) and MySmartCompiler that can be any class and its object stores in $this->compiler
  */
 
 class MySmartTemplate
@@ -50,14 +50,10 @@ class MySmartTemplate
 		$this->method			=	$method;
 		
 		if ( $this->templates_dir[ strlen( $this->templates_dir ) - 1 ] != '/' )
-		{
 			$this->templates_dir .= '/';
-		}
 		
 		if ( $this->compiler_dir[ strlen( $this->compiler_dir ) - 1 ] != '/' )
-		{
 			$this->compiler_dir .= '/';
-		}
 	}
 	
 	// ... //
@@ -88,9 +84,7 @@ class MySmartTemplate
 	    $this->alt_templates_dir = $dir;
 	    
 		if ( $this->alt_templates_dir[ strlen( $this->alt_templates_dir ) - 1 ] != '/' )
-		{
 			$this->alt_templates_dir .= '/';
-		}
 	}
 	
 	// ... //
@@ -214,9 +208,7 @@ class MySmartTemplate
 		$fp = fopen( $template_file, 'r' );
 		
 		if ( !$fp )
-		{
 			throw new Exception( 'ERROR::CAN_NOT_OPEN_THE_FILE' );
-		}
 		
 		$fr = fread( $fp, filesize( $template_file ) );
 		

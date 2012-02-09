@@ -2,7 +2,7 @@
 
 define( 'PLUGIN_ACTION_CLASS_NAME', 'ShowMicroblog' );
 
-class PLUGIN_ACTION_CLASS_NAME
+class ShowMicroblog
 {
     public function run()
     {
@@ -36,10 +36,13 @@ class PLUGIN_ACTION_CLASS_NAME
         
         $MySmartBB->rec->table = $MySmartBB->getPrefix() . 'MySmartMicroblog_posts';
         $MySmartBB->rec->filter = "member_id='" . $MySmartBB->_GET[ 'id' ] . "'";
+        $MySmartBB->rec->order = 'id DESC';
         
         $posts_res = &$MySmartBB->func->setResource();
         
         $MySmartBB->rec->getList();
+        
+        $MySmartBB->rec->setInfoCallback( 'ShowMicroblog::rowsProcessCB' );
         
         // ... //
         
@@ -55,12 +58,24 @@ class PLUGIN_ACTION_CLASS_NAME
         // Set the alternative directory of the templates
         $MySmartBB->template->setAltTemplateDir( 'plugins/MySmartMicroblog/templates' );
         
+        $MySmartBB->template->assign( 'username', $member_info[ 'username' ] );
+        
         $MySmartBB->template->display( 'mysmartmicroblog_show_blog', true );
+        
+        $MySmartBB->rec->removeInfoCallback();
         
         $MySmartBB->func->getFooter();
         
         // ... //
     }
+    
+	public function rowsProcessCB( $row )
+	{
+		global $MySmartBB;
+		
+		if ( !empty( $row[ 'date' ] ) )
+		    $row[ 'date' ] = $MySmartBB->func->date( $row[ 'date' ] );
+	}
 }
 
 ?>

@@ -14,6 +14,10 @@ interface PluginInterface
      *                  description : A brief description about the plugin and its functionality
      *                  author : The name(s) of the plugin's author(s)
      *                  license : The license of the plugin (e.g. GNU GPL)
+     *                  setting_page :  An optional key, If you have a setting page for your plugin
+     *                                  set this key to "true", so your setting file must called setting.module.php
+     *                                  and resides in the main directory of the plugin.
+     *                                  Otherwise, set the value of this key to "false" or keep it null.
     **/
 	public function info();
 	

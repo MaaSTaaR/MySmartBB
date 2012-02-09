@@ -4,7 +4,7 @@
  * @package : MySmartPlugins
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @started : 30/09/2009 10:18:46 PM (GMT+3)
- * @update : Tue 31 Jan 2012 07:55:10 AM AST 
+ * @update : Wed 08 Feb 2012 06:51:12 AM AST 
  * @license : GNU LGPL
 */
 
@@ -40,9 +40,12 @@ class MySmartPlugins
 		$info = $this->engine->rec->getInfo();
 		
 		if ( $info != false )
-		{
 			return 'ERROR::ALREADY_INSTALLED';
-		}
+		
+		$setting_page = 0;
+		
+		if ( $plugin_info[ 'setting_page' ] )
+		    $setting_page = 1;
 		
 		// Insert the plugin to the active list of plugins
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
@@ -51,7 +54,8 @@ class MySmartPlugins
 												'author'		=>	$plugin_info[ 'author' ],
 												'license'		=>	$plugin_info[ 'license' ],
 												'path'			=>	$path,
-												'active'		=>	1	);
+												'active'		=>	1,
+												'setting_page'  =>  $setting_page	);
 		
 		$this->engine->rec->get_id = true;
 		
@@ -120,7 +124,9 @@ class MySmartPlugins
 	{
 		require_once( 'plugins/' . $path . '/plugin.php' );
 		
-		return new PLUGIN_CLASS_NAME;
+		$class_name = PLUGIN_CLASS_NAME;
+		
+		return new $class_name;
 	}
 	
 	// ... //
@@ -243,7 +249,9 @@ class MySmartPlugins
 	{
 		require_once( 'plugins/' . $path . '/plugin.php' );
 		
-		$obj = new PLUGIN_CLASS_NAME;
+		$class_name = PLUGIN_CLASS_NAME;
+		
+		$obj = new $class_name;
 		
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
 		$this->engine->rec->fields = array( 'active'	=>	1 );
@@ -265,7 +273,9 @@ class MySmartPlugins
 	{
 		require_once( 'plugins/' . $path . '/plugin.php' );
 		
-		$obj = new PLUGIN_CLASS_NAME;
+		$class_name = PLUGIN_CLASS_NAME;
+		
+		$obj = new $class_name;
 		
 		$this->engine->rec->table = $this->engine->table[ 'plugin' ];
 		$this->engine->rec->fields = array( 'active'	=>	0 );

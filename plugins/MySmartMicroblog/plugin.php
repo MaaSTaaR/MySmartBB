@@ -4,14 +4,15 @@ define( 'PLUGIN_CLASS_NAME', 'MySmartMicroblog' );
 
 require_once( 'plugins/interface.class.php' );
 
-class PLUGIN_CLASS_NAME implements PluginInterface
+class MySmartMicroblog implements PluginInterface
 {
 	public function info()
 	{
 		return array(	'title'			=>	'Microblogging Plugin',
 						'description'	=>	'Let your member to create a small blog in their profile',
 						'author'		=>	'Mohammed Q. Hussain',
-						'license'		=>	'GNU GPL'	);
+						'license'		=>	'GNU GPL',
+						'setting_page'  =>  true	);
 	}
 	
 	public function hooks()
@@ -21,7 +22,8 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	
 	public function pages()
 	{
-	    return array(   'show'    =>  'show.module.php'  );
+	    return array(   'show'      =>  'show.module.php',
+	                    'add'       =>  'add.module.php'  );
 	}
 	
 	public function activate()
@@ -37,7 +39,7 @@ class PLUGIN_CLASS_NAME implements PluginInterface
 	    
 	    $html = '<tr id="plugin_mysmartmicroblog_link_row" align="center">' . "\n";
 	    $html .= '<td class="row1" width="20%">المدوّنة المُصغرة</td>' . "\n";
-	    $html .= '<td class="row1" width="30%"><a href="">هنا</a></td>' . "\n";
+	    $html .= '<td class="row1" width="30%"><a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$MemberInfo[\'id\']}">هنا</a></td>' . "\n";
 	    $html .= '</tr>' . "\n";
 	    
 	    $profile->getTable()->addRowAtEnd( $html );
@@ -84,12 +86,12 @@ class PLUGIN_CLASS_NAME implements PluginInterface
      	$html .= '</tr>' . "\n";
      	$html .= '<tr id="plugin_mysmartmicroblog_options_add">' . "\n";
      	$html .= '<td class="row1" align="center">' . "\n";
-     	$html .= '<a href="">تدوينة جديدة</a>' . "\n";
+     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=add&amp;main=1">تدوينة جديدة</a>' . "\n";
      	$html .= '</td>' . "\n";
      	$html .= '</tr>' . "\n";
      	$html .= '<tr id="plugin_mysmartmicroblog_options_show">' . "\n";
      	$html .= '<td class="row1" align="center">' . "\n";
-     	$html .= '<a href="">المدونة</a>' . "\n";
+     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$_CONF[\'member_row\'][\'id\']}">المدونة</a>' . "\n";
      	$html .= '</td>' . "\n";
      	$html .= '</tr>' . "\n";
 	    
@@ -138,9 +140,12 @@ class PLUGIN_CLASS_NAME implements PluginInterface
         $create_table = $MySmartBB->rec->createTable();
         
         if ( $create_table )
-        {
             $MySmartBB->func->msg( 'تم إنشاء الجدول MySmartMicroblog_posts' );
-        }
+        
+        $insert_info = $MySmartBB->info->insertInfo( 'mysmartmicroblog_post_max_len', 140 );
+        
+        if ( $insert_info )
+            $MySmartBB->func->msg( 'تم إنشاء قيمة الإعدادات mysmartmicroblog_post_max_len' );
 	}
 	
 	public function uninstall()
@@ -152,9 +157,12 @@ class PLUGIN_CLASS_NAME implements PluginInterface
         $drop_table = $MySmartBB->rec->dropTable();
         
         if ( $drop_table )
-        {
             $MySmartBB->func->msg( 'تم إنشاء الجدول MySmartMicroblog_posts' );
-        }
+            
+        $remove_info = $MySmartBB->info->removeInfo( 'mysmartmicroblog_post_max_len' );
+        
+        if ( $remove_info )
+            $MySmartBB->func->msg( 'تم حذف قيمة الإعدادات mysmartmicroblog_post_max_len' );
 	}
 	
 	// ~ Hooks ~ //

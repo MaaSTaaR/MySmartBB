@@ -1,1 +1,1 @@
-CREATE TABLE #table# (id int(9) NOT NULL AUTO_INCREMENT,title varchar(200) NOT NULL,description text NOT NULL,author varchar(255) NOT NULL,license varchar(255) NOT NULL,path varchar(255) NOT NULL,active int(1) NOT NULL,PRIMARY KEY (id)) ENGINE=MyISAM AUTO_INCREMENT=1
+CREATE TABLE #table# (id int(9) NOT NULL AUTO_INCREMENT,title varchar(200) NOT NULL,description text NOT NULL,author varchar(255) NOT NULL,license varchar(255) NOT NULL,path varchar(255) NOT NULL,active int(1) NOT NULL,setting_page int(1) NOT NULL, PRIMARY KEY (id)) ENGINE=MyISAM AUTO_INCREMENT=1

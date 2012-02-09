@@ -114,17 +114,14 @@
 		<td class="row1" width="30%">
 		{$Location['user_location']}
 		</td>
-	</tr>
-	{/if}
-<tr id="plugin_mysmartmicroblog_link_row" align="center">
+	</tr><tr id="plugin_mysmartmicroblog_link_row" align="center">
 <td class="row1" width="20%">المدوّنة المُصغرة</td>
-<td class="row1" width="30%"><a href="">هنا</a></td>
+<td class="row1" width="30%"><a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$MemberInfo['id']}">هنا</a></td>
 </tr>
 
 
 
-
-
+	{/if}
 </table>
 <br />
 

@@ -50,7 +50,9 @@ class MySmartPluginMOD
 	    
 	    unset( $available_page, $plugin_info, $plugin_obj );
 	    
-	    $obj = new PLUGIN_ACTION_CLASS_NAME;
+	    $class_name = PLUGIN_ACTION_CLASS_NAME;
+	    
+	    $obj = new $class_name;
 	    
 	    $obj->run();
 	    
