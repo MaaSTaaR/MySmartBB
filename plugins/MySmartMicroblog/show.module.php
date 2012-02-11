@@ -4,9 +4,20 @@ define( 'PLUGIN_ACTION_CLASS_NAME', 'ShowMicroblog' );
 
 class ShowMicroblog
 {
+    private $lang;
+    private $api;
+    
     public function run()
     {
         global $MySmartBB;
+        
+        // ... //
+        
+        $this->api = getAPI();
+        
+        $this->lang = $this->api->loadLanguage( 'show' );
+        
+        // ... //
         
         if ( empty( $MySmartBB->_GET[ 'id' ] ) )
             $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
@@ -30,7 +41,7 @@ class ShowMicroblog
         // ... //
         
         if ( !$member_info )
-            $MySmartBB->func->error( 'Sorry, no such member' );
+            $MySmartBB->func->error( $this->lang[ 'members_doesnt_exist' ] );
         
         // ... //
         
@@ -53,11 +64,12 @@ class ShowMicroblog
         
         // ... //
         
-        $MySmartBB->func->showHeader( $member_info[ 'username' ] . '\'s Microblog' );
+        $MySmartBB->func->showHeader( $this->lang[ 'microblog' ] . ' ' . $member_info[ 'username' ] );
         
         // Set the alternative directory of the templates
         $MySmartBB->template->setAltTemplateDir( 'plugins/MySmartMicroblog/templates' );
         
+        $MySmartBB->template->assign( 'plugin_lang', $this->lang[ 'template' ] );
         $MySmartBB->template->assign( 'username', $member_info[ 'username' ] );
         
         $MySmartBB->template->display( 'mysmartmicroblog_show_blog', true );

@@ -179,6 +179,7 @@ class MySmartPlugins
 	}
 	
 	// ... //
+	
 	private function insertHook( $plugin_id, $hook, $func, $path )
 	{
 		$this->engine->rec->table = $this->engine->table[ 'hook' ];
@@ -191,6 +192,8 @@ class MySmartPlugins
 		
 		return ( $insert ) ? true : false;
 	}
+	
+	// ... //
 	
 	public function runHooks( $hook )
 	{
@@ -218,12 +221,16 @@ class MySmartPlugins
 		}
 	}
 	
+	// ... //
+	
 	private function runPlugin( $path, $func )
 	{
 		$obj = $this->createPluginObject( $path );
 		
 		call_user_func( array( $obj, $func ) );
 	}
+	
+	// ... //
 	
 	public function rebuildHooksCache()
 	{
@@ -244,6 +251,8 @@ class MySmartPlugins
 		
 		return ( $update ) ? true : false;
 	}
+	
+	// ... //
 	
 	public function activatePlugin( $path )
 	{
@@ -268,6 +277,8 @@ class MySmartPlugins
 		
 		return false;
 	}
+	
+	// ... //
 	
 	public function deactivatePlugin( $path )
 	{

@@ -1,12 +1,25 @@
 <?php
 
+require_once( dirname( __FILE__ ) . '/common.php' );
+
 define( 'PLUGIN_SETTING_CLASS_NAME', 'SettingMicroblog' );
 
 class SettingMicroblog
 {
+    private $lang;
+    private $api;
+    
     public function run()
     {
         global $MySmartBB;
+        
+        // ... //
+        
+        $this->api = getAPI();
+        
+        $this->lang = $this->api->loadLanguage( 'setting' );
+        
+        // ... //
         
         if ( $MySmartBB->_GET[ 'main' ] )
         {
@@ -28,6 +41,8 @@ class SettingMicroblog
         
         $MySmartBB->template->setAltTemplateDir( 'plugins/MySmartMicroblog/templates' );
         
+        $MySmartBB->template->assign( 'plugin_lang', $this->lang[ 'template' ] );
+        
         $MySmartBB->template->display( 'mysmartmicroblog_admin_setting', true );
     }
     
@@ -39,7 +54,7 @@ class SettingMicroblog
         
         if ( $update )
         {
-            $MySmartBB->func->msg( 'تم التحديث بنجاح' );
+            $MySmartBB->func->msg( $this->lang[ 'update_succeed' ] );
             $MySmartBB->func->move( 'admin.php?page=plugins&amp;setting=1&amp;name=MySmartMicroblog&amp;main=1' );
         }
     }

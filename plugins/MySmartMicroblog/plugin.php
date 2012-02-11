@@ -2,6 +2,7 @@
 
 define( 'PLUGIN_CLASS_NAME', 'MySmartMicroblog' );
 
+require_once( dirname( __FILE__ ) . '/common.php' );
 require_once( 'plugins/interface.class.php' );
 
 class MySmartMicroblog implements PluginInterface
@@ -28,7 +29,15 @@ class MySmartMicroblog implements PluginInterface
 	
 	public function activate()
 	{
+	    global $MySmartBB;
+	    
 	    require_once( 'includes/systems/MySmartTemplateModifier.class.php' );
+	    
+	    // ... //
+	    
+	    $api = getAPI();
+	    
+	    $lang = $this->api->loadLanguage( 'general' );
 	    
 	    // ... //
 	    
@@ -38,8 +47,8 @@ class MySmartMicroblog implements PluginInterface
 	    $profile->openTable( 'profile_main_table' );
 	    
 	    $html = '<tr id="plugin_mysmartmicroblog_link_row" align="center">' . "\n";
-	    $html .= '<td class="row1" width="20%">المدوّنة المُصغرة</td>' . "\n";
-	    $html .= '<td class="row1" width="30%"><a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$MemberInfo[\'id\']}">هنا</a></td>' . "\n";
+	    $html .= '<td class="row1" width="20%">' . $lang[ 'microblog' ] . '</td>' . "\n";
+	    $html .= '<td class="row1" width="30%"><a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$MemberInfo[\'id\']}">' . $MySmartBB->lang_common[ 'here' ] .'</a></td>' . "\n";
 	    $html .= '</tr>' . "\n";
 	    
 	    $profile->getTable()->addRowAtEnd( $html );
@@ -51,13 +60,13 @@ class MySmartMicroblog implements PluginInterface
 	    $html = '<table id="plugin_mysmartmicroblog_last_post_table" align="center" class="t_style_b" border="1" width="60%">' . "\n";
 	    $html .= '<tr align="center">' . "\n";
 		$html .= '<td class="main1 rows_space" width="60%">' . "\n";
-		$html .= 'التدوينة الأخيره' . "\n";
+		$html .= $lang[ 'latest_microblog' ] . "\n";
 		$html .= '</td>' . "\n";
 	    $html .= '</tr>' . "\n";
 	    $html .= '<tr align="center">' . "\n";
 		$html .= '<td class="row1" width="30%">' . "\n";
 		$html .= '{if {$mysmartmicroblog_no_posts} == \'true\'}' . "\n";
-		$html .= 'لا توجد تدوينات' . "\n";
+		$html .= $lang[ 'no_microblog' ] . "\n";
 		$html .= '{else}' . "\n";
 		$html .= '{$mysmartmicroblog_post[\'context\']}' . "\n";
 		$html .= '{/if}' . "\n";
@@ -81,17 +90,17 @@ class MySmartMicroblog implements PluginInterface
 	    
         $html = '<tr id="plugin_mysmartmicroblog_options_head">' . "\n";
      	$html .= '<td class="main2 rows_space" align="center">' . "\n";
-     	$html .= 'مدونتك المُصغّرة' . "\n";
+     	$html .= $lang[ 'your_microblog' ] . "\n";
      	$html .= '</td>' . "\n";
      	$html .= '</tr>' . "\n";
      	$html .= '<tr id="plugin_mysmartmicroblog_options_add">' . "\n";
      	$html .= '<td class="row1" align="center">' . "\n";
-     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=add&amp;main=1">تدوينة جديدة</a>' . "\n";
+     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=add&amp;main=1">' . $lang[ 'new_post' ] . '</a>' . "\n";
      	$html .= '</td>' . "\n";
      	$html .= '</tr>' . "\n";
      	$html .= '<tr id="plugin_mysmartmicroblog_options_show">' . "\n";
      	$html .= '<td class="row1" align="center">' . "\n";
-     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$_CONF[\'member_row\'][\'id\']}">المدونة</a>' . "\n";
+     	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$_CONF[\'member_row\'][\'id\']}">' . $lang[ 'the_blog' ] . '</a>' . "\n";
      	$html .= '</td>' . "\n";
      	$html .= '</tr>' . "\n";
 	    
@@ -131,6 +140,14 @@ class MySmartMicroblog implements PluginInterface
 	{
 	    global $MySmartBB;
 	    
+	    // ... //
+	    
+	    $api = getAPI();
+	    
+	    $lang = $this->api->loadLanguage( 'general' );
+	    
+	    // ... //
+	    
 	    $MySmartBB->rec->table = $MySmartBB->getPrefix() . 'MySmartMicroblog_posts';
 	    $MySmartBB->rec->fields = array(    'id'            =>  'INT( 9 ) NOT NULL AUTO_INCREMENT PRIMARY KEY',
 	                                        'member_id'     =>  'INT( 9 ) NOT NULL',
@@ -140,12 +157,12 @@ class MySmartMicroblog implements PluginInterface
         $create_table = $MySmartBB->rec->createTable();
         
         if ( $create_table )
-            $MySmartBB->func->msg( 'تم إنشاء الجدول MySmartMicroblog_posts' );
+            $MySmartBB->func->msg( $lang[ 'table_created' ] . ' MySmartMicroblog_posts' );
         
         $insert_info = $MySmartBB->info->insertInfo( 'mysmartmicroblog_post_max_len', 140 );
         
         if ( $insert_info )
-            $MySmartBB->func->msg( 'تم إنشاء قيمة الإعدادات mysmartmicroblog_post_max_len' );
+            $MySmartBB->func->msg( $lang[ 'setting_created' ] . ' mysmartmicroblog_post_max_len' );
 	}
 	
 	public function uninstall()
@@ -157,12 +174,12 @@ class MySmartMicroblog implements PluginInterface
         $drop_table = $MySmartBB->rec->dropTable();
         
         if ( $drop_table )
-            $MySmartBB->func->msg( 'تم إنشاء الجدول MySmartMicroblog_posts' );
+            $MySmartBB->func->msg( $lang[ 'table_dropped' ] . ' MySmartMicroblog_posts' );
             
         $remove_info = $MySmartBB->info->removeInfo( 'mysmartmicroblog_post_max_len' );
         
         if ( $remove_info )
-            $MySmartBB->func->msg( 'تم حذف قيمة الإعدادات mysmartmicroblog_post_max_len' );
+            $MySmartBB->func->msg( $lang[ 'setting_dropped' ] . ' mysmartmicroblog_post_max_len' );
 	}
 	
 	// ~ Hooks ~ //

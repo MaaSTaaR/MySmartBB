@@ -67,8 +67,8 @@ class MySmartLocalCommon
  		
  		// ... //
  		
- 		if ( !defined( 'STOP_STYLE' ) )
- 			define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
+ 		//if ( !defined( 'STOP_STYLE' ) )
+ 		//	define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
  		
  		// ... //
 	}
@@ -107,7 +107,7 @@ class MySmartLocalCommon
        			(eregi("union", $sql_get)) 	or
        			(eregi("--", $sql_get)))
        		{
-       			$this->error('قمت بعمليه غير مشروعه!');
+       			$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
    			}
   		}
   		
@@ -125,7 +125,7 @@ class MySmartLocalCommon
   			
   			if ($Y[2] != $X[0])
         	{
-   				$this->error('قمت بعمليه غير مشروعه!');
+   				$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
   			}
   			
   			// ... //

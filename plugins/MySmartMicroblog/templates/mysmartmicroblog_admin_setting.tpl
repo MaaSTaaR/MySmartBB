@@ -1,6 +1,6 @@
 <br />
 
-<div class="address_bar">{$lang['common']['cp']} &raquo; MySmartMicroblog &raquo; الإعدادات</div>
+<div class="address_bar">{$lang['common']['cp']} &raquo; MySmartMicroblog &raquo; {$plugin_lang['settings']}</div>
 
 <br />
 
@@ -8,10 +8,10 @@
 
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 <tr align="center">
-	<td class="main1" colspan="2">إعدادات MySmartMicroblog</td>
+	<td class="main1" colspan="2">{$plugin_lang['settings']}</td>
 </tr>
 <tr>
-    <td class="row1">الحد الأقصى لعدد الحروف في التدوينة الواحدة</td>
+    <td class="row1">{$plugin_lang['post_max_length']}</td>
     <td class="row1">
         <input type="text" name="length_of_post" value="{$_CONF['info_row']['mysmartmicroblog_post_max_len']}" />
     </td>
