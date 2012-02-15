@@ -4,7 +4,7 @@
 {template}address_bar_part2{/template}
 
 {if {$NO_POST} == 'true'}
-No posts
+{$plugin_lang['no_posts']}
 {else}
 <table align="center" class="t_style_b" border="1" width="80%">
 	<tr align="center">

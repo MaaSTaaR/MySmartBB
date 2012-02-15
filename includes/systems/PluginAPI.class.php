@@ -27,7 +27,7 @@ class PluginAPI
         if ( is_null( $this->lang_path ) )
             $this->_initLanguage();
         
-        require_once( $this->lang_path . $file . '.lang.php' );
+        require( $this->lang_path . $file . '.lang.php' );
         
         return $lang;
     }

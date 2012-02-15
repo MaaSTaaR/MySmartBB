@@ -37,7 +37,7 @@ class MySmartMicroblog implements PluginInterface
 	    
 	    $api = getAPI();
 	    
-	    $lang = $this->api->loadLanguage( 'general' );
+	    $lang = $api->loadLanguage( 'general' );
 	    
 	    // ... //
 	    
@@ -72,7 +72,7 @@ class MySmartMicroblog implements PluginInterface
 		$html .= '{/if}' . "\n";
 		$html .= '</td>' . "\n";
 	    $html .= '</tr>' . "\n";
-        $html .= '</table><br id="plugin_mysmartmicroblog_last_post_br"></br>' . "\n";
+        $html .= '</table><br id="plugin_mysmartmicroblog_last_post_br"></br>';
 	    
 	    $profile->getHook()->addContent( $html );
 	    
@@ -102,7 +102,7 @@ class MySmartMicroblog implements PluginInterface
      	$html .= '<td class="row1" align="center">' . "\n";
      	$html .= '<a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$_CONF[\'member_row\'][\'id\']}">' . $lang[ 'the_blog' ] . '</a>' . "\n";
      	$html .= '</td>' . "\n";
-     	$html .= '</tr>' . "\n";
+     	$html .= '</tr>';
 	    
 	    $menu->getHook()->addContent( $html );
 	    
@@ -144,7 +144,7 @@ class MySmartMicroblog implements PluginInterface
 	    
 	    $api = getAPI();
 	    
-	    $lang = $this->api->loadLanguage( 'general' );
+	    $lang = $api->loadLanguage( 'general' );
 	    
 	    // ... //
 	    
@@ -168,6 +168,14 @@ class MySmartMicroblog implements PluginInterface
 	public function uninstall()
 	{
 	    global $MySmartBB;
+	    
+	    // ... //
+	    
+	    $api = getAPI();
+	    
+	    $lang = $api->loadLanguage( 'general' );
+	    
+	    // ... //
 	    
 	    $MySmartBB->rec->table = $MySmartBB->getPrefix() . 'MySmartMicroblog_posts';
         

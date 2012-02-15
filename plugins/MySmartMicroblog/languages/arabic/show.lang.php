@@ -9,5 +9,6 @@ $lang[ 'microblog' ] = 'المدونة المصغرة لـ';
 $lang[ 'template' ][ 'posts' ] = 'التدوينات';
 $lang[ 'template' ][ 'posts_of' ] = 'تدوينات :';
 $lang[ 'template' ][ 'date' ] = 'بتاريخ :';
+$lang[ 'template' ][ 'no_posts' ] = 'لا توجد تدوينات';
 
 ?>

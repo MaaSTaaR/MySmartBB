@@ -15,7 +15,7 @@ class MySmartCommon
 		
 		if (!$MySmartBB->_CONF['member_permission'])
 		{
-			if (!constant('STOP_STYLE'))
+			if ( !defined( 'STOP_STYLE' ) or STOP_STYLE != true )
 			{
 				$this->_showLoginForm();
 			}
