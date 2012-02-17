@@ -2,11 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-/* huh?
-$CALL_SYSTEM				=	array();
-$CALL_SYSTEM['SECTION'] 	= 	true;
-*/
-
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 require( 'common.php' );
@@ -159,6 +154,6 @@ class MySmartIndexMOD
 	}
 }
 	
-// The end , Hey it's first module wrote for MySmartBB 2.0 :) , 24/5/2006 -> 4:24 PM
+// The end , Hey it's the first module written for MySmartBB 2.0 :) , 24/5/2006 -> 4:24 PM
 
 ?>

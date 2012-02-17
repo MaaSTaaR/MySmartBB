@@ -37,6 +37,8 @@ class MySmartCReqMOD
 		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'cancel_request' ] );
 		
+		$MySmartBB->plugin->runHooks( 'cancel_request_start' );
+		
 		if (empty($MySmartBB->_GET['type']) 
 			or empty($MySmartBB->_GET['code']))
 		{
@@ -53,6 +55,8 @@ class MySmartCReqMOD
 			
 		if ($CleanReq)
 		{
+		    $MySmartBB->plugin->runHooks( 'cancel_request_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'request_canceled' ] );
 			$MySmartBB->func->goto('index.php');
 		}

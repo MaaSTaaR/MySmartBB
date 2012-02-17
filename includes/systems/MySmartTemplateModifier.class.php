@@ -63,12 +63,11 @@ class MySmartTable extends Table
         // Ensure that we add the new row under the template's syntax and not inside it
         $matches = array();
         
-        $search = str_replace( array( '<', '>', '/', '{', '}', '?', '[', ']', '$' ), array( '\\<', '\\>', '\\/', '\\{', '\\}', '\\?', '\\[', '\\]', '\\$' ), $html );
+        // Regular expression's black magic :-/
+        // http://www.php.net/manual/en/regexp.reference.meta.php
+        $search = str_replace( array( '<', '>', '/', '{', '}', '?', '[', ']', '$', '^', '.', '|', '(', ')', '*', '+' ), array( '\\<', '\\>', '\\/', '\\{', '\\}', '\\?', '\\[', '\\]', '\\$', '\\^', '\\.', '\\|', '\\(', '\\)', '\\*', '\\+' ), $html );
         
         $find = preg_match( '/' . $search . '(.*?)\{\/(.*?)\}/s', $this->content, &$matches );
-        
-        //var_dump( $find );
-        //echo htmlspecialchars( $search );
         
         if ( $find != 0 )
         {

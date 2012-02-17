@@ -55,6 +55,10 @@ class MySmartAnnouncementMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'announcement_show_start' );
+		
+		// ... //
+		
 		// Where is the member now?
      	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'reading_announcement' ] . ' ' . $MySmartBB->_CONF['template']['AnnInfo']['title'] );
      	

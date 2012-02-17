@@ -28,9 +28,11 @@ class MySmartChangeStyleMOD
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
-				
+		
 		if ($MySmartBB->_GET['change'])
 		{
+		    $MySmartBB->plugin->runHooks( 'change_style_start' );
+		    
 			if ( $MySmartBB->_CONF['member_permission'] )
 			{
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -46,6 +48,8 @@ class MySmartChangeStyleMOD
 			
 			if ($change)
 			{
+			    $MySmartBB->plugin->runHooks( 'change_style_success' );
+			    
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'style_changed' ] );
 				$MySmartBB->func->move('index.php');
 			}

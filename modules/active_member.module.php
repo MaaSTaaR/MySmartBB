@@ -37,6 +37,8 @@ class MySmartActiveMOD
 		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'activate_membership' ] );
 		
+		$MySmartBB->plugin->runHooks( 'active_member_start' );
+		
 		// No code !
 		if (empty($MySmartBB->_GET['code']))
 		{
@@ -85,7 +87,9 @@ class MySmartActiveMOD
 		
 		// The active is success
 		if ($UpdateGroup)
-		{	
+		{
+		    $MySmartBB->plugin->runHooks( 'active_member_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
 			$MySmartBB->func->goto('index.php');
 		}

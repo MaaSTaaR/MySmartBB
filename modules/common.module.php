@@ -8,6 +8,8 @@ class MySmartCommon
 			
 	public function run()
 	{
+	    global $MySmartBB;
+	    
 		$this->_generalProc();
 		$this->_checkMember();
 		$this->_setInformation();
@@ -15,6 +17,8 @@ class MySmartCommon
 		$this->_getStylePath();
 		$this->_checkClose();
 		$this->_templateAssign();
+		
+		$MySmartBB->plugin->runHooks( 'common_end' );
 	}
 	
 	private function _generalProc()

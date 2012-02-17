@@ -21,23 +21,8 @@ class MySmartFooterMOD
 		
 		// ... //
 		
-		//$MySmartBB->template->assign( 'memory_usage', memory_get_usage()/1024 );
-		//$MySmartBB->template->assign( 'query_num', $MySmartBB->_CONF[ 'temp' ][ 'query_numbers' ] );
-		
 		$MySmartBB->template->display( 'footer' );
-		
-		/*if ( !empty( $MySmartBB->_GET[ 'debug' ] ) )
-		{
-			$x = 1;
-			
-			foreach ( $MySmartBB->_CONF[ 'temp' ][ 'queries' ] as $k => $v )
-			{
-				echo $x . ': ' . $v . '<hr />';
-			
-				$x++;
-			}
-		}*/
-		
+				
 		// Kill everything , Hey MySmartBB you should be lovely with server because it's Powered by Linux ;)
 		unset( $MySmartBB->_CONF );
  		unset( $MySmartBB->template->_vars );

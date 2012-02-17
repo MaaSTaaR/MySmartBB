@@ -33,7 +33,7 @@ class MySmartAdsPageMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'move_to_site' ] );
-
+		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'move_to_site' ] );
@@ -52,6 +52,8 @@ class MySmartAdsPageMOD
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'ads_doesnt_exist' ] );
 		}
+		
+		$MySmartBB->plugin->runHooks( 'ads_goto_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table['ads'];
 		$MySmartBB->rec->fields = array(	'clicks'	=> $AdsRows['clicks'] + 1	);

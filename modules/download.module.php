@@ -77,6 +77,10 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'download_subject_start' );
+		
+		// ... //
+		
 		$filename = str_replace(' ','_',$SubjectInfo['title']);
 		$filename .= '.txt';
 		
@@ -164,6 +168,10 @@ class MySmartDownloadMOD
 
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'download_attachment_start' );
+		
+		// ... //
+		
 		// Send headers
 		
 		// File name
@@ -217,6 +225,8 @@ class MySmartDownloadMOD
 		
 		$filename = str_replace(' ','_',$MsgInfo['title']);
 		$filename .= '.txt';
+		
+		$MySmartBB->plugin->runHooks( 'download_pm_start' );
 		
 		// ... //
 		
