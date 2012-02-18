@@ -61,6 +61,8 @@ class MySmartMemberlistMOD
 
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
+		$MySmartBB->plugin->runHooks( 'memberlist_start' );
+		
 		$MySmartBB->template->display('show_memberlist');
 	}
 }

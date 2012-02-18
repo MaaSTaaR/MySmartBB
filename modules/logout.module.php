@@ -38,6 +38,8 @@ class MySmartLogoutMOD
 		
 		if ( $logout )
 		{
+		    $MySmartBB->plugin->runHooks( 'logout_success' );
+		    
 			$MySmartBB->template->display('logout_msg');
 			
 			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );

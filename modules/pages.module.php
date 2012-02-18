@@ -50,7 +50,9 @@ class MySmartAdsPageMOD
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['GetPage'][ 'title' ] );
 		
 		$MySmartBB->_CONF['template']['GetPage'][ 'html_code'] = $MySmartBB->func->htmlDecode( $MySmartBB->_CONF['template']['GetPage'][ 'html_code' ] );
-				
+		
+		$MySmartBB->plugin->runHooks( 'pages_start' );
+		
 		$MySmartBB->template->display('show_page');
 	}
 }

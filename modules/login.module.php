@@ -98,6 +98,10 @@ class MySmartLoginMOD
 			
 			// ... //
 			
+			$MySmartBB->plugin->runHooks( 'login_success' );
+			
+			// ... //
+			
 			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
       		$url = $url[ 'query' ];
       		$url = explode( '&', $url );
@@ -130,6 +134,8 @@ class MySmartLoginMOD
 		}
 		else
 		{
+		    $MySmartBB->plugin->runHooks( 'login_failed' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'login_failed' ] );
 		}
 	}

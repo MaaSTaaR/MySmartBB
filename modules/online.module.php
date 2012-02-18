@@ -34,14 +34,14 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->plugin->runHooks( 'online_show_start' );
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "id DESC";
 		
 		$MySmartBB->rec->getList();
 		
 		$MySmartBB->rec->setInfoCallback( 'MySmartOnlineMOD::rowProcess' );
+		
+		$MySmartBB->plugin->runHooks( 'online_show_start' );
 		
 		$MySmartBB->template->display('online');
 		

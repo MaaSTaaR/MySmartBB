@@ -59,6 +59,8 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_complete_process' ] );
 		}
 		
+		$MySmartBB->plugin->runHooks( 'pm_delete_start' );
+		
 		$k = 1;
 		$array_size = sizeof( $MySmartBB->_POST[ 'delete_list' ] );
 		
@@ -97,6 +99,8 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 			
 			$MySmartBB->rec->update();
+			
+			$MySmartBB->plugin->runHooks( 'pm_delete_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
 			$MySmartBB->func->move('index.php?page=pm_list&list=1&folder=inbox');

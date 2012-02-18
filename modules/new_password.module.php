@@ -57,6 +57,8 @@ class MySmartPasswordMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'request_doesnt_exist' ] );
 		}
 		
+		$MySmartBB->plugin->runHooks( 'new_password_start' );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'password'	=>	md5($MySmartBB->_CONF['member_row']['new_password']) );
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
@@ -67,6 +69,8 @@ class MySmartPasswordMOD
 		
 		if ($UpdatePassword)
 		{
+		    $MySmartBB->plugin->runHooks( 'new_password_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->goto('index.php');
 		}
