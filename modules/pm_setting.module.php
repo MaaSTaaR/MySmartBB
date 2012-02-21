@@ -62,6 +62,8 @@ class MySmartPrivateMassegeMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
 		
+		$MySmartBB->plugin->runHooks( 'pm_setting_main' );
+		
 		$MySmartBB->template->display('pm_setting');
 	}
 	
@@ -77,6 +79,8 @@ class MySmartPrivateMassegeMOD
 			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
+		$MySmartBB->plugin->runHooks( 'pm_setting_action_start' );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'autoreply'	=>	$MySmartBB->_POST['autoreply'],
 											'autoreply_title'	=>	$MySmartBB->_POST['title'],
@@ -90,6 +94,8 @@ class MySmartPrivateMassegeMOD
 		
 		if ($update)
 		{
+		    $MySmartBB->plugin->runHooks( 'pm_setting_action_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=pm_setting&amp;setting=1&amp;index=1');
 		}

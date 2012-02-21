@@ -120,6 +120,8 @@ class MySmartStaticMOD
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->plugin->runHooks( 'statistics_main' );
+		
 		$MySmartBB->template->display('static');
 	}
 }

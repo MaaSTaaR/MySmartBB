@@ -37,6 +37,8 @@ class MySmartTeamMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'moderators' ] );
 		
+		$MySmartBB->plugin->runHooks( 'team_show_start' );
+		
 		//$MySmartBB->member->getTeamList();
 		
 		$MySmartBB->template->display('teamlist');

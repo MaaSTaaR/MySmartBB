@@ -52,6 +52,8 @@ class MySmartUserCPSubjectMOD
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->plugin->runHooks( 'usercp_subject_start' );
+		
 		$MySmartBB->template->display('usercp_options_subjects');
 	}
 }

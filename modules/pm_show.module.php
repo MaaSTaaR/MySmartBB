@@ -102,6 +102,10 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'pm_show_before_mark_read' );
+		
+		// ... //
+		
 		$this->markAsRead();
 		
 		// ... //
@@ -115,6 +119,12 @@ class MySmartPrivateMassegeShowMOD
 		// ... //
 		
 		$MySmartBB->func->getEditorTools();
+		
+		// ... //
+		
+		$MySmartBB->plugin->runHooks( 'pm_show_main' );
+		
+		// ... //
 		
 		$MySmartBB->template->display('pm_show');
 	}

@@ -48,6 +48,10 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'search_main' );
+		
+		// ... //
+		
 		$MySmartBB->template->display('search');
 	}
 	
@@ -90,6 +94,12 @@ class MySmartSearchEngineMOD
 		// ... //
 		
 		$MySmartBB->rec->setInfoCallback( 'MySmartSearchEngineMOD::rowsProcessCB' );
+		
+		// ... //
+		
+		$MySmartBB->plugin->runHooks( 'search_action_start' );
+		
+		// ... //
 		
 		$MySmartBB->template->display('search_results');
 		

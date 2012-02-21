@@ -81,6 +81,8 @@ class MySmartPrivateMassegeSendMOD
 		
 		$MySmartBB->func->getEditorTools();
 		
+		$MySmartBB->plugin->runHooks( 'pm_send_main' );
+		
 		$MySmartBB->template->display('pm_send');
 	}
 		
@@ -110,6 +112,8 @@ class MySmartPrivateMassegeSendMOD
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_message' ] );
 		}
+		
+		$MySmartBB->plugin->runHooks( 'pm_send_action_start' );
 		
 		$size = sizeof($MySmartBB->_POST['to']);
 		

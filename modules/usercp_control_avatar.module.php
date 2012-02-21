@@ -79,6 +79,8 @@ class MySmartUserCPAvatarMOD
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_main' );
+		
 		$MySmartBB->template->display('usercp_control_avatar');
 	}
 	
@@ -89,6 +91,8 @@ class MySmartUserCPAvatarMOD
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
+		
+		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_start' );
 		
 		$allowed_array = array('.jpg','.gif','.png');
 		
@@ -217,9 +221,11 @@ class MySmartUserCPAvatarMOD
 		}
 		
 		$update = $MySmartBB->member->updateMember();
-			
+		
 		if ( $update )
 		{
+		    $MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=usercp_control_avatar&main=1',2);
 		}

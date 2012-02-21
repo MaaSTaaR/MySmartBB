@@ -42,6 +42,8 @@ class MySmartUserCPEmailMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_email' ] );
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_email_main' );
+		
 		$MySmartBB->template->display( 'usercp_control_email' );
 	}
 	
@@ -95,6 +97,8 @@ class MySmartUserCPEmailMOD
 		
 		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_email_action_start' );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'email'	=>	$MySmartBB->_POST['new_email']	);
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
@@ -103,6 +107,8 @@ class MySmartUserCPEmailMOD
 		
 		if ( $update )
 		{
+		    $MySmartBB->plugin->runHooks( 'usercp_control_email_action_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'index.php?page=usercp_control_email&amp;main=1' );
 		}

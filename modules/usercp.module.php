@@ -56,6 +56,10 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'usercp_main_start' );
+		
+		// ... //
+		
       	$MySmartBB->template->display('usercp_index');
 	}
 }

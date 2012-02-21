@@ -46,6 +46,8 @@ class MySmartUserCPInfoMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'edit_information' ] );
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_info_main' );
+		
 		$MySmartBB->template->display( 'usercp_control_info' );
 	}
 	
@@ -56,6 +58,8 @@ class MySmartUserCPInfoMOD
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
+		
+		$MySmartBB->plugin->runHooks( 'usercp_control_info_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'user_country'	=>	$MySmartBB->_POST['country'],
@@ -70,6 +74,8 @@ class MySmartUserCPInfoMOD
 		
 		if ( $update )
 		{
+		    $MySmartBB->plugin->runHooks( 'usercp_control_info_update_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=usercp_control_info&amp;main=1');
 		}
