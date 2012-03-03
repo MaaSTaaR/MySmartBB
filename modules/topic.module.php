@@ -42,6 +42,8 @@ class MySmartTopicMOD
 			$this->_subjectEnd();
 			$this->_getReply();
 			
+			$MySmartBB->plugin->runHooks( 'topic_main' );
+			
 			if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			{
 				if ($MySmartBB->_CONF['info_row']['samesubject_show'])

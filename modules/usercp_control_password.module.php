@@ -42,6 +42,8 @@ class MySmartUserCPPasswordMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_password' ] );
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_password_main' );
+		
 		$MySmartBB->template->display( 'usercp_control_password' );
 	}
 	
@@ -80,6 +82,8 @@ class MySmartUserCPPasswordMOD
 		
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'usercp_control_password_start' );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'password'	=>	$MySmartBB->_POST['new_password']	);
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
@@ -88,6 +92,8 @@ class MySmartUserCPPasswordMOD
 
 		if ( $update )
 		{
+		    $MySmartBB->plugin->runHooks( 'usercp_control_password_success' );
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'index.php?page=usercp_control_password&amp;main=1' );
 		}

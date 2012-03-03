@@ -59,6 +59,8 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'register_rules' ] );
 		
+		$MySmartBB->plugin->runHooks( 'register_rules_main' );
+		
 		$MySmartBB->template->display('register_rules');
 	}
 	
@@ -70,6 +72,8 @@ class MySmartRegisterMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'registering' ] );
+		
+		$MySmartBB->plugin->runHooks( 'register_main' );
 		
 		$MySmartBB->template->display('register');
 	}
@@ -189,6 +193,10 @@ class MySmartRegisterMOD
       		
       	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
       	
+      	// ... //
+      	
+      	$MySmartBB->plugin->runHooks( 'register_start' );
+      	
       	/* ... */
       	
       	// Get the information of default group to set username style cache
@@ -223,7 +231,9 @@ class MySmartRegisterMOD
       		$member_num = $MySmartBB->_CONF['info_row']['member_number'];
       		
       		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->rec->id );
-      														
+      		
+      		$MySmartBB->plugin->runHooks( 'register_success' );
+      		
       		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
       		{
       			$adress	= 	$MySmartBB->func->getForumAdress();

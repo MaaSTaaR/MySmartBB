@@ -53,6 +53,8 @@ class MySmartForumMOD
 		$this->_getSubSection();
 		$this->_getSubjectList();
 		
+		$MySmartBB->plugin->runHooks( 'forum_main' );
+		
 		$this->_callTemplate();
 	}
 	

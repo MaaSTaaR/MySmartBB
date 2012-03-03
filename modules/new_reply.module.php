@@ -138,6 +138,8 @@ class MySmartReplyAddMOD
 		
 		$MySmartBB->template->assign('Admin',$this->moderator);
 		
+		$MySmartBB->plugin->runHooks( 'new_reply_main' );
+		
 		$MySmartBB->template->display('new_reply');
 	}
 		
@@ -169,6 +171,8 @@ class MySmartReplyAddMOD
 				$update = $MySmartBB->subject->closeSubject( null, $this->SubjectInfo['id'] );
 			}
 		}
+		
+		$MySmartBB->plugin->runHooks( 'new_reply_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 		$MySmartBB->rec->fields = array(	'title'			=>	$MySmartBB->_POST['title'],
@@ -217,6 +221,8 @@ class MySmartReplyAddMOD
 			$this->_updateInformation();
 			
 			// ... //
+			
+			$MySmartBB->plugin->runHooks( 'new_reply_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_published' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password']);

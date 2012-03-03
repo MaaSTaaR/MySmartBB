@@ -100,6 +100,8 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->rec->setInfoCallback( 'MySmartPrivateMassegeListMOD::rowsProcessCB' );
 		
+		$MySmartBB->plugin->runHooks( 'pm_list_main' );
+		
 		$MySmartBB->template->display('pm_list');
 		
 		$MySmartBB->rec->removeInfoCallback();

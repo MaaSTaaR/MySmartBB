@@ -128,6 +128,10 @@ class MySmartTopicAddMOD
 				
 		// ... //
 		
+		$MySmartBB->plugin->runHooks( 'new_topic_main' );
+		
+		// ... //
+		
 		$MySmartBB->template->display('new_topic');
 	}
 	
@@ -151,6 +155,10 @@ class MySmartTopicAddMOD
 		// ... //
 		
 		$this->_checkContextLength();
+		
+		// ... //
+		
+		$MySmartBB->plugin->runHooks( 'new_topic_start' );
 		
 		// ... //
 		
@@ -211,6 +219,8 @@ class MySmartTopicAddMOD
 			$this->_updateInformation();
 			
 			// ... //
+			
+			$MySmartBB->plugin->runHooks( 'new_topic_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
