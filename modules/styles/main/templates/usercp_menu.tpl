@@ -89,6 +89,9 @@
      			<a href="index.php?page=usercp_option_subject&amp;main=1">{$lang['own_topics']}</a>
      		</td>
      	</tr>
+<<<<<<< .mine
+     	{hook}end_of_member_options{/hook}
+=======
      	{hook}end_of_member_options{/hook}
 
 
@@ -117,6 +120,7 @@
 
 
 
+>>>>>>> .r168
      </table>
 </div>
 <br />

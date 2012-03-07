@@ -17,6 +17,8 @@
 	
 	<title>{$title} - (Powered By MySmartBB)</title>
 	
+	{hook}inside_header{/hook}
+	
 </head>
 
 <body>
@@ -44,6 +46,8 @@
 				
 				<div class="menu_space"></div>
 				
+				{hook}menu_after_home{/hook}
+				
 				<div class="menu_box main2">
 					{if {$_CONF['member_permission']}}
 						<a href="index.php?page=usercp&amp;index=1">{$lang['common']['conrol_panel']}</a>
@@ -70,6 +74,8 @@
 					<a href="index.php?page=search&amp;index=1">{$lang['common']['search']}</a>
 				</div>
 				
+				{hook}menu_befor_logout{/hook}
+				
 				{if {$_CONF['member_permission']}}
 					<div class="menu_space"></div>
 					
@@ -84,6 +90,7 @@
 		
 		<div id="info_bar" align="center">
 			{if !{$_CONF['member_permission']}}
+			{hook}before_login_box{/hook}
 			<form method="post" action="index.php?page=login&amp;login=1">
 		    {$lang['common']['username']} 
 			<input type="text" name="username" />
@@ -97,6 +104,7 @@
           		،
           		<a href="index.php?page=forget&amp;index=1">{$lang['common']['forgot_password']}</a>
           	</form>
+          	{hook}after_login_box{/hook}
           	{else}
           		{$lang['common']['hello_member']} <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | {$lang['common']['your_last_visit']}  {$_COOKIE['MySmartBB_lastvisit']} 
           		{if {$_CONF['info_row']['pm_feature']}}
@@ -108,6 +116,7 @@
          			<a class="unreadpm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
          		{/if}
          		{/if}
+         		{hook}inside_user_info_box{/hook}
           	{/if}
 		</div>
 		

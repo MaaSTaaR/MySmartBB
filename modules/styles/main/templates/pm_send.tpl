@@ -68,18 +68,24 @@ $(document).ready(Ready);
 {template}address_bar_part2{/template}
 {/if}
 
+{hook}after_address_bar{/hook}
+
 <form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=pm_send&amp;send=1&amp;start=1">
 
 {template}iconbox{/template}
+
+{hook}after_iconbox{/hook}
 
 <br />
 
 {template}toolbox{/template}
 
+{hook}after_toolbox{/hook}
+
 <br />
 
 {if {$is_sender_msg} or {$is_away_msg}}
-<table border="1" width="50%" class="t_style_b" align="center">
+<table id="pm_away_message_table" border="1" width="50%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
 		{$lang['information']}
@@ -108,6 +114,8 @@ $(document).ready(Ready);
 </table>
 {/if}
 
+{hook}after_pm_away_message_table{/hook}
+
 <br />
 
 <table id="resivers" border="1" width="50%" class="t_style_b" align="center">
@@ -131,9 +139,11 @@ $(document).ready(Ready);
 	</tr>
 </table>
 
+{hook}after_receivers_table{/hook}
+
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="pm_send_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['message_context']}
@@ -168,9 +178,13 @@ $(document).ready(Ready);
 {template}add_attach_table{/template}
 </div>
 
+{hook}after_attach_table{/hook}
+
 <br />
 
 {template}smilebox{/template}
+
+{hook}after_smilebox{/hook}
 
 </form>
 

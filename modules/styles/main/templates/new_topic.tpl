@@ -94,19 +94,25 @@ $(document).ready(Ready);
 </a> {$_CONF['info_row']['adress_bar_separate']} {$lang['add_new_topic']}
 {template}address_bar_part2{/template}
 
+{hook}after_address_bar{/hook}
+
 <br />
 
 <form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=new_topic&amp;start=1&amp;id={$id}{$password}">
 
 {template}iconbox{/template}
 
+{hook}after_iconbox{/hook}
+
 <br />
 
 {template}toolbox{/template}
 
+{hook}after_toolbox{/hook}
+
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="new_topic_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['topic_context']}
@@ -144,8 +150,10 @@ $(document).ready(Ready);
 
 <br />
 
+{hook}after_new_topic_table{/hook}
+
 {if {$Admin}}
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="topic_management_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
 		{$lang['management_options']}
@@ -162,6 +170,8 @@ $(document).ready(Ready);
 <br />
 {/if}
 
+{hook}after_management_table{/hook}
+
 <div id="tags_table">
 {template}add_tags_table{/template}
 </div>
@@ -177,6 +187,8 @@ $(document).ready(Ready);
 <br />
 
 {template}smilebox{/template}
+
+{hook}after_smilebox{/hook}
 
 </form>
 
