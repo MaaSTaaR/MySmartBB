@@ -1,5 +1,7 @@
 <br /><br />
 
+{hook}before_subject_table{/hook}
+
 {$pager}
 
 <table id="subject_table" border="1" class="t_style_b" width="98%" align="center">
@@ -109,3 +111,5 @@
 {$pager}
 
 <br />
+
+{hook}after_subject_table{/hook}

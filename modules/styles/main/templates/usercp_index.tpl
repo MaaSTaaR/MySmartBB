@@ -4,8 +4,10 @@
 	{template}address_bar_part1{/template}
 	<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['usercp_main']}
 	{template}address_bar_part2{/template}
+	
+	{hook}after_adress_bar{/hook}
   	
-  	<table border="1" class="t_style_b" width="80%" align="center">
+  	<table id="own_topics_table" border="1" class="t_style_b" width="80%" align="center">
   		<tr align="center">
   			<td class="main1 rows_space" colspan="5">
      		{$lang['latest_own_subject']}
@@ -57,4 +59,6 @@
 		</tr>
     	{/DB::getInfo}
 	</table>
+	
+	{hook}after_own_topics_table{/hook}
 </div>

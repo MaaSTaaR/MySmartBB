@@ -1,6 +1,8 @@
+{hook}before_add_poll_table{/hook}
+
 <br />
 
-<table border="1" width="50%" class="t_style_b" align="center" id="poll_question_answers">
+<table id="add_poll_table" border="1" width="50%" class="t_style_b" align="center" id="poll_question_answers">
 	<tr align="center">
 		<td class="main1 rows_space" colspan="2">
 		{$lang['add_poll']}
@@ -53,3 +55,5 @@
 	</tr>
 	
 </table>
+
+{hook}after_add_poll_table{/hook}

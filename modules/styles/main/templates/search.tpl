@@ -2,12 +2,14 @@
 {$lang['the_search']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 <form name="search" method="get">
 
 <input type="hidden" name="page" value="search">
 <input type="hidden" name="start" value="1">
 
-<table border="1" width="60%" class="t_style_b" align="center">
+<table id="search_table" border="1" width="60%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%" colspan="2">
 		{$lang['search_engine']}
@@ -57,3 +59,5 @@
 </div>
 
 </form>
+
+{hook}after_search_table{/hook}

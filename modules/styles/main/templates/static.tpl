@@ -3,8 +3,9 @@
 {template}address_bar_part2{/template}
 
 <br />
+{hook}after_adress_bar{/hook}
 
-<table border="1" width="95%" class="t_style_b" align="center">
+<table id="general_stats_table" border="1" width="95%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="10%" class="main1 rows_space">
 		{$lang['board_age']}
@@ -55,7 +56,9 @@
 
 <br />
 
-<table border="1" width="95%" class="t_style_b" align="center">
+{hook}after_general_stats_table{/hook}
+
+<table id="topics_stats_table" border="1" width="95%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space1">
 		{$lang['older_subject_writer']}
@@ -82,7 +85,9 @@
 
 <br />
 
-<table border="1" width="50%" class="t_style_b" align="center">
+{hook}after_topics_stats_table{/hook}
+
+<table id="most_active_writer_table" border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
 		{$lang['most_active_writer']}
@@ -102,7 +107,9 @@
 
 <br />
 
-<table border="1" width="50%" class="t_style_b" align="center">
+{hook}after_most_active_writer_table{/hook}
+
+<table id="most_active_subject" border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
 		{$lang['most_active_subject']}
@@ -130,7 +137,9 @@
 
 <br />
 
-<table border="1" width="50%" class="t_style_b" align="center">
+{hook}after_most_active_subject_table{/hook}
+
+<table id="most_active_views_table" border="1" width="50%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">
 		{$lang['most_active_subject_visits']}
@@ -156,5 +165,6 @@
 	{/DB::getInfo}
 </table>
 
+{hook}after_most_active_views_table{/hook}
 
 <br />

@@ -1,4 +1,6 @@
-<table border="1" class="t_style_b" width="98%" align="center">
+{hook}before_moderator_table{/hook}
+
+<table id="moderator_table" border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="98%" class="main1 rows_space">
 			{$lang['common']['moderators']}
@@ -14,3 +16,5 @@
 </table>
 
 <br />
+
+{hook}after_moderator_table{/hook}

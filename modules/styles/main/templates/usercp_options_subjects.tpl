@@ -5,7 +5,9 @@
 <a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['subjects_list']}
 {template}address_bar_part2{/template}
 
-<table border="1" class="t_style_b" width="80%" align="center">
+{hook}after_adress_bar{/hook}
+
+<table id="last_topics_table" border="1" class="t_style_b" width="80%" align="center">
 	<tr align="center">
   		<td class="main1 rows_space" colspan="5">
      		{$lang['your_last_subjects']}
@@ -57,5 +59,7 @@
 		</tr>
     {/DB::getInfo}
 </table>
+
+{hook}after_last_topics_table{/hook}
 
 </div>

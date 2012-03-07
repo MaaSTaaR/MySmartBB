@@ -6,22 +6,32 @@
 
 <br />
 
+{hook}after_adress_bar{/hook}
+
 {template}add_reply_link{/template}
 {template}add_subject_link{/template}
 
 <br /><br />
 
+{hook}after_adding_links{/hook}
+
 {if {$Mod}}
 {template}show_subject--subject_control{/template}
 {/if}
 
+{hook}after_topic_management{/hook}
+
 {template}show_subject--subject_information{/template}
+
+{hook}after_topic_info{/hook}
 
 {if {$SHOW_POLL}}
 {template}show_poll{/template}
 {/if}
 
-<table align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="95%">
+{hook}after_poll{/hook}
+
+<table id="topic_context_table" align="center" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="95%">
 	<tr align="center">
 		<td class="main1 rows_space" width="25%">
 			{$lang['writer_information']}
@@ -60,3 +70,5 @@
 </table>
 
 <br />
+
+{hook}after_topic_context_table{/hook}

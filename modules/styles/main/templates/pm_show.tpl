@@ -8,7 +8,9 @@
 {$lang['read_the_pm']} {$lang['common']['colon']} {$MassegeRow['title']}
 {template}address_bar_part2{/template}
 
-	<table border="1" class="t_style_b" width="96%" align="center">
+{hook}after_adress_bar{/hook}
+
+	<table id="pm_view_table" border="1" class="t_style_b" width="96%" align="center">
 		<tr align="center">
 			<td class="main1 rows_space" colspan="2">
 				<img src="{$MassegeRow['icon']}" border="0" /> {$MassegeRow['title']}
@@ -51,9 +53,13 @@
 </tr>
 </table>
 
+{hook}after_pm_view_table{/hook}
+
 <br />
 
 {template}pm_send{/template}
+
+{hook}after_pm_send{/hook}
 
 </div>
 <br />

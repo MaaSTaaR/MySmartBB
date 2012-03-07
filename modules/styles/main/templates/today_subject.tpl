@@ -1,4 +1,6 @@
-<table border="1" class="t_style_b" width="98%" align="center">
+{hook}before_today_subject_table{/hook}
+
+<table id="today_subject_table" border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="30%" class="main1 rows_space small_text" align="center" colspan="2">
 			{$lang['topic_title']}
@@ -54,3 +56,5 @@
 </table>
 
 <br />
+
+{hook}after_today_subject_table{/hook}

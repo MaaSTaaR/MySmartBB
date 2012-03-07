@@ -2,13 +2,15 @@
 {$lang['send_report']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 <form method="post" action="index.php?page=report&amp;start=1&amp;id={$id}">
 
 <br />
 
 <div align="center">
 
-<table border="1" width="70%" class="t_style_b">
+<table id="send_report_table" border="1" width="70%" class="t_style_b">
 	<tr>
 		<td class="main1 rows_space" colspan="2" align="center">
 		{$lang['send_report']}
@@ -32,4 +34,6 @@
 
 </form>
 
+
+{hook}after_send_report_table{/hook}
 <br />

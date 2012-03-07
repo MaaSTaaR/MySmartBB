@@ -5,9 +5,11 @@
 <a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['pm_setting']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 <form name="info" method="post" action="index.php?page=pm_setting&amp;setting=1&amp;start=1">
 
-	<table align="center" border="1" width="60%" class="t_style_b">
+	<table id="pm_setting_table" align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
 			{$lang['message_to_sender']}
@@ -87,3 +89,5 @@
 
 </div>
 <br />
+
+{hook}after_pm_setting_table{/hook}

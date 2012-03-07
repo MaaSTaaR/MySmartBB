@@ -1,4 +1,4 @@
-	<table align="center" border="1" width="80%" class="t_style_b">
+	<table id="avatar_site_table" align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space" colspan="2">
 				{$lang['avatar_from_website']}
@@ -17,3 +17,5 @@
 			{$_CONF['info_row']['max_avatar_width']}x{$_CONF['info_row']['max_avatar_height']}</td>
 		</tr>
 	</table>
+
+{hook}after_avatar_site_table{/hook}

@@ -4,7 +4,9 @@
 
 <br />
 
-<table border="1" class="t_style_b" width="40%" align="center">
+{hook}after_adress_bar{/hook}
+
+<table id="announcement_details_table" border="1" class="t_style_b" width="40%" align="center">
 	<tr align="center">
 		<td width="20%" class="row1">
 			{$lang['announcement_title']}
@@ -31,14 +33,19 @@
 	</tr>
 </table>
 
+
 <br />
 
-<table border="1" class="t_style_b" width="70%" align="center">
+{hook}after_announcement_details_table{/hook}
+
+<table id="announcement_context_table" border="1" class="t_style_b" width="70%" align="center">
 	<tr>
 		<td width="70%" class="row1">
 		{$AnnInfo['text']}
 		</td>
 	</tr>
 </table>
+
+{hook}after_announcement_context_table{/hook}
 
 <br />

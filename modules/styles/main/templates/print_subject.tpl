@@ -22,10 +22,12 @@
 	</a> {$_CONF['info_row']['adress_bar_separate']} <a href="{$Info['reply_id']}">{$Info['title']}</a>
 	{template}address_bar_part2{/template}
 	
+	{hook}after_adress_bar{/hook}
+	
 	<a href="index.php?page=topic&show=1&id={$Info['subject_id']}">{$lang['original_view']}</a>
 	
 	<div align="center">
-		<table border="0" cellpadding="0" class="print-table" width="95%">
+		<table id="topic_view_table" border="0" cellpadding="0" class="print-table" width="95%">
 			<tr align="center">
 				<td width="30%" class="print-td" style="font-size:14pt">
 			    {$lang['writer_information']} {$lang['common']['colon']} {$Info['display_username']}
@@ -42,5 +44,7 @@
 			</tr>
 		</table>
 	</div>
+	
+	{hook}after_topic_view_table{/hook}
 	
 <br />

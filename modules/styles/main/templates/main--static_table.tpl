@@ -1,5 +1,5 @@
 <br />
-			<table align="center" border="1" width="98%" class="t_style_b">
+			<table id="statistics_table" align="center" border="1" width="98%" class="t_style_b">
 				<tr align="center">
 					<td class="main1 rows_space">
 						{$lang['statistics']}
@@ -53,3 +53,5 @@
 				</table>
 				
 				<br />
+				
+				{hook}after_statistics_table{/hook}

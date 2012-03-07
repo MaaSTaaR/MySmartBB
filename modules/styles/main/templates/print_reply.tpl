@@ -1,5 +1,5 @@
 ﻿<div align="center">
-	<table border="0" cellpadding="0" class="print-table" width="95%">
+	<table id="reply_view_table" border="0" cellpadding="0" class="print-table" width="95%">
 		<tr align="center">
 			<td width="30%" class="print-td" style="font-size:14pt">
 			{$lang['reply_writer']} : {$Info['display_username']}
@@ -16,5 +16,7 @@
 		</tr>
 	</table>
 </div>
+
+{hook}after_reply_view_table{/hook}
 
 <br />

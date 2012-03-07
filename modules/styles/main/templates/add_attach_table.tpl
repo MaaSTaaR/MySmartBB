@@ -1,6 +1,8 @@
+{hook}before_add_attachements_table{/hook}
+
 <br />
 
-<table border="1" width="50%" class="t_style_b" align="center" id="add_attach_table">
+<table id="add_attachements_table" border="1" width="50%" class="t_style_b" align="center" id="add_attach_table">
 	<tr align="center">
 		<td class="main1 rows_space" colspan="2">
 		{$lang['add_attachments']}
@@ -25,3 +27,5 @@
 		</td>
 	</tr>
 </table>
+
+{hook}after_add_attachements_table{/hook}

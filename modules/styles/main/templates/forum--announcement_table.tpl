@@ -1,4 +1,6 @@
-<table border="1" class="t_style_b" width="98%" align="center">
+{hook}before_announcement_table{/hook}
+
+<table id="announcement_table border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="98%" align="center" class="main1 rows_space">
 			{$lang['announcements']}
@@ -22,3 +24,5 @@
 </table>
 
 <br />
+
+{hook}after_announcement_table{/hook}

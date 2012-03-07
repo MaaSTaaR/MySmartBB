@@ -1,6 +1,8 @@
+{hook}before_online_table{/hook}
+
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="online_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td width="98%" class="main1 rows_space">
 		{$lang['online_now']} {$lang['common']['colon']} ({$MemberNumber}) {$lang['common']['member']} {$lang['common']['and']} ({$GuestNumber}) {$lang['common']['visitor']}
@@ -22,3 +24,5 @@
 </table>
 
 <br />
+
+{hook}after_online_table{/hook}

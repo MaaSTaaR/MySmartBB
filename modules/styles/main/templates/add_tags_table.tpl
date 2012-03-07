@@ -1,4 +1,6 @@
-<table border="1" width="50%" class="t_style_b" align="center" id="add_tags_table">
+{hook}before_add_tags_table{/hook}
+
+<table id="add_tags_table" border="1" width="50%" class="t_style_b" align="center" id="add_tags_table">
 	<tr align="center">
 		<td class="main1 rows_space" colspan="2">
 		{$lang['topic_tags']}
@@ -19,3 +21,5 @@
 	</tr>
 	
 </table>
+
+{hook}after_add_tags_table{/hook}

@@ -6,8 +6,10 @@
 <a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['your_options']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 <form name="info" method="post" action="index.php?page=usercp_control_setting&amp;start=1">
-	<table align="center" border="1" width="60%" class="t_style_b">
+	<table id="setting_table" align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">
 			{$lang['your_options']}
@@ -106,3 +108,5 @@
 </div>
 
 <br />
+
+{hook}after_setting_table{/hook}

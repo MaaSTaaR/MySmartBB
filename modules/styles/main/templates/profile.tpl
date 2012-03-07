@@ -116,43 +116,11 @@
 		</td>
 	</tr>
 	{/if}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </table>
 <br />
 
-<<<<<<< .mine
 {hook}after_main_table{/hook}
 
-=======
-{hook}after_main_table{/hook}
-
-
-
-
-
-
-
-
-
-
->>>>>>> .r168
 {if {$MemberInfo['away']}}
 <table id="profile_away_table" align="center" class="t_style_b" border="1" width="60%">
 	<tr align="center">

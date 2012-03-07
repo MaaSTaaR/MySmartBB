@@ -1,5 +1,7 @@
+{hook}before_forum_password_form_table{/hook}
+
 <br />
-<table cellpadding="2" cellpadding="2" border="1" class="t_style_b" width="50%" align="center">
+<table id="forum_password_form_table" cellpadding="2" cellpadding="2" border="1" class="t_style_b" width="50%" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="50%">
 		{$lang['password_proctected']}
@@ -16,3 +18,5 @@
 </table>
 
 <br />
+
+{hook}after_forum_password_form_table{/hook}

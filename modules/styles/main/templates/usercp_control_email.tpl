@@ -5,10 +5,12 @@
 	{template}address_bar_part1{/template}
 	<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['change_email']}
 	{template}address_bar_part2{/template}
-
+	
+	{hook}after_adress_bar{/hook}
+	
 	<form method="post" action="index.php?page=usercp_control_email&amp;start=1">
 
-	<table align="center" border="1" width="60%" class="t_style_b">
+	<table id="change_email_table" align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td width="60%" class="main1 rows_space" colspan="2">
 			{$lang['change_email']}
@@ -37,5 +39,7 @@
 	<div align="center"><input type="submit" value="{$lang['common']['submit']}" /></div>
 
 	</form>
+	
+	{hook}after_change_email_table{/hook}
 
 </div>

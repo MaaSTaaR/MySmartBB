@@ -1,5 +1,6 @@
+{hook}before_signature_table{/hook}
 <br /><br />
-<table align="center" border="1" cellpadding="2" cellspacing="2" width="80%" class="t_style_b">
+<table id="signature_table" align="center" border="1" cellpadding="2" cellspacing="2" width="80%" class="t_style_b">
 	<tr align="center">
 		<td class="main1">
 			{$lang['signature']}		
@@ -11,3 +12,4 @@
 		</td>
 	</tr>
 </table>
+{hook}after_signature_table{/hook}

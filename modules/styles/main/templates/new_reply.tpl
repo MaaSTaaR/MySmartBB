@@ -56,17 +56,23 @@ $(document).ready(Ready);
 
 <br />
 
+{hook}after_adress_bar{/hook}
+
 <form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=new_reply&amp;start=1&amp;id={$id}{$password}">
 
 {template}iconbox{/template}
+
+{hook}after_iconbox{/hook}
 
 <br />
 
 {template}toolbox{/template}
 
+{hook}after_toolbox{/hook}
+
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="add_reply_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['reply_context']}
@@ -94,8 +100,10 @@ $(document).ready(Ready);
 
 <br />
 
+{hook}after_add_reply_table{/hook}
+
 {if {$Admin}}
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="topic_management_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
 		{$lang['management_options']}
@@ -111,13 +119,19 @@ $(document).ready(Ready);
 </table>
 {/if}
 
+{hook}after_topic_management_table{/hook}
+
 <div id="attach_table">
 {template}add_attach_table{/template}
 </div>
 
+{hook}after_add_attachements_table{/hook}
+
 <br />
 
 {template}smilebox{/template}
+
+{hook}after_smilebox{/hook}
 
 </form>
 

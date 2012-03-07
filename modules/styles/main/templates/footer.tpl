@@ -18,13 +18,17 @@
 				<a href="index.php?page=latest&amp;today=1">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
 			</div>
 		</div>
+		
+		{hook}after_styles_list{/hook}
 
 		<!-- -->
 		
 	<div id="footer">
-		Powered By <a href="">MySmartBB</a> {$_CONF['info_row']['MySBB_version']} <br />
+		Powered By <a href="http://www.mysmartbb.com" target="_blank">MySmartBB</a> {$_CONF['info_row']['MySBB_version']} <br />
 		Copyleft for MySmartBB team 2005, 2011
 	</div>
+	
+	{hook}after_copyright{/hook}
 	
 	</div>
 	</body>

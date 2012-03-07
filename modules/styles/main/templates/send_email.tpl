@@ -2,11 +2,13 @@
 {$lang['send_email_to']} {$MemberInfo['username']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 <form method="post" action="index.php?page=send&amp;member=1&amp;start=1&amp;id={$MemberInfo['id']}">
 
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="send_email_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['message_context']}
@@ -33,3 +35,5 @@
 </form>
 
 <br />
+
+{hook}after_send_email_table{/hook}

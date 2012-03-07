@@ -1,4 +1,6 @@
-<table border="1" width="98%" class="t_style_b" align="center">
+{hook}before_smile_box_table{/hook}
+
+<table id="smile_box_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['common']['emoticons']}
@@ -14,3 +16,5 @@
 		</td>
 	</tr>
 </table>
+
+{hook}after_smile_box_table{/hook}

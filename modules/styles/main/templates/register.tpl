@@ -4,8 +4,10 @@
 
 <br />
 
+{hook}after_adress_bar{/hook}
+
 <form name="register" method="post" action="index.php?page=register&amp;start=1">
-<table border="1" class="t_style_b" width="60%" align="center">
+<table id="register_form_table" border="1" class="t_style_b" width="60%" align="center">
 	<tr align="center">
 		<td width="80%" class="main1 rows_space" colspan="2">
 		{$lang['registering']}
@@ -74,3 +76,5 @@
 </div>
 </form>
 <br />
+
+{hook}after_register_form_table{/hook}

@@ -16,12 +16,14 @@
 
 <br /><br />
 
+{hook}before_member_info_table{/hook}
+
 <fieldset>
 	<legend>
 	<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$lang['member_profile']}</a>
 	</legend>
 	
-	<table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
+	<table id="member_info_table" width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
 		<tr align="center">
 			<td width="60%">
 				{$lang['member_id']} {$lang['common']['colon']}
@@ -85,6 +87,8 @@
 	</table>
 </fieldset>
 
+{hook}after_member_info_table{/hook}
+
 {if {$Info['away']}}
 	<br />
 	<fieldset>
@@ -92,3 +96,5 @@
 		{$Info['away_msg']}
 	</fieldset>
 {/if}
+
+{hook}after_awat_info{/hook}

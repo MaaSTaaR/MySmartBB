@@ -1,4 +1,6 @@
-<table border="1" class="t_style_b" width="80%" align="center">
+{hook}before_online_table{/hook}
+
+<table id="online_table" border="1" class="t_style_b" width="80%" align="center">
    	<tr align="center">
 		<td class="main1 rows_space" colspan="2">
 		{$lang['online']}
@@ -15,3 +17,5 @@
 	</tr>
 	{/DB::getInfo}
 </table>
+
+{hook}after_online_table{/hook}

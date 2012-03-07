@@ -1,4 +1,6 @@
-<table border="1" width="98%" class="t_style_b" align="center">
+{hook}before_icon_box_table{/hook}
+
+<table id="icon_box_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space">
 		{$lang['common']['icons']}
@@ -19,3 +21,5 @@
 		</td>
 	</tr>
 </table>
+
+{hook}after_icon_box_table{/hook}

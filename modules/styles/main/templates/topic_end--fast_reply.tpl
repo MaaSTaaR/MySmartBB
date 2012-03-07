@@ -2,6 +2,8 @@
 
 <br />
 
+{hook}before_quick_reply_table{/hook}
+
 <form name="topic" method="post" action="index.php?page=new_reply&amp;start=1&amp;id={$id}{$password}">
 
 {if {$_CONF['info_row']['icons_show']}}
@@ -16,7 +18,7 @@
 
 <br />
 
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="quick_reply_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['reply_context']}
@@ -42,9 +44,11 @@
 
 <br />
 
+{hook}after_quick_reply_table{/hook}
+
 {if {$Admin}}
 {if {$_CONF['info_row']['activate_closestick']}}
-<table border="1" width="98%" class="t_style_b" align="center">
+<table id="topic_management_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
 		{$lang['management_options']}
@@ -62,9 +66,13 @@
 {/if}
 {/if}
 
+{hook}after_topic_management_table{/hook}
+
 {if {$_CONF['info_row']['smiles_show']}}
 {template}smilebox{/template}
 {/if}
+
+{hook}after_smilebox{/hook}
 
 </form>
 

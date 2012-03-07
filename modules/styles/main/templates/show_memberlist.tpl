@@ -4,11 +4,13 @@
 
 <br />
 
+{hook}after_adress_bar{/hook}
+
 {$pager}
 
 <br />
 
-<table border="1" width="60%" class="t_style_b" align="center">
+<table id="member_list_table" border="1" width="60%" class="t_style_b" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="20%">
 		{$lang['username']}
@@ -46,3 +48,5 @@
 {$pager}
 
 <br />
+
+{hook}after_member_list_table{/hook}

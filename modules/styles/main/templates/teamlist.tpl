@@ -4,7 +4,9 @@
 
 <br />
 
-<table cellpadding="2" cellspacing="2" border="1" align="center" class="t_style_b" width="50%">
+{hook}after_adress_bar{/hook}
+
+<table id="team_table" cellpadding="2" cellspacing="2" border="1" align="center" class="t_style_b" width="50%">
 	<tr align="center">
 		<td class="tcat1" width="30%">
 		{$lang['username']}
@@ -25,3 +27,5 @@
 {/DB::getInfo}
 </table>
 <br />
+
+{hook}after_team_table{/hook}

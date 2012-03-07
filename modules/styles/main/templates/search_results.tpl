@@ -3,7 +3,10 @@
 {template}address_bar_part2{/template}
 
 <br />
-<table border="1" width="80%" class="t_style_b" align="center">
+
+{hook}after_adress_bar{/hook}
+
+<table id="search_results_table" border="1" width="80%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="20%" class="main1 rows_space">
 		{$lang['subject_title']}
@@ -43,3 +46,5 @@
 </table>
 
 <br />
+
+{hook}after_search_results_table{/hook}

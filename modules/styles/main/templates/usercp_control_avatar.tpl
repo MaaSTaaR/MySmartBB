@@ -47,8 +47,10 @@ $(document).ready(Ready);
 <a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['avatar']}
 {template}address_bar_part2{/template}
 
+{hook}after_adress_bar{/hook}
+
 {if {$_CONF['member_row']['avater_path']} != ''}
-	<table align="center" border="1" width="50%" class="t_style_b">
+	<table id="current_avatar_table" align="center" border="1" width="50%" class="t_style_b">
 		<tr align="center">
 			<td width="50%" class="main1">
 			{$lang['your_avatar']}
@@ -62,8 +64,11 @@ $(document).ready(Ready);
 	</table>
 	<br />
 {/if}
+
+{hook}after_current_avatar_table{/hook}
+
 <form enctype="multipart/form-data" name="avatar" method="post" action="index.php?page=usercp&amp;control=1&amp;avatar=1&amp;start=1">
-	<table align="center" border="1" width="80%" class="t_style_b">
+	<table id="avatar_options_table" align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space">
 				{$lang['options']}
@@ -127,3 +132,5 @@ $(document).ready(Ready);
 </div>
 
 <br />
+
+{hook}after_avatar_options_table{/hook}

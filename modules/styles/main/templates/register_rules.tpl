@@ -2,7 +2,9 @@
 {$lang['register_rules']}
 {template}address_bar_part2{/template}
 
-<table border="1" class="t_style_b" width="70%" align="center">
+{hook}after_adress_bar{/hook}
+
+<table id="register_rules_table" border="1" class="t_style_b" width="70%" align="center">
 	<tr align="center">
 		<td class="main1 rows_space" width="70%" colspan="2">
 			{$lang['register_rules']}
@@ -21,3 +23,5 @@
 		</td>
 	</tr>
 </table>
+
+{hook}after_register_rules_table{/hook}

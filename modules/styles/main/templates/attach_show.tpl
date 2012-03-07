@@ -1,6 +1,8 @@
+{hook}before_attachment_table{/hook}
+
 <br />
 
-<table border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="50%" align="center">
+<table id="attachment_table" border="1" cellpadding="2" cellspacing="2" class="t_style_b" width="50%" align="center">
 	<tr align="center">
 		<td width="30%" class="main1">
 			{$lang['filename']}
@@ -20,3 +22,5 @@
 	</tr>
 	{/DB::getInfo}
 </table>
+
+{hook}after_attachment_table{/hook}

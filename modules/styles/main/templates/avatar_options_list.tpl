@@ -1,4 +1,4 @@
-	<table align="center" border="1" width="80%" class="t_style_b">
+	<table id="avatar_list_table" align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space">
 				{$lang['avatar_from_list']}
@@ -22,3 +22,5 @@
 	<div align="center">
 		{$pager}
 	</div>
+
+{hook}after_avatar_list_table{/hook}

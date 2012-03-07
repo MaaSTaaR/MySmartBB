@@ -1,4 +1,6 @@
-<table border="1" width="98%" class="t_style_b" align="center">
+{hook}before_toolbox_table{/hook}
+
+<table id="toolbox_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
 		{$lang['common']['toolbox']}
@@ -55,7 +57,4 @@
 	</tr>
 </table>
 
-	
-        
-
-        
+{hook}after_toolbox_table{/hook}        

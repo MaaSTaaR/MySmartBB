@@ -1,6 +1,8 @@
 <div align="center" dir="{$lang_info['direction']}">
+{hook}before_subforums_table{/hook}
+
 {if {$SHOW_SUB_SECTIONS}}
-	<table width="98%" border="1" width="98%" class="t_style_b" align="center">
+	<table id="subforums_table" width="98%" border="1" width="98%" class="t_style_b" align="center">
 		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$lang['common']['subforums']}
@@ -15,13 +17,16 @@
 			</td>
 		</tr>
 {/if}
+
+{hook}after_subforums_table{/hook}
+
 {Des::foreach}{forums_list}{forum}
 	{if {$forum['parent']} == 0}
 		{if {$forum['sort']} != 1}
 		</table>
 		<br />
 		{/if}
-		<table width="98%" border="1" width="98%" class="t_style_b" align="center">
+		<table id="forums_table" width="98%" border="1" width="98%" class="t_style_b" align="center">
 		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$forum['title']}
@@ -140,3 +145,5 @@
 		
 </div>
 <br />
+
+{hook}after_forums_table{/hook}

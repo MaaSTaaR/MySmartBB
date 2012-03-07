@@ -1,6 +1,8 @@
+{hook}before_poll_table{/hook}
+
 <form method="post" action="index.php?page=vote&amp;start=1&amp;id={$Poll['id']}">
 
-<table align="center" border="1" class="t_style_b" width="60%">
+<table id="poll_table" align="center" border="1" class="t_style_b" width="60%">
 	<tr align="center">
 		<td class="main1 rows_space" width="60%" colspan="2">
 			{$lang['poll']}
@@ -32,3 +34,5 @@
 <br />
 
 </form>
+
+{hook}after_poll_table{/hook}
