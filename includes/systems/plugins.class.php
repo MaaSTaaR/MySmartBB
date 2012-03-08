@@ -4,11 +4,14 @@
  * @package : MySmartPlugins
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @started : 30/09/2009 10:18:46 PM (GMT+3)
- * @update : Wed 08 Feb 2012 06:51:12 AM AST 
+ * @update : Thu 08 Mar 2012 03:26:40 PM AST 
  * @license : GNU LGPL
 */
 
-require( 'plugins/interface.class.php' );
+if ( defined( 'DIR' ) )
+    require( DIR . 'plugins/interface.class.php' );
+else
+    die( 'MySmartPlugins : DIR isn\'t defined' );
 
 class MySmartPlugins
 {

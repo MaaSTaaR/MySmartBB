@@ -1,9 +1,11 @@
 <?php
 
-$DIR = dirname( __FILE__ );
-$DIR = str_replace('setup','',$DIR);
+//$DIR = dirname( __FILE__ );
+//$DIR = str_replace('setup','',$DIR);
 
-define('DIR',$DIR . '/');
+//define('DIR',$DIR . '/');
+
+define( 'DIR', str_replace( 'setup', '', dirname( __FILE__ ) ) . '/' );
 
 //define('STOP_STYLE',false);
 //define('JAVASCRIPT_SMARTCODE',false);
