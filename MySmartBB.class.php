@@ -305,12 +305,12 @@ class MySmartBB
 		// Is magic quotes on or off?
 		$magic = get_magic_quotes_gpc();
 		
-		foreach ( $vars as $name )
+		if ( !$magic )
 		{
-			if ( !$magic )
-			{
+		    foreach ( $vars as $name )
+		    {
 				$this->func->cleanArray( $this->$name, 'sql' ); // TODO : Why not from xss also?
-			}
+		    }
 		}
   	}
   	

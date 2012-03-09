@@ -133,7 +133,7 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace( $MySmartBB->lang[ 'reply' ] . ' ' . $MySmartBB->lang_common[ 'colon' ],'',$MySmartBB->_CONF['template']['MassegeRow']['title']);
+		$MySmartBB->_CONF['template']['MassegeRow']['title']	=	str_replace( $MySmartBB->lang[ 'reply' ] . ' ' . $MySmartBB->lang_common[ 'colon' ],'',$MySmartBB->_CONF['template']['MassegeRow']['title'] );
 		$MySmartBB->_CONF['template']['MassegeRow']['text'] 	=	$MySmartBB->smartparse->replace($MySmartBB->_CONF['template']['MassegeRow']['text']);
 		
 		$MySmartBB->smartparse->replace_smiles($MySmartBB->_CONF['template']['MassegeRow']['text']);

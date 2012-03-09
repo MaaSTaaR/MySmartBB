@@ -93,11 +93,6 @@ class MySmartCommon
 		
 		// ... //
 		
-		// I hate SQL Injections
-		$MySmartBB->func->cleanArray( $MySmartBB->_CONF['member_row'], 'sql' );
-		
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['usergroup'] . "'";
 		

@@ -99,11 +99,7 @@ class MySmartTopicMOD
 		}
 		
 		// ... //
-		
-		$MySmartBB->func->cleanArray( $this->Info, 'sql' );
-		
-		// ... //
-		
+				
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 		{
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );

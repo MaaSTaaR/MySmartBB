@@ -91,7 +91,7 @@ class MySmartRecords
 		if ( isset( $this->filter ) )
 		{
 			$statement .= ' WHERE ' . $this->filter;
-		
+			
 			unset( $this->filter );
 		}
 		
@@ -319,7 +319,7 @@ class MySmartRecords
 		 	 * the whole data we clean it immediately after getting it from the database.
 		 	 */
 		 	 
-			$this->func->cleanArray( $row, 'html' );
+			$this->func->cleanArray( $row, 'html,sql' );
 			
 			if ( isset( $this->info_cb ) )
 				call_user_func( $this->info_cb, &$row );

@@ -22,7 +22,7 @@ class MySmartProfileMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 					
 		$MySmartBB->func->getFooter();
@@ -68,7 +68,7 @@ class MySmartProfileMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -87,7 +87,7 @@ class MySmartProfileMOD
 		// ... //
 		
 		// Where is the member now?
-     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_member_profile' ] . $MySmartBB->MySmartBB->lang_common[ 'colon' ] . ' ' . $MySmartBB->_CONF['template']['MemberInfo']['username'] );
+     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_member_profile' ] . $MySmartBB->lang_common[ 'colon' ] . ' ' . $MySmartBB->_CONF['template']['MemberInfo']['username'] );
      	
      	// ... //
      	

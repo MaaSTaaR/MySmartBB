@@ -27,8 +27,13 @@ class MySmartFunctions
 	{
 		switch ( $type )
 		{
+		    case 'sql,html':
+		    case 'html,sql':
+		        return htmlspecialchars( addslashes( stripslashes( $var ) ) );
+		        break;
+		        
 			case 'sql':
-				return addslashes($var);
+				return addslashes( stripslashes( $var ) );
 				break;
 			
 			case 'html':
@@ -450,6 +455,8 @@ class MySmartFunctions
 	
 	public function htmlDecode( $text )
 	{
+	    $text = stripslashes( $text );
+	    
 		$text = str_replace('&amp;','&',$text);
 		$text = str_replace('&lt;','<',$text);
 		$text = str_replace('&quot;','"',$text);

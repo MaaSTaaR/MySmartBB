@@ -120,19 +120,19 @@ class MySmartTemplateCompiler
 		
 		// 2D
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~';
-		$replace_array[] 	= 	'<?php echo $this->compiler->vars[\'\\1\'][\'\\2\'][\'\\3\']; ?>';
+		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'][\'\\2\'][\'\\3\'] ); ?>';
 		
 		// 2D - Without apostrophes
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\[([^[<].*?)\]\}~';
-		$replace_array[] 	= 	'<?php echo $this->compiler->vars[\'\\1\'][\'\\2\'][\'\\3\']; ?>';
+		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'][\'\\2\'][\'\\3\'] ); ?>';
 		
 		// 1D
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\}~';
-		$replace_array[] 	= 	'<?php echo $this->compiler->vars[\'\\1\'][\'\\2\']; ?>';
+		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'][\'\\2\'] ); ?>';
 		
 		// 1D - Without apostrophes
 		$search_array[] 	= 	'~\{\$([^[<].*?)\[([^[<].*?)\]\}~';
-		$replace_array[] 	= 	'<?php echo $this->compiler->vars[\'\\1\'][\'\\2\']; ?>';
+		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'][\'\\2\'] ); ?>';
 		
 		/** End of Array **/
 		
@@ -140,7 +140,7 @@ class MySmartTemplateCompiler
 		
 		// Variable
 		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
-		$replace_array[] 	= 	'<?php echo $this->compiler->vars[\'\\1\']; ?>';
+		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'] ); ?>';
 		
 		/* ... */
 		
@@ -244,10 +244,10 @@ class MySmartTemplateCompiler
 		foreach ( $this->_while_var as $var_name )
 		{
 			$search_array[] 	=	'~\{\{\$' . $var_name . '\[([^[<].*?)\]\}\}~';
-			$replace_array[] 	=	'$this->compiler->vars[\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1]';
+			$replace_array[] 	=	'stripslashes( $this->compiler->vars[\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1] )';
 		
 			$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
-			$replace_array[] 	=	'<?php echo $this->compiler->vars[\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1]; ?>';
+			$replace_array[] 	=	'<?php echo stripslashes( $this->compiler->vars[\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1] ); ?>';
 		}
 		
 		/* ... */
@@ -307,16 +307,16 @@ class MySmartTemplateCompiler
 		foreach ( $this->_foreach_var as $var_name )
 		{		
 			$search_array[] 	= 	'~\{{\$' . $var_name . '\}}~';
-			$replace_array[] 	= 	'$' . $var_name;
+			$replace_array[] 	= 	'stripslashes( $' . $var_name . ')';
 
 			$search_array[] 	=	'~\{{\$' . $var_name . '\[([^[<].*?)\]}}~';
-			$replace_array[] 	=	'$' . $var_name . '[\\1]';
+			$replace_array[] 	=	'stripslashes( $' . $var_name . '[\\1] )';
 			
 			$search_array[] 	= 	'~\{\$' . $var_name . '\}~';
-			$replace_array[] 	= 	'<?php echo $' . $var_name . '; ?>';
+			$replace_array[] 	= 	'<?php echo stripslashes( $' . $var_name . '); ?>';
 			
 			$search_array[] 	=	'~\{\$' . $var_name . '\[([^[<].*?)\]\}~';
-			$replace_array[] 	=	'<?php echo $' . $var_name . '[\\1]; ?>';
+			$replace_array[] 	=	'<?php echo stripslashes( $' . $var_name . '[\\1] ); ?>';
 		}
 		
 		$search_array[] 	=	'~\{counter}~';

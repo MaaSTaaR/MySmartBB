@@ -14,14 +14,16 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'register' );
+		
 		if ($MySmartBB->_CONF['info_row']['reg_close'])
 		{
-			$MySmartBB->func->error( $lang[ 'register_closed' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'register_closed' ] );
 		}
 		
 		if (!$MySmartBB->_CONF['info_row']['reg_' . $MySmartBB->_CONF['day']])
    		{
-   			$MySmartBB->func->error( $lang[ 'cant_register_today' ] );
+   			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_today' ] );
    		}
    		
 		if ($MySmartBB->_GET['index'])
@@ -44,7 +46,7 @@ class MySmartRegisterMOD
 		}
 		else
 		{
-			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 	    $MySmartBB->func->getFooter();
@@ -57,7 +59,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'register_rules' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'register_rules' ] );
 		
 		$MySmartBB->plugin->runHooks( 'register_rules_main' );
 		
@@ -71,7 +73,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'registering' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'registering' ] );
 		
 		$MySmartBB->plugin->runHooks( 'register_main' );
 		
@@ -85,7 +87,7 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $lang[ 'template' ][ 'registering' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'registering' ] );
 		
 		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
 		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
@@ -100,25 +102,25 @@ class MySmartRegisterMOD
 			or empty($MySmartBB->_POST['password']) 
 			or empty($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error( $lang[ 'common' ][ 'wrong_path' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
 		// Ensure the email is equal the confirm of email
 		if ($MySmartBB->_POST['email'] != $MySmartBB->_POST['email_confirm'])
 		{
-			$MySmartBB->func->error( $lang[ 'email_confirmation_not_identical' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_confirmation_not_identical' ] );
 		}
 		
 		// Ensure the password is equal the confirm of password
 		if ($MySmartBB->_POST['password'] != $MySmartBB->_POST['password_confirm']) 
 		{
-			$MySmartBB->func->error( $lang[ 'password_confirmation_not_identical' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'password_confirmation_not_identical' ] );
 		}
 		
 		// Check if the email is valid, This line will prevent any false email
 		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
 		{
-			$MySmartBB->func->error( $lang[ 'please_write_correct_email' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_correct_email' ] );
 		}
 		
 		// Ensure there is no person used the same username
@@ -129,7 +131,7 @@ class MySmartRegisterMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error( $lang[ 'username_does_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'username_does_exist' ] );
 		}
 		
 		// Ensure there is no person used the same email
@@ -140,47 +142,47 @@ class MySmartRegisterMOD
 		
 		if ( $isMember > 0 )
 		{
-			$MySmartBB->func->error( $lang[ 'email_does_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_does_exist' ] );
 		}
 		
 		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
 		{
-			$MySmartBB->func->error( $lang[ 'banned_username' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_username' ] );
 		}
 		
 		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
 		{
-			$MySmartBB->func->error( $lang[ 'banned_email' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_email' ] );
 		}
 		
 		if ($MySmartBB->banned->isProviderBanned( $EmailProvider ))
 		{
-			$MySmartBB->func->error( $lang[ 'banned_provider' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_provider' ] );
 		}
 		
 		if ($MySmartBB->_POST['username'] == 'Guest')
 		{
-			$MySmartBB->func->error( $lang[ 'cant_register_this_username' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_this_username' ] );
 		}
 
    		if (!isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_less_num']}))
    		{
-   			$MySmartBB->func->error( $lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_less_num'] );
+   			$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_less_num'] );
       	}
       	
       	if (isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_max_num']+1}))
       	{
-       	 	$MySmartBB->func->error( $lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_max_num'] );
+       	 	$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_max_num'] );
       	}
 
       	if (isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_max_num']+1}))
       	{
-            $MySmartBB->func->error( $lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] );
+            $MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] );
       	}
 
       	if (!isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_min_num']-1}))
       	{
-        	$MySmartBB->func->error( $lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] );
+        	$MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] );
       	}
       		
 		if (strstr($MySmartBB->_POST['username'],'"') 
@@ -188,7 +190,7 @@ class MySmartRegisterMOD
 			or strstr($MySmartBB->_POST['username'],'>') 
 			or strstr($MySmartBB->_POST['username'],'<'))
       	{
-      		$MySmartBB->func->error( $lang[ 'forbidden_symbols' ] );
+      		$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_symbols' ] );
       	}
       		
       	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
@@ -268,18 +270,18 @@ class MySmartRegisterMOD
 					
 					if ($Send)
 					{
-						$MySmartBB->func->msg( $lang[ 'register_succeed_email' ] );
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed_email' ] );
 						$MySmartBB->func->move('index.php',2);
 					}
 					else
 					{
-						$MySmartBB->func->error( $lang[ 'send_failed' ]  );
+						$MySmartBB->func->error( $MySmartBB->lang[ 'send_failed' ]  );
 					}
 				}
 			}
 			else
       		{
-      			$MySmartBB->func->msg( $lang[ 'register_succeed' ] );
+      			$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed' ] );
       			$MySmartBB->func->move('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
       		}
       	}
