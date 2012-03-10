@@ -65,8 +65,6 @@ class MySmartSendMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		} 
 		
-		$MySmartBB->func->cleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
-		
 		// ... //
 		
 		$MySmartBB->template->display('send_email');
@@ -102,9 +100,7 @@ class MySmartSendMOD
 		if (!$MemberInfo)
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		} 
-		
-		$MySmartBB->func->cleanArray($MemberInfo,'sql');
+		}
 		
 		// ... //
 		

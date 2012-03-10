@@ -80,9 +80,7 @@ class MySmartProfileMOD
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		} 
-		
-		$MySmartBB->func->CleanArray($MySmartBB->_CONF['template']['MemberInfo'],'sql');
+		}
 		
 		// ... //
 		
@@ -132,8 +130,6 @@ class MySmartProfileMOD
 		
 			if ($GetLastReplyInfo != false)
 			{
-				$MySmartBB->func->cleanArray($GetLastReplyInfo,'sql');
-				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 				$MySmartBB->rec->filter = "id='" . $GetLastReplyInfo['subject_id'] . "'";
 				

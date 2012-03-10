@@ -71,10 +71,6 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
-		$MySmartBB->func->cleanArray($MySmartBB->_CONF['template']['MassegeRow'],'sql');
-		
-		// ... //
-		
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['MassegeRow'][ 'title' ] );
 		
 		// ... //

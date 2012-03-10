@@ -78,8 +78,6 @@ class MySmartForgetMOD
 		
 		$ForgetMemberInfo = $MySmartBB->rec->getInfo();
 		
-		$MySmartBB->func->cleanArray($ForgetMemberInfo,'sql');
-		
 		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'forget_action_start' );

@@ -126,8 +126,6 @@ class MySmartTopicMOD
 		
 		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
-		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
-		
 		$MySmartBB->template->assign( 'section_info', $this->SectionInfo );
 	}
 	

@@ -69,16 +69,12 @@ class MySmartReplyAddMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doent_exist' ] );
 		}
 		
-		$MySmartBB->func->cleanArray( $this->SubjectInfo, 'sql' );
-		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $this->SubjectInfo['section'] . "'";
 		
 		$this->SectionInfo = $MySmartBB->rec->getInfo();
-		
-		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
 		
 		// ... //
 		

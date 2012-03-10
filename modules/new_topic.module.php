@@ -75,9 +75,6 @@ class MySmartTopicAddMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		}
 		
-		// Kill SQL Injection
-		$MySmartBB->func->cleanArray( $this->SectionInfo, 'sql' );
-		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
