@@ -299,7 +299,7 @@ class MySmartBB
 		// Prevent the programmer from using the normal variable.
 		unset( $_POST, $_GET, $_COOKIE, $_FILES, $_SERVER );
 		
-		/** Clean values in the local arrays to prevent SQL Injection **/
+		// Clean values in the local arrays to prevent SQL Injection
 		$vars = array( '_POST', '_GET', '_COOKIE', '_FILES', '_SERVER' );
 		
 		// Is magic quotes on or off?
@@ -309,7 +309,7 @@ class MySmartBB
 		{
 		    foreach ( $vars as $name )
 		    {
-				$this->func->cleanArray( $this->$name, 'sql' ); // TODO : Why not from xss also?
+				$this->func->cleanArray( $this->$name, 'sql' );
 		    }
 		}
   	}

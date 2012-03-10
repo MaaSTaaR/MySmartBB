@@ -463,12 +463,9 @@ class MySmartFunctions
 		$text = str_replace('&gt;','>',$text);
 		$text = str_replace("\'","'",$text);
 		
-		// TODO : letter case
-		$text = str_replace('<script','',$text);
-		$text = str_replace('</script>','',$text);
-		$text = str_replace('document.cookie','',$text);
-		$text = str_replace('document.location','',$text);
-		$text = str_replace('javascript','',$text);
+		$forbidden = array( '<script', '</script>', 'document.cookie', 'document.location', 'javascript' );
+		
+		$text = str_ireplace( $forbidden, '', $text );
 		
 		return $text;
 	}

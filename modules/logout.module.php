@@ -16,6 +16,8 @@ class MySmartLogoutMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'logout' );
+		
 		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_startLogout();
