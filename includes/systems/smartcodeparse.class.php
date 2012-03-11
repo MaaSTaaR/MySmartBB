@@ -112,7 +112,8 @@ class MySmartCodeParse
  			$eregi_replace = array();
  			$eregi_replace[] = '<a href="mailto:\\1">\\1</a>';
  			$eregi_replace[] = '\\1<a href="http://\\2" target="_blank">\\2</a>';
- 									
+ 			
+ 			// TODO : This function has been DEPRECATED as of PHP 5.3.0.
  			$string = eregi_replace($eregi_search,$eregi_replace,$string); 			
  		}
  		else

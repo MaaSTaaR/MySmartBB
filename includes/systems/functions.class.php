@@ -168,6 +168,7 @@ class MySmartFunctions
 	 */
 	public function checkEmail( $email )
 	{
+	    // TODO : This function has been DEPRECATED as of PHP 5.3.0.
         return eregi( "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[_a-z0-9-]+(\.[_a-z0-9-]+)", $email ) ? true : false;
 	}
 	

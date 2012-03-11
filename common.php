@@ -85,16 +85,16 @@ class MySmartLocalCommon
 		// Check if $_GET don't value any HTML or Javascript codes
     	foreach ($MySmartBB->_GET as $xss_get)
     	{
-   			if ((eregi("<[^>]*script*\"?[^>]*>", $xss_get)) or
-       			(eregi("<[^>]*object*\"?[^>]*>", $xss_get)) or
-       			(eregi("<[^>]*iframe*\"?[^>]*>", $xss_get)) or
-       			(eregi("<[^>]*applet*\"?[^>]*>", $xss_get)) or
-       			(eregi("<[^>]*meta*\"?[^>]*>", $xss_get)) 	or
-       			(eregi("<[^>]*style*\"?[^>]*>", $xss_get)) 	or
-       			(eregi("<[^>]*form*\"?[^>]*>", $xss_get)) 	or
-       			(eregi("<[^>]*img*\"?[^>]*>", $xss_get)))
+   			if ((preg_match("/\<[^\>]*script*\"?[^\>]*\>/", $xss_get)) or
+       			(preg_match("/\<[^\>]*object*\"?[^\>]*\>/", $xss_get)) or
+       			(preg_match("/\<[^\>]*iframe*\"?[^\>]*\>/", $xss_get)) or
+       			(preg_match("/\<[^\>]*applet*\"?[^\>]*\>/", $xss_get)) or
+       			(preg_match("/\<[^\>]*meta*\"?[^\>]*\>/", $xss_get)) 	 or
+       			(preg_match("/\<[^\>]*style*\"?[^\>]*\>/", $xss_get))  or
+       			(preg_match("/\<[^\>]*form*\"?[^\>]*\>/", $xss_get)) 	 or
+       			(preg_match("/\<[^\>]*img*\"?[^\>]*\>/", $xss_get)))
             {
-    			$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
+    			die( 'Forbidden Action' );
    			}
   		}
   		
@@ -103,11 +103,11 @@ class MySmartLocalCommon
 		// Check if $_GET don't value any SQL Injection
   		foreach ($MySmartBB->_GET as $sql_get)
     	{
-   			if ((eregi("select", $sql_get)) or
-       			(eregi("union", $sql_get)) 	or
-       			(eregi("--", $sql_get)))
+   			if ((preg_match("/select/", $sql_get)) or
+       			(preg_match("/union/", $sql_get)) 	or
+       			(preg_match("/--/", $sql_get)))
        		{
-       			$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
+       			die( 'Forbidden Action' );
    			}
   		}
   		
@@ -125,7 +125,7 @@ class MySmartLocalCommon
   			
   			if ($Y[2] != $X[0])
         	{
-   				$MySmartBB->func->error('قمت بعمليه غير مشروعه!');
+   				die( 'Forbidden Action' );
   			}
   			
   			// ... //
