@@ -170,7 +170,7 @@ class MySmartCommon
 		// ... //
 				
 		// Get visitor's style
-		// Check first if the visitor chose a specific style, otherwise set the default style to show.
+		// Check first if the visitor selected a specific style, otherwise set the default style to show.
 		$style_id = (int) ( $MySmartBB->func->isCookie( $MySmartBB->_CONF[ 'style_cookie' ] ) ) ? $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'style_cookie' ] ] : $MySmartBB->_CONF[ 'info_row' ][ 'def_style' ];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
@@ -252,7 +252,7 @@ class MySmartCommon
 		}
 		else
 		{
-			$MySmartBB->func->error('');
+			die();
 		}
 	}
 	

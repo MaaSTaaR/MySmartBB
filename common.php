@@ -113,20 +113,19 @@ class MySmartLocalCommon
   		
   		// ... //
   		
-  		// Stop any unknown forms
- 		if ($MySmartBB->_SERVER['REQUEST_METHOD'] == 'POST')
+  		// Stop any external post request.
+  		// At least pervent novice crackers.
+ 		if ( $MySmartBB->_SERVER['REQUEST_METHOD'] == 'POST' )
     	{
     		// ... //
     		
-  			$Y = explode('/',$GLOBALS['HTTP_REFERER']);
-  			$X = explode('/',$GLOBALS['HTTP_HOST']);
-  			
+  			$from = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+  			$host = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
+
   			// ... //
   			
-  			if ($Y[2] != $X[0])
-        	{
+  			if ( $from[ 2 ] != $host[ 0 ] )
    				die( 'Forbidden Action' );
-  			}
   			
   			// ... //
  		}
