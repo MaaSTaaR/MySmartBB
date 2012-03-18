@@ -18,6 +18,8 @@ class MySmartAdsMOD extends _func
 		
 		if ($MySmartBB->_CONF['member_permission'])
 		{
+		    $MySmartBB->load( 'ads' );
+		    
 		    $MySmartBB->loadLanguage( 'admin_ads' );
 		    
 			$MySmartBB->template->display('header');
@@ -100,11 +102,7 @@ class MySmartAdsMOD extends _func
 			
 		if ($insert)
 		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-			
-			$ads_num = $MySmartBB->rec->getNumber();
-			
-			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
+			$update = $MySmartBB->ads->updateAdsCache();
 			
 			if ($update)
 			{
@@ -169,6 +167,8 @@ class MySmartAdsMOD extends _func
 		
 		if ($update)
 		{
+		    $update = $MySmartBB->ads->updateAdsCache();
+		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'ad_updated' ] );
 			$MySmartBB->func->move('admin.php?page=ads&amp;control=1&amp;main=1');
 		}
@@ -200,11 +200,7 @@ class MySmartAdsMOD extends _func
 		
 		if ($del)
 		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-			
-			$ads_num = $MySmartBB->rec->getNumber();
-			
-			$update = $MySmartBB->info->updateInfo( 'ads_num', $ads_num );
+			$update = $MySmartBB->ads->updateAdsCache();
 			
 			if ($update)
 			{

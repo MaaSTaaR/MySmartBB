@@ -220,7 +220,7 @@ class MySmartTopicAddMOD
 			$MySmartBB->plugin->runHooks( 'new_topic_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
-			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
 		}

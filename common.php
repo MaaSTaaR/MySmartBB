@@ -5,9 +5,7 @@ define( 'DIR', dirname( __FILE__ ) . '/' );
 // ... //
 
 if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
-{
 	define( 'JAVASCRIPT_SMARTCODE', false );
-}
 
 // ... //
 
@@ -20,13 +18,9 @@ $MySmartBB = new MySmartBB;
 // ... //
 
 if (defined('COMMON_FILE_PATH'))
-{
 	require_once(COMMON_FILE_PATH);
-}
 else
-{
 	die('ERROR::COMMON_FILE_PATH_HAS_NO_VALUE');
-}
 
 // ... //
 
@@ -53,9 +47,7 @@ class MySmartLocalCommon
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		// Important variables , all important variables should store in _CONF array
+		// Important variables , all important variables should be stored in _CONF array
 		$MySmartBB->_CONF['member_permission']		=	false;
  		$MySmartBB->_CONF['param']					=	array();
  		$MySmartBB->_CONF['rows']					=	array();
@@ -64,13 +56,6 @@ class MySmartLocalCommon
  		$MySmartBB->_CONF['template']				=	array();
  		$MySmartBB->_CONF['template']['while']		=	array();
  		$MySmartBB->_CONF['template']['foreach']	=	array();
- 		
- 		// ... //
- 		
- 		//if ( !defined( 'STOP_STYLE' ) )
- 		//	define( 'STOP_STYLE', ( isset( $MySmartBB->_POST['ajax'] ) ) ? true : false );
- 		
- 		// ... //
 	}
 
 	/**
@@ -82,35 +67,25 @@ class MySmartLocalCommon
 		
 		// ... //
 		
-		// Check if $_GET don't value any HTML or Javascript codes
-    	foreach ($MySmartBB->_GET as $xss_get)
+		// Preventing XSS and SQL Injection's keywords from the GET request
+    	foreach ( $MySmartBB->_GET as $get )
     	{
-   			if ((preg_match("/\<[^\>]*script*\"?[^\>]*\>/", $xss_get)) or
-       			(preg_match("/\<[^\>]*object*\"?[^\>]*\>/", $xss_get)) or
-       			(preg_match("/\<[^\>]*iframe*\"?[^\>]*\>/", $xss_get)) or
-       			(preg_match("/\<[^\>]*applet*\"?[^\>]*\>/", $xss_get)) or
-       			(preg_match("/\<[^\>]*meta*\"?[^\>]*\>/", $xss_get)) 	 or
-       			(preg_match("/\<[^\>]*style*\"?[^\>]*\>/", $xss_get))  or
-       			(preg_match("/\<[^\>]*form*\"?[^\>]*\>/", $xss_get)) 	 or
-       			(preg_match("/\<[^\>]*img*\"?[^\>]*\>/", $xss_get)))
+   			if ( (preg_match("/\<[^\>]*script*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*object*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*iframe*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*applet*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*meta*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*style*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*form*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/\<[^\>]*img*\"?[^\>]*\>/", $get)) or
+       			(preg_match("/select/", $get)) or
+       			(preg_match("/union/", $get)) or
+       			(preg_match("/--/", $get)) )
             {
     			die( 'Forbidden Action' );
    			}
   		}
-  		
-  		// ... //
-		
-		// Check if $_GET don't value any SQL Injection
-  		foreach ($MySmartBB->_GET as $sql_get)
-    	{
-   			if ((preg_match("/select/", $sql_get)) or
-       			(preg_match("/union/", $sql_get)) 	or
-       			(preg_match("/--/", $sql_get)))
-       		{
-       			die( 'Forbidden Action' );
-   			}
-  		}
-  		
+  		  		
   		// ... //
   		
   		// Stop any external post request.

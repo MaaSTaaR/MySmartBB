@@ -36,6 +36,7 @@ class MySmartBB
 	public $db;
 	
 	// Functions
+	public $ads = null;
 	public $member = null;
 	public $info = null;
 	public $online = null;
@@ -238,6 +239,7 @@ class MySmartBB
   		$this->func_list[ 'tag' ] 			= 	array( 'tags.class.php', 'MySmartTags' );
   		$this->func_list[ 'attach' ] 		= 	array( 'attach.class.php', 'MySmartAttach' );
   		$this->func_list[ 'usertitle' ] 	= 	array( 'usertitle.class.php', 'MySmartUsertitle' );
+  		$this->func_list[ 'ads' ] 	        = 	array( 'ads.class.php', 'MySmartAds' );
   	}
   	
   	// ... //

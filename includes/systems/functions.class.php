@@ -495,6 +495,36 @@ class MySmartFunctions
 			return $resource;
 		}
 	}
+	
+	// For performance purpose, we didn't put this function in the includes/functions/ads.class.php
+	// Because we need to call this function in common.module.php, 
+	// therefore it _should_ be here so there is no need to load ads.class.php in all pages for one function only.
+	public function getRandomAds()
+	{
+	    global $MySmartBB;
+	    
+	    $info = $MySmartBB->_CONF[ 'info_row' ][ 'ads_cache' ];
+	    
+	    if ( !empty( $info ) )
+	    {
+	        $cache = unserialize( base64_decode( $info ) );
+	        
+	        if ( is_array( $cache ) )
+	        {
+	            $random = rand( 0, $MySmartBB->_CONF[ 'info_row' ][ 'ads_num' ] - 1 );
+	            
+	            return $cache[ $random ];
+	        }
+	        else
+	        {
+	            return null;
+	        }
+	    }
+	    else
+	    {
+	        return null;
+	    }
+	}
 }
 
 ?>
