@@ -1,0 +1,1 @@
+INSERT INTO #table# SET key='info',value=''

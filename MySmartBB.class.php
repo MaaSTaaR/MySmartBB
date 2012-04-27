@@ -17,6 +17,7 @@ require_once( DIR . 'includes/functions/member.class.php');
 require_once( DIR . 'includes/functions/info.class.php');
 require_once( DIR . 'includes/functions/online.class.php');
 require_once( DIR . 'includes/functions/style.class.php');
+require_once( DIR . 'includes/functions/cache.class.php');
 
 require_once( DIR . 'includes/config.php');
 
@@ -107,6 +108,10 @@ class MySmartBB
   		
   		// ... //
   		
+  		$this->initClasses();
+  		
+  		// ... //
+  		
   		$this->initInfo();
  		
 		// ... //
@@ -118,11 +123,7 @@ class MySmartBB
 		$this->initVariables();
 		
 		// ... //
-		
-		$this->initClasses();
-		
-		// ... //
-		
+				
 		$this->initPageAlign();
 		
 		// ... //
@@ -195,6 +196,7 @@ class MySmartBB
   		$this->table['subjects_bookmark'] 	= 	$this->prefix . 'subjects_bookmark';
   		$this->table[ 'plugin' ]			=	$this->prefix . 'plugins';
   		$this->table[ 'hook' ]				=	$this->prefix . 'plugins_hooks';
+  		$this->table[ 'cache' ]				=	$this->prefix . 'cache';
   	}
   	
   	// ... //
@@ -224,7 +226,6 @@ class MySmartBB
   		
   		// Library's object name -> Filename, Class name
   		$this->func_list[ 'banned' ] 		= 	array( 'banned.class.php', 'MySmartBanned' );
-  		$this->func_list[ 'cache' ] 		= 	array( 'cache.class.php', 'MySmartCache' );
   		$this->func_list[ 'group' ] 		= 	array( 'group.class.php', 'MySmartGroup' );
   		$this->func_list[ 'icon' ] 			= 	array( 'icons.class.php', 'MySmartIcons' );
   		$this->func_list[ 'massege' ] 		= 	array( 'messages.class.php', 'MySmartMessages' );
@@ -272,17 +273,21 @@ class MySmartBB
   		{
  			// TODO :: Cache me please!
  			
- 			$this->_CONF['info']					=	array();
+ 			//$this->_CONF['info']					=	array();
     		$this->_CONF['info_row']				=	array();
+			
+			$this->_CONF[ 'info_row' ] = $this->info->getInfoList();
 				
-			$this->rec->table = $this->table[ 'info' ];
+			/*$this->rec->table = $this->table[ 'info' ];
 		
 			$this->rec->getList();
 		
 			while ( $r = $this->rec->getInfo() )
 			{
 				$this->_CONF[ 'info_row' ][ $r[ 'var_name' ] ] = $r[ 'value' ];
-			}
+			}*/
+			
+			
 			
 			$this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] = $this->func->htmlDecode( $this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] );
  		}
@@ -322,6 +327,7 @@ class MySmartBB
   	{
 		if (!defined('INSTALL'))
 		{
+		    // $compiler is a local variable, so no need to unset it.
 			$compiler = new MySmartTemplateCompiler( $this );
 			
   			$this->template		=	new MySmartTemplate( $compiler );
@@ -336,6 +342,7 @@ class MySmartBB
   		$this->info 	= new MySmartInfo( $this );
   		$this->online 	= new MySmartOnline( $this );
   		$this->style 	= new MySmartStyle( $this );
+  		$this->cache 	= new MySmartCache( $this );
   	}
   	
   	// ... //

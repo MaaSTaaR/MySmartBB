@@ -5,11 +5,14 @@
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start 		: 	15/6/2006 , 10:46 PM
  * @updated 	: 	Sat 03 Sep 2011 03:36:43 AM AST 
+ * @license     :   GNU LGPL
  */
 
 class MySmartCache
 {
 	private $engine;
+	
+	const EMPTY_CACHE = 0;
 	
 	// ... //
 	
@@ -19,7 +22,55 @@ class MySmartCache
 	}
 	
 	// ... //
-	
+
+ 	public function updateCache( $key, $values )
+ 	{
+ 		if ( empty( $key )
+ 			or empty( $values )
+ 			or !is_array( $values ) )
+ 		{
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateCache() -- EMPTY name or value', E_USER_ERROR );
+ 		}
+ 		
+ 		$cache = serialize( $values );
+ 		$cache = base64_encode( $cache );
+ 		
+		$this->engine->rec->table = $this->engine->table[ 'cache' ];
+		$this->engine->rec->fields = array(	'cache'	=>	$cache	);
+		$this->engine->rec->filter = "name='" . $key . "'";
+		
+		$query = $this->engine->rec->update();
+		
+		return ($query) ? true : false;
+ 	}
+ 	
+ 	// ... //
+ 	
+ 	public function getCache( $key )
+ 	{
+ 		if ( empty( $key ) )
+ 		{
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM getCache() -- EMPTY key', E_USER_ERROR );
+ 		}
+ 		
+ 	    $this->engine->rec->table = $this->engine->table[ 'cache' ];
+ 	    $this->engine->rec->filter = "name='" . $key . "'";
+ 	    
+ 	    $info = $this->engine->rec->getInfo();
+ 	    
+ 	    if ( !$info )
+ 	        return false;
+ 	    
+ 	    if ( empty( $info[ 'cache' ] ) )
+ 	        return self::EMPTY_CACHE;
+ 	    
+ 	    $values = unserialize( base64_decode( $info[ 'cache' ] ) );
+ 	    
+ 	    return $values;
+ 	}
+ 	
+ 	// ... //
+ 		
 	public function updateLastMember( $member_num, $username, $id )
 	{
 		if ( !isset( $member_num )

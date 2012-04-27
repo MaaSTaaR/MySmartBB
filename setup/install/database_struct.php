@@ -181,6 +181,7 @@ class MySmartInstaller
 		$this->_addTable( 'vote', $this->engine->table[ 'vote' ] );
 		$this->_addTable( 'plugins', $this->engine->table[ 'plugin' ] );
 		$this->_addTable( 'hooks', $this->engine->table[ 'hook' ] );
+		$this->_addTable( 'cache', $this->engine->table[ 'cache' ] );
 	}
 	
 	private function _addRows()
@@ -194,6 +195,7 @@ class MySmartInstaller
 		$this->_addRow( 'style', $this->engine->table[ 'style' ] );
 		$this->_addRow( 'toolbox', $this->engine->table[ 'toolbox' ] );
 		$this->_addRow( 'usertitle', $this->engine->table[ 'usertitle' ] );
+		$this->_addRow( 'cache', $this->engine->table[ 'cache' ] );
 	}
 	
 	private function _addTable( $filename, $tablename )
