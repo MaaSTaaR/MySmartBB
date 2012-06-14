@@ -54,7 +54,7 @@ class MySmartModerators
 	// Description : 	Checks if the member is a moderator or not
 	//
 	// Parameters :
-	//				- $value : 	can be the id or the username of the member that we need to check if (s)he's a moderator,
+	//				- $value : 	can be the id or the username of the member who we need to check if (s)he's a moderator,
 	//              - $type : spicifies if $value is an 'id' or 'username'
 	//              - $section_id : the id of the section that we want to check if the member has a permission to moderate it,
 	//                              this parameter can be empty, in this case the function only checks if the member is on the list
@@ -180,13 +180,17 @@ class MySmartModerators
 			
 			// ~ Cache stuff ~ //
 			
-			$cache = $this->createModeratorsCache( $section_info[ 'section_id' ] );
+			$cache = $this->createModeratorsCache( $section_info[ 'id' ] );
 			
 			$this->engine->rec->table = $this->engine->table[ 'section' ];
 			$this->engine->rec->fields	= array();
 			$this->engine->rec->fields['moderators'] = $cache;
 			
+			$this->engine->rec->filter = "id='" . $section_info[ 'id' ] . "'";
+			
 			$update = $this->engine->rec->update();
+			
+			$this->engine->section->updateForumCache( $section_info[ 'parent' ], $section_info[ 'id' ] );
 		
 			return ( $update ) ? true : false;
 		}
@@ -212,9 +216,8 @@ class MySmartModerators
 		
 		if ( $del )
 		{
-		    // Note : We have to check if the member isn't a moderator of another section.
+		    // We have to check if the member isn't a moderator of another section.
 		    // If (s)he is, so we'll not change his/her group or title.
-		    
 			if ( !$this->isModerator( $moderator_info[ 'member_id' ] ) )
 			{
 				$this->engine->rec->table = $this->engine->table[ 'group' ];
@@ -234,12 +237,30 @@ class MySmartModerators
 				}				
 			}
 			
+			// ... //
+			
 			$cache = $this->engine->moderator->createModeratorsCache( $moderator_info['section_id'] );
-				
+			
 			$this->engine->rec->table   =   $this->engine->table[ 'section' ];
 			$this->engine->rec->fields  =	array(  'moderators'    =>  $cache  );
 			
+			$this->engine->rec->filter = "id='" . $moderator_info['section_id'] . "'";
+			
 			$update = $this->engine->rec->update();
+			
+			// ... //
+			
+			// Update the cache of the section
+			
+			$this->engine->rec->select = 'id,parent';
+			$this->engine->rec->table = $this->engine->table[ 'section' ];
+			$this->engine->rec->filter = "id='" . $moderator_info['section_id'] . "'";
+			
+			$section_info = $this->engine->rec->getInfo();
+			
+			$this->engine->section->updateForumCache( $section_info[ 'parent' ], $section_info[ 'id' ] );
+			
+			// ... //
 			
 			return ( $update ) ? true : false;
 		}

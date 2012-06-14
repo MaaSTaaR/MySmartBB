@@ -113,9 +113,11 @@ class MySmartForumsEditMOD
 		
 		if ($update)
 		{
-			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST[ 'parent' ] );
+			$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $MySmartBB->_CONF['template']['Inf']['id'] );
 			
-			// There is a new main section
+			// There is a new main section, because of the we should update the
+			// cache of the old parent to remove this child from the
+			// list of the old parent.
 			if ( $new_parent_flag )
 			{
 				$cache = $MySmartBB->section->updateSectionsCache( $old_parent );

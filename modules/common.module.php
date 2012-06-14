@@ -281,7 +281,6 @@ class MySmartCommon
 		
 		$MySmartBB->template->assign('image_path',$MySmartBB->_CONF[ 'style_info' ]['image_path']);
 		
-		$MySmartBB->template->assign('_CONF',$MySmartBB->_CONF);
 		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);
 	}
 }

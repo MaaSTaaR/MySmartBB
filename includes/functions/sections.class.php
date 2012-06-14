@@ -63,9 +63,9 @@ class MySmartSection
 		           
 		return ( $query ) ? true : false;
  	}
- 	
- 	// ... //
- 	
+	
+	// ... //
+	
 	public function createSectionsCache( $parent )
  	{
  		if ( empty( $parent ) )
@@ -149,14 +149,136 @@ class MySmartSection
 	
 	// ... //
 	
+	// See updateForumCache
+	public function createForumCache( $parent, $child )
+ 	{
+ 		if ( empty( $parent ) or empty( $child ) )
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM createForumCache()',E_USER_ERROR);
+ 		
+ 		// ... //
+ 		
+ 		$this->engine->rec->select = 'id,forums_cache';
+		$this->engine->rec->table = $this->table;
+ 		$this->engine->rec->filter = "id='" . $parent . "'";
+ 		
+ 		$parent_info = $this->engine->rec->getInfo();
+ 		
+ 		$forums_cache = unserialize( base64_decode( $parent_info[ 'forums_cache' ] ) );
+ 		
+ 		$key = -1;
+ 		$k = 0;
+ 		
+ 		foreach ( $forums_cache as $forum )
+ 		{
+ 			if ( $forum[ 'id' ] == $child )
+ 			{
+ 				$key = $k;
+ 				break;
+ 			}
+ 			
+ 			$k++;
+ 		}
+ 		
+ 		if ( $key == -1 )
+ 			trigger_error('ERROR: $child does not exist -- FROM createForumCache()',E_USER_ERROR);
+ 		
+ 		// ... //
+ 		
+ 		$cache = array();
+ 		$x = 0;
+ 		
+ 		// ... //
+ 		
+ 		$this->engine->rec->table = $this->table;
+ 		$this->engine->rec->filter = "id='" . $child . "'";
+
+ 		$forum_info = $this->engine->rec->getInfo();
+ 		
+ 		if ( $forum_info != false )
+ 		{
+			$cache 							= 	array();
+			$cache['id'] 					= 	$forum_info['id'];
+			$cache['title'] 				= 	$forum_info['title'];
+			$cache['section_describe'] 		= 	$forum_info['section_describe'];
+			$cache['parent'] 				= 	$forum_info['parent'];
+			$cache['sort'] 					= 	$forum_info['sort'];
+			$cache['section_picture'] 		= 	$forum_info['section_picture'];
+			$cache['sectionpicture_type'] 	= 	$forum_info['sectionpicture_type'];
+			$cache['use_section_picture'] 	= 	$forum_info['use_section_picture'];
+			$cache['linksection'] 			= 	$forum_info['linksection'];
+			$cache['linkvisitor'] 			= 	$forum_info['linkvisitor'];
+			$cache['last_writer'] 			= 	$forum_info['last_writer'];
+			$cache['last_subject'] 			= 	$forum_info['last_subject'];
+			$cache['last_subjectid'] 		= 	$forum_info['last_subjectid'];
+			$cache['last_date'] 			= 	$forum_info['last_date'];
+			$cache['subject_num'] 			= 	$forum_info['subject_num'];
+			$cache['reply_num'] 			= 	$forum_info['reply_num'];
+			$cache['moderators'] 			= 	$forum_info['moderators'];
+			$cache['forums_cache'] 			= 	$forum_info['forums_cache'];
+			
+			// ... //
+			
+			$cache['groups'] = array();
+			
+			$this->engine->rec->table = $this->engine->table[ 'section_group' ];
+ 			$this->engine->rec->filter = "section_id='" . $forum_info['id'] . "'";
+ 			$this->engine->rec->order = "id ASC";
+ 			
+ 			$group_res = &$this->engine->func->setResource();
+ 			
+			$this->engine->rec->getList();
+			
+			while ( $group = $this->engine->rec->getInfo( $group_res ) )
+			{
+				$cache[ 'groups' ][ $group[ 'group_id' ] ] 					=	array();
+				$cache[ 'groups' ][ $group[ 'group_id' ] ][ 'view_section' ] 	= 	$group[ 'view_section' ];
+				$cache[ 'groups' ][ $group[ 'group_id' ] ][ 'main_section' ] 	= 	$group[ 'main_section' ];
+			}
+ 			
+ 			// ... //
+ 			
+ 			$forums_cache[ $key ] = $cache;
+ 			
+ 			$cache = serialize( $forums_cache );
+ 			$cache = base64_encode( $cache );
+ 			
+ 			return $cache;
+ 		}
+ 		
+		return false;
+	}
+	
+	// ... //
+	
+	// We use this function which based on "createForumCache" to update the cache of just one child, 
+	// if we want to update the cache of the whole list of childs we should use "updateSectionsCache" which based on "createSectionsCache"
+	public function updateForumCache( $parent, $child )
+	{
+ 		if ( empty( $parent ) or empty( $child ) )
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateForumCache()',E_USER_ERROR);
+ 		
+ 		$update = $this->_updateCache( $parent, $child );
+ 		
+ 		return ($update) ? true : false;
+	}
+	
+	// ... //
+	
  	public function updateSectionsCache( $parent )
  	{
  		if ( empty( $parent ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSectionsCache()',E_USER_ERROR);
- 		}
  		
- 		$cache = $this->createSectionsCache( $parent );
+ 		$update = $this->_updateCache( $parent );
+ 		
+ 		return ($update) ? true : false;
+ 	}
+ 	
+ 	// ... //
+ 	
+ 	private function _updateCache( $parent, $child = null )
+ 	{
+ 		$cache = ( is_null( $child ) ) ? $this->createSectionsCache( $parent ) : $this->createForumCache( $parent, $child );
  		
  		if ( $cache == false )
  		{
@@ -340,8 +462,8 @@ class MySmartSection
 	
 				if ( !empty( $forum[ 'moderators' ] ) )
 				{
-					$moderators = unserialize( $forum[ 'moderators' ] );
-	
+					$moderators = unserialize( base64_decode( $forum[ 'moderators' ] ) );
+					
 					if ( is_array( $moderators ) )
 					{
 						foreach ( $moderators as $moderator )
@@ -403,8 +525,8 @@ class MySmartSection
 		}
 		else
 		{
-			$this->engine->rec->table = $this->engine->table[ 'section' ];
 			$this->engine->rec->select = 'subject_num';
+			$this->engine->rec->table = $this->engine->table[ 'section' ];
 			$this->engine->rec->filter = "id='" . $section_id . "'";
 			
 			$section_info = $this->engine->rec->getInfo();

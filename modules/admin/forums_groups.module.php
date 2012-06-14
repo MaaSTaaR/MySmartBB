@@ -111,7 +111,7 @@ class MySmartForumsDeleteMOD
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'cache_update_succeed' ] );
 				
-				$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
+				$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_CONF['template']['Inf']['parent'], $MySmartBB->_CONF['template']['Inf']['id'] );
 				
 				if ($cache)
 				{

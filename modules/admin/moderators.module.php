@@ -104,12 +104,13 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
+		// ... //
+		
+		// Check if the member is already a moderator on the same forum, if yes show an error
 		$IsModerator = $MySmartBB->moderator->isModerator( $MySmartBB->_POST['username'], 'username', $MySmartBB->_POST['section'] );
 		
-		if ($IsModerator)
-		{
+		if ( $IsModerator )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'duplicate_addition' ] );
-		}
 		
 		// ... //
 		
@@ -118,10 +119,8 @@ class MySmartModeratorsMOD extends _func
 		
 		$SectionInfo = $MySmartBB->rec->getInfo();
 		
-		if ($SectionInfo == false)
-		{
+		if ( $SectionInfo == false )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -130,7 +129,7 @@ class MySmartModeratorsMOD extends _func
 		
 		$Member = $MySmartBB->rec->getInfo();
 		
-		if ($Member != false)
+		if ( $Member != false )
 		{
 		    $set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $MySmartBB->_POST[ 'usertitle' ] );
 		    

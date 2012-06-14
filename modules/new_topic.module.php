@@ -189,9 +189,9 @@ class MySmartTopicAddMOD
 			// ... //
 						
 			$this->_addPoll();
-						
+			
 			$this->_addTags();
-				
+			
 			$this->_addAttachments();
 			
 			// ... //
@@ -312,7 +312,7 @@ class MySmartTopicAddMOD
 		// ... //
 		
 		// Update section's cache
-		$MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
+		$MySmartBB->section->updateForumCache( $this->SectionInfo['parent'], $this->SectionInfo['id'] );
 		
 		// ... //
 	}

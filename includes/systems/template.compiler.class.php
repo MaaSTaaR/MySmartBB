@@ -19,7 +19,7 @@ class MySmartTemplateCompiler
 	public $while_array				=	array();
 	public $foreach_array			=	array();
 	
-	/* ... */
+	// ... //
 	
 	function __construct( $MySmartBB )
 	{
@@ -32,44 +32,18 @@ class MySmartTemplateCompiler
 		$this->vars = &$MySmartBB->_CONF[ 'template' ];
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function assign( $varname, $value )
 	{
 		$this->vars[ $varname ] = $value;
 	}
 	
-	/* ... */
+	// ... //
 	
 	public function compile( $string )
 	{
-		//////////
-		
-		/* We need to avoid PHP's Warning and Notice messages */
-		/*if ( preg_match( '~\{\$([^[<].*?)\}~', $string )
-			or preg_match( '~\{\$([^[<].*?)\[([^[<].*?)\]\}~', $string )
-			or preg_match( '~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~', $string ) )
-		{
-			$vars_search = array();
-			$var_replace = array();
-			
-			$vars_search[] = '~\{\$([^[<].*?)\[\'([^[<].*?)\'\]\[\'([^[<].*?)\'\]\}~ie';
-			$vars_replace[] = '$this->_registerVariable( \'\\1\', \'\\2\', \'\\3\' );';
-			
-			$vars_search[] = '~\{\$([^[<].*?)\[([^[<].*?)\]\}~ie';
-			$vars_replace[] = '$this->_registerVariable( \'\\1\', \'\\2\' );';
-			
-			$vars_search[] = '~\{\$([^[<].*?)\}~ie';
-			$vars_replace[] = '$this->_registerVariable( \'\\1\' );';
-			
-			preg_replace( $vars_search, $vars_replace, $string );
-			
-			$string = $this->_defineVariables( $string );
-		}*/
-		
-		/* ... */
-		
-		/** I18n **/
+		// I18n
 		$string = preg_replace( '~\{\$lang_info\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_info[\\1]; ?>', $string );
 		$string = preg_replace( '~\{\$lang\[\'common\'\]\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang_common[\\1]; ?>', $string );
 		$string = preg_replace( '~\{\$lang\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->lang[\'template\'][\\1]; ?>', $string );
@@ -87,7 +61,7 @@ class MySmartTemplateCompiler
 			$string = $this->_proccessDBGetInfo( $string );
 		}
 		
-		/* ... */
+		// ... //
 		
 		if (preg_match('~\{Des::while}{([^[<].*?)}~',$string)
 			or preg_match('~\{Des::while::complete}~',$string))
@@ -95,21 +69,24 @@ class MySmartTemplateCompiler
 			$string = $this->_proccessWhile($string);
 		}
 		
-		//////////
+		// ... //
 		
 		if (preg_match('~\{Des::foreach}{([^[<].*?)}~',$string))
 		{
 			$string = $this->_proccessForeach($string);
 		}
 		
-		//////////
+		// ... //
 		
 		if (preg_match('~\{if (.*)\}~',$string))
 		{
 			$string = $this->_proccessIfStatement($string);
 		}
 		
-		/* ... */
+		$string = preg_replace( '~\{\$_CONF\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->_CONF[\\1]; ?>', $string );
+		$string = preg_replace( '~\{\$_CONF\[([^[<].*?)\]\[([^[<].*?)\]\}~', '<?php echo $MySmartBB->_CONF[\\1][\\2]; ?>', $string );
+		
+		// ... //
 		
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
@@ -136,13 +113,13 @@ class MySmartTemplateCompiler
 		
 		/** End of Array **/
 		
-		/* ... */
+		// ... //
 		
 		// Variable
 		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
 		$replace_array[] 	= 	'<?php echo stripslashes( $this->compiler->vars[\'\\1\'] ); ?>';
 		
-		/* ... */
+		// ... //
 		
 		$search_array[] 	= 	'~\{template}([^[<].*?){/template}~';
 		$replace_array[] 	= 	'<?php $this->display(\'\\1\'); ?>';
@@ -150,87 +127,29 @@ class MySmartTemplateCompiler
 		$search_array[] 	= 	'~\{include}([^[<].*?){/include}~';
 		$replace_array[] 	= 	'<?php include(\\1); ?>';
 		
-		/* ... */
+		// ... //
+		
 		
 		$string = preg_replace( $search_array, $replace_array, $string );
 		
 		return $string;
 	}
 	
-	/* ... */
-	
-	/**
-	 * The first step to kill PHP's warning and notice messages.
-	 */
-	private function _registerVariable()
-	{
-		$args_num = func_num_args();
-		$args = func_get_args();
-				
-		// An array
-		if ( $args_num > 1 )
-		{
-			foreach ( $args as $arg )
-			{
-				$array_syntax_args = '[\'' . $arg . '\']';
-			}
-			
-			$value = '$this->compiler->vars' . $array_syntax_args;
-		}
-		// Normal variable
-		else
-		{
-			$value = '$this->compiler->vars[\'' . $args[ 0 ] . '\']';
-		}
-		
-		$value = str_replace( '$this->compiler->vars[\'\'', '$this->compiler->vars[\'', $value );
-		$value = str_replace( '\'\']', '\']', $value );
-		
-		// Duplication is not allowed
-		if ( !in_array( $value, $this->vars_list ) )
-		{
-			$this->vars_list[] = $value;
-		}
-	}
-	
-	/* ... */
-	
-	/**
-	 * The second step to kill PHP's warning and notice messages.
-	 */
-	 
-	private function _defineVariables( $string )
-	{
-		$define_string = '<?php';
-		
-		foreach ( $this->vars_list as $var )
-		{
-			$define_string .= ' if ( !isset( ' . $var . ' ) ) { ' . $var . ' = null; } 
-			';
-		}
-		
-		$define_string .= '?>';
-		
-		$string = $define_string . $string;
-		
-		return $string;
-	}
-	
-	/* ... */
+	// ... //
 	
 	private function _proccessWhile( $string )
 	{
-		/* ... */
+		// ... //
 		
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
 		
-		/* ... */
+		// ... //
 		
 		// I am sorry, but we _must_ do that
 		$string = preg_replace( '~\{Des::while}{([^[<].*?)}~ise', '$this->_storeWhileVarName(\'\\1\');', $string );
 		
-		/* ... */
+		// ... //
 		
 		// If statement _must_ be first
 		if ( preg_match( '~\{if (.*)\}~', $string )
@@ -239,7 +158,7 @@ class MySmartTemplateCompiler
 			$string = $this->_proccessIfStatement( $string, 'while' );
 		}
 		
-		/* ... */
+		// ... //
 		
 		foreach ( $this->_while_var as $var_name )
 		{
@@ -250,27 +169,27 @@ class MySmartTemplateCompiler
 			$replace_array[] 	=	'<?php echo stripslashes( $this->compiler->vars[\'while\'][\'' . $var_name . '\'][$this->x_loop][\\1] ); ?>';
 		}
 		
-		/* ... */
+		// ... //
 		
 		$string = preg_replace( $search_array, $replace_array, $string );
 		
-		/* ... */
+		// ... //
 		
 		$string = str_replace( '{/Des::while}', '<?php $this->x_loop = $this->x_loop + 1; } ?>', $string);
 		$string = str_replace( '{Des::while::complete}', '', $string);
 		$string = str_replace( '{/Des::while::complete}', '', $string);
 		
-		/* ... */
+		// ... //
 		
 		$this->_while_var 		= 	null;
 		$this->_while_var_num 	= 	0;
 		
-		/* ... */
+		// ... //
 		
 		return $string;	
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _storeWhileVarName( $varname )
 	{
@@ -281,20 +200,20 @@ class MySmartTemplateCompiler
 		return '<?php $this->x_loop = 0; $this->size_loop = sizeof($this->compiler->vars[\'while\'][\'' . $varname . '\']); while ($this->x_loop < $this->size_loop) { ?>';
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _proccessForeach( $string )
 	{
-		/* ... */
+		// ... //
 		
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
 		
-		/* ... */
+		// ... //
 		
 		$string = preg_replace( '~\{Des::foreach}{([^[<].*?)}{([^[<].*?)}~ise', '$this->_storeForeachVarName(\'\\2\',\'\\1\');', $string );
 		
-		/* ... */
+		// ... //
 		
 		if ( preg_match( '~\{if (.*)\}~', $string )
 			or preg_match( '~if (.*) {~', $string ) )
@@ -302,7 +221,7 @@ class MySmartTemplateCompiler
 			$string = $this->_ProccessIfStatement( $string, 'foreach' );
 		}
 		
-		/* ... */
+		// ... //
 		
 		foreach ( $this->_foreach_var as $var_name )
 		{		
@@ -325,20 +244,20 @@ class MySmartTemplateCompiler
 		$search_array[] 	=	'~\{{counter}}~';
 		$replace_array[] 	=	'$this->x_loop';
 		
-		/* ... */
+		// ... //
 		
 		$string = preg_replace( $search_array, $replace_array, $string );
 		
-		/* ... */
+		// ... //
 		
 		$string = str_replace( '{/Des::foreach}', '<?php $this->x_loop += 1; } ?>', $string );
 		
-		/* ... */
+		// ... //
 		
 		return $string;	
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _storeForeachVarName( $varname, $oldname )
 	{
@@ -349,7 +268,7 @@ class MySmartTemplateCompiler
 		return '<?php foreach ($this->compiler->vars[\'foreach\'][\'' . $oldname . '\'] as $' . $varname . ') { ?>';
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _proccessIfStatement( $string, $type = null )
 	{
@@ -387,15 +306,15 @@ class MySmartTemplateCompiler
 		return $string;	
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _proccessIfStatementVariables( $input, $type = null )
 	{
-		/* ... */
+		// ... //
 		
 		$string = 'if ' . $input . ' { ';
 		
-		/* ... */
+		// ... //
 		
 		if ( $type == 'while' )
 		{
@@ -417,7 +336,10 @@ class MySmartTemplateCompiler
 			}
 		}
 		
-		/* ... */
+		// ... //
+		
+		$string = preg_replace( '~\{\$_CONF\[([^[<].*?)\]\}~', '$MySmartBB->_CONF[\\1]', $string );
+		$string = preg_replace( '~\{\$_CONF\[([^[<].*?)\]\[([^[<].*?)\]\}~', '$MySmartBB->_CONF[\\1][\\2]', $string );
 		
 		/** Array **/
 		
@@ -439,31 +361,31 @@ class MySmartTemplateCompiler
 		
 		/** End of Array **/
 		
-		/* ... */
+		// ... //
 		
 		// Variable
 		$search_array[] 	= 	'~\{\$([^[<].*?)\}~';
 		$replace_array[] 	= 	'$this->compiler->vars[\'\\1\']';
 		
-		/* ... */
+		// ... //
 		
 		$string = preg_replace( $search_array, $replace_array, $string );
 		
-		/* ... */
+		// ... //
 		
 		return $string;
 	}
 	
-	/* ... */
+	// ... //
 	
 	private function _proccessDBGetInfo( $string )
 	{
-		/* ... */
+		// ... //
 		
 		$search_array 	= 	array();
 		$replace_array 	= 	array();
 		
-		/* ... */
+		// ... //
 		
 		$search_array[] 	= 	'~\{DB::getInfo}{\$([^[<].*?)}{\$([^[<].*?)}~';
 		$replace_array[] 	= 	'<?php while ( $this->compiler->vars[\'\\2\'] = $MySmartBB->rec->getInfo( $this->compiler->vars[\'res\'][\'\\1\'] ) ) { ?>';
@@ -474,16 +396,16 @@ class MySmartTemplateCompiler
 		$search_array[] 	= 	'~\{/DB::getInfo}~';
 		$replace_array[] 	= 	'<?php } ?>';
 		
-		/* ... */
+		// ... //
 		
 		$string = preg_replace( $search_array, $replace_array, $string );
 		
-		/* ... */
+		// ... //
 		
 		return $string;	
 	}
 	
-	/* ... */
+	// ... //
 }
 
 ?>

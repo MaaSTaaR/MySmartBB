@@ -92,10 +92,10 @@ class MySmartCache
 	// Update the total of subjects in the bb.
 	public function updateSubjectNumber( $value = null, $operation = 'add', $operand = 1 )
 	{
-		$val = $this->engine->_CONF['info_row']['subject_number'];
-		
 		if ( is_null( $value ) )
 		{
+			$val = $this->engine->_CONF['info_row']['subject_number'];
+			
 			if ( $operation == 'add' )
 				$val += $operand;
 			else

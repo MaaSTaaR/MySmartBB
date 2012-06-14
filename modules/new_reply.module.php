@@ -280,7 +280,7 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		$update_cache = $MySmartBB->section->updateSectionsCache( $this->SectionInfo['parent'] );
+		$update_cache = $MySmartBB->section->updateForumCache( $this->SectionInfo['parent'], $this->SectionInfo['id'] );
 	}
 }
 	
