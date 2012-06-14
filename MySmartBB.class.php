@@ -271,23 +271,9 @@ class MySmartBB
   		// Get information from info table
   		if ( !defined( 'NO_INFO' ) )
   		{
- 			// TODO :: Cache me please!
- 			
- 			//$this->_CONF['info']					=	array();
-    		$this->_CONF['info_row']				=	array();
+    		$this->_CONF[ 'info_row' ]				=	array();
 			
-			$this->_CONF[ 'info_row' ] = $this->info->getInfoList();
-				
-			/*$this->rec->table = $this->table[ 'info' ];
-		
-			$this->rec->getList();
-		
-			while ( $r = $this->rec->getInfo() )
-			{
-				$this->_CONF[ 'info_row' ][ $r[ 'var_name' ] ] = $r[ 'value' ];
-			}*/
-			
-			
+			$this->info->getInfoList( $this->_CONF[ 'info_row' ] );			
 			
 			$this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] = $this->func->htmlDecode( $this->_CONF[ 'info_row' ][ 'adress_bar_separate' ] );
  		}

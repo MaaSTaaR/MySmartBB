@@ -12,7 +12,7 @@ class MySmartCache
 {
 	private $engine;
 	
-	const EMPTY_CACHE = 0;
+	const EMPTY_CACHE = -1;
 	
 	// ... //
 	

@@ -115,7 +115,7 @@ class MySmartIndexMOD
 
 		// ... //
 		
-		$MySmartBB->rec->filter = "username<>'Guest' AND user_date='" . $MySmartBB->_CONF['date'] . "'";
+		$MySmartBB->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
 		
 		if ( !isset( $MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] ) 
 			or !$MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] )

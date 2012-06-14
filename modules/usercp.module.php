@@ -44,7 +44,7 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['reply_res'] = '';
+		$MySmartBB->_CONF['template']['res']['last_subjects_res'] = '';
 		
 		$MySmartBB->rec->table		=	$MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter 	= 	"writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";

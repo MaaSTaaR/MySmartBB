@@ -1,10 +1,11 @@
 <?php
 
 /**
- * @package	:	MySmartOnline
+ * @package	    :	MySmartOnline
  * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start		:	4/4/2006 , 11:26 PM
- * @updated		:	Thu 28 Jul 2011 11:18:47 AM AST 
+ * @updated		:	Fri 27 Apr 2012 11:48:41 PM AST 
+ * @license     :   GNU LGPL
  */
 
 class MySmartOnline
@@ -165,40 +166,75 @@ class MySmartOnline
 	{
 		$IsToday = $this->isToday( $this->engine->_CONF[ 'member_row' ][ 'username' ] );
 		
-		// Get username with group style
-		$username_style = $this->engine->member->getUsernameWithStyle( 	$this->engine->_CONF['member_row']['username'], 
-																		$this->engine->_CONF['group_info']['username_style']  );
-		
 		// The member doesn't exist in today table , so insert the member								  
 		if (!$IsToday)
 		{
-			$this->engine->rec->table = $this->engine->table[ 'today' ];
+		    $username_style = $this->engine->member->getUsernameWithStyle( 	$this->engine->_CONF['member_row']['username'], 
+																		$this->engine->_CONF['group_info']['username_style']  );
+																		
 			
-			$this->engine->rec->fields = array(	'username'			=>	$this->engine->_CONF['member_row']['username'],
-												'user_id'			=>	$this->engine->_CONF['member_row']['id'],
-												'user_date'			=>	$this->engine->_CONF['date'],
-												'hide_browse'		=>	$this->engine->_CONF['member_row']['hide_online'],
-												'username_style'	=>	$username_style	);
+			$insert = $this->insertToday( $this->engine->_CONF[ 'member_row' ][ 'username' ], $this->engine->_CONF[ 'member_row' ][ 'id' ],
+                                            $this->engine->_CONF[ 'date' ], $this->engine->_CONF[ 'member_row' ][ 'hide_online' ], $username_style,
+                                            $this->engine->_CONF[ 'member_row' ][ 'visitor' ] );
 			
-			$InsertToday = $this->engine->rec->insert();
-			
-			if ($InsertToday)
-			{				
-				$this->engine->rec->table = $this->engine->table[ 'member' ];
-				$this->engine->rec->fields = array(	'visitor'	=>	$this->engine->_CONF['member_row']['visitor'] + 1	);
-				$this->engine->rec->filter = "id='" . (int) $this->engine->_CONF['member_row']['id'] . "'";
-				
-				$this->engine->rec->update();
-				
-				return true;
-			}
-			else
-			{
-				return false;
-			}			
+			return ( $insert ) ? true : false;	
 		}
 		
 		return true;
+	}
+	
+	public function insertToday( $username, $id, $date, $hidden, $username_style, $visits )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'today' ];
+		
+		$this->engine->rec->fields = array(	'username'			=>	$username,
+											'user_id'			=>	$id,
+											'user_date'			=>	$date,
+											'hide_browse'		=>	$hidden,
+											'username_style'	=>	$username_style	);
+			
+		$insert = $this->engine->rec->insert();
+		
+		if ( $insert )
+		{
+		    // Update visits number of the member
+			$this->engine->rec->table = $this->engine->table[ 'member' ];
+			$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
+			$this->engine->rec->filter = "id='" . (int) $id . "'";
+			
+			$this->engine->rec->update();
+			
+			return ( $this->updateTodayCache() ) ? true : false;
+		}
+		
+		return ( $insert ) ? true : false;
+	}
+	
+	public function updateTodayCache()
+	{
+	    $this->engine->rec->table = $this->engine->table[ 'today' ];
+		$this->engine->rec->order = 'user_id DESC';
+		$this->engine->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
+		
+		$this->engine->rec->getList();
+		
+		$info = array();
+		
+		while ( $row = $this->engine->rec->getInfo() )
+		{
+		    $info[] = $row;
+		}
+		
+		$info = base64_encode( serialize( $info ) );
+		
+		$this->engine->info->updateInfo( 'today_cache', $info );
+	}
+	
+	public function getTodayList()
+	{
+	    $info = array();
+	    
+	    // TODO
 	}
 	
 	// ~ ~ //

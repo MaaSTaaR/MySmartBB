@@ -25,7 +25,7 @@
 		{$lang['visits']}
 		</td>
 	</tr>
-	{DB::getInfo}{$MemberList}
+	{DB::getInfo}{$member_res}{$MemberList}
 	<tr align="center">
 		<td class="row1" width="20%">
 		<a href="index.php?page=profile&amp;show=1&amp;id={$MemberList['id']}">{$MemberList['username']}</a>

@@ -31,9 +31,6 @@ class MySmartInfo
 		
 		$query = $this->engine->rec->update();
 		
-		if ( $query )
-		    $this->updateCache();
-		
 		return ($query) ? true : false;
  	}
  	
@@ -53,9 +50,6 @@ class MySmartInfo
 		
 		$query = $this->engine->rec->insert();
 		
-		if ( $query )
-		    $this->updateCache();
-		           
 		return ( $query ) ? true : false;
  	}
  	
@@ -81,27 +75,12 @@ class MySmartInfo
 		$this->engine->rec->filter = "var_name='" . $name . "'";
 		
 		$query = $this->engine->rec->delete();
-		
-		if ( $query )
-		    $this->updateCache();
 		           
 		return ( $query ) ? true : false;
  	}
  	
- 	public function getInfoList()
+ 	public function getInfoList( &$info )
  	{
- 	    $info = $this->engine->cache->getCache( 'info' );
- 	    
- 	    if ( $info == MySmartCache::EMPTY_CACHE )
- 	        $info = $this->updateCache( true );
-		
-		return $info;
- 	}
- 	
- 	private function updateCache( $return_info_array = false )
- 	{
- 	    $info =	array();
-		
 		$this->engine->rec->table = $this->engine->table[ 'info' ];
 		
 		$this->engine->rec->getList();
@@ -110,8 +89,6 @@ class MySmartInfo
 		{
 		    $info[ $r[ 'var_name' ] ] = $r[ 'value' ];
 		}
-		
-	    return ( !$return_info_array ) ? $this->engine->cache->updateCache( 'info', $info ) : $info;
  	}
 }
 
