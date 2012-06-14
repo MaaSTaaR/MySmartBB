@@ -20,7 +20,7 @@ class MySmartSectionEditMOD
 		{
 		    $MySmartBB->loadLanguage( 'admin_sections_del' );
 		    
-			$MySmartBB->load( 'group,subject' );
+			$MySmartBB->load( 'group,subject,section' );
 			
 			$MySmartBB->template->display( 'header' );
 			
@@ -84,14 +84,8 @@ class MySmartSectionEditMOD
 				
 		if ($MySmartBB->_POST['choose'] == 'move')
 		{
-			// ... //
-			
-			if (empty($MySmartBB->_POST['to']))
-			{
+			if ( empty( $MySmartBB->_POST['to'] ) )
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_complete_the_process' ] );
-			}
-			
-			// ... //
 			
 			// Move normal sections to another main section
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
@@ -100,6 +94,8 @@ class MySmartSectionEditMOD
 			$MySmartBB->rec->filter = "parent='" . $Inf[ 'id' ] . "'";
 			
 			$update = $MySmartBB->rec->update();
+			
+			$MySmartBB->section->updateSectionsCache( $MySmartBB->_POST[ 'to' ] );
 			
 			// ... //
 			
@@ -124,7 +120,7 @@ class MySmartSectionEditMOD
 					
 					// ... //
 					
-					$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
+					$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 					$MySmartBB->rec->filter = "section_id='" . $Inf['id'] . "' AND main_section='1'";
 					
 					$del = $MySmartBB->rec->delete();
@@ -148,14 +144,14 @@ class MySmartSectionEditMOD
 			$MySmartBB->rec->order = "sort ASC";
 			
 			$SecList = $MySmartBB->rec->getList();
-		
+			
 			$s = array();
 			$x = 0;
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
-				$MySmartBB->rec->table = $MySmartBB->table[ 'section_section' ];
-				$MySmartBB->rec->filter = "section='" . $row['id'] . "' AND main_section<>'1'";
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+				$MySmartBB->rec->filter = "section_id='" . $row['id'] . "' AND main_section<>'1'";
 				
 				$del = $MySmartBB->rec->delete();
 				
@@ -206,14 +202,8 @@ class MySmartSectionEditMOD
 					if ($del)
 					{
 						$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
-						
-						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
-						
-						if ($cache)
-						{
-							$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
-							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
-						}
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
+						$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 					}
 				}
 			}
@@ -280,14 +270,8 @@ class MySmartSectionEditMOD
 					if ($del)
 					{
 						$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
-						
-						$cache = $MySmartBB->group->updateSectionGroupCache( /* $id? */ );
-						
-						if ($cache)
-						{
-							$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
-							$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
-						}
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
+						$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 					}
 				}
 			}

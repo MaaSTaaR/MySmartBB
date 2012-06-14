@@ -89,7 +89,7 @@ $(document).ready(Ready);
 		<td class="row2">
 			<select name="to" id="select_to">
 				{DB::getInfo}{$sec_res}{$section}
-				<option value="{$SecList['id']}">{$section['title']}</option>
+				<option value="{$section['id']}">{$section['title']}</option>
 				{/DB::getInfo}
 			</select>
 		</td>
