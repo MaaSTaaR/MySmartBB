@@ -60,6 +60,8 @@ class MySmartUserCPAvatarMOD
 		
 		// ... //
 		
+		$MySmartBB->_CONF['template']['res']['avatar_res'] = '';
+		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
@@ -87,6 +89,8 @@ class MySmartUserCPAvatarMOD
 	private function _avatarChange()
 	{
 		global $MySmartBB;
+		
+		$MySmartBB->load( 'attach' );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		
@@ -125,7 +129,7 @@ class MySmartUserCPAvatarMOD
 				$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_website' ] );
 			}
 				
-			$extension = $MySmartBB->func->GetURLExtension($MySmartBB->_POST['avatar']);
+			$extension = $MySmartBB->func->getURLExtension($MySmartBB->_POST['avatar']);
 				
 			if (!in_array($extension,$allowed_array))
 			{
@@ -167,7 +171,7 @@ class MySmartUserCPAvatarMOD
      			//////////
      				
      			// Get the extension of the file
-     			$ext = $MySmartBB->func->GetFileExtension($MySmartBB->_FILES['upload']['name']);
+     			$ext = $MySmartBB->attach->getFileExtension($MySmartBB->_FILES['upload']['name']);
      			
      			// Bad try!
      			if ($ext == 'MULTIEXTENSION'
@@ -220,7 +224,10 @@ class MySmartUserCPAvatarMOD
 			$MySmartBB->func->stop();
 		}
 		
-		$update = $MySmartBB->member->updateMember();
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
+		
+		$update = $MySmartBB->rec->update();
 		
 		if ( $update )
 		{

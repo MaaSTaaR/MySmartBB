@@ -6,6 +6,7 @@ $lang[ 'section_doesnt_exist' ] = 'القسم المطلوب غير موجود';
 
 $lang[ 'template' ][ 'sections' ] = 'الاقسام الرئيسيه';
 $lang[ 'template' ][ 'control_permissions' ] = 'التحكم في صلاحيات المجموعات للقسم';
-$lang[ 'template' ][ 'can_view_section' ] = 'إمكانية عرض القسم'; // sections_groups_control_main
+$lang[ 'template' ][ 'can_view_section' ] = 'إمكانية عرض القسم';
+$lang[ 'template' ][ 'group' ] = 'المجموعة';
 
 ?>

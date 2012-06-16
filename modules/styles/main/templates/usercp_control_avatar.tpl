@@ -67,7 +67,7 @@ $(document).ready(Ready);
 
 {hook}after_current_avatar_table{/hook}
 
-<form enctype="multipart/form-data" name="avatar" method="post" action="index.php?page=usercp&amp;control=1&amp;avatar=1&amp;start=1">
+<form enctype="multipart/form-data" name="avatar" method="post" action="index.php?page=usercp_control_avatar&amp;start=1">
 	<table id="avatar_options_table" align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space">

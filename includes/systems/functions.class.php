@@ -287,18 +287,18 @@ class MySmartFunctions
  	/**
  	 * Check if $adress is true site adress or not
  	 */
- 	function IsSite($adress)
+ 	public function isSite($adress)
  	{
  		return preg_match('~http:\/\/(.*?)~',$adress) ? true : false;
  	}
 
- 	function GetURLExtension($path)
+ 	public function getURLExtension($path)
  	{
  		global $MySmartBB;
  		
  		$filename = basename($path);
  		
-		return $this->GetFileExtension($filename);
+		return $MySmartBB->attach->getFileExtension($filename);
  	}
  	
  	// ... //

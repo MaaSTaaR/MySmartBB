@@ -8,7 +8,7 @@
 			<td width="80%" class="row1">
 			{DB::getInfo}{$avatar_res}{$avatar}
 				<input name="avatar_list" type="radio" value="{$avatar['avatar_path']}" id="avatar{$avatar['id']}" />
-				<label for="avatar{$AvatarList['id']}">
+				<label for="avatar{$avatar['id']}">
 					<img border="0" alt="{$lang['avatar']} #{$avatar['id']}" src="{$avatar['avatar_path']}" />
 				</label>
 				<br />

@@ -6,6 +6,7 @@ $lang[ 'section_doesnt_exist' ] = 'The category doesn\'t exist';
 
 $lang[ 'template' ][ 'sections' ] = 'Categories';
 $lang[ 'template' ][ 'control_permissions' ] = 'Control Permissions';
-$lang[ 'template' ][ 'can_view_section' ] = 'Can View The Category'; // sections_groups_control_main
+$lang[ 'template' ][ 'can_view_section' ] = 'Can View The Category';
+$lang[ 'template' ][ 'group' ] = 'Group';
 
 ?>

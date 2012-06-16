@@ -379,6 +379,11 @@ class MySmartSection
 		// Loop to read the information of main sections
 		while ( $cat = $this->engine->rec->getInfo() )
 		{
+			// Should we fetch the forums of this category or not?
+			// if the group of the visitor can't view this category
+			// so we shouldn't fetch the forums of this category.
+			$fetch_forums = true;
+			
 			// ... //
 			
 			// Get the groups information to know view this section or not
@@ -393,6 +398,12 @@ class MySmartSection
 					{
 						$forums_list[ $cat['id'] . '_m' ] = $cat;
 					}
+					else
+					{
+						// This visitor can't show the category, so don't fetch the forums
+						// which belong to this category.
+						$fetch_forums = false;
+					}
 				}
 			
 				unset($groups);
@@ -404,7 +415,7 @@ class MySmartSection
 			
 			// ... //
 			
-			if ( !empty( $cat[ 'forums_cache' ] ) )
+			if ( !empty( $cat[ 'forums_cache' ] ) and $fetch_forums )
 			{
 				$forums = $this->fetchForumsFromCache( $cat[ 'forums_cache' ], $check_group );
 				

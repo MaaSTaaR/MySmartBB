@@ -82,8 +82,19 @@ class MySmartTopicAddMOD
 		
 		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
+		// ... //
+		
+		// Get the permissions of the parent section
+		$MySmartBB->rec->select = 'view_section';
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		
+		$parent_per = $MySmartBB->rec->getInfo();
+		
+		// ... //
+		
 		// The visitor can't show this section , so stop the page
-		if (!$this->SectionGroup['view_section'] 
+		if (!$this->SectionGroup['view_section'] or $parent_per[ 'view_section' ] != 1
 			or !$this->SectionGroup['write_subject'])
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );

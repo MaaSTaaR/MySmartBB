@@ -83,9 +83,7 @@ class MySmartForumMOD
 		// ... //
 		
 		if (!$this->Section)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -100,10 +98,17 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		if ($this->SectionGroup['view_section'] != 1)
-		{
+		// Get the permissions of the parent section
+		$MySmartBB->rec->select = 'view_section';
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+		$MySmartBB->rec->filter = "section_id='" . $this->Section['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		
+		$parent_per = $MySmartBB->rec->getInfo();
+		
+		// ... //
+		
+		if ( $this->SectionGroup['view_section'] != 1 or $parent_per[ 'view_section' ] != 1 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_forum' ] );
-		}
 			
 		if ( isset( $this->Section[ 'main_section' ] )
 			and $this->Section[ 'main_section' ] )

@@ -12,9 +12,7 @@ class MySmartCommon
 	    
 		$this->_generalProc();
 		$this->_checkMember();
-		$this->_setInformation();
 		$this->_showAds();
-		$this->_getStylePath();
 		$this->_checkClose();
 		$this->_templateAssign();
 		
@@ -103,11 +101,13 @@ class MySmartCommon
 		// Get member style
 		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->member->getMemberStyle();
 		
+		$this->_setStyleInformation();
+		
 		// ... //
 		
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
 		{
-			die( $MySmartBB->lang_common[ 'cant_show_board' ] );
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_show_board' ] );
 		}
 		
 		// ... //
@@ -183,15 +183,18 @@ class MySmartCommon
 		
 		// ... //
 		
+		$this->_setStyleInformation();
+		
+		// ... //
+		
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
    		{
-   			echo 11;
    			$MySmartBB->func->error( $MySmartBB->lang_common[ 'visitor_pervented' ] );
    		}
 	}
 	
-	private function _setInformation()
+	private function _setStyleInformation()
 	{
 		global $MySmartBB;
 		
@@ -214,6 +217,17 @@ class MySmartCommon
   		$pager_html[3] 	= 	$MySmartBB->template->content('pager_style_part4');
   		
 		$MySmartBB->pager->setOutput( $pager_html );
+		
+		if ( !strstr( $MySmartBB->_CONF[ 'style_info' ][ 'style_path' ], 'http://www.' ) )
+		{
+			$filename = explode( '/', $MySmartBB->_CONF[ 'style_info' ]['style_path'] );
+			
+			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ]);
+		}
+		else
+		{
+			die();
+		}
 	}	
 		
 	/**
@@ -234,26 +248,6 @@ class MySmartCommon
 		}
 	}
 
-
-	/**
-	 * Get the style path
-	 */
-	private function _getStylePath()
-	{
-		global $MySmartBB;
-		
-		if ( !strstr( $MySmartBB->_CONF[ 'style_info' ][ 'style_path' ], 'http://www.' ) )
-		{
-			$filename = explode( '/', $MySmartBB->_CONF[ 'style_info' ]['style_path'] );
-			
-			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ]);
-		}
-		else
-		{
-			die();
-		}
-	}
-	
 	/**
 	 * Close the forums
 	 */

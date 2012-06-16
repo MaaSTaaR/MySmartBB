@@ -99,7 +99,16 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		if ( !$this->SectionGroup['view_section']
+		// Get the permissions of the parent section
+		$MySmartBB->rec->select = 'view_section';
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		
+		$parent_per = $MySmartBB->rec->getInfo();
+		
+		// ... //
+		
+		if ( !$this->SectionGroup['view_section'] or $parent_per[ 'view_section' ] != 1
 			or !$this->SectionGroup['write_reply'] )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );
