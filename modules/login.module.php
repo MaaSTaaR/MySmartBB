@@ -78,7 +78,7 @@ class MySmartLoginMOD
 			{
 				$MySmartBB->rec->filter = "id='" . (int) $isMember[ 'style' ] . "'";
 				
-				$style_cache = $MySmartBB->style->createStyleCache();
+				$style_cache = $MySmartBB->style->createStyleCache( $isMember['style'] );
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 				$MySmartBB->rec->fields = array( 	'style_cache'	=>	$style_cache,
@@ -112,25 +112,15 @@ class MySmartLoginMOD
       		
       		// ... //
       		
+      		$move_to = 'index.php';
+      		
       		if ( !$register_login )
       		{
-      			if ( $url != 'page=logout' 
-      				or empty( $url ) 
-      				or $url != 'page=login' )
-           		{
-       				$MySmartBB->func->move( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
-      			}
-      			elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
-      					or $url == 'page=logout' 
-      					or $url == 'page=login' )
-           		{
-       				$MySmartBB->func->move( 'index.php' );
-      			}
+      			if ( $url != 'page=logout' or empty( $url ) or $url != 'page=login' )
+       				$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
       		}
-      		else
-      		{
-      			$MySmartBB->func->move( 'index.php' );
-      		}
+      		
+      		$MySmartBB->func->move( $move_to );
 		}
 		else
 		{

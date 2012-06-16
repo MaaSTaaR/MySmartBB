@@ -72,12 +72,13 @@
      			<a href="index.php?page=usercp_control_email&amp;main=1">{$lang['change_email']}</a>
      		</td>
      	</tr>
-     	
+     	{if {$_CONF['info_row']['allow_avatar']}}
      	<tr>
      		<td class="row1" align="center">
      			<a href="index.php?page=usercp_control_avatar&amp;main=1">{$lang['change_avatar']}</a>
      		</td>
      	</tr>
+     	{/if}
      	{hook}end_of_profile_options{/hook}
      	<tr>
      		<td class="main2 rows_space" align="center">

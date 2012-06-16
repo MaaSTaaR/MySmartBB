@@ -27,13 +27,13 @@
 		<td class="row2">{$lang['default_group']}</td>
 		<td class="row2">
 <select name="def_group" id="select_def_group">
-	{DB::getInfo}{$group_res}{$GroupList}
-	{if {$_CONF['info_row']['def_group']} == {$GroupList['id']}}
-	<option value="{$GroupList['id']}" selected="selected">{$GroupList['title']}</option>
+	{Des::foreach}{groups}{group}
+	{if {$_CONF['info_row']['def_group']} == {$group['id']}}
+	<option value="{$group['id']}" selected="selected">{$group['title']}</option>
 	{else}
-	<option value="{$GroupList['id']}">{$GroupList['title']}</option>
+	<option value="{$group['id']}">{$group['title']}</option>
 	{/if}
-	{/DB::getInfo}
+	{/Des::foreach}
 </select>
 </td>
 </tr>
@@ -41,13 +41,13 @@
 		<td class="row1">{$lang['default_activate_group']}</td>
 		<td class="row1">
 <select name="adef_group" id="select_adef_group">
-	{DB::getInfo}{$group_res}{$GroupList}
-	{if {$_CONF['info_row']['adef_group']} == {$GroupList['id']}}
-	<option value="{$GroupList['id']}" selected="selected">{$GroupList['title']}</option>
+	{Des::foreach}{groups}{group}
+	{if {$_CONF['info_row']['adef_group']} == {$group['id']}}
+	<option value="{$group['id']}" selected="selected">{$group['title']}</option>
 	{else}
-	<option value="{$GroupList['id']}">{$GroupList['title']}</option>
+	<option value="{$group['id']}">{$group['title']}</option>
 	{/if}
-	{/DB::getInfo}
+	{/Des::foreach}
 </select>
 </td>
 

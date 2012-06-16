@@ -6,7 +6,7 @@
 			{$lang['same_topics']}
 		</td>
 	</tr>
-	{DB::getInfo}{$same_subjects_res}{$SameSubject}
+	{DB::getInfo}{$similar_subjects_res}{$SameSubject}
 	<tr align="center">
 		<td width="40%" class="row1">
 			<a href="index.php?page=topic&amp;show=1&amp;id={$SameSubject['id']}">{$SameSubject['title']}</a>

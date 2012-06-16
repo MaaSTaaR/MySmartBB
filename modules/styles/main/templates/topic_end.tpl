@@ -1,7 +1,7 @@
 {$pager}
 
 {if {$_CONF['info_row']['samesubject_show']}}
-{if !{$NO_SAME}}
+{if {$SHOW_SIMILAR}}
 {template}topic_end--same_subject{/template}
 {/if}
 {/if}

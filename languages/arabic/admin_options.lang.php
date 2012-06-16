@@ -34,7 +34,7 @@ $lang[ 'template' ][ 'textual_system' ] = 'نظام اليوم/الامس'; // o
 $lang[ 'template' ][ 'normal_system' ] = 'النظام العادي'; // options_time
 
 
-$lang[ 'template' ][ 'page_counts' ] = 'عدد الصفحات التي تظهر في الصفحه الاول'; // options_page
+$lang[ 'template' ][ 'page_counts' ] = 'عدد الصفحات التي تظهر في الصفحه الاولى'; // options_page
 $lang[ 'template' ][ 'max_topics' ] = 'الحد الاقصى لعدد المواضيع في القسم'; // options_page
 $lang[ 'template' ][ 'max_replies' ] = 'الحد الاقصى لعدد الردود في الصفحه'; // options_page
 $lang[ 'template' ][ 'max_avatar' ] = 'الحد الاقصى للصور الشخصيه في الصفحه'; // options_page

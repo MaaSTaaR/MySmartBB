@@ -16,6 +16,7 @@ class MySmartTopicMOD
 	private $SectionInfo;
 	private $SectionGroup;
 	private $subject_id;
+	private $subject_title;
 	private $reply_number = 1;
 	private $moderator;
 	
@@ -48,7 +49,7 @@ class MySmartTopicMOD
 			{
 				if ($MySmartBB->_CONF['info_row']['samesubject_show'])
 				{
-					$this->_sameTopics();
+					$this->_similarTopics();
 				}
 			
 				$this->_pageEnd();
@@ -74,9 +75,7 @@ class MySmartTopicMOD
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
 		if ( empty( $MySmartBB->_GET['id'] ) )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -84,26 +83,20 @@ class MySmartTopicMOD
 		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
 		
 		if ( !$this->Info )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
-		}
 
 		$this->Info['subject_id'] = $this->subject_id = $MySmartBB->_GET['id'];
+		$this->subject_title = $this->Info[ 'title' ];
 		
 		// ... //
 		
-		if ($this->Info['delete_topic'] 
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
+		if ( $this->Info['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_trashed' ] );
-		}
 		
 		// ... //
 				
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-		{
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
-		}
 		
 		// ... //
 		
@@ -153,14 +146,10 @@ class MySmartTopicMOD
 		global $MySmartBB;
 		
 		if (!$this->SectionGroup['view_section'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
-		}
 		
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
-		{
 			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
-		}
 		
 		// Check if the section has been protected with a password
 		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
@@ -366,19 +355,26 @@ class MySmartTopicMOD
 	
 	// ... //
 		
-	private function _sameTopics()
+	private function _similarTopics()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['same_subjects_res'] = '';
+		$MySmartBB->_CONF['template']['res']['similar_subjects_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "title LIKE '%" . $this->Info['title'] . "%' AND delete_topic<>'1' AND id<>'" . $this->Info['subject_id'] . "'";
+		$MySmartBB->rec->filter = "title LIKE '%" . $this->subject_title . "%' AND delete_topic<>'1' AND id<>'" . $this->subject_id . "'";
 		$MySmartBB->rec->order = 'write_time DESC';
 		$MySmartBB->rec->limit = '5';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['same_subjects_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['similar_subjects_res'];
 		
 		$MySmartBB->rec->getList();
+		
+		$topics_number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['similar_subjects_res'] );
+		
+		if ( $topics_number > 0 )
+			$MySmartBB->template->assign('SHOW_SIMILAR',true);
+		else
+			$MySmartBB->template->assign('SHOW_SIMILAR',false);
 	}
 	
 	private function _pageEnd()

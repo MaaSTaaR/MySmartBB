@@ -100,9 +100,14 @@ class MySmartCommon
 		
 		// ... //
 		
+		// Get member style
+		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->member->getMemberStyle();
+		
+		// ... //
+		
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
 		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_show_board' ] );
+			die( $MySmartBB->lang_common[ 'cant_show_board' ] );
 		}
 		
 		// ... //
@@ -122,11 +127,6 @@ class MySmartCommon
 			
 			$MySmartBB->member->lastVisitCookie( $last_visit, $MySmartBB->_CONF[ 'date' ], $MySmartBB->_CONF[ 'member_row' ][ 'id' ]);
 		}
-		
-		// ... //
-		
-		// Get member style
-		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->member->getMemberStyle();
 		
 		// ... //
 		
@@ -186,6 +186,7 @@ class MySmartCommon
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
    		{
+   			echo 11;
    			$MySmartBB->func->error( $MySmartBB->lang_common[ 'visitor_pervented' ] );
    		}
 	}

@@ -89,6 +89,7 @@
 
 {hook}after_member_info_table{/hook}
 
+{if {$_CONF['info_row']['allow_apsent']}}
 {if {$Info['away']}}
 	<br />
 	<fieldset>
@@ -96,5 +97,6 @@
 		{$Info['away_msg']}
 	</fieldset>
 {/if}
+{/if}
 
-{hook}after_awat_info{/hook}
+{hook}after_away_info{/hook}

@@ -278,20 +278,25 @@ class MySmartOptionsMOD
 	{
 		global $MySmartBB;
 		
-		/* ... */
+		// ... //
 		
-		$group_res = null;
-		
+		$MySmartBB->rec->select = 'id,title';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "group_order ASC";
 		
-		$group_res = &$MySmartBB->func->setResource();
-		
 		$MySmartBB->rec->getList();
 		
-		/* ... */
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'groups' ] = array();
+		$k = 0;
 		
-		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = $group_res;
+		while ( $r = $MySmartBB->rec->getInfo() )
+		{
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'groups' ][ $k ] = $r;
+			
+			$k++;
+		}
+		
+		// ... //
 		
 		$MySmartBB->template->display('options_register');
 	}

@@ -25,7 +25,7 @@ class MySmartStyle
 		$cache = array();
 		
 		// $value is the style's id.
-		if ( is_int( $value ) )
+		if ( is_numeric( $value ) )
 			$id = $value;
 		// $value is the style's information.
 		elseif ( is_array( $value ) )
