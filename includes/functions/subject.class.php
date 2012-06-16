@@ -25,17 +25,29 @@ class MySmartSubject
 	public function massDeleteSubject( $section_id )
 	{
  		if ( empty( $section_id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massDeleteSubject() -- EMPTY section_id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
  		$this->engine->rec->filter = "section='" . $section_id . "'";
  		
- 		$query = $this->engine->rec->delete();
+ 		$delete = $this->engine->rec->delete();
  		
- 		return ($query) ? true : false;
+ 		if ( $delete )
+ 		{
+			// No subject in the section, that's mean no last subject.
+			$this->engine->section->updateLastSubject( '', '', '', '', $section_id );
+			
+			// Update the number of subjects and replies on the section
+			$this->engine->section->updateSubjectNumber( $section_id, null, null );
+			$this->engine->section->updateReplyNumber( $section_id, null, null );
+			
+			$this->engine->section->updateForumCache( -1, $section_id );
+			
+			return true;
+ 		}
+ 		
+ 		return false;
 	}
 	
 	// ... //
