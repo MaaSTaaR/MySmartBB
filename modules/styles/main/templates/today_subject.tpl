@@ -18,7 +18,7 @@
 			{$lang['last_post']}
 		</td>
 	</tr>
-	{DB::getInfo}{$subject_list}
+	{DB::getInfo}{$latest_res}{$subject_list}
 	<tr>
 		<td width="3%" class="row1" align="center">
 			<img src="{$subject_list['icon']}" alt="" />

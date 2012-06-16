@@ -1,6 +1,6 @@
 <?php
 
-// MySmartBB 2.0.0 ALPHA 6
+// MySmartBB 2.0.0 Beta 1
 // http://www.MySmartBB.com
 
 
@@ -13,12 +13,12 @@ $config['db'] 					= array();
 $config['db']['server']			= 	'localhost';
 $config['db']['username']		= 	'root';
 $config['db']['password']		= 	'';
-$config['db']['name']			= 	'MySmartBB_ALPHA6';
+$config['db']['name']			= 	'MySmartBB_Beta1';
 $config['db']['prefix']			=	'';				// MySmartBB_ if empty
 
 //=================
 
-$config[ 'lang_dir' ] = 'arabic'; // The language directory (Note : arabic and english are available now)
+$config[ 'lang_dir' ] = 'english'; // The language directory (Note : arabic and english are available now)
 
 
 ?>

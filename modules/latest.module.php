@@ -41,9 +41,12 @@ class MySmartLatestMOD
 		$from 	= 	mktime( 0, 0, 0, $month, $day, $year );
 		$to 	= 	mktime( 23, 59, 59, $month, $day, $year );
 		
+		$MySmartBB->_CONF['template']['res']['latest_res'] = '';
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "native_write_time BETWEEN " . $from . " AND " . $to . " AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "id DESC";
+		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['latest_res'];
 				
 		$MySmartBB->rec->getList();
 		
