@@ -42,21 +42,55 @@ class MySmartSubject
 	
 	public function massMoveSubject( $to, $from )
 	{
- 		if ( empty( $to )
- 			or empty( $from ) )
- 		{
+ 		if ( empty( $to ) or empty( $from ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massMoveSubject() -- EMPTY to OR from',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'section'	=>	$to	);
- 		
  		$this->engine->rec->filter = "section='" . $from . "'";
  		
-		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
+		$update = $this->engine->rec->update();
+		
+		// After mass move we have to update the information of the last subject of the sections
+		if ( $update )
+		{
+			// ... //
+			
+			// No subject in the section $from, that's mean no last subject.
+			$this->engine->section->updateLastSubject( '', '', '', '', $from );
+			
+			// Update the number of subjects and replies on $form
+			$this->engine->section->updateSubjectNumber( $from, null, null );
+			$this->engine->section->updateReplyNumber( $from, null, null );
+			
+			$this->engine->section->updateForumCache( -1, $from );
+			
+			// ... //
+			
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->filter = "section='" . $to . "'";
+			$this->engine->rec->limit = '1';
+			$this->engine->rec->order = 'write_time DESC';
+			
+			$last_topic = $this->engine->rec->getInfo();
+			
+			$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
+			$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
+			
+			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $to );
+			
+			// Update the number of subjects and replies on $form
+			$this->engine->section->updateSubjectNumber( $to, null, null );
+			$this->engine->section->updateReplyNumber( $to, null, null );
+			
+			$this->engine->section->updateForumCache( -1, $to );
+			
+			// ... //
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	// ... //

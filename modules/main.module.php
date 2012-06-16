@@ -20,7 +20,7 @@ class MySmartIndexMOD
 		$MySmartBB->func->showHeader();
 		
 		$MySmartBB->load( 'section' );
-				
+		
 		$MySmartBB->plugin->runHooks( 'main_after_header' );
 		
 		$this->_getSections();

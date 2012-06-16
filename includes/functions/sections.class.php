@@ -41,14 +41,8 @@ class MySmartSection
  	
  	public function updateLastSubject( $writer, $title, $subject_id, $date, $section_id )
  	{
- 		if ( empty( $writer )
- 			or empty( $title )
- 			or empty( $subject_id )
- 			or empty( $date )
- 			or empty( $section_id ) )
- 		{
+ 		if ( empty( $section_id ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastSubject()',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -157,6 +151,26 @@ class MySmartSection
  		
  		// ... //
  		
+ 		$return_parent = false; // Should we return the parent id?
+ 		$forum_info = null;
+ 		
+ 		// If the parameter $parent = -1, that's mean we should fetch the id
+ 		// of the parent from the database.
+ 		if ( $parent == -1 )
+ 		{
+ 			$this->engine->rec->table = $this->table;
+ 			$this->engine->rec->filter = "id='" . $child . "'";
+ 			
+ 			$forum_info = $this->engine->rec->getInfo();
+ 			
+ 			if ( !$forum_info )
+ 				return false;
+ 			
+ 			$parent = $forum_info[ 'parent' ];
+ 			
+ 			$return_parent = true;
+ 		}
+ 		
  		$this->engine->rec->select = 'id,forums_cache';
 		$this->engine->rec->table = $this->table;
  		$this->engine->rec->filter = "id='" . $parent . "'";
@@ -189,10 +203,15 @@ class MySmartSection
  		
  		// ... //
  		
- 		$this->engine->rec->table = $this->table;
- 		$this->engine->rec->filter = "id='" . $child . "'";
+ 		// We didn't fetch the information of the forum, so we need to fetch it
+ 		// from the database
+ 		if ( is_null( $forum_info ) )
+ 		{
+ 			$this->engine->rec->table = $this->table;
+ 			$this->engine->rec->filter = "id='" . $child . "'";
 
- 		$forum_info = $this->engine->rec->getInfo();
+ 			$forum_info = $this->engine->rec->getInfo();
+ 		}
  		
  		if ( $forum_info != false )
  		{
@@ -230,7 +249,7 @@ class MySmartSection
 			
 			while ( $group = $this->engine->rec->getInfo( $group_res ) )
 			{
-				$cache[ 'groups' ][ $group[ 'group_id' ] ] 					=	array();
+				$cache[ 'groups' ][ $group[ 'group_id' ] ] 						=	array();
 				$cache[ 'groups' ][ $group[ 'group_id' ] ][ 'view_section' ] 	= 	$group[ 'view_section' ];
 				$cache[ 'groups' ][ $group[ 'group_id' ] ][ 'main_section' ] 	= 	$group[ 'main_section' ];
 			}
@@ -242,7 +261,14 @@ class MySmartSection
  			$cache = serialize( $forums_cache );
  			$cache = base64_encode( $cache );
  			
- 			return $cache;
+ 			if ( !$return_parent )
+ 			{
+ 				return $cache;
+ 			}
+ 			else
+ 			{
+ 				return array( 'cache'	=>	$cache, 'parent'	=>	$parent );
+ 			}
  		}
  		
 		return false;
@@ -280,10 +306,14 @@ class MySmartSection
  	{
  		$cache = ( is_null( $child ) ) ? $this->createSectionsCache( $parent ) : $this->createForumCache( $parent, $child );
  		
- 		if ( $cache == false )
+ 		if ( !is_null( $child ) and $parent == -1 )
  		{
- 			$cache = '';
+ 			$parent = $cache[ 'parent' ];
+ 			$cache = $cache[ 'cache' ];
  		}
+ 		
+ 		if ( $cache == false )
+ 			$cache = '';
  		
  		$this->engine->rec->table = $this->table;
  		$this->engine->rec->fields = array(	'forums_cache'	=>	$cache	);
@@ -519,19 +549,17 @@ class MySmartSection
 	
 	public function updateSubjectNumber( $section_id, $subject_number = null, $operation = 'add', $operand = 1 )
 	{
-		if ( !is_null( $subject_number) )
+		if ( !is_null( $subject_number ) )
 		{
 			$val = $subject_number;
 		}
 		else
 		{
-			$this->engine->rec->select = 'subject_num';
-			$this->engine->rec->table = $this->engine->table[ 'section' ];
-			$this->engine->rec->filter = "id='" . $section_id . "'";
+			$this->engine->rec->select = 'id';
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->filter = "section='" . $section_id . "'";
 			
-			$section_info = $this->engine->rec->getInfo();
-			
-			$val = $section_info[ 'subject_num' ];
+			$val = $this->engine->rec->getNumber();			
 		}
 		
 		if ( !is_null( $operation ) )
@@ -552,7 +580,11 @@ class MySmartSection
 		{
 			// Update the total of subjects
 			$this->engine->cache->updateSubjectNumber( $val );
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	// ... //
@@ -565,13 +597,11 @@ class MySmartSection
 		}
 		else
 		{
-			$this->engine->rec->table = $this->engine->table[ 'section' ];
-			$this->engine->rec->select = 'reply_num';
-			$this->engine->rec->filter = "id='" . $section_id . "'";
+			$this->engine->rec->select = 'id';
+			$this->engine->rec->table = $this->engine->table[ 'reply' ];
+			$this->engine->rec->filter = "section='" . $section_id . "'";
 			
-			$section_info = $this->engine->rec->getInfo();
-			
-			$val = $section_info[ 'reply_num' ];
+			$val = $this->engine->rec->getNumber();			
 		}
 		
 		if ( !is_null( $operation ) )
