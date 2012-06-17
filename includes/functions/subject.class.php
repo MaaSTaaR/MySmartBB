@@ -22,7 +22,7 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function massDeleteSubject( $section_id )
+	public function massDeleteSubject( $section_id, $update_section_info = true )
 	{
  		if ( empty( $section_id ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massDeleteSubject() -- EMPTY section_id',E_USER_ERROR);
@@ -35,14 +35,17 @@ class MySmartSubject
  		
  		if ( $delete )
  		{
-			// No subject in the section, that's mean no last subject.
-			$this->engine->section->updateLastSubject( '', '', '', '', $section_id );
+ 			if ( $update_section_info )
+ 			{
+				// No subject in the section, that's mean no last subject.
+				$this->engine->section->updateLastSubject( '', '', '', '', $section_id );
 			
-			// Update the number of subjects and replies on the section
-			$this->engine->section->updateSubjectNumber( $section_id, null, null );
-			$this->engine->section->updateReplyNumber( $section_id, null, null );
+				// Update the number of subjects and replies on the section
+				$this->engine->section->updateSubjectNumber( $section_id, null, null );
+				$this->engine->section->updateReplyNumber( $section_id, null, null );
 			
-			$this->engine->section->updateForumCache( -1, $section_id );
+				$this->engine->section->updateForumCache( -1, $section_id );
+			}
 			
 			return true;
  		}
@@ -52,7 +55,10 @@ class MySmartSubject
 	
 	// ... //
 	
-	public function massMoveSubject( $to, $from )
+	// If the parameter $update_from_info = false
+	// the information of $from (last subject, subjects and replies number) will not be updated
+	// we can use this parameter when want to delete $from and move its subjects to "$to"
+	public function massMoveSubject( $to, $from, $update_from_info = true )
 	{
  		if ( empty( $to ) or empty( $from ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massMoveSubject() -- EMPTY to OR from',E_USER_ERROR);
@@ -68,14 +74,17 @@ class MySmartSubject
 		{
 			// ... //
 			
-			// No subject in the section $from, that's mean no last subject.
-			$this->engine->section->updateLastSubject( '', '', '', '', $from );
+			if ( $update_from_info )
+			{
+				// No subject in the section $from, that's mean no last subject.
+				$this->engine->section->updateLastSubject( '', '', '', '', $from );
 			
-			// Update the number of subjects and replies on $form
-			$this->engine->section->updateSubjectNumber( $from, null, null );
-			$this->engine->section->updateReplyNumber( $from, null, null );
+				// Update the number of subjects and replies on $form
+				$this->engine->section->updateSubjectNumber( $from, null, null );
+				$this->engine->section->updateReplyNumber( $from, null, null );
 			
-			$this->engine->section->updateForumCache( -1, $from );
+				$this->engine->section->updateForumCache( -1, $from );
+			}
 			
 			// ... //
 			

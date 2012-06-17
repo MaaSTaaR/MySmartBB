@@ -7,19 +7,17 @@
 		</td>
 	</tr>
 	<tr>
-		{DB::getInfo}{$announcement_res}{$AnnouncementList}
 		<td width="98%" class="row1 rows_space">
-			<a href="index.php?page=announcement&amp;show=1&amp;id={$AnnouncementList['id']}">
-			{$AnnouncementList['title']}
+			<a href="index.php?page=announcement&amp;show=1&amp;id={$announcement['id']}">
+			{$announcement['title']}
 			</a> 
 		    {$lang['common']['written_by']}
-			<a href="index.php?page=profile&amp;show=1&amp;username={$AnnouncementList['writer']}">
-			{$AnnouncementList['writer']}
+			<a href="index.php?page=profile&amp;show=1&amp;username={$announcement['writer']}">
+			{$announcement['writer']}
 			</a> 
 			
-			{$lang['common']['on_date']} {$AnnouncementList['date']}
+			{$lang['common']['on_date']} {$announcement['date']}
 		</td>
-		{/DB::getInfo}
 	</tr>
 </table>
 

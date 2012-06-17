@@ -61,111 +61,57 @@ class MySmartForumsDeleteMOD
 		
 		$this->checkID( $MySmartBB->_CONF['template']['Inf'] );
 		
-		if ($MySmartBB->_POST['choose'] == 'move')
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-			
-			$del = $MySmartBB->rec->delete();
-			
-			if ($del)
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
-				
-				$move = $MySmartBB->subject->massMoveSubject( (int) $MySmartBB->_POST['to'], $MySmartBB->_CONF['template']['Inf']['id'] );
-				
-				if ($move)
-				{
-					$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
-					
-					// ... //
-					
-					$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-					$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-					
-					$FromSubjectNumber = $MySmartBB->rec->getNumber();
-					
-					// ... //
-					
-					$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-					$MySmartBB->rec->filter = "section_id='" . (int) $MySmartBB->_POST['to'] . "'";
-					
-					$ToSubjectNumber = $MySmartBB->rec->getNumber();
-					
-					// ... //
-					
-					$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-     				$MySmartBB->rec->fields = array(	'subject_num'	=>	$FromSubjectNumber + $ToSubjectNumber	);
-     				$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['to'] . "'";
-     				
-		     		$update = $MySmartBB->rec->update();
-     				
-     				if ($update)
-     				{
-						$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
-						
-						if ($cache)
-						{
-							$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-							
-							$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-							$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-							
-							$del = $MySmartBB->rec->delete();
-							
-							if ($del)
-							{
-								$MySmartBB->func->msg( $MySmartBB->lang[ 'section_group_delete_succeed' ] );
-								$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
-							}
-						}
-					}
-				}
-			}
-		}
-		elseif ($MySmartBB->_POST['choose'] == 'del')
-		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-			
-			$del = $MySmartBB->rec->delete();
-				
-			if ($del)
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-				$MySmartBB->rec->filter = "section='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-				
-				$del = $MySmartBB->rec->delete();
-				
-				if ($del)
-				{
-					$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_delete_succeed' ] );
-					
-					$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
-					
-					if ($cache)
-					{
-						$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-						
-						$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-						$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-						
-						$del = $MySmartBB->rec->delete();
-						
-						if ($del)
-						{
-							$MySmartBB->func->msg( $MySmartBB->lang[ 'section_group_delete_succeed' ] );
-							$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
-						}
-					}
-				}
-			}
-		}
-		else
-		{
+		if ( $MySmartBB->_POST['choose'] != 'move' and $MySmartBB->_POST['choose'] != 'del' )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_choice' ] );
+		
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+			
+		$del = $MySmartBB->rec->delete();
+		
+		if ( $del )
+		{
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+			$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+							
+			$del_group = $MySmartBB->rec->delete();
+			
+			if ( $del_group )
+			{
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_group_delete_succeed' ] );
+				
+				if ( $MySmartBB->_POST['choose'] == 'move' )
+				{
+					$move = $MySmartBB->subject->massMoveSubject( (int) $MySmartBB->_POST['to'], $MySmartBB->_CONF['template']['Inf']['id'], false );
+					
+					if ( $move )
+					{
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
+					}
+				}
+				elseif ( $MySmartBB->_POST[ 'choose' ] == 'del' )
+				{
+					$del = $MySmartBB->subject->massDeleteSubject( $MySmartBB->_CONF['template']['Inf']['id'], false );
+					
+					if ( $del )
+					{
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_delete_succeed' ] );
+					}
+				}
+			}
+			
+			// After delete the forum we should update the cache of the parent
+			// to show the forums correctly on the main page.
+			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_CONF['template']['Inf']['parent'] );
+			
+			if ( $cache )
+			{
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+				$MySmartBB->func->move('admin.php?page=forums&amp;control=1&amp;main=1');
+			}
 		}
 	}
 	

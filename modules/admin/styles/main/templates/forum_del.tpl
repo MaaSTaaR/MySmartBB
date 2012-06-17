@@ -43,15 +43,16 @@ $(document).ready(Ready);
 <br />
 
 	<form action="admin.php?page=forums_del&amp;start=1&amp;id={$Inf['id']}" method="post">
-		<p align="center">{$lang['youre_going_to_del']}</p>
-		
-		<table width="60%" class="t_style_b" border="0" align="center">
+		<table width="60%" class="t_style_b" border="1" align="center">
 			<tr>
-				<td class="main1 rows_space">
-				{$lang['what_to_do']}
+				<td class="main1" colspan="2">
+				{$lang['youre_going_to_del']}
 				</td>
 			</tr>
 			<tr>
+				<td class="row1">
+				{$lang['what_to_do']}
+				</td>
 				<td class="row1">
 					<select name="choose" id="choose_id">
 						<option value="move">{$lang['move_all_topics']}</option>
@@ -59,27 +60,19 @@ $(document).ready(Ready);
 					</select>
 				</td>
 			</tr>
-		</table>
-		
-		<br />
-		
-		<div id="move">
-			<table width="60%" class="t_style_b" border="0" align="center">
-				<tr>
-					<td class="main1 rows_space">
+			<tr id="move">
+				<td class="row1">
 				{$lang['move_to']}	
-					</td>
-				</tr>
-					<td class="row2">
-						<select name="to" id="select_to">
+				</td>
+				<td class="row1">
+					<select name="to" id="select_to">
 						{DB::getInfo}{$SecList}
-							<option value="{$SecList['id']}">{$SecList['title']}</option>
+						<option value="{$SecList['id']}">{$SecList['title']}</option>
 						{/DB::getInfo}
-						</select>
-					</td>
-				</tr>
-			</table>
-		</div>
+					</select>
+				</td>
+			</tr>
+		</table>
 		
 		<br />
 		

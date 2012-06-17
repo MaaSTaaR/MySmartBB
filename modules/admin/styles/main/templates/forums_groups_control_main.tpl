@@ -9,7 +9,7 @@
 	{DB::getInfo}{$SecGroupList}
 	<table width="60%" class="t_style_b" border="1" align="center">
 		<tr valign="top" align="center">
-			<td class="row1" colspan="2">
+			<td class="main1" colspan="2">
 				<strong>{$SecGroupList['group_name']}</strong>
 			</td>
 		</tr>

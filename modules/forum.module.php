@@ -244,14 +244,17 @@ class MySmartForumMOD
 		$MySmartBB->rec->order = "id DESC";
 		$MySmartBB->rec->limit = '1';
 		
-		$MySmartBB->func->setResource( 'announcement_res' );
-		
 		$MySmartBB->rec->getList();
 		
-		$announcement_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'announcement_res' ] );
+		$announcement = $MySmartBB->rec->getInfo();
 		
-		if ( $announcement_num > 0 )
+		if ( $announcement != false )
+		{
+			$announcement[ 'date' ] = $MySmartBB->func->date( $announcement[ 'date' ] );
+			
 			$MySmartBB->template->assign( 'SHOW_ANNOUNCEMENT', true );
+			$MySmartBB->template->assign( 'announcement', $announcement );
+		}
 	}
 	
 	private function _getSubSection()
