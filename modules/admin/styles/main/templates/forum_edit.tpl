@@ -174,24 +174,13 @@
 			</td>
 			<td class="row2">
 				<select name="show_sig">
-				{if {$Inf['show_sig']}}
+				{if {$Inf['show_sig']} != -1}
 					<option value="1" selected="selected">{$lang['common']['yes']}</option>
-					<option value="0">{$lang['common']['no']}</option>
+					<option value="-1">{$lang['common']['no']}</option>
 				{else}
 					<option value="1">{$lang['common']['yes']}</option>
-					<option value="0" selected="selected">{$lang['common']['no']}</option>
+					<option value="-1" selected="selected">{$lang['common']['no']}</option>
 				{/if}
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td class="row1">
-			{$lang['stop_signature_repeat']}
-			</td>
-			<td class="row1">
-				<select name="sig_iteration">
-					<option value="1">{$lang['common']['yes']}</option>
-					<option value="0" selected="selected">{$lang['common']['no']}</option>
 				</select>
 			</td>
 		</tr>
@@ -255,7 +244,7 @@
 			</td>
 			<td class="row1">
 				<select name="sec_section">
-				{if {$Inf['hide_subject']}}
+				{if {$Inf['sec_section']}}
 					<option value="1" selected="selected">{$lang['common']['yes']}</option>
 					<option value="0">{$lang['common']['no']}</option>
 				{else}

@@ -106,7 +106,9 @@ $(document).ready(Ready);
 
 <br />
 
+{if {$section_info['usesmartcode_allow']} != 0}
 {template}toolbox{/template}
+{/if}
 
 {hook}after_toolbox{/hook}
 

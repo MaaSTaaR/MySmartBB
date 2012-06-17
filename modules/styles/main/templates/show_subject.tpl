@@ -51,7 +51,7 @@
 				{template}attach_show{/template}
 			{/if}
 			
-			{if {$Info['user_sig']} != ''}
+			{if {$Info['user_sig']} != '' and {$section_info['show_sig']} != -1}
 				{template}signature_show{/template}
 			{/if}
 		</td>

@@ -12,7 +12,7 @@
 
 <br />
 
-{if {$_CONF['info_row']['toolbox_show']}}
+{if {$_CONF['info_row']['toolbox_show']} and {$section_info['usesmartcode_allow']} != 0}
 {template}toolbox{/template}
 {/if}
 

@@ -104,7 +104,6 @@ class MySmartForumsEditMOD
 		$MySmartBB->rec->fields['subject_order']			=	$MySmartBB->_POST['subject_order'];
 		$MySmartBB->rec->fields['hide_subject']				=	$MySmartBB->_POST['hide_subject'];
 		$MySmartBB->rec->fields['sec_section']				=	$MySmartBB->_POST['sec_section'];
-		$MySmartBB->rec->fields['sig_iteration']			=	$MySmartBB->_POST['sig_iteration'];
 		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
 
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";

@@ -26,13 +26,18 @@ class MySmartForumMOD
 		$MySmartBB->template->assign('SECTION_RSS',true);
 		$MySmartBB->template->assign('SECTION_ID',$MySmartBB->_GET['id']);
 		
-		if ($MySmartBB->_GET['show'])
+		$this->_getSectionInfo();
+		
+		if ( $MySmartBB->_GET[ 'show' ] )
 		{
 			$this->_browseForum();
 		}
-		elseif ($MySmartBB->_GET['password_check'])
+		elseif ( $MySmartBB->_GET[ 'password_check' ] )
 		{
-			$this->_passwordCheck();
+			$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_POST[ 'password' ] );
+			
+			if ( $check )
+				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] );
 		}
 		else
 		{
@@ -58,7 +63,7 @@ class MySmartForumMOD
 		$this->_callTemplate();
 	}
 	
-	private function _generalProcesses( $check = false )
+	private function _getSectionInfo()
 	{
 		global $MySmartBB;
 		
@@ -67,9 +72,7 @@ class MySmartForumMOD
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -77,7 +80,7 @@ class MySmartForumMOD
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$this->Section = $MySmartBB->rec->getInfo();
-				
+		
 		$MySmartBB->template->assign('section_info',$this->Section);
 		
 		// ... //
@@ -110,20 +113,17 @@ class MySmartForumMOD
 		if ( $this->SectionGroup['view_section'] != 1 or $parent_per[ 'view_section' ] != 1 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_forum' ] );
 			
-		if ( isset( $this->Section[ 'main_section' ] )
-			and $this->Section[ 'main_section' ] )
-		{
+		if ( isset( $this->Section[ 'main_section' ] ) and $this->Section[ 'main_section' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cat_section' ] );
-		}
+	}
+	
+	private function _generalProcesses( $check = false )
+	{
+		global $MySmartBB;
 		
 		// This section is a link , so we should go to another location
-		// TODO :: count visits number
-		if ($this->Section['linksection'])
-		{
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section['linksite'] );
-			$MySmartBB->func->move( $this->Section['linksite'], 3 );
-			$MySmartBB->func->stop();
-		}
+		if ( $this->Section['linksection'] )
+			$this->_goToLink();
 		
 		// ... //
 		
@@ -140,6 +140,30 @@ class MySmartForumMOD
      	{
 			$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Section['title'] );
      	}
+	}
+	
+	private function _goToLink()
+	{
+		global $MySmartBB;
+		
+		// ... //
+		
+		// Update the number of visitors
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->fields = array( 'linkvisitor' => $this->Section[ 'linkvisitor' ] + 1 );
+		$MySmartBB->rec->filter = "id='" . $this->Section[ 'id' ] . "'";
+		
+		$update = $MySmartBB->rec->update();
+		
+		// Update the cache to show the number of visitors in the main page
+		if ( $update )
+			$MySmartBB->section->updateForumCache( $this->Section[ 'parent' ], $this->Section[ 'id' ] );
+		
+		// ... //
+		
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section['linksite'] );
+		$MySmartBB->func->move( $this->Section['linksite'], 2 );
+		$MySmartBB->func->stop();
 	}
 	
 	/**

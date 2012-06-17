@@ -547,11 +547,19 @@ class MySmartSection
 	 			$this->engine->func->stop();
 			}
 			else
-			{												
-				if (! $this->checkPassword( $password, $section_id ) )
+			{
+				$password = base64_decode( $password );
+				
+				if ( !$this->checkPassword( $password, $section_id ) )
+				{
 					$this->engine->func->error( $this->engine->lang[ 'incorrect_password' ] );
+				}
 				else
-					$this->engine->_CONF[ 'template' ][ 'password' ] = '&amp;password=' . $password;
+				{
+					$this->engine->_CONF[ 'template' ][ 'password' ] = '&amp;password=' . base64_encode( $password );
+					
+					return true;
+				}
 			}
 		}
 	}

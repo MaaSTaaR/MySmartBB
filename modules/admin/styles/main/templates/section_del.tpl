@@ -58,15 +58,16 @@ $(document).ready(Ready);
 
 <form action="admin.php?page=sections_del&amp;start=1&amp;id={$Inf['id']}" method="post">
 
-<p align="center">{$lang['youre_going_delete']}</p>
-
 <table width="60%" class="t_style_b" border="1" align="center">
 	<tr>
-		<td class="main1 rows_space">
-		{$lang['what_to_do']}
+		<td class="main1 rows_space" colspan="2">
+		{$lang['youre_going_delete']}
 		</td>
 	</tr>
 	<tr>
+		<td class="row1">
+		{$lang['what_to_do']}
+		</td>
 		<td class="row1">
 			<select name="choose" id="choose_id">
 				<option value="move">{$lang['move_forums']}</option>
@@ -75,18 +76,11 @@ $(document).ready(Ready);
 			</select>
 		</td>
 	</tr>
-</table>
-
-<br />
-
-<div id="move_section">
-<table width="60%" class="t_style_b" border="1" align="center">
-	<tr>
-		<td class="main1 rows_space">
+	<tr id="move_section">
+		<td class="row1">
 		{$lang['move_to']}
 		</td>
-	</tr>
-		<td class="row2">
+		<td class="row1">
 			<select name="to" id="select_to">
 				{DB::getInfo}{$sec_res}{$section}
 				<option value="{$section['id']}">{$section['title']}</option>
@@ -94,19 +88,10 @@ $(document).ready(Ready);
 			</select>
 		</td>
 	</tr>
-</table>
-</div>
-
-<br />
-
-<div id="move_subject">
-<table width="60%" class="t_style_b" border="1" align="center">
-	<tr>
-		<td class="main1 rows_space">
+	<tr id="move_subject">
+		<td class="row1">
 		{$lang['move_topics_to']}
 		</td>
-	</tr>
-	<tr>
 		<td class="row1">
 			<select name="subject_to" id="select_subject_to">
 				{DB::getInfo}{$forum_res}{$forum}
@@ -116,7 +101,6 @@ $(document).ready(Ready);
 		</td>
 	</tr>
 </table>
-</div>
 
 <br />
 
@@ -124,5 +108,4 @@ $(document).ready(Ready);
 	<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 </div>
 
-<br />
 </form>
