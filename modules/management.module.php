@@ -173,6 +173,7 @@ class MySmartManagementMOD
 		}
 		
 		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
+		$MySmartBB->template->assign('section',$MySmartBB->_GET['section']);
 		
 		$MySmartBB->template->display('subject_close_index');
 	}
@@ -264,10 +265,8 @@ class MySmartManagementMOD
 		
 		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
 		

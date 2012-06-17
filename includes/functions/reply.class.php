@@ -55,9 +55,7 @@ class MySmartReply
 	public function unTrashReply( $id )
 	{
  		if ( empty( $id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashReply() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -65,9 +63,22 @@ class MySmartReply
  		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
-		$query = $this->engine->rec->update();
+		$update = $this->engine->rec->update();
+		
+		// After untrash we should recount the number of replies of the subject
+		if ( $update )
+		{
+			$this->engine->rec->table = $this->table;
+			$this->engine->rec->filter = "id='" . $id . "'";
+			
+			$reply_info = $this->engine->rec->getInfo();
+			
+			$this->engine->subject->updateReplyNumber( $reply_info[ 'subject_id' ], null, null );
+			
+			return true;
+		}
 		           
-		return ( $query ) ? true : false;
+		return false;
 	}
 		
 	// ... //

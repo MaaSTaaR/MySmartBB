@@ -1,4 +1,4 @@
-<form method="post" action="index.php?page=management&amp;close=1&amp;subject_id={$subject}">
+<form method="post" action="index.php?page=management&amp;close=1&amp;subject_id={$subject}&amp;section={$section}">
 
 <table align="center" border="1" class="t_style_b" width="60%">
 	<tr align="center">

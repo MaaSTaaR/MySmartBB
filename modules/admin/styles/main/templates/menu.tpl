@@ -103,9 +103,9 @@
 <tr align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=member_search&amp;main=1" target="main">{$lang['search']}</a></td>
 </tr>
-<tr align="center">
+<!--<tr align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=options" target="main">{$lang['send_email']}</a></td>
-</tr>
+</tr>-->
 </table><br />
 <table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">

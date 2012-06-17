@@ -197,13 +197,11 @@ class MySmartSubject
 		}
 		else
 		{
-			$this->engine->rec->table = $this->engine->table[ 'subject' ];
-			$this->engine->rec->select = 'reply_number';
-			$this->engine->rec->filter = "id='" . $subject_id . "'";
+			$this->engine->rec->table = $this->engine->table[ 'reply' ];
+			$this->engine->rec->select = 'id';
+			$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
 			
-			$subject_info = $this->engine->rec->getInfo();
-			
-			$val = $subject_info[ 'reply_number' ];
+			$val = $this->engine->rec->getNumber();
 		}
 		
 		if ( !is_null( $operation ) )

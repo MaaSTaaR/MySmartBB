@@ -50,11 +50,8 @@ class MySmartDownloadMOD
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
-		if ($SubjectInfo['delete_topic'] 
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
+		if ($SubjectInfo['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
-		}
 		
 		// ... //
 		
@@ -71,9 +68,7 @@ class MySmartDownloadMOD
 		$SectionGroup = $MySmartBB->rec->getInfo();
 		
 		if (!$SectionGroup['view_section'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
-		}
 		
 		// ... //
 		
@@ -102,9 +97,7 @@ class MySmartDownloadMOD
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -123,11 +116,8 @@ class MySmartDownloadMOD
 		// ... //
 		
 		// The subject isn't available
-		if ($SubjectInfo['delete_topic'] 
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
+		if ($SubjectInfo['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'])
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
-		}
 		
 		// ... //
 		
@@ -137,10 +127,10 @@ class MySmartDownloadMOD
 			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo['section'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
 			
 			$SectionGroup = $MySmartBB->rec->getInfo();
-		
+			
 			// ... //
 		
 			// The user can't show this subject

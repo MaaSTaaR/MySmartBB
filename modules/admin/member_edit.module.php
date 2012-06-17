@@ -74,45 +74,43 @@ class MySmartMemberMOD
 		
 		$MemInfo = false;
 		
-		$this->checkID($MemInfo);
+		$this->checkID( $MemInfo );
 		
-		if (empty($MySmartBB->_POST['email']) 
-			or empty($MySmartBB->_POST['user_title'])
-			or !isset($MySmartBB->_POST['posts']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_POST[ 'email' ] ) or empty( $MySmartBB->_POST[ 'user_title' ] ) or !isset( $MySmartBB->_POST[ 'posts' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
-		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
-		{
+		if ( !$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
-		}
+		
+		// ... //
 		
 		// Ensure there is no person used the same username
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['new_username'] . "'";
-		
-		$isMember = $MySmartBB->rec->getNumber();
-		
-		if ( $isMember > 0 )
+		if ( !empty( $MySmartBB->_POST[ 'new_username' ] ) )
 		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'username_exists' ] );
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['new_username'] . "'";
+		
+			$isMember = $MySmartBB->rec->getNumber();
+		
+			if ( $isMember > 0 )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'username_exists' ] );
 		}
 
-		if ($MySmartBB->_POST['username'] == 'Guest')
-		{
+		if ( $MySmartBB->_POST[ 'username' ] == 'Guest' )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
-		}
 		
 		// ... //
 		
-		$username = (!empty($MySmartBB->_POST['new_username'])) ? $MySmartBB->_POST['new_username'] : $MemInfo['username'];
+		$username = ( !empty( $MySmartBB->_POST[ 'new_username' ] ) ) ? $MySmartBB->_POST[ 'new_username' ] : $MemInfo[ 'username' ];
+		$old_username = $MemInfo[ 'username' ];
 		
 		// ... //
 		
-		// If the admin change the group of this member, so we should change the cache of username style
+		// If the admin changed the group of this member, so we should change the cache of username style
 		
-		if ($MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'])
+		if ( $MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'] or !empty( $MySmartBB->_POST[ 'new_username' ] ) )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['usergroup'] . "'";
@@ -120,7 +118,7 @@ class MySmartMemberMOD
 			$GroupInfo = $MySmartBB->rec->getInfo();
 			
 			$style = $GroupInfo['username_style'];
-			$username_style_cache = str_replace('[username]',$username,$style);			
+			$username_style_cache = str_replace('[username]',$username,$style);
 		}
 		else
 		{
@@ -151,10 +149,77 @@ class MySmartMemberMOD
 		
 		$update = $MySmartBB->rec->update();
 		
-		if (!empty($MySmartBB->_POST['new_username']))
+		if ( !empty( $MySmartBB->_POST[ 'new_username' ] ) )
 		{
-			// TODO ;;;
-			// Don't forget the cache of username style here
+			// Announcements
+			$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
+			$MySmartBB->rec->fields = array( 'writer'	=>	$username );
+			$MySmartBB->rec->filter = "writer='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Moderators
+			$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
+			$MySmartBB->rec->fields = array( 'username'	=>	$username );
+			$MySmartBB->rec->filter = "username='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// PM from
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+			$MySmartBB->rec->fields = array( 'user_from'	=>	$username );
+			$MySmartBB->rec->filter = "user_from='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// PM to
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+			$MySmartBB->rec->fields = array( 'user_to'	=>	$username );
+			$MySmartBB->rec->filter = "user_to='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Replies
+			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
+			$MySmartBB->rec->fields = array( 'writer'	=>	$username );
+			$MySmartBB->rec->filter = "writer='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Requests
+			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+			$MySmartBB->rec->fields = array( 'username'	=>	$username );
+			$MySmartBB->rec->filter = "username='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Subjects writer
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+			$MySmartBB->rec->fields = array( 'writer'	=>	$username );
+			$MySmartBB->rec->filter = "writer='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Subjects last replier
+			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+			$MySmartBB->rec->fields = array( 'last_replier'	=>	$username );
+			$MySmartBB->rec->filter = "last_replier='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Today
+			$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
+			$MySmartBB->rec->fields = array( 'username'	=>	$username );
+			$MySmartBB->rec->filter = "username='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			// Vote
+			$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
+			$MySmartBB->rec->fields = array( 'username'	=>	$username );
+			$MySmartBB->rec->filter = "username='" . $old_username . "'";
+			
+			$update = $MySmartBB->rec->update();
 		}
 		
 		if ($update)

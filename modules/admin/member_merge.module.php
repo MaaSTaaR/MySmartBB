@@ -53,11 +53,10 @@ class MySmartMemberMOD
 
 		// ... //
 		
-		if (empty($MySmartBB->_POST['user_get'])
-			or empty($MySmartBB->_POST['user_to']))
-		{
+		if (empty($MySmartBB->_POST['user_get']) or empty($MySmartBB->_POST['user_to']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_get'] . "'";
@@ -65,9 +64,9 @@ class MySmartMemberMOD
 		$isMember = $MySmartBB->rec->getNumber();
 		
 		if ( $isMember <= 0 )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'from_member_doesnt_exist' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['user_to'] . "'";
@@ -75,9 +74,7 @@ class MySmartMemberMOD
 		$isMember = $MySmartBB->rec->getNumber();
 		
 		if ( $isMember <= 0 )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'to_member_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -127,15 +124,63 @@ class MySmartMemberMOD
 		
 		// ... //
 		
+		// Announcements
+		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
+		$MySmartBB->rec->fields = array( 'writer'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "writer='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// Moderators
+		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
+		$MySmartBB->rec->fields = array( 'username'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "username='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// PM from
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+		$MySmartBB->rec->fields = array( 'user_from'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "user_from='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// PM to
+		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+		$MySmartBB->rec->fields = array( 'user_to'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "user_to='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// Requests
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+		$MySmartBB->rec->fields = array( 'username'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "username='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// Subjects last replier
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		$MySmartBB->rec->fields = array( 'last_replier'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "last_replier='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();
+
+		// Vote
+		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
+		$MySmartBB->rec->fields = array( 'username'=>$ToMemInfo['username'] );
+		$MySmartBB->rec->filter = "username='" . $GetMemInfo['username'] . "'";
+
+		$update = $MySmartBB->rec->update();		
+		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $GetMemInfo['id'] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 
-		if ($u_subject
-			and $u_reply
-			and $u_member
-			and $del)
+		if ($u_subject and $u_reply and $u_member and $del)
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'member_merged' ] );
 			$MySmartBB->func->move('admin.php?page=member&control=1&main=1');

@@ -34,8 +34,11 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->_CONF['template']['res']['online_res'] = '';
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "id DESC";
+		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['online_res'];
 		
 		$MySmartBB->rec->getList();
 		
