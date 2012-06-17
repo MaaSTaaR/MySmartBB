@@ -14,6 +14,8 @@ class MySmartPluginMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'plugin' );
+		
 		$this->_runPluginPage();
 	}
 	
@@ -21,23 +23,33 @@ class MySmartPluginMOD
 	{
 	    global $MySmartBB;
 	    
+	    // ... //
+	    
 	    if ( empty( $MySmartBB->_GET[ 'name' ] ) or empty( $MySmartBB->_GET[ 'action' ] ) )
 	        $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+	    
+	    // ... //
 	    
 	    $MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
 	    $MySmartBB->rec->filter = "path='" . $MySmartBB->_GET[ 'name' ] . "'";
 	    
 	    $plugin_info = $MySmartBB->rec->getInfo();
 	    
+	    // ... //
+	    
 	    if ( !$plugin_info )
-	        $MySmartBB->func->error( 'The required page doesn\'t exist' );
+	        $MySmartBB->func->error( $MySmartBB->lang[ 'page_doesnt_exist' ] );
 	    
 	    if ( !$plugin_info[ 'active' ] )
-	        $MySmartBB->func->error( 'The page is not active' );
+	        $MySmartBB->func->error( $MySmartBB->lang[ 'not_active_page' ] );
+	    
+	    // ... //
 	    
 	    $plugin_obj = $MySmartBB->plugin->createPluginObject( $plugin_info[ 'path' ] );
 	    
 	    $available_pages = $plugin_obj->pages();
+	    
+	    // ... //
 	    
 	    // The plugin doesn't use pages
 	    if ( !is_array( $available_pages ) or sizeof( $available_pages ) <= 0 )
@@ -45,6 +57,8 @@ class MySmartPluginMOD
 	    
 	    if ( !array_key_exists( $MySmartBB->_GET[ 'action' ], $available_pages ) )
 	        $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+	    
+	    // ... //
 	    
 	    include( 'plugins/' . $plugin_info[ 'path' ] . '/' . $available_pages[ $MySmartBB->_GET[ 'action' ] ] );
 	    

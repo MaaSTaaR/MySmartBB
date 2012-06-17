@@ -16,7 +16,7 @@ class MySmartAdsPageMOD
 		
 		$MySmartBB->loadLanguage( 'ads' );
 		
-		if ($MySmartBB->_GET['goto'])
+		if ( $MySmartBB->_GET[ 'goto' ] )
 		{
 			$this->_goToSite();
 		}
@@ -33,27 +33,32 @@ class MySmartAdsPageMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'move_to_site' ] );
+		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'move_to_site' ] );
+		
+		// ... //
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'move_to_site' ] );
-		
-		if (empty($MySmartBB->_GET['id']))
-		{
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$AdsRows = $MySmartBB->rec->getInfo();
 		
-		if (!$AdsRows)
-		{
+		// ... //
+		
+		if ( !$AdsRows )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'ads_doesnt_exist' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'ads_goto_start' );
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table['ads'];
 		$MySmartBB->rec->fields = array(	'clicks'	=> $AdsRows['clicks'] + 1	);
@@ -61,8 +66,12 @@ class MySmartAdsPageMOD
 		
 		$query = $MySmartBB->rec->update();
 		
+		// ... //
+		
 		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $AdsRows['sitename'] );
-		$MySmartBB->func->move($AdsRows['site']);
+		$MySmartBB->func->move( $AdsRows[ 'site' ] );
+		
+		// ... //
 	}
 }
 	

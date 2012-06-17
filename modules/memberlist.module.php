@@ -18,7 +18,7 @@ class MySmartMemberlistMOD
 		
 		$MySmartBB->loadLanguage( 'memberlist' );
 		
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_getMemberList();
 		}
@@ -61,12 +61,14 @@ class MySmartMemberlistMOD
 		$MySmartBB->rec->order = "id ASC";
 		
 		$MySmartBB->rec->getList();
+		
+		// ... //
 
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
 		$MySmartBB->plugin->runHooks( 'memberlist_start' );
 		
-		$MySmartBB->template->display('show_memberlist');
+		$MySmartBB->template->display( 'show_memberlist' );
 	}
 }
 	

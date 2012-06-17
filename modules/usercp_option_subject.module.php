@@ -36,10 +36,7 @@ class MySmartUserCPSubjectMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->ShowHeader( $MySmartBB->lang[ 'your_subjects' ] );
-		
-		/*$SubjectArr['proc']['native_write_time'] 	= 	array('method'=>'date','store'=>'write_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);
-		$SubjectArr['proc']['write_time'] 			= 	array('method'=>'date','store'=>'reply_date','type'=>$MySmartBB->_CONF['info_row']['timesystem']);*/
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'your_subjects' ] );
 		
 		$MySmartBB->_CONF['template']['res']['subject_res'] = '';
 		

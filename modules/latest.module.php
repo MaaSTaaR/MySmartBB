@@ -16,7 +16,7 @@ class MySmartLatestMOD
 		
 		$MySmartBB->loadLanguage( 'latest' );
 		
-		if ($MySmartBB->_GET['today'])
+		if ( $MySmartBB->_GET[ 'today' ] )
 		{
 			$this->_todaySubject();
 		}
@@ -34,12 +34,16 @@ class MySmartLatestMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang_common[ 'todays_topics' ] );
 		
+		// ... //
+		
 		$day 	= 	date('j');
 		$month 	= 	date('n');
 		$year 	= 	date('Y');
 		
 		$from 	= 	mktime( 0, 0, 0, $month, $day, $year );
 		$to 	= 	mktime( 23, 59, 59, $month, $day, $year );
+		
+		// ... //
 		
 		$MySmartBB->_CONF['template']['res']['latest_res'] = '';
 		
@@ -49,6 +53,8 @@ class MySmartLatestMOD
 		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['latest_res'];
 				
 		$MySmartBB->rec->getList();
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'today_topic_start' );
 		

@@ -20,9 +20,7 @@ class MySmartUserCPMOD
 		$MySmartBB->loadLanguage( 'usercp_main' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
 		
 		if ( isset( $MySmartBB->_GET[ 'index' ] ) )
 		{

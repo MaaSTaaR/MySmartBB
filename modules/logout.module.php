@@ -44,27 +44,28 @@ class MySmartLogoutMOD
 		    
 			$MySmartBB->template->display('logout_msg');
 			
-			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
-      		$url = $url[ 'query' ];
-      		$url = explode( '&', $url );
-      		$url = $url[ 0 ];
+			$move_to = 'index.php';
+			
+			if ( !empty( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] ) )
+			{
+				$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      			$url = $url[ 'query' ];
+      			$url = explode( '&', $url );
+      			$url = $url[ 0 ];
       		
-     		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
-      		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
+     			$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+      			$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
+      			
+      			if ( $X_url[ 0 ] == $Y_url[ 2 ] )
+      			{
+      				if ( $url != 'page=logout' or empty( $url ) or $url != 'page=login' )
+           			{
+       					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
+      				}
+      			}
+      		}
       		
-      		if ( $url != 'page=logout' 
-      			or empty( $url )
-      			or $url != 'page=login' )
-           	{
-       			$MySmartBB->func->move( $MySmartBB->_SERVER['HTTP_REFERER'] );
-      		}
-
-      		elseif ( $Y_url[ 2 ] != $X_url[ 0 ] 
-      				or $url == 'page=logout' 
-      				or $url == 'page=login' )
-           	{
-       			$MySmartBB->functions->move( 'index.php' );
-      		}
+      		$MySmartBB->func->move( $move_to );
 		}
 	}
 }

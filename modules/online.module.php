@@ -18,7 +18,7 @@ class MySmartOnlineMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'online' ] );
 		
-		if ($MySmartBB->_GET['show'])
+		if ( $MySmartBB->_GET[ 'show' ] )
 		{
 			$this->_show();
 		}

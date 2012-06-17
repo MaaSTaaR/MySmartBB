@@ -22,15 +22,6 @@ class MySmartFooterMOD
 		// ... //
 		
 		$MySmartBB->template->display( 'footer' );
-				
-		// Kill everything , Hey MySmartBB you should be lovely with server because it's Powered by Linux ;)
-		unset( $MySmartBB->_CONF );
- 		unset( $MySmartBB->template->_vars );
- 		unset( $MySmartBB->_GET );
- 		unset( $MySmartBB->_POST );
- 		unset( $MySmartBB->_SERVER );
- 		unset( $MySmartBB->_COOKIE );
- 		unset( $MySmartBB->_FILES );
 	}
 }
 

@@ -1,10 +1,10 @@
 <?php
 
-//////////
+// ... //
 
 define('IN_MYSMARTBB',true);
 
-//////////
+// ... //
 
 // $_GET['page']		=>	file name
 $modules 								    = 	array();
@@ -18,7 +18,6 @@ $modules[ 'search' ] 						= 	'search.module.php';
 $modules[ 'ads' ] 						    = 	'ads.module.php';
 $modules[ 'announcement' ] 				    = 	'announcement.module.php';
 $modules[ 'pages' ] 						= 	'pages.module.php';
-$modules[ 'team' ] 						    = 	'team.module.php';
 $modules[ 'login' ] 						= 	'login.module.php';
 $modules[ 'logout' ] 						= 	'logout.module.php';
 $modules[ 'usercp' ] 						= 	'usercp.module.php';
@@ -53,11 +52,11 @@ $modules[ 'usercp_control_avatar' ] 		=  	'usercp_control_avatar.module.php';
 $modules[ 'usercp_option_subject' ] 		=  	'usercp_option_subject.module.php';
 $modules[ 'plugin' ] 		                =  	'plugin.module.php';
 
-//////////
+// ... //
 
 $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
-//////////
+// ... //
 
 $req_file = false;
 
@@ -66,22 +65,22 @@ if (array_key_exists($page,$modules))
 	$req_file = $modules[$page];
 }
 
-//////////
+// ... //
 
 if ($req_file != false)
 {
-	//////////
+	// ... //
 	
 	if (!file_exists('./modules/' . $req_file))
 	{
 		die('المعذره .. يبدو ان هناك خطأ في النظام، الملف المطلوب غير موجود');
 	}
 	
-	//////////
+	// ... //
 	
 	require_once('./modules/' . $req_file);
 	
-	//////////
+	// ... //
 	
 	$class_name = CLASS_NAME;
 	
@@ -89,12 +88,12 @@ if ($req_file != false)
 	
 	$class_name->run();
 	
-	//////////
+	// ... //
 }
 else
 {
 	die('<div align="center">المعذره .. الصفحه المطلوبه غير موجوده</div>');
 }
 
-//////////
+// ... //
 ?>
