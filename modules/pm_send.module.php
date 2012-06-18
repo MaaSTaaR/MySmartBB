@@ -19,19 +19,13 @@ class MySmartPrivateMassegeSendMOD
 		$MySmartBB->loadLanguage( 'pm_send' );
 		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ], false );
-		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ], false );
-		}
 		
 		if (!$MySmartBB->_CONF['member_permission'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ], false );
-		}
 		
 		$MySmartBB->load( 'pm,icon,toolbox,attach' );
 		
@@ -61,16 +55,14 @@ class MySmartPrivateMassegeSendMOD
 		
 		if ( isset( $MySmartBB->_GET['username'] ) )
 		{
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->select = 'username,pm_senders,away,pm_senders_msg,away_msg';
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
 			
 			$GetToInfo = $MySmartBB->rec->getInfo();
 															
 			if (!$GetToInfo)
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-			}
 			
 			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders_msg']);
 			$MySmartBB->template->assign('away_msg',$GetToInfo['away_msg']);
@@ -94,33 +86,34 @@ class MySmartPrivateMassegeSendMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_send_process' ] );
+		// ... //
 		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_send_process' ] );
 		$MySmartBB->func->addressBar( '<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'pm_send_process' ] );
 		
+		// ... //
+		
 		if (empty($MySmartBB->_POST['to'][0]))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_username' ] );
-		}
 		
 		if (empty($MySmartBB->_POST['title']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_title' ] );
-		}
 		
 		if (empty($MySmartBB->_POST['text']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_message' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'pm_send_action_start' );
 		
-		$size = sizeof($MySmartBB->_POST['to']);
+		// TODO : It's totally ugly code, do something :-(
+		
+		$size = sizeof( $MySmartBB->_POST[ 'to' ] );
 		
 		$success 	= 	array();
 		$fail		=	array();
 		
-     	if ($size > 0)
+     	if ( $size > 0 )
      	{
      		$x = 0;
      		
@@ -140,8 +133,7 @@ class MySmartPrivateMassegeSendMOD
 				
 				$GetToInfo = $MySmartBB->rec->getInfo();
 				
-				if (!$GetToInfo
-					and $size > 1)
+				if (!$GetToInfo and $size > 1)
 				{
 					$fail[] = $MySmartBB->_POST['to'][$x];
 					
@@ -151,8 +143,7 @@ class MySmartPrivateMassegeSendMOD
 				
 					continue;
 				}
-				elseif (!$GetToInfo
-						and $size == 1)
+				elseif (!$GetToInfo and $size == 1)
 				{
 					$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 				}
@@ -162,8 +153,7 @@ class MySmartPrivateMassegeSendMOD
 				
 				$GetMemberOptions = $MySmartBB->rec->getInfo();
 				
-				if (!$GetMemberOptions['resive_pm']
-					and $size > 1)
+				if (!$GetMemberOptions['resive_pm'] and $size > 1)
 				{
 					$fail[] = $MySmartBB->_POST['to'][$x];
 					
@@ -173,8 +163,7 @@ class MySmartPrivateMassegeSendMOD
 				
 					continue;
 				}
-				elseif (!$GetMemberOptions['resive_pm']
-						and $size == 1)
+				elseif (!$GetMemberOptions['resive_pm'] and $size == 1)
 				{
 					$MySmartBB->func->error( $MySmartBB->lang[ 'member_cant_receive' ] );
 				}
@@ -186,8 +175,7 @@ class MySmartPrivateMassegeSendMOD
 					
 					$PrivateMassegeNumber = $MySmartBB->pm->getNumber();
 					
-					if ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
-						and $size > 1)
+					if ($PrivateMassegeNumber > $GetMemberOptions['max_pm'] and $size > 1)
 					{
 						$fail[] = $MySmartBB->_POST['to'][$x];
 						
@@ -197,8 +185,7 @@ class MySmartPrivateMassegeSendMOD
 						
 						continue;
 					}
-					elseif ($PrivateMassegeNumber > $GetMemberOptions['max_pm']
-							and $size == 1)
+					elseif ($PrivateMassegeNumber > $GetMemberOptions['max_pm'] and $size == 1)
 					{
 						$MySmartBB->func->error( $MySmartBB->lang[ 'member_max_inbox' ] );
 					}

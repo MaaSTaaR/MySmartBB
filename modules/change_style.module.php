@@ -24,10 +24,8 @@ class MySmartChangeStyleMOD
 		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'change_style' ] );
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		if ($MySmartBB->_GET['change'])
 		{
@@ -43,7 +41,7 @@ class MySmartChangeStyleMOD
 			}
 			else
 			{
-				setcookie( $MySmartBB->_CONF['style_cookie'], $MySmartBB->_GET[ 'id' ], time() + 31536000 );
+				$change = setcookie( $MySmartBB->_CONF['style_cookie'], $MySmartBB->_GET[ 'id' ], time() + 31536000 );
 			}
 			
 			if ($change)

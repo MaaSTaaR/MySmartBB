@@ -54,12 +54,12 @@ class MySmartCommon
 			
 			// ~ Check if the visitor is a member or not ? ~ //
 			
-			// If the information does'nt valid CheckMember's value will be false
+			// If the information doesn't valid CheckMember's value will be false
 			// otherwise the value will be an array
 			$this->CheckMember = $MySmartBB->member->checkMember( $username, $password );
 			
-			// This is a member :)										
-			if ($this->CheckMember != false)
+			// This is a member :)
+			if ( $this->CheckMember != false )
 			{
 				$this->__memberProcesses();
 			}
@@ -74,10 +74,7 @@ class MySmartCommon
 			$this->__visitorProcesses();
 		}
 	}
-		
-	/**
-	 * If the Guest is member , call this function
-	 */
+	
 	private function __memberProcesses()
 	{
 		global $MySmartBB;
@@ -106,9 +103,7 @@ class MySmartCommon
 		// ... //
 		
 		if ( $MySmartBB->_CONF[ 'group_info' ][ 'banned' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_show_board' ] );
-		}
 		
 		// ... //
 		

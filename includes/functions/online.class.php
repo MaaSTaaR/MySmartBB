@@ -27,21 +27,22 @@ class MySmartOnline
 			$timeout = $this->engine->_CONF['timeout'];
 		
 		$this->engine->rec->table = $this->engine->table[ 'online' ];
-		
 		$this->engine->rec->filter = "logged>=" . $timeout;
 		
 		if ( $way == 'username' )
 		{
-			$this->engine->rec->filter .= " AND username='" . $value . "'";
+			$field = 'username';
 		}
 		elseif ( $way == 'ip' )
 		{
-			$this->engine->rec->filter .= " AND user_ip='" . $value . "'";
+			$field = 'user_ip';
 		}
 		else
 		{
 			return false;
 		}
+		
+		$this->engine->rec->filter .= ' AND ' . $field . "='" . $value . "'";
 		
    		$num = $this->engine->rec->getNumber();
    		

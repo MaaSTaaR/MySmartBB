@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package	:	MySmartStyle
+ * @package		:	MySmartStyle
  * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @start		:	27/2/2006 , 8:38 PM
- * @updated		:	Thu 28 Jul 2011 11:23:05 AM AST 
+ * @updated		:	Mon 18 Jun 2012 03:13:39 PM AST 
  */
 
 class MySmartStyle
@@ -65,9 +65,7 @@ class MySmartStyle
 	public function deleteStyle( $id )
 	{
 		if ( empty( $id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM deleteStyle() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->engine->table[ 'style' ];
 		$this->engine->rec->filter = "id='" . $id . "'";
@@ -92,6 +90,21 @@ class MySmartStyle
 		{
 			return false;
 		}
+	}
+	
+	// ... //
+	
+	public function getStyleInfo( $id )
+	{
+		if ( empty( $id ) )
+ 			trigger_error('ERROR::NEED_PARAMETER -- FROM getStyleInfo() -- EMPTY id',E_USER_ERROR);
+ 		
+		$this->engine->rec->table = $this->engine->table[ 'style' ];
+		$this->engine->rec->filter = "id='" . (int) $id  . "'";
+		
+		$info = $this->engine->rec->getInfo();
+		
+		return $info;
 	}
 }
 

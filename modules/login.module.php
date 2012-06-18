@@ -41,12 +41,6 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
-		if ( empty( $MySmartBB->_POST[ 'username' ])
-			or empty( $MySmartBB->_POST[ 'password' ] ) )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ], true );
-		}
-		
 		if ( !$register_login )
 		{
 			$username = trim( $MySmartBB->_POST[ 'username' ] );
@@ -58,19 +52,22 @@ class MySmartLoginMOD
 			$password = trim( $MySmartBB->_GET[ 'password' ] );
 		}
 		
+		if ( empty( $username ) or empty( $password ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
 		$expire = ( isset( $MySmartBB->_POST[ 'temporary' ] ) and $MySmartBB->_POST[ 'temporary' ] == 'on' ) ? 0 : time() + 31536000;
 		
 		$isMember = $MySmartBB->member->loginMember( $username, $password, $expire );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'login' ] );
 		
-		if ($isMember != false)
+		if ( $isMember != false )
 		{
 			// ... //
 			
-			$MySmartBB->template->assign('username',$username);
+			$MySmartBB->template->assign( 'username', $username );
 			
-			$MySmartBB->template->display('login_msg');
+			$MySmartBB->template->display( 'login_msg' );
 			
 			// ... //
 			
@@ -100,24 +97,23 @@ class MySmartLoginMOD
 			
 			$MySmartBB->plugin->runHooks( 'login_success' );
 			
-			// ... //
-			
-			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
-      		$url = $url[ 'query' ];
-      		$url = explode( '&', $url );
-      		$url = $url[ 0 ];
-
-     		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
-      		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
-      		
-      		// ... //
+       		// ... //
       		
       		$move_to = 'index.php';
       		
       		if ( !$register_login )
       		{
-      			if ( $url != 'page=logout' or empty( $url ) or $url != 'page=login' )
-       				$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
+				$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+		  		$url = $url[ 'query' ];
+		  		$url = explode( '&', $url );
+		  		$url = $url[ 0 ];
+
+		 		$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+		  		$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
+		  		
+      			if ( $X_url[ 0 ] == $Y_url[ 2 ] )
+      				if ( $url != 'page=logout' or empty( $url ) or $url != 'page=login' )
+       					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
       		}
       		
       		$MySmartBB->func->move( $move_to );

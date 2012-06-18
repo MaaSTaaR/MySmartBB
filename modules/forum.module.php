@@ -15,7 +15,7 @@ class MySmartForumMOD
 	private $subject_res;
 	private $stick_subject_res;
 	
-	function run()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -23,8 +23,8 @@ class MySmartForumMOD
 		
 		$MySmartBB->load( 'section,subject' );
 		
-		$MySmartBB->template->assign('SECTION_RSS',true);
-		$MySmartBB->template->assign('SECTION_ID',$MySmartBB->_GET['id']);
+		$MySmartBB->template->assign( 'SECTION_RSS', true );
+		$MySmartBB->template->assign( 'SECTION_ID', $MySmartBB->_GET[ 'id' ] );
 		
 		$this->_getSectionInfo();
 		
@@ -71,7 +71,7 @@ class MySmartForumMOD
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		if (empty($MySmartBB->_GET['id']))
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
@@ -81,12 +81,14 @@ class MySmartForumMOD
 		
 		$this->Section = $MySmartBB->rec->getInfo();
 		
-		$MySmartBB->template->assign('section_info',$this->Section);
-		
 		// ... //
 		
-		if (!$this->Section)
+		if ( !$this->Section )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
+		
+		// ... //
+			
+		$MySmartBB->template->assign('section_info',$this->Section);
 		
 		// ... //
 		
@@ -115,9 +117,11 @@ class MySmartForumMOD
 			
 		if ( isset( $this->Section[ 'main_section' ] ) and $this->Section[ 'main_section' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cat_section' ] );
+		
+		// ... //
 	}
 	
-	private function _generalProcesses( $check = false )
+	private function _generalProcesses()
 	{
 		global $MySmartBB;
 		
@@ -127,11 +131,8 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		if ( !$check )
-		{
-			// Check if the section has been protected with a password
-			$MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
-     	}
+		// Check if the section has been protected with a password
+		$MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
      	
      	// ... //
      	
@@ -175,17 +176,17 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		// ~ Get the list of people who read this section ~ //
+		// Get the list of people who are reading this section
 		
 		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
 		
-		if (!$MySmartBB->_CONF['info_row']['show_onlineguest'])
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'show_onlineguest' ] )
 		{
 			$this->rec->filter .= " AND username<>'Guest'";
 		}
 		
 		// This member can't see hidden member
-		if (!$MySmartBB->_CONF['group_info']['show_hidden'])
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] )
 		{
 			$this->rec->filter .= " AND hide_browse<>'1'";
 		}
@@ -199,7 +200,7 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		// ~ Get the number of unregisterd visitors who read this section ~ //
+		// Get the number of unregistered visitors who are reading this section
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
@@ -208,7 +209,7 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		// ~ Get the number of members who read this section ~ //
+		// Get the number of members who read this section
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
@@ -222,7 +223,6 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		// TODO : cache
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
 		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "'";
 		
@@ -261,15 +261,13 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->template->assign('SHOW_SUB_SECTIONS',false);
+		
 		if ( !empty( $this->Section[ 'forums_cache' ] ) )
-		{	
+		{
 			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->fetchForumsFromCache( $this->Section[ 'forums_cache' ] );
 			
 			$MySmartBB->template->assign('SHOW_SUB_SECTIONS',true);
-		}
-		else
-		{
-			$MySmartBB->template->assign('SHOW_SUB_SECTIONS',false);
 		}
 	}
 	

@@ -30,22 +30,26 @@ class MySmartAdsPageMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$MySmartBB->_CONF['template']['GetPage'] = $MySmartBB->rec->getInfo();
 		
+		// ... //
+		
 		if (!$MySmartBB->_CONF['template']['GetPage'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'page_doesnt_exist' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['GetPage'][ 'title' ] );
 		

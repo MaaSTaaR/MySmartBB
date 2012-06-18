@@ -38,10 +38,8 @@ class MySmartDownloadMOD
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -50,7 +48,7 @@ class MySmartDownloadMOD
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
-		if ($SubjectInfo['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'])
+		if ( $SubjectInfo[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
 		
 		// ... //
@@ -67,7 +65,7 @@ class MySmartDownloadMOD
 		
 		$SectionGroup = $MySmartBB->rec->getInfo();
 		
-		if (!$SectionGroup['view_section'])
+		if ( !$SectionGroup[ 'view_section' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 		
 		// ... //
@@ -82,10 +80,9 @@ class MySmartDownloadMOD
 		header('Content-Disposition: attachment;filename=' . $filename);
 		header('Content-type: text/plain');
 		
-		echo $MySmartBB->lang[ 'topic_title' ] . ' ' . $SubjectInfo['title'] . '
- ' . $MySmartBB->lang[ 'topic_writer' ] . ' ' . $SubjectInfo['writer'] . '
+		// ... //
 
-' . $SubjectInfo['text'];
+		echo $MySmartBB->lang[ 'topic_title' ] . ' ' . $SubjectInfo['title'] . "\n" . $MySmartBB->lang[ 'topic_writer' ] . ' ' . $SubjectInfo['writer'] . "\n\n" . $SubjectInfo['text'];
 	}
 	
 	private function _downloadAttach()
@@ -135,15 +132,11 @@ class MySmartDownloadMOD
 		
 			// The user can't show this subject
 			if (!$SectionGroup['view_section'])
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
-			}
 		
 			// The user can't download this attachment
 			if (!$SectionGroup['download_attach'])
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
-			}
 			
 			// These checks are special for members	
 			if ($MySmartBB->_CONF['member_permission'])
@@ -185,7 +178,7 @@ class MySmartDownloadMOD
 		// ... //
 		
 		// File content
-		echo file_get_contents('./' . $AttachInfo['filepath']);
+		echo file_get_contents( './' . $AttachInfo['filepath'] );
 		
 		// ... //
 	}
@@ -205,13 +198,11 @@ class MySmartDownloadMOD
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
 		
 		$MsgInfo = $MySmartBB->rec->getInfo();
-																		
-		if (!$MsgInfo)
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
-		}
 		
-		$MsgInfo['title'] = $MySmartBB->func->cleanVariable($MsgInfo['title'],'html');
+		if (!$MsgInfo)
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
+		
+		$MsgInfo['title'] = $MySmartBB->func->cleanVariable( $MsgInfo['title'], 'html' );
 		
 		$filename = str_replace(' ','_',$MsgInfo['title']);
 		$filename .= '.txt';
@@ -230,11 +221,7 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
-		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $MsgInfo['title'] . '
- ' . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $MsgInfo['user_from'] . '
-
-';
-		echo $MsgInfo['text'];
+		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $MsgInfo['title'] . "\n" . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $MsgInfo['user_from'] . "\n\n" . $MsgInfo['text'];
 	}
 }
 

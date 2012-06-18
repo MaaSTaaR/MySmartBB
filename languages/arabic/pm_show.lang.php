@@ -12,4 +12,20 @@ $lang[ 'template' ][ 'context' ] = 'النص';
 $lang[ 'template' ][ 'date' ] = 'بتاريخ';
 $lang[ 'template' ][ 'take_copy' ] = 'اخذ نسخة من الرسالة';
 
+$lang[ 'template' ][ 'member_avatar' ] = 'الصورة الشخصية لـ ';
+$lang[ 'template' ][ 'member_profile' ] = 'الهوية الشخصية';
+$lang[ 'template' ][ 'member_id' ] = 'رقم العضوية';
+$lang[ 'template' ][ 'register_date' ] = 'تاريخ التسجيل';
+$lang[ 'template' ][ 'status' ] = 'الحالة';
+$lang[ 'template' ][ 'online' ] = 'متصل';
+$lang[ 'template' ][ 'offline' ] = 'غير متصل';
+$lang[ 'template' ][ 'posts' ] = 'المشاركات';
+$lang[ 'template' ][ 'country' ] = 'الدولة';
+$lang[ 'template' ][ 'gender' ] = 'الجنس';
+$lang[ 'template' ][ 'visits' ] = 'الزيارات';
+$lang[ 'template' ][ 'member_is_away' ] = 'العضو غائب';
+
+$lang[ 'template' ][ 'filename' ] = 'إسم الملف';
+$lang[ 'template' ][ 'download_times' ] = 'مرات التحميل';
+
 ?>

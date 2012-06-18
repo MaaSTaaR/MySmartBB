@@ -50,12 +50,12 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-
+		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -65,9 +65,7 @@ class MySmartReplyAddMOD
 		$this->SubjectInfo = $MySmartBB->rec->getInfo();
 
 		if ( !$this->SubjectInfo )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doent_exist' ] );
-		}
 		
 		// ... //
 		
@@ -157,24 +155,18 @@ class MySmartReplyAddMOD
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SubjectInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ]);
 		
-		if (empty($MySmartBB->_POST['text']))
-		{
+		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$this->_checkContextLength();
 		
 		if ( $this->moderator )
 		{
 			if ( $MySmartBB->_POST[ 'stick' ] )
-			{
 				$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo['id'] );
-			}
 		
 			if ( $MySmartBB->_POST[ 'close' ] )
-			{
 				$update = $MySmartBB->subject->closeSubject( null, $this->SubjectInfo['id'] );
-			}
 		}
 		
 		$MySmartBB->plugin->runHooks( 'new_reply_start' );
@@ -243,19 +235,13 @@ class MySmartReplyAddMOD
 		if ( !$MySmartBB->_CONF['group_info']['admincp_allow'] )
 		{
 			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']+1}))
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $info_row['post_text_max'] );
-			}
 			
 			if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']+1}))
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
-			}
 
 			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
-			{
 				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
-			}
 		}
 	}
 	

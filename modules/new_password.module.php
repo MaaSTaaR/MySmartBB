@@ -35,17 +35,17 @@ class MySmartPasswordMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'change_password_process' ] );
-		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'change_password_process' ] );
 		
-		if (empty($MySmartBB->_GET['code']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_GET[ 'code' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		if (!$MySmartBB->_CONF['member_permission'])
-		{
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'please_login' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
@@ -53,9 +53,9 @@ class MySmartPasswordMOD
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		
 		if (!$RequestInfo)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'request_doesnt_exist' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'new_password_start' );
 		
@@ -65,10 +65,12 @@ class MySmartPasswordMOD
 		
 		$UpdatePassword = $MySmartBB->rec->update();
 		
-		$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
+		// ... //
 		
 		if ($UpdatePassword)
 		{
+			$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
+			
 		    $MySmartBB->plugin->runHooks( 'new_password_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );

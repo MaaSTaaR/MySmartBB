@@ -18,24 +18,18 @@ class MySmartPrivateMassegeMOD
 		
 		$MySmartBB->loadLanguage( 'pm_setting' );
 		
+		// ... //
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
-		}
 		
-		/** Can't use the private massege system **/
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
-		}
-		/** **/
-		
-		/** Visitor can't use the private massege system **/
+
 		if (!$MySmartBB->_CONF['member_permission'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
-		/** **/
+		
+		// ... //
 				
 		if ($MySmartBB->_GET['setting'])
 		{
@@ -73,11 +67,12 @@ class MySmartPrivateMassegeMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
 		
-		if ($MySmartBB->_POST['autoreply']
-			and (!isset($MySmartBB->_POST['title']) or !isset($MySmartBB->_POST['msg'])))
-		{
+		// ... //
+		
+		if ( $MySmartBB->_POST['autoreply'] and ( !isset( $MySmartBB->_POST['title'] ) or !isset( $MySmartBB->_POST['msg'] ) ) )
 			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'pm_setting_action_start' );
 		

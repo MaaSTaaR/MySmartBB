@@ -44,6 +44,11 @@ class MySmartProfileMOD
 		
 		$MySmartBB->plugin->runHooks( 'show_profile_start' );
 		
+		// ... //
+		
+		// To save some of server's resources when the member his/her profile
+		// so don't do a new query because we already have the information
+		// of the member stored in $MySmartBB->_CONF['member_row']
 		$do_query = true;
 		
 		if (!empty($MySmartBB->_GET['id']))
@@ -71,6 +76,8 @@ class MySmartProfileMOD
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->_CONF['template']['MemberInfo'] = ($do_query) ? $MySmartBB->rec->getInfo() : $MySmartBB->_CONF['member_row'];
@@ -78,9 +85,7 @@ class MySmartProfileMOD
 		// ... //
 		
 		if (!$MySmartBB->_CONF['template']['MemberInfo'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -93,6 +98,9 @@ class MySmartProfileMOD
 		
 		// ... //
 		
+		// If the member who we are showing his/her profile belong to the same
+		// group of the current member (that is, the member who are showing the profile)
+		// don't do a query, we already have the information of the group stored in $MySmartBB->_CONF['group_info']
 		if ( $MySmartBB->_CONF[ 'member_permission' ] 
 			and $MySmartBB->_CONF['member_row']['usergroup'] == $MySmartBB->_CONF['template']['MemberInfo']['usergroup'])
 		{
@@ -108,7 +116,7 @@ class MySmartProfileMOD
 			
 		$MySmartBB->_CONF['template']['MemberInfo']['usergroup'] = $GroupInfo['title'];
 		
-		if ($MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0)
+		if ( $MySmartBB->_CONF['template']['MemberInfo']['posts'] > 0 )
 		{
 			// ... //
 			

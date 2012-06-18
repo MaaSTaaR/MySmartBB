@@ -18,20 +18,18 @@ class MySmartPrivateMassegeShowMOD
 		
 		$MySmartBB->loadLanguage( 'pm_show' );
 		
+		// ... //
+		
 		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
-		}
 		
 		if (!$MySmartBB->_CONF['group_info']['use_pm'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
-		}
 		
 		if (!$MySmartBB->_CONF['member_permission'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
 		
@@ -50,12 +48,14 @@ class MySmartPrivateMassegeShowMOD
 	{
 		global $MySmartBB;
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )		
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		// ... //
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )		
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
@@ -65,9 +65,7 @@ class MySmartPrivateMassegeShowMOD
 		// ... //
 		
 		if (!$MySmartBB->_CONF['template']['MassegeRow'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -79,6 +77,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
+		$MySmartBB->rec->select = 'id,username,user_sig,user_country,user_gender,register_date,posts,user_title,visitor,avater_path,away,away_msg,hide_online,logged,username_style_cache';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['template']['MassegeRow']['user_from'] . "'";
 		

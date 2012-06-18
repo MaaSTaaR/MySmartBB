@@ -16,15 +16,15 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->loadLanguage( 'register' );
 		
+		// ... //
+		
 		if ($MySmartBB->_CONF['info_row']['reg_close'])
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'register_closed' ] );
-		}
 		
 		if (!$MySmartBB->_CONF['info_row']['reg_' . $MySmartBB->_CONF['day']])
-   		{
    			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_today' ] );
-   		}
+   		
+   		// ... //
    		
 		if ($MySmartBB->_GET['index'])
 		{
@@ -92,114 +92,20 @@ class MySmartRegisterMOD
 		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
 		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
 		
-		// Store the email provider in explode_email[1] and the name of email in explode_email[0]
-		// That will be useful to ban email providers
-		$explode_email = explode('@',$MySmartBB->_POST['email']);
-		$EmailProvider = $explode_email[1];
-		
-		// Ensure all necessary information are valid
-		if (empty($MySmartBB->_POST['username']) 
-			or empty($MySmartBB->_POST['password']) 
-			or empty($MySmartBB->_POST['email']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		// Ensure the email is equal the confirm of email
-		if ($MySmartBB->_POST['email'] != $MySmartBB->_POST['email_confirm'])
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'email_confirmation_not_identical' ] );
-		}
-		
-		// Ensure the password is equal the confirm of password
-		if ($MySmartBB->_POST['password'] != $MySmartBB->_POST['password_confirm']) 
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'password_confirmation_not_identical' ] );
-		}
-		
-		// Check if the email is valid, This line will prevent any false email
-		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_correct_email' ] );
-		}
-		
-		// Ensure there is no person used the same username
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
-		
-		$isMember = $MySmartBB->rec->getNumber();
-		
-		if ( $isMember > 0 )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'username_does_exist' ] );
-		}
-		
-		// Ensure there is no person used the same email
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
-		
-		$isMember = $MySmartBB->rec->getNumber();
-		
-		if ( $isMember > 0 )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'email_does_exist' ] );
-		}
-		
-		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_username' ] );
-		}
-		
-		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_email' ] );
-		}
-		
-		if ($MySmartBB->banned->isProviderBanned( $EmailProvider ))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_provider' ] );
-		}
-		
-		if ($MySmartBB->_POST['username'] == 'Guest')
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_this_username' ] );
-		}
-
-   		if (!isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_less_num']}))
-   		{
-   			$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_less_num'] );
-      	}
-      	
-      	if (isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_max_num']+1}))
-      	{
-       	 	$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_max_num'] );
-      	}
-
-      	if (isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_max_num']+1}))
-      	{
-            $MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] );
-      	}
-
-      	if (!isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_min_num']-1}))
-      	{
-        	$MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] );
-      	}
+		// A long list of checks before registeration
+		$this->__checkFieldsValidity();
+		$this->__checkAlreadyUsed();
+		$this->__checkBanned();
+		$this->__checkConstraints();
+		$this->__checkLength();
       		
-		if (strstr($MySmartBB->_POST['username'],'"') 
-			or strstr($MySmartBB->_POST['username'],"'") 
-			or strstr($MySmartBB->_POST['username'],'>') 
-			or strstr($MySmartBB->_POST['username'],'<'))
-      	{
-      		$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_symbols' ] );
-      	}
-      		
-      	$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
+      	$MySmartBB->_POST['password'] = md5( $MySmartBB->_POST['password'] );
       	
       	// ... //
       	
       	$MySmartBB->plugin->runHooks( 'register_start' );
       	
-      	/* ... */
+      	// ... //
       	
       	// Get the information of default group to set username style cache
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
@@ -210,7 +116,7 @@ class MySmartRegisterMOD
 		$style = $GroupInfo['username_style'];
 		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_POST['username'],
@@ -219,7 +125,7 @@ class MySmartRegisterMOD
       										'usergroup'	=>	$MySmartBB->_CONF['info_row']['def_group'],
       										'user_gender'	=>	$MySmartBB->_POST['gender'],
       										'register_date'	=>	$MySmartBB->_CONF['now'],
-      										'user_title'	=>	'عضو',
+      										'user_title'	=>	$GroupInfo[ 'user_title' ],
       										'style'	=>	$MySmartBB->_CONF['info_row']['def_style'],
       										'username_style_cache'	=>	$username_style_cache);
       	
@@ -271,7 +177,7 @@ class MySmartRegisterMOD
 					if ($Send)
 					{
 						$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed_email' ] );
-						$MySmartBB->func->move('index.php',2);
+						$MySmartBB->func->move('index.php');
 					}
 					else
 					{
@@ -285,6 +191,106 @@ class MySmartRegisterMOD
       			$MySmartBB->func->move('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
       		}
       	}
+	}
+	
+	private function __checkFieldsValidity()
+	{
+		global $MySmartBB;
+		
+		// Ensure all necessary information are valid
+		if (empty($MySmartBB->_POST['username']) 
+			or empty($MySmartBB->_POST['password']) 
+			or empty($MySmartBB->_POST['email']))
+		{
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		}
+		
+		// Ensure the email is equal the confirm of email
+		if ($MySmartBB->_POST['email'] != $MySmartBB->_POST['email_confirm'])
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_confirmation_not_identical' ] );
+		
+		// Ensure the password is equal the confirm of password
+		if ($MySmartBB->_POST['password'] != $MySmartBB->_POST['password_confirm']) 
+			$MySmartBB->func->error( $MySmartBB->lang[ 'password_confirmation_not_identical' ] );
+		
+		// Check if the email is valid, This line will prevent any false email
+		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_correct_email' ] );
+	}
+	
+	private function __checkAlreadyUsed()
+	{
+		global $MySmartBB;
+		
+		// Ensure there is no person used the same username
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
+		
+		$isMember = $MySmartBB->rec->getNumber();
+		
+		if ( $isMember > 0 )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'username_does_exist' ] );
+		
+		// Ensure there is no person used the same email
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
+		
+		$isMember = $MySmartBB->rec->getNumber();
+		
+		if ( $isMember > 0 )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_does_exist' ] );
+	}
+	
+	private function __checkBanned()
+	{
+		global $MySmartBB;
+		
+		// Store the email provider in explode_email[1] and the name of email in explode_email[0]
+		// That will be useful to ban email providers
+		$explode_email = explode('@',$MySmartBB->_POST['email']);
+		$EmailProvider = $explode_email[1];
+		
+		if ($MySmartBB->banned->isUsernameBanned( $MySmartBB->_POST['username'] ))
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_username' ] );
+		
+		if ($MySmartBB->banned->isEmailBanned( $MySmartBB->_POST['email'] ))
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_email' ] );
+		
+		if ($MySmartBB->banned->isProviderBanned( $EmailProvider ))
+			$MySmartBB->func->error( $MySmartBB->lang[ 'banned_provider' ] );
+	}
+	
+	private function __checkConstraints()
+	{
+		global $MySmartBB;
+		
+		if ($MySmartBB->_POST['username'] == 'Guest')
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_this_username' ] );
+		
+		if (strstr($MySmartBB->_POST['username'],'"') 
+			or strstr($MySmartBB->_POST['username'],"'") 
+			or strstr($MySmartBB->_POST['username'],'>') 
+			or strstr($MySmartBB->_POST['username'],'<'))
+      	{
+      		$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_symbols' ] );
+      	}
+	}
+	
+	private function __checkLength()
+	{
+		global $MySmartBB;
+		
+   		if (!isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_less_num']}))
+   			$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_less_num'] );
+      	
+      	if (isset($MySmartBB->_POST['username']{$MySmartBB->_CONF['info_row']['reg_max_num']+1}))
+       	 	$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_max_num'] );
+
+      	if (isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_max_num']+1}))
+            $MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_max_num'] );
+
+      	if (!isset($MySmartBB->_POST['password']{$MySmartBB->_CONF['info_row']['reg_pass_min_num']-1}))
+        	$MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF['info_row']['reg_pass_min_num'] );
 	}
 }
 

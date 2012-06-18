@@ -50,33 +50,25 @@ class MySmartForgetMOD
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'do_retrieve_password' ] );
-		
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'do_retrieve_password' ] );
 		
-		if (empty($MySmartBB->_POST['email']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_POST[ 'email' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
-		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['email']))
-		{
+		if ( !$MySmartBB->func->checkEmail( $MySmartBB->_POST[ 'email' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
-		}
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
-		
-		$CheckEmail = $MySmartBB->rec->getNumber();
-		
-		if ( $CheckEmail > 0 )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'email_doesnt_exist' ] );
-		}
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" . $MySmartBB->_POST['email'] . "'";
 		
 		$ForgetMemberInfo = $MySmartBB->rec->getInfo();
+		
+		if ( !$ForgetMemberInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'email_doesnt_exist' ] );
 		
 		// ... //
 		
@@ -113,7 +105,7 @@ class MySmartForgetMOD
 				
 				$MassegeInfo = $MySmartBB->rec->getInfo();
 				
-				$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
+				$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$ForgetMemberInfo['username'], 
 																				$MySmartBB->_CONF['info_row']['title'], 
 																				null, 
 																				$ChangeAdress, 
@@ -130,7 +122,7 @@ class MySmartForgetMOD
 				    $MySmartBB->plugin->runHooks( 'forget_action_success' );
 				    
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'email_sent' ] );
-					$MySmartBB->func->move('index.php',2);
+					$MySmartBB->func->move('index.php');
 				}
 				else
 				{

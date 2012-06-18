@@ -3,7 +3,7 @@
 /*
  * @package 	: 	MySmartMember
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   Thu 28 Jul 2011 10:44:31 AM AST 
+ * @updated 	:   Mon 18 Jun 2012 04:30:40 PM AST 
 */
 
 class MySmartMember
@@ -30,11 +30,8 @@ class MySmartMember
 	// ~ ~ //
 	public function loginMember( $username, $password, $expire = null )
 	{
-		if ( empty( $username )
-			or empty( $password ) )
-		{
+		if ( empty( $username ) or empty( $password ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM loginMember() -- EMPTY username or password', E_USER_ERROR );
-		}
 		
 		$checkMember = $this->checkMember( $username, $password );
 		    	       		       
@@ -62,11 +59,8 @@ class MySmartMember
 	// ~ ~ //
 	public function checkMember( $username, $password )
 	{
-		if ( empty( $username )
-			or empty( $password ) )
-		{
+		if ( empty( $username ) or empty( $password ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkMember() -- EMPTY username or password', E_USER_ERROR );
-		}
 		
 		$this->engine->rec->table = $this->table;
 		$this->engine->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
@@ -252,20 +246,24 @@ class MySmartMember
 		{
 			$cache = unserialize( base64_decode( $member_info[ 'style_cache' ] ) );
 			
-			if ( !is_array( $cache ) 
+			if ( !is_array( $cache )
 			    or empty( $cache[ 'style_path' ] )
 			    or empty( $cache[ 'image_path' ] )
 			    or empty( $cache[ 'template_path' ] )
 			    or empty( $cache[ 'cache_path' ] ) )
 			{
 			    $this->updateMemberStyleCache( $member_info[ 'style' ] );
+			    
+			    $style_info = $this->engine->style->getStyleInfo( $member_info[ 'style' ] );
 			}
-			
-			$style_info[ 'style_path' ] 		= 	$cache[ 'style_path' ];
-			$style_info[ 'image_path' ] 		= 	$cache[ 'image_path' ];
-			$style_info[ 'template_path' ] 		= 	$cache[ 'template_path' ];
-			$style_info[ 'cache_path' ] 		= 	$cache[ 'cache_path' ];			
-			$style_info[ 'id' ] 				= 	$member_info[ 'style' ];
+			else
+			{
+				$style_info[ 'style_path' ] 		= 	$cache[ 'style_path' ];
+				$style_info[ 'image_path' ] 		= 	$cache[ 'image_path' ];
+				$style_info[ 'template_path' ] 		= 	$cache[ 'template_path' ];
+				$style_info[ 'cache_path' ] 		= 	$cache[ 'cache_path' ];			
+				$style_info[ 'id' ] 				= 	$member_info[ 'style' ];
+			}
 		}
 		// TODO : Just use else?
 		else if ( $member_info[ 'style_id_cache' ] != $member_info[ 'style' ] 

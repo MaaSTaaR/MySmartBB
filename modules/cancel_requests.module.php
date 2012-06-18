@@ -32,34 +32,39 @@ class MySmartCReqMOD
 	{
 		global $MySmartBB;
 		
-		// Show header with page title
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'cancel_request' ] );
+		// ... //
 		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'cancel_request' ] );
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'cancel_request' ] );
 		
 		$MySmartBB->plugin->runHooks( 'cancel_request_start' );
 		
-		if (empty($MySmartBB->_GET['type']) 
-			or empty($MySmartBB->_GET['code']))
-		{
+		// ... //
+		
+		if (empty($MySmartBB->_GET['type']) or empty($MySmartBB->_GET['code']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->_GET['type'] = (int) $MySmartBB->_GET['type'];
 		$MySmartBB->_GET['code'] = trim( $MySmartBB->_GET['code'] );
 		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->filter = "type='" . $MySmartBB->_GET['type'] . "' AND random_url='" . $MySmartBB->_GET['code'] . "'";
 		
-		$CleanReq = $MySmartBB->rec->delete();
+		$del = $MySmartBB->rec->delete();
 			
-		if ($CleanReq)
+		if ( $del )
 		{
 		    $MySmartBB->plugin->runHooks( 'cancel_request_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'request_canceled' ] );
-			$MySmartBB->func->goto('index.php');
+			$MySmartBB->func->move('index.php');
 		}
+		
+		// ... //
 	}
 }
 

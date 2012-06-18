@@ -57,9 +57,7 @@ class MySmartTopicAddMOD
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if ( empty( $MySmartBB->_GET['id'] ) )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -70,10 +68,8 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
-		if (!$this->SectionInfo)
-		{
+		if ( !$this->SectionInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -154,11 +150,10 @@ class MySmartTopicAddMOD
 		
 		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate']  . ' تنفيذ عملية كتابة موضوع');
 		
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['text']))
-		{
+		// ... //
+		
+		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['text']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		
@@ -246,24 +241,16 @@ class MySmartTopicAddMOD
 		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
 		{
 			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']}))
-			{
 	  			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_max'] );
-    		}
 
 	   		if  (!isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_min']}))
-			{
 	 			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_min'] );
-			}
 
 	  	 	if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']}))
-			{
 	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
-			}
 
 			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
-			{
 	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
-			}
 		}
 	}
 	
@@ -288,10 +275,8 @@ class MySmartTopicAddMOD
 		
 		$tags_size = sizeof($MySmartBB->_POST['tags']);
 
-		if ($tags_size > 0 and strlen($MySmartBB->_POST['tags'][0]) > 0)
-		{
+		if ( $tags_size > 0 and strlen($MySmartBB->_POST['tags'][0]) > 0 )
 			$MySmartBB->tag->taggingSubject( $MySmartBB->_POST['tags'], $this->subject_id, $MySmartBB->_POST[ 'title' ] );
-		}
 	}
 	
 	private function _addAttachments()
