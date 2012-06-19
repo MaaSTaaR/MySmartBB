@@ -16,11 +16,11 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->loadLanguage( 'search' );
 		
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_searchForm();
 		}
-		elseif ($MySmartBB->_GET['start'])
+		elseif ( $MySmartBB->_GET[ 'start' ] )
 		{
 			$this->_startSearch();
 		}
@@ -69,10 +69,8 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		if (empty($keyword))
-		{
+		if ( empty( $keyword ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_keyword' ] );
-		}
 		
 		// ... //
 		
@@ -86,7 +84,10 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
+		$MySmartBB->_CONF['template']['res']['search_res'] = '';
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['search_res'];
 		$MySmartBB->rec->filter = $filter;
 		
 		$MySmartBB->rec->getList();
@@ -100,6 +101,8 @@ class MySmartSearchEngineMOD
 		$MySmartBB->plugin->runHooks( 'search_action_start' );
 		
 		// ... //
+		
+		$MySmartBB->template->assign( 'highlight', $keyword );
 		
 		$MySmartBB->template->display('search_results');
 		

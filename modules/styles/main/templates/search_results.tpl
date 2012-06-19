@@ -24,10 +24,12 @@
 		{$lang['write_date']}
 		</td>
 	</tr>
-{DB::getInfo}{$SearchResult}
+{DB::getInfo}{$search_res}{$SearchResult}
 	<tr align="center">
 		<td width="20%" class="row1">
-			<a href="index.php?page=topic&amp;show=1&amp;highlight={$highlight}&amp;id={$SearchResult['id']}">{$SearchResult['title']}</a>
+			<a href="index.php?page=topic&amp;show=1&amp;id={$SearchResult['id']}&amp;highlight={$highlight}">
+				{$SearchResult['title']}
+			</a>
 		</td>
 		<td width="20%" class="row1">
 			<a href="index.php?page=profile&amp;show=1&amp;username={$SearchResult['writer']}">{$SearchResult['writer']}</a>

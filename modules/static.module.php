@@ -42,6 +42,7 @@ class MySmartStaticMOD
 		//$StaticInfo['Age'] 			= 	$MySmartBB->misc->getForumAge( $MySmartBB->_CONF['info_row']['create_date'] );
 		$StaticInfo['InstallDate']	=	$MySmartBB->func->date( $MySmartBB->_CONF['info_row']['create_date'] );
 		
+		
 		/**
 		 * Get the number of members , subjects , replies , active members and sections
 		 */

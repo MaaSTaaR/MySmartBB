@@ -85,9 +85,6 @@ class MySmartTopicMOD
 		if ( !$this->Info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
 
-		$this->Info['subject_id'] = $this->subject_id = $MySmartBB->_GET['id'];
-		$this->subject_title = $this->Info[ 'title' ];
-		
 		// ... //
 		
 		if ( $this->Info['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'] )
@@ -97,6 +94,11 @@ class MySmartTopicMOD
 				
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
+		
+		// ... //
+		
+		$this->Info['subject_id'] = $this->subject_id = $MySmartBB->_GET['id'];
+		$this->subject_title = $this->Info[ 'title' ];
 		
 		// ... //
 		
@@ -162,6 +164,8 @@ class MySmartTopicMOD
 		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
 			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
 		
+		// ... //
+		
 		// Check if the section has been protected with a password
 		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
 	}
@@ -197,6 +201,8 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->template->assign( 'SHOW_POLL', false );
+		
 		if ( $this->Info[ 'poll_subject' ] )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
@@ -204,7 +210,7 @@ class MySmartTopicMOD
 			
 			$Poll = $MySmartBB->rec->getInfo( false );
 			
-			if ($Poll != false)
+			if ( $Poll != false )
 			{
 				$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'answers' ] = unserialize( base64_decode( $Poll['answers'] ) );
 				
@@ -214,10 +220,6 @@ class MySmartTopicMOD
 				
 				$MySmartBB->template->assign( 'SHOW_POLL', true );
 			}
-		}
-		else
-		{
-			$MySmartBB->template->assign( 'SHOW_POLL', false );
 		}
 	}
 		
@@ -255,11 +257,10 @@ class MySmartTopicMOD
 		$topic_date = $MySmartBB->func->date($this->Info['native_write_time']);
 		$topic_time = $MySmartBB->func->time($this->Info['native_write_time']);
 		
-		$this->Info['native_write_time'] = $topic_date . ' ; ' . $topic_time;
+		$this->Info['native_write_time'] = $topic_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $topic_time;
 		
 		$this->_baseEnd();
 		
-		// Show subject
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->template->display('show_subject');
 		else
@@ -353,11 +354,10 @@ class MySmartTopicMOD
 		$reply_date = $MySmartBB->func->date($this->Info['write_time']);
 		$reply_time = $MySmartBB->func->time($this->Info['write_time']);
 		
-		$this->Info['write_time'] = $reply_date . ' ; ' . $reply_time;
+		$this->Info['write_time'] = $reply_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $reply_time;
 		
 		$this->_baseEnd();
 		
-		// Show the reply :)
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->template->display('show_reply');
 		else

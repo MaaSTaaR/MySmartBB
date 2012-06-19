@@ -28,21 +28,26 @@ class MySmartTagsMOD
 	{
 		global $MySmartBB;
 		
-		// Clean the id from any strings
+		// ... //
+		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$tag_info = $MySmartBB->rec->getInfo();
 		
+		// ... //
+		
 		if ( !$tag_info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'tag_doesnt_exist' ] );
+		
+		// ... //
 		
 		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
 		
@@ -51,7 +56,11 @@ class MySmartTagsMOD
 		
 		$number = $MySmartBB->rec->getNumber();
 		
+		// ... //
+		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'tags' ] );
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		
@@ -65,6 +74,8 @@ class MySmartTagsMOD
 		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$MySmartBB->rec->getList();
+		
+		// ... //
 		
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		$MySmartBB->template->assign( 'tag', $tag_info[ 'tag' ] );
