@@ -2,9 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
-
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');
@@ -20,9 +17,7 @@ class MySmartUserCPSubjectMOD
 		$MySmartBB->loadLanguage( 'usercp_option_subject' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )
 		{

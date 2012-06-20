@@ -49,7 +49,6 @@ class MySmartBB
 	public $cache = null;
 	public $banned = null;
 	public $massege = null;
-	public $vote = null;
 	public $group = null;
 	public $moderator = null;
 	public $icon = null;
@@ -235,7 +234,6 @@ class MySmartBB
   		$this->func_list[ 'section' ] 		= 	array( 'sections.class.php', 'MySmartSection' );
   		$this->func_list[ 'subject' ] 		= 	array( 'subject.class.php', 'MySmartSubject' );
   		$this->func_list[ 'toolbox' ] 		= 	array( 'toolbox.class.php', 'MySmartToolbox' );
-  		$this->func_list[ 'vote' ] 			= 	array( 'vote.class.php', 'MySmartVote' );
   		$this->func_list[ 'poll' ] 			= 	array( 'poll.class.php', 'MySmartPoll' );
   		$this->func_list[ 'tag' ] 			= 	array( 'tags.class.php', 'MySmartTags' );
   		$this->func_list[ 'attach' ] 		= 	array( 'attach.class.php', 'MySmartAttach' );

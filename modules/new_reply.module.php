@@ -209,7 +209,8 @@ class MySmartReplyAddMOD
 			// Upload files
 			if ($MySmartBB->_POST['attach'])
 			{
-				$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], $this->SectionGroup['upload_attach_num'], 
+				$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], 
+														$MySmartBB->_CONF[ 'group_info' ][ 'upload_attach_num' ], 
 														$this->reply_id, 'files', 'reply' );
 			}
 			

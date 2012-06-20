@@ -99,15 +99,15 @@ class MySmartUserCPAvatarMOD
 		
 		$MySmartBB->rec->fields['avater_path'] = '';
 		
-		if ($MySmartBB->_POST['options'] == 'list')
+		if ( $MySmartBB->_POST[ 'options' ] == 'list' )
 		{
 			$this->_fromList();
 		}
-		elseif ($MySmartBB->_POST['options'] == 'site')
+		elseif ( $MySmartBB->_POST[ 'options' ] == 'site' )
 		{
 			$this->_fromSite();
 		}
-		elseif ($MySmartBB->_POST['options'] == 'upload')
+		elseif ( $MySmartBB->_POST[ 'options' ] == 'upload' )
 		{
 			$this->_upload();
     	}
@@ -172,7 +172,7 @@ class MySmartUserCPAvatarMOD
 		$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar'];
 	}
 	
-	private function _upload();
+	private function _upload()
 	{
 		global $MySmartBB;
 		
@@ -188,7 +188,7 @@ class MySmartUserCPAvatarMOD
      		
      		$upload = $MySmartBB->attach->uploadFile( $MySmartBB->_FILES['upload'], $path, 
      													$this->allowed, 
-     													$this->engine->_CONF[ 'info_row' ][ 'download_path' ] . '/avatar' );
+     													$MySmartBB->_CONF[ 'info_row' ][ 'download_path' ] . '/avatar' );
      			
      		if ( $upload )
      			$MySmartBB->rec->fields['avater_path'] = $path;	
@@ -210,3 +210,5 @@ class MySmartUserCPAvatarMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
 	}
 }
+
+?>

@@ -2,6 +2,7 @@
 
 include( 'usercp.lang.php' );
 include( 'pm.lang.php' );
+include( 'pm_send.lang.php' );
 
 $lang[ 'pm_doesnt_exist' ] = 'The message doesn\'t exist';
 $lang[ 'reply' ] = 'Reply';
@@ -27,5 +28,7 @@ $lang[ 'template' ][ 'member_is_away' ] = 'The member is away';
 
 $lang[ 'template' ][ 'filename' ] = 'Filename';
 $lang[ 'template' ][ 'download_times' ] = 'Downloads';
+
+$lang[ 'template' ][ 'signature' ] = 'Signature';
 
 ?>

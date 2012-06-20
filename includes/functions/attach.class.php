@@ -152,7 +152,7 @@ class MySmartAttach
 		// ... //
 		
 		if ( file_exists( $dir . '/' . $file[ 'name' ] ) )
-			$file[ 'name' ] = $file[ 'name' ] . '-' . $this->engine->func->randomCode();
+			$file[ 'name' ] = $this->engine->func->randomCode() . '-' . $file[ 'name' ];
      	
      	// ... //
      	
@@ -215,29 +215,23 @@ class MySmartAttach
 				if ( !is_array( $allowed_extentions ) )
 					return null;
 				
-				return ( !in_array( $ext, $allowed_extentions ) ) ? false : true
+				return ( !in_array( $ext, $allowed_extentions ) ) ? false : true;
 			}
 		}
 	}
 	
  	public function getFileExtension( $filename )
     {
-  		$ex = explode('.',$filename);
+  		$ex = explode( '.', $filename );
   		
-  		$size = sizeof($ex);
+  		$size = sizeof( $ex );
   		
-  		if ($size == 2)
-  		{
+  		if ( $size == 2 )
   			return '.' . strtolower( $ex[1] );
-  		}
-  		elseif ($size > 2)
-  		{
+  		elseif ( $size > 2 )
   			return 'MULTIEXTENSION';
-  		}
   		else
-  		{
   			return false;
-  		}
  	}
 }
 

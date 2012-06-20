@@ -20,14 +20,10 @@ class MySmartUserCPSignatureMOD
 		$MySmartBB->loadLanguage( 'usercp_control_signature' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $lang[ 'member_zone' ] );
-		}
 		
 		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'sig_allow' ] )
-		{
 			$MySmartBB->func->error( $lang[ 'cant_use_this_feature' ] );
-		}
 		
 		$MySmartBB->load( 'icon,toolbox' );
 		
@@ -65,8 +61,7 @@ class MySmartUserCPSignatureMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $lang[ 'update_process' ] );
-		
-		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $lang[ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $lang[ 'update_process' ] );
+		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
 		
 		// ... //
 		
@@ -82,7 +77,7 @@ class MySmartUserCPSignatureMOD
 		
 		if ( $update )
 		{
-			$MySmartBB->func->msg( $lang[ 'update_succeed' ] );
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('index.php?page=usercp_control_signature&amp;main=1');
 		}
 		

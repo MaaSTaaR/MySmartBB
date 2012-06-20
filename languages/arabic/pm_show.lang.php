@@ -2,6 +2,7 @@
 
 include( 'usercp.lang.php' );
 include( 'pm.lang.php' );
+include( 'pm_send.lang.php' );
 
 $lang[ 'pm_doesnt_exist' ] = 'الرساله المطلوبه غير موجوده';
 $lang[ 'reply' ] = 'رد';
@@ -27,5 +28,7 @@ $lang[ 'template' ][ 'member_is_away' ] = 'العضو غائب';
 
 $lang[ 'template' ][ 'filename' ] = 'إسم الملف';
 $lang[ 'template' ][ 'download_times' ] = 'مرات التحميل';
+
+$lang[ 'template' ][ 'signature' ] = 'التوقيع';
 
 ?>

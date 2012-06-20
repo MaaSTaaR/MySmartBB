@@ -33,7 +33,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
 		
-		if ($MySmartBB->_GET['show'])
+		if ( $MySmartBB->_GET[ 'show' ] )
 		{
 			$this->_showMassege();
 		}

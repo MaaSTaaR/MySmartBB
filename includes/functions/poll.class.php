@@ -4,7 +4,7 @@
  * @package 	: 	MySmartPoll
  * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
  * @started 	: 	Wed 31 Aug 2011 12:55:55 AM AST 
- * @updated 	:	-
+ * @updated 	:	Wed 20 Jun 2012 09:02:59 PM AST 
  */
 
 class MySmartPoll
@@ -86,9 +86,7 @@ class MySmartPoll
 	public function updateResults( $poll, $answer )
 	{
 		if ( empty( $answer ) or ( empty( $poll ) or $poll == 0 ) )
-		{
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM MySmartPoll::updateResults()', E_USER_ERROR  );
-		}
 		
 		$info = null;
 		

@@ -20,9 +20,7 @@ class MySmartUserCPPasswordMOD
 		$MySmartBB->loadLanguage( 'usercp_control_password' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
 		{
@@ -54,13 +52,11 @@ class MySmartUserCPPasswordMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'execute_process' ] );
-		
 		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
 		
 		// ... //
 		
-		if ( empty( $MySmartBB->_POST[ 'old_password' ] ) 
-			or empty( $MySmartBB->_POST[ 'new_password'] ) )
+		if ( empty( $MySmartBB->_POST[ 'old_password' ] ) or empty( $MySmartBB->_POST[ 'new_password'] ) )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
@@ -76,9 +72,7 @@ class MySmartUserCPPasswordMOD
 		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_POST[ 'old_password' ] );
 		
 		if ( !$checkPasswordCorrect )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_password' ] );
-		}
 		
 		// ... //
 		

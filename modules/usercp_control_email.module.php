@@ -20,9 +20,7 @@ class MySmartUserCPEmailMOD
 		$MySmartBB->loadLanguage( 'usercp_control_email' ) ;
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
 		{
@@ -54,56 +52,50 @@ class MySmartUserCPEmailMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'execute_process' ] );
-		
 		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
 		
 		// ... //
+		
+		if ( empty ($MySmartBB->_POST[ 'new_email' ] ) or empty( $MySmartBB->_POST[ 'password' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		if ( !$MySmartBB->func->checkEmail( $MySmartBB->_POST[ 'new_email' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_email' ] );
+			
+		// ... //
+		
+		$MySmartBB->_POST['password'] = md5( trim( $MySmartBB->_POST[ 'password' ] ) );
+		
+		// ... //
+		
+		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_POST[ 'password' ] );
+		
+		if ( !$checkPasswordCorrect )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_password' ] );
+		
+		// ... //
+		
+		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST[ 'new_email' ]. "'";
 		
 		$EmailExists = $MySmartBB->rec->getNumber();
 		
-		if ( empty($MySmartBB->_POST['new_email']) 
-			or empty($MySmartBB->_POST['password']) )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
-		
-		// ... //
-		
-		$MySmartBB->_POST['password'] = md5( trim( $MySmartBB->_POST[ 'password' ] ) );
-		
-		// ... //
-
-		// Ensure if the password is correct or not
-		$checkPasswordCorrect = $MySmartBB->member->checkMember( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $MySmartBB->_POST[ 'password' ] );
-		
-		if ( !$checkPasswordCorrect )
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_password' ] );
-		}
-		
-		// ... //
-		
-		if (!$MySmartBB->func->checkEmail($MySmartBB->_POST['new_email']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_email' ] );
-		}
 		if ( $EmailExists > 0 )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'exist_email' ] );
-		}
 		
-		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_email_action_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'email'	=>	$MySmartBB->_POST['new_email']	);
-		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+		$MySmartBB->rec->fields = array(	'email'	=>	$MySmartBB->_POST[ 'new_email' ]	);
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 				
 		$update = $MySmartBB->rec->update();
+		
+		// ... //
 		
 		if ( $update )
 		{

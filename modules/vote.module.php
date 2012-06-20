@@ -37,35 +37,37 @@ class MySmartVoteMOD
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+			
+		if ( !isset( $MySmartBB->_POST[ 'answer' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_answer' ] );
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$Poll = $MySmartBB->rec->getInfo();
 		
-		if (!$Poll)
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'vote_doesnt_exist' ] );
-		}
+		// ... //
 		
-		if (!isset($MySmartBB->_POST['answer']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_answer' ] );
-		}
+		if (!$Poll)
+			$MySmartBB->func->error( $MySmartBB->lang[ 'vote_doesnt_exist' ] );
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
 		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET['id'] . "' AND member_id='" . $MySmartBB->_CONF['member_row']['id'] .  "'";
 		
-		$Vote = $MySmartBB->rec->getInfo();
+		$Vote = $MySmartBB->rec->getNumber();
 		
-		if ($Vote != false)
-		{
+		if ( $Vote != 0 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_vote_multi' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
@@ -75,6 +77,8 @@ class MySmartVoteMOD
 		
 		$insert = $MySmartBB->rec->insert();
 		
+		// ... //
+		
 		if ( $insert )
 		{
 			$update = $MySmartBB->poll->updateResults( $Poll, $MySmartBB->_POST[ 'answer' ] );
@@ -82,7 +86,7 @@ class MySmartVoteMOD
 			if ($update)
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'vote_succeed' ] );
-				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id']);
+				$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id'] );
 			}
 		}
 	}

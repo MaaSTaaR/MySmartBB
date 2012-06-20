@@ -20,9 +20,7 @@ class MySmartUserCPInfoMOD
 		$MySmartBB->loadLanguage( 'usercp_control_info' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
 		
 		if ( $MySmartBB->_GET[ 'main' ] )
 		{
@@ -55,9 +53,12 @@ class MySmartUserCPInfoMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
+		// ... //
 		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_info_start' );
 		
