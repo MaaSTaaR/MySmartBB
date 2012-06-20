@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartAvatarMOD');
 	
-class MySmartAvatarMOD extends _func
+class MySmartAvatarMOD
 {
 	public function run()
 	{
@@ -78,18 +78,19 @@ class MySmartAvatarMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['path']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_POST[ 'path' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
-		
-		$MySmartBB->rec->fields	= array();
-		
-		$MySmartBB->rec->fields['avatar_path'] = $MySmartBB->_POST['path'];
+		$MySmartBB->rec->fields	= array( 'avatar_path' => $MySmartBB->_POST['path'] );
 		
 		$insert = $MySmartBB->rec->insert();
+		
+		// ... //
 			
 		if ($insert)
 		{
@@ -116,7 +117,7 @@ class MySmartAvatarMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('avatar_edit');
 	}
@@ -127,19 +128,14 @@ class MySmartAvatarMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $MySmartBB->_CONF['template']['Inf'] );
 		
-		if (empty($MySmartBB->_POST['path']))
-		{
+		if ( empty( $MySmartBB->_POST[ 'path' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
-		
-		$MySmartBB->rec->fields 	= 	array();
-		
-		$MySmartBB->rec->fields['avatar_path'] 	= 	$MySmartBB->_POST['path'];
-		
+		$MySmartBB->rec->fields = array( 'avatar_path' => $MySmartBB->_POST['path'] );
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
@@ -157,7 +153,7 @@ class MySmartAvatarMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 				
 		$MySmartBB->template->display('avatar_del');
 	}
@@ -168,7 +164,7 @@ class MySmartAvatarMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		
@@ -182,32 +178,23 @@ class MySmartAvatarMOD extends _func
 			$MySmartBB->func->move('admin.php?page=avatar&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-// TODO : KILL ME
-class _func
-{
-	function check_by_id(&$Inf)
+	
+	private function __checkID( &$Inf )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
+		if (empty($MySmartBB->_GET['id']))
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
-		if ($Inf == false)
-		{
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'avatar_doesnt_exit' ] );
-		}
 	}
 }
 

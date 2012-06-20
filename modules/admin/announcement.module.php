@@ -9,14 +9,14 @@ define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 include('common.php');
 	
 define('CLASS_NAME','MySmartAnnouncementMOD');
-	
-class MySmartAnnouncementMOD extends _func
+
+class MySmartAnnouncementMOD
 {
 	public function run()
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF['member_permission'] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_announcement' );
 		    
@@ -78,11 +78,8 @@ class MySmartAnnouncementMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['text']))
-		{
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		
@@ -131,7 +128,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		$MySmartBB->_CONF['template']['AnnInfo'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
 		
 		$MySmartBB->template->display('announcement_edit');
 	}
@@ -142,13 +139,10 @@ class MySmartAnnouncementMOD extends _func
 		
 		$MySmartBB->_CONF['template']['AnnInfo'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
 		
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['text']))
-		{
+		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['text']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		
@@ -176,7 +170,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		$MySmartBB->_CONF['template']['AnnInfo'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
 		
 		$MySmartBB->template->display('announcement_del');
 	}
@@ -187,7 +181,7 @@ class MySmartAnnouncementMOD extends _func
 		
 		$MySmartBB->_CONF['template']['AnnInfo'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
@@ -200,31 +194,23 @@ class MySmartAnnouncementMOD extends _func
 			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-// TODO : KILL ME
-class _func
-{
-	function check_by_id(&$AnnInfo)
+	
+	private function __checkID( &$AnnInfo )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$AnnInfo = $MySmartBB->rec->getInfo();
 		
-		if ($AnnInfo == false)
-		{
+		if ( !$AnnInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'announcement_doesnt_exist' ] );
-		}
 	}
 }
 

@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartAdsMOD');
 	
-class MySmartAdsMOD extends _func
+class MySmartAdsMOD
 {
 	public function run()
 	{
@@ -130,7 +130,7 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('ads_edit');
 	}
@@ -141,7 +141,7 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 				
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['link']) 
@@ -180,7 +180,7 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('ads_del');
 	}
@@ -191,7 +191,7 @@ class MySmartAdsMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
@@ -209,31 +209,23 @@ class MySmartAdsMOD extends _func
 			}
 		}
 	}
-}
-
-// TODO : KILL ME
-class _func
-{	
-	function check_by_id(&$AdsInfo)
+	
+	private function __checkID( &$AdsInfo )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$AdsInfo = $MySmartBB->rec->getInfo();
 		
-		if ($AdsInfo == false)
-		{
+		if ( !$AdsInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'ad_doesnt_exist' ] );
-		}
 	}
 }
 

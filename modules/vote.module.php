@@ -60,7 +60,7 @@ class MySmartVoteMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET['id'] . "' AND member_id='" . $MySmartBB->_CONF['member_row']['id'] .  "'";
+		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET['id'] . "' AND member_id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] .  "'";
 		
 		$Vote = $MySmartBB->rec->getNumber();
 		

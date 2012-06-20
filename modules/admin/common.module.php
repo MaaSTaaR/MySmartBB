@@ -4,8 +4,6 @@
 
 class MySmartCommon
 {
-	var $CheckMember; // TODO : for what?
-	
 	public function run()
 	{
 		global $MySmartBB;
@@ -13,7 +11,7 @@ class MySmartCommon
 		$this->_checkMember();
 		$this->_commonCode();
 		
-		if (!$MySmartBB->_CONF['member_permission'])
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 		{
 			if ( !defined( 'STOP_STYLE' ) or STOP_STYLE != true )
 			{
@@ -31,12 +29,11 @@ class MySmartCommon
 		
 		$MySmartBB->_CONF['member_permission'] = false;
 		
-		if (!empty($username) 
-			and !empty($password))
+		if ( !empty( $username ) and !empty( $password ) )
 		{
 			$CheckMember = $MySmartBB->member->checkAdmin( $username, $password );
 			
-			if ($CheckMember != false)
+			if ( $CheckMember !== false )
 			{
 				$MySmartBB->_CONF['member_row'] = $CheckMember;
 				$MySmartBB->_CONF['member_permission'] 	= 	true;
@@ -56,7 +53,7 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 				
-		/* ... */
+		// ... //
 		
 		// Set information for template engine
 		$MySmartBB->template->setInformation(	'modules/admin/styles/main/templates/',
@@ -64,12 +61,7 @@ class MySmartCommon
 												'.tpl',
 												'file');
 		
-		/* ... */
-		
-		// We will use this in options page
-		$MySmartBB->template->assign('_CONF',$MySmartBB->_CONF);
-		
-		/* ... */
+		// ... //
 	}
 	
 	private function _showLoginForm()
