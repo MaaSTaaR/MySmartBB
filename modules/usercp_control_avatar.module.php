@@ -1,7 +1,5 @@
 <?php
 
-// TODO : Audit this file
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('JAVASCRIPT_func',true);
@@ -15,6 +13,8 @@ define('CLASS_NAME','MySmartUserCPAvatarMOD');
 
 class MySmartUserCPAvatarMOD
 {
+	private $allowed = array( '.jpg', '.gif', '.png' );
+	
 	public function run()
 	{
 		global $MySmartBB;
@@ -22,9 +22,10 @@ class MySmartUserCPAvatarMOD
 		$MySmartBB->loadLanguage( 'usercp_control_avatar' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		}
+			
+		if (!$MySmartBB->_CONF['info_row']['allow_avatar'])
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
 		
 		if ( $MySmartBB->_GET[ 'main' ] )				
 		{
@@ -46,11 +47,6 @@ class MySmartUserCPAvatarMOD
 		$MySmartBB->template->assign('JQUERY',true);
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'avatar' ] );
-		
-		if (!$MySmartBB->_CONF['info_row']['allow_avatar'])
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
-		}
 		
 		// ... //
 		
@@ -92,135 +88,33 @@ class MySmartUserCPAvatarMOD
 		
 		$MySmartBB->load( 'attach' );
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
+		// ... //
 		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_start' );
 		
-		$allowed_array = array('.jpg','.gif','.png');
-		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
-		
 		$MySmartBB->rec->fields['avater_path'] = '';
 		
-		if ($MySmartBB->_POST['options'] == 'no')
+		if ($MySmartBB->_POST['options'] == 'list')
 		{
-			$MySmartBB->rec->fields['avater_path'] = '';
-		}
-		elseif ($MySmartBB->_POST['options'] == 'list')
-		{
-			if (empty($MySmartBB->_POST['avatar_list']))
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
-			}
-			
-			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar_list'];
+			$this->_fromList();
 		}
 		elseif ($MySmartBB->_POST['options'] == 'site')
 		{
-			if (empty($MySmartBB->_POST['avatar'])
-				or $MySmartBB->_POST['avatar'] == 'http://')
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
-			}
-			elseif (!$MySmartBB->func->IsSite($MySmartBB->_POST['avatar']))
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_website' ] );
-			}
-				
-			$extension = $MySmartBB->func->getURLExtension($MySmartBB->_POST['avatar']);
-				
-			if (!in_array($extension,$allowed_array))
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_extension' ] );
-			}
-			
-			$size = @getimagesize($MySmartBB->_POST['avatar']);
-
-			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_width' ] );
-			}
-			
-			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
-			}
-			
-			$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar'];
+			$this->_fromSite();
 		}
 		elseif ($MySmartBB->_POST['options'] == 'upload')
 		{
-			$pic = $MySmartBB->_FILES['upload']['tmp_name'];
-
-			$size = @getimagesize($pic);
-
-			if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_width' ] );
-			}
-
-			if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
-			}
-			
-     		if (!empty($MySmartBB->_FILES['upload']['name']))
-     		{
-     			//////////
-     				
-     			// Get the extension of the file
-     			$ext = $MySmartBB->attach->getFileExtension($MySmartBB->_FILES['upload']['name']);
-     			
-     			// Bad try!
-     			if ($ext == 'MULTIEXTENSION'
-     				or !$ext)
-     			{
-     			}
-     			else
-     			{
-	     			// Convert the extension to small case
-    	 			$ext = strtolower($ext);
-     			
-    	 			// The extension is not allowed
-    	 			if (!in_array($ext,$allowed_array))
-					{
-						$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_extension' ] );
-					}
-    	 			else
-    	 			{
-    	 				// Set the name of the file
-    	 				
-    	 				$filename = $MySmartBB->_FILES['upload']['name'];
-    	 				
-    	 				// There is a file which has same name, so change the name of the new file
-    	 				if (file_exists($MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename))
-    	 				{
-    	 					$filename = $MySmartBB->_FILES['files']['upload'] . '-' . $MySmartBB->func->RandomCode();
-    	 				}
-    	 					
-    	 				//////////
-    	 				
-    	 				// Copy the file to download dirctory
-    	 				$copy = copy($MySmartBB->_FILES['upload']['tmp_name'],$MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename);	
-    	 						
-    	 				// Success
-    	 				if ($copy)
-    	 				{
-    	 					// Change avatar to the new one
-    	 					$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_CONF['info_row']['download_path'] . '/avatar/' . $filename;
-    	 				}
-    	 							
-    	 				//////////
-    	 			}				
-    	 		}
-    	 	}
+			$this->_upload();
     	}
 		else
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] );
-			$MySmartBB->func->move('index.php?page=usercp&control=1&avatar=1&main=1',2);
+			$MySmartBB->func->move('index.php?page=usercp&control=1&avatar=1&main=1');
 			$MySmartBB->func->stop();
 		}
 		
@@ -234,7 +128,85 @@ class MySmartUserCPAvatarMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=usercp_control_avatar&main=1',2);
+			$MySmartBB->func->move('index.php?page=usercp_control_avatar&main=1');
 		}
+	}
+	
+	private function _fromList()
+	{
+		global $MySmartBB;
+		
+		if ( empty( $MySmartBB->_POST[ 'avatar_list' ] ) )
+		{
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
+		}
+			
+		$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar_list'];
+	}
+	
+	private function _fromSite()
+	{
+		global $MySmartBB;
+		
+		// ... //
+		
+		if ( empty( $MySmartBB->_POST[ 'avatar' ] ) or $MySmartBB->_POST[ 'avatar' ] == 'http://' )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_image' ] );
+		
+		if ( !$MySmartBB->func->isSite( $MySmartBB->_POST[ 'avatar' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_website' ] );
+		
+		// ... //
+		
+		$extension = $MySmartBB->func->getURLExtension( $MySmartBB->_POST[ 'avatar' ] );
+		
+		if ( !in_array( $extension, $this->allowed ) )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_extension' ] );
+		
+		// ... //
+		
+		$this->__checkImageSize( $MySmartBB->_POST['avatar'] );
+		
+		// ... //
+			
+		$MySmartBB->rec->fields['avater_path'] = $MySmartBB->_POST['avatar'];
+	}
+	
+	private function _upload();
+	{
+		global $MySmartBB;
+		
+		// ... //
+		
+		$this->__checkImageSize( $MySmartBB->_FILES['upload']['tmp_name'] );
+
+		// ... //
+			
+     	if ( !empty( $MySmartBB->_FILES[ 'upload' ][ 'name' ] ) )
+     	{
+     		$path = null;
+     		
+     		$upload = $MySmartBB->attach->uploadFile( $MySmartBB->_FILES['upload'], $path, 
+     													$this->allowed, 
+     													$this->engine->_CONF[ 'info_row' ][ 'download_path' ] . '/avatar' );
+     			
+     		if ( $upload )
+     			$MySmartBB->rec->fields['avater_path'] = $path;	
+     	}
+     		
+     	// ... //
+	}
+	
+	private function __checkImageSize( $path )
+	{
+		global $MySmartBB;
+		
+		$size = @getimagesize($path);
+		
+		if ($size[0] > $MySmartBB->_CONF['info_row']['max_avatar_width'])
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_width' ] );
+
+		if ($size[1] > $MySmartBB->_CONF['info_row']['max_avatar_height'])
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
 	}
 }

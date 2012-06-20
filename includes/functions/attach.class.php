@@ -64,12 +64,10 @@ class MySmartAttach
 			{
 				$path = null;
 				
-				$upload = $this->uploadFile( 	$files[ 'name' ][ $k ], 
-												$files[ 'type' ][ $k ], 
-												$files[ 'tmp_name' ][ $k ], 
-												$files[ 'size' ][ $k ], 
-												$files[ 'error' ][ $k ],
-												$path );
+				$file = array( 'name'	=>	$files[ 'name' ][ $k ], 'type'	=>	$files[ 'type' ][ $k ], 'tmp_name'	=>	$files[ 'tmp_name' ][ $k ],
+								'size'	=>	$files[ 'size' ][ $k ],	'error'	=>	$files[ 'error' ][ $k ]	);
+				
+				$upload = $this->uploadFile( $file, $path );
 				
 				if ( $upload )
 				{
@@ -132,30 +130,40 @@ class MySmartAttach
 		return true;
 	}
 	
-	public function uploadFile( $name, $type, $tmp, $size, $error, &$returned_path )
+	public function uploadFile( $file, &$returned_path, $allowed_extentions = null, $target_dir = null )
 	{
-		$allowed = $this->isAllowedFile( $name, $type, $size );
+		if ( !is_array( $file ) )
+			trigger_error( 'ERROR: $file should be an array -- FROM uploadFile()',E_USER_ERROR );
+		
+		// ... //
+		
+		$allowed = $this->isAllowedFile( $file[ 'name' ], $file[ 'type' ], $file[ 'size' ], $allowed_extentions );
 		
 		if ( $allowed != true )
-		{
 			return $allowed;
-		}
 		
-		$dir = $this->engine->_CONF['info_row']['download_path'];
+		// ... //
 		
-		if ( file_exists( $dir . '/' . $name ) )
-		{
-			$name = $name . '-' . $this->engine->func->randomCode();
-		}
+		if ( is_null( $target_dir ) )
+			$dir = $this->engine->_CONF[ 'info_row' ][ 'download_path' ];
+		else
+			$dir = $target_dir;
+		
+		// ... //
+		
+		if ( file_exists( $dir . '/' . $file[ 'name' ] ) )
+			$file[ 'name' ] = $file[ 'name' ] . '-' . $this->engine->func->randomCode();
      	
-		$upload = move_uploaded_file( $tmp, $dir . '/' . $name );
-		
-		$returned_path = $dir . '/' . $name;
+     	// ... //
+     	
+     	$returned_path = $dir . '/' . $file[ 'name' ];
+     	
+		$upload = move_uploaded_file( $file[ 'tmp_name' ], $returned_path );
 		
 		return ( $upload ) ? true : false;
 	}
 	
-	public function isAllowedFile( $filename, $type, $size )
+	public function isAllowedFile( $filename, $type, $size, $allowed_extentions = null )
 	{
 		$ext = $this->getFileExtension( $filename );
      	
@@ -165,37 +173,49 @@ class MySmartAttach
 		}
 		else
 		{
-			// TODO : cache me please
-			$this->engine->rec->table = $this->engine->table[ 'extension' ];
-			$this->engine->rec->filter = "Ex='" . $ext . "'";
+			// If the parameter "$allowed_extentions" is null, so get the allowed extention list
+			// from the database.
+			if ( is_null( $allowed_extentions ) )
+			{
+				// TODO : cache me please
+				$this->engine->rec->table = $this->engine->table[ 'extension' ];
+				$this->engine->rec->filter = "Ex='" . $ext . "'";
      						
-			$extension = $this->engine->rec->getInfo();
+				$extension = $this->engine->rec->getInfo();
 			
-			if (!$extension)
-			{
-				return self::FORBIDDEN_EXTENTION;
-			}
-			else
-			{
-				if ( !empty( $extension['mime_type'] ) )
+				if (!$extension)
 				{
-					if ( $type != $extension['mime_type' ])
+					return self::FORBIDDEN_EXTENTION;
+				}
+				else
+				{
+					if ( !empty( $extension['mime_type'] ) )
 					{
-						return self::FORBIDDEN_EXTENTION;
+						if ( $type != $extension['mime_type' ])
+						{
+							return self::FORBIDDEN_EXTENTION;
+						}
 					}
 				}
-			}
 			
-			// Convert the size from bytes to KB
-			$size = ceil( ( $size / 1024 ) );
+				// Convert the size from bytes to KB
+				$size = ceil( ( $size / 1024 ) );
      					
-			if ( $size > $extension[ 'max_size' ] )
-			{
-				return self::LARGE_SIZE;
+				if ( $size > $extension[ 'max_size' ] )
+				{
+					return self::LARGE_SIZE;
+				}
+				else
+				{
+					return true;
+				}
 			}
 			else
 			{
-				return true;
+				if ( !is_array( $allowed_extentions ) )
+					return null;
+				
+				return ( !in_array( $ext, $allowed_extentions ) ) ? false : true
 			}
 		}
 	}
