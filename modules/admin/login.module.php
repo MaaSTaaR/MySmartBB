@@ -31,11 +31,8 @@ class MySmartLoginMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['username'])
-			or empty($MySmartBB->_POST['password']))
-		{
+		if (empty($MySmartBB->_POST['username']) or empty($MySmartBB->_POST['password']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$username = trim( $MySmartBB->_POST['username'] );
 		$password = md5( trim( $MySmartBB->_POST['password'] ) );

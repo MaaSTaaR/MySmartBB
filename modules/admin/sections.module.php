@@ -29,11 +29,7 @@ class MySmartSectionMOD
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['groups'])
-			{
-			    // TODO : what?
-			}
-			
+
 			$MySmartBB->template->display('footer');
 		}
 	}

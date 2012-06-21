@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartIconMOD');
 	
-class MySmartIconMOD extends _func
+class MySmartIconMOD
 {
 	public function run()
 	{
@@ -80,14 +80,14 @@ class MySmartIconMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['path']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_POST[ 'path' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
-		$MySmartBB->rec->fields		=	array();
+		// ... //
 		
-		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
+		$MySmartBB->rec->fields		=	array( 'smile_path' => $MySmartBB->_POST['path'] );
 		
 		$insert = $MySmartBB->icon->insertIcon();
 			
@@ -115,7 +115,7 @@ class MySmartIconMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('icon_edit');
 	}
@@ -126,18 +126,13 @@ class MySmartIconMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		if (empty($MySmartBB->_POST['path']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
-
-		$MySmartBB->rec->fields	=	array();
-		
-		$MySmartBB->rec->fields['smile_path'] 	= 	$MySmartBB->_POST['path'];
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->fields	=	array( 'smile_path' => $MySmartBB->_POST['path'] );
 				
 		$update = $MySmartBB->icon->updateIcon();
 		
@@ -154,7 +149,7 @@ class MySmartIconMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('icon_del');
 	}
@@ -165,7 +160,7 @@ class MySmartIconMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
@@ -177,18 +172,13 @@ class MySmartIconMOD extends _func
 			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-class _func
-{
-	function check_by_id(&$Inf)
+	
+	private function __checkID(&$Inf)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
@@ -201,6 +191,11 @@ class _func
 			$MySmartBB->func->error( $MySmartBB->lang[ 'icon_doesnt_exist' ] );
 		}
 	}
+}
+
+class _func
+{
+
 }
 
 ?>

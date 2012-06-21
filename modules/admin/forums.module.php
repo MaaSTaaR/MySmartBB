@@ -97,9 +97,7 @@ class MySmartForumsMOD
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		

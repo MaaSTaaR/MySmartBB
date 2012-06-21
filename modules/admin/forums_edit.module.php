@@ -66,11 +66,8 @@ class MySmartForumsEditMOD
 		
 		// ... //
 		
- 		if (empty($MySmartBB->_POST['name']) 
- 			or empty($MySmartBB->_POST['sort']))
-		{
+ 		if (empty($MySmartBB->_POST['name']) or empty($MySmartBB->_POST['sort']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		
@@ -114,7 +111,7 @@ class MySmartForumsEditMOD
 		{
 			$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $MySmartBB->_CONF['template']['Inf']['id'] );
 			
-			// There is a new main section, because of the we should update the
+			// There is a new main section, because of that we should update the
 			// cache of the old parent to remove this child from the
 			// list of the old parent.
 			if ( $new_parent_flag )

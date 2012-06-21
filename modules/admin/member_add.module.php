@@ -51,17 +51,18 @@ class MySmartMemberMOD
 		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
 		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
 		
-		if (empty($MySmartBB->_POST['username']) 
-			or empty($MySmartBB->_POST['password']) 
-			or empty($MySmartBB->_POST['email']))
-		{
+		// ... //
+		
+		if (empty($MySmartBB->_POST['username']) or empty($MySmartBB->_POST['password']) or empty($MySmartBB->_POST['email']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
-		}
+			
+		if ($MySmartBB->_POST['username'] == 'Guest')
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
+		
+		// ... //
 		
 		// Ensure there is no person used the same username
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -70,9 +71,9 @@ class MySmartMemberMOD
 		$isMember = $MySmartBB->rec->getNumber();
 		
 		if ( $isMember > 0 )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'username_exists' ] );
-		}
+		
+		// ... //
 		
 		// Ensure there is no person used the same email
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -81,14 +82,9 @@ class MySmartMemberMOD
 		$isMember = $MySmartBB->rec->getNumber();
 		
 		if ( $isMember > 0 )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'email_exists' ] );
-		}
 		
-		if ($MySmartBB->_POST['username'] == 'Guest')
-		{
-			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
-		}
+		// ... //
 		
 		$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
 		
@@ -97,7 +93,7 @@ class MySmartMemberMOD
       	// Get the information of default group to set username style cache
       	
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='4'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ] . "'";
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
@@ -113,7 +109,7 @@ class MySmartMemberMOD
 		$MySmartBB->rec->fields['username']				= 	$MySmartBB->_POST['username'];
 		$MySmartBB->rec->fields['password']				= 	$MySmartBB->_POST['password'];
 		$MySmartBB->rec->fields['email']				= 	$MySmartBB->_POST['email'];
-		$MySmartBB->rec->fields['usergroup']			= 	4;
+		$MySmartBB->rec->fields['usergroup']			= 	$MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ];
 		$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
 		$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
 		$MySmartBB->rec->fields['user_title']			= 	 $MySmartBB->lang[ 'member' ] ;

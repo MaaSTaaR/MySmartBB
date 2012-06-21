@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartPagesMOD');
 	
-class MySmartPagesMOD extends _func
+class MySmartPagesMOD
 {
 	public function run()
 	{
@@ -78,11 +78,8 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['text']) 
-			or empty($MySmartBB->_POST['name']))
-		{
+		if (empty($MySmartBB->_POST['text']) or empty($MySmartBB->_POST['name']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		
@@ -116,7 +113,7 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->assign('Inf',$MySmartBB->_CONF['template']['Inf']);
 		
@@ -127,13 +124,10 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($PageInfo);
+		$this->__checkID($PageInfo);
 		
-		if (empty($MySmartBB->_POST['name']) 
-			or empty($MySmartBB->_POST['text']))
-		{
+		if (empty($MySmartBB->_POST['name']) or empty($MySmartBB->_POST['text']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		
@@ -157,7 +151,7 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('page_del');		
 	}
@@ -166,7 +160,7 @@ class MySmartPagesMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($PageInfo);
+		$this->__checkID($PageInfo);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
@@ -179,19 +173,13 @@ class MySmartPagesMOD extends _func
 			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-// TODO : KILL ME
-class _func
-{
-	function check_by_id(&$PageInfo)
+	
+	private function __checkID(&$PageInfo)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		

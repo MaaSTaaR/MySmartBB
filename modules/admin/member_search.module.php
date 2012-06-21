@@ -47,9 +47,11 @@ class MySmartMemberSearchMOD
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['keyword']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
+		
+		$field = 'id';
 		
 		if ($MySmartBB->_POST['search_by'] == 'username')
 		{
@@ -59,21 +61,21 @@ class MySmartMemberSearchMOD
 		{
 			$field = 'email';
 		}
-		else
-		{
-			$field = 'id';
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_POST['keyword'] . "'";
 		
 		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->rec->getInfo();
 		
-		if ($MySmartBB->_CONF['template']['MemInfo'] == false)
-		{
+		// ... //
+		
+		if ( $MySmartBB->_CONF['template']['MemInfo'] == false )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_result' ] );
-		}
-				
+		
+		// ... //
+		
 		$MySmartBB->template->display('member_search_result');
 	}
 }

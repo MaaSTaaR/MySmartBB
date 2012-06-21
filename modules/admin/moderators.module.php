@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartModeratorsMOD');
 	
-class MySmartModeratorsMOD extends _func
+class MySmartModeratorsMOD
 {
 	public function run()
 	{
@@ -98,11 +98,8 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['username']) 
-			or empty($MySmartBB->_POST['section']))
-		{
+		if (empty($MySmartBB->_POST['username']) or empty($MySmartBB->_POST['section']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		
@@ -129,19 +126,17 @@ class MySmartModeratorsMOD extends _func
 		
 		$Member = $MySmartBB->rec->getInfo();
 		
-		if ( $Member != false )
-		{
-		    $set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $MySmartBB->_POST[ 'usertitle' ] );
-		    
-		    if ( $set )
-		    {
-		        $MySmartBB->func->msg(  $MySmartBB->lang[ 'moderator_added' ]  );
-		        $MySmartBB->func->move( 'admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $SectionInfo[ 'id' ] );
-		    }
-		}
-		else
-		{
+		if ( $Member == false )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
+		
+		// ... //
+		
+		$set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $MySmartBB->_POST[ 'usertitle' ] );
+		    
+		if ( $set )
+		{
+			$MySmartBB->func->msg(  $MySmartBB->lang[ 'moderator_added' ]  );
+			$MySmartBB->func->move( 'admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $SectionInfo[ 'id' ] );
 		}
 	}
 	
@@ -162,10 +157,12 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		if (!isset($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
@@ -174,10 +171,12 @@ class MySmartModeratorsMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Section'] = $MySmartBB->rec->getInfo();
 		
-		if (!is_array($MySmartBB->_CONF['template']['Section']))
-		{
+		// ... //
+		
+		if ( !$MySmartBB->_CONF['template']['Section'] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
 		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Section']['id'] . "'";
@@ -191,19 +190,19 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['section_id'] . "'";
 		
-		$MySmartBB->_CONF['template']['while']['Section'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF['template']['Section'] = $MySmartBB->rec->getInfo();
 		
-		if (!is_array($MySmartBB->_CONF['template']['while']['Section']))
-		{
+		// ... //
+		
+		if ( !$MySmartBB->_CONF['template']['Section'] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}
 		
 		// ... //
 		
@@ -214,7 +213,7 @@ class MySmartModeratorsMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($ModInfo);
+		$this->__checkID($ModInfo);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $ModInfo['member_id'] . "'";
@@ -229,18 +228,13 @@ class MySmartModeratorsMOD extends _func
 			$MySmartBB->func->move('admin.php?page=moderators&amp;control=1&amp;section=1&amp;id=' . $ModInfo['section_id']);
 		}
 	}
-}
-
-class _func
-{	
-	function check_by_id(&$ModeratorInfo)
+	
+	private function __checkID(&$ModeratorInfo)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		

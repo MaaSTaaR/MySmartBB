@@ -50,6 +50,8 @@ class MySmartGroupsDelMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'section' );
+		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
 		$this->checkID($MySmartBB->_CONF['template']['Inf']);
@@ -61,8 +63,31 @@ class MySmartGroupsDelMOD
 		
 		if ($del)
 		{
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'group_deleted' ] );
-			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
+			// Use the default group for the members who belong to the deleted group.
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			$MySmartBB->rec->fields = array( 'usergroup'	=>	$MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ] );
+			$MySmartBB->rec->filter = "usergroup='" . $MySmartBB->_CONF['template']['Inf'][ 'id' ] . "'";
+			
+			$update = $MySmartBB->rec->update();
+			
+			if ( $update )
+			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+				$MySmartBB->rec->filter = "group_id='" . $MySmartBB->_CONF['template']['Inf'][ 'id' ] . "'";
+			
+				$del = $MySmartBB->rec->delete();
+			
+				if ( $del )
+				{
+					$cache = $MySmartBB->section->updateAllSectionsCache();
+					
+					if ( $cache )
+					{
+						$MySmartBB->func->msg( $MySmartBB->lang[ 'group_deleted' ] );
+						$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
+					}
+				}
+			}
 		}
 	}
 		

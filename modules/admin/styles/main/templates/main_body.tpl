@@ -47,16 +47,16 @@
 		<td class="main1" colspan="2">{$lang['info_about']} MySmartBB</td>
 	</tr>
 	<tr align="center">
-		<td class="row1" width="40%">{$lang['developers']}</td>
-		<td class="row2" width="40%"><strong><a traget="_blank" href="">{$lang['here']}</a></strong></td>
-	</tr>
-	<tr align="center">
 		<td class="row1" width="40%">{$lang['official_website']}</td>
 		<td class="row2" width="40%"><strong><a traget="_blank" href="http://www.mysmartbb.com">{$lang['here']}</a></strong></td>
 	</tr>
 	<tr align="center">
-		<td class="row1" width="40%">{$lang['documents']}</td>
-		<td class="row2" width="40%"><strong><a traget="_blank" href="">{$lang['here']}</a></strong></td>
+		<td class="row1" width="40%">{$lang['project_website']}</td>
+		<td class="row2" width="40%"><strong><a traget="_blank" href="http://sourceforge.net/projects/mysmartbb/">{$lang['here']}</a></strong></td>
+	</tr>
+	<tr align="center">
+		<td class="row1" width="40%">{$lang['license']}</td>
+		<td class="row2" width="40%"><strong><a traget="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU GPL</a></strong></td>
 	</tr>
 </table>
 

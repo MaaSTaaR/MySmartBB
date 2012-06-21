@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartExtensionMOD');
 	
-class MySmartExtensionMOD extends _func
+class MySmartExtensionMOD
 {
 	public function run()
 	{
@@ -89,18 +89,22 @@ class MySmartExtensionMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['extension']) 
-			or empty($MySmartBB->_POST['max_size']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		// ... //
 		
-		if (!strstr($MySmartBB->_POST['extension'],'.'))
+		if (empty($MySmartBB->_POST['extension']) or empty($MySmartBB->_POST['max_size']))
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		// ... //
+		
+		// Add the dot if the user didn't write it before the name of the extension
+		if ( !strstr( $MySmartBB->_POST['extension'], '.' ) )
 		{
 			$MySmartBB->_POST['extension'] = '.' . $MySmartBB->_POST['extension'];
 		}
 		
 		$MySmartBB->_POST['extension'] = strtolower($MySmartBB->_POST['extension']);
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->fields			=	array();
@@ -136,7 +140,7 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('extenstion_edit');
 	}
@@ -147,14 +151,14 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
+		// ... //
 		
-		if (empty($MySmartBB->_POST['extension']) 
-			or empty($MySmartBB->_POST['max_size']))
-		{
+		if (empty($MySmartBB->_POST['extension']) or empty($MySmartBB->_POST['max_size']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		
@@ -181,7 +185,7 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('extenstion_del');
 	}
@@ -192,7 +196,7 @@ class MySmartExtensionMOD extends _func
 		
 		$MySmartBB->_CONF['template']['Inf'] = false;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
@@ -219,27 +223,17 @@ class MySmartExtensionMOD extends _func
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_POST['keyword']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'please_write_keyword' ] );
-		}
 		
 		$field = 'filename';
 		
-		if ($MySmartBB->_POST['search_by'] == 'filename')
-		{
-			$field = 'filename';
-		}
-		elseif ($MySmartBB->_POST['search_by'] == 'filesize')
+		if ($MySmartBB->_POST['search_by'] == 'filesize')
 		{
 			$field = 'filesize';
 		}
 		elseif ($MySmartBB->_POST['search_by'] == 'visitor')
 		{
 			$field = 'visitor';
-		}
-		else
-		{
-			$field = 'filename';
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
@@ -257,25 +251,17 @@ class MySmartExtensionMOD extends _func
 		$MySmartBB->_CONF['template']['Inf'] = $MySmartBB->rec->getInfo();
 		
 		if ($MySmartBB->_CONF['template']['Inf'] == false)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_results' ] );
-		}
 		
 		$MySmartBB->template->display('extension_search_result');
 	}
-}
-
-// TODO : KILL ME
-class _func
-{
-	function check_by_id(&$Inf)
+	
+	private function __checkID(&$Inf)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		

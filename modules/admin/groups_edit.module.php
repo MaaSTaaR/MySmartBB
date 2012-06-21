@@ -145,6 +145,8 @@ class MySmartGroupsEditMOD
 		
 		if ($update)
 		{
+			// TODO : update section's group permissions
+			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}

@@ -59,8 +59,6 @@ class MySmartForumsDeleteMOD
 		
 		$this->checkID($MySmartBB->_CONF['template']['Inf']);
 
-		$MySmartBB->_GET['group_id'] = (int) $MySmartBB->_GET['group_id'];
-		
 		$success 	= 	array();
 		$fail		=	array();
 		$size		=	sizeof($MySmartBB->_POST['groups']);

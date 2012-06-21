@@ -136,6 +136,8 @@ class MySmartGroupsAddMOD
 		
 		$insert = $MySmartBB->rec->insert();
 		
+		$group_id = $MySmartBB->rec->id;
+		
 		if ($insert)
 		{
 			// ... //
@@ -143,7 +145,7 @@ class MySmartGroupsAddMOD
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->order = 'id ASC';
 			
-			$sections = $MySmartBB->rec->getList();
+			$MySmartBB->rec->getList();
 			
 			// ... //
 			
@@ -154,7 +156,7 @@ class MySmartGroupsAddMOD
 				$MySmartBB->rec->fields			=	array();
 				
 				$MySmartBB->rec->fields['section_id'] 			= 	$row['id'];
-				$MySmartBB->rec->fields['group_id'] 			= 	$MySmartBB->group->id;
+				$MySmartBB->rec->fields['group_id'] 			= 	$group_id;
 				$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['view_section'];
 				$MySmartBB->rec->fields['download_attach'] 		= 	$MySmartBB->_POST['download_attach'];
 				$MySmartBB->rec->fields['write_subject'] 		= 	$MySmartBB->_POST['write_subject'];
@@ -168,7 +170,7 @@ class MySmartGroupsAddMOD
 				//$MySmartBB->rec->fields['no_posts'] 			= 	$MySmartBB->_POST['no_posts'];
 				$MySmartBB->rec->fields['vote_poll'] 			= 	$MySmartBB->_POST['vote_poll'];
 				$MySmartBB->rec->fields['main_section'] 		= 	($row['parent'] == 0) ? 1 : 0;
-				$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['title'];
+				$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['name'];
 				
 				$insert = $MySmartBB->rec->insert();
 			}
