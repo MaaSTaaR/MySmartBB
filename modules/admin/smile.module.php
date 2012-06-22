@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartSmileMOD');
 	
-class MySmartSmileMOD extends _func
+class MySmartSmileMOD
 {
 	public function run()
 	{
@@ -80,11 +80,12 @@ class MySmartSmileMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['short'])	
-			or empty($MySmartBB->_POST['path']))
-		{
+		// ... //
+		
+		if (empty($MySmartBB->_POST['short']) or empty($MySmartBB->_POST['path']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->fields	=	array();
 		
@@ -95,20 +96,8 @@ class MySmartSmileMOD extends _func
 			
 		if ($insert)
 		{
-			$cache = $MySmartBB->icon->updateSmilesCache();
-			
-			if ($cache)
-			{
-				$num = $MySmartBB->icon->getSmilesNumber();
-				
-				$number = $MySmartBB->info->updateInfo( 'smiles_number', $num );
-				
-				if ($number)
-				{
-					$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_added' ] );
-					$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
-				}
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_added' ] );
+			$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -127,7 +116,7 @@ class MySmartSmileMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('smile_edit');
 	}
@@ -136,13 +125,10 @@ class MySmartSmileMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($Inf);
+		$this->__checkID($Inf);
 		
-		if (empty($MySmartBB->_POST['short']) 
-			or empty($MySmartBB->_POST['path']))
-		{
+		if (empty($MySmartBB->_POST['short']) or empty($MySmartBB->_POST['path']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 
 		$MySmartBB->rec->fields	=	array();
 		
@@ -155,13 +141,8 @@ class MySmartSmileMOD extends _func
 		
 		if ($update)
 		{
-			$cache = $MySmartBB->icon->updateSmilesCache();
-			
-			if ($cache)
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_updated' ] );
-				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_updated' ] );
+			$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 		}
 	}
 	
@@ -169,7 +150,7 @@ class MySmartSmileMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('smile_del');
 	}
@@ -178,7 +159,7 @@ class MySmartSmileMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($Inf);
+		$this->__checkID($Inf);
 		
 		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
 		
@@ -186,27 +167,17 @@ class MySmartSmileMOD extends _func
 		
 		if ($del)
 		{
-			$cache = $MySmartBB->icon->updateSmilesCache();
-			
-			if ($cache)
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_deleted' ] );
-				$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'smile_deleted' ] );
+			$MySmartBB->func->move('admin.php?page=smile&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-class _func
-{
-	function check_by_id(&$Inf)
+	
+	private function __checkID(&$Inf)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
@@ -215,9 +186,7 @@ class _func
 		$Inf = $MySmartBB->icon->getSmileInfo();
 		
 		if ($Inf == false)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'smile_doesnt_exist' ] );
-		}
 	}
 }
 

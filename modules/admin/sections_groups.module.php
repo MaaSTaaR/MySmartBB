@@ -94,7 +94,6 @@ class MySmartSectionGroupsMOD
 		// ... //
 		
 		$success_size 	= 	sizeof($success);
-		$fail_size		=	sizeof($fail); // Why??
 		
 		// ... //
 		
@@ -125,9 +124,7 @@ class MySmartSectionGroupsMOD
 		// ... //
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -143,9 +140,7 @@ class MySmartSectionGroupsMOD
 		// ... //
 		
 		if ($Inf == false)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
-		}
 		
 		// ... //
 	}

@@ -78,11 +78,8 @@ class MySmartUsertitleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['posts']))
-		{
+		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['posts']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
 		
@@ -127,11 +124,8 @@ class MySmartUsertitleMOD extends _func
 		
 		$this->check_by_id($UTInfo);
 				
-		if (empty($MySmartBB->_POST['title']) 
-			or empty($MySmartBB->_POST['posts']))
-		{
+		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['posts']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
 		

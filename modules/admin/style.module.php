@@ -10,7 +10,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartStyleMOD');
 	
-class MySmartStyleMOD extends _func
+class MySmartStyleMOD
 {
 	function run()
 	{
@@ -127,7 +127,7 @@ class MySmartStyleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('style_edit');
 	}
@@ -136,7 +136,7 @@ class MySmartStyleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($Inf);
+		$this->__checkID($Inf);
 		
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['style_on']) 
@@ -148,7 +148,7 @@ class MySmartStyleMOD extends _func
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
-		/* ... */
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'style' ];
 		
@@ -166,11 +166,11 @@ class MySmartStyleMOD extends _func
 		
 		$update = $MySmartBB->rec->update();
 		
-		/* ... */
+		// ... //
 		
 		if ($update)
 		{
-			/* ... */
+			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			
@@ -182,22 +182,22 @@ class MySmartStyleMOD extends _func
 			
 			$MySmartBB->rec->update();
 			
-			/* ... */
+			// ... //
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 			
-			/* ... */
+			// ... //
 		}
 		
-		/* ... */
+		// ... //
 	}
 	
 	private function _delMain()
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('style_del');
 	}
@@ -206,7 +206,7 @@ class MySmartStyleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($Inf);
+		$this->__checkID($Inf);
 		
 		$del = $MySmartBB->style->deleteStyle( $Inf[ 'id' ] );
 		
@@ -216,18 +216,13 @@ class MySmartStyleMOD extends _func
 			$MySmartBB->func->move('admin.php?page=style&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-class _func
-{
-	function check_by_id(&$Inf)
+	
+	private function __checkID(&$Inf)
 	{
 		global $MySmartBB;
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
@@ -237,9 +232,7 @@ class _func
 		$Inf = $MySmartBB->rec->getInfo();
 		
 		if ($Inf == false)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'style_doesnt_exist' ] );
-		}
 	}
 }
 

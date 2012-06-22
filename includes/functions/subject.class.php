@@ -58,6 +58,11 @@ class MySmartSubject
 	// If the parameter $update_from_info = false
 	// the information of $from (last subject, subjects and replies number) will not be updated
 	// we can use this parameter when want to delete $from and move its subjects to "$to"
+	// ...
+	// TODO : 	1- We should also change the value of "section" field of the replies of moved topics.
+	//			2- It would be a great deal if we change this function to recieve "$from" as an array
+	//				so we can move the topics of multiple forums to a specific forum, you can see an
+	//				application of this in the file "admin/sections_del.module.php"
 	public function massMoveSubject( $to, $from, $update_from_info = true )
 	{
  		if ( empty( $to ) or empty( $from ) )

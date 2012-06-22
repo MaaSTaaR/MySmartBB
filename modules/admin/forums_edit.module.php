@@ -75,10 +75,10 @@ class MySmartForumsEditMOD
 		$new_parent_flag 	= 	false;
 		$old_parent			=	0;
 		
-		if ($MySmartBB->_CONF['template']['Inf']['parent'] != $MySmartBB->_POST['parent'])
+		if ( $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'parent' ] != $MySmartBB->_POST[ 'parent' ] )
 		{
 			$new_parent_flag	= 	true;
-			$old_parent			=	$MySmartBB->_CONF['template']['Inf']['id'];
+			$old_parent			=	$MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'parent' ];
 		}
 		
 		// ... //
@@ -109,14 +109,21 @@ class MySmartForumsEditMOD
 		
 		if ($update)
 		{
-			$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $MySmartBB->_CONF['template']['Inf']['id'] );
-			
 			// There is a new main section, because of that we should update the
 			// cache of the old parent to remove this child from the
 			// list of the old parent.
 			if ( $new_parent_flag )
 			{
 				$cache = $MySmartBB->section->updateSectionsCache( $old_parent );
+				
+				if ( $cache )
+				{
+					$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST[ 'parent' ] );
+				}
+			}
+			else
+			{
+				$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $MySmartBB->_CONF['template']['Inf']['id'] );
 			}
 			
 			if ($cache)

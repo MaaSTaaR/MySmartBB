@@ -54,11 +54,8 @@ class MySmartSectionEditMOD
 		
 		// ... //
 		
-		if (empty($MySmartBB->_POST['name']) 
-			or empty($MySmartBB->_POST['sort']))
-		{
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) or empty( $MySmartBB->_POST[ 'sort' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		
@@ -91,9 +88,7 @@ class MySmartSectionEditMOD
 		// ... //
 		
 		if (empty($MySmartBB->_GET['id']))
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		// ... //
 		
@@ -109,9 +104,7 @@ class MySmartSectionEditMOD
 		// ... //
 		
 		if ($Inf == false)
-		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
-		}
 		
 		// ... //
 	}

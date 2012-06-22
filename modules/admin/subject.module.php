@@ -1,5 +1,7 @@
 <?php
 
+// TODO : Audit this file
+
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('IN_ADMIN',true);
@@ -10,7 +12,7 @@ include('common.php');
 	
 define('CLASS_NAME','MySmartSubjectMOD');
 	
-class MySmartSubjectMOD extends _func
+class MySmartSubjectMOD
 {
 	public function run()
 	{
@@ -108,7 +110,7 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_section_by_id($MySmartBB->_CONF['template']['Inf'],$z);
+		$this->__checkID($MySmartBB->_CONF['template']['Inf'],$z);
 		
 		$MySmartBB->template->display('subjects_mass_del_confirm');
 	}
@@ -117,7 +119,7 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_section_by_id( $SectionInf, $z );
+		$this->__checkID( $SectionInf, $z );
 		
 		$del = array();
 		
@@ -148,7 +150,7 @@ class MySmartSubjectMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_section_by_id($FromInf,$ToInf,true);
+		$this->__checkID($FromInf,$ToInf,true);
 		
 		$move = array();
 		
@@ -165,11 +167,8 @@ class MySmartSubjectMOD extends _func
 			}
 		}
 	}
-}
-
-class _func
-{
-	function check_section_by_id( &$Inf, &$ToInf, $move = false )
+	
+	private function __checkID( &$Inf, &$ToInf, $move = false )
 	{
 		global $MySmartBB;
 		

@@ -30,13 +30,11 @@ class MySmartIcons
 		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
-		{
 			$this->engine->rec->fields = array();
-		}
 		
 		$this->engine->rec->fields[ 'smile_type' ] = '0';
 		
-		$query = $this->engine->rec->insert();
+		$insert = $this->engine->rec->insert();
 		
 		if ( $this->get_id )
 		{
@@ -45,7 +43,17 @@ class MySmartIcons
 			unset( $this->get_id );
 		}
 		
-		return ( $query ) ? true : false;
+		if ( $insert )
+		{
+			$cache = $this->updateSmilesCache();
+			
+			if ( $cache )
+			{
+				$update = $this->engine->info->updateInfo( 'smiles_number', $this->getSmilesNumber() );
+				
+				return ( $update ) ? true : false;
+			}
+		}
 	}
 	
 	// ... //
@@ -55,15 +63,20 @@ class MySmartIcons
 		$this->engine->rec->table = $this->table;
 		
 		if ( !is_array( $this->engine->rec->fields ) )
-		{
 			$this->engine->rec->fields = array();
-		}
 		
 		$this->engine->rec->fields[ 'smile_type' ] = '0';
 		
-		$query = $this->engine->rec->update();
+		$update = $this->engine->rec->update();
 		
-		return ( $query ) ? true : false;
+		if ( $update )
+		{
+			$cache = $this->updateSmilesCache();
+			
+			return ( $cache ) ? true : false;
+		}
+		
+		return false;		
  	}
  	
  	// ... //
@@ -83,9 +96,16 @@ class MySmartIcons
 			$this->engine->rec->filter = $statement;
 		}
 		
- 		$query = $this->engine->rec->delete();
+ 		$delete = $this->engine->rec->delete();
  		
- 		return ($query) ? true : false;
+ 		if ( $delete )
+		{
+			$cache = $this->updateSmilesCache();
+			
+			return ( $cache ) ? true : false;
+		}
+ 		
+ 		return false;
 	}
 	
 	// ... //
