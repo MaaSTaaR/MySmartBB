@@ -35,9 +35,9 @@ if ($MySmartBB->_GET['step'] == 1)
 	
 	$directories = array(	'../../download', 
 							'../../download/avatar', 
-							'../../download/contact', // TODO : delete me please!
 							'../../modules/styles/main/compiler', 
-							'../../modules/styles/main/templates' );
+							'../../modules/styles/main/templates',
+							'../../modules/admin/styles/main/compiler' );
 	
 	foreach ( $directories as $directory )
 	{

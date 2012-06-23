@@ -1,10 +1,10 @@
 <?php
 
-//////////
+// ... //
 
 define('IN_MYSMARTBB',true);
 
-//////////
+// ... //
 
 // $_GET['page']		=>	file name
 $modules 					= 	array();
@@ -51,35 +51,31 @@ $modules['member_edit'] 	= 	'member_edit.module.php';
 $modules['member_del'] 		= 	'member_del.module.php';
 $modules['member_search'] 	= 	'member_search.module.php';
 
-//////////
+// ... //
 
 $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
-//////////
+// ... //
 
 $req_file = false;
 
 if (array_key_exists($page,$modules))
-{
 	$req_file = $modules[$page];
-}
 
-//////////
+// ... //
 
 if ($req_file != false)
 {
-	//////////
+	// ... //
 	
 	if (!file_exists('./modules/admin/' . $req_file))
-	{
-		die('المعذره .. يبدو ان هناك خطأ في النظام، الملف المطلوب غير موجود');
-	}
+		die( 'Wrong path' );
 	
-	//////////
+	// ... //
 	
 	require_once('./modules/admin/' . $req_file);
 	
-	//////////
+	// ... //
 	
 	$class_name = CLASS_NAME;
 	
@@ -87,14 +83,14 @@ if ($req_file != false)
 	
 	$class_name->run();
 	
-	//////////
+	// ... //
 }
 else
 {
-	die('<div align="center">المعذره .. الصفحه المطلوبه غير موجوده</div>');
+	die( 'Wrong path' );
 }
 
-//////////
+// ... //
 
 
 ?>
