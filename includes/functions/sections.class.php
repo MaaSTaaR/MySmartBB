@@ -329,6 +329,7 @@ class MySmartSection
  	public function updateAllSectionsCache()
  	{
  		$this->engine->rec->table = $this->table;
+ 		$this->engine->rec->filter = "parent='0'";
  		
  		$forum_res = &$this->engine->func->setResource();
  		
@@ -338,29 +339,28 @@ class MySmartSection
  		
  		while ( $row = $this->engine->rec->getInfo( $forum_res ) )
  		{
- 			// This section is a parent section
- 			if ( !empty( $row[ 'forums_cache' ] ) )
- 			{
- 				$cache = $this->createSectionsCache( $row[ 'id' ] );
+ 			// ... //
+ 			
+ 			$cache = $this->createSectionsCache( $row[ 'id' ] );
  				
- 				$this->engine->rec->table 	= 	$this->table;
- 				$this->engine->rec->fields 	= 	array(	'forums_cache'	=>	$cache	);
- 				$this->engine->rec->filter 	= 	"id='" . $row[ 'id' ] . "'";
+ 			$this->engine->rec->table 	= 	$this->table;
+ 			$this->engine->rec->fields 	= 	array(	'forums_cache'	=>	$cache	);
+ 			$this->engine->rec->filter 	= 	"id='" . $row[ 'id' ] . "'";
  				
- 				$update = $this->engine->rec->update();
- 				
- 				if (!$update)
- 				{
- 					$fail = true;
- 				}
- 			}
- 			else
- 			{
- 				continue;
- 			}
+ 			$update = $this->engine->rec->update();
+ 			
+ 			if ( !$update )
+ 				$fail = true;
+ 			
+ 			// ... //
+ 			
+ 			$permissions_update = $this->engine->group->updateSectionGroupCache( $row[ 'id' ] );
+ 			
+ 			if ( !$permissions_update )
+ 				$fail = true;
  		}
  		
- 		return ( $fail ) ? false : true;
+ 		return !$fail;
  	}
  	
  	// ... //
@@ -391,7 +391,7 @@ class MySmartSection
 			if ( $check_group )
 			{
 				$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
-			
+				
 				if ( is_array( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
 				{
 					if ( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )

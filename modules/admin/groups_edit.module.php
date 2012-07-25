@@ -18,6 +18,8 @@ class MySmartGroupsEditMOD
 		
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
+			$MySmartBB->load( 'section,group' );
+			
 		    $MySmartBB->loadLanguage( 'admin_groups_edit' );
 		    
 			$MySmartBB->template->display( 'header' );
@@ -64,7 +66,7 @@ class MySmartGroupsEditMOD
 		}
 		
 		// Enable HTML and (only) HTML
-		$MySmartBB->_POST['style'] = $MySmartBB->func->CleanVariable($MySmartBB->_POST['style'],'unhtml');
+		$MySmartBB->_POST['style'] = $MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'style' ], 'unhtml' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		
@@ -75,17 +77,17 @@ class MySmartGroupsEditMOD
 		$MySmartBB->rec->fields['user_title'] 				= 	$MySmartBB->_POST['usertitle'];
 		$MySmartBB->rec->fields['forum_team'] 				= 	$MySmartBB->_POST['forum_team'];
 		$MySmartBB->rec->fields['banned'] 					= 	$MySmartBB->_POST['banned'];
-		$MySmartBB->rec->fields['view_section'] 				= 	$MySmartBB->_POST['view_section'];
+		$MySmartBB->rec->fields['view_section'] 			= 	$MySmartBB->_POST['view_section'];
 		$MySmartBB->rec->fields['download_attach'] 			= 	$MySmartBB->_POST['download_attach'];
 		$MySmartBB->rec->fields['download_attach_number'] 	= 	$MySmartBB->_POST['download_attach_number'];
 		$MySmartBB->rec->fields['write_subject'] 			= 	$MySmartBB->_POST['write_subject'];
 		$MySmartBB->rec->fields['write_reply'] 				= 	$MySmartBB->_POST['write_reply'];
 		$MySmartBB->rec->fields['upload_attach'] 			= 	$MySmartBB->_POST['upload_attach'];
 		$MySmartBB->rec->fields['upload_attach_num'] 		= 	$MySmartBB->_POST['upload_attach_num'];
-		$MySmartBB->rec->fields['edit_own_subject'] 			= 	$MySmartBB->_POST['edit_own_subject'];
+		$MySmartBB->rec->fields['edit_own_subject'] 		= 	$MySmartBB->_POST['edit_own_subject'];
 		$MySmartBB->rec->fields['edit_own_reply'] 			= 	$MySmartBB->_POST['edit_own_reply'];
 		$MySmartBB->rec->fields['del_own_subject'] 			= 	$MySmartBB->_POST['del_own_subject'];
-		$MySmartBB->rec->fields['del_own_reply']			 	= 	$MySmartBB->_POST['del_own_reply'];
+		$MySmartBB->rec->fields['del_own_reply']			= 	$MySmartBB->_POST['del_own_reply'];
 		$MySmartBB->rec->fields['write_poll'] 				= 	$MySmartBB->_POST['write_poll'];
 		$MySmartBB->rec->fields['vote_poll'] 				= 	$MySmartBB->_POST['vote_poll'];
 		$MySmartBB->rec->fields['use_pm'] 					= 	$MySmartBB->_POST['use_pm'];
@@ -98,22 +100,22 @@ class MySmartGroupsEditMOD
 		$MySmartBB->rec->fields['group_mod'] 				= 	$MySmartBB->_POST['group_mod'];
 		$MySmartBB->rec->fields['del_subject'] 				= 	$MySmartBB->_POST['del_subject'];
 		$MySmartBB->rec->fields['del_reply'] 				= 	$MySmartBB->_POST['del_reply'];
-		$MySmartBB->rec->fields['edit_subject'] 				= 	$MySmartBB->_POST['edit_subject'];
+		$MySmartBB->rec->fields['edit_subject'] 			= 	$MySmartBB->_POST['edit_subject'];
 		$MySmartBB->rec->fields['edit_reply'] 				= 	$MySmartBB->_POST['edit_reply'];
 		$MySmartBB->rec->fields['stick_subject'] 			= 	$MySmartBB->_POST['stick_subject'];
 		$MySmartBB->rec->fields['unstick_subject'] 			= 	$MySmartBB->_POST['unstick_subject'];
-		$MySmartBB->rec->fields['move_subject'] 				= 	$MySmartBB->_POST['move_subject'];
+		$MySmartBB->rec->fields['move_subject'] 			= 	$MySmartBB->_POST['move_subject'];
 		$MySmartBB->rec->fields['close_subject'] 			= 	$MySmartBB->_POST['close_subject'];
-		$MySmartBB->rec->fields['usercp_allow'] 				= 	$MySmartBB->_POST['usercp_allow'];
+		$MySmartBB->rec->fields['usercp_allow'] 			= 	$MySmartBB->_POST['usercp_allow'];
 		$MySmartBB->rec->fields['admincp_allow'] 			= 	$MySmartBB->_POST['admincp_allow'];
-		$MySmartBB->rec->fields['search_allow'] 				= 	$MySmartBB->_POST['search_allow'];
-		$MySmartBB->rec->fields['memberlist_allow'] 			= 	$MySmartBB->_POST['memberlist_allow'];
-		$MySmartBB->rec->fields['vice'] 						= 	$MySmartBB->_POST['vice'];
+		$MySmartBB->rec->fields['search_allow'] 			= 	$MySmartBB->_POST['search_allow'];
+		$MySmartBB->rec->fields['memberlist_allow'] 		= 	$MySmartBB->_POST['memberlist_allow'];
+		$MySmartBB->rec->fields['vice'] 					= 	$MySmartBB->_POST['vice'];
 		$MySmartBB->rec->fields['show_hidden'] 				= 	$MySmartBB->_POST['show_hidden'];
 		$MySmartBB->rec->fields['view_usernamestyle'] 		= 	$MySmartBB->_POST['view_usernamestyle'];
-		$MySmartBB->rec->fields['usertitle_change'] 			= 	$MySmartBB->_POST['usertitle_change'];
-		$MySmartBB->rec->fields['onlinepage_allow'] 			= 	$MySmartBB->_POST['onlinepage_allow'];
-		//$MySmartBB->rec->fields['allow_see_offstyles'] 		= 	$MySmartBB->_POST['allow_see_offstyles'];
+		$MySmartBB->rec->fields['usertitle_change'] 		= 	$MySmartBB->_POST['usertitle_change'];
+		$MySmartBB->rec->fields['onlinepage_allow'] 		= 	$MySmartBB->_POST['onlinepage_allow'];
+		//$MySmartBB->rec->fields['allow_see_offstyles'] 	= 	$MySmartBB->_POST['allow_see_offstyles'];
 		$MySmartBB->rec->fields['admincp_section'] 			= 	$MySmartBB->_POST['admincp_section'];
 		$MySmartBB->rec->fields['admincp_option'] 			= 	$MySmartBB->_POST['admincp_option'];
 		$MySmartBB->rec->fields['admincp_member'] 			= 	$MySmartBB->_POST['admincp_member'];
@@ -122,22 +124,22 @@ class MySmartGroupsEditMOD
 		$MySmartBB->rec->fields['admincp_admin'] 			= 	$MySmartBB->_POST['admincp_admin'];
 		//$MySmartBB->rec->fields['admincp_adminstep'] 		= 	$MySmartBB->_POST['admincp_adminstep']; REMOVED FEATURE
 		$MySmartBB->rec->fields['admincp_subject'] 			= 	$MySmartBB->_POST['admincp_subject'];
-		//$MySmartBB->rec->fields['admincp_database'] 			= 	$MySmartBB->_POST['admincp_database']; REMOVED FEATURE
+		//$MySmartBB->rec->fields['admincp_database'] 		= 	$MySmartBB->_POST['admincp_database']; REMOVED FEATURE
 		//$MySmartBB->rec->fields['admincp_fixup'] 			= 	$MySmartBB->_POST['admincp_fixup']; REMOVED FEATURE
 		$MySmartBB->rec->fields['admincp_ads'] 				= 	$MySmartBB->_POST['admincp_ads'];
-		$MySmartBB->rec->fields['admincp_template'] 			= 	$MySmartBB->_POST['admincp_template'];
-		$MySmartBB->rec->fields['admincp_adminads'] 			= 	$MySmartBB->_POST['admincp_adminads'];
+		$MySmartBB->rec->fields['admincp_template'] 		= 	$MySmartBB->_POST['admincp_template'];
+		$MySmartBB->rec->fields['admincp_adminads'] 		= 	$MySmartBB->_POST['admincp_adminads'];
 		$MySmartBB->rec->fields['admincp_attach'] 			= 	$MySmartBB->_POST['admincp_attach'];
-		$MySmartBB->rec->fields['admincp_page'] 				= 	$MySmartBB->_POST['admincp_page'];
+		$MySmartBB->rec->fields['admincp_page'] 			= 	$MySmartBB->_POST['admincp_page'];
 		$MySmartBB->rec->fields['admincp_block'] 			= 	$MySmartBB->_POST['admincp_block'];
 		$MySmartBB->rec->fields['admincp_style'] 			= 	$MySmartBB->_POST['admincp_style'];
 		$MySmartBB->rec->fields['admincp_toolbox'] 			= 	$MySmartBB->_POST['admincp_toolbox'];
 		$MySmartBB->rec->fields['admincp_smile'] 			= 	$MySmartBB->_POST['admincp_smile'];
-		$MySmartBB->rec->fields['admincp_icon'] 				= 	$MySmartBB->_POST['admincp_icon'];
+		$MySmartBB->rec->fields['admincp_icon'] 			= 	$MySmartBB->_POST['admincp_icon'];
 		$MySmartBB->rec->fields['admincp_avater'] 			= 	$MySmartBB->_POST['admincp_avater'];
 		$MySmartBB->rec->fields['group_order'] 				= 	$MySmartBB->_POST['group_order'];
 		$MySmartBB->rec->fields['admincp_contactus'] 		= 	$MySmartBB->_POST['admincp_contactus'];
-		//$MySmartBB->rec->fields['no_posts'] 		    		= 	$MySmartBB->_POST['no_posts'];
+		//$MySmartBB->rec->fields['no_posts'] 		    	= 	$MySmartBB->_POST['no_posts'];
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
 		
@@ -145,10 +147,40 @@ class MySmartGroupsEditMOD
 		
 		if ($update)
 		{
-			// TODO : update section's group permissions
+			// ... //
 			
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+				
+			$MySmartBB->rec->fields			=	array();
+			
+			$MySmartBB->rec->fields['group_id'] 			= 	$group_id;
+			$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['view_section'];
+			$MySmartBB->rec->fields['download_attach'] 		= 	$MySmartBB->_POST['download_attach'];
+			$MySmartBB->rec->fields['write_subject'] 		= 	$MySmartBB->_POST['write_subject'];
+			$MySmartBB->rec->fields['write_reply'] 			= 	$MySmartBB->_POST['write_reply'];
+			$MySmartBB->rec->fields['upload_attach'] 		= 	$MySmartBB->_POST['upload_attach'];
+			$MySmartBB->rec->fields['edit_own_subject'] 	= 	$MySmartBB->_POST['edit_own_subject'];
+			$MySmartBB->rec->fields['edit_own_reply'] 		= 	$MySmartBB->_POST['edit_own_reply'];
+			$MySmartBB->rec->fields['del_own_subject'] 		= 	$MySmartBB->_POST['del_own_subject'];
+			$MySmartBB->rec->fields['del_own_reply'] 		= 	$MySmartBB->_POST['del_own_reply'];
+			$MySmartBB->rec->fields['write_poll'] 			= 	$MySmartBB->_POST['write_poll'];
+			$MySmartBB->rec->fields['vote_poll'] 			= 	$MySmartBB->_POST['vote_poll'];
+			$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['name'];
+			
+			$MySmartBB->rec->filter = "group_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+			
+			$update_permissions = $MySmartBB->rec->update();
+			
+			if ( $update_permissions )
+			{
+				$cache = $MySmartBB->section->updateAllSectionsCache();
+				
+				if ( $cache )
+				{
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+					$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
+				}
+			}
 		}
 	}
 	
