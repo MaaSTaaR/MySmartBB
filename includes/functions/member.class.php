@@ -139,10 +139,12 @@ class MySmartMember
 	
 	public function getActiveMemberNumber()
 	{
-		$this->engine->table = $this->table;
-		$this->engine->filter = "posts>0";
+		$this->engine->rec->table = $this->table;
+		$this->engine->rec->filter = "posts>'0'";
 		
-		return $this->engine->rec->getNumber();
+		$num = $this->engine->rec->getNumber();
+		
+		return $num;
 	}
 	
 	// ... //
