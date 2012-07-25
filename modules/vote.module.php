@@ -1,7 +1,5 @@
 <?php
 
-// TODO :: groups, visitor
-
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
@@ -20,7 +18,6 @@ class MySmartVoteMOD
 		
 		$MySmartBB->load( 'poll' );
 		
-		// Show header with page title
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
 		if ($MySmartBB->_GET['start'])
@@ -54,8 +51,29 @@ class MySmartVoteMOD
 		
 		// ... //
 		
-		if (!$Poll)
+		if ( !$Poll )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'vote_doesnt_exist' ] );
+		
+		// ... //
+		
+		$MySmartBB->rec->select = 'section';
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		$MySmartBB->rec->filter = "id='" . $Poll[ 'subject_id' ] . "'";
+		
+		$subject = $MySmartBB->rec->getInfo();
+		
+		if ( !$subject )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
+		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+		$MySmartBB->rec->filter = "section_id='" . $subject[ 'section' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
+		
+		$permissions = $MySmartBB->rec->getInfo();
+		
+		if ( !$permissions[ 'vote_poll' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_to_vote' ] );
 		
 		// ... //
 		
