@@ -335,7 +335,7 @@ class MySmartForumMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartForumMOD::rowsProcessCB' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartForumMOD', 'rowsProcessCB' ) );
 		
 		// ... //
 	}

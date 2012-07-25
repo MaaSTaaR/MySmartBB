@@ -148,7 +148,7 @@ class MySmartIndexMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartIndexMOD::usernameStyleProcess' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartIndexMOD', 'usernameStyleProcess' ) );
 		
 		$MySmartBB->template->display( 'main' );
 	}

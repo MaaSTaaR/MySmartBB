@@ -108,7 +108,7 @@ class MySmartAnnouncementMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartAnnouncementMOD::rowsProcessCB' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartAnnouncementMOD', 'rowsProcessCB' ) );
 		
 		$MySmartBB->template->display('announcements_main');
 		

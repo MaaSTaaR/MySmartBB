@@ -42,7 +42,7 @@ class MySmartOnlineMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartOnlineMOD::rowProcess' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartOnlineMOD', 'rowProcess' ) );
 		
 		$MySmartBB->plugin->runHooks( 'online_show_start' );
 		

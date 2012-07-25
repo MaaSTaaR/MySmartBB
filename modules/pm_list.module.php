@@ -92,7 +92,7 @@ class MySmartPrivateMassegeListMOD
 				
 		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartPrivateMassegeListMOD::rowsProcessCB' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartPrivateMassegeListMOD', 'rowsProcessCB' ) );
 		
 		$MySmartBB->plugin->runHooks( 'pm_list_main' );
 		

@@ -45,7 +45,7 @@ class MySmartGroupsMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartGroupsMOD::rowProcess' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartGroupsMOD', 'rowProcess' ) );
 		
 		// ... //
 		

@@ -94,7 +94,7 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->setInfoCallback( 'MySmartSearchEngineMOD::rowsProcessCB' );
+		$MySmartBB->rec->setInfoCallback( array( 'MySmartSearchEngineMOD', 'rowsProcessCB' ) );
 		
 		// ... //
 		
