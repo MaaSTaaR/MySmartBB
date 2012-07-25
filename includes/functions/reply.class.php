@@ -31,7 +31,7 @@ class MySmartReply
  		
  		// Fields to retrieve from member table
 		// That helps us to keep the returned array as small as possible, and prevent the member's password to retrieve
-		$member_select = array( 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
+		$member_select = array( 'id', 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
 								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache' );
 		
 		$select = 'reply.*,reply.id AS reply_id';

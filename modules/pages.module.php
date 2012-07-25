@@ -14,6 +14,8 @@ class MySmartAdsPageMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'pages' );
+		
 		if ($MySmartBB->_GET['show'])
 		{
 			$this->_showPage();

@@ -20,6 +20,8 @@ class MySmartGroupsDelMOD
 		{
 		    $MySmartBB->loadLanguage( 'admin_groups_del' );
 		    
+		    $MySmartBB->load( 'group' );
+		    
 			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'main' ] )
