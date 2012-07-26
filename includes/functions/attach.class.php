@@ -166,61 +166,50 @@ class MySmartAttach
 	public function isAllowedFile( &$filename, $type, $size, $allowed_extentions = null )
 	{
 		$ext = $this->getFileExtension( $filename );
-     	
-     	if ( $ext == 'MULTIEXTENSION' )
-     	{
-     		
-     	}
-		elseif ( !$ext )
+		
+		// If the parameter "$allowed_extentions" is null, so get the allowed extention list
+		// from the database.
+		if ( is_null( $allowed_extentions ) )
 		{
-			return self::FORBIDDEN_EXTENTION;
-		}
-		else
-		{
-			// If the parameter "$allowed_extentions" is null, so get the allowed extention list
-			// from the database.
-			if ( is_null( $allowed_extentions ) )
-			{
-				// TODO : cache me please
-				$this->engine->rec->table = $this->engine->table[ 'extension' ];
-				$this->engine->rec->filter = "Ex='" . $ext . "'";
-     						
-				$extension = $this->engine->rec->getInfo();
-			
-				if (!$extension)
-				{
-					return self::FORBIDDEN_EXTENTION;
-				}
-				else
-				{
-					if ( !empty( $extension['mime_type'] ) )
-					{
-						if ( $type != $extension['mime_type' ])
-						{
-							return self::FORBIDDEN_EXTENTION;
-						}
-					}
-				}
-			
-				// Convert the size from bytes to KB
-				$size = ceil( ( $size / 1024 ) );
+			// TODO : cache me please
+			$this->engine->rec->table = $this->engine->table[ 'extension' ];
+			$this->engine->rec->filter = "Ex='" . $ext . "'";
      					
-				if ( $size > $extension[ 'max_size' ] )
-				{
-					return self::LARGE_SIZE;
-				}
-				else
-				{
-					return true;
-				}
+			$extension = $this->engine->rec->getInfo();
+		
+			if (!$extension)
+			{
+				return self::FORBIDDEN_EXTENTION;
 			}
 			else
 			{
-				if ( !is_array( $allowed_extentions ) )
-					return null;
-				
-				return ( !in_array( $ext, $allowed_extentions ) ) ? false : true;
+				if ( !empty( $extension['mime_type'] ) )
+				{
+					if ( $type != $extension['mime_type' ])
+					{
+						return self::FORBIDDEN_EXTENTION;
+					}
+				}
 			}
+		
+			// Convert the size from bytes to KB
+			$size = ceil( ( $size / 1024 ) );
+     				
+			if ( $size > $extension[ 'max_size' ] )
+			{
+				return self::LARGE_SIZE;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		else
+		{
+			if ( !is_array( $allowed_extentions ) )
+				return null;
+			
+			return ( !in_array( $ext, $allowed_extentions ) ) ? false : true;
 		}
 	}
 	
