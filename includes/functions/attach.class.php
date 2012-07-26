@@ -163,11 +163,15 @@ class MySmartAttach
 		return ( $upload ) ? true : false;
 	}
 	
-	public function isAllowedFile( $filename, $type, $size, $allowed_extentions = null )
+	public function isAllowedFile( &$filename, $type, $size, $allowed_extentions = null )
 	{
 		$ext = $this->getFileExtension( $filename );
      	
-		if ( $ext == 'MULTIEXTENSION' or !$ext )
+     	if ( $ext == 'MULTIEXTENSION' )
+     	{
+     		
+     	}
+		elseif ( !$ext )
 		{
 			return self::FORBIDDEN_EXTENTION;
 		}
@@ -220,9 +224,19 @@ class MySmartAttach
 		}
 	}
 	
- 	public function getFileExtension( $filename )
+ 	public function getFileExtension( &$filename )
     {
-  		$ex = explode( '.', $filename );
+    	$ex = pathinfo( $filename );
+    	
+    	$extension = '.' . strtolower( $ex[ 'extension' ] );
+    	
+    	// Kill multi-extension
+    	$filename = str_replace( '.', '-', $ex[ 'filename' ] );
+    	$filename = $filename . $extension;
+    	
+    	return $extension;
+    	
+  		/*$ex = explode( '.', $filename );
   		
   		$size = sizeof( $ex );
   		
@@ -231,7 +245,7 @@ class MySmartAttach
   		elseif ( $size > 2 )
   			return 'MULTIEXTENSION';
   		else
-  			return false;
+  			return false;*/
  	}
 }
 
