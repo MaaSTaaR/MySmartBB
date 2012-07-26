@@ -218,18 +218,17 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET['section'];
-		
-		if (empty($MySmartBB->_GET['subject_id'])
-			or empty($MySmartBB->_GET['section']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
+		$MySmartBB->_GET[ 'section' ] = (int) $MySmartBB->_GET[ 'section' ];
 		
 		// ... //
 		
-		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->func->getForumsList();
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) or empty( $MySmartBB->_GET[ 'section' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		// ... //
+		
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList();
 		
 		// ... //
 		
@@ -333,21 +332,31 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
+		// ... //
+		
+		if ( empty($MySmartBB->_GET[ 'subject_id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
 		
-		$MySmartBB->func->getEditorTools();
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
 		
 		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->rec->getInfo();
+		
+		// ... //
+		
+		$MySmartBB->func->getEditorTools();
+		
+		// ... //
 		
 		$MySmartBB->template->display('subject_edit');
 	}
@@ -358,16 +367,17 @@ class MySmartManagementMOD
 		
 		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		// ... //
 		
-		if (!isset($MySmartBB->_POST['title'])
-			or !isset($MySmartBB->_POST['text']))
-		{
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		// ... //
+		
+		if ( !isset( $MySmartBB->_POST[ 'title' ] ) or !isset( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
@@ -390,14 +400,10 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		if (!isset($MySmartBB->_GET['operator'])
-			or !isset($MySmartBB->_GET['section'])
-			or !isset($MySmartBB->_GET['reply']))
-		{
+		if ( !isset( $MySmartBB->_GET[ 'operator' ] ) or !isset( $MySmartBB->_GET[ 'section' ] ) or !isset( $MySmartBB->_GET[ 'reply' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
-		elseif ($MySmartBB->_GET['operator'] == 'delete')
+		if ($MySmartBB->_GET['operator'] == 'delete')
 		{
 			$this->__ReplyDelete();
 		}
