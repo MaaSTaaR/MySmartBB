@@ -5,7 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="look/styles/admin/main/css/style.css" type="text/css" />
 </head>
-<frameset rows="5%,95%">
+<frameset rows="6%,94%">
 	<frame src="admin.php?page=index&amp;top=1" name="top" />
 	{if {$_CONF['align']} == 'right'}
 	<frameset cols="75%,25%">

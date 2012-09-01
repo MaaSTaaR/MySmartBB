@@ -11,13 +11,13 @@ body
 	border-width: 0;
 	margin-left: 11%;
 	margin-right: 11%;
-	background: #fff;
+	/*background: #fff;*/
 }
 
 #header
 {
 	width: 100%;
-	border-width: thin;
+	border-width: 1px;
 	border-style: solid;
 	border-color: #ccc;
 	background: #656B9A;
@@ -26,6 +26,8 @@ body
 	padding-left: 1%;
 	padding-bottom: 1%;
 	height: 110px;
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
 }
 
 #header .menu_box
@@ -43,11 +45,13 @@ body
 
 #address_bar
 {
-	width: 97.5%;
+	width: 96%;
+	margin-right: 1%;
 	
 	border-width: thin;
-	border-style: dashed;
-	border-color: #ccc;	
+	border-style: solid;
+	border-color: #ccc;
+	border-radius: 5px;	
 	
 	background: #F2F2F2;
 	
@@ -129,6 +133,9 @@ body
     font-size: 8pt;
     color: #545A83;
     text-align: center;
+    
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 #login_box
@@ -187,17 +194,8 @@ body
     clear: both;
 }
 
-table.t_style_a
-{
-	border-width: thin;
-	border-style: solid;
-	border-collapse: collapse;
-	border-color: #111111;
-}
-	
 table.t_style_b
 {
-	border-width: thin;
 	border-style: solid;
 	border-collapse: collapse;
 	border-color: #ccc;
@@ -303,8 +301,9 @@ textarea
 	font-family: Tahoma;
 	font-size: 8pt;
 	border-width: 1px;
-	border-style: dashed;
+	border-style: solid;
 	border-color: #B4B4B4;
+	border-radius: 5px;
 }
 
 input,button
@@ -312,8 +311,11 @@ input,button
 	font-family: Tahoma;
 	font-size: 8pt;
 	border-width: 1px;
-	border-style: dashed;
+	border-style: solid;
 	border-color: #B4B4B4;
+	border-radius: 3px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 select 
@@ -321,8 +323,9 @@ select
 	font-family: Tahoma;
 	font-size: 8pt;
 	border-width: 1px;
-	border-style: dashed;
+	border-style: solid;
 	border-color: #B4B4B4;
+	border-radius: 3px;
 }
 
 a.unreadpm, .unreadpm
@@ -381,4 +384,18 @@ option.main_section
 	padding: 0.2% 0.2% 0.2% 0.3%;
 	border-radius: 5px;
 	background: #eee;
+}
+
+a.button
+{
+	border: 1px solid #a7a7a7;
+	padding: 0.5% 0.5% 0.5% 0.5%;
+	border-radius: 5px;
+	background: #eee;
+}
+
+a.button:hover
+{
+	background: #DFDFDF;
+	color: #000;
 }

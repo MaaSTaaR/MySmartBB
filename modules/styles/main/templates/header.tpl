@@ -36,7 +36,7 @@
 		
 		<div id="header">
 			<div class="right_side">
-				<img border="0" src="{$image_path}/logo.jpg" alt="" /> 
+				<img border="0" src="{$image_path}/logo.jpg" alt="" />
 			</div>
 			
 			<div class="left_side">

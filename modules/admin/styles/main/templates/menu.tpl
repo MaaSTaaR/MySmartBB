@@ -1,6 +1,6 @@
 <br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table class="t_style_b" width="90%" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
 		{$lang['plugins_system']}
