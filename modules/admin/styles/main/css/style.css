@@ -1,8 +1,11 @@
 body
 {
 	background: #e7e7e7;
+	font-family: Tahoma;
+    font-size: 9pt;
 }
-table.t_style_a
+
+table.t_style_a
 {
 	border-width: thin;
 	border-style: solid;
@@ -22,6 +25,10 @@ table.t_style_b
 {
 	background-image: url(../images/gradient_tcat.gif);
 	color: #fff;
+	border-color: #ccc;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+	padding-right: 1%;
 }
 	
 .main1 a:link
@@ -46,6 +53,10 @@ table.t_style_b
 {
 	background-image: url(../images/gradient_thead.gif);
 	color: #545A83;
+	border-color: #ccc;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+	padding-right: 1%;
 }
 
 .main2 a:link
@@ -68,19 +79,81 @@ table.t_style_b
 
 .row1
 { 
-	background: #F8F8F8; 
+	background: #F8F8F8;
+	border-color: #ccc;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+	padding-right: 1%;
 }
 
 .row2
 { 
-	background: #F4F4F4; 
+	background: #F4F4F4;
+	border-color: #ccc;
+	padding-top: 0.5%;
+	padding-bottom: 0.5%;
+	padding-right: 1%;
 }
+
 
 .rows_space
 {
 	padding-top: 0.5%;
-	padding-right: 1%;
 	padding-bottom: 0.5%;
+	padding-right: 1%;
+}
+
+
+th,td,p 
+{
+	font-family: Tahoma;
+    font-size: 9pt;
+    color: #000000;
+}
+
+a:link,a:active,a:visited 
+{
+	text-decoration: none;
+    color: #003366;
+}
+
+a:hover	
+{
+	text-decoration: none;
+    color: #0066FF;
+}
+
+textarea 
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
+
+input,button
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
+
+select 
+{
+	font-family: Tahoma;
+	font-size: 8pt;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #B4B4B4;
+}
+
+option.main_section
+{
+	font-weight: bold;
+	font-style: italic;
 }
 
 .address_bar
@@ -100,43 +173,4 @@ table.t_style_b
 	
 	font-family: Tahoma;
     font-size: 9pt;
-}
-
-th,td,p 
-{	font-family: Tahoma;    font-size: 9pt;    color: #000000;
-}
-a:link,a:active,a:visited 
-{	text-decoration: none;    color: #003366;}a:hover	
-{	text-decoration: none;    color: #0066FF;}
-
-.small_text
-{ 
-	font-size: 11px; 
-}
-
-textarea 
-{
-	font-family: Tahoma;
-	font-size: 8pt;
-	border-width: 1px;
-	border-style: dashed;
-	border-color: #B4B4B4;
-}
-
-input 
-{
-	font-family: Tahoma;
-	font-size: 8pt;
-	border-width: 1px;
-	border-style: dashed;
-	border-color: #B4B4B4;
-}
-
-select 
-{
-	font-family: Tahoma;
-	font-size: 8pt;
-	border-width: 1px;
-	border-style: dashed;
-	border-color: #B4B4B4;
 }

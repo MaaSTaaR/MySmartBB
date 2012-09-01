@@ -19,8 +19,6 @@ require_once( DIR . 'includes/functions/online.class.php');
 require_once( DIR . 'includes/functions/style.class.php');
 require_once( DIR . 'includes/functions/cache.class.php');
 
-require_once( DIR . 'includes/config.php');
-
 // ... //
 
 class MySmartBB
@@ -81,66 +79,67 @@ class MySmartBB
 	public $lang_info;
 	private $lang_dir;
 	private $func_list = null;
+	private $config;
 	
 	function __construct()
 	{
 		global $config;
 		
+		$this->getConfig();
+		
+		// ... //
+		
 		// General systems
-  		$this->db				= 	new MySmartSQL( $config['db']['server'], $config['db']['username'], 
-  													$config['db']['password'], $config['db']['name'] );
+  		$this->db				= 	new MySmartSQL( $this->config[ 'db' ][ 'server' ], $this->config[ 'db' ][ 'username' ], 
+  													$this->config[ 'db' ][ 'password' ], $this->config[ 'db' ][ 'name' ] );
   		$this->pager			=	new MySmartPager;
   		$this->func 			= 	new MySmartFunctions();
   		$this->rec				=	new MySmartRecords($this->db, $this->func, $this->pager); 
   		
   		// ... //
   		
-  		$this->initLanguage( $config[ 'lang_dir' ] );
-  		
-  		// ... //
-  		
-  		$this->initTableList();
+  		$this->initLanguage();
+  		$this->initTableList(); 		
  		
  		// ... //
  		
- 		$this->initDB();
+ 		$e = $this->initDB();
   		
-  		// ... //
-  		
-  		$this->initClasses();
-  		
-  		// ... //
-  		
-  		$this->initInfo();
- 		
-		// ... //
-		
-		$this->initPredefinedVars();
-		
-		// ... //
-		
-		$this->initVariables();
-		
-		// ... //
-				
-		$this->initPageAlign();
-		
-		// ... //
-		
-  		if (!is_bool($e)
-  			and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED'
-  			and !defined('INSTALL'))
+  		if ( !is_bool( $e ) and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED' and !defined( 'INSTALL' ) )
   		{
   			$this->func->move( './setup/install/', 0 );
   			$this->func->stop( true );
   		}
+  		
+  		// ... //
+  		
+  		$this->initClasses();  		
+  		$this->initInfo(); 		
+		$this->initPredefinedVars();
+		$this->initVariables();
+		$this->initPageAlign();
   	}
   	
   	// ... //
   	
-  	private function initLanguage( $dir )
+  	private function getConfig()
   	{
-  		$this->lang_dir = 'languages/' . $dir . '/';
+  		require_once( DIR . 'includes/config.php');
+  		
+  		$this->config = $config;
+  		
+  		if ( empty( $this->config[ 'lang_dir' ] ) )
+  			$this->config[ 'lang_dir' ] = 'english';
+  		
+  		if ( !empty( $this->config[ 'db' ][ 'prefix' ] ) )
+  			$this->prefix = $this->config[ 'db' ][ 'prefix' ];
+  	}
+  	
+  	// ... //
+  	
+  	private function initLanguage()
+  	{
+  		$this->lang_dir = 'languages/' . $this->config[ 'lang_dir' ] . '/';
   		
   		require( $this->lang_dir . 'language.php' );
   		
@@ -155,13 +154,6 @@ class MySmartBB
   	
   	private function initTableList()
   	{
-  		global $config;
-  		
-  		if (!empty($config['db']['prefix']))
-  		{
-  			$this->prefix = $config['db']['prefix'];
-  		}
-
   		$this->table['ads'] 				= 	$this->prefix . 'ads';
   		$this->table['announcement'] 		= 	$this->prefix . 'announcement';
   		$this->table['attach'] 				= 	$this->prefix . 'attach';
@@ -254,12 +246,13 @@ class MySmartBB
   		// Ensure if tables are installed or not
   		$check = $this->db->check($this->prefix . 'info');
   		
-  		// Well, the table "MySBB_info" isn't exists, so return an error message
-  		if (!$check
-  			and !defined('INSTALL'))
-  		{
+  		// The table "MySmartBB_info" doesn't exists. Return an error message
+  		if ( !$check and !defined( 'INSTALL' ) )
   			return 'ERROR::THE_TABLES_ARE_NOT_INSTALLED';
-  		}
+  		
+  		// ... //
+  		
+  		return true;
   	}
   	
   	// ... //

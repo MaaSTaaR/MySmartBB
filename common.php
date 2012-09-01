@@ -4,13 +4,14 @@ define( 'DIR', dirname( __FILE__ ) . '/' );
 
 // ... //
 
+// TODO : Check if we _still_ need this?
 if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
 	define( 'JAVASCRIPT_SMARTCODE', false );
 
 // ... //
 
 // Can't live without this file :)
-include('MySmartBB.class.php');
+include( 'MySmartBB.class.php' );
 
 // The master object
 $MySmartBB = new MySmartBB;
@@ -89,7 +90,7 @@ class MySmartLocalCommon
   		// ... //
   		
   		// Stop any external post request.
-  		// At least pervent novice crackers.
+  		// At least prevent novice crackers.
  		if ( $MySmartBB->_SERVER['REQUEST_METHOD'] == 'POST' )
     	{
     		// ... //

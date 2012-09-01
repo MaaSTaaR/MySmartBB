@@ -1,3 +1,1 @@
-<td width="2%" class="row2">
-	<strong><em>[p]</em></strong>
-</td>
+	<span class="current">[p]</span>

@@ -3,6 +3,6 @@
 <head>
 	<title>{$lang['common']['cp']} - (Powered By MySmartBB)</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" href="modules/styles/main/css/style.css" type="text/css" />
+	<link rel="stylesheet" href="modules/admin/styles/main/css/style.css" type="text/css" />
 </head>
 <body>

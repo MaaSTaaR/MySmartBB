@@ -12,6 +12,7 @@
 	</tr>
 	<tr>
 		<td class="row1" width="70%" colspan="2">
+		{$_CONF['info_row']['register_rules']}
 		</td>
 	</tr>
 	<tr align="center">

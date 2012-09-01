@@ -215,9 +215,13 @@ class MySmartCommon
 		
 		if ( !strstr( $MySmartBB->_CONF[ 'style_info' ][ 'style_path' ], 'http://www.' ) )
 		{
-			$filename = explode( '/', $MySmartBB->_CONF[ 'style_info' ]['style_path'] );
+			$bb_path = '/' . $MySmartBB->func->getDirPath();
 			
-			$MySmartBB->template->assign('style_path',$MySmartBB->_CONF[ 'style_info' ][ 'style_path' ]);
+			$css_path = $bb_path . $MySmartBB->_CONF[ 'style_info' ][ 'style_path' ];
+			$img_path = $bb_path . $MySmartBB->_CONF[ 'style_info' ][ 'image_path' ];
+			
+			$MySmartBB->template->assign( 'style_path', $css_path );
+			$MySmartBB->template->assign( 'image_path', $img_path );
 		}
 		else
 		{
@@ -268,9 +272,7 @@ class MySmartCommon
 	private function _templateAssign()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->template->assign('image_path',$MySmartBB->_CONF[ 'style_info' ]['image_path']);
-		
+				
 		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);
 	}
 }

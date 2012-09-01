@@ -6,7 +6,7 @@
 
 <table cellpadding="3" cellspacing="1" width="60%" class="t_style_b" border="1" align="center">
 	<tr align="center">
-		<td class="row1" colspan="2">
+		<td class="row2" colspan="2">
 			<a href="admin.php?page=options&amp;general=1&amp;main=1">{$lang['general_options']}</a>
 		</td>
 	</tr>

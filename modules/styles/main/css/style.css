@@ -357,3 +357,28 @@ option.main_section
 	font-weight: bold;
 	font-style: italic;
 }
+
+.pagination
+{
+	margin-bottom: 1%;
+}
+
+.pagination a
+{
+	border: 1px solid #dddddd;
+	padding: 0.2% 0.2% 0.2% 0.3%;
+	border-radius: 5px;
+}
+
+.pagination a:hover
+{
+	border-color: #a7a7a7;
+}
+
+.pagination .current
+{
+	border: 1px solid #a7a7a7;
+	padding: 0.2% 0.2% 0.2% 0.3%;
+	border-radius: 5px;
+	background: #eee;
+}

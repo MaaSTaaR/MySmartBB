@@ -50,7 +50,7 @@ class SettingMicroblog
     {
         global $MySmartBB;
         
-        $update = $MySmartBB->info->updateInfo( 'mysmartmicroblog_admin_setting', $MySmartBB->_POST[ 'length_of_post' ] );
+        $update = $MySmartBB->info->updateInfo( 'mysmartmicroblog_post_max_len', $MySmartBB->_POST[ 'length_of_post' ] );
         
         if ( $update )
         {

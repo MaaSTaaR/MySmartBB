@@ -16,13 +16,13 @@ class MySmartOptionsMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_options' );
 		    
 			$MySmartBB->load( 'group' );
 			
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 		
 			if ($MySmartBB->_GET['index'])
 			{
@@ -320,6 +320,7 @@ class MySmartOptionsMOD
 		$update[12] = $MySmartBB->info->updateInfo( 'reg_Wed', $MySmartBB->_POST['Wed'] );
 		$update[13] = $MySmartBB->info->updateInfo( 'reg_Thu', $MySmartBB->_POST['Thu'] );
 		$update[14] = $MySmartBB->info->updateInfo( 'reg_Fri', $MySmartBB->_POST['Fri'] );
+		$update[ 15 ] = $MySmartBB->info->updateInfo( 'register_rules', $MySmartBB->_POST[ 'register_rules' ] );
 		
 		// Ugly line :-(
 		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4] 

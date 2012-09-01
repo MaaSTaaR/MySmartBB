@@ -28,7 +28,7 @@ class MySmartRegisterMOD
    		
 		if ($MySmartBB->_GET['index'])
 		{
-			if ($MySmartBB->_CONF['info_row']['reg_o'] 
+			if ( $MySmartBB->_CONF[ 'info_row' ][ 'reg_o' ] 
 				and ( !isset( $MySmartBB->_GET[ 'agree' ] ) or !$MySmartBB->_GET[ 'agree' ] ) )
 			{
 				$this->_registerRules();
@@ -61,9 +61,11 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'register_rules' ] );
 		
+		$MySmartBB->_CONF[ 'info_row' ][ 'register_rules' ] = nl2br( $MySmartBB->_CONF[ 'info_row' ][ 'register_rules' ] );
+		
 		$MySmartBB->plugin->runHooks( 'register_rules_main' );
 		
-		$MySmartBB->template->display('register_rules');
+		$MySmartBB->template->display( 'register_rules' );
 	}
 	
 	/**

@@ -251,6 +251,27 @@ class MySmartFunctions
  	
  	// ... //
  	
+ 	public function getDirPath()
+ 	{
+ 		global $MySmartBB;
+ 		
+  		$parts = explode( '/', $MySmartBB->_SERVER[ 'SCRIPT_NAME' ] );
+  		
+  		$path = '';
+  		
+  		foreach ( $parts as $part )
+  		{
+  			if ( !stristr( $part, '.php' ) )
+  				$path .= $part;
+  			else
+  				break;
+  		}
+  		
+  		return $path . '/';
+ 	}
+ 	
+ 	// ... //
+ 	
  	/**
  	 * Get a strong random code :)
  	 */

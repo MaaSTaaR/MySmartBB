@@ -14,19 +14,13 @@ class MySmartForumMOD
 	private $SectionGroup;
 	private $subject_res;
 	private $stick_subject_res;
+	private $id;
 	
 	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'forum' );
-		
-		$MySmartBB->load( 'section,subject' );
-		
-		$MySmartBB->template->assign( 'SECTION_RSS', true );
-		$MySmartBB->template->assign( 'SECTION_ID', $MySmartBB->_GET[ 'id' ] );
-		
-		$this->_getSectionInfo();
+		$this->_initForum();
 		
 		if ( $MySmartBB->_GET[ 'show' ] )
 		{
@@ -47,9 +41,11 @@ class MySmartForumMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	private function _browseForum()
+	public function _browseForum()
 	{
 		global $MySmartBB;
+				
+		// ... //
 		
 		$this->_generalProcesses();
 		$this->_sectionOnline();
@@ -58,10 +54,30 @@ class MySmartForumMOD
 		$this->_getSubSection();
 		$this->_getSubjectList();
 		
+		// ... //
+		
 		$MySmartBB->plugin->runHooks( 'forum_main' );
 		
 		$this->_callTemplate();
 	}
+	
+	/*public function check( $id )
+	{
+		global $MySmartBB;
+		
+		$this->id = $id;
+		
+		// ... //
+		
+		$this->_initForum();
+		
+		// ... //
+		
+		$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_POST[ 'password' ] );
+			
+		if ( $check )
+			$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] );
+	}*/
 	
 	private function _getSectionInfo()
 	{
@@ -69,7 +85,7 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
@@ -77,7 +93,7 @@ class MySmartForumMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$this->Section = $MySmartBB->rec->getInfo();
 		
@@ -374,6 +390,22 @@ class MySmartForumMOD
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'stick_subject_res' ] = $this->stick_subject_res;
 		
 		$MySmartBB->template->display('forum');
+	}
+	
+	// ... //
+	
+	private function _initForum()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'forum' );
+		
+		$MySmartBB->load( 'section,subject' );
+		
+		$MySmartBB->template->assign( 'SECTION_RSS', true );
+		$MySmartBB->template->assign( 'SECTION_ID', (int) $MySmartBB->_GET[ 'id' ] );
+		
+		$this->_getSectionInfo();
 	}
 }
 

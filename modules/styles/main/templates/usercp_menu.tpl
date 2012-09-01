@@ -91,6 +91,12 @@
      		</td>
      	</tr>
      	{hook}end_of_member_options{/hook}
+
+
+
+
+
+
      </table>
 </div>
 <br />

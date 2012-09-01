@@ -3,8 +3,8 @@
 /*
  * @package : MySmartPager
  * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : 24-8-2007 6:53 AM
- * @last update : Fri 02 Sep 2011 03:23:52 AM AST 
+ * @start : 24-8-2007 6:53 AM
+ * @update : Fri 02 Sep 2011 03:23:52 AM AST 
  * @under : GNU LGPL
 */
 
@@ -18,7 +18,7 @@ class MySmartPager
 	private $pages_number;			// The number of pages
 	private $var_name;				// The count's variable name
 	private $print_style = array();	// The style of print
-	private $limit;					// How many of pages will print?
+	private $limit;					// How many of pages will be printed?
 	private $i;						// Will use it in loop
 	private $page = 1;				// The current page (Inside the loop)
 	private $p;
@@ -41,7 +41,7 @@ class MySmartPager
 		$this->count 		= 	($count < 0) ? 0 : $count;
 		$this->location		=	$location;
 		$this->var_name		=	$var;
-		$this->limit		=	3;
+		$this->limit		=	3; // TODO : I'll be glad if we use a dynamic value ;-)
 		
 		// We want integer only in pages number, so we use ceil();
 		$this->pages_number = 	ceil( $this->total / $this->rows_perpage );
@@ -66,18 +66,47 @@ class MySmartPager
 	{
 		$output = $this->print_style[ 0 ];
 		
+		// ... //
+		
+		$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
+		
+		// ... //
+		
+		// We should always print the First Page
+		
+		if ( $current_page != 1 )
+		{
+			$this->i = 0;
+			$this->page = 1;
+			
+			$output .= $this->_proc( $this->print_style[ 2 ] );
+		}
+		
+		// ... //
+		
+		// Shows the previous page if the current page is the 3rd or less
+		if ( $current_page <= 3 )
+		{
+			$this->page = ( $current_page > 2 ) ? $current_page - 1 : $current_page;
+			$this->i = ( $current_page > 2 ) ? $this->count - $this->rows_perpage : $this->count;
+		}
+		// Shows the _two_ previous pages if the current page is the 4th or greater
+		else
+		{
+			$this->page = $current_page - 2;
+			$this->i = $this->count - ( $this->rows_perpage * 2 );
+		}
+		
+		// ... //
+		
+		// The total of rows bigger than the rows that should be shown per page
+		// so we have work to do.
 		if ( $this->total > $this->rows_perpage )
 		{
 			if ( $this->pages_number > $this->limit )
 			{
-				$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
-				
-				$this->page = $current_page;
-				$this->i = $this->count;
-				
-				
 				$k = ( $this->page + $this->limit );
-
+				
 				while ( $this->page <= $k )
 				{
 					if ( $this->page < $this->pages_number )
@@ -108,11 +137,6 @@ class MySmartPager
 			}
 			else
 			{
-				$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
-			
-				$this->page = $current_page;
-				$this->i = $this->count;
-			
 				while ( $this->page <= $this->pages_number )
 				{
 					if ( $current_page == $this->page )
@@ -123,24 +147,6 @@ class MySmartPager
 					$this->i += $this->rows_perpage;
 					$this->page++;
 				}
-			}
-		}
-		else
-		{
-			$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
-			
-			$this->page = $current_page;
-			$this->i = $this->count;
-			
-			while ( $this->page <= $this->pages_number )
-			{
-				if ( $current_page == $this->page )
-					$output .= $this->_proc( $this->print_style[ 1 ] );
-				else
-					$output .= $this->_proc( $this->print_style[ 2 ] );
-			
-				$this->i += $this->rows_perpage;
-				$this->page++;
 			}
 		}
 		

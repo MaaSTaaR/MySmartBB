@@ -10,7 +10,7 @@ class MySmartMicroblog implements PluginInterface
 	public function info()
 	{
 		return array(	'title'			=>	'Microblogging Plugin',
-						'description'	=>	'Let your member to create a small blog in their profile',
+						'description'	=>	'Let your members to create a small blog in their profiles',
 						'author'		=>	'Mohammed Q. Hussain',
 						'license'		=>	'GNU GPL',
 						'setting_page'  =>  true	);

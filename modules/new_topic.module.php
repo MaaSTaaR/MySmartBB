@@ -298,7 +298,7 @@ class MySmartTopicAddMOD
 		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], 
 													$MySmartBB->_POST['title'], 
 													$this->subject_id, 
-													$MySmartBB->_CONF['date'], 
+													$MySmartBB->_CONF['now'], 
 													(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
 			
 		// ... //

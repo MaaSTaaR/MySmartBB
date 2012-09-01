@@ -2,7 +2,7 @@
 
 // ... //
 
-define('IN_MYSMARTBB',true);
+define( 'IN_MYSMARTBB', true );
 
 // ... //
 
@@ -56,14 +56,10 @@ $modules[ 'plugin' ] 		                =  	'plugin.module.php';
 
 $page = empty($_GET['page']) ? 'index' : $_GET['page'];
 
-// ... //
-
 $req_file = false;
 
 if (array_key_exists($page,$modules))
 	$req_file = $modules[$page];
-
-// ... //
 
 if ($req_file != false)
 {
@@ -84,13 +80,11 @@ if ($req_file != false)
 	
 	$class_name->run();
 	
-	// ... //
+	// ... //	
 }
 else
 {
 	die( 'Wrong path' );
 }
-
-// ... //
 
 ?>
