@@ -46,8 +46,8 @@ class MySmartProfileMOD
 		
 		// ... //
 		
-		// To save some of server's resources when the member his/her profile
-		// so don't do a new query because we already have the information
+		// To save some of server's resources when the member shows his/her profile
+		// we don't execute a new query because we already have the information
 		// of the member stored in $MySmartBB->_CONF['member_row']
 		$do_query = true;
 		

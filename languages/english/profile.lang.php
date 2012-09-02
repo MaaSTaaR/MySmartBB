@@ -3,6 +3,8 @@
 $lang[ 'view_member_info' ] = 'Member Profile';
 $lang[ 'member_doesnt_exist' ] = 'The member doesn\'t exist';
 $lang[ 'viewing_member_profile' ] = 'Viewing the profile of';
+$lang[ 'male' ] = 'Male';
+$lang[ 'female' ] = 'Female';
 
 $lang[ 'template' ][ 'view_member_profile' ] = 'View the profile of';
 $lang[ 'template' ][ 'username' ] = 'Username';

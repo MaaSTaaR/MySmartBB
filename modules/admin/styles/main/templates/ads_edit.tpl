@@ -24,7 +24,7 @@
 			{$lang['link']}
 			</td>
 			<td class="row2">
-				<input type="text" name="link" value="{$Inf['site']}" />
+				<input type="text" name="link" value="{$Inf['site']}" dir="ltr" />
 			</td>
 		</tr>
 		<tr>
@@ -32,7 +32,7 @@
 			{$lang['image_url']}
 			</td>
 			<td class="row1">
-				<input type="text" name="picture" value="{$Inf['picture']}" />
+				<input type="text" name="picture" value="{$Inf['picture']}" dir="ltr" />
 			</td>
 		</tr>
 		<tr>
@@ -58,7 +58,5 @@
 	<div align="center">
 		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
-	
-	<br />
 
 </form>

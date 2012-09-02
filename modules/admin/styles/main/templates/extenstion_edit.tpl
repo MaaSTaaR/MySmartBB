@@ -43,5 +43,4 @@
 		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
 	
-	<br />
 </form>

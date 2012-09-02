@@ -16,16 +16,15 @@
 			{$lang['path']}
 			</td>
 			<td class="row1">
-				<input type="text" name="path" />
+				<input type="text" name="path" dir="ltr" />
 			</td>
 		</tr>
 	</table>
 	
 	<br />
-
+	
 	<div align="center">
 		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
-	
-	<br />
+
 </form>

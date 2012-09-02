@@ -36,15 +36,13 @@
 		
 		<div id="header">
 			<div class="right_side">
-				<img border="0" src="{$image_path}/logo.jpg" alt="" />
+				<!-- <img border="0" src="{$image_path}/logo.jpg" alt="" /> -->
 			</div>
 			
 			<div class="left_side">
 				<div class="menu_box main2">
 					<a href="index.php">{$lang['common']['home']}</a>
 				</div>
-				
-				<div class="menu_space"></div>
 				
 				{hook}menu_after_home{/hook}
 				
@@ -56,19 +54,13 @@
 					{/if}
 				</div>
 				
-				<div class="menu_space"></div>
-				
 				<div class="menu_box main2">
 					<a href="index.php?page=static&amp;index=1">{$lang['common']['statistics']}</a>
 				</div>
 				
-				<div class="menu_space"></div>
-				
 				<div class="menu_box main2">
 					<a href="index.php?page=member_list&amp;index=1">{$lang['common']['memberlist']}</a>
 				</div>
-				
-				<div class="menu_space"></div>
 				
 				<div class="menu_box main2">
 					<a href="index.php?page=search&amp;index=1">{$lang['common']['search']}</a>
@@ -77,8 +69,6 @@
 				{hook}menu_befor_logout{/hook}
 				
 				{if {$_CONF['member_permission']}}
-					<div class="menu_space"></div>
-					
 					<div class="menu_box main2">
 						<a href="index.php?page=logout&amp;index=1">{$lang['common']['logout']}</a>
 					</div>

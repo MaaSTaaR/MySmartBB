@@ -16,7 +16,7 @@
 			{$lang['path']}
 			</td>
 			<td class="row1">
-				<input type="text" name="path" value="{$Inf['avatar_path']}" />
+				<input type="text" name="path" value="{$Inf['avatar_path']}" dir="ltr" />
 			</td>
 		</tr>
 	</table>
@@ -26,7 +26,5 @@
 	<div align="center">
 		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
-
-	<br />
-
+	
 </form>

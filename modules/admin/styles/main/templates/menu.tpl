@@ -71,21 +71,30 @@
 <br />
 
 <table width="90%" class="t_style_b" border="1" align="center">
-<tr align="center">
-	<td class="main1" colspan="2">{$lang['addition_options']}</td>
-</tr>
-<tr align="center">
-	<td class="row1" colspan="2">{$lang['announcements']}<a href="admin.php?page=announcement&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=announcement&amp;control=1&amp;main=1" target="main">{$lang['control']}</a></td>
+	<tr align="center">
+		<td class="main1" colspan="2">
+			{$lang['addition_options']}
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="row1" colspan="2">
+			{$lang['announcements']} <a href="admin.php?page=announcement&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=announcement&amp;control=1&amp;main=1" target="main">{$lang['control']}</a>
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="row1" colspan="2">
+			{$lang['pages']} <a href="admin.php?page=pages&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=pages&amp;control=1&amp;main=1" target="main">{$lang['control']}</a>
+		</td>
+	</tr>
+	<tr align="center">
+		<td class="row1" colspan="2">
+			{$lang['ads']} <a href="admin.php?page=ads&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=ads&amp;control=1&amp;main=1" target="main">{$lang['control']}</a>
+		</td>
+	</tr>
+</table>
 
-</tr>
-<tr align="center">
-	<td class="row1" colspan="2">{$lang['pages']}<a href="admin.php?page=pages&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=pages&amp;control=1&amp;main=1" target="main">{$lang['control']}</a></td>
-</tr>
-<tr align="center">
-	<td class="row1" colspan="2">{$lang['ads']}<a href="admin.php?page=ads&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=ads&amp;control=1&amp;main=1" target="main">{$lang['control']}</a></td>
+<br />
 
-</tr>
-</table><br />
 <table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['members']}</td>

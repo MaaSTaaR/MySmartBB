@@ -30,11 +30,9 @@
 	</table>
 	
 	<br />
-
+	
 	<div align="center">
 		<input type="submit" value="{$lang['common']['submit']}" name="submit" />
 	</div>
-
-	<br />
 	
 </form>

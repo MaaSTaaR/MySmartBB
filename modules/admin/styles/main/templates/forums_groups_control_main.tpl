@@ -8,12 +8,12 @@
 
 	{DB::getInfo}{$SecGroupList}
 	<table width="60%" class="t_style_b" border="1" align="center">
-		<tr valign="top" align="center">
+		<tr align="center">
 			<td class="main1" colspan="2">
 				<strong>{$SecGroupList['group_name']}</strong>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['view_forum']}
 			</td>
@@ -29,7 +29,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row2">
 			{$lang['download_attachments']}
 			</td>
@@ -45,7 +45,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['upload_attachments']}
 			</td>
@@ -61,7 +61,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row2">
 			{$lang['write_topic']}
 			</td>
@@ -77,7 +77,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['write_reply']}
 			</td>
@@ -93,7 +93,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row2">
 			{$lang['edit_own_topic']}
 			</td>
@@ -109,7 +109,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['edit_own_reply']}
 			</td>
@@ -125,7 +125,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row2">
 			{$lang['delete_own_topic']}
 			</td>
@@ -141,7 +141,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['delete_own_reply']}
 			</td>
@@ -157,7 +157,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row2">
 			{$lang['write_poll']}
 			</td>
@@ -173,7 +173,7 @@
 				</select>	
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['vote_poll']}
 			</td>
@@ -189,7 +189,7 @@
 				</select>
 			</td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<td class="row1">
 			{$lang['count_posts_number']}
 			</td>

@@ -3,6 +3,8 @@
 $lang[ 'view_member_info' ] = 'عرض معلومات العضو';
 $lang[ 'member_doesnt_exist' ] = 'المعذره .. العضو المطلوب غير موجود في سجلاتنا';
 $lang[ 'viewing_member_profile' ] = 'يطلع على الملف الشخصي للعضو';
+$lang[ 'male' ] = 'ذكر';
+$lang[ 'female' ] = 'انثى';
 
 $lang[ 'template' ][ 'view_member_profile' ] = 'عرض الملف الشخصي للعضو';
 $lang[ 'template' ][ 'username' ] = 'الاسم المستعار';

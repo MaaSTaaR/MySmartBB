@@ -16,7 +16,7 @@
 			{$lang['icon_path']}
 			</td>
 			<td class="row1">
-				<input type="text" name="path" id="input_path" value="{$Inf['smile_path']}" />
+				<input type="text" name="path" id="input_path" value="{$Inf['smile_path']}" dir="ltr" />
 			</td>
 		</tr>
 	</table>

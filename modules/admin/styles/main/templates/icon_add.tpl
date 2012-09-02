@@ -16,7 +16,7 @@
 			{$lang['icon_path']}
 			</td>
 			<td class="row1">
-				<input type="text" name="path" id="input_path" value="look/images/icons/" />
+				<input type="text" name="path" id="input_path" value="modules/images/icons/" dir="ltr" />
 			</td>
 		</tr>
 	</table>

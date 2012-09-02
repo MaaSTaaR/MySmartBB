@@ -19,7 +19,7 @@
 
 		<td class="row2">{$lang['smile_path']}</td>
 		<td class="row2">
-<input type="text" name="path" id="input_path" value="{$Inf['smile_path']}" size="30" />&nbsp;
+<input type="text" name="path" id="input_path" value="{$Inf['smile_path']}" size="30" dir="ltr" />&nbsp;
 </td>
 </tr>
 </table><br />

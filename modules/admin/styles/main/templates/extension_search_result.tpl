@@ -5,7 +5,6 @@
 <br />
 
 <div align="center">
-
 	<table width="90%" class="t_style_b" border="1">
 		<tr align="center">
 			<td class="main1">
