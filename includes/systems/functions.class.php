@@ -291,18 +291,18 @@ class MySmartFunctions
  	// ... //
 
 	/**
-	 * Just send email :)
+	 * Just send an email :)
 	 */
- 	function mail($to,$subject,$message,$sender)
+ 	public function mail( $to, $subject, $message, $sender )
     {
     	$headers  = "MIME-Version: 1.0\n";
-    	$headers .= "Content-type: text/html; charset=windows-1256\n";
+    	$headers .= "Content-type: text/html; charset=utf-8\n";
     	$headers .= "From: $sender\n";
     	$headers .= "Reply-To: $sender\n";
 
-        $send = @mail($to, $subject, $message, $headers);
+        $send = mail( $to, $subject, $message, $headers );
 
-        return ($send) ? true : false;
+        return $send;
  	}
  	
  	/**

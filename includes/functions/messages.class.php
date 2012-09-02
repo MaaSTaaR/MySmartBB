@@ -16,8 +16,10 @@ class MySmartMessages
 		$this->engine = $engine;
 	}
 	
-	public function messageProccess( $username, $title, $active_url, $change_url, $cancel_url, $text )
-	{		
+	public function messageProccess( $username, $title, $active_url, $change_url, $cancel_url, $new_password = null, $text )
+	{
+		$text = $this->engine->func->htmlDecode( $text );
+		
 		$search_array 		= 	array();
 		$replace_array 		= 	array();
 		
@@ -35,6 +37,9 @@ class MySmartMessages
 		
 		$search_array[]		=	'[MySBB]cancel_url[/MySBB]';
 		$replace_array[]	=	$cancel_url;
+		
+		$search_array[]		=	'[MySBB]new_password[/MySBB]';
+		$replace_array[]	=	$new_password;
 		
 		$text = str_replace( $search_array, $replace_array, $text );
 		

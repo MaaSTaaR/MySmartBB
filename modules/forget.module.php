@@ -85,7 +85,7 @@ class MySmartForgetMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		
 		$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
-											'username'	=>	$ForgetMemberInfo['username'],
+											'username'		=>	$ForgetMemberInfo['username'],
 											'request_type'	=>	'1'	);
 												
 		$InsertReq = $MySmartBB->rec->insert();

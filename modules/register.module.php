@@ -149,7 +149,7 @@ class MySmartRegisterMOD
       			$adress	= 	$MySmartBB->func->getForumAdress();
 				$code	=	$MySmartBB->func->randomCode();
 			
-				$ActiveAdress = $Adress . 'index.php?page=active_member&index=1&code=' . $code;
+				$ActiveAdress = $adress . 'index.php?page=active_member&index=1&code=' . $code;
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 				$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
@@ -165,13 +165,13 @@ class MySmartRegisterMOD
 					
 					$MassegeInfo = $MySmartBB->rec->getInfo();
 					
-					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_CONF['member_row']['username'], 
+					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_POST['username'], 
 																					$MySmartBB->_CONF['info_row']['title'], 
 																					$ActiveAdress, 
 																					null, null, 
 																					$MassegeInfo['text'] );
 					
-					$Send = $MySmartBB->func->mail(	$MySmartBB->_CONF['member_row']['email'],
+					$Send = $MySmartBB->func->mail(	$MySmartBB->_POST['email'],
 													$MassegeInfo['title'],
 													$MassegeInfo['text'],
 													$MySmartBB->_CONF['info_row']['send_email'] );

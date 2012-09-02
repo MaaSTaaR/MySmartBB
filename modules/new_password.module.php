@@ -18,7 +18,7 @@ class MySmartPasswordMOD
 		
 		$MySmartBB->loadLanguage( 'new_password' );
 		
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_index();
 		}
@@ -42,13 +42,10 @@ class MySmartPasswordMOD
 		if ( empty( $MySmartBB->_GET[ 'code' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'please_login' ] );
-		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		
@@ -59,22 +56,55 @@ class MySmartPasswordMOD
 		
 		$MySmartBB->plugin->runHooks( 'new_password_start' );
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'password'	=>	md5($MySmartBB->_CONF['member_row']['new_password']) );
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+		// ... //
 		
-		$UpdatePassword = $MySmartBB->rec->update();
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "username='" . $RequestInfo[ 'username' ] . "'";
+		
+		$memberInfo = $MySmartBB->rec->getInfo();
+		
+		if ( !$memberInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist ' ] );
 		
 		// ... //
 		
-		if ($UpdatePassword)
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->fields = array(	'password'	=>	md5( $memberInfo[ 'new_password' ] ) );
+		$MySmartBB->rec->filter = "id='" . $memberInfo[ 'id' ] . "'";
+		
+		$update = $MySmartBB->rec->update();
+		
+		// ... //
+		
+		if ( $update )
 		{
-			$MySmartBB->member->cleanNewPassword( $MySmartBB->_CONF['member_row']['id'] );
+			$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
+			$MySmartBB->rec->filter = "id='5'";
+				
+			$messageInfo = $MySmartBB->rec->getInfo();
+				
+			$messageInfo[ 'text' ] = $MySmartBB->massege->messageProccess( 		$memberInfo['username'], 
+																				$MySmartBB->_CONF['info_row']['title'], 
+																				null, 
+																				null, 
+																				null, 
+																				$memberInfo[ 'new_password' ],
+																				$messageInfo['text'] );
+				
+			$send = $MySmartBB->func->mail(	$memberInfo['email'],
+											$messageInfo['title'],
+											$messageInfo['text'],
+											$MySmartBB->_CONF['info_row']['send_email'] );
 			
-		    $MySmartBB->plugin->runHooks( 'new_password_success' );
+			if ( $send )
+			{
+				$MySmartBB->member->cleanNewPassword( $memberInfo[ 'id' ] );
+			
+		    	$MySmartBB->plugin->runHooks( 'new_password_success' );
 		    
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->goto('index.php');
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+				$MySmartBB->func->move( 'index.php' );
+			}
 		}
 	}
 }

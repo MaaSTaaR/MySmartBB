@@ -72,11 +72,11 @@ $lang[ 'struct' ][ 'data' ][ 'change_password_title' ] = 'طلب تغيير كل
 $lang[ 'struct' ][ 'data' ][ 'change_email_title' ] = 'طلب تغيير بريدك الالكتروني';
 $lang[ 'struct' ][ 'data' ][ 'report_abuse_title' ] = 'تبليغ عن موضوع مخالف';
 $lang[ 'struct' ][ 'data' ][ 'membership_activate_title' ] = 'تفعيل العضويه';
-$lang[ 'struct' ][ 'data' ][ 'register_rules_title' ] = 'شروط التسجيل';
+$lang[ 'struct' ][ 'data' ][ 'new_password_title' ] = 'كلمة مرورك الجديدة';
 $lang[ 'struct' ][ 'data' ][ 'change_password_context' ] = 'السلام عليكم و رحمة الله و بركاته [MySBB]username[/MySBB]<br /><br />لقد قمت بطلب تغيير كلمة مرورك الخاصه في المنتدى , لاكمال الخطوات و تغييرها يرجى الضغط على هذه الوصله : <a href="[MySBB]change_url[/MySBB]">[MySBB]change_url[/MySBB]</a><br /><br />اذا لم تطلب تغيير كلمة المرور يرجى الضغط على الوصله التاليه لكي يتم إلغاء الطلب : <a href="[MySBB]cancel_url[/MySBB]">[MySBB]cancel_url[/MySBB]</a><br /><br />مع تحيات ادارة [MySBB]board_title[/MySBB]';
 $lang[ 'struct' ][ 'data' ][ 'change_email_context' ] = 'السلام عليكم و رحمة الله و بركاته [MySBB]username[/MySBB]<br /><br />لقد قمت بطلب تغيير بريدك الالكتروني في المنتدى , لاكمال الخطوات و تغييره يرجى الضغط على هذه الوصله : <a href="[MySBB]change_url[/MySBB]">[MySBB]change_url[/MySBB]</a><br /><br />اذا لم تطلب تغيير البريد الالكتروني يرجى الضغط على الوصله التاليه لكي يتم إلغاء الطلب : <a href="[MySBB]cancel_url[/MySBB]">[MySBB]cancel_url[/MySBB]</a><br /><br />مع تحيات ادارة [MySBB]board_title[/MySBB]';
-$lang[ 'struct' ][ 'data' ][ 'report_abuse_context' ] = '<p>السلام عليكم و رحمة الله و بركاته عزيزي المدير , لقد قام احد الاعضاء\\الزوار بالتبليغ عن الموضوع التالي : <a href="[MySBB]subject_url[/MySBB]">[MySBB]subject_url[/MySBB]</a></p>';
+$lang[ 'struct' ][ 'data' ][ 'report_abuse_context' ] = '<p>السلام عليكم و رحمة الله و بركاته عزيزي المدير , لقد قام احد الاعضاء\\الزوار بالتبليغ عن الموضوع</p><br /><br />ملاحظات المُرسل :<br />';
 $lang[ 'struct' ][ 'data' ][ 'membership_activate_context' ] = 'السلام عليكم و رحمة الله و بركاته يا [MySBB]username[/MySBB] <br /><br />نشكرك على التسجيل في [MySBB]board_title[/MySBB] , يرجى تفعيل العضويه لكي تتمكن من المشاركه في المنتدى و تنتقل إلى مجموعة الاعضاء<br /><br />لتفعيل عضويتك يرجى الضغط على الرابط التالي : <a href="[MySBB]url[/MySBB]">[MySBB]url[/MySBB]</a><br /><br />مع تحيات الاداره';
-$lang[ 'struct' ][ 'data' ][ 'register_rules_context' ] = '';
+$lang[ 'struct' ][ 'data' ][ 'new_password_context' ] = 'السلام عليكم و رحمة الله و بركاته <br /><br />كلمة مرورك الجديدة في [MySBB]board_title[/MySBB] هي : [MySBB]new_password[/MySBB].<br /><br />الرجاء تغييرها في أسرع وقت إلى ما يناسبك.<br /><br />مع تحيات ادارة [MySBB]board_title[/MySBB]';
 
 ?>

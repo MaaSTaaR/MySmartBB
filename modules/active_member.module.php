@@ -18,8 +18,7 @@ class MySmartActiveMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'activate_membership' ] );
 		
-		// The index page for active
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_index();
 		}
@@ -86,7 +85,7 @@ class MySmartActiveMOD
 		    $MySmartBB->plugin->runHooks( 'active_member_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
-			$MySmartBB->func->goto('index.php');
+			$MySmartBB->func->move('index.php');
 		}
 	}
 }

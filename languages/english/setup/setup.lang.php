@@ -72,11 +72,11 @@ $lang[ 'struct' ][ 'data' ][ 'change_password_title' ] = 'The Request of Change 
 $lang[ 'struct' ][ 'data' ][ 'change_email_title' ] = 'The Request of Change Email';
 $lang[ 'struct' ][ 'data' ][ 'report_abuse_title' ] = 'Report Abuse Topic';
 $lang[ 'struct' ][ 'data' ][ 'membership_activate_title' ] = 'Membership Activation';
-$lang[ 'struct' ][ 'data' ][ 'register_rules_title' ] = 'Register Rules';
+$lang[ 'struct' ][ 'data' ][ 'new_password_title' ] = 'Your New Password';
 $lang[ 'struct' ][ 'data' ][ 'change_password_context' ] = 'Hello [MySBB]username[/MySBB]<br /><br />Please to complete the request of change your password click on the following link : <a href="[MySBB]change_url[/MySBB]">[MySBB]change_url[/MySBB]</a><br /><br />If you didn\'t request to change your password please click on the following link to cancel the request : <a href="[MySBB]cancel_url[/MySBB]">[MySBB]cancel_url[/MySBB]</a><br /><br />Regards [MySBB]board_title[/MySBB].';
 $lang[ 'struct' ][ 'data' ][ 'change_email_context' ] = 'Hello [MySBB]username[/MySBB]<br /><br />Please to complete the request of change your email click on the following link : <a href="[MySBB]change_url[/MySBB]">[MySBB]change_url[/MySBB]</a><br /><br />If you didn\'t request to change your email please click on the following link to cancel the request : <a href="[MySBB]cancel_url[/MySBB]">[MySBB]cancel_url[/MySBB]</a><br /><br />Regards [MySBB]board_title[/MySBB].';
-$lang[ 'struct' ][ 'data' ][ 'report_abuse_context' ] = '<p>Hello Admin, There is some member who think that the following topic is an abuse topic : <a href="[MySBB]subject_url[/MySBB]">[MySBB]subject_url[/MySBB]</a></p>';
+$lang[ 'struct' ][ 'data' ][ 'report_abuse_context' ] = '<p>Hello, There is some member who think that the following topic is an abuse topic</p><br /><br />The reporter\'s note :<br />';
 $lang[ 'struct' ][ 'data' ][ 'membership_activate_context' ] = 'Hello [MySBB]username[/MySBB] <br /><br /> Thanks for your registration in [MySBB]board_title[/MySBB], please activate your membership by clicking on the following link : <a href="[MySBB]url[/MySBB]">[MySBB]url[/MySBB]</a><br /><br />Regards.';
-$lang[ 'struct' ][ 'data' ][ 'register_rules_context' ] = '';
+$lang[ 'struct' ][ 'data' ][ 'new_password_context' ] = 'Hello [MySBB]username[/MySBB]<br /><br />Your new password in [MySBB]board_title[/MySBB] is : [MySBB]new_password[/MySBB].<br /><br />Kindly, change it to something else as soon as possible.<br /><br />Regards [MySBB]board_title[/MySBB]';
 
 ?>

@@ -57,9 +57,7 @@ class MySmartUserCPPasswordMOD
 		// ... //
 		
 		if ( empty( $MySmartBB->_POST[ 'old_password' ] ) or empty( $MySmartBB->_POST[ 'new_password'] ) )
-		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		

@@ -70,16 +70,26 @@ class MySmartReportMOD
 		
 		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&show=1&id=' . $MySmartBB->_GET[ 'id' ];
 		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
+		$MySmartBB->rec->filter = "id='3'";
+				
+		$messageInfo = $MySmartBB->rec->getInfo();
+		
+		$messageInfo[ 'text' ] = $MySmartBB->func->htmlDecode( $messageInfo[ 'text' ] ) . $MySmartBB->_POST[ 'text' ];
+		
+		// ... //
 		
 		$Report = $MySmartBB->func->mail(	$MySmartBB->_CONF['info_row']['admin_email'],
-											$MySmartBB->_POST['title'],
-											$MySmartBB->_POST['text'],
+											$messageInfo[ 'title' ],
+											$messageInfo[ 'text' ],
 											$MySmartBB->_CONF['member_row']['email'] );
 		
 		if ( $Report )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'report_sent' ] );
-			$MySmartBB->func->goto('index.php');
+			$MySmartBB->func->move('index.php');
 		}
 		else
 		{

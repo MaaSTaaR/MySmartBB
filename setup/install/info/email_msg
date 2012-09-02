@@ -2,4 +2,4 @@ INSERT INTO #table# SET id='1', title='lang(change_password_title)', text='lang(
 INSERT INTO #table# SET id='2', title='lang(change_email_title)', text='lang(change_email_context)'
 INSERT INTO #table# SET id='3', title='lang(report_abuse_title)', text='lang(report_abuse_context)'
 INSERT INTO #table# SET id='4', title='lang(membership_activate_title)', text='lang(membership_activate_context)'
-INSERT INTO #table# SET id='5', title='lang(register_rules_title)', text='lang(register_rules_context)'
+INSERT INTO #table# SET id='5', title='lang(new_password_title)', text='lang(new_password_context)'
