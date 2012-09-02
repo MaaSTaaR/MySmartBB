@@ -131,7 +131,8 @@ class MySmartSubject
 		// Fields to retrieve from member table
 		// That helps us to keep the returned array as small as possible, and prevent the member's password to be retrieved
 		$member_select = array( 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
-								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache' );
+								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache',
+								'logged' );
 		
 		$select = 'subject.*,subject.visitor AS subject_visitor';
 		

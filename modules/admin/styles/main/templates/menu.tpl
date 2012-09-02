@@ -15,7 +15,7 @@
 
 <br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
 		{$lang['setting']}
@@ -30,7 +30,7 @@
 
 <br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
 		{$lang['categories']}
@@ -50,7 +50,7 @@
 
 <br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 	<tr align="center">
 		<td class="main1" colspan="2">
 		{$lang['forums']}
@@ -70,7 +70,7 @@
 
 <br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['addition_options']}</td>
 </tr>
@@ -86,7 +86,7 @@
 
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['members']}</td>
 </tr>
@@ -107,7 +107,7 @@
 	<td class="row1" colspan="2"><a href="admin.php?page=options" target="main">{$lang['send_email']}</a></td>
 </tr>-->
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['groups']}</td>
 </tr>
@@ -119,7 +119,7 @@
 
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['usertitle']}</td>
 </tr>
@@ -132,7 +132,7 @@
 </tr>
 </table><br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['moderators']}</td>
 </tr>
@@ -145,7 +145,7 @@
 </tr>
 </table><br />
 
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['trash']}</td>
 </tr>
@@ -157,7 +157,7 @@
 
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['topics']}</td>
 </tr>
@@ -175,7 +175,7 @@
 	<td class="row1" colspan="2"><a href="admin.php?page=subject&amp;mass_move=1&amp;main=1" target="main">{$lang['mass_move']}</a></td>
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['attachments']}</td>
 
@@ -190,7 +190,7 @@
 	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;search=1&amp;main=1" target="main">{$lang['search']}</a></td>
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['toolbox']}</td>
 
@@ -202,7 +202,7 @@
 	<td class="row1" colspan="2">{$lang['colors']}<a href="admin.php?page=toolbox&amp;colors=1&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1" target="main">{$lang['control']}</a></td>
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['style_options']}</td>
 </tr>
@@ -214,7 +214,7 @@
 	<td class="row1" colspan="2">{$lang['templates']}<a href="admin.php?page=template&amp;add=1&amp;main=1" target="main">{$lang['add']}</a> - <a href="admin.php?page=template&amp;control=1&amp;main=1" target="main">{$lang['control']}</a></td>
 </tr>
 </table><br />
-<table cellpadding="3" cellspacing="1" width="90%" class="t_style_b" border="1" align="center">
+<table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">
 	<td class="main1" colspan="2">{$lang['images_options']}</td>
 </tr>

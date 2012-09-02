@@ -340,7 +340,7 @@ class MySmartMember
 		// ... //
 		
 		// The status of the member (online or offline)
-		if ( $member_info['logged'] < $this->engine->_CONF['timeout'] )
+		if ( $member_info[  'logged' ] < $this->engine->_CONF[ 'timeout' ] )
 			$this->engine->template->assign( 'status', 'offline' );
 		else
 			$this->engine->template->assign( 'status', 'online' );

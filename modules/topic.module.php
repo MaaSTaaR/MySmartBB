@@ -401,9 +401,9 @@ class MySmartTopicMOD
      	$MySmartBB->template->assign('Admin',$this->moderator);
      	
      	$MySmartBB->template->assign('stick',$this->Info['stick']);
-     	$MySmartBB->template->assign('close',$this->Info['close']);
+     	$MySmartBB->template->assign( 'close', $this->Info['close'] );
      	
-     	$MySmartBB->template->display('topic_end');
+     	$MySmartBB->template->display( 'topic_end' );
 	}
 	
 	// ... //
