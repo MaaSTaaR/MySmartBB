@@ -53,7 +53,7 @@ class ShowMicroblog
         
         $MySmartBB->rec->getList();
         
-        $MySmartBB->rec->setInfoCallback( 'ShowMicroblog::rowsProcessCB' );
+        $MySmartBB->rec->setInfoCallback( array( 'ShowMicroblog', 'rowsProcessCB' ) );
         
         // ... //
         

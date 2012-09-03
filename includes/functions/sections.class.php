@@ -524,7 +524,7 @@ class MySmartSection
 				unset( $forum[ 'groups' ] );
 				
 				// Interpret the date of the last post to a human-form date
-				if ( !empty( $forum[ 'last_date' ] ) )
+				if ( is_numeric( $forum[ 'last_date' ] ) )
 					$forum[ 'last_date' ] = $this->engine->func->date( $forum[ 'last_date' ] );
 				
 				$forums_list[ $forum[ 'id' ] . '_f' ] = $forum;
