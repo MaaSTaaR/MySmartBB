@@ -13,31 +13,31 @@
 		<td class="row1">{$lang['board_time']}</td>
 		<td class="row1">
 <select name="time_stamp" id="select_time_stamp">
-	<option {if {$_CONF['info_row']['timestamp']} == '-43200'} selected="selected" {/if} value="-43200" >GMT 12</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-39600'} selected="selected" {/if} value="-39600" >GMT 11</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-36000'} selected="selected" {/if} value="-36000" >GMT 10</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-32400'} selected="selected" {/if} value="-32400" >GMT 9</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-28800'} selected="selected" {/if} value="-28800" >GMT 8</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-25200'} selected="selected" {/if} value="-25200" >GMT 7</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-21600'} selected="selected" {/if} value="-21600" >GMT 6</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-18000'} selected="selected" {/if} value="-18000" >GMT 5</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-14400'} selected="selected" {/if} value="-14400" >GMT 4</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-10800'} selected="selected" {/if} value="-10800" >GMT 3</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-7200'} selected="selected" {/if} value="-7200" >GMT 2</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '-3600'} selected="selected" {/if} value="-3600" >GMT 1</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '0000'} selected="selected" {/if} value="0000"  selected="selected">GMT Time</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+3600'} selected="selected" {/if} value="+3600" >GMT + 1</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+7200'} selected="selected" {/if} value="+7200" >GMT + 2</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+10800'} selected="selected" {/if} value="+10800" >GMT + 3</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+14400'} selected="selected" {/if} value="+14400" >GMT + 4</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+18000'} selected="selected" {/if} value="+18000" >GMT + 5</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+21600'} selected="selected" {/if} value="+21600" >GMT + 6</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+25200'} selected="selected" {/if} value="+25200" >GMT + 7</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+28800'} selected="selected" {/if} value="+28800" >GMT + 8</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+32400'} selected="selected" {/if} value="+32400" >GMT + 9</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+36000'} selected="selected" {/if} value="+36000" >GMT + 10</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+39600'} selected="selected" {/if} value="+39600" >GMT + 11</option>
-	<option {if {$_CONF['info_row']['timestamp']} == '+43200'} selected="selected" {/if} value="+43200" >GMT + 12</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-12'} selected="selected" {/if} value="-12" >GMT - 12</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-11'} selected="selected" {/if} value="-11" >GMT - 11</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-10'} selected="selected" {/if} value="-10" >GMT - 10</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-9'} selected="selected" {/if} value="-9" >GMT - 9</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-8'} selected="selected" {/if} value="-8" >GMT - 8</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-7'} selected="selected" {/if} value="-7" >GMT - 7</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-6'} selected="selected" {/if} value="-6" >GMT - 6</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-5'} selected="selected" {/if} value="-5" >GMT - 5</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-4'} selected="selected" {/if} value="-4" >GMT - 4</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-3'} selected="selected" {/if} value="-3" >GMT - 3</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-2'} selected="selected" {/if} value="-2" >GMT - 2</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '-1'} selected="selected" {/if} value="-1" >GMT - 1</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '0'} selected="selected" {/if} value="0">GMT Time</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+1'} selected="selected" {/if} value="+1" >GMT + 1</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+2'} selected="selected" {/if} value="+2" >GMT + 2</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+3'} selected="selected" {/if} value="+3" >GMT + 3</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+4'} selected="selected" {/if} value="+4" >GMT + 4</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+5'} selected="selected" {/if} value="+5" >GMT + 5</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+6'} selected="selected" {/if} value="+6" >GMT + 6</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+7'} selected="selected" {/if} value="+7" >GMT + 7</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+8'} selected="selected" {/if} value="+8" >GMT + 8</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+9'} selected="selected" {/if} value="+9" >GMT + 9</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+10'} selected="selected" {/if} value="+10" >GMT + 10</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+11'} selected="selected" {/if} value="+11" >GMT + 11</option>
+	<option {if {$_CONF['info_row']['timestamp']} == '+12'} selected="selected" {/if} value="+12" >GMT + 12</option>
 </select>
 </td>
 </tr>

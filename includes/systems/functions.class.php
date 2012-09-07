@@ -328,7 +328,9 @@ class MySmartFunctions
 	{
 		global $MySmartBB;
 		
-		$input = date( $format, $input );
+		$input = $this->getTime( $input );
+		
+		$input = gmdate( $format, $input );
 		
 		if ( !isset( $type ) )
 		{
@@ -353,25 +355,25 @@ class MySmartFunctions
 			$date_list = array();
 		
 			$date_list['today'] 			= 	$time;
-			$date_list['today'] 			= 	date($format,$date_list['today']);
+			$date_list['today'] 			= 	gmdate($format,$date_list['today']);
 		
 			$date_list['yesterday'] 		= 	$time - (1 * 24 * 60 * 60);
-			$date_list['yesterday'] 		= 	date($format,$date_list['yesterday']);
+			$date_list['yesterday'] 		= 	gmdate($format,$date_list['yesterday']);
 		
 			$date_list['before_yesterday'] 	= 	$time - (2 * 24 * 60 * 60);
-			$date_list['before_yesterday'] 	= 	date($format,$date_list['before_yesterday']);
+			$date_list['before_yesterday'] 	= 	gmdate($format,$date_list['before_yesterday']);
 			
 			$date_list['last_week'] 		= 	$time - (7 * 24 * 60 * 60);
-			$date_list['last_week'] 		= 	date($format,$date_list['last_week']);
+			$date_list['last_week'] 		= 	gmdate($format,$date_list['last_week']);
 		
 			$date_list['last_two_weeks'] 	= 	$time - (14 * 24 * 60 * 60);
-			$date_list['last_two_weeks'] 	= 	date($format,$date_list['last_two_weeks']);
+			$date_list['last_two_weeks'] 	= 	gmdate($format,$date_list['last_two_weeks']);
 		
 			$date_list['last_three_weeks'] 	= 	$time - (24 * 24 * 60 * 60);
-			$date_list['last_three_weeks'] 	= 	date($format,$date_list['last_three_weeks']);
+			$date_list['last_three_weeks'] 	= 	gmdate($format,$date_list['last_three_weeks']);
 		
 			$date_list['last_month'] 		= 	$time - (30 * 24 * 60 * 60);
-			$date_list['last_month'] 		= 	date($format,$date_list['last_month']);
+			$date_list['last_month'] 		= 	gmdate($format,$date_list['last_month']);
 		
 			if ($input == $date_list['today'])
 			{
@@ -414,12 +416,48 @@ class MySmartFunctions
 	{
 	    global $MySmartBB;
 	    
-		$x = date( $format, $time );
+	    $time = $this->getTime( $time );
+	    
+		$x = gmdate( $format, $time );
 		$x = strtolower( $x );
 		$x = str_replace( 'pm', $MySmartBB->lang_common[ 'pm' ], $x );
 		$x = str_replace( 'am', $MySmartBB->lang_common[ 'am' ], $x );
 				
 		return $x;		
+	}
+	
+	// ... //
+	
+	/**
+	 * 
+	 * Get GMT time and return GMT(+|-)x time
+	 */
+	public function getTime( $time )
+	{
+		global $MySmartBB;
+	    
+	    $timestamp = $MySmartBB->_CONF[ 'info_row' ][ 'timestamp' ];
+
+	    if ( $timestamp != '0' )
+	    {
+	    	$plus = ( strstr( $timestamp, '+' ) != false ) ? true : false;
+	    	$minus = ( strstr( $timestamp, '-' ) != false ) ? true : false;
+	    	
+	    	$timestamp = str_replace( array( '+', '-' ), '', $timestamp );
+
+	    	$number = ( ( 60 * $timestamp ) * 60 );
+
+	    	if ( $plus )
+		    {
+		    	$time += $number;
+		    }
+		    elseif ( $minus )
+		    {
+		    	$time -= $number;
+		    }
+	    }
+	    
+	    return $time;
 	}
 	
 	// ... //
