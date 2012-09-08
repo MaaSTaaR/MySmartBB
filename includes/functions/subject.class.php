@@ -154,11 +154,8 @@ class MySmartSubject
 	
 	public function updateSubjectVisits( $visits, $id )
 	{
-		if ( empty( $visits )
-			or empty( $id ) )
-		{
+		if ( empty( $visits ) or empty( $id ) )
 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()',E_USER_ERROR);
-		}
 		
  		$this->engine->rec->table = $this->table;
  		
@@ -297,21 +294,78 @@ class MySmartSubject
 	
 	public function moveSubject( $section_id, $subject_id )
 	{
- 		if ( empty( $section_id )
- 			or empty( $subject_id ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubject() -- EMPTY section_id or subject_id',E_USER_ERROR);
- 		}
+ 		if ( empty( $section_id ) or empty( $subject_id ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveSubject() -- EMPTY section_id or subject_id', E_USER_ERROR );
+ 		
+ 		// ... //
+ 		
+ 		$this->engine->rec->table = $this->engine->table[ 'subject' ];
+ 		$this->engine->rec->filter = "id='" . $subject_id . "'";
+ 		
+ 		$subject_info = $this->engine->rec->getInfo();
+ 		
+ 		// ... //
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'section'	=>	$section_id	);
- 		
  		$this->engine->rec->filter = "id='" . $subject_id . "'";
  		
 		$query = $this->engine->rec->update();
 		
-		return ( $query ) ? true : false;
+		if ( $query )
+		{
+			// TODO : Update the number of subjects and replies of the section
+			//			of the original section
+			 
+			// ... //
+			
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->filter = "section='" . $section_id . "'";
+			$this->engine->rec->limit = '1';
+			$this->engine->rec->order = 'write_time DESC';
+			
+			$last_topic = $this->engine->rec->getInfo();
+			
+			$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
+			$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
+			
+			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $section_id );
+			
+			$this->engine->section->updateSubjectNumber( $section_id, null, null );
+			$this->engine->section->updateReplyNumber( $section_id, null, null );
+			
+			$this->engine->section->updateForumCache( -1, $section_id );
+			
+			// ... //
+			
+			$to = $subject_info[ 'section' ];
+			
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->filter = "section='" . $to . "'";
+			$this->engine->rec->limit = '1';
+			$this->engine->rec->order = 'write_time DESC';
+			
+			$last_topic = $this->engine->rec->getInfo();
+			
+			$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
+			$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
+			
+			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $to );
+			
+			// Update the number of subjects and replies on $form
+			$this->engine->section->updateSubjectNumber( $to, null, null );
+			$this->engine->section->updateReplyNumber( $to, null, null );
+			
+			$this->engine->section->updateForumCache( -1, $to );
+			
+			// ... //
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	// ... //

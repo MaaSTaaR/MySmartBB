@@ -402,3 +402,8 @@ a.button:hover
 	background: #DFDFDF;
 	color: #000;
 }
+
+fieldset
+{
+	border-radius: 5px;
+}

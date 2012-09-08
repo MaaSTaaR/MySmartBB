@@ -22,7 +22,7 @@
 	<legend>
 	<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$lang['member_profile']}</a>
 	</legend>
-	
+
 	<table id="member_info_table" width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
 		<tr align="center">
 			<td width="60%">
@@ -60,6 +60,7 @@
 				{$Info['posts']}
 			</td>
 		</tr>
+		{if {$Info['user_country']} != ''}
 		<tr align="center">
 			<td width="60%">
 				{$lang['country']} {$lang['common']['colon']}
@@ -68,6 +69,7 @@
 				{$Info['user_country']}
 			</td>
 		</tr>
+		{/if}
 		<tr align="center">
 			<td width="60%">
 				{$lang['gender']} {$lang['common']['colon']}

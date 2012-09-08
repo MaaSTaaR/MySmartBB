@@ -242,19 +242,23 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		// ... //
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
+		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
+		
+		// ... //
+		
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
-		$update = $MySmartBB->subject->moveSubject( $MySmartBB->_POST['section'], $MySmartBB->_GET['subject_id'] );
+		// ... //
 		
-		if ($update)
+		$update = $MySmartBB->subject->moveSubject( $MySmartBB->_POST[ 'section' ], $MySmartBB->_GET[ 'subject_id' ] );
+		
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_moved' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET[ 'subject_id' ] );
 		}
 	}
 	
