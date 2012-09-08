@@ -580,7 +580,7 @@ class MySmartSection
 		{
 			$this->engine->rec->select = 'id';
 			$this->engine->rec->table = $this->engine->table[ 'subject' ];
-			$this->engine->rec->filter = "section='" . $section_id . "'";
+			$this->engine->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 			
 			$val = $this->engine->rec->getNumber();			
 		}

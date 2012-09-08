@@ -254,9 +254,7 @@ class MySmartSubject
 	public function stickSubject( $id )
 	{
  		if ( empty( $id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM stickSubject() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -274,9 +272,7 @@ class MySmartSubject
 	public function closeSubject( $reason, $id )
 	{
  		if ( empty( $id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM closeSubject() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -314,9 +310,6 @@ class MySmartSubject
 		
 		if ( $query )
 		{
-			// TODO : Update the number of subjects and replies of the section
-			//			of the original section
-			 
 			// ... //
 			
 			$this->engine->rec->table = $this->engine->table[ 'subject' ];
@@ -373,9 +366,7 @@ class MySmartSubject
 	public function moveSubjectToTrash( $reason, $subject_id, $section_id )
 	{
  		if ( empty( $subject_id ) or empty( $section_id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -387,7 +378,7 @@ class MySmartSubject
 		$query = $this->engine->rec->update();
 		
 		if ( $query )
-			$this->engine->section->updateSubjectNumber( $section_id, null, 'delete' );
+			$this->engine->section->updateSubjectNumber( $section_id, null, null );
 		           
 		return ( $query ) ? true : false;
 	}

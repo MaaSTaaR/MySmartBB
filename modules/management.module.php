@@ -304,28 +304,31 @@ class MySmartManagementMOD
 			
 			// ... //
 			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
-												'user_to'	=>	$Subject['writer'],
-												'title'	=>	$MySmartBB->lang[ 'your_subject_deleted' ] . ' ' . $Subject['title'],
-												'text'	=>	$MySmartBB->_POST['reason'],
-												'date'	=>	$MySmartBB->_CONF['now'],
-												'icon'	=>	$Subject['icon'],
-												'folder'	=>	'inbox'	);
-			
-			$send = $MySmartBB->rec->insert();
-			
-			// ... //
-			
-			$number = $MySmartBB->pm->newMessageNumber( $Subject['writer'] );
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$number	);
-			$MySmartBB->rec->filter = "username='" . $Subject[ 'writer' ] . "'";
-			
-			$update_cache = $MySmartBB->rec->update();
-			
-			// ... //
+			if ( !empty( $MySmartBB->_POST[ 'reason' ] ) )
+			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
+													'user_to'	=>	$Subject['writer'],
+													'title'	=>	$MySmartBB->lang[ 'your_subject_deleted' ] . ' ' . $Subject['title'],
+													'text'	=>	$MySmartBB->_POST['reason'],
+													'date'	=>	$MySmartBB->_CONF['now'],
+													'icon'	=>	$Subject['icon'],
+													'folder'	=>	'inbox'	);
+				
+				$send = $MySmartBB->rec->insert();
+				
+				// ... //
+				
+				$number = $MySmartBB->pm->newMessageNumber( $Subject['writer'] );
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+				$MySmartBB->rec->fields = array(	'unread_pm'	=>	$number	);
+				$MySmartBB->rec->filter = "username='" . $Subject[ 'writer' ] . "'";
+				
+				$update_cache = $MySmartBB->rec->update();
+				
+				// ... //
+			}
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_deleted' ] );
 			$MySmartBB->func->move('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
