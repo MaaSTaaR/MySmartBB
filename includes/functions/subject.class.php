@@ -366,7 +366,7 @@ class MySmartSubject
 	public function moveSubjectToTrash( $reason, $subject_id, $section_id )
 	{
  		if ( empty( $subject_id ) or empty( $section_id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id', E_USER_ERROR );
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -378,19 +378,28 @@ class MySmartSubject
 		$query = $this->engine->rec->update();
 		
 		if ( $query )
+		{
+			// Move all replies to trash so we can count the correct number
+			// of replies and subjects.
+			$this->engine->reply->moveRepliesToTrash( $subject_id, $section_id );
+			
 			$this->engine->section->updateSubjectNumber( $section_id, null, null );
+			
+			// Update forum's cache so the new number of subjects and replies
+			// will be shown for the visitor in the main page.
+			// The first parameter is null because the parent's id is unknown.
+			$this->engine->section->updateForumCache( null, $section_id );
+		}
 		           
 		return ( $query ) ? true : false;
 	}
 	
 	// ... //
 	
-	public function unTrashSubject( $id )
+	public function unTrashSubject( $id, $section_id )
 	{
- 		if ( empty( $id ) )
- 		{
+ 		if ( empty( $id ) or empty( $section_id ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashSubject() -- EMPTY id',E_USER_ERROR);
- 		}
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -399,8 +408,19 @@ class MySmartSubject
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
+		
+		if ( $query )
+		{
+			$this->engine->reply->unTrashReplies( $id, $section_id );
+			
+			$this->engine->section->updateSubjectNumber( $section_id, null, null );
+			
+			$this->engine->section->updateForumCache( null, $section_id );
+			
+			return true;
+		}
+
+		return false;
 	}
 	
 	// ... //

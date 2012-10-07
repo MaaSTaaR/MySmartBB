@@ -94,7 +94,7 @@ class MySmartCache
 	{
 		if ( is_null( $value ) )
 		{
-			$val = $this->engine->_CONF['info_row']['subject_number'];
+			$val = $this->engine->_CONF[ 'info_row' ][ 'subject_number' ];
 			
 			if ( $operation == 'add' )
 				$val += $operand;

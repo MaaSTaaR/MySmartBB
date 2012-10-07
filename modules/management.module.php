@@ -286,10 +286,12 @@ class MySmartManagementMOD
 
 		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
 
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
+		// ... //
+		
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		
+		// ... //
 		
 		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
 

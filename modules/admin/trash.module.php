@@ -16,13 +16,13 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_trash' );
 		    
 			$MySmartBB->template->display('header');
 			
-			$MySmartBB->load( 'reply,subject' );
+			$MySmartBB->load( 'reply,subject,section' );
 			
 			if ($MySmartBB->_GET['subject'])
 			{
@@ -90,12 +90,15 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$info = null;
 		
-		$UnTrash = $MySmartBB->subject->unTrashSubject( $MySmartBB->_GET['id'] );
+		$this->check_subject_by_id( $info );
+		
+		// ... //
+		
+		$UnTrash = $MySmartBB->subject->unTrashSubject( $info[ 'id' ], $info[ 'section' ] );
 		
 		if ($UnTrash)
 		{

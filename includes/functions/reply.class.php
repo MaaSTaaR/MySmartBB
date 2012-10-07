@@ -81,6 +81,35 @@ class MySmartReply
 		           
 		return false;
 	}
+	
+	// ... //
+	
+	public function unTrashReplies( $subject_id, $section_id )
+	{
+		// ... //
+		
+ 		if ( empty( $subject_id ) or empty( $section_id ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM unTrashReplies()', E_USER_ERROR );
+ 		
+ 		// ... //
+ 		
+ 		$this->engine->rec->table = $this->table;
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'0'	);
+ 		
+ 		$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
+ 		
+		$update = $this->engine->rec->update();
+		
+		if ( $update )
+		{
+			$this->engine->section->updateReplyNumber( $section_id, null, null );
+			
+			return true;
+		}
+		           
+		return false;
+	}
 		
 	// ... //
 	
@@ -125,10 +154,12 @@ class MySmartReply
 	
 	public function moveReplyToTrash( $id, $subject_id, $section_id )
 	{
+		// ... //
+		
  		if ( empty( $id ) )
- 		{
  			trigger_error('ERROR::NEED_PARAMETER -- FROM moveReplyToTrash() -- EMPTY id',E_USER_ERROR);
- 		}
+ 		
+ 		// ... //
  		
  		$this->engine->rec->table = $this->table;
  		
@@ -142,6 +173,37 @@ class MySmartReply
 		{
 			$this->engine->subject->updateReplyNumber( $subject_id, null, 'delete' );
 			$this->engine->section->updateReplyNumber( $section_id, null, 'delete' );
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	// ... //
+	
+	public function moveRepliesToTrash( $subject_id, $section_id )
+	{
+		// ... //
+		
+ 		if ( empty( $subject_id ) or empty( $section_id ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveRepliesToTrash()', E_USER_ERROR );
+ 		
+ 		// ... //
+ 		
+ 		$this->engine->rec->table = $this->table;
+ 		
+ 		$this->engine->rec->fields = array(	'delete_topic'	=>	'1'	);
+ 		
+ 		$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
+ 		
+		$query = $this->engine->rec->update();
+		
+		if ( $query )
+		{
+			$this->engine->section->updateReplyNumber( $section_id, null, null );
 			
 			return true;
 		}

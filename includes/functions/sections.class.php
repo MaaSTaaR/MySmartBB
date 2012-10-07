@@ -277,11 +277,23 @@ class MySmartSection
 	// ... //
 	
 	// We use this function which based on "createForumCache" to update the cache of just one child, 
-	// if we want to update the cache of the whole list of childs we should use "updateSectionsCache" which based on "createSectionsCache"
+	// if we want to update the cache of the whole list of children we should use "updateSectionsCache" which based on "createSectionsCache"
 	public function updateForumCache( $parent, $child )
 	{
- 		if ( empty( $parent ) or empty( $child ) )
+ 		if ( empty( $child ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM updateForumCache()',E_USER_ERROR);
+ 		
+ 		// We don't know parent's ID. Grab it from database.
+ 		if ( is_null( $parent ) )
+ 		{
+ 			$this->engine->rec->select = 'parent';
+ 			$this->engine->rec->table = $this->table;
+ 			$this->engine->rec->filter = "id='" . $child . "'";
+ 			
+ 			$child_info = $this->engine->rec->getInfo();
+ 			
+ 			$parent = $child_info[ 'parent' ];
+ 		}
  		
  		$update = $this->_updateCache( $parent, $child );
  		
@@ -582,7 +594,7 @@ class MySmartSection
 			$this->engine->rec->table = $this->engine->table[ 'subject' ];
 			$this->engine->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 			
-			$val = $this->engine->rec->getNumber();			
+			$val = $this->engine->rec->getNumber();
 		}
 		
 		if ( !is_null( $operation ) )
@@ -622,7 +634,7 @@ class MySmartSection
 		{
 			$this->engine->rec->select = 'id';
 			$this->engine->rec->table = $this->engine->table[ 'reply' ];
-			$this->engine->rec->filter = "section='" . $section_id . "'";
+			$this->engine->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 			
 			$val = $this->engine->rec->getNumber();			
 		}

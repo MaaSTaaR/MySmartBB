@@ -49,7 +49,7 @@ class MySmartAnnouncementMOD
 		$MySmartBB->_CONF['template']['AnnInfo'] = $MySmartBB->rec->getInfo();
 		
 		if (!$MySmartBB->_CONF['template']['AnnInfo'])
-			$MySmartBB->func->error( $$MySmartBB->lang[ 'announcement_doesnt_exist' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'announcement_doesnt_exist' ] );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF['template']['AnnInfo'][ 'title' ] );
 		
