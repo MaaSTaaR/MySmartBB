@@ -40,16 +40,16 @@ class MySmartActiveMOD
 		
 		// ... //
 		
-		if (empty($MySmartBB->_GET['code']))
+		if ( empty( $MySmartBB->_GET[ 'code' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		if (!$MySmartBB->_CONF['member_permission'])
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_login' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		
@@ -85,7 +85,7 @@ class MySmartActiveMOD
 		    $MySmartBB->plugin->runHooks( 'active_member_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
-			$MySmartBB->func->move('index.php');
+			$MySmartBB->func->move( 'index.php' );
 		}
 	}
 }
