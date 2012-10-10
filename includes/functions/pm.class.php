@@ -37,15 +37,19 @@ class MySmartPM
 	
 	// ... //
 	
+	/**
+	 * Gets the number of unread messages.
+	 * 
+	 * @param $username The username of the member who we want to check his/her unread messages number.
+	 * 
+	 * @return The number of unread messages.
+	 */
 	public function newMessageNumber( $username )
 	{
  		if ( empty( $username ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM newMessageNumber() -- EMPTY username');
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM newMessageNumber() -- EMPTY username' );
  		
  		$this->engine->rec->table = $this->table;
- 		
 		$this->engine->rec->filter = "user_to='" . $username . "' AND folder='inbox' AND user_read<>'1'";
 				
 		return $this->engine->rec->getNumber();

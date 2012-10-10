@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartManagementMOD');
+define( 'CLASS_NAME', 'MySmartManagementMOD' );
 
 class MySmartManagementMOD
 {
@@ -22,41 +22,58 @@ class MySmartManagementMOD
 		
 		$MySmartBB->load( 'section,moderator,icon,toolbox' );
 		
-		$MySmartBB->_GET['section'] = (int) $MySmartBB->_GET[ 'section' ];
+		// ... //
+		
+		$MySmartBB->_GET[ 'section' ] = (int) $MySmartBB->_GET[ 'section' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'section' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		// ... //
+		
+		if ( ( empty( $MySmartBB->_GET[ 'reply' ] ) and empty( $MySmartBB->_GET[ 'reply_edit' ] ) ) )
+		{
+			$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
+		
+			if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
+				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		}
+		
+		// ... //
 		
 		if ( $MySmartBB->moderator->moderatorCheck( $MySmartBB->_GET[ 'section' ] ) )
 		{
 			$MySmartBB->load( 'cache,moderator,pm,reply,section,subject' );
 			
-			if ($MySmartBB->_GET['subject'])
+			if ( $MySmartBB->_GET[ 'subject' ] )
 			{
 				$this->_subject();
 			}
-			elseif ($MySmartBB->_GET['move'])
+			elseif ( $MySmartBB->_GET[ 'move' ] )
 			{
 				$this->_moveStart();
 			}
-			elseif ($MySmartBB->_GET['subject_edit'])
+			elseif ( $MySmartBB->_GET[ 'subject_edit' ] )
 			{
 				$this->_subjectEditStart();
 			}
-			elseif ($MySmartBB->_GET['repeat'])
+			elseif ( $MySmartBB->_GET[ 'repeat' ] )
 			{
 				$this->_subjectRepeatStart();
 			}
-			elseif ($MySmartBB->_GET['close'])
+			elseif ( $MySmartBB->_GET[ 'close' ] )
 			{
 				$this->_closeStart();
 			}
-			elseif ($MySmartBB->_GET['delete'])
+			elseif ( $MySmartBB->_GET[ 'delete' ] )
 			{
 				$this->_deleteStart();
 			}
-			elseif ($MySmartBB->_GET['reply'])
+			elseif ( $MySmartBB->_GET[ 'reply' ] )
 			{
 				$this->_reply();
 			}
-			elseif ($MySmartBB->_GET['reply_edit'])
+			elseif ( $MySmartBB->_GET[ 'reply_edit' ] )
 			{
 				$this->_replyEditStart();
 			}
@@ -73,51 +90,56 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		if (!isset($MySmartBB->_GET['operator'])
-			or !isset($MySmartBB->_GET['section']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		// ... //
 		
-		if ($MySmartBB->_GET['operator'] == 'stick')
+		if ( empty( $MySmartBB->_GET[ 'operator' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+				
+		// ... //
+		
+		if ( $MySmartBB->_GET['operator'] == 'stick' )
 		{
 			$this->__stick();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'unstick')
+		elseif ( $MySmartBB->_GET['operator'] == 'unstick' )
 		{
 			$this->__unStick();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'close')
+		elseif ( $MySmartBB->_GET['operator'] == 'close' )
 		{
 			$this->__close();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'open')
+		elseif ( $MySmartBB->_GET['operator'] == 'open' )
 		{
 			$this->__open();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'delete')
+		elseif ( $MySmartBB->_GET['operator'] == 'delete' )
 		{
 			$this->__subjectDelete();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'move')
+		elseif ( $MySmartBB->_GET['operator'] == 'move' )
 		{
 			$this->__moveIndex();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'edit')
+		elseif ( $MySmartBB->_GET['operator'] == 'edit' )
 		{
 			$this->__subjectEdit();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'repeated')
+		elseif ( $MySmartBB->_GET['operator'] == 'repeated' )
 		{
 			$this->__subjectRepeat();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'up')
+		elseif ( $MySmartBB->_GET['operator'] == 'up' )
 		{
 			$this->__upStart();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'down')
+		elseif ( $MySmartBB->_GET['operator'] == 'down' )
 		{
 			$this->__downStart();
+		}
+		else
+		{
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		}
 	}
 	
@@ -125,19 +147,12 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET[ 'subject_id' ] );
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$update = $MySmartBB->subject->stickSubject( $MySmartBB->_GET['subject_id'] );
-		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_sticked' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET[ 'subject_id' ] );
 		}
 	}
 	
@@ -145,19 +160,12 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$update = $MySmartBB->subject->unStickSubject( $MySmartBB->_GET[ 'subject_id' ] );
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$update = $MySmartBB->subject->unStickSubject( $MySmartBB->_GET['subject_id'] );
-		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_unsticked' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET[ 'subject_id' ] );
 		}
 	}
 	
@@ -165,33 +173,19 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$MySmartBB->template->assign( 'subject', $MySmartBB->_GET[ 'subject_id' ] );
+		$MySmartBB->template->assign( 'section', $MySmartBB->_GET[ 'section' ] );
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
-		$MySmartBB->template->assign('section',$MySmartBB->_GET['section']);
-		
-		$MySmartBB->template->display('subject_close_index');
+		$MySmartBB->template->display( 'subject_close_index' );
 	}
 	
 	private function __open()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$update = $MySmartBB->subject->openSubject( $MySmartBB->_GET[ 'subject_id' ] );
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$update = $MySmartBB->subject->openSubject( $MySmartBB->_GET['subject_id'] );
-		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_opened' ] );
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
@@ -201,30 +195,16 @@ class MySmartManagementMOD
 	private function __subjectDelete()
 	{
 		global $MySmartBB;
-
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
-		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
-		$MySmartBB->template->assign('section',$MySmartBB->_GET['section']);
-		$MySmartBB->template->display('subject_delete_reason');
+		$MySmartBB->template->assign( 'subject', $MySmartBB->_GET[ 'subject_id' ] );
+		$MySmartBB->template->assign( 'section', $MySmartBB->_GET[ 'section' ] );
+		
+		$MySmartBB->template->display( 'subject_delete_reason' );
 	}
 	
 	private function __moveIndex()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
-		$MySmartBB->_GET[ 'section' ] = (int) $MySmartBB->_GET[ 'section' ];
-		
-		// ... //
-		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) or empty( $MySmartBB->_GET[ 'section' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
@@ -242,17 +222,6 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
-		
-		// ... //
-		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
-		
 		$update = $MySmartBB->subject->moveSubject( $MySmartBB->_POST[ 'section' ], $MySmartBB->_GET[ 'subject_id' ] );
 		
 		if ( $update )
@@ -266,53 +235,40 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST[ 'reason' ], $MySmartBB->_GET[ 'subject_id' ] );
 		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		$update = $MySmartBB->subject->closeSubject( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'] );
-		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_closed' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $MySmartBB->_GET[ 'subject_id' ] );
 		}
 	}
 	
 	private function _deleteStart()
 	{
 		global $MySmartBB;
-
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-
-		// ... //
 		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
-		
-		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST['reason'], $MySmartBB->_GET['subject_id'], $MySmartBB->_GET[ 'section' ] );
+		$update = $MySmartBB->subject->moveSubjectToTrash( $MySmartBB->_POST[ 'reason' ], $MySmartBB->_GET[ 'subject_id' ], $MySmartBB->_GET[ 'section' ] );
 
-		if ($update)
+		if ( $update )
 		{
-			// ... //			
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
-			
-			$Subject = $MySmartBB->rec->getInfo();
-			
-			// ... //
-			
+			// Send a private message to the writer with the reason of deletion.
 			if ( !empty( $MySmartBB->_POST[ 'reason' ] ) )
 			{
+				// ... //			
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+				$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+				
+				$Subject = $MySmartBB->rec->getInfo();
+				
+				// ... //
+				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
 													'user_to'	=>	$Subject['writer'],
 													'title'	=>	$MySmartBB->lang[ 'your_subject_deleted' ] . ' ' . $Subject['title'],
-													'text'	=>	$MySmartBB->_POST['reason'],
+													'text'	=>	$MySmartBB->lang[ 'your_subject_deleted' ] . ' : ' . $MySmartBB->_POST['reason'],
 													'date'	=>	$MySmartBB->_CONF['now'],
 													'icon'	=>	$Subject['icon'],
 													'folder'	=>	'inbox'	);
@@ -333,7 +289,7 @@ class MySmartManagementMOD
 			}
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_deleted' ] );
-			$MySmartBB->func->move('index.php?page=topic&show=1&id=' . $MySmartBB->_GET['subject_id']);
+			$MySmartBB->func->move( 'index.php?page=topic&show=1&id=' . $MySmartBB->_GET[ 'subject_id' ] );
 		}
 	}
 
@@ -343,21 +299,12 @@ class MySmartManagementMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		
-		// ... //
-		
-		if ( empty($MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
-		
-		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section']);
+		$MySmartBB->template->assign( 'edit_page', 'index.php?page=management&amp;subject_edit=1&amp;subject_id=' . $MySmartBB->_GET['subject_id'] . '&amp;section=' . $MySmartBB->_GET['section'] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'subject_id' ] . "'";
 		
 		$MySmartBB->_CONF['template']['SubjectInfo'] = $MySmartBB->rec->getInfo();
 		
@@ -367,19 +314,12 @@ class MySmartManagementMOD
 		
 		// ... //
 		
-		$MySmartBB->template->display('subject_edit');
+		$MySmartBB->template->display( 'subject_edit' );
 	}
 	
 	private function _subjectEditStart()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		
-		// ... //
-		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
@@ -512,30 +452,14 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
+		$MySmartBB->template->assign( 'subject', $MySmartBB->_GET[ 'subject_id' ] );
 		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->template->assign('subject',$MySmartBB->_GET['subject_id']);
-		
-		$MySmartBB->template->display('subject_repeat_index');
+		$MySmartBB->template->display( 'subject_repeat_index' );
 	}
 	
 	private function _subjectRepeatStart()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
@@ -616,13 +540,6 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 	  	
-	  	$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('-42') )	);
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['subject_id'] . "'";
@@ -639,13 +556,6 @@ class MySmartManagementMOD
 	private function __downStart()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->_GET['subject_id'] = (int) $MySmartBB->_GET['subject_id'];
-		
-		if (empty($MySmartBB->_GET['subject_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('420000000000000000000') ) );

@@ -50,24 +50,25 @@ class MySmartModerators
  	
  	// ... //
  	
-	// ~ ~ //
-	// Description : 	Checks if the member is a moderator or not
-	//
-	// Parameters :
-	//				- $value : 	can be the id or the username of the member who we need to check if (s)he's a moderator,
-	//              - $type : spicifies if $value is an 'id' or 'username'
-	//              - $section_id : the id of the section that we want to check if the member has a permission to moderate it,
-	//                              this parameter can be empty, in this case the function only checks if the member is on the list
-	//                              of moderators or not.
-	// Returns : 
-	//				- true or false
-	// ~ ~ //	
+	/**
+	 * Checks if the member is a moderator or not
+	 *
+	 *	@param $value Can be the id or the username of the member who we need to check.
+	 *  @param $type Spicifies if $value is an 'id' or 'username'
+	 *  @param $section_id The id of the section that we want to check if the member has a permission to moderate it,
+	 *                       this parameter can be empty, in this case the function only checks if the member is on the list
+	 *                       of moderators or not.
+	 *  
+	 *  @return true or false
+	 */	
  	public function isModerator( $value, $type = 'id', $section_id = null )
  	{
+ 		// ... //
+ 		
  		if ( empty( $value ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM isModerator() -- EMPTY value or section_id');
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM isModerator() -- EMPTY value or section_id' );
+ 		
+ 		// ... //
  		
  		$filter = '';
  		
@@ -88,28 +89,45 @@ class MySmartModerators
  		
     	$num = $this->engine->rec->getNumber();
     	 	
-    	return ($num <= 0) ? false : true;
+    	return ( $num <= 0 ) ? false : true;
  	}
  	
  	// ... //
  	
+	/**
+	 * Checks if a member has a permission to control a specific forum's topics.
+	 * 
+	 * @param $section_id The id of the section to be checked
+	 * @param $username The username of the member to be checked, can be null so the function will check the current member
+	 * 
+	 * @return true if the member has a permission, otherwise false
+	 * 
+	 * @see MySmartModerators::isModerator()
+	 */
 	public function moderatorCheck( $section_id, $username = null )
 	{
 		$Mod = false;
 		$user = null;
 		
-		if ( $this->engine->_CONF['member_permission'] )
+		// ... //
+		
+		// Get the username, from the parameter or from member_row array.
+		if ( $this->engine->_CONF[ 'member_permission' ] )
 		{
+			// $username parameter is null.
+			// In this case we will check the current member.
 			if ( !isset( $username ) )
 			{
-				if ($this->engine->_CONF['group_info']['admincp_allow'] 
-					or $this->engine->_CONF['group_info']['vice'])
+				// The current member is the administrator or the vice president.
+				// Therefore absolutely (s)he has the permission.
+				if ( $this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] 
+					or $this->engine->_CONF[ 'group_info' ][ 'vice' ] )
 				{
-					$Mod = true;
+					return true;
 				}
 				else
 				{
-					$user = $this->engine->_CONF['member_row']['username'];
+					$user = $this->engine->_CONF[ 'member_row' ][ 'username' ];
 				}
 			}
 			else
@@ -117,8 +135,10 @@ class MySmartModerators
 				$user = $username;
 			}
 			
-			if ( !$Mod )
-				$Mod = $this->isModerator( $user, 'username', $section_id );
+			// ... //
+			
+			// Do the real job.
+			$Mod = $this->isModerator( $user, 'username', $section_id );
 		}
 				
 		return $Mod;

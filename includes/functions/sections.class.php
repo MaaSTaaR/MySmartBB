@@ -276,12 +276,24 @@ class MySmartSection
 	
 	// ... //
 	
-	// We use this function which based on "createForumCache" to update the cache of just one child, 
-	// if we want to update the cache of the whole list of children we should use "updateSectionsCache" which based on "createSectionsCache"
+	/**
+	 * Updates the cache of just one child forum, if we want to update the cache 
+	 * of the whole list of children we should use "updateSectionsCache" 
+	 * which based on "createSectionsCache", This function based on "createForumCache".
+	 * 
+	 * @param $parent The id of the parent forum of the forum that we want to update,
+	 * 					this parameter can be "null" so the parent id will be grabbed automatically.
+	 * @param $child The id of the forum which we want to update its cache.
+	 * 
+	 * @return true for success, otherwise false
+	 * 
+	 * @see MySmartSection::updateSectionsCache()
+	 * @see MySmartSection::createForumCache()
+	 */
 	public function updateForumCache( $parent, $child )
 	{
  		if ( empty( $child ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateForumCache()',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateForumCache()' );
  		
  		// We don't know parent's ID. Grab it from database.
  		if ( is_null( $parent ) )
@@ -582,6 +594,19 @@ class MySmartSection
 	
 	// ... //
 	
+	/**
+	 * Updates topics number of a forum.
+	 *
+	 * @param $section_id The id of the forum that will be updated.
+	 * @param $subject_number If we already have the value of topics number of the forum 
+	 * 						we can pass it to this parameter, otherwise keep it null so
+	 * 						the number of topics will be getten automatically.
+	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
+	 * 						a specific value to/from the number of topics.
+	 * @param $operand The value of the oprand if $operation is not null.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateSubjectNumber( $section_id, $subject_number = null, $operation = 'add', $operand = 1 )
 	{
 		if ( !is_null( $subject_number ) )
@@ -614,7 +639,7 @@ class MySmartSection
 		if ( $update )
 		{
 			// Update the total of subjects
-			$this->engine->cache->updateSubjectNumber( $val );
+			//$this->engine->cache->updateSubjectNumber( $val ); TODO : check it
 			
 			return true;
 		}
@@ -624,6 +649,19 @@ class MySmartSection
 	
 	// ... //
 	
+	/**
+	 * Updates replies number of a forum.
+	 *
+	 * @param $section_id The id of the forum that will be updated.
+	 * @param $reply_number If we already have the value of replies number of the forum 
+	 * 						we can pass it to this parameter, otherwise keep it null so
+	 * 						the number of replies will be getten automatically.
+	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
+	 * 						a specific value from the number of replies.
+	 * @param $operand The value of the oprand if $operation is not null.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateReplyNumber( $section_id, $reply_number = null, $operation = 'add', $operand = 1 )
 	{
 		if ( !is_null( $reply_number) )
@@ -656,8 +694,12 @@ class MySmartSection
 		if ( $update )
 		{
 			// Update the total of subjects
-			$this->engine->cache->updateSubjectNumber( $val );
+			//$this->engine->cache->updateSubjectNumber( $val ); // TODO : is this correct?
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	// ... //

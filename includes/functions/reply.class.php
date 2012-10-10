@@ -184,6 +184,14 @@ class MySmartReply
 	
 	// ... //
 	
+	/**
+	 * Moves all replies of a specific topic to trash.
+	 * 
+	 * @param $subject_id The id of the topic that we want to delete its replies (actually moving them to trash).
+	 * @param $section_id The id of the forum that the topic belongs to, it is required to update the statistics of the forum.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function moveRepliesToTrash( $subject_id, $section_id )
 	{
 		// ... //
@@ -194,9 +202,7 @@ class MySmartReply
  		// ... //
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'1'	);
- 		
  		$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -207,10 +213,8 @@ class MySmartReply
 			
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 	
 	// ... //

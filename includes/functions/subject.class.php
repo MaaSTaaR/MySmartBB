@@ -251,15 +251,20 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Sticks a specific topic.
+	 * 
+	 * @param $id The id of the topic to be stuck.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function stickSubject( $id )
 	{
  		if ( empty( $id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM stickSubject() -- EMPTY id',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM stickSubject() -- EMPTY id' );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'stick'	=>	'1'	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -269,16 +274,22 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Closes a specific topic.
+	 * 
+	 * @param $reason The reason of close the topic, can be empty.
+	 * @param $id The id of the topic to be closed. 
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function closeSubject( $reason, $id )
 	{
  		if ( empty( $id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM closeSubject() -- EMPTY id',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM closeSubject() -- EMPTY id' );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'close'	=>	'1',
  											'close_reason'	=>	$reason	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -363,16 +374,23 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Moves a topic to trash, so the administrator can delete it permanently or restore it.
+	 * 
+	 * @param $reason The reason of delete the topic, can be empty.
+	 * @param $subject_id The id of the topic to be deleted (actually moved to trash).
+	 * @param $section_id The id of the forum that the topic belongs to, it is required to update the statistics of the forum.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function moveSubjectToTrash( $reason, $subject_id, $section_id )
 	{
  		if ( empty( $subject_id ) or empty( $section_id ) )
  			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveSubjectToTrash() -- EMPTY id', E_USER_ERROR );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'1',
  											'delete_reason'	=>	$reason	);
- 		
  		$this->engine->rec->filter = "id='" . $subject_id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -380,12 +398,12 @@ class MySmartSubject
 		if ( $query )
 		{
 			// Move all replies to trash so we can count the correct number
-			// of replies and subjects.
+			// of replies and topics of the forum.
 			$this->engine->reply->moveRepliesToTrash( $subject_id, $section_id );
 			
 			$this->engine->section->updateSubjectNumber( $section_id, null, null );
 			
-			// Update forum's cache so the new number of subjects and replies
+			// Update forum's cache so the new number of topics and replies
 			// will be shown for the visitor in the main page.
 			// The first parameter is null because the parent's id is unknown.
 			$this->engine->section->updateForumCache( null, $section_id );
@@ -425,17 +443,20 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Unsticks a specific topic.
+	 * 
+	 * @param $id The id of the topic to be unstuck.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function unStickSubject( $id )
 	{
  		if ( empty( $id ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM unStickSubject() -- EMPTY id',E_USER_ERROR);
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM unStickSubject() -- EMPTY id' );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'stick'	=>	'0'	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -445,17 +466,20 @@ class MySmartSubject
 	
 	// ... //
 
+	/**
+	 * Opeans a closed topic.
+	 * 
+	 * @param $id The id of the topic to be unstuck.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function openSubject( $id )
 	{
  		if ( empty( $id ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM openSubject() -- EMPTY id',E_USER_ERROR);
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM openSubject() -- EMPTY id' );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'close'	=>	'0'	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
