@@ -50,13 +50,13 @@ class MySmartMember
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : This function checks the username and password.
-	// 
-	// Returns : 
-	//				- false 
-	//				- or array contains the information of the user
-	// ~ ~ //
+	/**
+	 * Description : This function checks the username and password.
+	 * 
+	 * Returns : 
+	 *				- false 
+	 *				- or array contains the information of the user
+	 */
 	public function checkMember( $username, $password )
 	{
 		if ( empty( $username ) or empty( $password ) )

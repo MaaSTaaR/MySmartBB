@@ -70,19 +70,36 @@ class MySmartCache
  	}
  	
  	// ... //
- 		
-	public function updateLastMember( $member_num, $username, $id )
+ 	
+	/**
+	 * Updates the username of the newest member and add one to the current number of members,
+	 * This function should be called _after_ insert member into database.
+	 * 
+	 * @param $username The username of the newest member
+	 * @param $id The id of the newest member
+	 * 
+	 * @return true for success, otherwise false
+	 */
+	public function updateLastMember( $username, $id )
 	{
-		if ( !isset( $member_num )
-			or !isset( $username )
-			or !isset( $id ) )
-		{
+		// ... //
+		
+		if ( !isset( $username ) or !isset( $id ) )
 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastMember()',E_USER_ERROR);
-		}
+		
+		// ... //
+		
+		// Get the actual number of members
+		$this->engine->rec->select = 'id';
+		$this->engine->rec->table = $this->engine->table[ 'member' ];
+		
+		$member_num = $this->engine->rec->getNumber();
+		
+		// ... //
 		
 		$update_username 	= 	$this->engine->info->updateInfo( 'last_member', $username );
 		$update_id 			= 	$this->engine->info->updateInfo( 'last_member_id', $id );
-		$update_number 		= 	$this->engine->info->updateInfo( 'member_number', $member_num + 1 );
+		$update_number 		= 	$this->engine->info->updateInfo( 'member_number', $member_num );
 		
 		return ( $update_username and $update_id and $update_number ) ? true : false;
 	}

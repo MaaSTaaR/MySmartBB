@@ -122,9 +122,7 @@ class MySmartMemberMOD
 		
 		if ($insert)
 		{
-			$MySmartBB->cache->updateLastMember( 	$MySmartBB->_CONF['info_row']['member_number'], 
-													$MySmartBB->_POST['username'], 
-													$MySmartBB->rec->id );
+			$MySmartBB->cache->updateLastMember( $MySmartBB->_POST[ 'username' ], $MySmartBB->rec->id );
 
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'add_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=member_edit&amp;main=1&amp;id=' . $MySmartBB->rec->id);

@@ -113,86 +113,56 @@ class MySmartRegisterMOD
       	
       	// Get the information of default group to set username style cache
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['def_group'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'info_row' ][ 'def_group' ] . "'";
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
-		$style = $GroupInfo['username_style'];
-		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
+		// ... //
+		
+		// Get the stylish username
+		$style = $GroupInfo[ 'username_style' ];
+		$username_style_cache = str_replace( '[username]', $MySmartBB->_POST['username'], $style );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'username'	=>	$MySmartBB->_POST['username'],
-      										'password'	=>	$MySmartBB->_POST['password'],
-      										'email'	=>	$MySmartBB->_POST['email'],
-      										'usergroup'	=>	$MySmartBB->_CONF['info_row']['def_group'],
-      										'user_gender'	=>	$MySmartBB->_POST['gender'],
-      										'register_date'	=>	$MySmartBB->_CONF['now'],
+		$MySmartBB->rec->fields = array(	'username'		=>	$MySmartBB->_POST[ 'username' ],
+      										'password'		=>	$MySmartBB->_POST[ 'password' ],
+      										'email'			=>	$MySmartBB->_POST[ 'email' ],
+      										'usergroup'		=>	$MySmartBB->_CONF[ 'info_row']['def_group' ],
+      										'user_gender'	=>	$MySmartBB->_POST[ 'gender' ],
+      										'register_date'	=>	$MySmartBB->_CONF[ 'now' ],
       										'user_title'	=>	$GroupInfo[ 'user_title' ],
-      										'style'	=>	$MySmartBB->_CONF['info_row']['def_style'],
+      										'style'			=>	$MySmartBB->_CONF[ 'info_row' ][ 'def_style' ],
       										'username_style_cache'	=>	$username_style_cache);
       	
       	$MySmartBB->rec->get_id = true;
       	
       	$insert = $MySmartBB->rec->insert();
       	
-      	// Ouf finally , but we still have work in this module
-      	if ($insert)
+      	if ( $insert )
       	{
-      		$member_num = $MySmartBB->_CONF['info_row']['member_number'];
+      		// ... //
       		
-      		$MySmartBB->cache->updateLastMember( $member_num, $MySmartBB->_POST['username'], $MySmartBB->rec->id );
+      		// Update statistics
+      		$MySmartBB->cache->updateLastMember( $MySmartBB->_POST[ 'username' ], $MySmartBB->rec->id );
+      		
+      		// ... //
       		
       		$MySmartBB->plugin->runHooks( 'register_success' );
       		
-      		if ($MySmartBB->_CONF['info_row']['def_group'] == 5)
+      		// ... //
+      		
+      		// The default group requires an email activation from its members.
+      		// Therefore, We register a request and send the activation message to the member's email.
+      		if ( $MySmartBB->_CONF[ 'info_row' ][ 'def_group' ] == 5 )
       		{
-      			$adress	= 	$MySmartBB->func->getForumAdress();
-				$code	=	$MySmartBB->func->randomCode();
-			
-				$ActiveAdress = $adress . 'index.php?page=active_member&index=1&code=' . $code;
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-				$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
-													'username'	=>	$MySmartBB->_POST['username'],
-													'request_type'	=>	'3'	);
-												
-				$insert = $MySmartBB->rec->insert();
-			
-				if ($insert)
-				{
-					$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
-					$MySmartBB->rec->filter = "id='4'";
-					
-					$MassegeInfo = $MySmartBB->rec->getInfo();
-					
-					$MassegeInfo['text'] = $MySmartBB->massege->messageProccess( 	$MySmartBB->_POST['username'], 
-																					$MySmartBB->_CONF['info_row']['title'], 
-																					$ActiveAdress, 
-																					null, null, null,
-																					$MassegeInfo['text'] );
-					
-					$Send = $MySmartBB->func->mail(	$MySmartBB->_POST['email'],
-													$MassegeInfo['title'],
-													$MassegeInfo['text'],
-													$MySmartBB->_CONF['info_row']['send_email'] );
-					
-					if ($Send)
-					{
-						$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed_email' ] );
-						$MySmartBB->func->move('index.php');
-					}
-					else
-					{
-						$MySmartBB->func->error( $MySmartBB->lang[ 'send_failed' ]  );
-					}
-				}
+      			$this->__sendActivationCode();      			
 			}
 			else
       		{
       			$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed' ] );
-      			$MySmartBB->func->move('index.php?page=login&register_login=1&username=' . $MySmartBB->_POST['username'] . '&password=' . $MySmartBB->_POST['password']);
+      			$MySmartBB->func->move( 'index.php?page=login&amp;register_login=1&amp;username=' . $MySmartBB->_POST[ 'username' ] . '&amp;password=' . $MySmartBB->_POST[ 'password' ] );
       		}
       	}
 	}
@@ -290,17 +260,63 @@ class MySmartRegisterMOD
 	{
 		global $MySmartBB;
 		
-   		if ( !isset( $MySmartBB->_POST[ 'username' ]{$MySmartBB->_CONF[ 'info_row' ][ 'reg_less_num' ]-1} ) )
+   		if ( !isset( $MySmartBB->_POST[ 'username' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'reg_less_num' ] - 1 } ) )
    			$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_less_than' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'reg_less_num' ] );
       	
-      	if ( isset( $MySmartBB->_POST[ 'username' ]{$MySmartBB->_CONF[ 'info_row' ][ 'reg_max_num' ]+1} ) )
+      	if ( isset( $MySmartBB->_POST[ 'username' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'reg_max_num' ] } ) )
        	 	$MySmartBB->func->error( $MySmartBB->lang[ 'username_length_greater_than' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'reg_max_num' ] );
 
-      	if ( isset( $MySmartBB->_POST[ 'password' ]{$MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_max_num' ]+1} ) )
+      	if ( isset( $MySmartBB->_POST[ 'password' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_max_num' ] } ) )
             $MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_max_num' ] );
 
-      	if ( !isset( $MySmartBB->_POST[ 'password' ]{$MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_min_num' ]-1 }) )
-        	$MySmartBB->func->error( $MySmartBB->lang[ 'password_length_greater_than' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_min_num' ] );
+      	if ( !isset( $MySmartBB->_POST[ 'password' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_min_num' ] - 1 } ) )
+        	$MySmartBB->func->error( $MySmartBB->lang[ 'password_length_less_than' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'reg_pass_min_num' ] );
+	}
+	
+	private function __sendActivationCode()
+	{
+		global $MySmartBB;
+		
+      	$adress	= 	$MySmartBB->func->getForumAdress();
+		$code	=	$MySmartBB->func->randomCode();
+		
+		$ActiveAdress = $adress . 'index.php?page=active_member&index=1&code=' . $code;
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+		$MySmartBB->rec->fields = array(	'random_url'	=>	$code,
+											'username'		=>	$MySmartBB->_POST[ 'username' ],
+											'request_type'	=>	'3'	);
+		
+		$insert = $MySmartBB->rec->insert();
+		
+		if ( $insert )
+		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
+			$MySmartBB->rec->filter = "id='4'";
+			
+			$MassegeInfo = $MySmartBB->rec->getInfo();
+			
+			$MassegeInfo[ 'text' ] = $MySmartBB->massege->messageProccess(	$MySmartBB->_POST[ 'username' ], 
+																			$MySmartBB->_CONF[ 'info_row' ][ 'title' ], 
+																			$ActiveAdress, 
+																			null, null, null,
+																			$MassegeInfo[ 'text' ] );
+			
+			$send = $MySmartBB->func->mail(	$MySmartBB->_POST[ 'email' ],
+											$MassegeInfo[ 'title' ],
+											$MassegeInfo[ 'text' ],
+											$MySmartBB->_CONF[ 'info_row' ][ 'send_email' ] );
+			
+			if ( $send )
+			{
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed_email' ] );
+				$MySmartBB->func->move( 'index.php' );
+			}
+			else
+			{
+				$MySmartBB->func->error( $MySmartBB->lang[ 'send_failed' ] );
+			}
+		}
 	}
 }
 
