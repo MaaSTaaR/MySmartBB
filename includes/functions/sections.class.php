@@ -39,10 +39,20 @@ class MySmartSection
  	
  	// ... //
  	
+	/**
+	 * Updates the information of latest topic of a forum.
+	 * 
+	 * @param $writer The username of topic's writer.
+	 * @param $title The title of the topic.
+	 * @param $subject_id The id of the topic.
+	 * @param $date The date of the topic.
+	 * 
+	 * @return true for success, otherwise false
+	 */
  	public function updateLastSubject( $writer, $title, $subject_id, $date, $section_id )
  	{
  		if ( empty( $section_id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastSubject()',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateLastSubject()' );
  		
  		$this->engine->rec->table = $this->table;
  		

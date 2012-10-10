@@ -299,8 +299,18 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Moves a topic to another forum.
+	 * 
+	 * @param $section_id The id of the forum that the topic belongs to.
+	 * @param $subject_id The id of the topic.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function moveSubject( $section_id, $subject_id )
 	{
+		// ... //
+		
  		if ( empty( $section_id ) or empty( $subject_id ) )
  			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveSubject() -- EMPTY section_id or subject_id', E_USER_ERROR );
  		
