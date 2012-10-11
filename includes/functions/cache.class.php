@@ -130,25 +130,46 @@ class MySmartCache
 	
 	// ... //
 	
+	/**
+	 * Updates total number of replies.
+	 *
+	 * @param $value If we already have the total number of replies we can pass it to this parameter, 
+	 * 						otherwise keep it null so the number of replies will be getten automatically.
+	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
+	 * 						a specific value to/from the number of replies.
+	 * @param $operand The value of the oprand if $value is not null.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateReplyNumber( $value = null, $operation = 'add', $operand = 1 )
 	{
-		$val = $this->engine->_CONF['info_row']['reply_number'];
+		$do_operation = true;
 		
-		if ( is_null( $value ) )
+		if ( !is_null( $value ) )
+		{
+			$val = $value;
+		}
+		else
+		{
+			$this->engine->rec->table = $this->engine->table[ 'reply' ];
+			$this->engine->rec->filter = "delete_topic<>'1'";
+			
+			$val = $this->engine->rec->getNumber();
+			
+			$do_operation = false;
+		}
+		
+		if ( !is_null( $operation ) and $do_operation )
 		{
 			if ( $operation == 'add' )
 				$val += $operand;
 			else
 				$val -= $operand;
 		}
-		else
-		{
-			$val = $value;
-		}
 		
 		$update = $this->engine->info->updateInfo( 'reply_number', $val );
 		
-		return ($update) ? true : false;		
+		return ( $update ) ? true : false;		
 	}
 	
 	// ... //

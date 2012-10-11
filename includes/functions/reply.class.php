@@ -152,27 +152,34 @@ class MySmartReply
 	
 	// ... //
 	
+	/**
+	 * Moves a reply to trash.
+	 * 
+	 * @param $id The id of the reply to be deleted
+	 * @param $subject_id The id of the topic that reply belongs to.
+	 * @param $section_id The id of the forum that the reply belongs to.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function moveReplyToTrash( $id, $subject_id, $section_id )
 	{
 		// ... //
 		
- 		if ( empty( $id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM moveReplyToTrash() -- EMPTY id',E_USER_ERROR);
+ 		if ( empty( $id ) or empty( $subject_id ) or empty( $section_id ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM moveReplyToTrash() -- EMPTY id' );
  		
  		// ... //
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'1'	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
 		
 		if ( $query )
 		{
-			$this->engine->subject->updateReplyNumber( $subject_id, null, 'delete' );
-			$this->engine->section->updateReplyNumber( $section_id, null, 'delete' );
+			$this->engine->subject->updateReplyNumber( $subject_id );
+			$this->engine->section->updateReplyNumber( $section_id );
 			
 			return true;
 		}

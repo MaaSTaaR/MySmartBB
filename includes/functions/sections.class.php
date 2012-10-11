@@ -613,12 +613,14 @@ class MySmartSection
 	 * 						the number of topics will be getten automatically.
 	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
 	 * 						a specific value to/from the number of topics.
-	 * @param $operand The value of the oprand if $operation is not null.
+	 * @param $operand The value of the oprand if $subject_number is not null.
 	 * 
 	 * @return true for success, otherwise false
 	 */
 	public function updateSubjectNumber( $section_id, $subject_number = null, $operation = 'add', $operand = 1 )
 	{
+		$do_operation = true;
+		
 		if ( !is_null( $subject_number ) )
 		{
 			$val = $subject_number;
@@ -630,9 +632,11 @@ class MySmartSection
 			$this->engine->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 			
 			$val = $this->engine->rec->getNumber();
+			
+			$do_operation = false;
 		}
 		
-		if ( !is_null( $operation ) )
+		if ( !is_null( $operation ) and $do_operation )
 		{
 			if ( $operation == 'add' )
 				$val += $operand;
@@ -651,6 +655,8 @@ class MySmartSection
 			// Update the total of subjects
 			//$this->engine->cache->updateSubjectNumber( $val ); TODO : check it
 			
+			$this->updateForumCache( null, $section_id );
+			
 			return true;
 		}
 		
@@ -668,12 +674,14 @@ class MySmartSection
 	 * 						the number of replies will be getten automatically.
 	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
 	 * 						a specific value from the number of replies.
-	 * @param $operand The value of the oprand if $operation is not null.
+	 * @param $operand The value of the oprand if $reply_number is not null.
 	 * 
 	 * @return true for success, otherwise false
 	 */
 	public function updateReplyNumber( $section_id, $reply_number = null, $operation = 'add', $operand = 1 )
 	{
+		$do_operation = true;
+		
 		if ( !is_null( $reply_number) )
 		{
 			$val = $reply_number;
@@ -684,10 +692,12 @@ class MySmartSection
 			$this->engine->rec->table = $this->engine->table[ 'reply' ];
 			$this->engine->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 			
-			$val = $this->engine->rec->getNumber();			
+			$val = $this->engine->rec->getNumber();
+
+			$do_operation = false;
 		}
 		
-		if ( !is_null( $operation ) )
+		if ( !is_null( $operation ) and $do_operation )
 		{
 			if ( $operation == 'add' )
 				$val += $operand;
@@ -705,6 +715,10 @@ class MySmartSection
 		{
 			// Update the total of subjects
 			//$this->engine->cache->updateSubjectNumber( $val ); // TODO : is this correct?
+			
+			// The new number of replies will be shown correctly 
+			// on the main page after updating cache.
+			$this->updateForumCache( null, $section_id );
 			
 			return true;
 		}

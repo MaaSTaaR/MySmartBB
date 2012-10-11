@@ -170,19 +170,30 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Updates the time of latest reply on a topic, we use this time to sort topics list from newest to oldest, this function _must_ be called after inserting a reply.
+	 * 
+	 * @param $id The id of the topic to be updated.
+	 * @param $write_time The time of inserting the new reply in a Unix time system.
+	 * 						If it is null so the current time will be used. It's null by default.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateWriteTime( $id, $write_time = null )
 	{
+		// ... //
+		
  		if ( empty( $id ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateWriteTime() -- EMPTY id',E_USER_ERROR);
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateWriteTime() -- EMPTY id' );
+ 		
+ 		// ... //
  		
  		$write_time = ( is_null( $write_time ) ) ? $this->engine->_CONF[ 'now' ] : $write_time;
  		
+ 		// ... //
+ 		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'write_time'	=>	$write_time	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -192,9 +203,24 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Updates replies number of a topic.
+	 *
+	 * @param $subject_id The id of the topic that will be updated.
+	 * @param $reply_number If we already have the value of replies number of the topic 
+	 * 						we can pass it to this parameter, otherwise keep it null so
+	 * 						the number of replies will be getten automatically.
+	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
+	 * 						a specific value to/from the number of replies.
+	 * @param $operand The value of the operand if $reply_number is not null.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateReplyNumber( $subject_id, $reply_number = null, $operation = 'add', $operand = 1 )
 	{
-		if ( !is_null( $reply_number) )
+		$do_operation = true;
+		
+		if ( !is_null( $reply_number ) )
 		{
 			$val = $reply_number;
 		}
@@ -205,9 +231,13 @@ class MySmartSubject
 			$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
 			
 			$val = $this->engine->rec->getNumber();
+			
+			// ... //
+			
+			$do_operation = false;
 		}
 		
-		if ( !is_null( $operation ) )
+		if ( !is_null( $operation ) and $do_operation )
 		{
 			if ( $operation == 'add' )
 				$val += $operand;
@@ -225,23 +255,34 @@ class MySmartSubject
 		{			
 			// Update the total of replies
 			$this->engine->cache->updateReplyNumber();
+			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	// ... //
 	
+	/**
+	 * Updates the last replier of a topic.
+	 * 
+	 * @param $replier The username of the last replier.
+	 * @param $id The id of the topic to be updated.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateLastReplier( $replier, $id )
 	{
- 		if ( empty( $id )
- 			or empty( $replier ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateLastReplier() -- EMPTY id or reply_number',E_USER_ERROR);
- 		}
+		// ... //
+		
+ 		if ( empty( $id ) or empty( $replier ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateLastReplier()' );
+ 		
+ 		// ... //
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'last_replier'	=>	$replier	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();

@@ -30,8 +30,8 @@
 				<option value="move">{$lang['move_subject']}</option>
 				<option value="edit">{$lang['edit_subject']}</option>
 				<option value="repeated">{$lang['repeated_subject']}</option>
-				<option value="up">{$lang['raise_subject']}</option>
-				<option value="down">{$lang['down_subject']}</option>
+				<!-- <option value="up">{$lang['raise_subject']}</option>
+				<option value="down">{$lang['down_subject']}</option> -->
 			</select>
 			<input type="submit" value="{$lang['common']['submit']}" />
 		</td>

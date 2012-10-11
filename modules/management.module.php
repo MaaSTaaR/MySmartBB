@@ -50,6 +50,13 @@ class MySmartManagementMOD
 		}
 		else
 		{
+			$MySmartBB->_GET[ 'reply_id' ] = (int) $MySmartBB->_GET[ 'reply_id' ];
+		
+			if ( empty( $MySmartBB->_GET[ 'reply_id' ] ) )
+				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+			
+			// ... //
+			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
 			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'reply_id' ] . "'";
 			
@@ -151,6 +158,8 @@ class MySmartManagementMOD
 		{
 			$this->__subjectRepeat();
 		}
+		/*
+		 * Freezed for 2.0.0, will be back later.
 		elseif ( $MySmartBB->_GET['operator'] == 'up' )
 		{
 			$this->__upStart();
@@ -159,6 +168,7 @@ class MySmartManagementMOD
 		{
 			$this->__downStart();
 		}
+		*/
 		else
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
@@ -371,16 +381,20 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		if ( !isset( $MySmartBB->_GET[ 'operator' ] ) or !isset( $this->subject_info[ 'section' ] ) or !isset( $MySmartBB->_GET[ 'reply' ] ) )
+		// ... //
+		
+		if ( empty( $MySmartBB->_GET[ 'operator' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		if ($MySmartBB->_GET['operator'] == 'delete')
+		// ... //
+		
+		if ( $MySmartBB->_GET[ 'operator' ] == 'delete' )
 		{
-			$this->__ReplyDelete();
+			$this->__replyDelete();
 		}
-		elseif ($MySmartBB->_GET['operator'] == 'edit')
+		elseif ($MySmartBB->_GET[ 'operator' ] == 'edit' )
 		{
-			$this->__ReplyEdit();
+			$this->__replyEdit();
 		}
 	}
 	
@@ -388,19 +402,12 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
-		
-		if (empty($MySmartBB->_GET['reply_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$update = $MySmartBB->reply->moveReplyToTrash( $MySmartBB->_GET['reply_id'], $this->subject_info[ 'id' ], $this->subject_info[ 'section' ] );
+		$update = $MySmartBB->reply->moveReplyToTrash( $this->reply_info[ 'id' ], $this->reply_info[ 'subject_id' ], $this->reply_info[ 'section' ] );
 		
 		if ($update)
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_deleted' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->reply_info[ 'subject_id' ] );
 		}
 	}
 	
@@ -408,65 +415,45 @@ class MySmartManagementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
+		// ... //
 		
-		if (empty($MySmartBB->_GET['reply_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $this->reply_info[ 'id' ] . '&amp;section=' . $this->reply_info[ 'section' ] . '&amp;subject_id=' . $this->reply_info[ 'subject_id' ]);
 		
 		// ... //
 		
-		$MySmartBB->template->assign('edit_page','index.php?page=management&amp;reply_edit=1&amp;reply_id=' . $MySmartBB->_GET['reply_id'] . '&amp;section=' . $this->subject_info[ 'section' ] . '&amp;subject_id=' . $this->subject_info[ 'id' ]);
-		
-		// ... //
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
-		
-		$MySmartBB->_CONF['template']['ReplyInfo'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF[ 'template' ][ 'ReplyInfo' ] = $this->reply_info;
 		
 		// ... //
 		
 		$MySmartBB->func->getEditorTools();
 		
-		$MySmartBB->template->display('reply_edit');
+		$MySmartBB->template->display( 'reply_edit' );
 	}
 	
 	private function _replyEditStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['reply_id'] = (int) $MySmartBB->_GET['reply_id'];
-		
-		if (empty($MySmartBB->_GET['reply_id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		if (!isset($MySmartBB->_POST['title'])
-			or !isset($MySmartBB->_POST['text']))
-		{
+		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
-		}
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
-											'text'	=>	$MySmartBB->_POST['text'],
-											'icon'	=>	$MySmartBB->_POST['icon']	);
+		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST[ 'title' ],
+											'text'	=>	$MySmartBB->_POST[ 'text' ],
+											'icon'	=>	$MySmartBB->_POST[ 'icon' ]	);
 											
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['reply_id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->reply_info[ 'id' ] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
 		// ... //
 		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->reply_info[ 'subject_id' ]);
 		}
 	}
 	
@@ -496,10 +483,10 @@ class MySmartManagementMOD
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
      		$MySmartBB->rec->fields = array(	'text'			=>	$MySmartBB->lang[ 'repeated_subject_see_original' ] . " [url=" . $MySmartBB->_POST['url'] . "]" . $MySmartBB->lang_common[ 'here' ] . '[/url]',
-     											'writer'		=>	$MySmartBB->_CONF['member_row']['username'],
+     											'writer'		=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ],
      											'subject_id'	=>	$this->subject_info[ 'id' ],
-     											'write_time'	=>	$MySmartBB->_CONF['now'],
-     											'section'		=>	$this->subject_info['section']	);
+     											'write_time'	=>	$MySmartBB->_CONF[ 'now' ],
+     											'section'		=>	$this->subject_info[ 'section' ]	);
      		
      		$insert = $MySmartBB->rec->insert();
      	
@@ -515,38 +502,36 @@ class MySmartManagementMOD
    				
    				// ... //
    				
-     			$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $MySmartBB->_CONF['now'], $this->subject_info[ 'id' ] );
+     			$MySmartBB->subject->updateWriteTime( $this->subject_info[ 'id' ] );
      			
-     			$UpdateReplyNumber = $MySmartBB->subject->updateReplyNumber( $this->subject_info['reply_number'], $this->subject_info[ 'id' ] );
+     			$MySmartBB->subject->updateReplyNumber( $this->subject_info[ 'id' ] );
      		    
-     			$UpdateLast = $MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], $Subject['title'], $this->subject_info['id'], $MySmartBB->_CONF['date'],  (!$this->subject_info['sub_section']) ? $this->subject_info['id'] : $this->subject_info['from_sub_section'] );
+     			$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $this->subject_info[ 'title' ], $this->subject_info[ 'id' ], $MySmartBB->_CONF[ 'now' ],  ( !$this->subject_info[ 'sub_section' ] ) ? $this->subject_info[ 'id' ] : $this->subject_info[ 'from_sub_section' ] );
      			
-     			$UpdateSubjectNumber = $MySmartBB->cache->updateReplyNumber( $MySmartBB->_CONF['info_row']['reply_number'] );
-     			     		
-     			$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $this->subject_info[ 'id' ] );
+     			$MySmartBB->cache->updateReplyNumber();
      			
-     			// ... //
+     			$MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $this->subject_info[ 'id' ] );
      			
-     			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-     			$MySmartBB->rec->fields = array(	'reply_num'	=>	$this->subject_info['reply_num'] + 1 );
-     			$MySmartBB->rec->filter = "id='" . $this->subject_info[ 'section' ] . "'";
+     			$MySmartBB->section->updateReplyNumber( $this->subject_info[ 'section' ] );
      			
-     			$UpdateSubjectNumber = $MySmartBB->rec->update();
+     			// We need to update forum's cache to show the correct number of statistics in the main page     			
+     			$MySmartBB->section->updateForumCache( null, $this->subject_info[ 'section' ] );
      			
      			// ... //
      			     			
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-				$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+				$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
      		}
 		}
 	}
 	
+	// Freezed feature (2.0.0) 
 	private function __upStart()
 	{
 		global $MySmartBB;
 	  	
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval('-42') )	);
+		$MySmartBB->rec->fields = array(	'write_time'	=>	time() - ( intval( '-42' ) )	);
 		$MySmartBB->rec->filter = "id='" . $this->subject_info[ 'id' ] . "'";
 		
 		$update = $MySmartBB->rec->update();
@@ -557,7 +542,8 @@ class MySmartManagementMOD
 			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
 		}
 	}
-		
+	
+	// Freezed feature (2.0.0)
 	private function __downStart()
 	{
 		global $MySmartBB;

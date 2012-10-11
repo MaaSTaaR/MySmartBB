@@ -466,45 +466,43 @@ class MySmartFunctions
 	{
 		global $MySmartBB;
 		
+		// ... //
+		
 		if ( !is_object( $MySmartBB->icon ) )
-		{
-			trigger_error( 'ERROR::ICON_OBJECT_DID_NOT_FOUND', E_USER_ERROR );
-		}
+			trigger_error( 'ERROR::ICON_OBJECT_DID_NOT_FOUND' );
 		
 		if ( !is_object( $MySmartBB->toolbox ) )
-		{
-			trigger_error( 'ERROR::TOOLBOX_OBJECT_DID_NOT_FOUND', E_USER_ERROR );
-		}
+			trigger_error( 'ERROR::TOOLBOX_OBJECT_DID_NOT_FOUND' );
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['smile_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'smile_res' ] = '';
 		
 		$MySmartBB->rec->order = 'id ASC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['smile_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'smile_res' ];
 		
 		$MySmartBB->icon->getSmileList();
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['icon_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'icon_res' ] = '';
 		
 		$MySmartBB->rec->order = 'id DESC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['icon_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'icon_res' ];
 		
 		$MySmartBB->icon->getIconList();
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['color_res'] = '';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['color_res'];
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'color_res' ] = '';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'color_res' ];
 		
 		$MySmartBB->toolbox->getColorsList();
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['font_res'] = '';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['font_res'];
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'font_res' ] = '';
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'font_res' ];
 		
 		$MySmartBB->toolbox->getFontsList();
 		
