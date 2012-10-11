@@ -121,20 +121,29 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Returns the information of a topic with the information of the writer.
+	 * 
+	 * @param $subject_id The id of the topic to be got from database.
+	 * 
+	 * @return An array contains row of topic and writer or false when not match. The id of subject will be stored as "subject_id"
+	 */
 	public function getSubjectWriterInfo( $subject_id )
 	{
-		if ( empty( $subject_id ) )
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM GetSubjectWriterInfo() -- EMPTY id');
-		}
+		// ... //
 		
-		// Fields to retrieve from member table
-		// That helps us to keep the returned array as small as possible, and prevent the member's password to be retrieved
+		if ( empty( $subject_id ) )
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM getSubjectWriterInfo()' );
+		
+		// ... //
+		
+		// Fields to be retrieved from member table
+		// That helps us to keep the returned array as small as possible, and prevents the member's password to be retrieved
 		$member_select = array( 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
 								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache',
 								'logged' );
 		
-		$select = 'subject.*,subject.visitor AS subject_visitor';
+		$select = 'subject.*,subject.visitor AS subject_visitor, subject.id AS subject_id';
 		
 		foreach ( $member_select as $key => $field )
 		{
@@ -152,15 +161,21 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Updates visitors number of a topic.
+	 * 
+	 * @param $visits The current number of visitors.
+	 * @param $id The id of the topic to be updated.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateSubjectVisits( $visits, $id )
 	{
 		if ( empty( $visits ) or empty( $id ) )
-			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()',E_USER_ERROR);
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()' );
 		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();

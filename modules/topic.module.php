@@ -1,24 +1,23 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartTopicMOD');
+define( 'CLASS_NAME', 'MySmartTopicMOD' );
 
 class MySmartTopicMOD
 {
 	private $Info;
 	private $SectionInfo;
 	private $SectionGroup;
-	private $subject_id;
-	private $subject_title;
 	private $reply_number = 1;
-	private $moderator;
+	private $moderator = false;
+	private $subject_id;
 	
 	public function run()
 	{
@@ -72,23 +71,27 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 
-		if ( empty( $MySmartBB->_GET['id'] ) )
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		// Get the subject and the writer's information
-		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET['id'] );
+		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET[ 'id' ] );
 		
 		if ( !$this->Info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
-
+		
 		// ... //
 		
-		if ( $this->Info['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'] )
+		if ( $this->Info[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_trashed' ] );
+		
+		// ... //
+		
+		$this->subject_id = $this->Info[ 'subject_id' ];
 		
 		// ... //
 				
@@ -97,17 +100,12 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		$this->Info['subject_id'] = $this->subject_id = $MySmartBB->_GET['id'];
-		$this->subject_title = $this->Info[ 'title' ];
+		$MySmartBB->template->assign( 'subject_id', $this->Info[ 'subject_id' ] );
+		$MySmartBB->template->assign( 'section_id', $this->Info[ 'section' ] );
 		
 		// ... //
 		
-		$MySmartBB->template->assign('subject_id',$MySmartBB->_GET['id']);
-		$MySmartBB->template->assign('section_id',$this->Info['section']);
-		
-		// ... //
-		
-     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_topic' ] . ' ' . $MySmartBB->lang_common['colon'] . '' . $this->Info['title'] );
+     	$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing_topic' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Info[ 'title' ] );
      	
      	// ... //
 	}
@@ -130,7 +128,7 @@ class MySmartTopicMOD
 		
 		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo['id'] );
 		
-		$MySmartBB->template->assign('Mod',$this->moderator);
+		$MySmartBB->template->assign( 'Mod', $this->moderator );
 	}
 	
 	private function _getGroup()
@@ -138,7 +136,7 @@ class MySmartTopicMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'id' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$this->SectionGroup = $MySmartBB->rec->getInfo();
 	}
@@ -149,20 +147,23 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		// Get the permissions of the parent section
+		// Get the permissions of the parent forum. If the current member
+		// has no permission to view the parent forum so (s)he has no
+		// permission to view the current forum, even if "view_section" value
+		// of the current forum is true.
 		$MySmartBB->rec->select = 'view_section';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'parent' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$parent_per = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if (!$this->SectionGroup['view_section'] or $parent_per[ 'view_section' ] != 1)
+		if ( !$this->SectionGroup[ 'view_section' ] or $parent_per[ 'view_section' ] != 1 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 		
-		if ($MySmartBB->_CONF['member_row']['username'] != $this->Info['writer'])
-			$MySmartBB->subject->updateSubjectVisits( $this->Info['visitor'], $MySmartBB->_GET['id'] );
+		if ( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] != $this->Info[ 'writer' ] )
+			$MySmartBB->subject->updateSubjectVisits( $this->Info[ 'subject_visitor' ], $this->Info[ 'subject_id' ] );
 		
 		// ... //
 		
@@ -184,7 +185,7 @@ class MySmartTopicMOD
 		$MySmartBB->_CONF['template']['res']['tags_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
-		$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'subject_id' ] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['tags_res'];
 		
 		$MySmartBB->rec->getList();
@@ -206,7 +207,7 @@ class MySmartTopicMOD
 		if ( $this->Info[ 'poll_subject' ] )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
-			$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
+			$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'subject_id' ] . "'";
 			
 			$Poll = $MySmartBB->rec->getInfo( false );
 			
@@ -238,7 +239,7 @@ class MySmartTopicMOD
 			$MySmartBB->_CONF['template']['res']['attach_res'] = '';
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-			$MySmartBB->rec->filter = "subject_id='" . $MySmartBB->_GET['id'] . "'";
+			$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'subject_id' ] . "'";
 			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
 			
 			$MySmartBB->rec->getList();
@@ -277,7 +278,7 @@ class MySmartTopicMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->filter = "subject_id='" . $this->Info['subject_id'] . "' AND delete_topic<>'1'";
+		$MySmartBB->rec->filter = "subject_id='" . $this->subject_id . "' AND delete_topic<>'1'";
 		
 		$reply_number = $MySmartBB->rec->getNumber();
 		
@@ -373,7 +374,7 @@ class MySmartTopicMOD
 		$MySmartBB->_CONF['template']['res']['similar_subjects_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "title LIKE '%" . $this->subject_title . "%' AND delete_topic<>'1' AND id<>'" . $this->subject_id . "'";
+		$MySmartBB->rec->filter = "title LIKE '%" . $this->Info[ 'title' ] . "%' AND delete_topic<>'1' AND id<>'" . $this->Info[ 'subject_id' ] . "'";
 		$MySmartBB->rec->order = 'write_time DESC';
 		$MySmartBB->rec->limit = '5';
 		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['similar_subjects_res'];
@@ -396,7 +397,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->func->getEditorTools();
 		
-     	$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
+     	$MySmartBB->template->assign('id',$this->Info[ 'subject_id' ]);
      	
      	$MySmartBB->template->assign('Admin',$this->moderator);
      	

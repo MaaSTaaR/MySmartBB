@@ -21,13 +21,18 @@ class MySmartSection
 	
  	// ... //
  	
+	/**
+	 * Checks if the provided password is correct for a forum.
+	 * 
+	 * @param $password The password which the member provided.
+	 * @param $id The id of the forum to be checked.
+	 * 
+	 * @return true if the password correct, otherwise false
+	 */
  	public function checkPassword( $password, $id )
  	{
- 		if ( empty( $id )
- 			or empty( $password ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM checkPassword() -- EMPTY id OR password',E_USER_ERROR);
- 		}
+ 		if ( empty( $id ) or empty( $password ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkPassword() -- EMPTY id OR password' );
  		
  		$this->engine->rec->table = $this->table;
  		$this->engine->rec->filter = "id='" . $id . "' AND section_password='" . $password . "'";
@@ -575,6 +580,21 @@ class MySmartSection
 	
 	// ... //
 	
+	
+	/**
+	 * Prevents member (or visitor) from view password-protected forum 
+	 * if the member didn't provide the password, if he did checks the provided password,
+	 * if there is no password for the forum just do nothing.
+	 * 
+	 * @param $section_id The id of the forum to be checked.
+	 * @param $section_password The password of the forum.
+	 * @param $password The password that the member provided. Should be provided encrypted using base64.
+	 * 
+	 * @return true for if the password correct, otherwise false. If the member
+	 * 			didn't provide password ask the member for password.
+	 * 
+	 * @see MySmartSection::checkPassword()
+	 */
 	public function forumPassword( $section_id, $section_password, $password )
 	{
 		if ( !empty( $section_password ) and !$this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] )

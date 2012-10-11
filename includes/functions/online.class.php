@@ -71,6 +71,13 @@ class MySmartOnline
 	
 	// ... //
 	
+	/**
+	 * Updates the current location of the current member, so we can know what is the member doing.
+	 * 
+	 * @param $location The textual location of the member, for example : He is viewing a topic
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateMemberLocation( $location )
 	{
 		if ( $this->engine->_CONF[ 'member_permission' ] )
