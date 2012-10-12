@@ -22,14 +22,23 @@ class MySmartReply
 	
 	// ... //
 	
+	/**
+	 * Returns the information of replies of a topic with the information of the writer.
+	 * 
+	 * @param $subject_id The id of the topic that replies belong to.
+	 * 
+	 * @return An array contains rows of replies and writers or false when not match. The id of reply will be stored as "reply_id"
+	 */
 	public function getReplyWriterInfo( $subject_id )
 	{
+		// ... //
+		
  		if ( empty( $subject_id ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM getReplyWriterInfo()',E_USER_ERROR);
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM getReplyWriterInfo()' );
  		
- 		// Fields to retrieve from member table
+ 		// ... //
+ 		
+ 		// Fields to be retrieved from member table
 		// That helps us to keep the returned array as small as possible, and prevent the member's password to retrieve
 		$member_select = array( 'id', 'username', 'user_sig', 'user_country', 'user_gender', 'register_date', 'posts', 'user_title', 
 								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache',
@@ -42,11 +51,10 @@ class MySmartReply
 			$select .= ',member.' . $field;
 		}
 		
-		
-		$this->engine->rec->table = $this->table . ' AS reply,' . $this->engine->table['member'] . ' AS member';
+		$this->engine->rec->table = $this->table . ' AS reply,' . $this->engine->table[ 'member' ] . ' AS member';
 		$this->engine->rec->select = $select;
 		
-		$this->engine->rec->filter .= "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
+		$this->engine->rec->filter = "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
 		
 		$this->engine->rec->getList();
 	}

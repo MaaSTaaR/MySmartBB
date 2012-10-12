@@ -28,10 +28,10 @@ class MySmartForumMOD
 		}
 		elseif ( $MySmartBB->_GET[ 'password_check' ] )
 		{
-			$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_POST[ 'password' ] );
+			$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], base64_encode( $MySmartBB->_POST[ 'password' ] ) );
 			
 			if ( $check )
-				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] );
+				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ], 0 );
 		}
 		else
 		{

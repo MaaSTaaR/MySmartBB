@@ -178,7 +178,7 @@ class MySmartTopicAddMOD
 											'native_write_time'	=>	$MySmartBB->_CONF['now'],
 											'sec_subject'	=>	$this->SectionInfo['sec_section'],
 											'poll_subject'	=>	0,
-											'attach_subject'	=>	0,
+											'attach_subject'	=>	( $MySmartBB->_POST[ 'attach' ] ) ? '1' : '0',
 											'visitor'		=>	0	);
 											
 		if ( $this->moderator )

@@ -18,6 +18,7 @@ class MySmartTopicMOD
 	private $reply_number = 1;
 	private $moderator = false;
 	private $subject_id;
+	private $subject_title;
 	
 	public function run()
 	{
@@ -46,7 +47,7 @@ class MySmartTopicMOD
 			
 			if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			{
-				if ($MySmartBB->_CONF['info_row']['samesubject_show'])
+				if ( $MySmartBB->_CONF[ 'info_row' ][ 'samesubject_show' ] )
 				{
 					$this->_similarTopics();
 				}
@@ -92,6 +93,7 @@ class MySmartTopicMOD
 		// ... //
 		
 		$this->subject_id = $this->Info[ 'subject_id' ];
+		$this->subject_title = $this->Info[ 'title' ];
 		
 		// ... //
 				
@@ -170,11 +172,9 @@ class MySmartTopicMOD
 		// Check if the section has been protected with a password
 		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
 	}
-		
+	
 	private function _getWriterInfo()
 	{
-		global $MySmartBB;
-		
 		$this->_baseWriterInfo();
 	}
 	
@@ -182,20 +182,17 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['tags_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'tags_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'subject_id' ] . "'";
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['tags_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'tags_res' ];
 		
 		$MySmartBB->rec->getList();
 		
-		$tags_number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['tags_res'] );
+		$tags_number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'tags_res' ] );
 		
-		if ( $tags_number > 0 )
-			$MySmartBB->template->assign('SHOW_TAGS',true);
-		else
-			$MySmartBB->template->assign('SHOW_TAGS',false);
+		$MySmartBB->template->assign( 'SHOW_TAGS', ( $tags_number > 0 ) ? true : false );
 	}
 	
 	private function _checkPoll()
@@ -213,11 +210,11 @@ class MySmartTopicMOD
 			
 			if ( $Poll != false )
 			{
-				$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'answers' ] = unserialize( base64_decode( $Poll['answers'] ) );
+				$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'answers' ] = unserialize( base64_decode( $Poll[ 'answers' ] ) );
 				
-				$MySmartBB->template->assign('Poll',$Poll);
+				$MySmartBB->template->assign( 'Poll', $Poll );
 				
-				unset($Poll['answers']);
+				unset( $Poll[ 'answers' ] );
 				
 				$MySmartBB->template->assign( 'SHOW_POLL', true );
 			}
@@ -233,18 +230,17 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// We have attachments in this subject
-		if ( $this->Info['attach_subject'] )
+		if ( $this->Info[ 'attach_subject' ] )
 		{
-			$MySmartBB->_CONF['template']['res']['attach_res'] = '';
+			$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] = '';
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 			$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'subject_id' ] . "'";
-			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
+			$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ];
 			
 			$MySmartBB->rec->getList();
 			
-			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['attach_res'] );
+			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] );
 			
 			if ( $attach_num > 0 )
 				$MySmartBB->template->assign( 'ATTACH_SHOW', true );
@@ -255,25 +251,24 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;			
 		
-		$topic_date = $MySmartBB->func->date($this->Info['native_write_time']);
-		$topic_time = $MySmartBB->func->time($this->Info['native_write_time']);
+		$topic_date = $MySmartBB->func->date( $this->Info[ 'native_write_time' ] );
+		$topic_time = $MySmartBB->func->time( $this->Info[ 'native_write_time' ] );
 		
-		$this->Info['native_write_time'] = $topic_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $topic_time;
+		$this->Info[ 'native_write_time' ] = $topic_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $topic_time;
 		
 		$this->_baseEnd();
 		
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-			$MySmartBB->template->display('show_subject');
+			$MySmartBB->template->display( 'show_subject' );
 		else
-			$MySmartBB->template->display('print_subject');
+			$MySmartBB->template->display( 'print_subject' );
 	}
 	
 	private function _getReply()
 	{
 		global $MySmartBB;
-				
-		// Show the replies
-		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
+		
+		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
 		
 		// ... //
 		
@@ -286,13 +281,12 @@ class MySmartTopicMOD
 		
 		$reply_res = '';
 		
-		// Pager setup
-		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$reply_number;
-		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
-		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->Info['subject_id'];
-		$MySmartBB->rec->pager['var'] 		= 	'count';
+		$MySmartBB->rec->pager 					= 	array();
+		$MySmartBB->rec->pager[ 'total' ]		= 	$reply_number;
+		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'perpage' ];
+		$MySmartBB->rec->pager[ 'count' ] 		= 	$MySmartBB->_GET[ 'count' ];
+		$MySmartBB->rec->pager[ 'location' ] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id;
+		$MySmartBB->rec->pager[ 'var' ] 		= 	'count';
 		
 		$MySmartBB->rec->result = &$reply_res;
 		
@@ -313,9 +307,7 @@ class MySmartTopicMOD
 		
 		$this->_baseWriterInfo();
 		
-		$this->Info['reply_number'] = $this->reply_number;
-		
-		$this->reply_number += 1;
+		$this->Info[ 'reply_number' ] = $this->reply_number++;
 	}
 		
 	private function __replyFormat()
@@ -329,19 +321,17 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		// We have attachment in this reply
-		if ( $this->Info['attach_reply'] )
+		if ( $this->Info[ 'attach_reply' ] )
 		{
-			$MySmartBB->_CONF['template']['res']['attach_res'] = '';
+			$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] = '';
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-			$MySmartBB->rec->filter = "subject_id='" . $this->Info['reply_id'] . "' AND reply='1'";
-			$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['attach_res'];
+			$MySmartBB->rec->filter = "subject_id='" . $this->Info[ 'reply_id' ] . "' AND reply='1'";
+			$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ];
 			
-			// Get the attachment information
 			$MySmartBB->rec->getList();
 			
-			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['attach_res'] );
+			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] );
 			
 			if ( $attach_num > 0 )
 				$MySmartBB->template->assign( 'SHOW_REPLY_ATTACH', true );
@@ -352,17 +342,17 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 					
-		$reply_date = $MySmartBB->func->date($this->Info['write_time']);
-		$reply_time = $MySmartBB->func->time($this->Info['write_time']);
+		$reply_date = $MySmartBB->func->date( $this->Info[ 'write_time' ] );
+		$reply_time = $MySmartBB->func->time( $this->Info[ 'write_time' ] );
 		
-		$this->Info['write_time'] = $reply_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $reply_time;
+		$this->Info[ 'write_time' ] = $reply_date . ' ' . $MySmartBB->lang_common[ 'comma' ] . ' ' . $reply_time;
 		
 		$this->_baseEnd();
 		
 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-			$MySmartBB->template->display('show_reply');
+			$MySmartBB->template->display( 'show_reply' );
 		else
-			$MySmartBB->template->display('print_reply');
+			$MySmartBB->template->display( 'print_reply' );
 	}
 	
 	// ... //
@@ -371,38 +361,36 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['res']['similar_subjects_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'similar_subjects_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "title LIKE '%" . $this->Info[ 'title' ] . "%' AND delete_topic<>'1' AND id<>'" . $this->Info[ 'subject_id' ] . "'";
+		$MySmartBB->rec->filter = "title LIKE '%" . $this->subject_title . "%' AND delete_topic<>'1' AND id<>'" . $this->subject_id . "'";
 		$MySmartBB->rec->order = 'write_time DESC';
 		$MySmartBB->rec->limit = '5';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['similar_subjects_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'similar_subjects_res' ];
 		
 		$MySmartBB->rec->getList();
 		
-		$topics_number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['similar_subjects_res'] );
+		$topics_number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'similar_subjects_res' ] );
+		
+		$MySmartBB->template->assign( 'SHOW_SIMILAR', false );
 		
 		if ( $topics_number > 0 )
-			$MySmartBB->template->assign('SHOW_SIMILAR',true);
-		else
-			$MySmartBB->template->assign('SHOW_SIMILAR',false);
+			$MySmartBB->template->assign( 'SHOW_SIMILAR', true );
 	}
 	
 	private function _pageEnd()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
+		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
 		
 		$MySmartBB->func->getEditorTools();
 		
-     	$MySmartBB->template->assign('id',$this->Info[ 'subject_id' ]);
+     	$MySmartBB->template->assign( 'id', $this->Info[ 'subject_id' ] );
      	
-     	$MySmartBB->template->assign('Admin',$this->moderator);
-     	
-     	$MySmartBB->template->assign('stick',$this->Info['stick']);
-     	$MySmartBB->template->assign( 'close', $this->Info['close'] );
+     	$MySmartBB->template->assign( 'stick', $this->Info[ 'stick' ] );
+     	$MySmartBB->template->assign( 'close', $this->Info[ 'close' ] );
      	
      	$MySmartBB->template->display( 'topic_end' );
 	}
@@ -423,30 +411,28 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		// The visitor come from the search page, so highlight the key word
-		if ( !empty( $MySmartBB->_GET['highlight'] ) )
-		{
-			$this->Info['text'] = str_replace( $MySmartBB->_GET['highlight'], "<span class='highlight'>" . $MySmartBB->_GET['highlight'] . "</span>",$this->Info['text'] );
-		}
+		// The visitor came from the search page, so highlight the keyword
+		if ( !empty( $MySmartBB->_GET[ 'highlight' ] ) )
+			$this->Info[ 'text' ] = str_replace( $MySmartBB->_GET[ 'highlight' ], "<span class='highlight'>" . $MySmartBB->_GET[ 'highlight' ] . "</span>", $this->Info[ 'text' ] );
 		
 		// ... //
 		
 		if ( $this->SectionInfo[ 'usesmartcode_allow' ] )
-			$this->Info['text'] = $MySmartBB->smartparse->replace($this->Info['text']);
+			$this->Info['text'] = $MySmartBB->smartparse->replace( $this->Info[ 'text' ] );
 		else
-			$this->Info['text'] = nl2br($this->Info['text']);
+			$this->Info['text'] = nl2br( $this->Info[ 'text' ] );
 		
 		// ... //
 		
-		$MySmartBB->smartparse->replace_smiles($this->Info['text']);
+		$MySmartBB->smartparse->replace_smiles( $this->Info[ 'text' ] );
 	}
 	
 	private function _baseEnd()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign('Info',$this->Info);
-		$MySmartBB->template->assign('section',$this->Info['section']);
+		$MySmartBB->template->assign( 'Info', $this->Info );
+		$MySmartBB->template->assign( 'section', $this->Info[ 'section' ] );
 		
 		unset( $this->Info );
 	}

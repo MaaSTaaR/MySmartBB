@@ -316,26 +316,23 @@ class MySmartMember
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : 	This function formats the information of member to show it in pages.
-	//
-	// Parameters :
-	//				- $member_info : 	an array that contains member's information as stored in database.
-	// Returns : 
-	//				- Nothing, it gets the array as a reference.
-	// ~ ~ //	
+	/**
+	 * Formats the information of member to show it in pages.
+	 * 
+	 * @param $member_info an array that contains member's information as stored in database. It's a reference.
+	 */
 	public function processMemberInfo( &$member_info )
 	{
 		// ... //
 		
-		if ( is_numeric( $member_info['register_date'] ) )
-		{
-			$member_info['register_date'] = $this->engine->func->date( $member_info['register_date'] );
-		}
+		if ( is_numeric( $member_info[ 'register_date' ] ) )
+			$member_info[ 'register_date' ] = $this->engine->func->date( $member_info[ 'register_date' ] );
+		
+		// ... //
 		
 		// Convert the writer's gender to a readable text
-		$member_info['user_gender'] 	= 	str_replace( 'm', $this->engine->lang[ 'male' ], $member_info['user_gender'] );
-		$member_info['user_gender'] 	= 	str_replace( 'f', $this->engine->lang[ 'female' ], $member_info['user_gender'] );
+		$member_info[ 'user_gender' ] 	= 	str_replace( 'm', $this->engine->lang[ 'male' ], $member_info[ 'user_gender' ] );
+		$member_info[ 'user_gender' ] 	= 	str_replace( 'f', $this->engine->lang[ 'female' ], $member_info[ 'user_gender' ] );
 		
 		// ... //
 		
@@ -348,29 +345,29 @@ class MySmartMember
 		// ... //
 		
 		// Format the away message
-		if ( !empty( $member_info['away_msg'] ) )
+		if ( !empty( $member_info[ 'away_msg' ] ) )
 			$this->engine->smartparse->replace_smiles( $member_info[ 'away_msg' ] );
 		
 		// ... //
 		
-		// The username to show
+		// The username to be shown
 		if ( empty( $member_info[ 'username_style_cache' ] ) )
 		{
-			$member_info['display_username'] = $member_info['username'];
+			$member_info[ 'display_username' ] = $member_info[ 'username' ];
 		}
 		else
 		{
-			$member_info['display_username'] = $member_info['username_style_cache'];
-			$member_info['display_username'] = $this->engine->func->htmlDecode( $member_info['display_username'] );
+			$member_info[ 'display_username' ] = $member_info[ 'username_style_cache' ];
+			$member_info[ 'display_username' ] = $this->engine->func->htmlDecode( $member_info[ 'display_username' ] );
 		}
 		
 		// ... //
 		
-		// The writer's signture does'nt empty 
+		// The writer's signture isn't empty 
 		if ( !empty( $member_info[ 'user_sig' ] ) )
 		{
-			$member_info['user_sig'] = $this->engine->smartparse->replace($member_info['user_sig']);
-			$this->engine->smartparse->replace_smiles($member_info['user_sig']);
+			$member_info[ 'user_sig' ] = $this->engine->smartparse->replace( $member_info[ 'user_sig' ] );
+			$this->engine->smartparse->replace_smiles( $member_info[ 'user_sig' ] );
 		}
 		
 		// ... //
