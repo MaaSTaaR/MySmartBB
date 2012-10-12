@@ -475,19 +475,30 @@ class MySmartSection
 	
 	// ... //
 	
+	/**
+	 * Returns a list of forums with its details from serialized cache.
+	 * 
+	 * @param $cache The serialized cache to obtain forums list from.
+	 * @param $check_group If it's true, check if the current member has
+	 * 						permissions to view a specific forum from the list.
+	 * 						If false the function will return the whole list of forums.
+	 * 						Default value is true.
+	 * 
+	 * @return Array of forums or null
+	 */
 	public function fetchForumsFromCache( $cache, $check_group = true )
 	{
 		$forums_list = array();
 		
 		$forums = unserialize( base64_decode( $cache ) );
 	
-		foreach ($forums as $forum)
+		foreach ( $forums as $forum )
 		{
 			$show_forum = false;
-	
+			
+			// Check if the visitor has the permission to view this forum.
 			if ( $check_group )
 			{
-				// Check if the visitor have the permission to see this forum or not
 				if ( is_array( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
 				{
 					if ( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
@@ -522,11 +533,9 @@ class MySmartSection
 								if ( $sub[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
 								{
 									if ( !$forum[ 'is_sub' ] )
-									{
 										$forum[ 'is_sub' ] = 1;
-									}
 	
-									$forum['sub'] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ' . $this->engine->lang_common[ 'comma' ];
+									$forum[ 'sub' ] .= '<a href="index.php?page=forum&amp;show=1&amp;id=' . $sub[ 'id' ] . '">' . $sub[ 'title' ] . '</a> ' . $this->engine->lang_common[ 'comma' ];
 								}
 							}
 						}
@@ -536,9 +545,8 @@ class MySmartSection
 				// ... //
 	
 				// Get the moderators list as a _link_ and store it in $forum['moderators_list']
-	
-				$forum['is_moderators'] 		= 	0;
-				$forum['moderators_list']		=	null;
+				$forum[ 'is_moderators' ] 		= 	0;
+				$forum[ 'moderators_list' ]		=	null;
 	
 				if ( !empty( $forum[ 'moderators' ] ) )
 				{
@@ -549,9 +557,7 @@ class MySmartSection
 						foreach ( $moderators as $moderator )
 						{
 							if ( !$forum[ 'is_moderators' ] )
-							{
 								$forum[ 'is_moderators' ] = 1;
-							}
 	
 							$forum[ 'moderators_list' ] .= '<a href="index.php?page=profile&amp;show=1&amp;id=' . $moderator['member_id'] . '">' . $moderator['username'] . '</a> ' . $this->engine->lang_common[ 'comma' ];
 						}
@@ -582,8 +588,8 @@ class MySmartSection
 	
 	
 	/**
-	 * Prevents member (or visitor) from view password-protected forum 
-	 * if the member didn't provide the password, if he did checks the provided password,
+	 * Prevents member (or visitor) from view password-protected forum if the member 
+	 * didn't provide the password, if he did checks the provided password,
 	 * if there is no password for the forum just do nothing.
 	 * 
 	 * @param $section_id The id of the forum to be checked.

@@ -1,12 +1,12 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartForumMOD');
+define( 'CLASS_NAME', 'MySmartForumMOD' );
 
 class MySmartForumMOD
 {
@@ -41,6 +41,20 @@ class MySmartForumMOD
 		$MySmartBB->func->getFooter();
 	}
 	
+	private function _initForum()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'forum' );
+		
+		$MySmartBB->load( 'section,subject' );
+		
+		$MySmartBB->template->assign( 'SECTION_RSS', true );
+		$MySmartBB->template->assign( 'SECTION_ID', (int) $MySmartBB->_GET[ 'id' ] );
+		
+		$this->_getSectionInfo();
+	}
+	
 	public function _browseForum()
 	{
 		global $MySmartBB;
@@ -60,25 +74,7 @@ class MySmartForumMOD
 		
 		$this->_callTemplate();
 	}
-	
-	/*public function check( $id )
-	{
-		global $MySmartBB;
 		
-		$this->id = $id;
-		
-		// ... //
-		
-		$this->_initForum();
-		
-		// ... //
-		
-		$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_POST[ 'password' ] );
-			
-		if ( $check )
-			$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] );
-	}*/
-	
 	private function _getSectionInfo()
 	{
 		global $MySmartBB;
@@ -102,9 +98,12 @@ class MySmartForumMOD
 		if ( !$this->Section )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		
+		if ( $this->Section[ 'parent' ] == 0 )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cat_section' ] );
+		
 		// ... //
 			
-		$MySmartBB->template->assign('section_info',$this->Section);
+		$MySmartBB->template->assign( 'section_info', $this->Section );
 		
 		// ... //
 		
@@ -112,8 +111,9 @@ class MySmartForumMOD
 		
 		// .. //
 		
+		$MySmartBB->rec->select = 'view_section';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->Section['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->Section[ 'id' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
@@ -122,17 +122,14 @@ class MySmartForumMOD
 		// Get the permissions of the parent section
 		$MySmartBB->rec->select = 'view_section';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->Section['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->Section[ 'parent' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$parent_per = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( $this->SectionGroup['view_section'] != 1 or $parent_per[ 'view_section' ] != 1 )
+		if ( $this->SectionGroup[ 'view_section' ] != 1 or $parent_per[ 'view_section' ] != 1 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_forum' ] );
-			
-		if ( isset( $this->Section[ 'main_section' ] ) and $this->Section[ 'main_section' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cat_section' ] );
 		
 		// ... //
 	}
@@ -142,7 +139,7 @@ class MySmartForumMOD
 		global $MySmartBB;
 		
 		// This section is a link , so we should go to another location
-		if ( $this->Section['linksection'] )
+		if ( $this->Section[ 'linksection' ] )
 			$this->_goToLink();
 		
 		// ... //
@@ -153,10 +150,8 @@ class MySmartForumMOD
      	// ... //
      	
 		// Where is the member now?
-		if ( $MySmartBB->_CONF['member_permission'] )
-     	{
-			$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Section['title'] );
-     	}
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Section[ 'title' ] );
 	}
 	
 	private function _goToLink()
@@ -178,14 +173,11 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section['linksite'] );
-		$MySmartBB->func->move( $this->Section['linksite'], 2 );
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section[ 'linksite' ] );
+		$MySmartBB->func->move( $this->Section[ 'linksite' ], 2 );
 		$MySmartBB->func->stop();
 	}
 	
-	/**
-	 * Know who is reading the section ?
-	 */
 	private function _sectionOnline()
 	{
 		global $MySmartBB;
@@ -194,18 +186,18 @@ class MySmartForumMOD
 		
 		// Get the list of people who are reading this section
 		
-		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
+		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
+		
+		// ... //
 		
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'show_onlineguest' ] )
-		{
 			$this->rec->filter .= " AND username<>'Guest'";
-		}
 		
 		// This member can't see hidden member
 		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] )
-		{
 			$this->rec->filter .= " AND hide_browse<>'1'";
-		}
+		
+		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->order = "user_id DESC";
@@ -216,21 +208,19 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		// Get the number of unregistered visitors who are reading this section
-		
+		// Get the number of guests who are viewing this forum
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
+		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
 		
-		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->rec->getNumber();
+		$MySmartBB->_CONF[ 'template' ][ 'GuestNumber' ] = $MySmartBB->rec->getNumber();
 		
 		// ... //
 		
-		// Get the number of members who read this section
-		
+		// Get the number of members who are viewing this forum
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER['QUERY_STRING'] . "'";
+		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
 		
-		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->rec->getNumber();
+		$MySmartBB->_CONF[ 'template' ][ 'MemberNumber' ] = $MySmartBB->rec->getNumber();
 		
 		// ... //
 	}
@@ -277,13 +267,13 @@ class MySmartForumMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign('SHOW_SUB_SECTIONS',false);
+		$MySmartBB->template->assign( 'SHOW_SUB_SECTIONS', false );
 		
 		if ( !empty( $this->Section[ 'forums_cache' ] ) )
 		{
 			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->fetchForumsFromCache( $this->Section[ 'forums_cache' ] );
 			
-			$MySmartBB->template->assign('SHOW_SUB_SECTIONS',true);
+			$MySmartBB->template->assign( 'SHOW_SUB_SECTIONS', true );
 		}
 	}
 	
@@ -294,8 +284,8 @@ class MySmartForumMOD
 		$this->__getSubjectList();
 		$this->__getStickSubjectList();
 		
-		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
-		$MySmartBB->template->assign('section_id',$this->Section['id']); // TODO : See the line 73
+		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
+		$MySmartBB->template->assign( 'section_id', $this->Section[ 'id' ] );
 	}
 	
 	private function __getSubjectList()
@@ -304,13 +294,12 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$filter = "section='" . $this->Section['id'] . "' AND stick<>'1' AND delete_topic<>'1'";
+		$filter = "section='" . $this->Section[ 'id' ] . "' AND stick<>'1' AND delete_topic<>'1'";
 		
-		if ($this->Section['hide_subject'] 
-			and !$MySmartBB->_CONF['group_info']['admincp_allow'])
-		{
-			$filter .= " AND writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
-		}
+		// ... //
+		
+		if ( $this->Section[ 'hide_subject' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+			$filter .= " AND writer='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		// ... //
 		
@@ -321,31 +310,27 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->filter = $filter;
+		$order = "write_time DESC";
 		
-		if ($this->Section['subject_order'] == 2)
-		{
-			$MySmartBB->rec->order = "id DESC";
-		}
-		elseif ($this->Section['subject_order'] == 3)
-		{
-			$MySmartBB->rec->order = "id ASC";
-		}
-		else
-		{
-			$MySmartBB->rec->order = "write_time DESC";
-		}
+		if ( $this->Section[ 'subject_order' ] == 2 )
+			$order = "id DESC";
+		elseif ( $this->Section[ 'subject_order' ] == 3 )
+			$order = "id ASC";
 		
-		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
+		// ... //
+		
+		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		$MySmartBB->rec->filter = $filter;
+		$MySmartBB->rec->order = $order;
 		
-		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$subject_total;
-		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['subject_perpage'];
-		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=forum&amp;show=1&amp;id=' . $this->Section['id'] . '#subject_table';
-		$MySmartBB->rec->pager['var'] 		= 	'count';
+		$MySmartBB->rec->pager 					= 	array();
+		$MySmartBB->rec->pager[ 'total' ]		= 	$subject_total;
+		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'subject_perpage' ];
+		$MySmartBB->rec->pager[ 'count' ] 		= 	$MySmartBB->_GET[ 'count' ];
+		$MySmartBB->rec->pager[ 'location' ] 	= 	'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . '#subject_table';
+		$MySmartBB->rec->pager[ 'var' ] 		= 	'count';
 		
 		$this->subject_res = &$MySmartBB->func->setResource();
 		
@@ -361,7 +346,7 @@ class MySmartForumMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "section='" . $this->Section['id'] . "' AND stick='1' AND delete_topic<>'1'";
+		$MySmartBB->rec->filter = "section='" . $this->Section[ 'id' ] . "' AND stick='1' AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "write_time DESC";
 		
 		$this->stick_subject_res = &$MySmartBB->func->setResource();
@@ -389,23 +374,7 @@ class MySmartForumMOD
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'subject_res' ] = $this->subject_res;
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'stick_subject_res' ] = $this->stick_subject_res;
 		
-		$MySmartBB->template->display('forum');
-	}
-	
-	// ... //
-	
-	private function _initForum()
-	{
-		global $MySmartBB;
-		
-		$MySmartBB->loadLanguage( 'forum' );
-		
-		$MySmartBB->load( 'section,subject' );
-		
-		$MySmartBB->template->assign( 'SECTION_RSS', true );
-		$MySmartBB->template->assign( 'SECTION_ID', (int) $MySmartBB->_GET[ 'id' ] );
-		
-		$this->_getSectionInfo();
+		$MySmartBB->template->display( 'forum' );
 	}
 }
 
