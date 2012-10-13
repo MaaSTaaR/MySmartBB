@@ -74,6 +74,8 @@ $lang[ 'template' ][ 'reply_writer' ] = 'Writer';
 $lang[ 'template' ][ 'delete_reply' ] = 'Delete the Reply';
 $lang[ 'template' ][ 'edit_reply' ] = 'Edit the Reply';
 
+$lang[ 'template' ][ 'password_proctected' ] = 'This forum protected by password, Please enter the password to view the forum';
+
 // ... //
 
 $lang[ 'topic_doesnt_exist' ] = 'The topic doesn\'t exist';

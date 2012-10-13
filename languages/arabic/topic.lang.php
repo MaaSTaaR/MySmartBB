@@ -74,6 +74,8 @@ $lang[ 'template' ][ 'reply_writer' ] = 'كاتب الرد';
 $lang[ 'template' ][ 'delete_reply' ] = 'حذف الرد';
 $lang[ 'template' ][ 'edit_reply' ] = 'تحرير الرد';
 
+$lang[ 'template' ][ 'password_proctected' ] = 'هذا المنتدى محمي بكلمة مرور، يرجى ادخالها حتى تستطيع عرض هذا المنتدى';
+
 // ... //
 
 $lang[ 'topic_doesnt_exist' ] = 'المعذره، الموضوع المطلوب غير موجود';

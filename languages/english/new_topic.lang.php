@@ -24,6 +24,8 @@ $lang[ 'template' ][ 'poll_question' ] = 'The Question';
 $lang[ 'template' ][ 'poll_answer' ] = 'The Answer';
 $lang[ 'template' ][ 'add_another_answer' ] = 'Add Another Answer';
 
+$lang[ 'template' ][ 'password_proctected' ] = 'This forum protected by password, Please enter the password to view the forum';
+
 // ... //
 
 $lang[ 'forum_doesnt_exist' ] = 'The forum doesn\'t exist';

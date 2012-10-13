@@ -1,19 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
-{
-	define( 'JAVASCRIPT_SMARTCODE', true );
-}
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+include( 'common.php' );
 
-include('common.php');
-
-define('CLASS_NAME','MySmartTopicAddMOD');
+define( 'CLASS_NAME', 'MySmartTopicAddMOD' );
 
 class MySmartTopicAddMOD
 {
@@ -32,11 +27,11 @@ class MySmartTopicAddMOD
 		
 		$this->_commonCode();
 		
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_index();
 		}
-		elseif ($MySmartBB->_GET['start'])
+		elseif ( $MySmartBB->_GET[ 'start' ] )
 		{
 			$this->_start();
 		}
@@ -54,15 +49,15 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		if ( empty( $MySmartBB->_GET['id'] ) )
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
@@ -74,7 +69,7 @@ class MySmartTopicAddMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'id' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
@@ -83,18 +78,27 @@ class MySmartTopicAddMOD
 		// Get the permissions of the parent section
 		$MySmartBB->rec->select = 'view_section';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'parent' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$parent_per = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
 		// The visitor can't show this section , so stop the page
-		if (!$this->SectionGroup['view_section'] or $parent_per[ 'view_section' ] != 1
-			or !$this->SectionGroup['write_subject'])
+		if ( !$this->SectionGroup[ 'view_section' ] or !$parent_per[ 'view_section' ]
+			or !$this->SectionGroup[ 'write_subject' ] )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );
 		}
+		
+		// ... //
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
+		
+		// ... //
+		
+		// It should be before calling forumPassword().
+		$MySmartBB->template->assign( 'section_info', $this->SectionInfo );
 		
 		// ... //
 		
@@ -103,47 +107,33 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
-		$this->moderator = $MySmartBB->moderator->moderatorCheck( $MySmartBB->_GET['id'] );
-		
-		// ... //
-		
-		$MySmartBB->template->assign('section_info',$this->SectionInfo);
-		
-		// ... //
+		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo[ 'id' ] );
 	}
 		
 	private function _index()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
-		
 		$MySmartBB->func->getEditorTools();
-		
-		$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
-		
-		// Instead of send a whole version of $this->SectionGroup to template engine
-		// We just send options which we really need, we use this way to save memory
-		$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
 		
 		// ... //
 		
-		$MySmartBB->template->assign('Admin',$this->moderator);
+		// Instead of send a whole version of $this->SectionGroup to template engine
+		// We just send options which we really need, we use this way to save memory
+		$MySmartBB->template->assign( 'upload_attach', $this->SectionGroup[ 'upload_attach' ] );
+		$MySmartBB->template->assign( 'Admin', $this->moderator );
+		$MySmartBB->template->assign( 'id', $this->SectionInfo[ 'id' ] );
 				
 		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'new_topic_main' );
 		
-		// ... //
-		
-		$MySmartBB->template->display('new_topic');
+		$MySmartBB->template->display( 'new_topic' );
 	}
 	
 	private function _start()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
 		
 		$MySmartBB->_POST['title'] 	= 	trim( $MySmartBB->_POST['title'] );
 		$MySmartBB->_POST['text'] 	= 	trim( $MySmartBB->_POST['text'] );

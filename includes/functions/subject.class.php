@@ -171,7 +171,7 @@ class MySmartSubject
 	 */
 	public function updateSubjectVisits( $visits, $id )
 	{
-		if ( empty( $visits ) or empty( $id ) )
+		if ( !isset( $visits ) or empty( $id ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()' );
 		
  		$this->engine->rec->table = $this->table;

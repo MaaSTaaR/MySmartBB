@@ -14,6 +14,8 @@ $lang[ 'template' ][ 'management_options' ] = 'Topic Management';
 $lang[ 'template' ][ 'stick_subject' ] = 'Mark The Topic as Important';
 $lang[ 'template' ][ 'close_subject' ] = 'Close The Topic';
 
+$lang[ 'template' ][ 'password_proctected' ] = 'This forum protected by password, Please enter the password to view the forum';
+
 // ... //
 
 $lang[ 'topic_doent_exist' ] = 'The topic doesn\'t exist';

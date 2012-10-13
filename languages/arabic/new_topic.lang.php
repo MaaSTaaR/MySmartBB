@@ -24,6 +24,8 @@ $lang[ 'template' ][ 'poll_question' ] = 'السؤال';
 $lang[ 'template' ][ 'poll_answer' ] = 'الجواب';
 $lang[ 'template' ][ 'add_another_answer' ] = 'اضف جواب آخر';
 
+$lang[ 'template' ][ 'password_proctected' ] = 'هذا المنتدى محمي بكلمة مرور، يرجى ادخالها حتى تستطيع عرض هذا المنتدى';
+
 // ... //
 
 $lang[ 'forum_doesnt_exist' ] = 'المعذره .. القسم المطلوب غير موجود';
