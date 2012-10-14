@@ -23,9 +23,9 @@ class MySmartTags
 	public function taggingSubject( $tags, $subject_id, $subject_title )
 	{
 		if ( !is_array( $tags ) or ( empty( $subject_id ) or $subject_id == 0 ) or empty( $subject_title ) )
-		{
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM taggingSubject()', E_USER_ERROR  );
-		}
+		
+		// ... //
 		
 		// TODO : This is a temporary way to solve the problem, We have to prevent queries inside loops!
 		foreach ( $tags as $tag )

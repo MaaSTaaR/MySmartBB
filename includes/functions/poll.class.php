@@ -20,12 +20,20 @@ class MySmartPoll
 	
 	// ... //
 	
+	/**
+	 * Inserts a poll to a topic.
+	 * 
+	 * @param $question The text of the poll's question.
+	 * @param $answers An array of the answers.
+	 * @param $subject_id The id of the topic of the poll.
+	 * @param $update_subject_state Set it true if you want the function to mark to topic as a poll topic, otherwise set it false. Default value is false.
+	 * 
+	 * @return true for success, otherwise false.
+	 */
 	public function insertPoll( $question, $answers, $subject_id, $update_subject_state = false )
 	{
 		if ( empty( $question ) or !is_array( $answers ) or ( empty( $subject_id ) or $subject_id == 0 ) )
-		{
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM insertPoll()', E_USER_ERROR  );
-		}
 		
 		// ... //
 		
@@ -63,9 +71,7 @@ class MySmartPoll
      		if ( $update_subject_state )
      		{
      			$this->engine->rec->table = $this->engine->table[ 'subject' ];
-     			
      			$this->engine->rec->fields = array(	'poll_subject'	=>	'1'	);
-     			
      			$this->engine->rec->filter = "id='" . $subject_id . "'";
      			
      			$update = $this->engine->rec->update();

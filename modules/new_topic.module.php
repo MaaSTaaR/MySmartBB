@@ -252,9 +252,9 @@ class MySmartTopicAddMOD
 		
 		if ( $MySmartBB->_POST[ 'poll' ] )
 		{
-			if ( isset( $MySmartBB->_POST[ 'question' ] )
-				and isset( $MySmartBB->_POST[ 'answers' ][ 0 ] )
-				and isset( $MySmartBB->_POST[ 'answers' ][ 1 ] ) )
+			if ( !empty( $MySmartBB->_POST[ 'question' ] )
+				and !empty( $MySmartBB->_POST[ 'answers' ][ 0 ] )
+				and !empty( $MySmartBB->_POST[ 'answers' ][ 1 ] ) )
 			{
 				$MySmartBB->poll->insertPoll( $MySmartBB->_POST[ 'question' ], $MySmartBB->_POST[ 'answers' ], $this->subject_id, true );
 			}
@@ -265,10 +265,10 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$tags_size = sizeof($MySmartBB->_POST['tags']);
+		$tags_size = sizeof( $MySmartBB->_POST[ 'tags' ] );
 
-		if ( $tags_size > 0 and strlen($MySmartBB->_POST['tags'][0]) > 0 )
-			$MySmartBB->tag->taggingSubject( $MySmartBB->_POST['tags'], $this->subject_id, $MySmartBB->_POST[ 'title' ] );
+		if ( $tags_size > 0 and strlen( $MySmartBB->_POST[ 'tags' ][ 0 ]) > 0 )
+			$MySmartBB->tag->taggingSubject( $MySmartBB->_POST[ 'tags' ], $this->subject_id, $MySmartBB->_POST[ 'title' ] );
 	}
 	
 	private function _addAttachments()
