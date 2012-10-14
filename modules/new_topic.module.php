@@ -135,14 +135,14 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_POST['title'] 	= 	trim( $MySmartBB->_POST['title'] );
-		$MySmartBB->_POST['text'] 	= 	trim( $MySmartBB->_POST['text'] );
+		$MySmartBB->_POST[ 'title' ] 	= 	trim( $MySmartBB->_POST[ 'title' ] );
+		$MySmartBB->_POST[ 'text' ] 	= 	trim( $MySmartBB->_POST[ 'text' ] );
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate']  . ' تنفيذ عملية كتابة موضوع');
+		$MySmartBB->func->addressBar( '<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . $MySmartBB->lang[ 'do_write_topic' ] );
 		
 		// ... //
 		
-		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['text']))
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		// ... //
@@ -158,30 +158,32 @@ class MySmartTopicAddMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
     	$MySmartBB->rec->get_id = true;
 
-		$MySmartBB->rec->fields = array(	'title'	=>	$MySmartBB->_POST['title'],
-											'text'	=>	$MySmartBB->_POST['text'],
-											'writer'	=>	$MySmartBB->_CONF['member_row']['username'],
-											'section'	=>	$this->SectionInfo['id'],
-											'write_time'	=>	$MySmartBB->_CONF['now'],
-											'icon'	=>	$MySmartBB->_POST['icon'],
-											'subject_describe'	=>	$MySmartBB->_POST['describe'],
-											'native_write_time'	=>	$MySmartBB->_CONF['now'],
-											'sec_subject'	=>	$this->SectionInfo['sec_section'],
-											'poll_subject'	=>	0,
+		$MySmartBB->rec->fields = array(	'title'				=>	$MySmartBB->_POST[ 'title' ],
+											'text'				=>	$MySmartBB->_POST[ 'text' ],
+											'writer'			=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ],
+											'section'			=>	$this->SectionInfo[ 'id' ],
+											'write_time'		=>	$MySmartBB->_CONF[ 'now' ],
+											'icon'				=>	$MySmartBB->_POST[ 'icon' ],
+											'subject_describe'	=>	$MySmartBB->_POST[ 'describe' ],
+											'native_write_time'	=>	$MySmartBB->_CONF[ 'now' ],
+											'sec_subject'		=>	$this->SectionInfo[ 'sec_section' ],
+											'poll_subject'		=>	'0',
 											'attach_subject'	=>	( $MySmartBB->_POST[ 'attach' ] ) ? '1' : '0',
-											'visitor'		=>	0	);
+											'visitor'			=>	'0'	);
 											
 		if ( $this->moderator )
 		{
-			$MySmartBB->rec->fields['stick'] = ($MySmartBB->_POST['stick']) ? 1 : 0;
-			$MySmartBB->rec->fields['close'] = ($MySmartBB->_POST['close']) ? 1 : 0;
+			$MySmartBB->rec->fields[ 'stick' ] = ( $MySmartBB->_POST[ 'stick' ] ) ? 1 : 0;
+			$MySmartBB->rec->fields[ 'close' ] = ( $MySmartBB->_POST[ 'close' ] ) ? 1 : 0;
 		}
 		
-		$Insert = $MySmartBB->rec->insert();
-		$this->subject_id = $MySmartBB->rec->id;
+		$insert = $MySmartBB->rec->insert();
+		
 					
-		if ($Insert)
+		if ( $insert )
 		{
+			$this->subject_id = $MySmartBB->rec->id;
+			
 			// ... //
 						
 			$this->_addPoll();
@@ -216,7 +218,7 @@ class MySmartTopicAddMOD
 			$MySmartBB->plugin->runHooks( 'new_topic_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
+			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
 		}
@@ -228,19 +230,19 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 		{
-			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']}))
-	  			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_max'] );
+			if ( isset($MySmartBB->_POST[ 'title' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_title_max' ] } ) )
+	  			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_title_max' ] );
 
-	   		if  (!isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_min']}))
-	 			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_title_min'] );
+	   		if  ( !isset( $MySmartBB->_POST[ 'title' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_title_min' ] - 1 } ) )
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_lesser' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_title_min' ] );
 
-	  	 	if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']}))
-	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
+	  	 	if ( isset( $MySmartBB->_POST[ 'text' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_text_max' ] } ) )
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_text_max' ] );
 
-			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
-	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
+			if ( !isset($MySmartBB->_POST[ 'text' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_text_min' ] - 1 } ) )
+	 			$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_text_min' ] );
 		}
 	}
 	
@@ -248,13 +250,13 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		if ( $MySmartBB->_POST['poll'] )
+		if ( $MySmartBB->_POST[ 'poll' ] )
 		{
-			if ( isset($MySmartBB->_POST['question'])
-				and isset($MySmartBB->_POST['answers'][0])
-				and isset($MySmartBB->_POST['answers'][1]) )
+			if ( isset( $MySmartBB->_POST[ 'question' ] )
+				and isset( $MySmartBB->_POST[ 'answers' ][ 0 ] )
+				and isset( $MySmartBB->_POST[ 'answers' ][ 1 ] ) )
 			{
-				$MySmartBB->poll->insertPoll( $MySmartBB->_POST['question'], $MySmartBB->_POST['answers'], $this->subject_id, true );
+				$MySmartBB->poll->insertPoll( $MySmartBB->_POST[ 'question' ], $MySmartBB->_POST[ 'answers' ], $this->subject_id, true );
 			}
 		}
 	}

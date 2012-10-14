@@ -38,6 +38,8 @@ $lang[ 'context_length_lesser' ] = 'The text length is lesser than';
 
 $lang[ 'incorrect_password' ] = 'Incorrect Password';
 
+$lang[ 'do_write_topic' ] = 'Writing the topic';
+
 // ... //
 
 ?>
