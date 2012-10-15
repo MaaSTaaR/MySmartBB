@@ -20,6 +20,15 @@ class MySmartTags
 	
 	// ... //
 	
+	/**
+	 * Registers tags for a topic.
+	 * 
+	 * @param $tags The array of the tags.
+	 * @param $subject_id The id of the topic that will be tagged.
+	 * @param $subject_title The title of the topic.
+	 * 
+	 * @return true for success, otherwise false.
+	 */
 	public function taggingSubject( $tags, $subject_id, $subject_title )
 	{
 		if ( !is_array( $tags ) or ( empty( $subject_id ) or $subject_id == 0 ) or empty( $subject_title ) )
@@ -37,6 +46,9 @@ class MySmartTags
 			
 			$Tag = $this->engine->rec->getInfo();
 			
+			var_dump( $Tag );
+			
+			// This tag doesn't exist, insert it into database.
 			if ( !$Tag )
 			{
 				$this->engine->rec->table = $this->engine->table[ 'tag' ];
@@ -50,18 +62,18 @@ class MySmartTags
 			else
 			{
 				$this->engine->rec->table = $this->engine->table[ 'tag' ];
-				$this->engine->rec->fields = array(	'number'	=>	$Tag['num'] + 1);
-				$this->engine->rec->filter = "id='" . $Tag['id'] . "'";
+				$this->engine->rec->fields = array(	'number'	=>	$Tag[ 'number' ] + 1 );
+				$this->engine->rec->filter = "id='" . $Tag[ 'id' ] . "'";
 						
 				$update = $this->engine->rec->update();
 						
-				$tag_id = $Tag['id'];
+				$tag_id = $Tag[ 'id' ];
 			}
 					
 			$this->engine->rec->table = $this->engine->table[ 'tag_subject' ];
-			$this->engine->rec->fields = array(	'tag_id'	=>	$tag_id,
+			$this->engine->rec->fields = array(	'tag_id'		=>	$tag_id,
 												'subject_id'	=>	$subject_id,
-												'tag'	=>	$tag,
+												'tag'			=>	$tag,
 												'subject_title'	=>	$subject_title);
 			
 			$insert = $this->engine->rec->insert();

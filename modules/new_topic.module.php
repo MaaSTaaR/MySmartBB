@@ -265,9 +265,7 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		$tags_size = sizeof( $MySmartBB->_POST[ 'tags' ] );
-
-		if ( $tags_size > 0 and strlen( $MySmartBB->_POST[ 'tags' ][ 0 ]) > 0 )
+		if ( !empty( $MySmartBB->_POST[ 'tags' ][ 0 ] ) )
 			$MySmartBB->tag->taggingSubject( $MySmartBB->_POST[ 'tags' ], $this->subject_id, $MySmartBB->_POST[ 'title' ] );
 	}
 	
