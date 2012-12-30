@@ -195,12 +195,12 @@
 			</td>
 			<td class="row1">
 				<select name="groups[{$SecGroupList['group_id']}][no_posts]" id="select_no_posts">
-					{if {$SecGroupList['no_posts']}}
-					<option value="1" selected="selected">{$lang['common']['yes']}</option>
-					<option value="0">{$lang['common']['no']}</option>
+					{if {$SecGroupList['no_posts']} == '1'}
+					<option value="0">{$lang['common']['yes']}</option>
+					<option value="1" selected="selected">{$lang['common']['no']}</option>
 					{else}
-					<option value="1">{$lang['common']['yes']}</option>
-					<option value="0" selected="selected">{$lang['common']['no']}</option>
+					<option value="0" selected="selected">{$lang['common']['yes']}</option>
+					<option value="1">{$lang['common']['no']}</option>
 					{/if}
 				</select>
 			</td>

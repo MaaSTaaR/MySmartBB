@@ -20,14 +20,21 @@ class MySmartUsertitle
 	
 	// ... //
 	
+	/**
+	 * Gets the usertitle for a specific number of posts.
+	 * 
+	 * @param $posts The number of posts which we want to get the usertitle of it.
+	 * 
+	 * @return null if the usertitle doesn't exist, or returns the usertitle
+	 */
 	public function getNewUsertitle( $posts )
 	{
 		$this->engine->rec->table = $this->engine->table[ 'usertitle' ];
 		$this->engine->rec->filter = "posts='" . $posts . "'";
 		
-		$UserTitle = $this->engine->rec->getInfo();
+		$info = $this->engine->rec->getInfo();
 		
-		return ( $UserTitle != false ) ? $UserTitle['usertitle'] : null;
+		return ( $info != false ) ? $info[ 'usertitle' ] : null;
 	}
 	
 	// ... //

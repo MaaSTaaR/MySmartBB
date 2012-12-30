@@ -194,18 +194,18 @@ class MySmartTopicAddMOD
 			
 			// ... //
 			
-			$posts = ( !$this->SectionGroup[ 'no_posts' ] ) ? $MySmartBB->_CONF['member_row']['posts'] + 1 : $MySmartBB->_CONF['member_row']['posts'];
+			$posts = ( !$this->SectionGroup[ 'no_posts' ] ) ? $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] + 1 : $MySmartBB->_CONF[ 'member_row' ][ 'posts' ];
 			
-			$usertitle = ( $MySmartBB->_CONF['group_info']['usertitle_change'] ) ? $MySmartBB->usertitle->getNewUsertitle( $posts ) : null;
+			$usertitle = ( $MySmartBB->_CONF[ 'group_info' ][ 'usertitle_change' ] ) ? $MySmartBB->usertitle->getNewUsertitle( $posts ) : $MySmartBB->_CONF[ 'member_row' ][ 'user_title' ];
 			
 			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array(	'posts'	=>	$posts,
-												'lastpost_time'	=>	$MySmartBB->_CONF['now'],
-												'user_title'	=>	(!is_null($usertitle)) ? $usertitle : $MySmartBB->_CONF['member_row']['user_title']);
+												'lastpost_time'	=>	$MySmartBB->_CONF[ 'now' ],
+												'user_title'	=>	$usertitle );
 												
-   			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+   			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
    			
    			$MySmartBB->rec->update();
    			
@@ -218,7 +218,7 @@ class MySmartTopicAddMOD
 			$MySmartBB->plugin->runHooks( 'new_topic_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
-			//$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
 		}
@@ -285,21 +285,19 @@ class MySmartTopicAddMOD
 	{
 		global $MySmartBB;
 		
-		// Update Last subject's information
-		$MySmartBB->section->updateLastSubject( $MySmartBB->_CONF['member_row']['username'], 
-													$MySmartBB->_POST['title'], 
+		$MySmartBB->section->updateLastSubject( 	$MySmartBB->_CONF[ 'member_row' ][ 'username' ], 
+													$MySmartBB->_POST[ 'title' ], 
 													$this->subject_id, 
-													$MySmartBB->_CONF['now'], 
-													(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
+													$MySmartBB->_CONF[ 'now' ], 
+													( !$this->SectionInfo[ 'sub_section' ] ) ? $this->SectionInfo[ 'id' ] : $this->SectionInfo[ 'from_sub_section' ] );
 			
 		// ... //
 		
-		$MySmartBB->section->updateSubjectNumber( $this->SectionInfo['id'], $this->SectionInfo['subject_num'] );
+		$MySmartBB->section->updateSubjectNumber( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'subject_num' ] );
 		
 		// ... //
 		
-		// Update section's cache
-		$MySmartBB->section->updateForumCache( $this->SectionInfo['parent'], $this->SectionInfo['id'] );
+		$MySmartBB->section->updateForumCache( $this->SectionInfo[ 'parent' ], $this->SectionInfo[ 'id' ] );
 		
 		// ... //
 	}
