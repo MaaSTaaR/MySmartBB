@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartReplyAddMOD');
+define( 'CLASS_NAME', 'MySmartReplyAddMOD' );
 
 class MySmartReplyAddMOD
 {
@@ -70,28 +70,23 @@ class MySmartReplyAddMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $this->SubjectInfo['section'] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->SubjectInfo[ 'section' ] . "'";
 		
 		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo['id'], $MySmartBB->_CONF['member_row']['username'] );
+		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo[ 'id' ] );
 		
 		// ... //
 
-		if ( !$this->moderator )
-		{
-			if ( $this->SubjectInfo[ 'close' ] )
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'topic_closed' ] );
-			}
-		}
+		if ( !$this->moderator and $this->SubjectInfo[ 'close' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_closed' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'id' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$this->SectionGroup = $MySmartBB->rec->getInfo();
 		
@@ -100,14 +95,14 @@ class MySmartReplyAddMOD
 		// Get the permissions of the parent section
 		$MySmartBB->rec->select = 'view_section';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo['parent'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $this->SectionInfo[ 'parent' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$parent_per = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( !$this->SectionGroup['view_section'] or $parent_per[ 'view_section' ] != 1
-			or !$this->SectionGroup['write_reply'] )
+		if ( !$this->SectionGroup[ 'view_section' ] or !$parent_per[ 'view_section' ]
+			or !$this->SectionGroup[ 'write_reply' ] )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_write_permission' ] );
 		}
@@ -123,8 +118,8 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		$MySmartBB->template->assign('section_info',$this->SectionInfo);
-		$MySmartBB->template->assign('subject_info',$this->SubjectInfo);
+		$MySmartBB->template->assign( 'section_info', $this->SectionInfo );
+		$MySmartBB->template->assign( 'subject_info', $this->SubjectInfo );
 	}
 	
 	private function _index()
@@ -133,52 +128,82 @@ class MySmartReplyAddMOD
 		
 		$MySmartBB->func->getEditorTools();
 		
-		$MySmartBB->template->assign('id',$MySmartBB->_GET['id']);
+		$MySmartBB->template->assign( 'id', $MySmartBB->_GET[ 'id' ] );
 				
 		// Instead of send a whole version of $this->SectionGroup to template engine
 		// We just send options which we really need, we use this way to save memory
-		$MySmartBB->template->assign('upload_attach',$this->SectionGroup['upload_attach']);
+		$MySmartBB->template->assign( 'upload_attach', $this->SectionGroup[ 'upload_attach' ] );
 		
-		$MySmartBB->template->assign('Admin',$this->moderator);
+		$MySmartBB->template->assign( 'Admin', $this->moderator );
 		
 		$MySmartBB->plugin->runHooks( 'new_reply_main' );
 		
-		$MySmartBB->template->display('new_reply');
+		$MySmartBB->template->display( 'new_reply' );
 	}
 		
 	private function _start()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_POST['title'] = trim( $MySmartBB->_POST[ 'title' ] );
-		$MySmartBB->_POST['text'] = trim( $MySmartBB->_POST[ 'text' ] );
+		// ... //
 		
-		$MySmartBB->func->addressBar('<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SectionInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password'] . '">' . $this->SubjectInfo['title'] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ]);
+		$MySmartBB->_POST[ 'title' ] = trim( $MySmartBB->_POST[ 'title' ] );
+		$MySmartBB->_POST[ 'text' ] = trim( $MySmartBB->_POST[ 'text' ] );
+		
+		// ... //
+		
+		$MySmartBB->func->addressBar( '<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SubjectInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
+		
+		// ... //
 		
 		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		// ... //
 		
 		$this->_checkContextLength();
 		
 		if ( $this->moderator )
 		{
-			if ( $MySmartBB->_POST[ 'stick' ] )
-				$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo['id'] );
+			// ... //
+			
+			if ( $MySmartBB->_POST[ 'stick' ] == 'on' )
+			{
+				if ( !$this->SubjectInfo[ 'stick' ] )
+					$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo[ 'id' ] );
+			}
+			else
+			{
+				if ( $this->SubjectInfo[ 'stick' ] )
+					$update = $MySmartBB->subject->unStickSubject( $this->SubjectInfo[ 'id' ] );
+			}
+			
+			// ... //
 		
-			if ( $MySmartBB->_POST[ 'close' ] )
-				$update = $MySmartBB->subject->closeSubject( null, $this->SubjectInfo['id'] );
+			if ( $MySmartBB->_POST[ 'close' ] == 'on' )
+			{
+				if ( !$this->SubjectInfo[ 'close' ] )
+					$update = $MySmartBB->subject->closeSubject( null, $this->SubjectInfo[ 'id' ] );
+			}
+			else
+			{
+				if ( $this->SubjectInfo[ 'close' ] )
+					$update = $MySmartBB->subject->openSubject( $this->SubjectInfo[ 'id' ] );
+			}
 		}
+		
+		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'new_reply_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->fields = array(	'title'			=>	$MySmartBB->_POST['title'],
-											'text'			=>	$MySmartBB->_POST['text'],
-											'writer'		=>	$MySmartBB->_CONF['member_row']['username'],
-											'subject_id'	=>	$this->SubjectInfo['id'],
-											'write_time'	=>	$MySmartBB->_CONF['now'],
-											'section'		=>	$this->SubjectInfo['section'],
-											'icon'			=>	$MySmartBB->_POST['icon']	);
+		$MySmartBB->rec->fields = array(	'title'			=>	$MySmartBB->_POST[ 'title' ],
+											'text'			=>	$MySmartBB->_POST[ 'text' ],
+											'writer'		=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ],
+											'subject_id'	=>	$this->SubjectInfo[ 'id' ],
+											'write_time'	=>	$MySmartBB->_CONF[ 'now' ],
+											'section'		=>	$this->SubjectInfo[ 'section' ],
+											'icon'			=>	$MySmartBB->_POST[ 'icon' ]	);
 		$MySmartBB->rec->get_id = true;
 		
 		$insert = $MySmartBB->rec->insert();
@@ -188,26 +213,24 @@ class MySmartReplyAddMOD
 		{
 			// ... //
 			
-			$posts = ( !$this->SectionGroup[ 'no_posts' ] ) ? $MySmartBB->_CONF['member_row']['posts'] + 1 : $MySmartBB->_CONF['member_row']['posts'];
+			$posts = ( !$this->SectionGroup[ 'no_posts' ] ) ? $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] + 1 : $MySmartBB->_CONF[ 'member_row' ][ 'posts' ];
 			
-			$usertitle = ( $MySmartBB->_CONF['group_info']['usertitle_change'] ) ? $MySmartBB->usertitle->getNewUsertitle( $posts ) : null;
+			$usertitle = ( $MySmartBB->_CONF[ 'group_info' ][ 'usertitle_change' ] ) ? $MySmartBB->usertitle->getNewUsertitle( $posts ) : $MySmartBB->_CONF[ 'member_row' ][ 'user_title' ];
 			
 			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->fields = array(	'posts'	=>	$posts,
-												'lastpost_time'	=>	$MySmartBB->_CONF['now'],
-												'user_title'	=>	(!is_null($usertitle)) ? $usertitle : $MySmartBB->_CONF['member_row']['user_title']	);
+			$MySmartBB->rec->fields = array(	'posts'			=>	$posts,
+												'lastpost_time'	=>	$MySmartBB->_CONF[ 'now' ],
+												'user_title'	=>	$usertitle 	);
 			
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 			
-   			$UpdateMember = $MySmartBB->rec->update();
+   			$MySmartBB->rec->update();
 			
 			// ... //
 			
-			
-			// Upload files
-			if ($MySmartBB->_POST['attach'])
+			if ( $MySmartBB->_POST[ 'attach' ] )
 			{
 				$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], 
 														$MySmartBB->_CONF[ 'group_info' ][ 'upload_attach_num' ], 
@@ -233,16 +256,16 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
-		if ( !$MySmartBB->_CONF['group_info']['admincp_allow'] )
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 		{
-			if (isset($MySmartBB->_POST['title']{$MySmartBB->_CONF['info_row']['post_title_max']+1}))
-				$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $info_row['post_text_max'] );
-			
-			if (isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_max']+1}))
-				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_max'] );
-
-			if (!isset($MySmartBB->_POST['text']{$MySmartBB->_CONF['info_row']['post_text_min']}))
-				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF['info_row']['post_text_min'] );
+			if ( isset( $MySmartBB->_POST[ 'title' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_title_max' ] } ) )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'title_length_greater' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_title_max' ] );
+				
+			if ( isset( $MySmartBB->_POST[ 'text' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_text_max' ] } ) )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_greater' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_text_max' ] );
+		
+			if ( !isset( $MySmartBB->_POST[ 'text' ]{ $MySmartBB->_CONF[ 'info_row' ][ 'post_text_min' ] - 1 } ) )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'context_length_lesser' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'post_text_min' ] );
 		}
 	}
 	
@@ -252,35 +275,34 @@ class MySmartReplyAddMOD
 	{
 		global $MySmartBB;
 		
-		$UpdateWriteTime = $MySmartBB->subject->updateWriteTime( $this->SubjectInfo[ 'id' ] );
+		$MySmartBB->subject->updateWriteTime( $this->SubjectInfo[ 'id' ] );
 			
 		// ... //
 		
-		$MySmartBB->subject->updateReplyNumber( $this->SubjectInfo['id'], $this->SubjectInfo['reply_number'] );
+		$MySmartBB->subject->updateReplyNumber( $this->SubjectInfo[ 'id' ], $this->SubjectInfo[ 'reply_number' ] );
 		
-		// Update the total of replies in the section
-		$MySmartBB->section->updateReplyNumber( $this->SectionInfo['id'], $this->SectionInfo['reply_num'] );
+		$MySmartBB->section->updateReplyNumber( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'reply_num' ] );
 		
 		
 		// ... //
 
-		$UpdateLast = $MySmartBB->section->updateLastSubject( 	$MySmartBB->_CONF['member_row']['username'], 
-																$this->SubjectInfo['title'], 
-																$this->SubjectInfo['id'], 
-																$MySmartBB->_CONF['now'], 
-																(!$this->SectionInfo['sub_section']) ? $this->SectionInfo['id'] : $this->SectionInfo['from_sub_section'] );
+		$MySmartBB->section->updateLastSubject( 	$MySmartBB->_CONF[ 'member_row' ][ 'username' ], 
+													$this->SubjectInfo[ 'title' ], 
+													$this->SubjectInfo[ 'id' ], 
+													$MySmartBB->_CONF[ 'now' ], 
+													( !$this->SectionInfo[ 'sub_section' ] ) ? $this->SectionInfo[ 'id' ] : $this->SectionInfo[ 'from_sub_section' ] );
 		
 		// ... //
 			
-		$UpdateLastReplier = $MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF['member_row']['username'], $this->SubjectInfo['id'] );
+		$MySmartBB->subject->updateLastReplier( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $this->SubjectInfo[ 'id' ] );
 		
 		// ... //
 		
-		$update_cache = $MySmartBB->section->updateForumCache( $this->SectionInfo['parent'], $this->SectionInfo['id'] );
+		$MySmartBB->section->updateForumCache( $this->SectionInfo[ 'parent' ], $this->SectionInfo[ 'id' ] );
 	}
 }
 	
-// Wooooooow , The latest modules of MySmartBB SEGMA 1 :) The THETA stage will come soon ;)
+// Wooooooow , The latest module of MySmartBB SEGMA 1 :) The THETA stage will come soon ;)
 // 11/8/2006 -> 11:21 PM -> MaaSTaaR
 	
 ?>

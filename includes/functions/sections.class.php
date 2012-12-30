@@ -31,7 +31,7 @@ class MySmartSection
 	 */
  	public function checkPassword( $password, $id )
  	{
- 		if ( empty( $id ) or empty( $password ) )
+ 		if ( empty( $id ) )
  			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkPassword() -- EMPTY id OR password' );
  		
  		$this->engine->rec->table = $this->table;
@@ -607,6 +607,8 @@ class MySmartSection
 		{
 			if ( empty( $password ) )
 	   		{
+	   			$this->engine->template->assign( 'section_id', $section_id );
+	   			
 	 			$this->engine->template->display( 'forum_password' );
 	 			$this->engine->func->stop();
 			}
