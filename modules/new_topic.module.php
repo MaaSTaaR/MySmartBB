@@ -275,7 +275,8 @@ class MySmartTopicAddMOD
 		
 		if ( $MySmartBB->_POST[ 'attach' ] )
 		{
-			$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], $MySmartBB->_CONF[ 'group_info' ][ 'upload_attach_num' ], 
+			$MySmartBB->attach->uploadAttachments( 	$this->SectionGroup[ 'upload_attach' ], 
+													$MySmartBB->_CONF[ 'group_info' ][ 'upload_attach_num' ], 
 													$this->subject_id, 'files', 'subject' );			
 		}
 	}
