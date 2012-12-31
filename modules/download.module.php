@@ -96,12 +96,18 @@ class MySmartDownloadMOD
 		
 		$AttachInfo = $MySmartBB->rec->getInfo();
 		
+		if ( !$AttachInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
+		
 		// ... //
 				
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = "id='" . $AttachInfo[ 'subject_id' ] . "'";
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
+		
+		if ( !$SubjectInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
 		
 		// ... //
 		
@@ -136,9 +142,7 @@ class MySmartDownloadMOD
 			{
 				// No enough posts
 				if ( $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] > $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] )
-				{
-					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
-				}
+					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] );
 			}
 		}
 
@@ -181,16 +185,16 @@ class MySmartDownloadMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
-		$MsgInfo = $MySmartBB->rec->getInfo();
+		$info = $MySmartBB->rec->getInfo();
 		
-		if (!$MsgInfo)
+		if ( !$info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
 		
-		$MsgInfo['title'] = $MySmartBB->func->cleanVariable( $MsgInfo['title'], 'html' );
+		$info['title'] = $MySmartBB->func->cleanVariable( $info['title'], 'html' );
 		
-		$filename = str_replace(' ','_',$MsgInfo['title']);
+		$filename = str_replace( ' ', '_', $info[ 'title' ] );
 		$filename .= '.txt';
 		
 		$MySmartBB->plugin->runHooks( 'download_pm_start' );
@@ -200,14 +204,14 @@ class MySmartDownloadMOD
 		// Send headers
 		
 		// File name
-		header('Content-Disposition: attachment;filename=' . $filename);
+		header( 'Content-Disposition: attachment;filename=' . $filename );
 		
 		// MIME
-		header('Content-type: text/plain');
+		header( 'Content-type: text/plain' );
 		
 		// ... //
 		
-		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $MsgInfo['title'] . "\n" . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $MsgInfo['user_from'] . "\n\n" . $MsgInfo['text'];
+		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $info[ 'title' ] . "\n" . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $info[ 'user_from' ] . "\n\n" . $info[ 'text' ];
 	}
 }
 
