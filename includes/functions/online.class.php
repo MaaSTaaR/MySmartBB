@@ -21,52 +21,65 @@ class MySmartOnline
 	
 	// ... //
 	
+	/**
+	 * Checks if the member is online or not.
+	 * 
+	 * @param $way Can be 'username' to check the member according to his/her username
+	 * 				or 'ip' to check the member according to his/her ip.
+	 * @param $value The username or ip to be checked.
+	 * @param $timeout The timeout, can be null so the default value (in MySmartBB::_CONF[ 'timeout' ])
+	 * 					will be used.
+	 * 
+	 * @return boolean
+	 */
 	public function isOnline( $way, $value, $timeout = null )
 	{
 		if ( is_null( $timeout ) )
-			$timeout = $this->engine->_CONF['timeout'];
+			$timeout = $this->engine->_CONF[ 'timeout' ];
+		
+		// ... //
+		
+		$field = 'username';
+		
+		if ( $way == 'ip' )
+			$field = 'user_ip';
+		
+		// ... //
 		
 		$this->engine->rec->table = $this->engine->table[ 'online' ];
-		$this->engine->rec->filter = "logged>=" . $timeout;
-		
-		if ( $way == 'username' )
-		{
-			$field = 'username';
-		}
-		elseif ( $way == 'ip' )
-		{
-			$field = 'user_ip';
-		}
-		else
-		{
-			return false;
-		}
-		
-		$this->engine->rec->filter .= ' AND ' . $field . "='" . $value . "'";
+		$this->engine->rec->filter = "logged>=" . $timeout . ' AND ' . $field . "='" . $value . "'";
 		
    		$num = $this->engine->rec->getNumber();
    		
-   		return ($num <= 0) ? false : true;
+   		return ( $num <= 0 ) ? false : true;
 	}
 	
 	// ... //
 	
+	/**
+	 * Checks if the member attended today or not,
+	 *
+	 * @param $username The username of the member to be checked
+	 * @param $date The default value is null, if it is null the member
+	 * 					will be checked for today date, otherwise the member will
+	 * 					be checked for a specific date.
+	 *
+	 * @return boolean
+	 */
 	public function isToday( $username, $date = null )
 	{
 		if ( empty( $username ) )
-		{
-			trigger_error('ERROR::NEED_PARAMETER -- FROM isToday() -- EMPTY username or date');
-		}
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM isToday() -- EMPTY username or date' );
 		
 		if ( is_null( $date ) )
 			$date = $this->engine->_CONF[ 'date' ];
-			
+		
 		$this->engine->rec->table = $this->engine->table[ 'today' ];
 		$this->engine->rec->filter = "username='" . $username . "' AND user_date='" . $date . "'";
 		
 		$num = $this->engine->rec->getNumber();
 		
-		return ($num <= 0) ? false : true;
+		return ( $num <= 0 ) ? false : true;
 	}
 	
 	// ... //
@@ -98,63 +111,53 @@ class MySmartOnline
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : 	This function checks if the member is already online and update online information, otherwise insert the member
-	//					into online table
-	// 
-	// Returns : 
-	//				- true or false
-	// ~ ~ //
+	/**
+	 * Checks if the current member is already online and update online information, otherwise 
+	 * insert the member into online table.
+	 * 
+	 * @return boolean
+	 */
 	public function onlineMember()
 	{
 		// ... //
 		
-		$IsOnline = $this->isOnline( 'username', $this->engine->_CONF[ 'member_row' ][ 'username' ] );
+		$username = $this->engine->_CONF[ 'member_row' ][ 'username' ];
+		
+		$IsOnline = $this->isOnline( 'username', $username );
 		
 		// ... //
 		
 		// Get username with group style
-		$username_style = $this->engine->member->getUsernameWithStyle( 	$this->engine->_CONF['member_row']['username'], 
-																		$this->engine->_CONF['group_info']['username_style']  );
+		$username_style = $this->engine->member->getUsernameWithStyle( 	$username, 
+																		$this->engine->_CONF[ 'group_info' ][ 'username_style' ]  );
+		
+		// ... //
+		
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
+		$this->engine->rec->fields = array(	'username'			=>	$username,
+											'username_style'	=>	$username_style,
+											'logged'			=>	$this->engine->_CONF[ 'now' ],
+											'path'				=>	$this->engine->_SERVER[ 'QUERY_STRING' ],
+											'user_ip'			=>	$this->engine->_CONF[ 'ip' ],
+											'hide_browse'		=>	$this->engine->_CONF[ 'member_row' ][ 'hide_online' ],
+											'user_id'			=>	$this->engine->_CONF[ 'member_row' ][ 'id' ]	);
 		
 		// ... //
 		
 		// The member isn't online, Insert the information
 		if ( !$IsOnline )
 		{
-			$this->engine->rec->table = $this->engine->table[ 'online' ];
-			$this->engine->rec->fields = array(	'username'			=>	$this->engine->_CONF['member_row']['username'],
-												'username_style'	=>	$username_style,
-												'logged'			=>	$this->engine->_CONF['now'],
-												'path'				=>	$this->engine->_SERVER['QUERY_STRING'],
-												'user_ip'			=>	$this->engine->_CONF['ip'],
-												'hide_browse'		=>	$this->engine->_CONF['member_row']['hide_online'],
-												'user_location'		=>	$MemberLocation,
-												'user_id'			=>	$this->engine->_CONF['member_row']['id']	);
-												
 			$insert = $this->engine->rec->insert();
 		}
 		// Member is already online , just update information
 		else
 		{
-			$username_style_fi = str_replace('\\','',$username_style);
-			
-			if ($IsOnline['logged'] < $this->engine->_CONF['timeout'] 
-				or $IsOnline['path'] != $this->engine->_SERVER['QUERY_STRING'] 
-				or $IsOnline['username_style'] != $username_style_fi
-				or $IsOnline['hide_browse'] != $this->engine->_CONF['rows']['member_row']['hide_online'])
+			if ( $IsOnline[ 'logged' ] < $this->engine->_CONF[ 'timeout' ] 
+				or $IsOnline[ 'path' ] != $this->engine->_SERVER[ 'QUERY_STRING' ] 
+				or $IsOnline[ 'username_style' ] != $username_style
+				or $IsOnline[ 'hide_browse' ] != $this->engine->_CONF[ 'member_row' ][ 'hide_online' ] )
 			{
-				$this->engine->rec->table = $this->engine->table[ 'online' ];
-				$this->engine->rec->fields = array(	'username'			=>	$this->engine->_CONF['member_row']['username'],
-													'username_style'	=>	$username_style,
-													'logged'			=>	$this->engine->_CONF['now'],
-													'path'				=>	$this->engine->_SERVER['QUERY_STRING'],
-													'user_ip'			=>	$this->engine->_CONF['ip'],
-													'hide_browse'		=>	$this->engine->_CONF['member_row']['hide_online'],
-													'user_location'		=>	$MemberLocation,
-													'user_id'			=>	$this->engine->_CONF['member_row']['id']	);
-				
-				$this->engine->rec->filter = "username='" . $this->engine->_CONF[ 'member_row' ][ 'username' ] . "'";
+				$this->engine->rec->filter = "username='" . $username . "'";
 				
 				$update = $this->engine->rec->update();
 			}
@@ -163,26 +166,30 @@ class MySmartOnline
 		return ( $insert or $update ) ? true : false;
 	}
 	
-	// ~ ~ //
-	// Description : 	This function checks if the member is already in today's visitor, if (s)he's not insert the member
-	//					into today table, and update the number of member's visit
-	// 
-	// Returns : 
-	//				- true or false
-	// ~ ~ //
+	/**
+	 * Checks if the member is already in today's visitor, if (s)he's not then insert the member
+	 * into today table, and update the number of member's visits
+	 * 
+	 * @return boolean
+	 */
 	public function todayMember()
 	{
-		$IsToday = $this->isToday( $this->engine->_CONF[ 'member_row' ][ 'username' ] );
+		$username = $this->engine->_CONF[ 'member_row' ][ 'username' ];
+		
+		$IsToday = $this->isToday( $username );
 		
 		// The member doesn't exist in today table , so insert the member								  
-		if (!$IsToday)
+		if ( !$IsToday )
 		{
-		    $username_style = $this->engine->member->getUsernameWithStyle( 	$this->engine->_CONF['member_row']['username'], 
-																		$this->engine->_CONF['group_info']['username_style']  );
+		    $username_style = $this->engine->member->getUsernameWithStyle( 	$username, 
+																			$this->engine->_CONF[ 'group_info' ][ 'username_style' ]  );
 																		
 			
-			$insert = $this->insertToday( $this->engine->_CONF[ 'member_row' ][ 'username' ], $this->engine->_CONF[ 'member_row' ][ 'id' ],
-                                            $this->engine->_CONF[ 'date' ], $this->engine->_CONF[ 'member_row' ][ 'hide_online' ], $username_style,
+			$insert = $this->insertToday( 	$username, 
+											$this->engine->_CONF[ 'member_row' ][ 'id' ],
+                                            $this->engine->_CONF[ 'date' ], 
+											$this->engine->_CONF[ 'member_row' ][ 'hide_online' ], 
+											$username_style,
                                             $this->engine->_CONF[ 'member_row' ][ 'visitor' ] );
 			
 			return ( $insert ) ? true : false;	
@@ -191,6 +198,19 @@ class MySmartOnline
 		return true;
 	}
 	
+	/**
+	 * Inserts a member to the list of members who attended today and updates
+	 * the number of member's visits to the forum.
+	 * 
+	 * @param $username The username.
+	 * @param $id The id of the member.
+	 * @param $date The date of today or whatever.
+	 * @param $hidden Is this member hidden?
+	 * @param $username_style The stylish username of the member.
+	 * @param $visits The current number of member's visits to the forum.
+	 * 
+	 * @return boolean
+	 */
 	public function insertToday( $username, $id, $date, $hidden, $username_style, $visits )
 	{
 		$this->engine->rec->table = $this->engine->table[ 'today' ];
@@ -210,77 +230,39 @@ class MySmartOnline
 			$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
 			$this->engine->rec->filter = "id='" . (int) $id . "'";
 			
-			$this->engine->rec->update();
-			
-			return ( $this->updateTodayCache() ) ? true : false;
+			return ( $this->engine->rec->update() ) ? true : false;
 		}
 		
 		return ( $insert ) ? true : false;
 	}
 	
-	public function updateTodayCache()
-	{
-	    $this->engine->rec->table = $this->engine->table[ 'today' ];
-		$this->engine->rec->order = 'user_id DESC';
-		$this->engine->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
-		
-		$this->engine->rec->getList();
-		
-		$info = array();
-		
-		while ( $row = $this->engine->rec->getInfo() )
-		{
-		    $info[] = $row;
-		}
-		
-		$info = base64_encode( serialize( $info ) );
-		
-		$this->engine->info->updateInfo( 'today_cache', $info );
-	}
-	
-	public function getTodayList()
-	{
-	    $info = array();
-	    
-	    // TODO
-	}
-	
-	// ~ ~ //
-	// Description : 	This function checks if the _visitor_ is already online and update online information, otherwise insert the visitor
-	//					into online table
-	// 
-	// Returns : 
-	//				- true or false
-	// ~ ~ //
+	/**
+	 * Checks if the _visitor_ is already online and update online information, 
+	 * otherwise insert the visitor into online table
+	 */
 	public function onlineVisitor()
 	{
 		// Check if the visitor is already online
-		$isOnline = $this->isOnline( 'ip', $this->engine->_CONF['ip'] );
-								
+		$isOnline = $this->isOnline( 'ip', $this->engine->_CONF[ 'ip' ] );
+		
+		$this->engine->rec->table = $this->engine->table[ 'online' ];
+		$this->engine->rec->fields = array(	'username'			=>	'Guest',
+											'username_style'	=>	'Guest',
+											'logged'			=>	$this->engine->_CONF['now'],
+											'path'				=>	$this->engine->_SERVER['QUERY_STRING'],
+											'user_ip'			=>	$this->engine->_CONF['ip'],
+											'user_id'			=>	-1	);
+		
 		// The visitor is already online, just update the information										
 		if ( $isOnline )
 		{
-			$this->engine->rec->table = $this->engine->table[ 'online' ];
-			$this->engine->rec->fields = array(	'username'	=>	'Guest',
-												'logged'	=>	$this->engine->_CONF['now'],
-												'path'		=>	$this->engine->_SERVER['QUERY_STRING'],
-												'user_ip'	=>	$this->engine->_CONF['ip']	);
-			
-			$this->engine->rec->filter = "username='Guest'";
+			$this->engine->rec->filter = "user_ip='" . $this->engine->_CONF[ 'ip' ] . "'";
 			
 			$update = $this->engine->rec->update();
 		}
 		// The visitor doesn't exist in online table, so we insert his/her info
 		else
 		{
-			$this->engine->rec->table = $this->engine->table[ 'online' ];
-			$this->engine->rec->fields = array(	'username'			=>	'Guest',
-												'username_style'	=>	'Guest',
-												'logged'			=>	$this->engine->_CONF['now'],
-												'path'				=>	$this->engine->_SERVER['QUERY_STRING'],
-												'user_ip'			=>	$this->engine->_CONF['ip'],
-												'user_id'			=>	-1	);
-			
 			$insert = $this->engine->rec->insert(); 
 		}
 	}

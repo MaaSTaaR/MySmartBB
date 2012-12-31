@@ -18,11 +18,22 @@ class MySmartStyle
 		
 	// ... //
 	
+	/**
+	 * Create serialized cache of a specific style.
+	 * 
+	 * @param $value Can be style's id or an array of style information as represented in database.
+	 * 					This cache will be created for this style.
+	 * 
+	 * @return false or the cache in serialized form.
+	 */
 	public function createStyleCache( $value )
 	{
 		$id = null;
 		$style_info = null;
+		
 		$cache = array();
+		
+		// ... //
 		
 		// $value is the style's id.
 		if ( is_numeric( $value ) )
@@ -34,6 +45,8 @@ class MySmartStyle
 			return false;
 		
 		unset( $value );
+		
+		// ... //
 		
 		if ( !is_null( $id ) )
 		{
@@ -94,10 +107,17 @@ class MySmartStyle
 	
 	// ... //
 	
+	/**
+	 * Gets the information of style from the database.
+	 * 
+	 * @param $id The id of the style.
+	 * 
+	 * @return false or array.
+	 */
 	public function getStyleInfo( $id )
 	{
 		if ( empty( $id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM getStyleInfo() -- EMPTY id',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM getStyleInfo() -- EMPTY id' );
  		
 		$this->engine->rec->table = $this->engine->table[ 'style' ];
 		$this->engine->rec->filter = "id='" . (int) $id  . "'";

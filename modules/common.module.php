@@ -26,14 +26,14 @@ class MySmartCommon
 		// ~ Delete unnecessary rows ~ //
 		
  		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
- 		$MySmartBB->rec->filter = 'logged<' . $MySmartBB->_CONF['timeout'];
+ 		$MySmartBB->rec->filter = 'logged<' . $MySmartBB->_CONF[ 'timeout' ];
  		
  		$MySmartBB->rec->delete();
  		
  		// ... //
  		
  		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
- 		$MySmartBB->rec->filter = "user_date<>'" . $MySmartBB->_CONF['date'] . "'";
+ 		$MySmartBB->rec->filter = "user_date<>'" . $MySmartBB->_CONF[ 'date' ] . "'";
  	 	
  	 	$MySmartBB->rec->delete();
 	}
@@ -54,20 +54,14 @@ class MySmartCommon
 			
 			// ~ Check if the visitor is a member or not ? ~ //
 			
-			// If the information doesn't valid CheckMember's value will be false
+			// If the information isn't valid. $CheckMember value will be false
 			// otherwise the value will be an array
 			$this->CheckMember = $MySmartBB->member->checkMember( $username, $password );
 			
-			// This is a member :)
 			if ( $this->CheckMember != false )
-			{
 				$this->__memberProcesses();
-			}
-			// This is a visitor
 			else
-			{
 				$this->__visitorProcesses();
-			}
 		}
 		else
 		{
@@ -89,7 +83,7 @@ class MySmartCommon
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['usergroup'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'usergroup' ] . "'";
 		
 		$MySmartBB->_CONF[ 'group_info' ] = $MySmartBB->rec->getInfo();
 		
@@ -120,19 +114,19 @@ class MySmartCommon
 		{
 			$last_visit = ( empty( $MySmartBB->_CONF[ 'member_row' ][ 'lastvisit' ] ) ) ? $MySmartBB->_CONF[ 'date' ] : $MySmartBB->_CONF[ 'member_row' ][ 'lastvisit' ];
 			
-			$MySmartBB->member->lastVisitCookie( $last_visit, $MySmartBB->_CONF[ 'date' ], $MySmartBB->_CONF[ 'member_row' ][ 'id' ]);
+			$MySmartBB->member->lastVisitCookie( $last_visit, $MySmartBB->_CONF[ 'date' ], $MySmartBB->_CONF[ 'member_row' ][ 'id' ] );
 		}
 		
 		// ... //
 		
-		if ( $MySmartBB->_CONF['member_row']['logged'] < $MySmartBB->_CONF['timeout'] )
+		if ( $MySmartBB->_CONF[ 'member_row' ][ 'logged' ] < $MySmartBB->_CONF[ 'timeout' ] )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			
-			$MySmartBB->rec->fields = array(	'logged'	=>	$MySmartBB->_CONF['now'],
-												'member_ip'	=>	$MySmartBB->_CONF['ip']	);
+			$MySmartBB->rec->fields = array(	'logged'	=>	$MySmartBB->_CONF[ 'now' ],
+												'member_ip'	=>	$MySmartBB->_CONF[ 'ip' ]	);
 			
-			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+			$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 			
 			$MySmartBB->rec->update();
 		}
@@ -152,10 +146,11 @@ class MySmartCommon
 		// ... //
 		
 		// Get the visitor's group info and store it in _CONF['group_info']
+		// TODO : Visitors group id should be dynamic.
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='7'";
 		
-		$MySmartBB->_CONF['group_info'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF[ 'group_info' ] = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
@@ -174,7 +169,10 @@ class MySmartCommon
 		$MySmartBB->_CONF[ 'style_info' ] = $MySmartBB->rec->getInfo();
 		
 		if ( !$MySmartBB->_CONF[ 'style_info' ] )
+		{
+			setcookie( $MySmartBB->_CONF[ 'style_cookie' ], '' );
 			die();
+		}
 		
 		// ... //
 		
@@ -184,32 +182,30 @@ class MySmartCommon
 		
 		// Sorry visitor you can't visit this forum today :(
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ $MySmartBB->_CONF[ 'day' ] ] )
-   		{
    			$MySmartBB->func->error( $MySmartBB->lang_common[ 'visitor_pervented' ] );
-   		}
 	}
 	
 	private function _setStyleInformation()
 	{
 		global $MySmartBB;
 		
-		if ( !is_array($MySmartBB->_CONF[ 'style_info' ])
-			or empty($MySmartBB->_CONF[ 'style_info' ]['template_path'])
-			or empty($MySmartBB->_CONF[ 'style_info' ]['cache_path']) )
+		if ( !is_array( $MySmartBB->_CONF[ 'style_info' ] )
+			or empty( $MySmartBB->_CONF[ 'style_info' ][ 'template_path' ] )
+			or empty($MySmartBB->_CONF[ 'style_info' ][ 'cache_path' ] ) )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'cant_find_style' ] );
 		}
 		
-		$MySmartBB->template->setInformation(	$MySmartBB->_CONF[ 'style_info' ]['template_path'] . '/',
-												$MySmartBB->_CONF[ 'style_info' ]['cache_path'] . '/',
+		$MySmartBB->template->setInformation(	$MySmartBB->_CONF[ 'style_info' ][ 'template_path' ] . '/',
+												$MySmartBB->_CONF[ 'style_info' ][ 'cache_path' ] . '/',
 												'.tpl',
 												'file');
 		
   		$pager_html 	= 	array();
-  		$pager_html[0] 	= 	$MySmartBB->template->content('pager_style_part1');
-  		$pager_html[1] 	= 	$MySmartBB->template->content('pager_style_part2');
-  		$pager_html[2] 	= 	$MySmartBB->template->content('pager_style_part3');
-  		$pager_html[3] 	= 	$MySmartBB->template->content('pager_style_part4');
+  		$pager_html[0] 	= 	$MySmartBB->template->content( 'pager_style_part1' );
+  		$pager_html[1] 	= 	$MySmartBB->template->content( 'pager_style_part2' );
+  		$pager_html[2] 	= 	$MySmartBB->template->content( 'pager_style_part3' );
+  		$pager_html[3] 	= 	$MySmartBB->template->content( 'pager_style_part4' );
   		
 		$MySmartBB->pager->setOutput( $pager_html );
 		
@@ -236,14 +232,14 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['temp']['ads_show'] = false;
+		$MySmartBB->_CONF[ 'temp' ][ 'ads_show' ] = false;
 		
 		// Get random ads
-		if ( $MySmartBB->_CONF['info_row']['ads_num'] > 0 )
+		if ( $MySmartBB->_CONF[ 'info_row' ][ 'ads_num' ] > 0 )
 		{			
-			$MySmartBB->_CONF['rows']['AdsInfo'] = $MySmartBB->func->getRandomAds();
+			$MySmartBB->_CONF[ 'rows' ][ 'AdsInfo' ] = $MySmartBB->func->getRandomAds();
 			
-			$MySmartBB->_CONF['temp']['ads_show'] = true;
+			$MySmartBB->_CONF[ 'temp' ][ 'ads_show' ] = true;
 		}
 	}
 
@@ -253,12 +249,11 @@ class MySmartCommon
 	private function _checkClose()
 	{
 		global $MySmartBB;
-			
+		
 		// if the forum close by admin , stop the page
-		if ( $MySmartBB->_CONF['info_row']['board_close'] )
+		if ( $MySmartBB->_CONF[ 'info_row' ][ 'board_close' ] )
     	{
-  			if ( $MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] != 1
-  				and !defined( 'LOGIN' ) )
+  			if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] and !defined( 'LOGIN' ) )
         	{
         		$MySmartBB->func->showHeader( $MySmartBB->lang_common[ 'closed' ] );
     			$MySmartBB->func->error( $MySmartBB->_CONF[ 'info_row' ][ 'board_msg' ] );

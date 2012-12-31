@@ -51,16 +51,18 @@ class MySmartMember
 	// ... //
 	
 	/**
-	 * Description : This function checks the username and password.
+	 * Checks if the username and password are correct then return an array which
+	 * contains the information of member, otherwise returns false
 	 * 
-	 * Returns : 
-	 *				- false 
-	 *				- or array contains the information of the user
+	 * @param $username The username
+	 * @param $password The password hashed with md5()
+	 * 
+	 * @return Array of member's information or false if there is no such memer.
 	 */
 	public function checkMember( $username, $password )
 	{
 		if ( empty( $username ) or empty( $password ) )
-			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkMember() -- EMPTY username or password', E_USER_ERROR );
+			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkMember() -- EMPTY username or password' );
 		
 		$this->engine->rec->table = $this->table;
 		$this->engine->rec->filter = "username='" . $username . "' AND password='" . $password . "'";
@@ -95,16 +97,20 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Gets the username in a stylish way.
+	 * 
+	 * @param $username The username of the member.
+	 * @param $style The style of the username in the following form <html_tag>[username]</html_tag>.
+	 * 					for example <strong>[username]</strong>.
+	 * 					We usually get this value from "username_style" field in group table from the database.
+	 * 
+	 * @return The styled username as the following <html_tag>$username</html_tag>
+	 */
 	public function getUsernameWithStyle( $username, $style )
 	{
-		// These codes are from the first generation of MySmartBB
-		// Do you remember it ? :)
-		
-		if ( empty( $username )
-			or empty( $style ) )
-		{
-			trigger_error('ERROR::NEED_PARAMATER -- FROM getUsernameWithStyle() -- EMPTY style or username',E_USER_ERROR);
-		}
+		if ( empty( $username ) or empty( $style ) )
+			trigger_error( 'ERROR::NEED_PARAMATER -- FROM getUsernameWithStyle() -- EMPTY style or username' );
 		
 		$html_tags = explode( '[username]', $style );
     					  
@@ -117,14 +123,23 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Registers the previous visit date on a cookie, and the current visit date on the database, 
+	 * so we can show for the member when did he visit the forum last time according the the cookie.
+	 * 
+	 * @param $last_visit The previous visit date.
+	 * @param $date The current visit date.
+	 * @param $member_id The id of the member to be updated.
+	 * 
+	 */
 	public function lastVisitCookie( $last_visit, $date, $member_id )
 	{
-		if ( empty( $last_visit )
-			or empty( $date )
-			or empty( $member_id ) )
-		{
+		// ... //
+		
+		if ( empty( $last_visit ) or empty( $date ) or empty( $member_id ) )
 			trigger_error('ERROR::NEED_PARAMETER -- FROM lastVisitCookie() -- EMPTY last_visit OR date OR id',E_USER_ERROR);
-		}
+		
+		// ... //
 		
 		$cookie = setcookie( $this->engine->_CONF[ 'lastvisit_cookie' ], $last_visit, time() + 85200 );
 		
@@ -221,18 +236,16 @@ class MySmartMember
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : 	This function returns and array that contains the information of a style of a specific member,
-	//					in the begin it tries to retrieve the information from cache, if there is no cache it queries
-	//					the database, and gets style's information then creates cache.
-	//
-	// Parameters :
-	//				- $member_info : 	null or an array that contains member's information as stored in database.
-	//									if it's null the function gets member's information from MySmartBB::_CONF[ 'member_row' ]
-	// Returns : 
-	//				- false 
-	//				- or array that contains the information of the style
-	// ~ ~ //
+	/**
+	 * Returns an array of style information of a specific member,
+	 * It tries to retrieve the information from cache, if there is no cache it queries
+	 * the database, and gets style's information then creates cache.
+	 * 
+	 * @param $member_info null or an array that contains member's information as stored in database.
+	 * 						if it's null the function gets member's information from MySmartBB::_CONF[ 'member_row' ].
+	 * 
+	 * @return false or array that contains the information of the style
+	 */
 	public function getMemberStyle( $member_info = null )
 	{
 		if ( is_null( $member_info ) )
@@ -272,12 +285,7 @@ class MySmartMember
 				or ( $member_info['should_update_style_cache'] )
 				or empty( $member_info[ 'style_cache' ] ) )
 		{
-			// ... //
-			
-			$this->engine->rec->table = $this->engine->table[ 'style' ];
-			$this->engine->rec->filter = "id='" . (int) $member_info['style']  . "'";
-			
-			$style_info = $this->engine->rec->getInfo();
+			$style_info = $this->engine->style->getStyleInfo( $member_info[ 'style' ] );
 			
 			$this->updateMemberStyleCache( $style_info );
 		}
@@ -291,6 +299,15 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Updates style cache of the member
+	 * 
+	 * @param $style_info an array of style information as represented in database.
+	 * @param $member_info null or an array that contains member's information as stored in database.
+	 * 						if it's null the function gets member's information from MySmartBB::_CONF[ 'member_row' ].
+	 * 
+	 * @return if success true, otherwise false.
+	 */
 	public function updateMemberStyleCache( $style_info, $member_info = null )
 	{
 		if ( is_null( $member_info ) )
@@ -298,18 +315,20 @@ class MySmartMember
 		
 	    $style_cache = $this->engine->style->createStyleCache( $style_info );
 	    
+	    // ... //
+	    
 	    $this->engine->rec->table = $this->engine->table[ 'member' ];
-		$this->engine->rec->fields = array(	'style_cache'	=>	$style_cache,
-											'style_id_cache'	=>	$member_info['style']	);
+		$this->engine->rec->fields = array(	'style_cache'		=>	$style_cache,
+											'style_id_cache'	=>	$member_info[ 'style' ]	);
 		
 		if ( $member_info[ 'should_update_style_cache' ] )
-		{
-			$this->engine->rec->fields['should_update_style_cache'] = 0;
-		}
+			$this->engine->rec->fields[ 'should_update_style_cache' ] = '0';
 		
-		$this->engine->rec->filter = "id='" . (int) $member_info['id'] . "'";
+		$this->engine->rec->filter = "id='" . (int) $member_info[ 'id' ] . "'";
 		
 		$update_cache = $this->engine->rec->update();
+		
+		// ... //
 		
 		return ( $update_cache ) ? true : false;
 	}
