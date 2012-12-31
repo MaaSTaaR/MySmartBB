@@ -30,11 +30,11 @@ class MySmartReplyAddMOD
 		
 		$this->_commonCode();
 		
-		if ($MySmartBB->_GET['index'])
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_index();
 		}
-		elseif ($MySmartBB->_GET['start'])
+		elseif ( $MySmartBB->_GET[ 'start' ] )
 		{
 			$this->_start();
 		}

@@ -23,8 +23,8 @@ function AddMoreAttach(x)
 	if (x <= up_max)
 	{
 		$(".more_attach_tr").hide();	
-		$("#add_attach_table").append('<tr align="center"><td class="row1 rows_space">{$lang['file']} #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
-		$("#add_attach_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="{$lang['add_another_file']}" /></td></tr>');
+		$("#add_attachements_table").append('<tr align="center"><td class="row1 rows_space">{$lang['file']} #' + x + '</td><td class="row1 rows_space"><input name="files[]" type="file" id="attach' + x + '" size="40" /></td></tr>');
+		$("#add_attachements_table").append('<tr align="center" class="more_attach_tr"><td class="row1 rows_space" colspan="2"><input type="button" name="more_attach" class="more_attach_class" value="{$lang['add_another_file']}" /></td></tr>');
 		
 		$(".more_attach_class").click(function() { AddMoreAttach(x) });
 		
@@ -84,30 +84,30 @@ $(document).ready(Ready);
 
 <br />
 
-{if {$is_sender_msg} or {$is_away_msg}}
+{if {$recv_info['pm_senders_msg']} or {$recv_info['away']}}
 <table id="pm_away_message_table" border="1" width="50%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
 		{$lang['information']}
 		</td>
 	</tr>
-	{if {$is_away_msg}}
+	{if {$recv_info['away']}}
 	<tr>
 		<td class="row1 rows_space">
-		{$to} {$lang['away']}
+		{$recv_info['username']} {$lang['away']}
 		</td>
 		<td class="row2 rows_space">
-		{$away_msg}
+		{$recv_info['away_msg']}
 		</td>
 	</tr>
 	{/if}
-	{if {$is_sender_msg}}
+	{if {$recv_info['pm_senders_msg']}}
 	<tr>
 		<td class="row1 rows_space">
-		{$lang['message_from']} {$to}
+		{$lang['message_from']} {$recv_info['username']}
 		</td>
 		<td class="row2 rows_space">
-		{$senders_msg}
+		{$recv_info['pm_senders_msg']}
 		</td>
 	</tr>
 	{/if}
@@ -129,7 +129,7 @@ $(document).ready(Ready);
 			{$lang['receiver']}
 		</td>
 		<td class="row2 rows_space">
-			<input name="to[]" value="{$to}" type="text" />
+			<input name="to[]" value="{$recv_info['username']}" type="text" />
 		</td>
 	</tr>
 	<tr class="more_tr">

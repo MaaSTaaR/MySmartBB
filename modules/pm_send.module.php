@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartPrivateMassegeSendMOD');
+define( 'CLASS_NAME', 'MySmartPrivateMassegeSendMOD' );
 
 class MySmartPrivateMassegeSendMOD
 {
@@ -18,24 +18,28 @@ class MySmartPrivateMassegeSendMOD
 		
 		$MySmartBB->loadLanguage( 'pm_send' );
 		
-		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ], false );
+		// ... //
 		
-		if (!$MySmartBB->_CONF['group_info']['use_pm'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ], false );
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'pm_feature' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		
-		if (!$MySmartBB->_CONF['member_permission'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ], false );
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'use_pm' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
+		
+		// ... //
 		
 		$MySmartBB->load( 'pm,icon,toolbox,attach' );
 		
-		if ($MySmartBB->_GET['send'])
+		if ( $MySmartBB->_GET[ 'send' ] )
 		{
-			if ($MySmartBB->_GET['index'])
+			if ( $MySmartBB->_GET[ 'index' ] )
 			{
 				$this->_sendForm();
 			}
-			elseif ($MySmartBB->_GET['start'])
+			elseif ( $MySmartBB->_GET[ 'start' ] )
 			{
 				$this->_startSend();
 			}
@@ -44,44 +48,33 @@ class MySmartPrivateMassegeSendMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	/**
-	 * Show send form for the sender , Get the colors , fonts , icons and smiles list
-	 */
 	private function _sendForm()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_pm' ] );
 		
-		if ( isset( $MySmartBB->_GET['username'] ) )
+		if ( isset( $MySmartBB->_GET[ 'username' ] ) )
 		{
 			$MySmartBB->rec->select = 'username,pm_senders,away,pm_senders_msg,away_msg';
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET['username'] . "'";
+			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET[ 'username' ] . "'";
 			
-			$GetToInfo = $MySmartBB->rec->getInfo();
+			$info = $MySmartBB->rec->getInfo();
 															
-			if (!$GetToInfo)
+			if ( !$info )
 				$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 			
-			$MySmartBB->template->assign('senders_msg',$GetToInfo['pm_senders_msg']);
-			$MySmartBB->template->assign('away_msg',$GetToInfo['away_msg']);
-			$MySmartBB->template->assign('is_sender_msg',$GetToInfo['pm_senders']);
-			$MySmartBB->template->assign('is_away_msg',$GetToInfo['away']);
-			$MySmartBB->template->assign('to',$GetToInfo['username']);
+			$MySmartBB->template->assign( 'recv_info', $info );
 		}
 		
 		$MySmartBB->func->getEditorTools();
 		
 		$MySmartBB->plugin->runHooks( 'pm_send_main' );
 		
-		$MySmartBB->template->display('pm_send');
+		$MySmartBB->template->display( 'pm_send' );
 	}
-		
-	/**
-	 * Check if the necessary informations is not empty , 
-	 * and some checks about the sender and resiver then send the massege .
-	 */
+	
 	private function _startSend()
 	{
 		global $MySmartBB;
@@ -93,13 +86,13 @@ class MySmartPrivateMassegeSendMOD
 		
 		// ... //
 		
-		if (empty($MySmartBB->_POST['to'][0]))
+		if ( empty( $MySmartBB->_POST[ 'to' ][ 0 ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_username' ] );
 		
-		if (empty($MySmartBB->_POST['title']))
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_title' ] );
 		
-		if (empty($MySmartBB->_POST['text']))
+		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_message' ] );
 		
 		// ... //
@@ -110,179 +103,183 @@ class MySmartPrivateMassegeSendMOD
 		
 		$size = sizeof( $MySmartBB->_POST[ 'to' ] );
 		
+		if ( $size <= 0 )
+			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
+		
 		$success 	= 	array();
 		$fail		=	array();
 		
-     	if ( $size > 0 )
+     	$x = 0;
+     	
+     	for ( $x = 0; $x < $size; $x++ )
      	{
-     		$x = 0;
+     		$username = $MySmartBB->_POST[ 'to' ][ $x ];
      		
-     		while ($x < $size)
-     		{
-     			// Ensure there is no repeat
-     			if (in_array($MySmartBB->_POST['to'][$x],$success)
-     				or in_array($MySmartBB->_POST['to'][$x],$fail))
-     			{
-     				$x += 1;
-     				
-     				continue;
-     			}
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-				$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['to'][$x] . "'";
-				
-				$GetToInfo = $MySmartBB->rec->getInfo();
-				
-				if (!$GetToInfo and $size > 1)
+     		// ... //
+     		
+     		if ( in_array( $username, $success ) or in_array( $username, $fail ) )
+     			continue;
+     		
+     		if ( empty( $username ) )
+     			continue;
+			
+     		// ... //
+     		
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+			$MySmartBB->rec->filter = "username='" . $username . "'";
+			
+			$GetToInfo = $MySmartBB->rec->getInfo();
+			
+			if ( !$GetToInfo )
+			{
+				if ( $size > 1 )
 				{
-					$fail[] = $MySmartBB->_POST['to'][$x];
+					$fail[] = $username;
 					
-					unset($GetToInfo,$GetMemberOptions);
-				
-					$x += 1;
-				
 					continue;
 				}
-				elseif (!$GetToInfo and $size == 1)
+				elseif ( $size == 1 )
 				{
 					$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 				}
-				
-				$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-				$MySmartBB->rec->filter = "id='" . $GetToInfo['usergroup'] . "'";
-				
-				$GetMemberOptions = $MySmartBB->rec->getInfo();
-				
-				if (!$GetMemberOptions['resive_pm'] and $size > 1)
+			}
+			
+			// ... //
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
+			$MySmartBB->rec->filter = "id='" . $GetToInfo[ 'usergroup' ] . "'";
+			
+			$GetMemberOptions = $MySmartBB->rec->getInfo();
+			
+			if ( !$GetMemberOptions[ 'resive_pm' ] )
+			{
+				if ( $size > 1 )
 				{
-					$fail[] = $MySmartBB->_POST['to'][$x];
+					$fail[] = $username;
 					
-					unset($GetToInfo,$GetMemberOptions);
-				
-					$x += 1;
-				
 					continue;
 				}
-				elseif (!$GetMemberOptions['resive_pm'] and $size == 1)
+				elseif ( $size == 1 )
 				{
 					$MySmartBB->func->error( $MySmartBB->lang[ 'member_cant_receive' ] );
 				}
-		
-				if ($GetMemberOptions['max_pm'] > 0)
-				{
-					$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-					$MySmartBB->rec->filter = "user_to='" . $GetToInfo['username'] . "'";
-					
-					$PrivateMassegeNumber = $MySmartBB->pm->getNumber();
-					
-					if ($PrivateMassegeNumber > $GetMemberOptions['max_pm'] and $size > 1)
-					{
-						$fail[] = $MySmartBB->_POST['to'][$x];
-						
-						unset($GetToInfo,$GetMemberOptions);
+			}
+			
+			// ... //
+			
+			if ( $GetMemberOptions[ 'max_pm' ] > 0 )
+			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+				$MySmartBB->rec->filter = "user_to='" . $GetToInfo[ 'username' ] . "'";
 				
-						$x += 1;
-						
+				$PrivateMassegeNumber = $MySmartBB->rec->getNumber();
+				
+				if ( $PrivateMassegeNumber > $GetMemberOptions[ 'max_pm' ] )
+				{
+					if ( $size > 1 )
+					{
+						$fail[] = $username;
+							
 						continue;
 					}
-					elseif ($PrivateMassegeNumber > $GetMemberOptions['max_pm'] and $size == 1)
+					elseif ( $size == 1 )
 					{
 						$MySmartBB->func->error( $MySmartBB->lang[ 'member_max_inbox' ] );
 					}
 				}
-				
-				// ... //
+			}
+			
+			// ... //
+			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+			$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ],
+												'user_to'	=>	$GetToInfo[ 'username' ],
+												'title'	=>	$MySmartBB->_POST[ 'title' ],
+												'text'	=>	$MySmartBB->_POST[ 'text' ],
+												'date'	=>	$MySmartBB->_CONF[ 'now' ],
+												'icon'	=>	$MySmartBB->_POST[ 'icon' ],
+												'folder'	=>	'inbox'	);
+			
+			$MySmartBB->rec->get_id = true;
+			
+			$sent = $MySmartBB->rec->insert();
+			
+			$pm_id = $MySmartBB->rec->id;
+			
+			// ... //
+													
+			if ( $sent )
+			{
+     			if ( $MySmartBB->_POST[ 'attach' ] )
+     				$MySmartBB->attach->uploadAttachments(	true, 
+															$MySmartBB->_CONF[ 'group_info' ][ 'upload_attach_num' ], 
+															$pm_id, 'files', 'pm' );
+     			
+     			// ... //
 				
 				$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
-													'user_to'	=>	$GetToInfo['username'],
-													'title'	=>	$MySmartBB->_POST['title'],
-													'text'	=>	$MySmartBB->_POST['text'],
-													'date'	=>	$MySmartBB->_CONF['now'],
-													'icon'	=>	$MySmartBB->_POST['icon'],
-													'folder'	=>	'inbox'	);
-				
-				$MySmartBB->rec->get_id = true;
-				
-				$Send = $MySmartBB->rec->insert();
-				
-				$pm_id = $MySmartBB->rec->id;
-				
-				// ... //
-														
-				if ($Send)
-				{
-     				if ( $MySmartBB->_POST[ 'attach' ] )
-     				{
-     					$MySmartBB->attach->addAttach( $MySmartBB->_FILES[ 'files' ], 'pm', $pm_id );
-     				}
-     				
-     				// ... //
-					
-					$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-					$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF['member_row']['username'],
-														'user_to'	=>	$GetToInfo['username'],
-														'title'	=>	$MySmartBB->_POST['title'],
-														'text'	=>	$MySmartBB->_POST['text'],
-														'date'	=>	$MySmartBB->_CONF['now'],
-														'icon'	=>	$MySmartBB->_POST['icon'],
-														'folder'	=>	'sent'	);
+				$MySmartBB->rec->fields = array(	'user_from'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ],
+													'user_to'	=>	$GetToInfo[ 'username' ],
+													'title'	=>	$MySmartBB->_POST[ 'title' ],
+													'text'	=>	$MySmartBB->_POST[ 'text' ],
+													'date'	=>	$MySmartBB->_CONF[ 'now' ],
+													'icon'	=>	$MySmartBB->_POST[ 'icon' ],
+													'folder'	=>	'sent'	);
+												
+				$SentBox = $MySmartBB->rec->insert();
 													
-					$SentBox = $MySmartBB->rec->insert();
-														
-					if ($SentBox)
+				if ( $SentBox )
+				{
+					if ( $GetToInfo[ 'autoreply' ] )
 					{
-						/** Auto reply **/
-						if ($GetToInfo['autoreply'])
+						$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+						$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
+															'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
+															'title'	=>	$MySmartBB->lang[ 'auto_reply' ] . ' ' . $GetToInfo['autoreply_title'],
+															'text'	=>	$GetToInfo['autoreply_msg'],
+															'date'	=>	$MySmartBB->_CONF['now'],
+															'folder'	=>	'inbox'	);
+													
+						$insert = $MySmartBB->rec->insert();
+						
+						if ( $insert )
 						{
-							$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-							$MySmartBB->rec->fields = array(	'user_from'	=>	$GetToInfo['username'],
-																'user_to'	=>	$MySmartBB->_CONF['member_row']['username'],
-																'title'	=>	$MySmartBB->lang[ 'auto_reply' ] . ' ' . $GetToInfo['autoreply_title'],
-																'text'	=>	$GetToInfo['autoreply_msg'],
-																'date'	=>	$MySmartBB->_CONF['now'],
-																'folder'	=>	'inbox'	);
-														
-							$MySmartBB->rec->insert();
-						}
-						
-						$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo['username'] );
-		      			
-		      			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-						$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
-						$MySmartBB->rec->filter = "username='" . $GetToInfo['username'] . "'";
-						
-						$Cache = $MySmartBB->rec->update();
-						
-						if ($Cache)
-						{
-							$success[] = $MySmartBB->_POST['to'][$x];
+							$new_pm = $MySmartBB->pm->newMessageNumber( $MySmartBB->_CONF['member_row']['username'] );
+							
+							$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+							$MySmartBB->rec->fields = array(	'unread_pm'	=>	$new_pm	);
+							$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+								
+							$MySmartBB->rec->update();
 						}
 					}
+					
+					$Number = $MySmartBB->pm->newMessageNumber( $GetToInfo[ 'username' ] );
+		     			
+		    		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+					$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
+					$MySmartBB->rec->filter = "username='" . $GetToInfo[ 'username' ] . "'";
+					
+					$Cache = $MySmartBB->rec->update();
+					
+					if ($Cache)
+						$success[] = $username;
 				}
-				
-				unset($GetToInfo,$GetMemberOptions);
-				
-				$x += 1;
 			}
-     	}
-     	else
-     	{
-     		$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
-     	}
+		}
      	
-     	$sucess_number 	= 	sizeof($success);
-     	$fail_numer		=	sizeof($fail);
+     	$sucess_number 	= 	sizeof( $success );
+     	$fail_numer		=	sizeof( $fail );
 
-     	if ($sucess_number == $size)
+     	if ( $sucess_number == $size )
      	{
      		$MySmartBB->func->msg( $MySmartBB->lang[ 'message_sent' ] );	
      	}
-     	elseif ($fail_number == $size)
+     	elseif ( $fail_number == $size )
      	{
      		$MySmartBB->func->msg( $MySmartBB->lang[ 'sent_fail' ] );
      	}
-     	elseif ($sucess_number < $size)
+     	elseif ( $sucess_number < $size )
      	{
      		$MySmartBB->func->msg( $MySmartBB->lang[ 'sent_for_some' ] );
      	}
@@ -292,4 +289,3 @@ class MySmartPrivateMassegeSendMOD
 }
 
 ?>
-		
