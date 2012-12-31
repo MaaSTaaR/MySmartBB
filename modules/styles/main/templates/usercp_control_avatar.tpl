@@ -74,6 +74,7 @@ $(document).ready(Ready);
 				{$lang['options']}
 			</td>
 		</tr>
+		{if {$SHOW_AVATAR_LIST}}
 		<tr align="center">
 			<td width="80%" class="row1">
 				<input name="options" type="radio" value="list" id="option1" />
@@ -82,6 +83,7 @@ $(document).ready(Ready);
 				</label>
 			</td>
 		</tr>
+		{/if}
 		<tr align="center">
 			<td width="80%" class="row2">
 				<input name="options" type="radio" value="site" id="option2">
@@ -112,9 +114,11 @@ $(document).ready(Ready);
 
 	<br />
 	
+	{if {$SHOW_AVATAR_LIST}}
 	<div id="avatar_list" style="display: none; margin-top: 1ex; margin-bottom: 2ex;">
 	{template}avatar_options_list{/template}
 	</div>
+	{/if}
 	
 	<div id="from_another_site" style="display: none; margin-top: 1ex; margin-bottom: 2ex;">
 	{template}avatar_options_site{/template}
