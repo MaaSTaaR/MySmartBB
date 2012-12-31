@@ -25,10 +25,20 @@ class MySmartPM
 	
 	// ... //
 	
-	public function markMessageAsRead()
+	/**
+	 * Indicates the the private message has been read by the member.
+	 * So it's not a new message anymore.
+	 * 
+	 * @param $id The id of the private message
+	 * 
+	 * @return boolean
+	 */
+	public function markMessageAsRead( $id )
 	{
  		$this->engine->rec->table = $this->table;
  		$this->engine->rec->fields = array(	'user_read'	=>	'1'	);
+ 		
+ 		$MySmartBB->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
 		           

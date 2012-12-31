@@ -92,7 +92,7 @@ class MySmartDownloadMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$AttachInfo = $MySmartBB->rec->getInfo();
 		
@@ -100,50 +100,20 @@ class MySmartDownloadMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
 		
 		// ... //
-				
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $AttachInfo[ 'subject_id' ] . "'";
 		
-		$SubjectInfo = $MySmartBB->rec->getInfo();
-		
-		if ( !$SubjectInfo )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
-		
-		// ... //
-		
-		// The subject isn't available
-		if ( $SubjectInfo[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
-		
-		// ... //
-		
-		// We can't stop the admin :)
-		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+		if ( $AttachInfo[ 'pm_id' ] == '0' )
 		{
-			// ... //
+			$this->__checkTopicPermissions( $AttachInfo[ 'subject_id' ] );
+		}
+		else
+		{
+			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
+			$MySmartBB->rec->filter = "id='" . $AttachInfo[ 'pm_id' ] . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo[ 'section' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
+			$pm_info = $MySmartBB->rec->getInfo();
 			
-			$SectionGroup = $MySmartBB->rec->getInfo();
-			
-			// ... //
-		
-			// The user can't show this subject
-			if ( !$SectionGroup[ 'view_section' ] )
-				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
-		
-			// The user can't download this attachment
-			if ( !$SectionGroup[ 'download_attach' ] )
+			if ( !$pm_info )
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
-			
-			// These checks are special for members	
-			if ( $MySmartBB->_CONF[ 'member_permission' ] )
-			{
-				// No enough posts
-				if ( $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] > $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] )
-					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] );
-			}
 		}
 
 		// ... //
@@ -212,6 +182,56 @@ class MySmartDownloadMOD
 		// ... //
 		
 		echo $MySmartBB->lang[ 'pm_title' ] . ' ' . $info[ 'title' ] . "\n" . $MySmartBB->lang[ 'pm_sender' ] . ' ' . $info[ 'user_from' ] . "\n\n" . $info[ 'text' ];
+	}
+	
+	private function __checkTopicPermissions( $id )
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
+		$MySmartBB->rec->filter = "id='" . $id . "'";
+		
+		$SubjectInfo = $MySmartBB->rec->getInfo();
+		
+		if ( !$SubjectInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
+		
+		// ... //
+		
+		// The subject isn't available
+		if ( $SubjectInfo[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
+		
+		// ... //
+		
+		// We can't stop the admin :)
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+		{
+			// ... //
+				
+			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
+			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo[ 'section' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
+				
+			$SectionGroup = $MySmartBB->rec->getInfo();
+				
+			// ... //
+		
+			// The user can't show this subject
+			if ( !$SectionGroup[ 'view_section' ] )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
+		
+			// The user can't download this attachment
+			if ( !$SectionGroup[ 'download_attach' ] )
+				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
+				
+			// These checks are special for members
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
+			{
+				// No enough posts
+				if ( $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] > $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] )
+					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] );
+			}
+		}
 	}
 }
 
