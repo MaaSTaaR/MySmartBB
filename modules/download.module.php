@@ -1,12 +1,12 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartDownloadMOD');
+define( 'CLASS_NAME', 'MySmartDownloadMOD' );
 
 class MySmartDownloadMOD
 {
@@ -16,15 +16,24 @@ class MySmartDownloadMOD
 		
 		$MySmartBB->loadLanguage( 'download' );
 		
-		if ($MySmartBB->_GET['subject'])
+		// ... //
+		
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		// ... //
+		
+		if ( $MySmartBB->_GET[ 'subject' ] )
 		{
 			$this->_downloadSubject();
 		}
-		elseif ($MySmartBB->_GET['attach'])
+		elseif ( $MySmartBB->_GET[ 'attach' ] )
 		{
 			$this->_downloadAttach();
 		}
-		elseif ($MySmartBB->_GET['pm'])
+		elseif ( $MySmartBB->_GET[ 'pm' ] )
 		{
 			$this->_downloadPM();
 		}
@@ -34,19 +43,12 @@ class MySmartDownloadMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
+		
+		// ... //
 		
 		if ( $SubjectInfo[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
@@ -54,14 +56,14 @@ class MySmartDownloadMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $SubjectInfo['section'] . "'";
+		$MySmartBB->rec->filter = "id='" . $SubjectInfo[ 'section' ] . "'";
 		
 		$SectionInfo = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $SectionInfo['id'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $SectionInfo[ 'id' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 		
 		$SectionGroup = $MySmartBB->rec->getInfo();
 		
@@ -74,29 +76,20 @@ class MySmartDownloadMOD
 		
 		// ... //
 		
-		$filename = str_replace(' ','_',$SubjectInfo['title']);
+		$filename = str_replace( ' ', '_', $SubjectInfo[ 'title' ] );
 		$filename .= '.txt';
 		
-		header('Content-Disposition: attachment;filename=' . $filename);
-		header('Content-type: text/plain');
+		header( 'Content-Disposition: attachment;filename=' . $filename );
+		header( 'Content-type: text/plain' );
 		
 		// ... //
 
-		echo $MySmartBB->lang[ 'topic_title' ] . ' ' . $SubjectInfo['title'] . "\n" . $MySmartBB->lang[ 'topic_writer' ] . ' ' . $SubjectInfo['writer'] . "\n\n" . $SubjectInfo['text'];
+		echo $MySmartBB->lang[ 'topic_title' ] . ' ' . $SubjectInfo[ 'title' ] . "\n" . $MySmartBB->lang[ 'topic_writer' ] . ' ' . $SubjectInfo[ 'writer' ] . "\n\n" . $SubjectInfo[ 'text' ];
 	}
 	
 	private function _downloadAttach()
 	{
 		global $MySmartBB;
-		
-		// ... //
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-
-		if (empty($MySmartBB->_GET['id']))
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
@@ -106,43 +99,43 @@ class MySmartDownloadMOD
 		// ... //
 				
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $AttachInfo['subject_id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $AttachInfo[ 'subject_id' ] . "'";
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
 		// The subject isn't available
-		if ($SubjectInfo['delete_topic'] and !$MySmartBB->_CONF['group_info']['admincp_allow'])
+		if ( $SubjectInfo[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_in_trash' ] );
 		
 		// ... //
 		
 		// We can't stop the admin :)
-		if (!$MySmartBB->_CONF['group_info']['admincp_allow'])
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 		{
 			// ... //
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo['section'] . "' AND group_id='" . $MySmartBB->_CONF['group_info']['id'] . "'";
+			$MySmartBB->rec->filter = "section_id='" . $SubjectInfo[ 'section' ] . "' AND group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "'";
 			
 			$SectionGroup = $MySmartBB->rec->getInfo();
 			
 			// ... //
 		
 			// The user can't show this subject
-			if (!$SectionGroup['view_section'])
+			if ( !$SectionGroup[ 'view_section' ] )
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
 		
 			// The user can't download this attachment
-			if (!$SectionGroup['download_attach'])
+			if ( !$SectionGroup[ 'download_attach' ] )
 				$MySmartBB->func->error( $MySmartBB->lang[ 'cant_download_attach' ] );
 			
 			// These checks are special for members	
-			if ($MySmartBB->_CONF['member_permission'])
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
 			{
 				// No enough posts
-				if ($MySmartBB->_CONF['group_info']['download_attach_number'] > $MySmartBB->_CONF['member_row']['posts'])
+				if ( $MySmartBB->_CONF[ 'group_info' ][ 'download_attach_number' ] > $MySmartBB->_CONF[ 'member_row' ][ 'posts' ] )
 				{
 					$MySmartBB->func->error( $MySmartBB->lang[ 'your_posts_must_be' ] . ' ' . $MySmartBB->_CONF['group_info']['download_attach_number']);
 				}
@@ -186,13 +179,6 @@ class MySmartDownloadMOD
 	private function _downloadPM()
 	{
 		global $MySmartBB;
-		
-		if (empty($MySmartBB->_GET['id']))		
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "' AND user_to='" . $MySmartBB->_CONF['member_row']['username'] . "'";
