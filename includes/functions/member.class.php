@@ -152,6 +152,11 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Gets the number of members who have at least one post.
+	 * 
+	 * @return The number of members
+	 */
 	public function getActiveMemberNumber()
 	{
 		$this->engine->rec->table = $this->table;

@@ -680,8 +680,8 @@ class MySmartSection
 		
 		if ( $update )
 		{
-			// Update the total of subjects
-			//$this->engine->cache->updateSubjectNumber( $val ); TODO : check it
+			// Update the total of topics
+			$this->engine->cache->updateSubjectNumber( $val, null );
 			
 			$this->updateForumCache( null, $section_id );
 			
@@ -741,9 +741,6 @@ class MySmartSection
 		
 		if ( $update )
 		{
-			// Update the total of subjects
-			//$this->engine->cache->updateSubjectNumber( $val ); // TODO : is this correct?
-			
 			// The new number of replies will be shown correctly 
 			// on the main page after updating cache.
 			$this->updateForumCache( null, $section_id );

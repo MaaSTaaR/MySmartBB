@@ -159,7 +159,7 @@
 		<a href="index.php?page=topic&amp;show=1&amp;id={$TopSubjectVisitor['id']}">{$TopSubjectVisitor['title']}</a>
 		</td>
 		<td width="20%" class="row1">
-		{$TopSubjectVisitor['reply_number']}
+		{$TopSubjectVisitor['visitor']}
 		</td>
 	</tr>
 	{/DB::getInfo}

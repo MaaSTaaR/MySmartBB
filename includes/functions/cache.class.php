@@ -106,26 +106,46 @@ class MySmartCache
 	
 	// ... //
 	
-	// Update the total of subjects in the bb.
+	/**
+	 * Updates total number of topics.
+	 *
+	 * @param $value If we already have the total number of topics we can pass it to this parameter, 
+	 * 						otherwise keep it null so the number of topics will be getten automatically.
+	 * @param $operation Can be "add" or "sub" or null, just use it if you want to add or substract
+	 * 						a specific value to/from the number of replies.
+	 * @param $operand The value of the oprand if $value is not null.
+	 * 
+	 * @return true for success, otherwise false
+	 */
 	public function updateSubjectNumber( $value = null, $operation = 'add', $operand = 1 )
 	{
-		if ( is_null( $value ) )
+		$do_operation = true;
+		
+		if ( !is_null( $value ) )
 		{
-			$val = $this->engine->_CONF[ 'info_row' ][ 'subject_number' ];
+			$val = $value;
+		}
+		else
+		{
+			$this->engine->rec->table = $this->engine->table[ 'subject' ];
+			$this->engine->rec->filter = "delete_topic<>'1'";
 			
+			$val = $this->engine->rec->getNumber();
+				
+			$do_operation = false;
+		}
+		
+		if ( !is_null( $operation ) and $do_operation )
+		{
 			if ( $operation == 'add' )
 				$val += $operand;
 			else
 				$val -= $operand;
 		}
-		else
-		{
-			$val = $value;
-		}
 		
 		$update = $this->engine->info->updateInfo( 'subject_number', $val );
 		
-		return ($update) ? true : false;
+		return ( $update ) ? true : false;
 	}
 	
 	// ... //

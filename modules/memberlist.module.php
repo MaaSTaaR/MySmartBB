@@ -55,7 +55,7 @@ class MySmartMemberlistMOD
 		$MySmartBB->rec->pager['total']		= 	$members_num;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=member_list&amp;show=1&amp;id=' . $this->Section['id'];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=member_list&amp;index=1';
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
 		$MySmartBB->rec->order = "id ASC";

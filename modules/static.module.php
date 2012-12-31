@@ -1,12 +1,12 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartStaticMOD');
+define( 'CLASS_NAME', 'MySmartStaticMOD' );
 
 class MySmartStaticMOD
 {
@@ -41,8 +41,8 @@ class MySmartStaticMOD
 		// ... //
 		
 		// Get the age of the forum and the installation date
-		$StaticInfo[ 'Age' ] 			= 	floor( ( $MySmartBB->_CONF[ 'now' ] - $MySmartBB->_CONF['info_row']['create_date'] ) / 60 / 60 / 24 );
-		$StaticInfo[ 'InstallDate' ]	=	$MySmartBB->func->date( $MySmartBB->_CONF['info_row']['create_date'] );
+		$StaticInfo[ 'Age' ] 			= 	floor( ( $MySmartBB->_CONF[ 'now' ] - $MySmartBB->_CONF[ 'info_row' ][ 'create_date' ] ) / 60 / 60 / 24 );
+		$StaticInfo[ 'InstallDate' ]	=	$MySmartBB->func->date( $MySmartBB->_CONF[ 'info_row' ][ 'create_date' ] );
 		
 		// ... //
 		
@@ -52,8 +52,10 @@ class MySmartStaticMOD
 		$StaticInfo[ 'GetReplyNumber' ]		= 	$MySmartBB->_CONF[ 'info_row' ][ 'reply_number' ];
 		$StaticInfo[ 'GetActiveMember' ]	= 	$MySmartBB->member->getActiveMemberNumber();
 		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "parent<>'0'";
+		$MySmartBB->rec->filter = "parent<>'0' AND linksection<>'1'";
 		
 		$StaticInfo[ 'GetSectionNumber' ]	= $MySmartBB->rec->getNumber();
 		
@@ -68,7 +70,7 @@ class MySmartStaticMOD
 
 		$GetOldest = $MySmartBB->rec->getInfo();
 		
-		$StaticInfo['OldestSubjectWriter'] = $GetOldest['writer'];
+		$StaticInfo[ 'OldestSubjectWriter' ] = $GetOldest[ 'writer' ];
 		
 		unset( $GetOldest );
 		
@@ -81,7 +83,7 @@ class MySmartStaticMOD
 		
 		$GetNewer = $MySmartBB->rec->getInfo();
 		
-		$StaticInfo['NewerSubjectWriter'] = $GetNewer['writer'];
+		$StaticInfo[ 'NewerSubjectWriter' ] = $GetNewer[ 'writer' ];
 		
 		unset( $getNewer );
 		
@@ -89,29 +91,29 @@ class MySmartStaticMOD
 		
 		$MySmartBB->rec->select = 'writer';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->order = "visitor DESC";
+		$MySmartBB->rec->order = "reply_number DESC";
 		$MySmartBB->rec->limit = '1';
 		
 		$GetMostVisit = $MySmartBB->rec->getInfo();
 		
-		$StaticInfo['MostSubjectWriter'] = $GetMostVisit['writer'];
+		$StaticInfo[ 'MostSubjectWriter' ] = $GetMostVisit[ 'writer' ];
 		
 		unset( $GetMostVisit );
 		
 		// ... //
 		
-		$MySmartBB->template->assign('StaticInfo',$StaticInfo);
+		$MySmartBB->template->assign( 'StaticInfo', $StaticInfo );
 		
 		// ... //
 		
 		// Get top ten list of members who have most number of posts
 		
-		$MySmartBB->_CONF['template']['res']['topten_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topten_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->order = "posts DESC";
 		$MySmartBB->rec->limit = '10';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topten_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topten_res' ];
 		
 		$MySmartBB->rec->getList();
 		
@@ -119,12 +121,13 @@ class MySmartStaticMOD
 		
 		// Get top ten list of subjects which have most number of replies
 		
-		$MySmartBB->_CONF['template']['res']['topsubject_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topsubject_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->order = "reply_number DESC";
 		$MySmartBB->rec->limit = '10';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topsubject_res'];
+		$MySmartBB->rec->filter = "delete_topic<>'1'";
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topsubject_res' ];
 		
 		$MySmartBB->rec->getList();
 		
@@ -132,12 +135,13 @@ class MySmartStaticMOD
 		
 		// Get top ten list of subjects which have most number of visitors
 
-		$MySmartBB->_CONF['template']['res']['topvisit_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topvisit_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->order = "visitor DESC";
 		$MySmartBB->rec->limit = '10';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['topvisit_res'];
+		$MySmartBB->rec->filter = "delete_topic<>'1'";
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topvisit_res' ];
 		
 		$MySmartBB->rec->getList();
 		
