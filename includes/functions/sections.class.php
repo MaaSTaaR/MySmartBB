@@ -404,6 +404,16 @@ class MySmartSection
  	
  	// ... //
  	
+ 	/**
+ 	 * Returns a list of categories and forums with its details.
+ 	 * 
+ 	 * @param $check_group If it's true, check if the current member has
+	 * 						permissions to view a specific category/forum from the list.
+	 * 						If false the function will return the whole list of forums.
+	 * 						Default value is true.
+ 	 * 
+ 	 * @return Array of categories and forums
+ 	 */
 	public function getForumsList( $check_group = true )
 	{
 		$forums_list = array();
@@ -412,10 +422,8 @@ class MySmartSection
 		$this->engine->rec->filter = 'parent=0';
 		$this->engine->rec->order = 'sort ASC';
 		
-		// Get main sections
 		$this->engine->rec->getList();
 		
-		// Loop to read the information of main sections
 		while ( $cat = $this->engine->rec->getInfo() )
 		{
 			// Should we fetch the forums of this category or not?
@@ -426,26 +434,28 @@ class MySmartSection
 			// ... //
 			
 			// Get the groups information to know view this section or not
-			
 			if ( $check_group )
 			{
+				// Visitor's group id
+				$group_id = $this->engine->_CONF[ 'group_info' ][ 'id' ];
+				
 				$groups = unserialize( base64_decode( $cat[ 'sectiongroup_cache' ] ) );
 				
-				if ( is_array( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
+				if ( is_array( $groups[ $group_id ] ) )
 				{
-					if ( $groups[ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+					if ( $groups[ $group_id ][ 'view_section' ] )
 					{
-						$forums_list[ $cat['id'] . '_m' ] = $cat;
+						$forums_list[ $cat[ 'id' ] . '_m' ] = $cat;
 					}
 					else
 					{
-						// This visitor can't show the category, so don't fetch the forums
-						// which belong to this category.
+						// This visitor has no permission to show the category, 
+						// so don't fetch the forums which belong to this category.
 						$fetch_forums = false;
 					}
 				}
 			
-				unset($groups);
+				unset( $groups );
 			}
 			else
 			{
@@ -461,12 +471,8 @@ class MySmartSection
 				if ( !is_null( $forums ) )
 					$forums_list = array_merge( $forums_list, $forums );
 				
-				
-				// Save some memory
-				unset( $forums );
-				
-				unset( $forums_list[ $cat['id'] . '_m' ][ 'forums_cache' ] );
-				unset( $forums_list[ $cat['id'] . '_m' ][ 'sectiongroup_cache' ] );
+				unset( $forums_list[ $cat[ 'id' ] . '_m' ][ 'forums_cache' ] );
+				unset( $forums_list[ $cat[ 'id' ] . '_m' ][ 'sectiongroup_cache' ] );
 			}
 		}
 		
@@ -489,9 +495,10 @@ class MySmartSection
 	public function fetchForumsFromCache( $cache, $check_group = true )
 	{
 		$forums_list = array();
+		$group_id = $this->engine->_CONF[ 'group_info' ][ 'id' ];
 		
 		$forums = unserialize( base64_decode( $cache ) );
-	
+		
 		foreach ( $forums as $forum )
 		{
 			$show_forum = false;
@@ -499,13 +506,9 @@ class MySmartSection
 			// Check if the visitor has the permission to view this forum.
 			if ( $check_group )
 			{
-				if ( is_array( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
-				{
-					if ( $forum[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
-					{
+				if ( is_array( $forum[ 'groups' ][ $group_id ] ) )
+					if ( $forum[ 'groups' ][ $group_id ][ 'view_section' ] )
 						$show_forum = true;
-					}
-				}
 			}
 			else
 			{
@@ -528,9 +531,9 @@ class MySmartSection
 					{
 						foreach ( $subs as $sub )
 						{
-							if ( is_array( $sub[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ] ) )
+							if ( is_array( $sub[ 'groups' ][ $group_id ] ) )
 							{
-								if ( $sub[ 'groups' ][ $this->engine->_CONF[ 'group_info' ][ 'id' ] ][ 'view_section' ] )
+								if ( $sub[ 'groups' ][ $group_id ][ 'view_section' ] )
 								{
 									if ( !$forum[ 'is_sub' ] )
 										$forum[ 'is_sub' ] = 1;

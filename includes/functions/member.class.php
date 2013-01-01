@@ -21,31 +21,31 @@ class MySmartMember
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : This function checks the username and password, If they are correct so login the user by registering the cookies.
-	// 
-	// Returns : 
-	//				- false 
-	//				- or array contains the information of the user
-	// ~ ~ //
+	/**
+	 * Checks username and password, If they are correct so log the user in by registering the cookies.
+	 * 
+	 * @param $username The username
+	 * @param $password The password hashed with md5()
+	 * @param $expire Cookie's expiration time, default value if null
+	 * 
+	 * @return false if the username and password are not correct.
+	 * 
+	 * @see MySmartMember::checkMember()
+	 */
 	public function loginMember( $username, $password, $expire = null )
 	{
 		if ( empty( $username ) or empty( $password ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM loginMember() -- EMPTY username or password', E_USER_ERROR );
 		
 		$checkMember = $this->checkMember( $username, $password );
-		    	       		       
+
 		if ( !$checkMember )
-		{
 			return false;
-		}
-		else
-		{
-			setcookie( $this->engine->_CONF[ 'username_cookie' ], $username, $expire );
-			setcookie( $this->engine->_CONF[ 'password_cookie' ], $password, $expire );
-       				
-       		return $checkMember;
-       	}
+		
+		setcookie( $this->engine->_CONF[ 'username_cookie' ], $username, $expire );
+		setcookie( $this->engine->_CONF[ 'password_cookie' ], $password, $expire );
+		
+		return $checkMember;
 	}
 	
 	// ... //
@@ -307,7 +307,7 @@ class MySmartMember
 	/**
 	 * Updates style cache of the member
 	 * 
-	 * @param $style_info an array of style information as represented in database.
+	 * @param $style_info an array of style information as represented in database, or the id of the style.
 	 * @param $member_info null or an array that contains member's information as stored in database.
 	 * 						if it's null the function gets member's information from MySmartBB::_CONF[ 'member_row' ].
 	 * 
