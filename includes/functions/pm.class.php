@@ -67,6 +67,12 @@ class MySmartPM
 	
 	// ... //
 	
+	/**
+	 * Gets the list of inbox private messages.
+	 * 
+	 * @param $username The username of the member who the messages belong to.
+	 * 
+	 */
 	public function getInboxList( $username )
 	{
  		$this->engine->rec->table = $this->table;
@@ -78,6 +84,12 @@ class MySmartPM
 	
 	// ... //
 	
+	/**
+	 * Gets the list of sent private messages.
+	 *
+	 * @param $username The username of the member who the messages belong to.
+	 *
+	 */
 	public function getSentList( $username )
 	{
  		$this->engine->rec->table = $this->table;
