@@ -1,12 +1,12 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
 require( 'common.php' );
 
-define('CLASS_NAME','MySmartIndexMOD');
+define( 'CLASS_NAME', 'MySmartIndexMOD' );
 
 class MySmartIndexMOD
 {
@@ -35,18 +35,11 @@ class MySmartIndexMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	/**
-	 * Get sections list from cache and show it.
-	 */
 	private function _getSections()
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList();
-		
-		// ... //
 	}
 		
 	private function _getOnline()
@@ -58,20 +51,20 @@ class MySmartIndexMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username='Guest'";
 		
-		$MySmartBB->_CONF['template']['GuestNumber'] = $MySmartBB->rec->getNumber();
+		$MySmartBB->_CONF[ 'template' ][ 'GuestNumber' ] = $MySmartBB->rec->getNumber();
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
 		$MySmartBB->rec->filter = "username<>'Guest'";
 		
-		$MySmartBB->_CONF['template']['MemberNumber'] = $MySmartBB->rec->getNumber();
+		$MySmartBB->_CONF[ 'template' ][ 'MemberNumber' ] = $MySmartBB->rec->getNumber();
 		
 		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ] = '';
 		
-		$MySmartBB->rec->table		=	$MySmartBB->table['group'];
+		$MySmartBB->rec->table		=	$MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter 	= 	"view_usernamestyle='1'";
 		$MySmartBB->rec->order 		= 	'group_order ASC';
 		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'group_res' ];
@@ -117,21 +110,18 @@ class MySmartIndexMOD
 		
 		$MySmartBB->rec->filter = "user_date='" . $MySmartBB->_CONF[ 'date' ] . "'";
 		
-		if ( !isset( $MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] ) 
-			or !$MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] )
-		{
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'show_hidden' ] )
 			$MySmartBB->rec->filter .= " AND hide_browse<>'1'";
-		}
 		
-		$MySmartBB->_CONF['template']['res']['today_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'today_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
 		$MySmartBB->rec->order = 'user_id DESC';
-		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['today_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'today_res' ];
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->_CONF['template']['TodayNumber'] = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['today_res'] );
+		$MySmartBB->_CONF[ 'template' ][ 'TodayNumber' ] = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'today_res' ] );
 	}
 	
 	public function usernameStyleProcess( $row )

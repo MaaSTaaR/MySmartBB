@@ -147,40 +147,8 @@ class MySmartGroupsEditMOD
 		
 		if ($update)
 		{
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-				
-			$MySmartBB->rec->fields			=	array();
-			
-			$MySmartBB->rec->fields['group_id'] 			= 	$group_id;
-			$MySmartBB->rec->fields['view_section'] 		= 	$MySmartBB->_POST['view_section'];
-			$MySmartBB->rec->fields['download_attach'] 		= 	$MySmartBB->_POST['download_attach'];
-			$MySmartBB->rec->fields['write_subject'] 		= 	$MySmartBB->_POST['write_subject'];
-			$MySmartBB->rec->fields['write_reply'] 			= 	$MySmartBB->_POST['write_reply'];
-			$MySmartBB->rec->fields['upload_attach'] 		= 	$MySmartBB->_POST['upload_attach'];
-			$MySmartBB->rec->fields['edit_own_subject'] 	= 	$MySmartBB->_POST['edit_own_subject'];
-			$MySmartBB->rec->fields['edit_own_reply'] 		= 	$MySmartBB->_POST['edit_own_reply'];
-			$MySmartBB->rec->fields['del_own_subject'] 		= 	$MySmartBB->_POST['del_own_subject'];
-			$MySmartBB->rec->fields['del_own_reply'] 		= 	$MySmartBB->_POST['del_own_reply'];
-			$MySmartBB->rec->fields['write_poll'] 			= 	$MySmartBB->_POST['write_poll'];
-			$MySmartBB->rec->fields['vote_poll'] 			= 	$MySmartBB->_POST['vote_poll'];
-			$MySmartBB->rec->fields['group_name'] 			= 	$MySmartBB->_POST['name'];
-			
-			$MySmartBB->rec->filter = "group_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-			
-			$update_permissions = $MySmartBB->rec->update();
-			
-			if ( $update_permissions )
-			{
-				$cache = $MySmartBB->section->updateAllSectionsCache();
-				
-				if ( $cache )
-				{
-					$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-					$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
-				}
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+			$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
 		}
 	}
 	
