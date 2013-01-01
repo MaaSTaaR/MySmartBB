@@ -36,9 +36,9 @@ class MySmartLatestMOD
 		
 		// ... //
 		
-		$day 	= 	date('j');
-		$month 	= 	date('n');
-		$year 	= 	date('Y');
+		$day 	= 	date( 'j' );
+		$month 	= 	date( 'n' );
+		$year 	= 	date( 'Y' );
 		
 		$from 	= 	mktime( 0, 0, 0, $month, $day, $year );
 		$to 	= 	mktime( 23, 59, 59, $month, $day, $year );

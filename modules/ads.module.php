@@ -45,7 +45,7 @@ class MySmartAdsPageMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$AdsRows = $MySmartBB->rec->getInfo();
 		
@@ -60,7 +60,7 @@ class MySmartAdsPageMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->table = $MySmartBB->table['ads'];
+		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->fields = array(	'clicks'	=> $AdsRows['clicks'] + 1	);
 		$MySmartBB->rec->filter = "id='" . $AdsRows['id'] . "'";
 		
@@ -68,7 +68,7 @@ class MySmartAdsPageMOD
 		
 		// ... //
 		
-		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $AdsRows['sitename'] );
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $AdsRows[ 'sitename' ] );
 		$MySmartBB->func->move( $AdsRows[ 'site' ] );
 		
 		// ... //

@@ -20,10 +20,10 @@ class MySmartUserCPSignatureMOD
 		$MySmartBB->loadLanguage( 'usercp_control_signature' );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $lang[ 'member_zone' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
 		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'sig_allow' ] )
-			$MySmartBB->func->error( $lang[ 'cant_use_this_feature' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
 		
 		$MySmartBB->load( 'icon,toolbox' );
 		
@@ -43,7 +43,7 @@ class MySmartUserCPSignatureMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $lang[ 'compose_signature' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'compose_signature' ] );
 		
 		$MySmartBB->func->getEditorTools();
 		
@@ -60,7 +60,7 @@ class MySmartUserCPSignatureMOD
 		
 		// ... //
 		
-		$MySmartBB->func->showHeader( $lang[ 'update_process' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'update_process' ] );
 		$MySmartBB->func->addressBar('<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'update_process' ] );
 		
 		// ... //

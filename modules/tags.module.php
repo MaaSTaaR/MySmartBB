@@ -16,7 +16,7 @@ class MySmartTagsMOD
 		
 		$MySmartBB->loadLanguage( 'tags' );
 		
-		if ($MySmartBB->_GET['show'])
+		if ( $MySmartBB->_GET[ 'show' ] )
 		{
 			$this->_show();
 		}
@@ -30,9 +30,9 @@ class MySmartTagsMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		if (empty($MySmartBB->_GET['id']))
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
@@ -49,10 +49,10 @@ class MySmartTagsMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET['count'] = (!isset($MySmartBB->_GET['count'])) ? 0 : $MySmartBB->_GET['count'];
+		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
-		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$number = $MySmartBB->rec->getNumber();
 		
@@ -71,16 +71,16 @@ class MySmartTagsMOD
 		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=tags&amp;show=1&amp;id=' . $MySmartBB->_GET['id'];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
-		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "tag_id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$MySmartBB->rec->getList();
 		
 		// ... //
 		
-		$MySmartBB->template->assign('pager',$MySmartBB->pager->show());
+		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
 		$MySmartBB->template->assign( 'tag', $tag_info[ 'tag' ] );
 		
-		$MySmartBB->template->display('tags_show_subject');
+		$MySmartBB->template->display( 'tags_show_subject' );
 	}
 }
 

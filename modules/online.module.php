@@ -34,6 +34,9 @@ class MySmartOnlineMOD
 	{
 		global $MySmartBB;
 		
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'onlinepage_allow' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission' ] );
+		
 		$MySmartBB->_CONF['template']['res']['online_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];

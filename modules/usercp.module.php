@@ -22,7 +22,7 @@ class MySmartUserCPMOD
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
-		if ( isset( $MySmartBB->_GET[ 'index' ] ) )
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_index();
 		}
@@ -42,10 +42,10 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['last_subjects_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'last_subjects_res' ] = '';
 		
 		$MySmartBB->rec->table		=	$MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter 	= 	"writer='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+		$MySmartBB->rec->filter 	= 	"writer='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		$MySmartBB->rec->order 		= 	'id DESC';
 		$MySmartBB->rec->limit 		= 	'5';
 		$MySmartBB->rec->result 	= 	&$MySmartBB->_CONF['template']['res']['last_subjects_res'];
@@ -58,7 +58,7 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
-      	$MySmartBB->template->display('usercp_index');
+      	$MySmartBB->template->display( 'usercp_index' );
 	}
 }
 

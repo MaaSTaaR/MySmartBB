@@ -46,8 +46,6 @@ class MySmartTags
 			
 			$Tag = $this->engine->rec->getInfo();
 			
-			var_dump( $Tag );
-			
 			// This tag doesn't exist, insert it into database.
 			if ( !$Tag )
 			{

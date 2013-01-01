@@ -74,12 +74,11 @@ class MySmartMember
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : This function logs the user out by deleteing the cookies
-	// 
-	// Returns : 
-	//				- true or false 
-	// ~ ~ //
+	/**
+	 * Logs the current member out by deleting the cookies and the member from online table
+	 * 
+	 * @return boolean
+	 */
 	public function logout()
 	{
 		$this->engine->rec->table = $this->engine->table[ 'online' ];

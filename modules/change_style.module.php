@@ -27,14 +27,14 @@ class MySmartChangeStyleMOD
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		if ($MySmartBB->_GET['change'])
+		if ( $MySmartBB->_GET[ 'change' ] )
 		{
 		    $MySmartBB->plugin->runHooks( 'change_style_start' );
 		    
-			if ( $MySmartBB->_CONF['member_permission'] )
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
 			{
 				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 				$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_GET[ 'id' ]	);
 				
 				$change = $MySmartBB->rec->update();

@@ -1,15 +1,15 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_func', true );
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartUserCPSettingMOD');
+define( 'CLASS_NAME', 'MySmartUserCPSettingMOD' );
 
 class MySmartUserCPSettingMOD
 {
@@ -52,7 +52,7 @@ class MySmartUserCPSettingMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('usercp_control_setting');
+		$MySmartBB->template->display( 'usercp_control_setting' );
 	}
 		
 	private function _settingChange()
@@ -67,10 +67,10 @@ class MySmartUserCPSettingMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'style'	=>	$MySmartBB->_POST['style'],
-											'hide_online'	=>	$MySmartBB->_POST['hide_online'],
-											'user_time'	=>	$MySmartBB->_POST['user_time'],
-											'send_allow'	=>	$MySmartBB->_POST['send_allow']	);
+		$MySmartBB->rec->fields = array(	'style'			=>	$MySmartBB->_POST[ 'style' ],
+											'hide_online'	=>	$MySmartBB->_POST[ 'hide_online' ],
+											'user_time'		=>	$MySmartBB->_POST[ 'user_time' ],
+											'send_allow'	=>	$MySmartBB->_POST[ 'send_allow' ]	);
 		
 		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
