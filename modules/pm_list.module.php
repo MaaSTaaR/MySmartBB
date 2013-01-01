@@ -70,7 +70,7 @@ class MySmartPrivateMassegeListMOD
 		$MySmartBB->rec->pager['total']		= 	$number;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['perpage'];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=pm&amp;show=1';
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=pm_list&amp;list=1&amp;folder=' . $MySmartBB->_GET[ 'folder' ];
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
 		$MySmartBB->rec->order = "id DESC";
