@@ -20,7 +20,7 @@ class MySmartVoteMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
-		if ($MySmartBB->_GET['start'])
+		if ( $MySmartBB->_GET[ 'start' ] )
 		{
 			$this->_start();
 		}
@@ -32,20 +32,20 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
 		// ... //
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 			
-		if ( !isset( $MySmartBB->_POST[ 'answer' ] ) )
+		if ( empty( $MySmartBB->_POST[ 'answer' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'please_choose_answer' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Poll = $MySmartBB->rec->getInfo();
 		
@@ -78,20 +78,20 @@ class MySmartVoteMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET['id'] . "' AND member_id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] .  "'";
+		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET[ 'id' ] . "' AND member_id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] .  "'";
 		
 		$Vote = $MySmartBB->rec->getNumber();
 		
-		if ( $Vote != 0 )
+		if ( $Vote > 0 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_vote_multi' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
-		$MySmartBB->rec->fields = array(	'poll_id'	=>	$MySmartBB->_GET['id'],
-											'member_id'	=>	$MySmartBB->_CONF['member_row']['id'],
-											'username'	=>	$MySmartBB->_CONF['member_row']['username']	);
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->fields = array(	'poll_id'	=>	$MySmartBB->_GET[ 'id' ],
+											'member_id'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'id' ],
+											'username'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ]	);
 		
 		$insert = $MySmartBB->rec->insert();
 		
@@ -101,7 +101,7 @@ class MySmartVoteMOD
 		{
 			$update = $MySmartBB->poll->updateResults( $Poll, $MySmartBB->_POST[ 'answer' ] );
 		
-			if ($update)
+			if ( $update )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'vote_succeed' ] );
 				$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id'] );

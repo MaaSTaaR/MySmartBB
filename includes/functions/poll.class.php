@@ -89,6 +89,14 @@ class MySmartPoll
 	
 	// ... //
 	
+	/**
+	 * Updates the result of a specific poll for a specific answer.
+	 * 
+	 * @param $poll The id of the poll or the array of poll's information as represented in database.
+	 * @param $answer The text of the answer to be updated.
+	 * 
+	 * @return boolean
+	 */
 	public function updateResults( $poll, $answer )
 	{
 		if ( empty( $answer ) or ( empty( $poll ) or $poll == 0 ) )

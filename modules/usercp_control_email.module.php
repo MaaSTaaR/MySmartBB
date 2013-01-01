@@ -1,15 +1,15 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_func', true );
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartUserCPEmailMOD');
+define( 'CLASS_NAME', 'MySmartUserCPEmailMOD' );
 
 class MySmartUserCPEmailMOD
 {
@@ -52,11 +52,11 @@ class MySmartUserCPEmailMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'execute_process' ] );
-		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
+		$MySmartBB->func->addressBar( '<a href="index.php?page=usercp&amp;index=1">' . $MySmartBB->lang[ 'template' ][ 'usercp' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'execute_process' ] );
 		
 		// ... //
 		
-		if ( empty ($MySmartBB->_POST[ 'new_email' ] ) or empty( $MySmartBB->_POST[ 'password' ] ) )
+		if ( empty( $MySmartBB->_POST[ 'new_email' ] ) or empty( $MySmartBB->_POST[ 'password' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		if ( !$MySmartBB->func->checkEmail( $MySmartBB->_POST[ 'new_email' ] ) )
@@ -64,7 +64,7 @@ class MySmartUserCPEmailMOD
 			
 		// ... //
 		
-		$MySmartBB->_POST['password'] = md5( trim( $MySmartBB->_POST[ 'password' ] ) );
+		$MySmartBB->_POST[ 'password' ] = md5( trim( $MySmartBB->_POST[ 'password' ] ) );
 		
 		// ... //
 		
@@ -75,7 +75,7 @@ class MySmartUserCPEmailMOD
 		
 		// ... //
 		
-		$MySmartBB->_POST['new_email'] = trim( $MySmartBB->_POST['new_email'] );
+		$MySmartBB->_POST[ 'new_email' ] = trim( $MySmartBB->_POST[ 'new_email' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "email='" .  $MySmartBB->_POST[ 'new_email' ]. "'";
