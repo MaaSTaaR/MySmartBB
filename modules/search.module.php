@@ -38,21 +38,13 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->load( 'section' );
 		
-		// ... //
-		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'the_search' ] );
-		
-		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList();
 		
-		// ... //
-		
 		$MySmartBB->plugin->runHooks( 'search_main' );
 		
-		// ... //
-		
-		$MySmartBB->template->display('search');
+		$MySmartBB->template->display( 'search' );
 	}
 	
 	private function _startSearch()
@@ -63,9 +55,9 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		$keyword 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET['keyword'], 'html' );
-		$username 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET['username'], 'html' );
-		$section 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET['section'], 'html' );
+		$keyword 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'keyword' ], 'html' );
+		$username 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'username' ], 'html' );
+		$section 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'section' ], 'html' );
 		
 		// ... //
 		
@@ -84,10 +76,10 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['res']['search_res'] = '';
+		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'search_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['search_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'search_res' ];
 		$MySmartBB->rec->filter = $filter;
 		
 		$MySmartBB->rec->getList();
@@ -104,7 +96,7 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->template->assign( 'highlight', $keyword );
 		
-		$MySmartBB->template->display('search_results');
+		$MySmartBB->template->display( 'search_results' );
 		
 		$MySmartBB->rec->removeInfoCallback();
 	}

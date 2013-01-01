@@ -112,6 +112,8 @@ class MySmartMember
 		if ( empty( $username ) or empty( $style ) )
 			trigger_error( 'ERROR::NEED_PARAMATER -- FROM getUsernameWithStyle() -- EMPTY style or username' );
 		
+		// TODO : why not using str_replace instead? that will do the job in just one line.
+		
 		$html_tags = explode( '[username]', $style );
     					  
 		$res  = $html_tags[ 0 ];

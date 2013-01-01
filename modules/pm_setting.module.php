@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartPrivateMassegeMOD');
+define( 'CLASS_NAME', 'MySmartPrivateMassegeMOD' );
 
 class MySmartPrivateMassegeMOD
 {
@@ -20,24 +20,26 @@ class MySmartPrivateMassegeMOD
 		
 		// ... //
 		
-		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
+		
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'pm_feature' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
 		
-		if (!$MySmartBB->_CONF['group_info']['use_pm'])
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'use_pm' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
-
-		if (!$MySmartBB->_CONF['member_permission'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
 		// ... //
 				
-		if ($MySmartBB->_GET['setting'])
+		if ( $MySmartBB->_GET[ 'setting' ] )
 		{
-			if ($MySmartBB->_GET['index'])
+			$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
+			
+			if ( $MySmartBB->_GET[ 'index' ] )
 			{
 				$this->_settingIndex();
 			}
-			elseif ($MySmartBB->_GET['start'])
+			elseif ( $MySmartBB->_GET[ 'start' ] )
 			{
 				$this->_settingStart();
 			}
@@ -54,45 +56,39 @@ class MySmartPrivateMassegeMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
-		
 		$MySmartBB->plugin->runHooks( 'pm_setting_main' );
 		
-		$MySmartBB->template->display('pm_setting');
+		$MySmartBB->template->display( 'pm_setting' );
 	}
 	
 	private function _settingStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
-		
-		// ... //
-		
-		if ( $MySmartBB->_POST['autoreply'] and ( !isset( $MySmartBB->_POST['title'] ) or !isset( $MySmartBB->_POST['msg'] ) ) )
-			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'please_fill_information' ] );
+		if ( $MySmartBB->_POST[ 'autoreply' ] and ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'msg' ] ) ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		// ... //
 		
 		$MySmartBB->plugin->runHooks( 'pm_setting_action_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'autoreply'	=>	$MySmartBB->_POST['autoreply'],
-											'autoreply_title'	=>	$MySmartBB->_POST['title'],
-											'autoreply_msg'	=>	$MySmartBB->_POST['msg'],
-											'pm_senders'	=>	$MySmartBB->_POST['pm_senders'],
-											'pm_senders_msg'	=>		$MySmartBB->_POST['pm_senders_msg']	);
+		$MySmartBB->rec->fields = array(	'autoreply'			=>	$MySmartBB->_POST[ 'autoreply' ],
+											'autoreply_title'	=>	$MySmartBB->_POST[ 'title' ],
+											'autoreply_msg'		=>	$MySmartBB->_POST[ 'msg' ],
+											'pm_senders'		=>	$MySmartBB->_POST[ 'pm_senders' ],
+											'pm_senders_msg'	=>	$MySmartBB->_POST[ 'pm_senders_msg' ]	);
 											
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
-		if ($update)
+		if ( $update )
 		{
 		    $MySmartBB->plugin->runHooks( 'pm_setting_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=pm_setting&amp;setting=1&amp;index=1');
+			$MySmartBB->func->move( 'index.php?page=pm_setting&amp;setting=1&amp;index=1' );
 		}
 	}
 }

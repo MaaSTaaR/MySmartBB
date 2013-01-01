@@ -1,12 +1,12 @@
 ﻿<?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartReportMOD');
+define( 'CLASS_NAME', 'MySmartReportMOD' );
 
 class MySmartReportMOD
 {
@@ -14,17 +14,20 @@ class MySmartReportMOD
 	{
 		global $MySmartBB;
 		
-		if (!$MySmartBB->_CONF['member_permission'])
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_visitors' ] );
-		
 		
 		$MySmartBB->loadLanguage( 'report' );
 		
-		if ($MySmartBB->_GET['index'])
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_report' ] );
+		
+		$this->_commonCode();
+		
+		if ( $MySmartBB->_GET[ 'index' ] )
 		{
 			$this->_memberReportIndex();
 		}
-		elseif ($MySmartBB->_GET['start'])
+		elseif ( $MySmartBB->_GET[ 'start' ] )
 		{
 			$this->_memberReportStart();
 		}
@@ -36,32 +39,14 @@ class MySmartReportMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_report' ] );
-	
 		$MySmartBB->template->assign( 'id', $MySmartBB->_GET[ 'id' ] );
 		
-		$MySmartBB->template->display('send_report');
+		$MySmartBB->template->display( 'send_report' );
 	}
 	
 	private function _memberReportStart()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_report' ] );
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		// ... //
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
 		
 		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
@@ -81,20 +66,30 @@ class MySmartReportMOD
 		
 		// ... //
 		
-		$Report = $MySmartBB->func->mail(	$MySmartBB->_CONF['info_row']['admin_email'],
+		$Report = $MySmartBB->func->mail(	$MySmartBB->_CONF[ 'info_row' ][ 'admin_email' ],
 											$messageInfo[ 'title' ],
 											$messageInfo[ 'text' ],
-											$MySmartBB->_CONF['member_row']['email'] );
+											$MySmartBB->_CONF[ 'member_row' ][ 'email' ] );
 		
 		if ( $Report )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'report_sent' ] );
-			$MySmartBB->func->move('index.php');
+			$MySmartBB->func->move( 'index.php' );
 		}
 		else
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
 		}
+	}
+	
+	private function _commonCode()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	}
 }
 

@@ -262,7 +262,7 @@ class MySmartBB
   		// Get information from info table
   		if ( !defined( 'NO_INFO' ) )
   		{
-    		$this->_CONF[ 'info_row' ]				=	array();
+    		$this->_CONF[ 'info_row' ] = array();
 			
 			$this->info->getInfoList( $this->_CONF[ 'info_row' ] );			
 			
@@ -370,9 +370,7 @@ class MySmartBB
   		{
   			// The Library doesn't exist
   			if ( !array_key_exists( $lib, $this->func_list ) )
-  			{
   				return false;
-  			}
   			
   			if ( is_null( $this->$lib ) )
   			{

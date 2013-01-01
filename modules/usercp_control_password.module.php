@@ -1,15 +1,15 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
+define( 'JAVASCRIPT_func', true );
+define( 'JAVASCRIPT_SMARTCODE', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartUserCPPasswordMOD');
+define( 'CLASS_NAME', 'MySmartUserCPPasswordMOD' );
 
 class MySmartUserCPPasswordMOD
 {
@@ -61,8 +61,8 @@ class MySmartUserCPPasswordMOD
 		
 		// ... //
 		
-		$MySmartBB->_POST['old_password'] = md5( trim( $MySmartBB->_POST[ 'old_password' ] ) );
-		$MySmartBB->_POST['new_password'] = md5( trim( $MySmartBB->_POST[ 'new_password' ] ) );
+		$MySmartBB->_POST[ 'old_password' ] = md5( trim( $MySmartBB->_POST[ 'old_password' ] ) );
+		$MySmartBB->_POST[ 'new_password' ] = md5( trim( $MySmartBB->_POST[ 'new_password' ] ) );
 		
 		// ... //
 
@@ -77,8 +77,8 @@ class MySmartUserCPPasswordMOD
 		$MySmartBB->plugin->runHooks( 'usercp_control_password_start' );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'password'	=>	$MySmartBB->_POST['new_password']	);
-		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF['member_row']['id'] . "'";
+		$MySmartBB->rec->fields = array(	'password'	=>	$MySmartBB->_POST[ 'new_password' ]	);
+		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 			
 		$update = $MySmartBB->rec->update();
 

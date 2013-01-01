@@ -1,12 +1,12 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartActiveMOD');
+define( 'CLASS_NAME', 'MySmartActiveMOD' );
 
 class MySmartActiveMOD
 {
@@ -49,32 +49,34 @@ class MySmartActiveMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET[ 'code' ] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		
-		if (!$RequestInfo)
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'request_doesnt_exist' ] );
+		if ( !$RequestInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'request_doesnt_exist' ] );
 		
       	// ... //
       	
       	// Get the information of default group to set username style cache
       	
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['info_row']['adef_group'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ] . "'";
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
-		$style = $GroupInfo['username_style'];
-		$username_style_cache = str_replace('[username]',$MySmartBB->_CONF['member_row']['username'],$style);
+		// ... //
 		
-      	// ... //
+		$username_style_cache = $MySmartBB->member->getUsernameWithStyle( $MySmartBB->_CONF[ 'member_row' ][ 'username' ], $GroupInfo[ 'username_style' ] );
+      	
+		// ... //
       	
       	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->fields = array(	'usergroup'	=>	$MySmartBB->_CONF['info_row']['adef_group'],
-											'username_style_cache'	=>	$username_style_cache	);
+		$MySmartBB->rec->fields = array(	'usergroup'	=>	$GroupInfo[ 'id' ],
+											'username_style_cache'	=>	$username_style_cache,
+											'user_title'	=>	$GroupInfo[ 'user_title' ]	);
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['member_row']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
 		$UpdateGroup = $MySmartBB->rec->update();
 		
@@ -82,10 +84,18 @@ class MySmartActiveMOD
 		
 		if ( $UpdateGroup )
 		{
-		    $MySmartBB->plugin->runHooks( 'active_member_success' );
-		    
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
-			$MySmartBB->func->move( 'index.php' );
+			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+			$MySmartBB->rec->filter = "id='" . $RequestInfo[ 'id' ] . "'";
+			
+			$del = $MySmartBB->rec->delete();
+			
+			if ( $del )
+			{
+			    $MySmartBB->plugin->runHooks( 'active_member_success' );
+			    
+				$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
+				$MySmartBB->func->move( 'index.php' );
+			}
 		}
 	}
 }
