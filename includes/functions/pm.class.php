@@ -53,6 +53,8 @@ class MySmartPM
 	 * @param $username The username of the member who we want to check his/her unread messages number.
 	 * 
 	 * @return The number of unread messages.
+	 * 
+	 * @todo I think we should me it to MySmartMember. It's a members stuff.
 	 */
 	public function newMessageNumber( $username )
 	{

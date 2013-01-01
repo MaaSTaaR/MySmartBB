@@ -45,11 +45,11 @@ class MySmartPasswordMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET['code'] . "' AND request_type='1'";
+		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET[ 'code' ] . "' AND request_type='1'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		
-		if (!$RequestInfo)
+		if ( !$RequestInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'request_doesnt_exist' ] );
 		
 		// ... //

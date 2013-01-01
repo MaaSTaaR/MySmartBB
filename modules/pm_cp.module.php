@@ -18,18 +18,24 @@ class MySmartPrivateMassegeCPMOD
 		
 		$MySmartBB->loadLanguage( 'pm_cp' );
 		
-		if (!$MySmartBB->_CONF['info_row']['pm_feature'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
-
-		if (!$MySmartBB->_CONF['group_info']['use_pm'])
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
-
-		if (!$MySmartBB->_CONF['member_permission'])
+		// ... //
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-
-		if ($MySmartBB->_GET['cp'])
+		
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'pm_feature' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_feature_stopped' ] );
+		
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'use_pm' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
+		
+		// ... //
+		
+		$MySmartBB->load( 'pm' );
+		
+		if ( $MySmartBB->_GET[ 'cp' ] )
 		{
-			if ($MySmartBB->_GET['del'])
+			if ( $MySmartBB->_GET[ 'del' ] )
 			{
 				$this->_deletePrivateMassege();
 			}
@@ -61,7 +67,7 @@ class MySmartPrivateMassegeCPMOD
 		$k = 1;
 		$array_size = sizeof( $MySmartBB->_POST[ 'delete_list' ] );
 		
-		$filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND (";
+		$filter = "user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "' AND (";
 		
 		foreach ( $MySmartBB->_POST[ 'delete_list' ] as $key => $id )
 		{
@@ -89,17 +95,13 @@ class MySmartPrivateMassegeCPMOD
 		{
 			// ... //
 			
-			// Recount the number of new messages after delete this message
-			$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-			$MySmartBB->rec->filter = "user_to='" . $MySmartBB->_CONF['member_row']['username'] . "' AND folder='inbox' AND user_read<>'1'";
+			// Recount the number of new messages after the deletion
 			
-			$Number = $MySmartBB->rec->getNumber();
-			
-			// ... //
+			$new_pm_num = $MySmartBB->pm->newMessageNumber( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] );
 			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$Number	);
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF['member_row']['username'] . "'";
+			$MySmartBB->rec->fields = array(	'unread_pm'	=>	$new_pm_num	);
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 			
 			$MySmartBB->rec->update();
 			
@@ -108,7 +110,7 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->plugin->runHooks( 'pm_delete_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
-			$MySmartBB->func->move('index.php?page=pm_list&list=1&folder=inbox');
+			$MySmartBB->func->move( 'index.php?page=pm_list&list=1&folder=inbox' );
 		}
 	}
 }
