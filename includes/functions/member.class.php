@@ -169,6 +169,12 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Cleans the new_password field of a specific member, This field
+	 * used to reset the password after forgetting it.
+	 * 
+	 * @param $id The id of the member.
+	 */
 	public function cleanNewPassword( $id )
 	{
 		$this->engine->rec->table = $this->table;

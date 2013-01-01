@@ -1,14 +1,12 @@
 <?php
 
-// TODO : Audit this file
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+include( 'common.php' );
 
-include('common.php');
-
-define('CLASS_NAME','MySmartPasswordMOD');
+define( 'CLASS_NAME', 'MySmartPasswordMOD' );
 
 class MySmartPasswordMOD
 {
@@ -17,6 +15,8 @@ class MySmartPasswordMOD
 		global $MySmartBB;
 		
 		$MySmartBB->loadLanguage( 'new_password' );
+		
+		$MySmartBB->load( 'massege' );
 		
 		if ( $MySmartBB->_GET[ 'index' ] )
 		{
@@ -64,7 +64,7 @@ class MySmartPasswordMOD
 		$memberInfo = $MySmartBB->rec->getInfo();
 		
 		if ( !$memberInfo )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist ' ] );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 		
 		// ... //
 		
@@ -80,30 +80,38 @@ class MySmartPasswordMOD
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'email_msg' ];
 			$MySmartBB->rec->filter = "id='5'";
-				
+			
 			$messageInfo = $MySmartBB->rec->getInfo();
 				
-			$messageInfo[ 'text' ] = $MySmartBB->massege->messageProccess( 		$memberInfo['username'], 
-																				$MySmartBB->_CONF['info_row']['title'], 
+			$messageInfo[ 'text' ] = $MySmartBB->massege->messageProccess( 		$memberInfo[ 'username' ], 
+																				$MySmartBB->_CONF[ 'info_row' ][ 'title' ], 
 																				null, 
 																				null, 
 																				null, 
 																				$memberInfo[ 'new_password' ],
-																				$messageInfo['text'] );
-				
-			$send = $MySmartBB->func->mail(	$memberInfo['email'],
-											$messageInfo['title'],
-											$messageInfo['text'],
-											$MySmartBB->_CONF['info_row']['send_email'] );
+																				$messageInfo[ 'text' ] );
+			
+			$send = $MySmartBB->func->mail(	$memberInfo[ 'email' ],
+											$messageInfo[ 'title' ],
+											$messageInfo[ 'text' ],
+											$MySmartBB->_CONF[ 'info_row' ][ 'send_email' ] );
 			
 			if ( $send )
 			{
-				$MySmartBB->member->cleanNewPassword( $memberInfo[ 'id' ] );
-			
-		    	$MySmartBB->plugin->runHooks( 'new_password_success' );
-		    
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-				$MySmartBB->func->move( 'index.php' );
+				$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
+				$MySmartBB->rec->filter = "id='" . $RequestInfo[ 'id' ] . "'";
+				
+				$del = $MySmartBB->rec->delete();
+				
+				if ( $del )
+				{
+					$MySmartBB->member->cleanNewPassword( $memberInfo[ 'id' ] );
+				
+			    	$MySmartBB->plugin->runHooks( 'new_password_success' );
+			    
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+					$MySmartBB->func->move( 'index.php' );
+				}
 			}
 		}
 	}
