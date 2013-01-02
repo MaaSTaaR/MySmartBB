@@ -39,9 +39,9 @@ class MySmartSectionEditMOD
 	{
 		global $MySmartBB;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('section_edit');
+		$MySmartBB->template->display( 'section_edit' );
 	}
 	
 	private function _editStart()
@@ -63,8 +63,8 @@ class MySmartSectionEditMOD
 		
 		$MySmartBB->rec->fields	=	array();
 		
-		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['name'];
-		$MySmartBB->rec->fields['sort'] 	= 	$MySmartBB->_POST['sort'];
+		$MySmartBB->rec->fields[ 'title' ] 	= 	$MySmartBB->_POST[ 'name' ];
+		$MySmartBB->rec->fields[ 'sort' ] 	= 	$MySmartBB->_POST[ 'sort' ];
 		
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
@@ -72,38 +72,36 @@ class MySmartSectionEditMOD
 		
 		// ... //
 		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'section_updated' ] );
-			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=sections&amp;control=1&amp;main=1' );
 		}
 		
 		// ... //
 	}
 	
-	private function checkID(&$Inf)
+	private function checkID( &$Inf )
 	{
 		global $MySmartBB;
 		
 		// ... //
 		
-		if (empty($MySmartBB->_GET['id']))
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
-		// ... //
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
+
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ($Inf == false)
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
 		
 		// ... //

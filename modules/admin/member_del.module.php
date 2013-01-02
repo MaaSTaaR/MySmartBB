@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 	
-define('CLASS_NAME','MySmartMemberDelMOD');
+define( 'CLASS_NAME', 'MySmartMemberDelMOD' );
 	
 class MySmartMemberDelMOD
 {
@@ -39,53 +39,49 @@ class MySmartMemberDelMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('member_del');
+		$MySmartBB->template->display( 'member_del' );
 	}
 	
 	private function _delStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
-		if ($del)
+		if ( $del )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
-			$MySmartBB->func->move('admin.php?page=member&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=member&amp;control=1&amp;main=1' );
 		}
 	}
 	
-	private function checkID(&$MemInfo)
+	private function checkID( &$MemInfo )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$MemInfo = $MySmartBB->rec->getInfo();
 		
-		if ($MemInfo == false)
-		{
+		if ( $MemInfo == false )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		}
 	}
 }
 

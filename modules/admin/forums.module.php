@@ -16,13 +16,13 @@ class MySmartForumsMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_forums' );
 		    
 			$MySmartBB->load( 'section' );
 			
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
 			if ( $MySmartBB->_GET[ 'control' ] )
 			{
@@ -31,9 +31,9 @@ class MySmartForumsMOD
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['forum'])
+			elseif ( $MySmartBB->_GET[ 'forum' ] )
 			{
-				if ($MySmartBB->_GET['index'])
+				if ( $MySmartBB->_GET[ 'index' ] )
 				{
 					$this->_forumMain();
 				}
@@ -47,13 +47,9 @@ class MySmartForumsMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
-		// ... //
-		
-		$MySmartBB->template->display('forums_main');
+		$MySmartBB->template->display( 'forums_main' );
 	}
 	
 	
@@ -64,52 +60,47 @@ class MySmartForumsMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		// ... //
 		
 		if ( !empty( $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'forums_cache' ] ) )
 		{
-			$MySmartBB->_CONF['template']['foreach']['forums_list'] = unserialize(base64_decode($MySmartBB->_CONF['template']['Inf']['forums_cache']));
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = unserialize( base64_decode( $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'forums_cache' ] ) );
 		
-			$size = sizeof($MySmartBB->_CONF['template']['foreach']['forums_list']);
+			$size = sizeof( $MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] );
 		
-			// No information!
-			if ($size <= 0)
-			{
-				$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
-			}
+			if ( $size <= 0 )
+				$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = array();
 		}
 		else
 		{
-			$MySmartBB->_CONF['template']['foreach']['forums_list'] = array();
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = array();
 		}
 		
 		// ... //
 		
-		$MySmartBB->template->display('forums_main');
+		$MySmartBB->template->display( 'forums_main' );
 	}
 	
 	private function checkID( &$Inf )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
-		if ($Inf == false)
-		{
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}		
 	}
 }
 
