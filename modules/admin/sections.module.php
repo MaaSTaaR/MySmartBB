@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 	
-define('CLASS_NAME','MySmartSectionMOD');
+define( 'CLASS_NAME', 'MySmartSectionMOD' );
 	
 class MySmartSectionMOD
 {
@@ -30,7 +30,7 @@ class MySmartSectionMOD
 				}
 			}
 
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 		
@@ -38,19 +38,13 @@ class MySmartSectionMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
 		$MySmartBB->rec->filter = "parent='0'";
 		
 		$MySmartBB->rec->getList();
 		
-		// ... //
-		
 		$MySmartBB->template->display('sections_main');
-
-		// ... //
 	}
 }
 

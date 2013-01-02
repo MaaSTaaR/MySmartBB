@@ -188,17 +188,23 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Checks if the username and password are correct, if so checks if the member is the administrator.
+	 * 
+	 * @param $username The username.
+	 * @param $password The password hashed with md5.
+	 * 
+	 * @return false if the username and password are incorrect, otherwise an array of member's information.
+	 * 
+	 * @see MySmartMember::checkMember()
+	 */
 	public function checkAdmin( $username, $password )
 	{
- 		if ( empty( $username )
- 			or empty( $password ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM checkAdmin() -- EMPTY username OR password',E_USER_ERROR);
- 		}
+ 		if ( empty( $username ) or empty( $password ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM checkAdmin() -- EMPTY username OR password', E_USER_ERROR );
  		
 		$CheckMember = $this->checkMember( $username, $password );
 		
-		// Well , (s)he is a member
 		if ( $CheckMember != false )
 		{
 			$this->engine->rec->table = $this->engine->table[ 'group' ];
@@ -207,13 +213,9 @@ class MySmartMember
 			$GroupInfo = $this->engine->rec->getInfo();
 			
 			if ( $GroupInfo != false )
-			{
 				return ( $GroupInfo[ 'admincp_allow' ] ) ? $CheckMember : false;
-			}
 			else
-			{
 				return false;
-			}
 		}
 		else
 		{
@@ -223,20 +225,25 @@ class MySmartMember
 	
 	// ... //
 	
+	/**
+	 * Log the administrator in after checking the username, password and administrator's permissions.
+	 * 
+	 * @param $username The username.
+	 * @param $password The password hashed with md5.
+	 * 
+	 * @return boolean
+	 */
 	public function loginAdmin( $username, $password )
 	{
- 		if (empty( $username )
- 			or empty( $password ))
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM loginAdmin() -- EMPTY username OR password',E_USER_ERROR);
- 		}
+ 		if ( empty( $username ) or empty( $password ) )
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM loginAdmin() -- EMPTY username OR password', E_USER_ERROR );
  		
 		$Check = $this->checkAdmin( $username, $password );
 		
-		if ($Check != false)
+		if ( $Check != false )
 		{
-			setcookie( $this->engine->_CONF['admin_username_cookie'], $username );
-			setcookie( $this->engine->_CONF['admin_password_cookie'], $password );
+			setcookie( $this->engine->_CONF[ 'admin_username_cookie' ], $username );
+			setcookie( $this->engine->_CONF[ 'admin_password_cookie' ], $password );
        		
        		return true;
 		}

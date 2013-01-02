@@ -1,6 +1,6 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
 class MySmartCommon
 {
@@ -12,12 +12,8 @@ class MySmartCommon
 		$this->_commonCode();
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-		{
 			if ( !defined( 'STOP_STYLE' ) or STOP_STYLE != true )
-			{
 				$this->_showLoginForm();
-			}
-		}
 	}
 		
 	private function _checkMember()
@@ -27,7 +23,7 @@ class MySmartCommon
 		$username = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'admin_username_cookie' ] ];
 		$password = $MySmartBB->_COOKIE[ $MySmartBB->_CONF[ 'admin_password_cookie' ] ];
 		
-		$MySmartBB->_CONF['member_permission'] = false;
+		$MySmartBB->_CONF[ 'member_permission' ] = false;
 		
 		if ( !empty( $username ) and !empty( $password ) )
 		{
@@ -35,42 +31,31 @@ class MySmartCommon
 			
 			if ( $CheckMember !== false )
 			{
-				$MySmartBB->_CONF['member_row'] = $CheckMember;
-				$MySmartBB->_CONF['member_permission'] 	= 	true;
+				$MySmartBB->_CONF[ 'member_row' ] 			= 	$CheckMember;
+				$MySmartBB->_CONF[ 'member_permission' ] 	= 	true;
 			}
-			else
-			{
-				$MySmartBB->_CONF['member_permission'] = false;
-			}
-		}
-		else
-		{
-			$MySmartBB->_CONF['member_permission'] = false;
 		}
 	}
 	
 	private function _commonCode()
 	{
 		global $MySmartBB;
-				
-		// ... //
 		
-		// Set information for template engine
 		$MySmartBB->template->setInformation(	'modules/admin/styles/main/templates/',
 												'modules/admin/styles/main/compiler/',
 												'.tpl',
-												'file');
-		
-		// ... //
+												'file');		
 	}
 	
 	private function _showLoginForm()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
-		$MySmartBB->template->display('login');
-		$MySmartBB->template->display('footer');
+		$MySmartBB->template->display( 'header' );
+		$MySmartBB->template->display( 'login' );
+		$MySmartBB->template->display( 'footer' );
+		
+		die();
 	}
 }
 	

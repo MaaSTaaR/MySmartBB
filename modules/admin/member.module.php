@@ -16,21 +16,21 @@ class MySmartMemberMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_member' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['control'])
+			if ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -43,7 +43,7 @@ class MySmartMemberMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('members_main');
+		$MySmartBB->template->display( 'members_main' );
 	}
 }
 

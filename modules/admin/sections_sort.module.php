@@ -40,35 +40,24 @@ class MySmartSectionSortMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$x = 0;
-		$s = array();
+		$state = array();
 		
 		while ( $row = $MySmartBB->rec->getInfo() )
 		{
 			$name = 'order-' . $row[ 'id' ];
 			
-			$MySmartBB->rec->table 				= 	$MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->fields				=	array();
-			$MySmartBB->rec->fields['sort'] 	= 	$MySmartBB->_POST[$name];
+			$MySmartBB->rec->table	= 	$MySmartBB->table[ 'section' ];
+			$MySmartBB->rec->fields	=	array( 'sort' => $MySmartBB->_POST[ $name ] );
+			$MySmartBB->rec->filter = 	"id='" . $row[ 'id' ] . "'";
 			
-			$MySmartBB->rec->filter = "id='" . $row[ 'id' ] . "'";
-			
-			$update = $MySmartBB->rec->update();
-			
-			$s[$SecList[$x]['id']] = ($update) ? 'true' : 'false';
-
-			$x += 1;
+			$state[ $row[ 'id' ] ] = $MySmartBB->rec->update();
 		}
 		
-		if (in_array('false',$s))
-		{
+		if ( in_array( false, $state ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'process_failed' ] );
-		}
-		else
-		{
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
-		}
+		
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
+		$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
 	}
 }
 

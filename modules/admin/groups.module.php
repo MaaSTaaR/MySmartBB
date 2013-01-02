@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN' , true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 
-define('CLASS_NAME','MySmartGroupsMOD');
+define( 'CLASS_NAME', 'MySmartGroupsMOD' );
 
 class MySmartGroupsMOD
 {
@@ -16,21 +16,21 @@ class MySmartGroupsMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_groups' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['control'])
+			if ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 		
@@ -38,8 +38,6 @@ class MySmartGroupsMOD
 	{
 		global $MySmartBB;
 
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->order = "id ASC";
 		
@@ -47,9 +45,7 @@ class MySmartGroupsMOD
 		
 		$MySmartBB->rec->setInfoCallback( array( 'MySmartGroupsMOD', 'rowProcess' ) );
 		
-		// ... //
-		
-		$MySmartBB->template->display('groups_main');
+		$MySmartBB->template->display( 'groups_main' );
 		
 		$MySmartBB->rec->removeInfoCallback();
 	}

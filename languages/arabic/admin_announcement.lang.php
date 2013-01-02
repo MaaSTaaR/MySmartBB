@@ -8,11 +8,11 @@ $lang[ 'announcement_doesnt_exist' ] = 'الاعلان المطلوب غير م�
 $lang[ 'template' ][ 'announcements' ] = 'الاعلانات الاداريه';
 $lang[ 'template' ][ 'title' ] = 'العنوان';
 
-$lang[ 'template' ][ 'add_announcement' ] = 'اضافة إعلان جديد'; // announcement_add
-$lang[ 'template' ][ 'edit_announcement' ] = 'تحرير اعلان'; // announcement_edit
-$lang[ 'template' ][ 'text' ] = 'النص'; // announcement_add
+$lang[ 'template' ][ 'add_announcement' ] = 'اضافة إعلان جديد';
+$lang[ 'template' ][ 'edit_announcement' ] = 'تحرير اعلان';
+$lang[ 'template' ][ 'text' ] = 'النص';
 
-$lang[ 'template' ][ 'writer' ] = 'الكاتب'; // announcements_main
-$lang[ 'template' ][ 'add_date' ] = 'تاريخ الاضافه'; // announcements_main
+$lang[ 'template' ][ 'writer' ] = 'الكاتب';
+$lang[ 'template' ][ 'add_date' ] = 'تاريخ الاضافه';
 
 ?>

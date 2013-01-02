@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 	
-define('CLASS_NAME','MySmartMemberSearchMOD');
+define( 'CLASS_NAME', 'MySmartMemberSearchMOD' );
 	
 class MySmartMemberSearchMOD
 {
@@ -39,44 +39,40 @@ class MySmartMemberSearchMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('member_search_main');
+		$MySmartBB->template->display( 'member_search_main' );
 	}
 	
 	private function _searchStart()
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['keyword']))
+		if ( empty( $MySmartBB->_POST[ 'keyword' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		// ... //
 		
 		$field = 'id';
 		
-		if ($MySmartBB->_POST['search_by'] == 'username')
-		{
+		if ( $MySmartBB->_POST[ 'search_by' ] == 'username' )
 			$field = 'username';
-		}
-		elseif ($MySmartBB->_POST['search_by'] == 'email')
-		{
+		elseif ( $MySmartBB->_POST[ 'search_by' ] == 'email' )
 			$field = 'email';
-		}
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_POST['keyword'] . "'";
+		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_POST[ 'keyword' ] . "'";
 		
-		$MySmartBB->_CONF['template']['MemInfo'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF[ 'template' ][ 'MemInfo' ] = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( $MySmartBB->_CONF['template']['MemInfo'] == false )
+		if ( !$MySmartBB->_CONF[ 'template' ][ 'MemInfo' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_result' ] );
 		
 		// ... //
 		
-		$MySmartBB->template->display('member_search_result');
+		$MySmartBB->template->display( 'member_search_result' );
 	}
 }
 
