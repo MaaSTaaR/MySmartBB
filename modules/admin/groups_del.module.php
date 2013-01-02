@@ -41,11 +41,11 @@ class MySmartGroupsDelMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('group_del');
+		$MySmartBB->template->display( 'group_del' );
 	}
 	
 	private function _delStart()
@@ -54,28 +54,28 @@ class MySmartGroupsDelMOD
 		
 		$MySmartBB->load( 'section' );
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
-		if ($del)
+		if ( $del )
 		{
 			// Use the default group for the members who belong to the deleted group.
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 			$MySmartBB->rec->fields = array( 'usergroup'	=>	$MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ] );
-			$MySmartBB->rec->filter = "usergroup='" . $MySmartBB->_CONF['template']['Inf'][ 'id' ] . "'";
+			$MySmartBB->rec->filter = "usergroup='" . $info[ 'id' ] . "'";
 			
 			$update = $MySmartBB->rec->update();
 			
 			if ( $update )
 			{
 				$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-				$MySmartBB->rec->filter = "group_id='" . $MySmartBB->_CONF['template']['Inf'][ 'id' ] . "'";
+				$MySmartBB->rec->filter = "group_id='" . $info[ 'id' ] . "'";
 			
 				$del = $MySmartBB->rec->delete();
 			
@@ -86,7 +86,7 @@ class MySmartGroupsDelMOD
 					if ( $cache )
 					{
 						$MySmartBB->func->msg( $MySmartBB->lang[ 'group_deleted' ] );
-						$MySmartBB->func->move('admin.php?page=groups&amp;control=1&amp;main=1');
+						$MySmartBB->func->move( 'admin.php?page=groups&amp;control=1&amp;main=1' );
 					}
 				}
 			}
@@ -97,22 +97,18 @@ class MySmartGroupsDelMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
-		if ($GroupInfo == false)
-		{
+		if ( !$GroupInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'group_doesnt_exist' ] );
-		}
 	}
 }
 
