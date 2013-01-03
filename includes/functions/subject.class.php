@@ -22,32 +22,46 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Deletes all topics and replies for a specific section.
+	 * 
+	 * @param $section_id The id of the section.
+	 * @param $update_section_info If this parameter = false, the information of the section (last subject, subjects and replies number) will not be updated
+	 *			we can use this parameter when want to delete the section and delete its topics, The default value is true.
+	 * 
+	 * @return boolean
+	 */
 	public function massDeleteSubject( $section_id, $update_section_info = true )
 	{
  		if ( empty( $section_id ) )
  			trigger_error('ERROR::NEED_PARAMETER -- FROM massDeleteSubject() -- EMPTY section_id',E_USER_ERROR);
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->filter = "section='" . $section_id . "'";
  		
  		$delete = $this->engine->rec->delete();
  		
  		if ( $delete )
  		{
+ 			$this->engine->rec->table = $this->engine->table[ 'reply' ];
+ 			$this->engine->rec->filter = "section='" . $section_id . "'";
+ 			
+ 			$del = $this->engine->rec->delete();
+ 			
  			if ( $update_section_info )
  			{
 				// No subject in the section, that's mean no last subject.
 				$this->engine->section->updateLastSubject( '', '', '', '', $section_id );
 			
 				// Update the number of subjects and replies on the section
-				$this->engine->section->updateSubjectNumber( $section_id, null, null );
-				$this->engine->section->updateReplyNumber( $section_id, null, null );
+				$this->engine->section->updateSubjectNumber( $section_id, 0, null );
+				$this->engine->section->updateReplyNumber( $section_id, 0, null );
 			
-				$this->engine->section->updateForumCache( -1, $section_id );
+				$this->engine->section->updateForumCache( null, $section_id );
 			}
 			
-			return true;
+			if ( $del )
+				return true;
  		}
  		
  		return false;
@@ -55,14 +69,22 @@ class MySmartSubject
 	
 	// ... //
 	
-	// If the parameter $update_from_info = false
-	// the information of $from (last subject, subjects and replies number) will not be updated
-	// we can use this parameter when want to delete $from and move its subjects to "$to"
-	// ...
-	// TODO : 	1- We should also change the value of "section" field of the replies of moved topics.
-	//			2- It would be a great deal if we change this function to recieve "$from" as an array
-	//				so we can move the topics of multiple forums to a specific forum, you can see an
-	//				application of this in the file "admin/sections_del.module.php"
+	/**
+	 * Moves all topics from one section to another and updates all section's related information
+	 * such as topics number, replies number and last topic for both sections.
+	 * 
+	 * @param $to The id of the section which the topics will be moved to.
+	 * @param $from The id of the section which the topics will be moved from.
+	 * @param $update_from_info If this parameter = false, the information of $from (last subject, subjects and replies number) will not be updated
+	 *			we can use this parameter when want to delete $from and move its topics to "$to", The default value is true.
+	 * 								
+	 * @return boolean
+	 * 
+	 * @todo We should also change the value of "section" field of the replies of moved topics.
+	 * @todo It would be a great deal if we change this function to recieve "$from" as an array
+	 * 			so we can move the topics of multiple forums to a specific forum, you can see an
+	 * 			application of this in the file "admin/sections_del.module.php"
+	 */
 	public function massMoveSubject( $to, $from, $update_from_info = true )
 	{
  		if ( empty( $to ) or empty( $from ) )
@@ -79,17 +101,22 @@ class MySmartSubject
 		{
 			// ... //
 			
+			// Updates the related information of $from.
 			if ( $update_from_info )
 			{
 				// No subject in the section $from, that's mean no last subject.
 				$this->engine->section->updateLastSubject( '', '', '', '', $from );
 			
 				// Update the number of subjects and replies on $form
-				$this->engine->section->updateSubjectNumber( $from, null, null );
-				$this->engine->section->updateReplyNumber( $from, null, null );
+				$this->engine->section->updateSubjectNumber( $from, 0, null );
+				$this->engine->section->updateReplyNumber( $from, 0, null );
 			
-				$this->engine->section->updateForumCache( -1, $from );
+				$this->engine->section->updateForumCache( null, $from );
 			}
+			
+			// ... //
+			
+			// Updates the related information of $to
 			
 			// ... //
 			
@@ -105,11 +132,13 @@ class MySmartSubject
 			
 			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $to );
 			
-			// Update the number of subjects and replies on $form
-			$this->engine->section->updateSubjectNumber( $to, null, null );
-			$this->engine->section->updateReplyNumber( $to, null, null );
+			// ... //
 			
-			$this->engine->section->updateForumCache( -1, $to );
+			// Update the number of topics and replies on $to
+			$this->engine->section->updateSubjectNumber( $to );
+			$this->engine->section->updateReplyNumber( $to );
+			
+			$this->engine->section->updateForumCache( null, $to );
 			
 			// ... //
 			
