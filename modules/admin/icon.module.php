@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
-	
-define('CLASS_NAME','MySmartIconMOD');
+include( 'common.php' );
+
+define( 'CLASS_NAME', 'MySmartIconMOD' );
 	
 class MySmartIconMOD
 {
@@ -16,56 +16,56 @@ class MySmartIconMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_icon' );
 		    
 			$MySmartBB->load( 'icon' );
 			
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -73,7 +73,7 @@ class MySmartIconMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->template->display('icon_add');
+		$MySmartBB->template->display( 'icon_add' );
 	}
 	
 	private function _addStart()
@@ -87,14 +87,14 @@ class MySmartIconMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->fields		=	array( 'smile_path' => $MySmartBB->_POST['path'] );
+		$MySmartBB->rec->fields	=array( 'smile_path' => $MySmartBB->_POST[ 'path' ] );
 		
 		$insert = $MySmartBB->icon->insertIcon();
 			
-		if ($insert)
+		if ( $insert )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_added' ] );
-			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=icon&amp;control=1&amp;main=1' );
 		}
 	}
 	
@@ -106,40 +106,40 @@ class MySmartIconMOD
 		
 		$MySmartBB->icon->getIconList();
 		
-		$MySmartBB->template->display('icons_main');
+		$MySmartBB->template->display( 'icons_main' );
 	}
 	
 	private function _editMain()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('icon_edit');
+		$MySmartBB->template->display( 'icon_edit' );
 	}
 	
 	private function _editStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = false;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
-		
-		if (empty($MySmartBB->_POST['path']))
+		if ( empty( $MySmartBB->_POST[ 'path' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
-		$MySmartBB->rec->fields	=	array( 'smile_path' => $MySmartBB->_POST['path'] );
+		$this->__checkID( $info );
+		
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
+		$MySmartBB->rec->fields	= array( 'smile_path' => $MySmartBB->_POST[ 'path' ] );
 				
 		$update = $MySmartBB->icon->updateIcon();
 		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_updated' ] );
-			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=icon&amp;control=1&amp;main=1' );
 		}
 	}
 	
@@ -147,55 +147,48 @@ class MySmartIconMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('icon_del');
+		$MySmartBB->template->display( 'icon_del' );
 	}
 	
 	private function _delStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = false;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $info );
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->icon->deleteIcon();
 		
-		if ($del)
+		if ( $del )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'icon_deleted' ] );
-			$MySmartBB->func->move('admin.php?page=icon&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=icon&amp;control=1&amp;main=1' );
 		}
 	}
 	
-	private function __checkID(&$Inf)
+	private function __checkID( &$Inf )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->icon->getIconInfo();
 		
-		if ($Inf == false)
-		{
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'icon_doesnt_exist' ] );
-		}
 	}
-}
-
-class _func
-{
-
 }
 
 ?>
