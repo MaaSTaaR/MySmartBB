@@ -20,6 +20,13 @@ class MySmartGroup
 	
 	// ... //
 	
+	/**
+	 * Creates a serialzed cache of group's permissions for a specific section.
+	 * 
+	 * @param $id The id of the section
+	 * 
+	 * @return Serialized cache.
+	 */
 	public function createSectionGroupCache( $id )
 	{
 		$this->engine->rec->table = $this->engine->table[ 'section_group' ];
@@ -36,8 +43,6 @@ class MySmartGroup
 			$cache[ $row[ 'group_id' ] ][ 'id' ]			=	$row[ 'id' ];
 			$cache[ $row[ 'group_id' ] ][ 'view_section' ]	=	$row[ 'view_section' ];
 			$cache[ $row[ 'group_id' ] ][ 'main_section' ]	=	$row[ 'main_section' ];
-			
-			$x += 1;
 		}
 		
 		$cache = base64_encode( serialize( $cache ) );
@@ -47,11 +52,20 @@ class MySmartGroup
 	
 	// ... //
 	
+	/**
+	 * Updates the cache of group's permissions for a specific section.
+	 * 
+	 * @param $id The id of the section.
+	 * 
+	 * @return boolean
+	 * 
+	 * @see MySmartGroup::createSectionGroupCache()
+	 */
 	public function updateSectionGroupCache( $id )
 	{
 		$cache = $this->createSectionGroupCache( $id );
 		
-		$this->engine->rec->table = $this->engine->table['section'];
+		$this->engine->rec->table = $this->engine->table[ 'section' ];
 		
 		$this->engine->rec->fields = array(	'sectiongroup_cache'	=>	$cache );
 		$this->engine->rec->filter = "id='" . $id . "'";

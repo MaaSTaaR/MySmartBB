@@ -1,15 +1,15 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
-	
-define('CLASS_NAME','MySmartMemberMOD');
-	
+include( 'common.php' );
+
+define( 'CLASS_NAME', 'MySmartMemberMOD' );
+
 class MySmartMemberMOD
 {
 	public function run()
@@ -48,25 +48,25 @@ class MySmartMemberMOD
 	{
 		global $MySmartBB;
 					
-		$MySmartBB->_POST['username'] 	= 	trim( $MySmartBB->_POST['username'] );
-		$MySmartBB->_POST['email'] 		= 	trim( $MySmartBB->_POST['email'] );
+		$MySmartBB->_POST[ 'username' ] 	= 	trim( $MySmartBB->_POST[ 'username' ] );
+		$MySmartBB->_POST[ 'email' ] 		= 	trim( $MySmartBB->_POST[ 'email' ] );
 		
 		// ... //
 		
-		if (empty($MySmartBB->_POST['username']) or empty($MySmartBB->_POST['password']) or empty($MySmartBB->_POST['email']))
+		if ( empty( $MySmartBB->_POST[ 'username' ] ) or empty( $MySmartBB->_POST[ 'password' ] ) or empty( $MySmartBB->_POST[ 'email' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		if (!$MySmartBB->func->checkEmail( $MySmartBB->_POST['email'] ))
+		if ( !$MySmartBB->func->checkEmail( $MySmartBB->_POST[ 'email' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'write_correct_email' ] );
 			
-		if ($MySmartBB->_POST['username'] == 'Guest')
+		if ( $MySmartBB->_POST[ 'username' ] == 'Guest' )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_username' ] );
 		
 		// ... //
 		
 		// Ensure there is no person used the same username
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST[ 'username' ] . "'";
 		
 		$isMember = $MySmartBB->rec->getNumber();
 		
@@ -86,7 +86,7 @@ class MySmartMemberMOD
 		
 		// ... //
 		
-		$MySmartBB->_POST['password'] = md5($MySmartBB->_POST['password']);
+		$MySmartBB->_POST[ 'password' ] = md5( $MySmartBB->_POST[ 'password' ] );
 		
       	// ... //
       	
@@ -97,14 +97,14 @@ class MySmartMemberMOD
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
-		$style = $GroupInfo['username_style'];
-		$username_style_cache = str_replace('[username]',$MySmartBB->_POST['username'],$style);
+		$style = $GroupInfo[ 'username_style' ];
+		$username_style_cache = str_replace( '[username]', $MySmartBB->_POST[ 'username' ], $style );
 		
       	// ... //
       	
       	$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
       	
-		$MySmartBB->rec->fields			=	array();
+		$MySmartBB->rec->fields = array();
 		
 		$MySmartBB->rec->fields['username']				= 	$MySmartBB->_POST['username'];
 		$MySmartBB->rec->fields['password']				= 	$MySmartBB->_POST['password'];
@@ -112,7 +112,7 @@ class MySmartMemberMOD
 		$MySmartBB->rec->fields['usergroup']			= 	$MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ];
 		$MySmartBB->rec->fields['user_gender']			= 	$MySmartBB->_POST['gender'];
 		$MySmartBB->rec->fields['register_date']		= 	$MySmartBB->_CONF['now'];
-		$MySmartBB->rec->fields['user_title']			= 	 $MySmartBB->lang[ 'member' ] ;
+		$MySmartBB->rec->fields['user_title']			= 	$GroupInfo[ 'user_title' ];
 		$MySmartBB->rec->fields['style']				=	$MySmartBB->_CONF['info_row']['def_style'];
 		$MySmartBB->rec->fields['username_style_cache']	=	$username_style_cache;
 		

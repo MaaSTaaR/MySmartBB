@@ -68,7 +68,7 @@ class MySmartSectionAddMOD
 		// How to sort this section? automatically or manually?
 		$sort = 0;
 		
-		if ($MySmartBB->_POST['order_type'] == 'auto')
+		if ( $MySmartBB->_POST[ 'order_type' ] == 'auto' )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 			$MySmartBB->rec->filter = "parent='0'";
@@ -76,18 +76,11 @@ class MySmartSectionAddMOD
 			
 			$SortSection = $MySmartBB->rec->getInfo();
 			
-			if ( !$SortSection )
-			{
-				$sort = 1;
-			}
-			else
-			{
-				$sort = $SortSection['sort'] + 1;
-			}
+			$sort = ( !$SortSection ) ? 1 :  $SortSection[ 'sort' ] + 1;
 		}
 		else
 		{
-			$sort = $MySmartBB->_POST['sort'];
+			$sort = $MySmartBB->_POST[ 'sort' ];
 		}
 		
 		// ... //
@@ -96,20 +89,20 @@ class MySmartSectionAddMOD
 		
 		$MySmartBB->rec->fields	=	array();
 		
-		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['name'];
-		$MySmartBB->rec->fields['sort'] 	= 	$sort;
-		$MySmartBB->rec->fields['parent'] 	= 	'0';
+		$MySmartBB->rec->fields[ 'title' ] 		= 	$MySmartBB->_POST[ 'name' ];
+		$MySmartBB->rec->fields[ 'sort' ] 		= 	$sort;
+		$MySmartBB->rec->fields[ 'parent' ] 	= 	'0';
 		
 		$MySmartBB->rec->get_id	= true;
 		
 		$insert = $MySmartBB->rec->insert();
 		
-		if ($insert)
+		if ( $insert )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 			$MySmartBB->rec->order = "id ASC";
 			
-			$groups = $MySmartBB->rec->getList();
+			$MySmartBB->rec->getList();
 			
 			while ( $row = $MySmartBB->rec->getInfo() )
 			{
@@ -134,16 +127,14 @@ class MySmartSectionAddMOD
 				$MySmartBB->rec->fields['group_name'] 			= 	$row['title'];
 				
 				$insert = $MySmartBB->rec->insert();
-				
-				$x += 1;
 			}
 			
 			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->rec->id );
 			
-			if ($cache)
+			if ( $cache )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_added' ] );
-				$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
+				$MySmartBB->func->move( 'admin.php?page=sections&amp;control=1&amp;main=1' );
 			}
 		}
 		else

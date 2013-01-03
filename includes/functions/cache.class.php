@@ -72,7 +72,7 @@ class MySmartCache
  	// ... //
  	
 	/**
-	 * Updates the username of the newest member and add one to the current number of members,
+	 * Updates the username of the newest member and updates the total number of members,
 	 * This function should be called _after_ insert member into database.
 	 * 
 	 * @param $username The username of the newest member
