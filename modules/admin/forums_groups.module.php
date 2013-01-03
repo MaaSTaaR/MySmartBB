@@ -8,9 +8,9 @@ define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
 include( 'common.php' );
 
-define( 'CLASS_NAME', 'MySmartForumsDeleteMOD' );
+define( 'CLASS_NAME', 'MySmartForumsGroupsMOD' );
 	
-class MySmartForumsDeleteMOD
+class MySmartForumsGroupsMOD
 {
 	public function run()
 	{
@@ -39,31 +39,29 @@ class MySmartForumsDeleteMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
-		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "' AND main_section<>'1'";
+		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'id' ] . "' AND main_section<>'1'";
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('forums_groups_control_main');
+		$MySmartBB->template->display( 'forums_groups_control_main' );
 	}
 		
 	private function _groupControlStart()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = false;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $info );
 
-		$success 	= 	array();
-		$fail		=	array();
-		$size		=	sizeof($MySmartBB->_POST['groups']);
-		
-		foreach ($MySmartBB->_POST['groups'] as $id => $val)
+		$state = array();
+
+		foreach ( $MySmartBB->_POST[ 'groups' ] as $id => $val )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 			
@@ -82,39 +80,29 @@ class MySmartForumsDeleteMOD
 			$MySmartBB->rec->fields['no_posts'] 			= 	$val['no_posts'];
 			$MySmartBB->rec->fields['vote_poll'] 			= 	$val['vote_poll'];
 			
-			$MySmartBB->rec->filter = "group_id='" . $id . "' AND section_id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+			$MySmartBB->rec->filter = "group_id='" . $id . "' AND section_id='" . $info[ 'id' ] . "'";
 			
 			$update = $MySmartBB->rec->update();
 			
-			if ($update)
-			{
-				$success[] = $id;
-			}
-			else
-			{
-				$fail[] = $id;
-			}
+			$state[] = ( $update ) ? true : false;
 		}
 		
-		$success_size 	= 	sizeof($success);
-		$fail_size		=	sizeof($fail); // Why?
-		
-		if ($success_size == $size)
+		if ( !in_array( false, $state ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			
-			$cache = $MySmartBB->group->updateSectionGroupCache( $MySmartBB->_CONF['template']['Inf']['id'] );
+			$cache = $MySmartBB->group->updateSectionGroupCache( $info[ 'id' ] );
 			
 			if ($cache)
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'cache_update_succeed' ] );
 				
-				$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_CONF['template']['Inf']['parent'], $MySmartBB->_CONF['template']['Inf']['id'] );
+				$cache = $MySmartBB->section->updateForumCache( $info[ 'parent' ], $info[ 'id' ] );
 				
-				if ($cache)
+				if ( $cache )
 				{
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
-					$MySmartBB->func->move('admin.php?page=forums_groups&amp;index=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+					$MySmartBB->func->move('admin.php?page=forums_groups&amp;index=1&amp;id=' . $info[ 'id' ]);
 				}
 			}
 		}
@@ -124,22 +112,18 @@ class MySmartForumsDeleteMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
-		if ($Inf == false)
-		{
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}		
 	}
 }
 
