@@ -60,14 +60,14 @@ class MySmartForumsEditMOD
 		
 		// ... //
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
-		
-		$this->checkID( $MySmartBB->_CONF['template']['Inf'] );
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) or empty( $MySmartBB->_POST[ 'sort' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		// ... //
 		
- 		if (empty($MySmartBB->_POST['name']) or empty($MySmartBB->_POST['sort']))
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		$info = false;
+		
+		$this->checkID( $info );
 		
 		// ... //
 		
@@ -75,10 +75,10 @@ class MySmartForumsEditMOD
 		$new_parent_flag 	= 	false;
 		$old_parent			=	0;
 		
-		if ( $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'parent' ] != $MySmartBB->_POST[ 'parent' ] )
+		if ( $info[ 'parent' ] != $MySmartBB->_POST[ 'parent' ] )
 		{
 			$new_parent_flag	= 	true;
-			$old_parent			=	$MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'parent' ];
+			$old_parent			=	$info[ 'parent' ];
 		}
 		
 		// ... //
@@ -103,15 +103,16 @@ class MySmartForumsEditMOD
 		$MySmartBB->rec->fields['sec_section']				=	$MySmartBB->_POST['sec_section'];
 		$MySmartBB->rec->fields['parent']					=	$MySmartBB->_POST['parent'];
 
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
-		if ($update)
+		if ( $update )
 		{
 			// There is a new main section, because of that we should update the
 			// cache of the old parent to remove this child from the
-			// list of the old parent.
+			// list of the old parent and also we shoukd update the cache
+			// of the new parent to add this child to the list.
 			if ( $new_parent_flag )
 			{
 				$cache = $MySmartBB->section->updateSectionsCache( $old_parent );
@@ -123,13 +124,13 @@ class MySmartForumsEditMOD
 			}
 			else
 			{
-				$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $MySmartBB->_CONF['template']['Inf']['id'] );
+				$cache = $MySmartBB->section->updateForumCache( $MySmartBB->_POST[ 'parent' ], $info['id'] );
 			}
 			
 			if ($cache)
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'forum_updated' ] );
-				$MySmartBB->func->move('admin.php?page=forums_edit&amp;main=1&amp;id=' . $MySmartBB->_CONF['template']['Inf']['id']);
+				$MySmartBB->func->move('admin.php?page=forums_edit&amp;main=1&amp;id=' . $info['id']);
 			}
 			else
 			{
@@ -142,22 +143,18 @@ class MySmartForumsEditMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
-		if ($Inf == false)
-		{
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		}		
 	}
 }
 
