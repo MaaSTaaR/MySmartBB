@@ -1,69 +1,69 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
-	
-define('CLASS_NAME','MySmartPagesMOD');
-	
+include( 'common.php' );
+
+define( 'CLASS_NAME', 'MySmartPagesMOD' );
+
 class MySmartPagesMOD
 {
 	public function run()
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_pages' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -71,29 +71,29 @@ class MySmartPagesMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('page_add');
+		$MySmartBB->template->display( 'page_add' );
 	}
 	
 	private function _addStart()
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['text']) or empty($MySmartBB->_POST['name']))
+		if ( empty( $MySmartBB->_POST[ 'text' ] ) or empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
 		
 		$MySmartBB->rec->fields	=	array();
 		
-		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
-		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST['text'], 'unhtml' );
+		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST[ 'name' ];
+		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'text' ], 'unhtml' );
 				
 		$insert = $MySmartBB->rec->insert();
 		
-		if ($insert)
+		if ( $insert )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_added' ] );
-			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=pages&amp;control=1&amp;main=1' );
 		}
 	}
 	
@@ -106,27 +106,29 @@ class MySmartPagesMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('pages_main');
+		$MySmartBB->template->display( 'pages_main' );
 	}
 	
 	private function _editMain()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$MySmartBB->template->assign('Inf',$MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('page_edit');		
+		$MySmartBB->template->display( 'page_edit' );		
 	}
 	
 	private function _editStart()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($PageInfo);
+		$info = false;
 		
-		if (empty($MySmartBB->_POST['name']) or empty($MySmartBB->_POST['text']))
+		$this->__checkID( $info );
+		
+		if ( empty( $MySmartBB->_POST[ 'text' ] ) or empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
@@ -136,14 +138,14 @@ class MySmartPagesMOD
 		$MySmartBB->rec->fields['title'] 		= 	$MySmartBB->_POST['name'];
 		$MySmartBB->rec->fields['html_code'] 	= 	$MySmartBB->_POST['text'];
 		
-		$MySmartBB->rec->filter = "id='" . $PageInfo['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
-		if ($update)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_updated' ] );
-			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=pages&amp;control=1&amp;main=1' );
 		}
 	}
 	
@@ -151,47 +153,49 @@ class MySmartPagesMOD
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
 		
-		$MySmartBB->template->display('page_del');		
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
+		
+		$MySmartBB->template->display( 'page_del' );		
 	}
 	
 	private function _delStart()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($PageInfo);
+		$info = false;
+		
+		$this->__checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
 		if ($del)
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'page_deleted' ] );
-			$MySmartBB->func->move('admin.php?page=pages&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=pages&amp;control=1&amp;main=1' );
 		}
 	}
 	
-	private function __checkID(&$PageInfo)
+	private function __checkID( &$PageInfo )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$PageInfo = $MySmartBB->rec->getInfo();
 		
-		if ($PageInfo == false)
-		{
+		if ( !$PageInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'page_doesnt_exist' ] );
-		}
 	}
 }
 

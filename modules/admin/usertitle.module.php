@@ -1,63 +1,63 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 	
-define('CLASS_NAME','MySmartUsertitleMOD');
+define( 'CLASS_NAME', 'MySmartUsertitleMOD' );
 	
-class MySmartUsertitleMOD extends _func
+class MySmartUsertitleMOD
 {
 	public function run()
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_usertitle' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
@@ -71,29 +71,28 @@ class MySmartUsertitleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('usertitle_add');
+		$MySmartBB->template->display( 'usertitle_add' );
 	}
 	
 	private function _addStart()
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['posts']))
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'posts' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
 		
-		$MySmartBB->rec->fields	=	array();
-		
-		$MySmartBB->rec->fields['usertitle'] 	= 	$MySmartBB->_POST['title'];
-		$MySmartBB->rec->fields['posts'] 		= 	$MySmartBB->_POST['posts'];
+		$MySmartBB->rec->fields	= array();
+		$MySmartBB->rec->fields['usertitle'] = $MySmartBB->_POST['title'];
+		$MySmartBB->rec->fields['posts'] = $MySmartBB->_POST['posts'];
 		
 		$insert = $MySmartBB->rec->insert();
 		
-		if ($insert)
+		if ( $insert )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'usertitle_added' ] );
-			$MySmartBB->func->move('admin.php?page=usertitle&amp;control=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=usertitle&amp;control=1&amp;main=1' );
 		}
 	}
 	
@@ -102,30 +101,34 @@ class MySmartUsertitleMOD extends _func
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
-		$MySmartBB->rec->order = 'id DESC';
+		$MySmartBB->rec->order = 'posts DESC';
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('usertitles_main');
+		$MySmartBB->template->display( 'usertitles_main' );
 	}
 	
 	private function _editMain()
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = false;
+		
+		$this->_checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 				
-		$MySmartBB->template->display('usertitle_edit');
+		$MySmartBB->template->display( 'usertitle_edit' );
 	}
 	
 	private function _editStart()
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($UTInfo);
-				
-		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['posts']))
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'posts' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		$info = false;
+		
+		$this->_checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
 		
@@ -134,7 +137,7 @@ class MySmartUsertitleMOD extends _func
 		$MySmartBB->rec->fields['usertitle'] 	= 	$MySmartBB->_POST['title'];
 		$MySmartBB->rec->fields['posts'] 		= 	$MySmartBB->_POST['posts'];
 		
-		$MySmartBB->rec->filter = "id='" . $UTInfo['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
@@ -149,19 +152,21 @@ class MySmartUsertitleMOD extends _func
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($MySmartBB->_CONF['template']['Inf']);
+		$this->_checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('usertitle_del');
+		$MySmartBB->template->display( 'usertitle_del' );
 	}
 	
 	private function _delStart()
 	{
 		global $MySmartBB;
 		
-		$this->check_by_id($UTInfo);
+		$info = false;
+		
+		$this->_checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
@@ -171,31 +176,23 @@ class MySmartUsertitleMOD extends _func
 			$MySmartBB->func->move('admin.php?page=usertitle&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-// TODO : KILL ME
-class _func
-{
-	function check_by_id(&$UTInfo)
+	
+	private function _checkID( &$info )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'usertitle' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
-		
-		$UTInfo = $MySmartBB->rec->getInfo();
-		
-		if ($UTInfo == false)
-		{
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+	
+		$info = $MySmartBB->rec->getInfo();
+	
+		if ( !$info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'usertitle_doesnt_exist' ] );
-		}
 	}
 }
 
