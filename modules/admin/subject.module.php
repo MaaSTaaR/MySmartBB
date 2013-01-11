@@ -2,15 +2,15 @@
 
 // TODO : Audit this file
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
-	
-define('CLASS_NAME','MySmartSubjectMOD');
+include( 'common.php' );
+
+define( 'CLASS_NAME', 'MySmartSubjectMOD' );
 	
 class MySmartSubjectMOD
 {
@@ -18,56 +18,56 @@ class MySmartSubjectMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_subject' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
 			$MySmartBB->load( 'reply,subject,section' );
 			
-			if ($MySmartBB->_GET['close'])
+			if ( $MySmartBB->_GET[ 'close' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_closeSubject();
 				}
 			}
-			elseif ($MySmartBB->_GET['attach'])
+			elseif ( $MySmartBB->_GET[ 'attach' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_attachSubject();
 				}
 			}
-			elseif ($MySmartBB->_GET['mass_del'])
+			elseif ( $MySmartBB->_GET[ 'mass_del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_massDelMain();
 				}
-				elseif ($MySmartBB->_GET['confirm'])
+				elseif ( $MySmartBB->_GET[ 'confirm' ] )
 				{
 					$this->_massDelConfirm();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_massDelStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['mass_move'])
+			elseif ( $MySmartBB->_GET[ 'mass_move' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_massMoveMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_massMoveStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -81,7 +81,7 @@ class MySmartSubjectMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('subjects_closed');
+		$MySmartBB->template->display( 'subjects_closed' );
 	}
 	
 	private function _attachSubject()
@@ -94,7 +94,7 @@ class MySmartSubjectMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('subjects_attach');		
+		$MySmartBB->template->display( 'subjects_attach' );		
 	}
 	
 	private function _massDelMain()
@@ -103,37 +103,32 @@ class MySmartSubjectMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
-		$MySmartBB->template->display('subjects_mass_del');
+		$MySmartBB->template->display( 'subjects_mass_del' );
 	}
 	
 	private function _massDelConfirm()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf'],$z);
+		$this->__checkDelID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
-		$MySmartBB->template->display('subjects_mass_del_confirm');
+		$MySmartBB->template->display( 'subjects_mass_del_confirm' );
 	}
 	
 	private function _massDelStart()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID( $SectionInf, $z );
+		$info = false;
 		
-		$del = array();
+		$this->__checkDelID( $info );
 		
-		$del[0] = $MySmartBB->subject->massDeleteSubject( $SectionInf['id'] );
+		$del = $MySmartBB->subject->massDeleteSubject( $info['id'] );
 		
-		if ($del[0])
+		if ( $del )
 		{
-			$del[1] = $MySmartBB->reply->massDeleteReply( $SectionInf['id'] );
-			
-			if ($del[1])
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_deleted' ] );
-				$MySmartBB->func->move('admin.php?page=subject&amp;mass_del=1&amp;main=1');
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_deleted' ] );
+			$MySmartBB->func->move( 'admin.php?page=subject&amp;mass_del=1&amp;main=1' );
 		}
 	}
 	
@@ -143,84 +138,70 @@ class MySmartSubjectMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
-		$MySmartBB->template->display('subjects_mass_move');
+		$MySmartBB->template->display( 'subjects_mass_move' );
 	}
 		
 	private function _massMoveStart()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($FromInf,$ToInf,true);
+		$from_info = false;
+		$to_info = false;
 		
-		$move = array();
+		$this->__checkMoveID( $from_info,$to_info );
 		
-		$move[0] = $MySmartBB->subject->massMoveSubject( $ToInf['id'], $FromInf['id'] );
+		$move = $MySmartBB->subject->massMoveSubject( $to_info['id'], $from_info['id'] );
 		
-		if ($move[0])
+		if ( $move )
 		{
-			$move[1] = $MySmartBB->reply->massMoveReply( $ToInf['id'], $FromInf['id'] );
-			
-			if ($move[1])
-			{
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
-				$MySmartBB->func->move('admin.php?page=subject&amp;mass_move=1&amp;main=1');
-			}
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'topics_moved' ] );
+			$MySmartBB->func->move( 'admin.php?page=subject&amp;mass_move=1&amp;main=1' );
 		}
 	}
 	
-	private function __checkID( &$Inf, &$ToInf, $move = false )
+	private function __checkMoveID( &$Inf, &$ToInf )
 	{
 		global $MySmartBB;
 		
-		if (!$move)
-		{
-			if (empty($MySmartBB->_GET['id']))
-			{
-				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-			}
+		$MySmartBB->_POST[ 'from' ] = (int) $MySmartBB->_POST[ 'from' ];
+		$MySmartBB->_POST[ 'to' ] = (int) $MySmartBB->_POST[ 'to' ];
+			
+		if ( empty( $MySmartBB->_POST[ 'from' ] ) or empty( $MySmartBB->_POST[ 'to' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+			
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST[ 'from' ] . "'";
+			
+		$Inf = $MySmartBB->rec->getInfo();
+			
+		if ( !$Inf )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
+			
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST[ 'to' ] . "'";
+			
+		$ToInf = $MySmartBB->rec->getInfo();
+			
+		if ( !$ToInf )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
+	}
+	
+	private function __checkDelID( &$Inf )
+	{
+		global $MySmartBB;
 		
-			$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
-			
-			$Inf = $MySmartBB->rec->getInfo();
-			
-			if ($Inf == false)
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-			}
-		}
-		else
-		{
-			if (empty($MySmartBB->_POST['from'])
-				or empty($MySmartBB->_POST['to']))
-			{
-				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-			}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-			$MySmartBB->_POST['from'] = (int) $MySmartBB->_POST['from'];
-			$MySmartBB->_POST['to'] = (int) $MySmartBB->_POST['to'];
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['from'] . "'";
-			
-			$Inf = $MySmartBB->rec->getInfo();
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['to'] . "'";
-			
-			$ToInf = $MySmartBB->rec->getInfo();
-			
-			if ($Inf == false)
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-			}
-			elseif ($ToInf == false)
-			{
-				$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-			}
-		}
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		
+		$Inf = $MySmartBB->rec->getInfo();
+		
+		if ( !$Inf )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 	}
 }
 

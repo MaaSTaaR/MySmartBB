@@ -70,8 +70,8 @@ class MySmartSubject
 	// ... //
 	
 	/**
-	 * Moves all topics from one section to another and updates all section's related information
-	 * such as topics number, replies number and last topic for both sections.
+	 * Moves all topics and its replies from one section to another and updates all section's 
+	 * related information such as topics number, replies number and last topic for both sections.
 	 * 
 	 * @param $to The id of the section which the topics will be moved to.
 	 * @param $from The id of the section which the topics will be moved from.
@@ -80,7 +80,6 @@ class MySmartSubject
 	 * 								
 	 * @return boolean
 	 * 
-	 * @todo We should also change the value of "section" field of the replies of moved topics.
 	 * @todo It would be a great deal if we change this function to recieve "$from" as an array
 	 * 			so we can move the topics of multiple forums to a specific forum, you can see an
 	 * 			application of this in the file "admin/sections_del.module.php"
@@ -99,6 +98,14 @@ class MySmartSubject
 		// After mass move we have to update the information of the last subject of the sections
 		if ( $update )
 		{
+			// ... //
+			
+			$this->engine->rec->table = $this->engine->table[ 'reply' ];
+			$this->engine->rec->fields = array(	'section'	=>	$to	);
+			$this->engine->rec->filter = "section='" . $from . "'";
+				
+			$update = $this->engine->rec->update();
+			
 			// ... //
 			
 			// Updates the related information of $from.
