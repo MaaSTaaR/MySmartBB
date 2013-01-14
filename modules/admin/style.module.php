@@ -1,14 +1,14 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+define( 'IN_ADMIN', true );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
 
-include('common.php');
+include( 'common.php' );
 	
-define('CLASS_NAME','MySmartStyleMOD');
+define( 'CLASS_NAME', 'MySmartStyleMOD' );
 	
 class MySmartStyleMOD
 {
@@ -16,56 +16,56 @@ class MySmartStyleMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('header');
+		$MySmartBB->template->display( 'header' );
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_style' );
 		    
 			$MySmartBB->load( 'style' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -73,7 +73,7 @@ class MySmartStyleMOD
 	{
 		global $MySmartBB;
 
-		$MySmartBB->template->display('style_add');
+		$MySmartBB->template->display( 'style_add' );
 	}
 	
 	private function _addStart()
@@ -172,12 +172,8 @@ class MySmartStyleMOD
 		{
 			// ... //
 			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			
-			$MySmartBB->rec->fields		=	array();
-			
-			$MySmartBB->rec->fields['should_update_style_cache'] 	= 	1;
-			
+			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];			
+			$MySmartBB->rec->fields		=	array( 'should_update_style_cache' => '1' );
 			$MySmartBB->rec->filter = "style='" . $Inf['id'] . "'";
 			
 			$MySmartBB->rec->update();
