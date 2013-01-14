@@ -16,54 +16,54 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		if ( $MySmartBB->_CONF['member_permission'] )
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_announcement' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 		
@@ -71,7 +71,7 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('announcement_add');
+		$MySmartBB->template->display( 'announcement_add' );
 	}
 	
 	private function _addStart()
@@ -110,7 +110,7 @@ class MySmartAnnouncementMOD
 		
 		$MySmartBB->rec->setInfoCallback( array( 'MySmartAnnouncementMOD', 'rowsProcessCB' ) );
 		
-		$MySmartBB->template->display('announcements_main');
+		$MySmartBB->template->display( 'announcements_main' );
 		
 		$MySmartBB->rec->removeInfoCallback();
 	}
@@ -126,9 +126,9 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AnnInfo'] = false;
+		$MySmartBB->_CONF[ 'template' ][ 'AnnInfo' ] = null;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'AnnInfo' ] );
 		
 		$MySmartBB->template->display('announcement_edit');
 	}
@@ -137,12 +137,12 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AnnInfo'] = false;
-		
-		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
-		
-		if (empty($MySmartBB->_POST['title']) or empty($MySmartBB->_POST['text']))
+		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		$info = null;
+		
+		$this->__checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
 		
@@ -150,10 +150,10 @@ class MySmartAnnouncementMOD
 		
 		$MySmartBB->rec->fields['title'] 	= 	$MySmartBB->_POST['title'];
 		$MySmartBB->rec->fields['text'] 	= 	$MySmartBB->_POST['text'];
-		$MySmartBB->rec->fields['writer'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['writer'];
-		$MySmartBB->rec->fields['date'] 	= 	$MySmartBB->_CONF['template']['AnnInfo']['date'];
+		$MySmartBB->rec->fields['writer'] 	= 	$info['writer'];
+		$MySmartBB->rec->fields['date'] 	= 	$info['date'];
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['AnnInfo']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
@@ -168,7 +168,7 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AnnInfo'] = false;
+		$MySmartBB->_CONF['template']['AnnInfo'] = null;
 		
 		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
 		
@@ -179,16 +179,16 @@ class MySmartAnnouncementMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['AnnInfo'] = false;
+		$info = null;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['AnnInfo']);
+		$this->__checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
-		if ($del)
+		if ( $del )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'announcement_deleted' ] );
 			$MySmartBB->func->move('admin.php?page=announcement&amp;control=1&amp;main=1');

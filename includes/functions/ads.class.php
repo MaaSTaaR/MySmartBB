@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartAds
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started 	: 	Mon 19 Mar 2012 12:36:58 AM AST 
- * @updated 	:	-
- * @license     :   GNU LGPL
+ * @package MySmartAds
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Mon 19 Mar 2012 12:36:58 AM AST 
+ * @license GNU GPL
  */
 
 class MySmartAds
@@ -21,6 +20,11 @@ class MySmartAds
 	
 	// ... //
 	
+	/**
+	 * Updates the cache of ads.
+	 * 
+	 * @return boolean
+	 */
 	public function updateAdsCache()
 	{
         $this->engine->rec->table = $this->engine->table[ 'ads' ];

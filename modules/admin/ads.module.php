@@ -7,9 +7,9 @@ define('IN_ADMIN',true);
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');
-	
+
 define('CLASS_NAME','MySmartAdsMOD');
-	
+
 class MySmartAdsMOD
 {
 	public function run()
@@ -22,50 +22,50 @@ class MySmartAdsMOD
 		    
 		    $MySmartBB->loadLanguage( 'admin_ads' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 		
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -73,16 +73,16 @@ class MySmartAdsMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->display('ads_add');
+		$MySmartBB->template->display( 'ads_add' );
 	}
 	
 	private function _addStart()
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['name']) 
-			or empty($MySmartBB->_POST['link']) 
-			or empty($MySmartBB->_POST['picture']))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) 
+			or empty( $MySmartBB->_POST[ 'link' ] ) 
+			or empty( $MySmartBB->_POST[ 'picture' ] ) )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
@@ -138,10 +138,6 @@ class MySmartAdsMOD
 	private function _editStart()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->_CONF['template']['Inf'] = false;
-		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
 				
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['link']) 
@@ -150,18 +146,21 @@ class MySmartAdsMOD
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
+		$info = null;
+		
+		$this->__checkID( $info );
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		
 		$MySmartBB->rec->fields	=	array();
-		
 		$MySmartBB->rec->fields['sitename'] 	= 	$MySmartBB->_POST['name'];
 		$MySmartBB->rec->fields['site'] 		= 	$MySmartBB->_POST['link'];
 		$MySmartBB->rec->fields['picture'] 		= 	$MySmartBB->_POST['picture'];
 		$MySmartBB->rec->fields['width'] 		= 	$MySmartBB->_POST['width'];
 		$MySmartBB->rec->fields['height'] 		= 	$MySmartBB->_POST['height'];
-		$MySmartBB->rec->fields['clicks'] 		= 	$MySmartBB->_CONF['template']['Inf']['clicks'];
+		$MySmartBB->rec->fields['clicks'] 		= 	$info['clicks'];
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
@@ -189,12 +188,12 @@ class MySmartAdsMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = null;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
