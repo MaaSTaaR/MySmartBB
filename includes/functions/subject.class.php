@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartSubject
- * @author 		: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
- * @start 		: 	11/3/2006 , 8:18 PM
- * @updated 	: 	Sat 03 Sep 2011 06:55:00 AM AST 
+ * @package MySmartSubject
+ * @author Mohammed Q. Hussian <MaaSTaaR@gmail.com>
+ * @since 11/3/2006 , 8:18 PM
+ * @license GNU GPL
  */
  
 class MySmartSubject
@@ -279,7 +279,7 @@ class MySmartSubject
 		{
 			$this->engine->rec->table = $this->engine->table[ 'reply' ];
 			$this->engine->rec->select = 'id';
-			$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
+			$this->engine->rec->filter = "subject_id='" . $subject_id . "' AND delete_topic<>'1'";
 			
 			$val = $this->engine->rec->getNumber();
 			
@@ -516,15 +516,24 @@ class MySmartSubject
 	
 	// ... //
 	
+	/**
+	 * Restores a specific topic from the trash. Also recounts the number of topics
+	 * and replies of the forum which the topic belongs to.
+	 * 
+	 * @param $id The id of the topic.
+	 * @param $section_id The id of the forum which the topic belongs to.
+	 
+	 * @return boolean
+	 * 
+	 * @todo Change the name of this function to restoreTopic
+	 */
 	public function unTrashSubject( $id, $section_id )
 	{
  		if ( empty( $id ) or empty( $section_id ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashSubject() -- EMPTY id',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM unTrashSubject() -- EMPTY id', E_USER_ERROR );
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'0' );
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
@@ -533,7 +542,7 @@ class MySmartSubject
 		{
 			$this->engine->reply->unTrashReplies( $id, $section_id );
 			
-			$this->engine->section->updateSubjectNumber( $section_id, null, null );
+			$this->engine->section->updateSubjectNumber( $section_id, null );
 			
 			$this->engine->section->updateForumCache( null, $section_id );
 			

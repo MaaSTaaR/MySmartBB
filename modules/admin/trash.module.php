@@ -10,7 +10,7 @@ include('common.php');
 
 define('CLASS_NAME','MySmartTrashMOD');
 
-class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
+class MySmartTrashMOD // Yes it's a Smart Trash :D
 {
 	public function run()
 	{
@@ -20,56 +20,56 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		{
 		    $MySmartBB->loadLanguage( 'admin_trash' );
 		    
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
 			$MySmartBB->load( 'reply,subject,section' );
 			
-			if ($MySmartBB->_GET['subject'])
+			if ( $MySmartBB->_GET[ 'subject' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_subjectTrashMain();
 				}
-				elseif ($MySmartBB->_GET['untrash'])
+				elseif ( $MySmartBB->_GET[ 'untrash' ] )
 				{
 					$this->_subjectUnTrash();
 				}
-				elseif ($MySmartBB->_GET['del'])
+				elseif ( $MySmartBB->_GET[ 'del' ] )
 				{
-					if ($MySmartBB->_GET['confirm'])
+					if ( $MySmartBB->_GET[ 'confirm' ] )
 					{
 						$this->_subjectDelMain();
 					}
-					elseif ($MySmartBB->_GET['start'])
+					elseif ( $MySmartBB->_GET[ 'start' ] )
 					{
 						$this->_subjectDelete();
 					}
 				}
 			}
-			elseif ($MySmartBB->_GET['reply'])
+			elseif ( $MySmartBB->_GET[ 'reply' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_replyTrashMain();
 				}
-				elseif ($MySmartBB->_GET['untrash'])
+				elseif ( $MySmartBB->_GET[ 'untrash' ] )
 				{
 					$this->_replyUnTrash();
 				}
-				elseif ($MySmartBB->_GET['del'])
+				elseif ( $MySmartBB->_GET[ 'del' ] )
 				{
-					if ($MySmartBB->_GET['confirm'])
+					if ( $MySmartBB->_GET[ 'confirm' ] )
 					{
 						$this->_replyDelMain();
 					}
-					elseif ($MySmartBB->_GET['start'])
+					elseif ( $MySmartBB->_GET[ 'start' ] )
 					{
 						$this->_replyDelete();
 					}
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -83,7 +83,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('trash_subjects');
+		$MySmartBB->template->display( 'trash_subjects' );
 	}
 	
 	private function _subjectUnTrash()
@@ -98,9 +98,9 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		// ... //
 		
-		$UnTrash = $MySmartBB->subject->unTrashSubject( $info[ 'id' ], $info[ 'section' ] );
+		$update = $MySmartBB->subject->unTrashSubject( $info[ 'id' ], $info[ 'section' ] );
 		
-		if ($UnTrash)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_restored' ] );
 			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
@@ -111,26 +111,30 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 	{
 		global $MySmartBB;
 		
-		$this->check_subject_by_id($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = null;
 		
-		$MySmartBB->template->display('trash_subject_del');
+		$this->check_subject_by_id( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
+		
+		$MySmartBB->template->display( 'trash_subject_del' );
 	}
 	
 	private function _subjectDelete()
 	{
 		global $MySmartBB;
 		
-		$this->check_subject_by_id($Inf);
+		$info = null;
+		
+		$this->check_subject_by_id( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $Inf['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
-		if ($del)
+		if ( $del )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_deleted' ] );
-			$MySmartBB->func->move('admin.php?page=trash&amp;subject=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=trash&amp;subject=1&amp;main=1' );
 		}
 	}
 	
@@ -144,7 +148,7 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('trash_replies');		
+		$MySmartBB->template->display( 'trash_replies' );		
 	}
 	
 	private function _replyUnTrash()
@@ -156,12 +160,12 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
 		
-		$UnTrash = $MySmartBB->reply->unTrashReply( $MySmartBB->_GET['id'] );
+		$update = $MySmartBB->reply->unTrashReply( $MySmartBB->_GET[ 'id' ] );
 		
-		if ($UnTrash)
+		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_restored' ] );
-			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
+			$MySmartBB->func->move( 'admin.php?page=trash&amp;reply=1&amp;main=1' );
 		}
 	}
 	
@@ -169,7 +173,9 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 	{
 		global $MySmartBB;
 		
-		$this->check_reply_by_id($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = null;
+		
+		$this->check_reply_by_id( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		$MySmartBB->template->display('trash_reply_del');
 	}
@@ -178,10 +184,12 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 	{
 		global $MySmartBB;
 		
-		$this->check_reply_by_id($ReplyInf);
+		$info = null;
+		
+		$this->check_reply_by_id( $info );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info[ 'id' ] . "'";
 		
 		$del = $MySmartBB->rec->delete();
 		
@@ -191,52 +199,41 @@ class MySmartTrashMOD extends _func // Yes it's a Smart Trash :D
 			$MySmartBB->func->move('admin.php?page=trash&amp;reply=1&amp;main=1');
 		}
 	}
-}
-
-class _func
-{
-	function check_subject_by_id(&$Inf)
+	
+	private function check_subject_by_id( &$info )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
+	
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
-		
-		$Inf = $MySmartBB->rec->getInfo();
-		
-		if ($Inf == false)
-		{
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "' AND delete_topic='1'";
+	
+		$info = $MySmartBB->rec->getInfo();
+	
+		if ( !$info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
-		}
 	}
 	
-	function check_reply_by_id(&$ReplyInf)
+	private function check_reply_by_id( &$info )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
-		
-		$ReplyInf = $MySmartBB->rec->getInfo();
-		
-		if ($ReplyInf == false)
-		{
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "' AND delete_topic='1'";
+	
+		$info = $MySmartBB->rec->getInfo();
+	
+		if ( !$info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
-		}
 	}
 }
 

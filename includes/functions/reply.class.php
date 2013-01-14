@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartReply
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	12/3/2006 , 11:57 PM (Kuwait : GMT+3)
- * @end   		: 	13/3/2006 , 12:01 AM (Kuwait : GMT+3)
- * @updated 	: 	Wed 09 Feb 2011 11:31:27 AM AST 
+ * @package MySmartReply
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 12/3/2006 , 11:57 PM (Kuwait : GMT+3)
+ * @license GNU GPL
  */
 
 
@@ -67,9 +66,7 @@ class MySmartReply
  			trigger_error('ERROR::NEED_PARAMETER -- FROM unTrashReply() -- EMPTY id',E_USER_ERROR);
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'0'	);
- 		
  		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$update = $this->engine->rec->update();
@@ -84,6 +81,8 @@ class MySmartReply
 			
 			$this->engine->subject->updateReplyNumber( $reply_info[ 'subject_id' ], null, null );
 			
+			$this->engine->section->updateForumCache( -1, $reply_info[ 'section' ] );
+			
 			return true;
 		}
 		           
@@ -92,6 +91,22 @@ class MySmartReply
 	
 	// ... //
 	
+	/**
+	 * Restores the replies of a specific topic from the trash. Also recounts the number of replies
+	 * of the forum which the topic belongs to. 
+	 * 
+	 * Note : It's better to use it through MySmartSubject::unTrashSubject or 
+	 * 			call MySmartSection::updateForumCache( null, $section_id ) after calling this function.
+	 *  		Yes this function does its job correctly but it will not update the cache of the specified
+	 *  		forum, so the number of replies for the forum will be shown uncorrectly on the main page. 
+	 *
+	 * @param $subject_id The id of the topic.
+	 * @param $section_id The id of the forum which the topic belongs to.
+	 * 
+	 * @return boolean
+	 *
+	 * @todo Change the name of this function to restoreReplies
+	 */
 	public function unTrashReplies( $subject_id, $section_id )
 	{
 		// ... //
@@ -102,16 +117,14 @@ class MySmartReply
  		// ... //
  		
  		$this->engine->rec->table = $this->table;
- 		
  		$this->engine->rec->fields = array(	'delete_topic'	=>	'0'	);
- 		
  		$this->engine->rec->filter = "subject_id='" . $subject_id . "'";
  		
 		$update = $this->engine->rec->update();
 		
 		if ( $update )
 		{
-			$this->engine->section->updateReplyNumber( $section_id, null, null );
+			$this->engine->section->updateReplyNumber( $section_id, null );
 			
 			return true;
 		}
