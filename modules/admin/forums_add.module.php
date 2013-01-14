@@ -63,39 +63,25 @@ class MySmartForumsAddMOD
 		
 		// ... //
 		
- 		if (empty($MySmartBB->_POST['name'])
- 			or ($MySmartBB->_POST['order_type'] == 'manual' and empty($MySmartBB->_POST['sort'])))
+ 		if ( empty( $MySmartBB->_POST[ 'name' ] ) 
+ 				or ( $MySmartBB->_POST[ 'order_type' ] == 'manual' and empty( $MySmartBB->_POST[ 'sort' ] ) ) )
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		}
 		
 		// ... //
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_POST['parent'] . "'";
-		
-		$parent_info = $MySmartBB->rec->getInfo();
-		
-		// ... //
-		
 		$sort = 0;
 		
-		if ($MySmartBB->_POST['order_type'] == 'auto')
+		if ( $MySmartBB->_POST[ 'order_type' ] == 'auto' )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-			$MySmartBB->rec->filter = "parent='" . (int) $MySmartBB->_POST['parent'] . "'";
+			$MySmartBB->rec->filter = "parent='" . (int) $MySmartBB->_POST[ 'parent' ] . "'";
 			$MySmartBB->rec->order = "sort DESC";
 			
-			$SortSection = $MySmartBB->rec->getInfo();
+			$section_info = $MySmartBB->rec->getInfo();
 			
-			if (!$SortSection)
-			{
-				$sort = 1;
-			}
-			else
-			{
-				$sort = $SortSection['sort'] + 1;
-			}
+			$sort = ( !$section_info ) ? 1 : $section_info[ 'sort' ] + 1;
 		}
 		else
 		{
@@ -161,10 +147,15 @@ class MySmartForumsAddMOD
 			
 			// ... //
 			
-			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST['parent'] );
-				
+			$cache = $MySmartBB->section->updateSectionsCache( $MySmartBB->_POST[ 'parent' ] );
+			
 			if ( $cache )
 			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+				$MySmartBB->rec->filter = "id='" . (int) $MySmartBB->_POST[ 'parent' ] . "'";
+				
+				$parent_info = $MySmartBB->rec->getInfo();
+				
 				// The parent is not a category, It's a forum so we have to update the cache of this forum
 				// because we want to show the sub-forums of that forum in the index page
 				if ( $parent_info[ 'parent' ] != 0 )

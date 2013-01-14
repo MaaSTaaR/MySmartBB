@@ -1,9 +1,9 @@
 <?php
 
 /**
- * @package 	: 	MySmartSection
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	: 	Sat 03 Sep 2011 03:36:57 AM AST 
+ * @package MySmartSection
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @license GNU GPL
  */
  
 class MySmartSection
@@ -75,12 +75,20 @@ class MySmartSection
 	
 	// ... //
 	
+ 	/**
+ 	 * Gets the data of "all" children forums from the database then creates a serialized 
+ 	 * cache from this data.
+ 	 * 
+ 	 * @param $parent The id of the parent forum.
+ 	 * 
+ 	 * @return false if there is no data to be cached, or serialized cache.
+ 	 * 
+ 	 * @see MySmartSection::updateSectionsCache
+ 	 */
 	public function createSectionsCache( $parent )
  	{
  		if ( empty( $parent ) )
- 		{
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM createSectionsCache()',E_USER_ERROR);
- 		}
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM createSectionsCache()', E_USER_ERROR );
  		
  		// ... //
  		
@@ -140,25 +148,35 @@ class MySmartSection
  			
  			// ... //
  			
-			$x += 1;
+			$x++;
  		}
  		
  		if ( $x > 0 )
  		{
  			$cache = serialize( $cache );
  			$cache = base64_encode( $cache );
- 		}
- 		else
- 		{
- 			$cache = false;
+ 			
+ 			return $cache;
  		}
  		
-		return $cache;
+		return false;
 	}
 	
 	// ... //
-	
-	// See updateForumCache
+
+	/**
+	 * Gets the data of a specific child forum from the database then creates a serialized 
+	 * cache from this data.
+	 * 
+	 * @param $parent The id of child's parent, you can pass -1 to this parameter
+	 * 					so the id of the parent will be grabbed automatically.
+	 * @param $child The if of the child will be updated.
+	 * 
+	 * @return false or serialized cache, in the case of $parent = -1 the function returns
+	 * 			and array with two keys 'parent' = parent's id, 'cache' = serialized cache.
+	 * 
+	 * @see MySmartSection::updateForumCache
+	 */
 	public function createForumCache( $parent, $child )
  	{
  		if ( empty( $parent ) or empty( $child ) )
@@ -186,6 +204,10 @@ class MySmartSection
  			$return_parent = true;
  		}
  		
+ 		// ... //
+ 		
+ 		// Gets the cache array of the parent forum, so we can change $child entry
+ 		// to the new one.
  		$this->engine->rec->select = 'id,forums_cache';
 		$this->engine->rec->table = $this->table;
  		$this->engine->rec->filter = "id='" . $parent . "'";
@@ -194,6 +216,12 @@ class MySmartSection
  		
  		$forums_cache = unserialize( base64_decode( $parent_info[ 'forums_cache' ] ) );
  		
+ 		if ( !is_array( $forums_cache ) )
+ 			return false;
+ 		
+ 		// ... //
+ 		
+ 		// Seeks the index number of the $child forum in the cache array
  		$key = -1;
  		$k = 0;
  		
@@ -209,7 +237,7 @@ class MySmartSection
  		}
  		
  		if ( $key == -1 )
- 			trigger_error('ERROR: $child does not exist -- FROM createForumCache()',E_USER_ERROR);
+ 			trigger_error( 'ERROR: $child does not exist -- FROM createForumCache()', E_USER_ERROR );
  		
  		// ... //
  		
@@ -329,22 +357,58 @@ class MySmartSection
 	
 	// ... //
 	
+	/**
+	 * Updates the cache of the whole list of children for a specific parent forum.
+	 *
+	 * @param $parent The id of the parent so the children cache of this forum will be updated.
+	 *
+	 * @return true for success, otherwise false
+	 */
  	public function updateSectionsCache( $parent )
  	{
  		if ( empty( $parent ) )
- 			trigger_error('ERROR::NEED_PARAMETER -- FROM updateSectionsCache()',E_USER_ERROR);
+ 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateSectionsCache()', E_USER_ERROR );
  		
  		$update = $this->_updateCache( $parent );
  		
- 		return ($update) ? true : false;
+ 		return ( $update ) ? true : false;
  	}
  	
  	// ... //
  	
+ 	/**
+ 	 * Either updates the cache of the whole list of children or the cache of one children 
+ 	 * for a specific parent forum. This function is the base function for MySmartSection::updateForumCache
+ 	 * and MySmartSection::updateSectionsCache. Its only purpose is to kill duplicated code.
+ 	 * 
+ 	 * @param $parent The parent forum id, so the cache of the children (or one child) 
+ 	 * 					of this forum will be updated. If you don't know the parent id
+ 	 * 					and only know the child id you can pass the value -1 for this
+ 	 * 					parameter, so the correct parent id will be getten from the
+ 	 * 					database later.
+ 	 * @param $child If it's null the whole list of children will be updated. Otherwise it should contains the
+ 	 * 					id of the child that should be updated.
+ 	 * 
+ 	 * @return boolean
+ 	 * 
+ 	 * @see MySmartSection::createSectionCache
+ 	 * @see MySmartSection::createForumCache
+ 	 */
  	private function _updateCache( $parent, $child = null )
  	{
+ 		// Gets a serialized cache of children.
+ 		// If the parameter $child is null we'll call the function createSectionsCache
+ 		// which will create the cache by getting the data of the whole children from
+ 		// the database. Otherwise we'll call createForumCache which will create the cache
+ 		// by getting the data of only one child from the database and the remain child's cache
+ 		// will not changed.
+ 		// So, if we need to update the cache of one child it's better 
+ 		// to use createForumCache from optimization's perspective.
  		$cache = ( is_null( $child ) ) ? $this->createSectionsCache( $parent ) : $this->createForumCache( $parent, $child );
  		
+ 		// If the call of this function passed the child id but didn't pass the parent id (Actually passed as -1)
+ 		// so the $cache variable will be an array with two entries, the first one is the id of the parent
+ 		// the second one is the serialized cache. This case only occurred when we call createForumCache( -1, $child );
  		if ( !is_null( $child ) and $parent == -1 )
  		{
  			$parent = $cache[ 'parent' ];
@@ -360,7 +424,7 @@ class MySmartSection
  		
  		$update = $this->engine->rec->update();
  		
- 		return ($update) ? true : false;
+ 		return ( $update ) ? true : false;
  	}
  	
  	// ... //
