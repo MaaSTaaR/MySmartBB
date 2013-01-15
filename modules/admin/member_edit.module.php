@@ -108,17 +108,24 @@ class MySmartMemberMOD
 		
 		// ... //
 		
-		// If the admin changed the group of this member, so we should change the cache of username style
+		// If the admin changed the group/username of this member we should change 
+		// the cache of username style
 		
 		if ( $MySmartBB->_POST['usergroup'] != $MemInfo['usergroup'] or !empty( $MySmartBB->_POST[ 'new_username' ] ) )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['usergroup'] . "'";
+			$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST[ 'usergroup' ] . "'";
 			
 			$GroupInfo = $MySmartBB->rec->getInfo();
 			
-			$style = $GroupInfo['username_style'];
-			$username_style_cache = str_replace('[username]',$username,$style);
+			$username_style_cache = $MySmartBB->member->getUsernameWithStyle( $username, $GroupInfo['username_style'] );
+			
+			// The admin changed the group of the member but didn't change the usertitle of the member.
+			// So we should change the usertitle of the member to the new group's usertitle.
+			if ( $MySmartBB->_POST[ 'usergroup' ] != $MemInfo[ 'usergroup' ] and $MySmartBB->_POST[ 'user_title'] == $MemInfo[ 'user_title' ] )
+			{
+				$MySmartBB->_POST[ 'user_title' ] = $GroupInfo[ 'user_title' ];
+			}
 		}
 		else
 		{
@@ -233,22 +240,18 @@ class MySmartMemberMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
+		if ( empty($MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$MemInfo = $MySmartBB->rec->getInfo();
 		
-		if ($MemInfo == false)
-		{
+		if ( !$MemInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		}
 	}
 }
 
