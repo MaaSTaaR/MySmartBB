@@ -42,7 +42,7 @@ class MySmartGroupsEditMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$MySmartBB->_CONF['template']['Inf'] = null;
 		
 		$this->checkID($MySmartBB->_CONF['template']['Inf']);
 		
@@ -53,9 +53,9 @@ class MySmartGroupsEditMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF['template']['Inf'] = false;
+		$info = null;
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->checkID( $info );
 		
 		if (empty($MySmartBB->_POST['name']) 
 			or empty($MySmartBB->_POST['group_order']) 
@@ -141,7 +141,7 @@ class MySmartGroupsEditMOD
 		$MySmartBB->rec->fields['admincp_contactus'] 		= 	$MySmartBB->_POST['admincp_contactus'];
 		//$MySmartBB->rec->fields['no_posts'] 		    	= 	$MySmartBB->_POST['no_posts'];
 		
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $info['id'] . "'";
 		
 		$update = $MySmartBB->rec->update();
 		
@@ -156,22 +156,18 @@ class MySmartGroupsEditMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$GroupInfo = $MySmartBB->rec->getInfo();
 		
-		if ($GroupInfo == false)
-		{
+		if ( !$GroupInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'group_doesnt_exist' ] );
-		}
 	}
 }
 
