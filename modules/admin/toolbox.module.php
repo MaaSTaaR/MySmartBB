@@ -4,15 +4,13 @@
 
 define('IN_ADMIN',true);
 
-define('CALL_TOOLBOX_SYSTEM',true);
-
 define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
 
 include('common.php');
 	
 define('CLASS_NAME','MySmartToolboxMOD');
 	
-class MySmartToolboxMOD extends _func
+class MySmartToolboxMOD
 {
 	public function run()
 	{
@@ -317,38 +315,35 @@ class MySmartToolboxMOD extends _func
 			$MySmartBB->func->move('admin.php?page=toolbox&amp;colors=1&amp;control=1&amp;main=1');
 		}
 	}
-}
-
-class _func
-{	
-	function check_font_by_id(&$Inf)
+	
+	private function check_font_by_id(&$Inf)
 	{
 		global $MySmartBB;
-		
+	
 		if (empty($MySmartBB->_GET['id']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
+	
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
+	
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
-		
+	
 		$Inf = $MySmartBB->toolbox->getFontInfo();
-		
+	
 		if ($Inf == false)
 			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 	}
 	
-	function check_color_by_id(&$Inf)
+	private function check_color_by_id(&$Inf)
 	{
 		global $MySmartBB;
-		
+	
 		if (empty($MySmartBB->_GET['id']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		
+	
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
-		
+	
 		$Inf = $MySmartBB->toolbox->getColorInfo(array('id'	=>	$MySmartBB->_GET['id']));
-		
+	
 		if ($Inf == false)
 			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 	}
