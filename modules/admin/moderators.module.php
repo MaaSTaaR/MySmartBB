@@ -16,60 +16,60 @@ class MySmartModeratorsMOD
 	{
 		global $MySmartBB;
 		
-		if ($MySmartBB->_CONF['member_permission'])
+		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
 		    $MySmartBB->loadLanguage( 'admin_moderators' );
 		    
 			$MySmartBB->load( 'moderator,section' );
 			
-			$MySmartBB->template->display('header');
+			$MySmartBB->template->display( 'header' );
 			
-			if ($MySmartBB->_GET['add'])
+			if ( $MySmartBB->_GET[ 'add' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_addMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_addStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['control'])
+			elseif ( $MySmartBB->_GET[ 'control' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_controlMain();
 				}
-				elseif ($MySmartBB->_GET['section'])
+				elseif ( $MySmartBB->_GET[ 'section' ] )
 				{
 					$this->_controlSection();
 				}
 			}
-			elseif ($MySmartBB->_GET['edit'])
+			elseif ( $MySmartBB->_GET[ 'edit' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_editMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_editStart();
 				}
 			}
-			elseif ($MySmartBB->_GET['del'])
+			elseif ( $MySmartBB->_GET[ 'del' ] )
 			{
-				if ($MySmartBB->_GET['main'])
+				if ( $MySmartBB->_GET[ 'main' ] )
 				{
 					$this->_delMain();
 				}
-				elseif ($MySmartBB->_GET['start'])
+				elseif ( $MySmartBB->_GET[ 'start' ] )
 				{
 					$this->_delStart();
 				}
 			}
 			
-			$MySmartBB->template->display('footer');
+			$MySmartBB->template->display( 'footer' );
 		}
 	}
 	
@@ -91,15 +91,35 @@ class MySmartModeratorsMOD
 		
 		// ... //
 		
-		$MySmartBB->template->display('moderator_add');
+		$MySmartBB->template->display( 'moderator_add' );
 	}
 	
 	private function _addStart()
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['username']) or empty($MySmartBB->_POST['section']))
+		if ( empty( $MySmartBB->_POST[ 'username' ] ) or empty( $MySmartBB->_POST[ 'section' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
+		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST[ 'username' ] . "'";
+		
+		$Member = $MySmartBB->rec->getInfo();
+		
+		if ( !$Member )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
+		
+		// ... //
+		
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST[ 'section' ] . "'";
+		
+		$SectionInfo = $MySmartBB->rec->getInfo();
+		
+		if ( !$SectionInfo )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		
 		// ... //
 		
@@ -111,27 +131,9 @@ class MySmartModeratorsMOD
 		
 		// ... //
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_POST['section'] . "'";
+		$usertitle = ( empty( $MySmartBB->_POST[ 'usertitle' ] ) ) ? null : $MySmartBB->_POST[ 'usertitle' ];
 		
-		$SectionInfo = $MySmartBB->rec->getInfo();
-		
-		if ( $SectionInfo == false )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
-		
-		// ... //
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "username='" . $MySmartBB->_POST['username'] . "'";
-		
-		$Member = $MySmartBB->rec->getInfo();
-		
-		if ( $Member == false )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
-		
-		// ... //
-		
-		$set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $MySmartBB->_POST[ 'usertitle' ] );
+		$set = $MySmartBB->moderator->setModerator( $Member, $SectionInfo, $MySmartBB->_POST[ 'group' ], $usertitle );
 		    
 		if ( $set )
 		{
@@ -144,13 +146,9 @@ class MySmartModeratorsMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
 		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList( false );
 		
-		// ... //
-		
-		$MySmartBB->template->display('moderators_main');
+		$MySmartBB->template->display( 'moderators_main' );
 	}
 
 	private function _controlSection()
@@ -159,64 +157,66 @@ class MySmartModeratorsMOD
 		
 		// ... //
 		
-		if (!isset($MySmartBB->_GET['id']))
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
-		$MySmartBB->_CONF['template']['Section'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF[ 'template' ][ 'Section' ] = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( !$MySmartBB->_CONF['template']['Section'] )
+		if ( !$MySmartBB->_CONF[ 'template' ][ 'Section' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF['template']['Section']['id'] . "'";
+		$MySmartBB->rec->filter = "section_id='" . $MySmartBB->_CONF[ 'template' ][ 'Section' ][ 'id' ] . "'";
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display('moderators_section_control');
+		$MySmartBB->template->display( 'moderators_section_control' );
 	}
 		
 	private function _delMain()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($MySmartBB->_CONF['template']['Inf']);
+		$this->__checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF['template']['Inf']['section_id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'section_id' ] . "'";
 		
-		$MySmartBB->_CONF['template']['Section'] = $MySmartBB->rec->getInfo();
+		$MySmartBB->_CONF[ 'template' ][ 'Section' ] = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( !$MySmartBB->_CONF['template']['Section'] )
+		if ( !$MySmartBB->_CONF[ 'template' ][ 'Section' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		
 		// ... //
 		
-		$MySmartBB->template->display('moderator_del');
+		$MySmartBB->template->display( 'moderator_del' );
 	}
 	
 	private function _delStart()
 	{
 		global $MySmartBB;
 		
-		$this->__checkID($ModInfo);
+		$ModInfo = null;
+		
+		$this->__checkID( $ModInfo );
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "id='" . $ModInfo['member_id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $ModInfo[ 'member_id' ] . "'";
 		
 		$member_info = $MySmartBB->rec->getInfo();
 		
@@ -229,24 +229,22 @@ class MySmartModeratorsMOD
 		}
 	}
 	
-	private function __checkID(&$ModeratorInfo)
+	private function __checkID( &$ModeratorInfo )
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_GET['id']))
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'moderators' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$ModeratorInfo = $MySmartBB->rec->getInfo();
 		
-		if ($ModeratorInfo == false)
-		{
+		if ( !$ModeratorInfo )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'moderator_doesnt_exist' ] );
-		}
 	}
 }
 

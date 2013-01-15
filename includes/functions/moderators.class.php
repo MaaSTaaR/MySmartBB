@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartModerators
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	18/05/2008 04:53:56 PM 
- * @updated 	:	Mon 05 Sep 2011 11:43:17 AM AST 
+ * @package MySmartModerators
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 18/05/2008 04:53:56 PM
+ * @license GNU GPL
  */
 
 class MySmartModerators
@@ -22,6 +22,14 @@ class MySmartModerators
 	
  	// ... //
 	
+	/**
+	 * Gets the moderators list of a specific forum from the database and create a serialized
+	 * cache from this data.
+	 * 
+	 * @param int $section_id The id of the forum.
+	 * 
+	 * @return Serialized cache.
+	 */
  	public function createModeratorsCache( $section_id )
  	{
  		$this->engine->rec->table = $this->table;
@@ -40,7 +48,7 @@ class MySmartModerators
 			$cache[ $x ][ 'member_id' ] 	= 	$row[ 'member_id' ];
 			$cache[ $x ][ 'username' ] 		= 	$row[ 'username' ];
 			
-			$x += 1;
+			$x++;
 		}
 		
 		$cache = base64_encode( serialize( $cache ) );
@@ -54,10 +62,10 @@ class MySmartModerators
 	 * Checks if the member is a moderator or not
 	 *
 	 *	@param $value Can be the id or the username of the member who we need to check.
-	 *  @param $type Spicifies if $value is an 'id' or 'username'
+	 *  @param $type Spicifies if $value is an 'id' or 'username'. The default value is 'id'
 	 *  @param $section_id The id of the section that we want to check if the member has a permission to moderate it,
-	 *                       this parameter can be empty, in this case the function only checks if the member is on the list
-	 *                       of moderators or not.
+	 *                       this parameter can be null, in this case the function only checks if the member is on the list
+	 *                       of moderators or not. The default value is null.
 	 *  
 	 *  @return true or false
 	 */	
@@ -146,17 +154,18 @@ class MySmartModerators
 	
 	// ... //
 	
-	// ~ ~ //
-	// Description : 	This function sets a specific member as a moderator of a specific section
-	//
-	// Parameters :
-	//				- $member_info : 	an array that contains member's information as stored in database.
-	//              - $section_info : 	an array that contains section's information as stored in database.
-	//              - $group : the id of the group that the member will belong to, it must be a group that has moderators permissions
-	//              - $usertitle : a custom user title, can be empty
-	// Returns : 
-	//				- true or false
-	// ~ ~ //	
+	/**
+	 * Sets a specific member as a moderator of a specific forum.
+	 * 
+	 * @param array $member_info an array that contains member's information as stored in database.
+	 * @param array $section_info an array that contains forum's information as stored in database.
+	 * @param int $group the id of the group that the member will belong to, it must be a group that has moderators permissions.
+	 * @param string $usertitle a custom user title. The default value is null. If it's null 
+	 * 							so the new title of the member will be the same as the group's usertitle.
+	 * 
+	 * @return boolean
+	 */
+	
 	public function setModerator( $member_info, $section_info, $group, $usertitle = null )
 	{
 	    $this->engine->rec->table = $this->table;
@@ -175,25 +184,43 @@ class MySmartModerators
 			// ~ Change the group and the usertitle of the member ~ //
 			
 			$this->engine->rec->table = $this->engine->table[ 'group' ];
-			$this->engine->rec->filter = "id='" . (int) $Member['group'] . "'";
+			$this->engine->rec->filter = "id='" . (int) $member_info['usergroup'] . "'";
 			
 			$Group = $this->engine->rec->getInfo();
 			
-			// If the user isn't an admin, so change the group
-			if (!$Group['admincp_allow']
-				and !$Group['vice']
-				and !$Group['group_mod'])
+			// If the user isn't an admin, so change his/her group and usertitle
+			if ( true )//( !$Group[ 'admincp_allow' ] and !$Group[ 'vice' ] and !$Group[ 'group_mod' ] )
 			{
+				// ... //
+				
+				$this->engine->rec->table = $this->engine->table[ 'group' ];
+				$this->engine->rec->filter = "id='" . $group . "'";
+					
+				$moderator_group = $this->engine->rec->getInfo();
+				
+				// ... //
+				
+				// $usertitle is null, so get the usertitle of the new group
+				if ( is_null( $usertitle ) )
+					$usertitle = $moderator_group[ 'user_title' ];
+				
+				// ... //
+				
+				// Get the new style of the username				
+				$username_style = $this->engine->member->getUsernameWithStyle( $member_info[ 'username' ], $moderator_group[ 'username_style' ] );
+				
+				// ... //
+				
 				$this->engine->rec->table = $this->engine->table[ 'member' ];
 				
 				$this->engine->rec->fields	= array();
-				
 				$this->engine->rec->fields['usergroup'] = $group;
-				$this->engine->rec->fields['user_title'] = ( !empty( $usertitle ) ) ? $usertitle : 'مشرف على ' . $section_info['title'];
+				$this->engine->rec->fields['user_title'] = $usertitle;
+				$this->engine->rec->fields[ 'username_style_cache' ] = $username_style;
 				
 				$this->engine->rec->filter = "id='" . $member_info[ 'id' ] . "'";
 				
-				$change = $this->engine->rec->update();
+				$this->engine->rec->update();
 			}
 			
 			// ... //
@@ -218,15 +245,14 @@ class MySmartModerators
 		return false;
 	}
 	
-	// ~ ~ //
-	// Description : 	This function unsets a specific member as a moderator of a specific section
-	//
-	// Parameters :
-	//              - $moderator_info : 	an array that contains moderator's information as stored in database.
-	//				- $member_info : 	an array that contains member's information as stored in database.
-	// Returns : 
-	//				- true or false
-	// ~ ~ //	
+	/**
+	 * Unsets a specific member as a moderator of a specific section.
+	 * 
+	 * @param array $moderator_info an array that contains moderator's information as stored in database.
+	 * @param array $member_info an array that contains member's information as stored in database.
+	 * 
+	 * @return boolean
+	 */
 	public function unsetModerator( $moderator_info, $member_info )
 	{
 		$this->engine->rec->table = $this->table;
@@ -241,20 +267,35 @@ class MySmartModerators
 			if ( !$this->isModerator( $moderator_info[ 'member_id' ] ) )
 			{
 				$this->engine->rec->table = $this->engine->table[ 'group' ];
-				$this->engine->rec->filter = "id='" . $member_info['group'] . "'";
+				$this->engine->rec->filter = "id='" . $member_info[ 'group' ] . "'";
 				
 				$Group = $this->engine->rec->getInfo();
 				
 				// If the user isn't an admin, so change the group
-				if (!$Group['admincp_allow'] and !$Group['vice'])
+				if ( !$Group[ 'admincp_allow' ] and !$Group[ 'vice' ] )
 				{
+					$this->engine->rec->table = $this->engine->table[ 'group' ];
+					$this->engine->rec->filter = "id='4'";
+					
+					$member_group = $this->engine->rec->getInfo();
+					
+					// ... //
+					
+					$username_style = $this->engine->member->getUsernameWithStyle( $member_info[ 'username' ], $member_group[ 'username_style' ] );
+					
+					// ... //
+					
 					$this->engine->rec->table = $this->engine->table[ 'member' ];
-					$this->engine->rec->fields	=	array(  'usergroup' =>  '4' );
+					
+					$this->engine->rec->fields = array();
+					$this->engine->rec->fields[ 'usergroup' ] = '4';
+					$this->engine->rec->fields[ 'user_title' ] = $member_group[ 'user_title' ];
+					$this->engine->rec->fields[ 'username_style_cache' ] = $username_style;
 										
-					$this->engine->rec->filter = "id='" . $moderator_info['member_id'] . "'";
+					$this->engine->rec->filter = "id='" . $member_info[ 'id' ] . "'";
 					
 					$change = $this->engine->rec->update();
-				}				
+				}
 			}
 			
 			// ... //
@@ -271,14 +312,8 @@ class MySmartModerators
 			// ... //
 			
 			// Update the cache of the section
-			
-			$this->engine->rec->select = 'id,parent';
-			$this->engine->rec->table = $this->engine->table[ 'section' ];
-			$this->engine->rec->filter = "id='" . $moderator_info['section_id'] . "'";
-			
-			$section_info = $this->engine->rec->getInfo();
-			
-			$this->engine->section->updateForumCache( $section_info[ 'parent' ], $section_info[ 'id' ] );
+
+			$this->engine->section->updateForumCache( -1, $moderator_info[ 'section_id' ] );
 			
 			// ... //
 			
