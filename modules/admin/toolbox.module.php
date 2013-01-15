@@ -130,12 +130,10 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['name']))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		$MySmartBB->rec->fields	=	array();
-		
-		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields	=	array( 'name' => $MySmartBB->_POST['name'] );
 		
 		$insert = $MySmartBB->toolbox->insertFont();
 			
@@ -170,14 +168,18 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
-		$this->check_font_by_id($Inf);
-		
-		if (empty($MySmartBB->_POST['name']))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		$MySmartBB->rec->fields	=	array();
+		// ... //
 		
-		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
+		$Inf = null;
+		
+		$this->check_font_by_id($Inf);
+		
+		// ... //
+		
+		$MySmartBB->rec->fields	=	array( 'name' => $MySmartBB->_POST['name'] );
 		
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
@@ -194,6 +196,8 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->_CONF['template']['Inf'] = null;
+		
 		$this->check_font_by_id($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('font_del');
@@ -202,6 +206,8 @@ class MySmartToolboxMOD
 	private function _DelFontsStart()
 	{
 		global $MySmartBB;
+		
+		$Inf = null;
 		
 		$this->check_font_by_id($Inf);
 		
@@ -230,12 +236,10 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
-		if (empty($MySmartBB->_POST['name']))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		$MySmartBB->rec->fields	=	array();
-		
-		$MySmartBB->rec->fields['name'] = $MySmartBB->_POST['name'];
+		$MySmartBB->rec->fields	= array( 'name' => $MySmartBB->_POST[ 'name' ] );
 		
 		$insert = $MySmartBB->toolbox->insertColor();
 		
@@ -261,6 +265,8 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->_CONF['template']['Inf'] = null;
+		
 		$this->check_color_by_id($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('color_edit');
@@ -270,14 +276,14 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
-		$this->check_color_by_id($Inf);
-		
-		if (empty($MySmartBB->_POST['name']))
+		if ( empty( $MySmartBB->_POST[ 'name' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
-		$MySmartBB->rec->fields	=	array();
+		$Inf = null;
 		
-		$MySmartBB->rec->fields['name'] 	= 	$MySmartBB->_POST['name'];
+		$this->check_color_by_id($Inf);
+		
+		$MySmartBB->rec->fields	=	array( 'name' => $MySmartBB->_POST['name'] );
 		
 		$MySmartBB->rec->filter = "id='" . $Inf[ 'id' ] . "'";
 		
@@ -294,6 +300,8 @@ class MySmartToolboxMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->_CONF['template']['Inf'] = null;
+		
 		$this->check_color_by_id($MySmartBB->_CONF['template']['Inf']);
 		
 		$MySmartBB->template->display('color_del');
@@ -302,6 +310,8 @@ class MySmartToolboxMOD
 	private function _delColorsStart()
 	{
 		global $MySmartBB;
+		
+		$Inf = null;
 		
 		$this->check_color_by_id($Inf);
 		
@@ -319,32 +329,34 @@ class MySmartToolboxMOD
 	private function check_font_by_id(&$Inf)
 	{
 		global $MySmartBB;
-	
-		if (empty($MySmartBB->_GET['id']))
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-	
+		
 		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-	
+		
+		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
 	
 		$Inf = $MySmartBB->toolbox->getFontInfo();
 	
-		if ($Inf == false)
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 	}
 	
 	private function check_color_by_id(&$Inf)
 	{
 		global $MySmartBB;
-	
+		
+		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
+		
 		if (empty($MySmartBB->_GET['id']))
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 	
-		$Inf = $MySmartBB->toolbox->getColorInfo(array('id'	=>	$MySmartBB->_GET['id']));
+		$Inf = $MySmartBB->toolbox->getColorInfo();
 	
-		if ($Inf == false)
+		if ( !$Inf )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'font_doesnt_exist' ] );
 	}
 }
