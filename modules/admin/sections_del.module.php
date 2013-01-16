@@ -12,7 +12,7 @@ define('CLASS_NAME','MySmartSectionEditMOD');
 	
 class MySmartSectionEditMOD
 {
-	private $Inf;
+	private $Inf = null;
 	
 	public function run()
 	{
@@ -45,7 +45,9 @@ class MySmartSectionEditMOD
 		
 		// ... //
 		
-		$this->checkID($MySmartBB->_CONF['template']['Inf']);
+		$MySmartBB->_CONF[ 'template' ][ 'Inf' ] = null;
+		
+		$this->checkID( $MySmartBB->_CONF[ 'template' ][ 'Inf' ] );
 		
 		// ... //
 		
@@ -53,7 +55,7 @@ class MySmartSectionEditMOD
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
-		$MySmartBB->rec->filter = "parent='0' AND id<>'" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "parent='0' AND id<>'" . $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'id' ] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'sec_res' ];
 		
 		$MySmartBB->rec->getList();
@@ -64,14 +66,14 @@ class MySmartSectionEditMOD
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
 		$MySmartBB->rec->order = "sort ASC";
-		$MySmartBB->rec->filter = "parent<>'0' AND id<>'" . $MySmartBB->_CONF['template']['Inf']['id'] . "'";
+		$MySmartBB->rec->filter = "parent<>'0' AND parent<>'" . $MySmartBB->_CONF[ 'template' ][ 'Inf' ][ 'id' ] . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'forum_res' ];
 
 		$MySmartBB->rec->getList();
 		
 		// ... //
 		
-		$MySmartBB->template->display('section_del');
+		$MySmartBB->template->display( 'section_del' );
 	}
 	
 	private function _delStart()
@@ -84,15 +86,15 @@ class MySmartSectionEditMOD
 		
 		// ... //
 				
-		if ($MySmartBB->_POST['choose'] == 'move')
+		if ( $MySmartBB->_POST[ 'choose' ] == 'move' )
 		{
 			$this->__moveForums();
 		}
-		elseif ($MySmartBB->_POST['choose'] == 'del')
+		elseif ( $MySmartBB->_POST[ 'choose' ] == 'del' )
 		{
 			$this->__deleteForums();
 		}
-		elseif ($MySmartBB->_POST['choose'] == 'move_subjects')
+		elseif ( $MySmartBB->_POST[ 'choose' ] == 'move_subjects' )
 		{
 			$this->__moveTopics();
 		}
@@ -106,51 +108,39 @@ class MySmartSectionEditMOD
 	{
 		global $MySmartBB;
 		
-		// ... //
-		
-		if ( empty( $MySmartBB->_POST['to'] ) )
+		if ( empty( $MySmartBB->_POST[ 'to' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_complete_the_process' ] );
 		
 		// ... //
 		
-		// Move normal sections to another main section
+		// Move forums to another parent
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->fields	= array( 'parent' => $MySmartBB->_POST['to'] );
+		$MySmartBB->rec->fields	= array( 'parent' => $MySmartBB->_POST[ 'to' ] );
 		$MySmartBB->rec->filter = "parent='" . $this->Inf[ 'id' ] . "'";
 
 		$update = $MySmartBB->rec->update();
 		
 		// ... //
 		
+		// Update the children's cache of the new parent.
+		// So the new children will be shown on the main page.
 		$MySmartBB->section->updateSectionsCache( $MySmartBB->_POST[ 'to' ] );
 
 		// ... //
 
 		if ( $update )
 		{
-			// ... //
-	
-			$del = $this->__deleteSection( $this->Inf['id'] );
-			
-			if ($del)
+			// Delete the parent.
+			if ( $this->__deleteSection( $this->Inf[ 'id' ] ) )
 			{
-				// ... //
-		
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
-		
-				// ... //
 				
-				$del = $this->__deletePermissions( $this->Inf['id'] );
-		
-				// ... //
-		
-				if ($del)
+				// Delete group's permissions of the parent.
+				if ( $this->__deletePermissions( $this->Inf[ 'id' ] ) )
 				{
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
-					$MySmartBB->func->move('admin.php?page=sections&amp;control=1&amp;main=1');
+					$MySmartBB->func->move( 'admin.php?page=sections&amp;control=1&amp;main=1' );
 				}
-		
-				// ... //
 			}
 		}
 	}
@@ -161,16 +151,18 @@ class MySmartSectionEditMOD
 		
 		// ... //
 		
+		// Get the ids of all children to delete their permissions, topics and replies.
+		
 		$MySmartBB->rec->select = 'id';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "parent='" . $this->Inf['id'] . "'";
+		$MySmartBB->rec->filter = "parent='" . $this->Inf[ 'id' ] . "'";
 		$MySmartBB->rec->order = "sort ASC";
 
 		$MySmartBB->rec->getList();
 		
 		// ... //
 		
-		// Delete permissions, topics and replies of the child forums
+		// Construct the SQL filters to use them in the deletion of topics, replies and permissions.
 		
 		$k = 0;
 		
@@ -190,6 +182,12 @@ class MySmartSectionEditMOD
 			
 			$k++;
 		}
+		
+		// ... //
+		
+		// Delete permissions, topics and replies of the children forums after constructed our filter.
+		
+		// TODO : what about attachments, polls, tags and the total number of topics/replies
 		
 		if ( !empty( $permissions_filter ) )
 		{
@@ -213,31 +211,21 @@ class MySmartSectionEditMOD
 		}
 		
 		if ( $del_permissions and $del_topics and $del_replies )
-		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_groups_delete_succeed' ] );
-		}
 		else
-		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_topics_delete_failed' ] );
-		}
 		
 		// ... //
 
-		$del = $this->__deleteChildForums( $this->Inf['id'] );
-
-		if ($del)
+		if ( $this->__deleteChildForums( $this->Inf[ 'id' ] ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_delete_succeed' ] );
 			
-			$del = $this->__deleteSection( $this->Inf['id'] );
-	
-			if ($del)
+			if ( $this->__deleteSection( $this->Inf[ 'id' ] ) )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
-		
-				$del = $this->__deletePermissions( $this->Inf['id'] );
 				
-				if ($del)
+				if ( $this->__deletePermissions( $this->Inf[ 'id' ] ) )
 				{
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
@@ -252,7 +240,7 @@ class MySmartSectionEditMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "parent='" . $this->Inf['id'] . "'";
+		$MySmartBB->rec->filter = "parent='" . $this->Inf[ 'id' ] . "'";
 		$MySmartBB->rec->order = "sort ASC";
 		
 		$forums_res = &$MySmartBB->func->setResource();
@@ -260,7 +248,7 @@ class MySmartSectionEditMOD
 		$MySmartBB->rec->getList();
 		
 		$x = 0;
-		$s = array();
+		$state = array();
 		$permissions_filter = '';
 		
 		while ( $row = $MySmartBB->rec->getInfo( $forums_res ) )
@@ -276,9 +264,9 @@ class MySmartSectionEditMOD
 			
 			$move = $MySmartBB->subject->massMoveSubject( $MySmartBB->_POST['subject_to'], $row['id'], false );
 	
-			$s[$x] = ($move) ? 'true' : 'false';
+			$state[] = ( $move ) ? true : false;
 	
-			$x += 1;
+			$x++;
 		}
 		
 		if ( !empty( $permissions_filter ) )
@@ -286,33 +274,27 @@ class MySmartSectionEditMOD
 			$MySmartBB->rec->table = $MySmartBB->table[ 'section_group' ];
 			$MySmartBB->rec->filter = $permissions_filter;
 	
-			$s[$x] = $MySmartBB->rec->delete() ? 'true' : 'false';
+			$state[] = $MySmartBB->rec->delete() ? true : false;
 		}
 		
-		if (in_array('false',$s))
-		{
+		// ... //
+		
+		if ( in_array( false, $state ) )
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'sections_groups_delete_failed' ] );
-		}
 		else
-		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_groups_delete_succeed' ] );
-		}
 		
-		$del = $this->__deleteChildForums( $this->Inf['id'] );
-
-		if ($del)
+		// ... //
+		
+		if ( $this->__deleteChildForums( $this->Inf[ 'id' ] ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'forums_delete_succeed' ] );
-	
-			$del = $this->__deleteSection( $this->Inf['id'] );
-	
-			if ($del)
+			
+			if ( $this->__deleteSection( $this->Inf[ 'id' ] ) )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'section_delete_succeed' ] );
-				
-				$del = $this->__deletePermissions( $this->Inf['id'] );
 
-				if ($del)
+				if ( $this->__deletePermissions( $this->Inf[ 'id' ] ) )
 				{
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'groups_delete_succeed' ] );
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
@@ -358,32 +340,26 @@ class MySmartSectionEditMOD
 		return ( $del ) ? true : false;
 	}
 	
-	private function checkID(&$Inf)
+	private function checkID( &$Inf )
 	{
 		global $MySmartBB;
-		
-		// ... //
+
+		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
-		$MySmartBB->_GET['id'] = (int) $MySmartBB->_GET['id'];
-		
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
 		
 		$Inf = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( $Inf == false )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );
-		
-		// ... //
+		if ( !$Inf )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'section_doesnt_exist' ] );		
 	}
 }
 
