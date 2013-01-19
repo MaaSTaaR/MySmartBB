@@ -25,7 +25,7 @@
 		
 	<div id="footer">
 		Powered By <a href="http://www.mysmartbb.com" target="_blank">MySmartBB</a> {$_CONF['info_row']['MySBB_version']} <br />
-		Copyleft for MySmartBB team 2005, 2012
+		Copyleft for MySmartBB team 2005, 2013
 	</div>
 	
 	{hook}after_copyright{/hook}

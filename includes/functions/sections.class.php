@@ -429,6 +429,11 @@ class MySmartSection
  	
  	// ... //
  	
+ 	/**
+ 	 * Updates the cache of all children for all parents.
+ 	 * 
+ 	 * @return boolean
+ 	 */
  	public function updateAllSectionsCache()
  	{
  		$this->engine->rec->table = $this->table;
@@ -457,6 +462,7 @@ class MySmartSection
  			
  			// ... //
  			
+ 			// TODO : I "think" we don't need this anymore please check it, see createSectionsCache
  			$permissions_update = $this->engine->group->updateSectionGroupCache( $row[ 'id' ] );
  			
  			if ( !$permissions_update )

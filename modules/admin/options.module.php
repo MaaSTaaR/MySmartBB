@@ -180,7 +180,7 @@ class MySmartOptionsMOD
 		$update[1] = $MySmartBB->info->updateInfo( 'send_email', $MySmartBB->_POST['send_email'] );
 		$update[2] = $MySmartBB->info->updateInfo( 'admin_email', $MySmartBB->_POST['admin_email'] );
 		
-		if ($update[0] and $update[1] and $update[2])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;general=1&amp;main=1');
@@ -203,7 +203,7 @@ class MySmartOptionsMOD
 		$update[1] = $MySmartBB->info->updateInfo( 'pm_feature', $MySmartBB->_POST['pm_feature'] );
 		$update[2] = $MySmartBB->info->updateInfo( 'describe_feature', $MySmartBB->_POST['describe_feature'] );
 		
-		if ($update[0] and $update[1] and $update[2])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;features=1&amp;main=1');
@@ -225,7 +225,7 @@ class MySmartOptionsMOD
 		$update[0] = $MySmartBB->info->updateInfo( 'timestamp', $MySmartBB->_POST['time_stamp'] );
 		$update[1] = $MySmartBB->info->updateInfo( 'timesystem', $MySmartBB->_POST['time_system'] );
 		
-		if ($update[0] and $update[1])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;time=1&amp;main=1');
@@ -258,7 +258,7 @@ class MySmartOptionsMOD
 		$update[2] = $MySmartBB->info->updateInfo( 'perpage', $MySmartBB->_POST['reply_perpage'] );
 		$update[3] = $MySmartBB->info->updateInfo( 'avatar_perpage', $MySmartBB->_POST['avatar_perpage'] );
 		
-		if ($update[0] and $update[1] and $update[2] and $update[3])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;pages=1&amp;main=1');
@@ -322,10 +322,7 @@ class MySmartOptionsMOD
 		$update[14] = $MySmartBB->info->updateInfo( 'reg_Fri', $MySmartBB->_POST['Fri'] );
 		$update[ 15 ] = $MySmartBB->info->updateInfo( 'register_rules', $MySmartBB->_POST[ 'register_rules' ] );
 		
-		// Ugly line :-(
-		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4] 
-			and $update[5] and $update[6] and $update[7] and $update[8] and $update[9]
-			and $update[10] and $update[11] and $update[12] and $update[13] and $update[14])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;register=1&amp;main=1');
@@ -359,7 +356,7 @@ class MySmartOptionsMOD
 		$update[4] = $MySmartBB->info->updateInfo( 'samesubject_show', $MySmartBB->_POST['samesubject_show'] );
 		$update[5] = $MySmartBB->info->updateInfo( 'show_subject_all', $MySmartBB->_POST['show_subject_all'] );
 		
-		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4] and $update[5])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;topics=1&amp;main=1');
@@ -385,7 +382,7 @@ class MySmartOptionsMOD
 		$update[4] = $MySmartBB->info->updateInfo( 'title_quote', $MySmartBB->_POST['title_quote'] );
 		$update[5] = $MySmartBB->info->updateInfo( 'activate_closestick', $MySmartBB->_POST['activate_closestick'] );
 		
-		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4] and $update[5])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;fast_reply=1&amp;main=1');
@@ -406,7 +403,7 @@ class MySmartOptionsMOD
 		$update = array();
 		$update[0] = $MySmartBB->info->updateInfo( 'allow_apsent', $MySmartBB->_POST['allow_apsent'] );
 		
-		if ( $update[0] )
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;member=1&amp;main=1');
@@ -437,7 +434,7 @@ class MySmartOptionsMOD
 		$update[3] = $MySmartBB->info->updateInfo( 'max_avatar_height', $MySmartBB->_POST['max_avatar_height'] );
 		$update[4] = $MySmartBB->info->updateInfo( 'default_avatar', $MySmartBB->_POST['default_avatar'] );
 		
-		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;avatar=1&amp;main=1');
@@ -464,7 +461,7 @@ class MySmartOptionsMOD
 		$update[5] = $MySmartBB->info->updateInfo( 'Thu', $MySmartBB->_POST['Thu'] );
 		$update[6] = $MySmartBB->info->updateInfo( 'Fri', $MySmartBB->_POST['Fri'] );
 		
-		if ($update[0] and $update[1] and $update[2] and $update[3] and $update[4] and $update[5] and $update[6])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;close_days=1&amp;main=1');
@@ -486,7 +483,7 @@ class MySmartOptionsMOD
 		$update[0] = $MySmartBB->info->updateInfo( 'board_close', $MySmartBB->_POST['board_close'] );
 		$update[1] = $MySmartBB->info->updateInfo( 'board_msg', $MySmartBB->_POST['board_msg'] );
 				
-		if ($update[0] and $update[1])
+		if ( !in_array( false, $update ) )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('admin.php?page=options&amp;close=1&amp;main=1');
