@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartPoll
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started 	: 	Wed 31 Aug 2011 12:55:55 AM AST 
- * @updated 	:	Wed 20 Jun 2012 09:02:59 PM AST 
+ * @package MySmartPoll
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Wed 31 Aug 2011 12:55:55 AM AST 
+ * @license GNU GPL 
  */
 
 class MySmartPoll

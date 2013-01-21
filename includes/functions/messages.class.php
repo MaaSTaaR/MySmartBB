@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartMasseges
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	15/7/2006 , 1:18 AM (kuwait : GMT+3)
- * @updated 	: 	Thu 28 Jul 2011 11:23:40 AM AST 
+ * @package MySmartMasseges
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 15/7/2006 , 1:18 AM (Kuwait : GMT+3)
+ * @license GNU GPL 
  */
 
 class MySmartMessages

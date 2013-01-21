@@ -1,11 +1,13 @@
 <?php
 
-/*
- * @package : TemplateModifier
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : Tue 26 Dec 2011 11:39 PM
- * @license : GNU LGPL
- * @description : This class make the life easier for plugin's developer who needs to modify existing templates for his/her plugin.
+/**
+ * This class make the life easier for plugin's developer who needs to modify existing 
+ * templates for his/her plugin.
+ * 
+ * @package TemplateModifier
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Tue 26 Dec 2011 11:39 PM
+ * @license GNU LGPL 
 */
 
 define( 'TEMPLATES_EXT', '.tpl' );

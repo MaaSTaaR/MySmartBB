@@ -1,12 +1,11 @@
 <?php
 
-/*
- * @package : MySmartRecords
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : 19/4/2007 11:55 AM
- * @update : Tue 31 Jan 2012 06:57:16 AM AST 
- * @license : GNU LGPL
- * @version : 2.1.0
+/**
+ * @package MySmartRecords
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 19/4/2007 11:55 AM 
+ * @license GNU LGPL
+ * @version 2.1.0
 */
 
 /**
@@ -495,10 +494,10 @@ class MySmartRecords
 	
 	// ... //
 	
-	/*
+	/**
 	 * setInfoCallback() :
 	 *      Set a function that runs with every row fetch in "getInfo"
-	**/
+	 */
 	public function setInfoCallback( $cb )
 	{
 		$this->info_cb = $cb;

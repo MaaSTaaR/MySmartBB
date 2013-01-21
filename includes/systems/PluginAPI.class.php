@@ -1,11 +1,12 @@
 <?php
 
-/*
- * @package : PluginAPI
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : Sat 11 Feb 2012 05:56:12 AM AST 
- * @license : GNU LGPL
- * @description : A set of APIs for plugin's developers.
+/**
+ * @package PluginAPI
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Sat 11 Feb 2012 05:56:12 AM AST 
+ * @license GNU LGPL
+ *  
+ * A set of APIs for plugin's developers.
 */
 
 class PluginAPI

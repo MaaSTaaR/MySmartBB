@@ -1,13 +1,10 @@
 <?php
 
 /**
- * Private message system
- *
- * @package		: 	MySmartPM
- * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	24/2/2006 8:31 AM
- * @end   		: 	24/2/2006 9:05 AM
- * @updated 	: 	Thu 28 Jul 2011 11:21:55 AM AST 
+ * @package MySmartPM
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 24/2/2006 8:31 AM
+ * @license GNU GPL 
 */
 
 class MySmartPM

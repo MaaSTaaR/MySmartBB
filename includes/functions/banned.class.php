@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartBanned
- * @copyright 	: 	Mohammed Q. Hussian <MaaSTaaR@gmail.com>
- * @start 		: 	17/3/2006 , 7:13 PM
- * @updated 	: 	Thu 28 Jul 2011 10:27:35 AM AST 
+ * @package	MySmartBanned
+ * @author Mohammed Q. Hussian <MaaSTaaR@gmail.com>
+ * @since 17/3/2006 , 7:13 PM
+ * @license GNU GPL 
  */
  
 class MySmartBanned

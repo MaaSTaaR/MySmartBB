@@ -1,11 +1,10 @@
 <?php
 
-/*
- * @package : MySmartPager
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start : 24-8-2007 6:53 AM
- * @update : Fri 02 Sep 2011 03:23:52 AM AST 
- * @under : GNU LGPL
+/**
+ * @package MySmartPager
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 24-8-2007 6:53 AM 
+ * @license GNU LGPL
 */
 
 class MySmartPager

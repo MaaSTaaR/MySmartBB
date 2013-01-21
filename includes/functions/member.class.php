@@ -1,9 +1,9 @@
 <?php
 
-/*
- * @package 	: 	MySmartMember
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @updated 	:   Mon 18 Jun 2012 04:30:40 PM AST 
+/**
+ * @package MySmartMember
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @license GNU GPL 
 */
 
 class MySmartMember

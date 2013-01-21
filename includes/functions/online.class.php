@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package	    :	MySmartOnline
- * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start		:	4/4/2006 , 11:26 PM
- * @updated		:	Fri 27 Apr 2012 11:48:41 PM AST 
- * @license     :   GNU LGPL
+ * @package MySmartOnline
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 4/4/2006 , 11:26 PM
+ * @license GNU GPL
  */
 
 class MySmartOnline

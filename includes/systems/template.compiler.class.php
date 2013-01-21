@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MySmartBB's compiler for MySmartTemplate
  */

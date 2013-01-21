@@ -1,11 +1,12 @@
 <?php
 
-/*
- * @package : MyTemplateModifier
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : Thu 02 Feb 2012 05:47:00 AM AST 
- * @license : GNU LGPL
- * @description : Special version of TemplateModifier for MySmartBB
+/**
+ * @package MyTemplateModifier
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Thu 02 Feb 2012 05:47:00 AM AST 
+ * @license GNU GPL
+ * 
+ * A Special version of TemplateModifier for MySmartBB
 */
 
 require( 'TemplateModifier.class.php' );

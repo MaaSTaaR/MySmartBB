@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartInfo
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	20/1/2007 , 9:29 PM
- * @end   		: 	20/1/2007 , 9:33 PM
- * @updated		: 	Thu 09 Feb 2012 06:53:33 AM AST 
+ * @package MySmartInfo
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 20/1/2007 , 9:29 PM
+ * @license GNU GPL 
  */
 
 class MySmartInfo

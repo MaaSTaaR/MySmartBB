@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartToolbox
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	21/09/2007 10:30:28 PM 
- * @updated 	:	Sat 12 Feb 2011 11:43:39 AM AST 
+ * @package MySmartToolbox
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 21/09/2007 10:30:28 PM 
+ * @license GNU GPL 
  */
 
 class MySmartToolbox

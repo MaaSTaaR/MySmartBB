@@ -1,12 +1,10 @@
 <?php
 
 /**
- * @package : MySmartCode
- * @copyright : MaaSTaaR <MaaSTaaR@hotmail.com>
- * @version : 1.0 Special verion for MySmartBB
- * @start : 23/2/2006 , 3:46 PM (kuwait : GMT+3)
- * @end   : 23/2/2006 , 6:30 PM (kuwait : GMT+3)
- * @last update : 01/09/2008 04:54:55 AM 
+ * @package MySmartCodeParse
+ * @author MaaSTaaR <MaaSTaaR@hotmail.com>
+ * @version 1.0 Special verion for MySmartBB
+ * @since 23/2/2006 , 3:46 PM (kuwait : GMT+3)
  */
  
 class MySmartCodeParse
@@ -139,9 +137,7 @@ class MySmartCodeParse
  	/**
  	 * The SmartCode should be programmer paradise like Linux ;)
  	 *
- 	 * @author : Jason Warner <jason@mercuryboard.com>
- 	 *
- 	 * @edited by : MaaSTaaR <MaaSTaaR@gmail.com>
+ 	 * @author Jason Warner <jason@mercuryboard.com>
  	 *
  	 * @param :
  	 * 	 			code 	-> the code

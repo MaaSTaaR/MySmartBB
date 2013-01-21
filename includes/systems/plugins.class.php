@@ -1,11 +1,10 @@
 <?php
 
-/*
- * @package : MySmartPlugins
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started : 30/09/2009 10:18:46 PM (GMT+3)
- * @update : Thu 08 Mar 2012 03:26:40 PM AST 
- * @license : GNU LGPL
+/**
+ * @package MySmartPlugins
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 30/09/2009 10:18:46 PM (GMT+3) 
+ * @license GNU LGPL
 */
 
 if ( defined( 'DIR' ) )

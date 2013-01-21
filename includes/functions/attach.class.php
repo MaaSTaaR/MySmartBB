@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartAttach
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started 	: 	Wed 31 Aug 2011 08:08:01 AM AST 
- * @updated 	:	-
+ * @package MySmartAttach
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Wed 31 Aug 2011 08:08:01 AM AST 
+ * @license GNU GPL
  */
 
 class MySmartAttach

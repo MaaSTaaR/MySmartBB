@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package		:	MySmartStyle
- * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start		:	27/2/2006 , 8:38 PM
- * @updated		:	Mon 18 Jun 2012 03:13:39 PM AST 
+ * @package MySmartStyle
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 27/2/2006 , 8:38 PM
+ * @license GNU GPL
  */
 
 class MySmartStyle

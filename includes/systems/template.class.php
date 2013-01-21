@@ -1,12 +1,11 @@
 <?php
 
-/*
- * @package : MySmartTemplate
- * @author : Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @version : 1.0.0
- * @start : 20/4/2006 , 7:00 PM (GMT+3)
- * @update : 7/02/2012
- * @license : GNU LGPL
+/**
+ * @package MySmartTemplate
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @version 1.0.0
+ * @since 20/4/2006 , 7:00 PM (GMT+3)
+ * @license GNU LGPL
 */
 
 /**

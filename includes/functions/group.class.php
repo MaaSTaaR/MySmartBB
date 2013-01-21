@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package	:	MySmartGroup
- * @author		:	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start		:	5/4/2006 , 6:07 PM
- * @updated		:	Thu 28 Jul 2011 11:13:05 AM AST 
+ * @package MySmartGroup
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 5/4/2006 , 6:07 PM
+ * @license GNU GPL 
  */
 
 class MySmartGroup

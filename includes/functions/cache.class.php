@@ -1,11 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartCache
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start 		: 	15/6/2006 , 10:46 PM
- * @updated 	: 	Sat 03 Sep 2011 03:36:43 AM AST 
- * @license     :   GNU LGPL
+ * @package MySmartCache
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 15/6/2006 , 10:46 PM 
+ * @license GNU GPL
  */
 
 class MySmartCache

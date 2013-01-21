@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartUsertitle
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started 	: 	Thu 01 Sep 2011 06:35:42 AM AST 
- * @updated 	:	-
+ * @package MySmartUsertitle
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Thu 01 Sep 2011 06:35:42 AM AST 
+ * @license GNU GPL
  */
 
 class MySmartUsertitle

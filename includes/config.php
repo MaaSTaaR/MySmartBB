@@ -1,6 +1,6 @@
 <?php
 
-// MySmartBB 2.0.0 Beta 4
+// MySmartBB 2.0.0 Beta 5
 // http://www.MySmartBB.com
 
 

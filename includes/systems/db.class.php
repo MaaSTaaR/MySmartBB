@@ -1,6 +1,10 @@
 <?php
 
-// Last Update : Fri 26 Aug 2011 10:37:13 PM AST 
+/**
+ * @package MySmartSQL
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @license GNU LGPL
+ */
 
 class MySmartSQL
 {

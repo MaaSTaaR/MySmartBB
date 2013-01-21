@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartIcons
- * @author		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @start		: 	21/09/2007 10:28:43 PM 
- * @updated 	:	Thu 28 Jul 2011 11:00:18 AM AST 
+ * @package MySmartIcons
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since 21/09/2007 10:28:43 PM 
+ * @license GNU GPL 
  */
 
 class MySmartIcons

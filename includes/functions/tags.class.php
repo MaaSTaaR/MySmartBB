@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @package 	: 	MySmartTags
- * @author 		: 	Mohammed Q. Hussain <MaaSTaaR@gmail.com>
- * @started 	: 	Wed 31 Aug 2011 06:07:49 AM AST 
- * @updated 	:	-
+ * @package MySmartTags
+ * @author Mohammed Q. Hussain <MaaSTaaR@gmail.com>
+ * @since Wed 31 Aug 2011 06:07:49 AM AST 
+ * @license GNU GPL
  */
 
 class MySmartTags
