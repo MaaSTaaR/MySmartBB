@@ -56,4 +56,5 @@
 	
 </table>
 
+<br />
 {hook}after_add_poll_table{/hook}

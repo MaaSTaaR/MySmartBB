@@ -103,7 +103,20 @@ class MySmartDownloadMOD
 		
 		if ( $AttachInfo[ 'pm_id' ] == '0' )
 		{
-			$this->__checkTopicPermissions( $AttachInfo[ 'subject_id' ] );
+			$subject_id = $AttachInfo[ 'subject_id' ];
+			
+			if ( $AttachInfo[ 'reply' ] )
+			{
+				$MySmartBB->rec->select = 'id,subject_id';
+				$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
+				$MySmartBB->rec->filter = "id='" . $AttachInfo[ 'subject_id' ] . "'";
+				
+				$reply_info = $MySmartBB->rec->getInfo();
+				
+				$subject_id = $reply_info[ 'subject_id' ];
+			}
+			
+			$this->__checkTopicPermissions( $subject_id );
 		}
 		else
 		{

@@ -9,10 +9,10 @@
 	<tr>
 		<td class="row1">
 			{DB::getInfo}{$smile_res}{$smile}
-				<img src="{$smile['smile_path']}" OnClick="set_smile('{$smile['smile_path']}');" alt="{$smile['smile_path']}" border="0" />
+				<img src="{$smile['smile_path']}" OnClick="set_smile('{$smile['smile_short']}');" alt="{$smile['smile_path']}" border="0" />
 			{/DB::getInfo}
-			<br />
-			<a class="small_text" href="JavaScript:OpenWindow('new.php?smile=1');">{$lang['common']['view_all_emoticons']}</a>
+			<!-- <br />
+			<a class="small_text" href="JavaScript:OpenWindow('new.php?smile=1');">{$lang['common']['view_all_emoticons']}</a> -->
 		</td>
 	</tr>
 </table>

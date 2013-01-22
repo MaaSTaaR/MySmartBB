@@ -108,11 +108,20 @@ $(document).ready(Ready);
 
 {if {$section_info['usesmartcode_allow']} != 0}
 {template}toolbox{/template}
+<br />
 {/if}
 
 {hook}after_toolbox{/hook}
 
+{template}smilebox{/template}
+
+{hook}after_smilebox{/hook}
+
 <br />
+
+<div id="poll_table">
+{template}add_poll_table{/template}
+</div>
 
 <table id="new_topic_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
@@ -154,6 +163,12 @@ $(document).ready(Ready);
 
 {hook}after_new_topic_table{/hook}
 
+<div id="attach_table">
+{template}add_attach_table{/template}
+</div>
+
+<br />
+
 {if {$Admin}}
 <table id="topic_management_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
@@ -178,19 +193,7 @@ $(document).ready(Ready);
 {template}add_tags_table{/template}
 </div>
 
-<div id="poll_table">
-{template}add_poll_table{/template}
-</div>
-
-<div id="attach_table">
-{template}add_attach_table{/template}
-</div>
-
 <br />
-
-{template}smilebox{/template}
-
-{hook}after_smilebox{/hook}
 
 </form>
 

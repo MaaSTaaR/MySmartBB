@@ -74,6 +74,11 @@ $(document).ready(Ready);
 
 <br />
 
+{template}smilebox{/template}
+
+{hook}after_smilebox{/hook}
+
+<br />
 <table id="add_reply_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
@@ -104,7 +109,14 @@ $(document).ready(Ready);
 
 {hook}after_add_reply_table{/hook}
 
+<div id="attach_table">
+{template}add_attach_table{/template}
+</div>
+
+{hook}after_add_attachements_table{/hook}
+
 {if {$Admin}}
+<br />
 <table id="topic_management_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="2">
@@ -122,18 +134,6 @@ $(document).ready(Ready);
 {/if}
 
 {hook}after_topic_management_table{/hook}
-
-<div id="attach_table">
-{template}add_attach_table{/template}
-</div>
-
-{hook}after_add_attachements_table{/hook}
-
-<br />
-
-{template}smilebox{/template}
-
-{hook}after_smilebox{/hook}
 
 </form>
 

@@ -4,7 +4,7 @@ function code(Y)
 	
 	if (Y != 4)
 	{
-		var X = prompt("«·‰’","")
+		var X = prompt("Text","")
 	
 		if (X == "" || X == null)
 		{
@@ -27,12 +27,12 @@ function code(Y)
 			form.focus();
 			break;
 		case 4: // URL
-			var N = prompt("≈œŒ· «”„ «·„Êﬁ⁄ (≈Œ Ì«—Ï","");
-			var X = prompt("≈œŒ· Ê’·… «·„Êﬁ⁄","http://");
+			var N = prompt("Site name (Optional)","");
+			var X = prompt("Link","http://");
 			
 			if (X.substr(0,7) != "http://")
 			{
-				alert("Ì—ÃÏ ﬂ «»… http://");
+				alert("Invalid link");
 				form.focus();
 				return false;
 			}
@@ -74,7 +74,7 @@ function Sizes()
 		form.focus();
 	}
 	
-	var X = prompt("≈œŒ· «·‰’","");
+	var X = prompt("Text","");
 	
 	if (X != "" & X != null)
 	{
@@ -99,7 +99,7 @@ function Colors()
 		form.focus();
 	}
 	
-	var X = prompt("≈œŒ· «·‰’","");
+	var X = prompt("Text","");
 	
 	if (X != "" && X != null)
 	{
@@ -124,7 +124,7 @@ function Fonts()
 		form.focus();
 	}
 	
-	var X = prompt("≈œŒ· «·‰’","");
+	var X = prompt("Text","");
 	
 	if (X != "" & X != null)
 	{
@@ -141,10 +141,8 @@ function Fonts()
 
 function set_smile(smile)
 {
-	//var form = document.topic.text;
+	var form = document.topic.text;
 	
-	$("#text_id").wysiwyg("insertImage",smile);
-	
-	//form.value = form.value + " " + X + " ";
-	//form.focus();
+	form.value = form.value + " " + smile + " ";
+	form.focus();
 }

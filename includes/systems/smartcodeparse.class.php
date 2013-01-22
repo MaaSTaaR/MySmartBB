@@ -23,8 +23,6 @@ class MySmartCodeParse
   
  		if ($brackets)
  		{
- 			$string = htmlspecialchars($string);
- 			
  			$first_search = array();
  			$first_search[] = '~\[code](.*?)\[/code]~ise';
  			$first_search[] = '~\[php](.*?)\[/php]~ise';

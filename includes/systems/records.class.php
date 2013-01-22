@@ -108,6 +108,8 @@ class MySmartRecords
 		if ( is_object( $this->pager_obj ) and is_array( $this->pager ) )
 		{
 			$statement = $this->initPager( $statement );
+			
+			unset( $this->pager );
 		}
 		
 		// ... //

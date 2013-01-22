@@ -18,6 +18,13 @@
 
 <br />
 
+{if {$_CONF['info_row']['smiles_show']}}
+{template}smilebox{/template}
+<br />
+{/if}
+
+{hook}after_smilebox{/hook}
+
 <table id="quick_reply_table" border="1" width="98%" class="t_style_b" align="center">
 	<tr>
 		<td class="main1 rows_space" colspan="7">
@@ -67,12 +74,6 @@
 {/if}
 
 {hook}after_topic_management_table{/hook}
-
-{if {$_CONF['info_row']['smiles_show']}}
-{template}smilebox{/template}
-{/if}
-
-{hook}after_smilebox{/hook}
 
 </form>
 
