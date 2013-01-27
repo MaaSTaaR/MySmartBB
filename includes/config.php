@@ -1,6 +1,6 @@
 <?php
 
-// MySmartBB 2.0.0 Beta 5
+// MySmartBB 2.0.0
 // http://www.MySmartBB.com
 
 
@@ -18,6 +18,6 @@ $config['db'][ 'prefix' ]		=	'';				// The prefix of tables will be MySmartBB_ i
 
 //=================
 
-$config[ 'lang_dir' ] = 'arabic'; // The language directory (Note : arabic and english are available now)
+$config[ 'lang_dir' ] = 'english'; // The language directory (Note : arabic and english are available now)
 
 ?>
