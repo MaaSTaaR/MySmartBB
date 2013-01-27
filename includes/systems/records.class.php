@@ -323,6 +323,10 @@ class MySmartRecords
 			$this->func->cleanArray( $row, 'html,sql' );
 			
 			if ( isset( $this->info_cb ) )
+				// TODO : This line generates a warning for PHP 5.3 and a fatal error for PHP 5.4
+				// because of using the reference sign on a function call : &$row
+				// In the same time call_user_func function doesn't support passing by reference.
+				// So it's a temporary way to do the job. We must do something later. 
 				call_user_func( $this->info_cb, &$row );
 		}
 		
