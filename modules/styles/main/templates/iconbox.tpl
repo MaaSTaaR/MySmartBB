@@ -8,8 +8,8 @@
 	</tr>
 	<tr>
 		<td class="row1">
-			<input type="radio" value="{$_CONF['info_row']['icon_path']}i1.gif" checked="checked" name="icon" id="fp1" />
-			<label for="fp1">{$lang['common']['no_icon']}</label>
+			<input type="radio" value="{$_CONF['info_row']['icon_path']}i1.gif" checked="checked" name="icon" id="fp0" />
+			<label for="fp0">{$lang['common']['no_icon']}</label>
         
 			{DB::getInfo}{$icon_res}{$icon}
 				<input type="radio" value="{$icon['smile_path']}" name="icon" id="fp{$icon['id']}" />

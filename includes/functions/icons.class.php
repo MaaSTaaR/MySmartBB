@@ -132,9 +132,7 @@ class MySmartIcons
 	
 	public function getCachedSmiles()
 	{
-		$cache = $this->engine->_CONF[ 'info_row' ][ 'smiles_cache' ];
-		
-		$cache = $this->engine->func->htmlDecode( $cache );
+		$cache = base64_decode( $this->engine->_CONF[ 'info_row' ][ 'smiles_cache' ] );
 		
 		$cache = unserialize( $cache );
 		
@@ -180,7 +178,7 @@ class MySmartIcons
 			$x += 1;
 		}
 		
-		$cache = serialize( $cache );
+		$cache = base64_encode( serialize( $cache ) );
 		
 		return $cache;
  	}
