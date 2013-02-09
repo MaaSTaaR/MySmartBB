@@ -55,6 +55,8 @@ class MySmartReply
 		
 		$this->engine->rec->filter = "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
 		
+		$this->engine->rec->order = 'reply_id ASC';
+		
 		$this->engine->rec->getList();
 	}
 	
