@@ -229,8 +229,6 @@ class MySmartCodeParse
 		
 		foreach ($smiles as $smile)
 		{
-			$MySmartBB->functions->CleanVariable($smile,'html');
-			
 			$text = str_replace('<img src="' . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$smile['smile_short'],$text);
 			
 			// For WYSIWYG
