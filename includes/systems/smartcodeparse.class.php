@@ -5,6 +5,7 @@
  * @author MaaSTaaR <MaaSTaaR@hotmail.com>
  * @version 1.0 Special verion for MySmartBB
  * @since 23/2/2006 , 3:46 PM (kuwait : GMT+3)
+ * @todo A really ugly class. Please improve it!
  */
  
 class MySmartCodeParse
@@ -208,7 +209,8 @@ class MySmartCodeParse
 
 		return $return;		
  	 }
- 	 
+ 	
+ 	// Should be called before "replace()" becase the [code] tag and smiles removing.
  	public function replace_smiles( &$text )
 	{
 		global $MySmartBB;

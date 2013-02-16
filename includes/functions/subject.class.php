@@ -179,7 +179,7 @@ class MySmartSubject
 								'visitor', 'avater_path', 'away', 'away_msg', 'hide_online', 'register_time', 'username_style_cache',
 								'logged' );
 		
-		$select = 'subject.*,subject.visitor AS subject_visitor, subject.id AS subject_id';
+		$select = 'subject.*,subject.visitor AS subject_visitor, subject.id AS subject_id, member.id AS id';
 		
 		foreach ( $member_select as $key => $field )
 		{
