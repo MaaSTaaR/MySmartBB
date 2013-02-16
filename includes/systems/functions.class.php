@@ -602,8 +602,10 @@ class MySmartFunctions
 			$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
 			
 			if ( $X_url[ 0 ] == $Y_url[ 2 ] )
-				if ( $url != 'page=logout' or empty( $url ) or $url != 'page=login' )
-				$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
+				if ( ( strstr( $url, 'page=logout' ) == false ) 
+						and ( strstr( $url, 'page=login' ) == false )
+						and !empty( $url ) )
+					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
 		}
 		
 		return $move_to;
