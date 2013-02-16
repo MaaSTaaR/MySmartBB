@@ -417,14 +417,15 @@ class MySmartTopicMOD
 		
 		// ... //
 		
+		// Should be called before "replace()" becase the [code] tag and smiles removing.
+		$MySmartBB->smartparse->replace_smiles( $this->Info[ 'text' ] );
+		
+		// ... //
+		
 		if ( $this->SectionInfo[ 'usesmartcode_allow' ] )
 			$this->Info['text'] = $MySmartBB->smartparse->replace( $this->Info[ 'text' ] );
 		else
 			$this->Info['text'] = nl2br( $this->Info[ 'text' ] );
-		
-		// ... //
-		
-		$MySmartBB->smartparse->replace_smiles( $this->Info[ 'text' ] );
 	}
 	
 	private function _baseEnd()

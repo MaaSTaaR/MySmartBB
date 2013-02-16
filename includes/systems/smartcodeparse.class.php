@@ -151,7 +151,7 @@ class MySmartCodeParse
 		{
 			$input = "\r\n" . $input;
 		}
-
+		
 		if (substr($input, -1) != "\n") 
 		{
 			$input .= "\r\n";
@@ -188,7 +188,7 @@ class MySmartCodeParse
 		
 		$lines = explode('<br />', $input);
 		$count = count($lines) - 1;
-
+		
 		$col1 = '';
 		$col2 = '';
 		
@@ -200,7 +200,7 @@ class MySmartCodeParse
 			$col2 .= rtrim($lines[$i]);
 			$start += 1;
 		}
-
+		
 		$return = "<table align='center' border='1' width='90%' cellpadding='0' cellspacing='0' class='t_style_a' dir='ltr'>";
 		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>" . $MySmartBB->lang_common[ 'code' ] . "</b></td></tr>";
 		$return .= "<tr><td width='1%'><br />$col1</td>";
@@ -221,11 +221,11 @@ class MySmartCodeParse
 		}
 	}
 	
-	function strip_smiles(&$text)
+	function strip_smiles( $text )
 	{   		
    		global $MySmartBB;
 
-		$smiles = $MySmartBB->icon->GetCachedSmiles();
+		$smiles = $MySmartBB->icon->getCachedSmiles();
 		
 		foreach ($smiles as $smile)
 		{
@@ -234,6 +234,8 @@ class MySmartCodeParse
 			// For WYSIWYG
 			$text = str_replace('&lt;img src=&quot;' . $smile['smile_path'] . '&quot;&gt;',$smile['smile_short'],$text);
 		}
+		
+		return $text;
     }
     
     function ResizeImage($path)
