@@ -267,7 +267,10 @@ class MySmartFunctions
   				break;
   		}
   		
-  		return $path . '/';
+  		if ( !empty( $path ) )
+  			return $path . '/';
+  		else
+  			return '';
  	}
  	
  	// ... //
