@@ -394,7 +394,7 @@ class MySmartSubject
 	/**
 	 * Moves a topic to another forum.
 	 * 
-	 * @param $section_id The id of the forum that the topic belongs to.
+	 * @param $section_id The id of the forum that the topic will belong to.
 	 * @param $subject_id The id of the topic.
 	 * 
 	 * @return true for success, otherwise false
@@ -435,7 +435,7 @@ class MySmartSubject
 			$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
 			$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
 			
-			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $section_id );
+			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $last_topic[ 'id' ], $date, $section_id );
 			
 			$this->engine->section->updateSubjectNumber( $section_id, null, null );
 			$this->engine->section->updateReplyNumber( $section_id, null, null );
@@ -444,25 +444,37 @@ class MySmartSubject
 			
 			// ... //
 			
-			$to = $subject_info[ 'section' ];
+			$from = $subject_info[ 'section' ];
 			
 			$this->engine->rec->table = $this->engine->table[ 'subject' ];
-			$this->engine->rec->filter = "section='" . $to . "'";
+			$this->engine->rec->filter = "section='" . $from . "'";
 			$this->engine->rec->limit = '1';
 			$this->engine->rec->order = 'write_time DESC';
 			
 			$last_topic = $this->engine->rec->getInfo();
 			
-			$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
-			$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
+			if ( !$last_topic )
+			{
+				$writer = '';
+				$date = '';
+				$last_title = '';
+				$last_id = '';	
+			}
+			else
+			{				
+				$writer = ( empty( $last_topic[ 'last_replier' ] ) ) ? $last_topic[ 'writer' ] : $last_topic[ 'last_replier' ];
+				$date = $this->engine->func->date( $last_topic[ 'write_time' ] );
+				$last_title = $last_topic[ 'title' ];
+				$last_id = $last_topic[ 'id' ];
+			}
 			
-			$this->engine->section->updateLastSubject( $writer, $last_topic[ 'title' ], $lat_topic[ 'id' ], $date, $to );
+			$this->engine->section->updateLastSubject( $writer, $last_title, $last_id, $date, $from );
 			
 			// Update the number of subjects and replies on $form
-			$this->engine->section->updateSubjectNumber( $to, null, null );
-			$this->engine->section->updateReplyNumber( $to, null, null );
+			$this->engine->section->updateSubjectNumber( $from, null, null );
+			$this->engine->section->updateReplyNumber( $from, null, null );
 			
-			$this->engine->section->updateForumCache( -1, $to );
+			$this->engine->section->updateForumCache( -1, $from );
 			
 			// ... //
 			
