@@ -41,7 +41,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td class="row2" width="25%">
+		<td class="row2" width="25%" style="vertical-align: text-top;">
 			{template}writer_info{/template}
 		</td>
 		<td class="row2" width="70%">
