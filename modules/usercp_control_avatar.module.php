@@ -123,9 +123,7 @@ class MySmartUserCPAvatarMOD
     	}
 		else
 		{
-			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp&control=1&avatar=1&main=1' );
-			$MySmartBB->func->stop();
+			$MySmartBB->rec->fields[ 'avater_path' ] = '';
 		}
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
@@ -138,7 +136,7 @@ class MySmartUserCPAvatarMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp_control_avatar&main=1' );
+			//$MySmartBB->func->move( 'index.php?page=usercp_control_avatar&main=1' );
 		}
 	}
 	
