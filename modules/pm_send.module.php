@@ -66,6 +66,7 @@ class MySmartPrivateMassegeSendMOD
 				$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exist' ] );
 			
 			$MySmartBB->template->assign( 'recv_info', $info );
+			$MySmartBB->template->assign( 'to', $info[ 'username' ] );
 		}
 		
 		$MySmartBB->func->getEditorTools();

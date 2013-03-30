@@ -129,7 +129,7 @@ $(document).ready(Ready);
 			{$lang['receiver']}
 		</td>
 		<td class="row2 rows_space">
-			<input name="to[]" value="{$recv_info['username']}" type="text" />
+			<input name="to[]" value="{$to}" type="text" />
 		</td>
 	</tr>
 	<tr class="more_tr">
