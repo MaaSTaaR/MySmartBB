@@ -39,7 +39,10 @@ class MySmartReportMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign( 'id', $MySmartBB->_GET[ 'id' ] );
+		$MySmartBB->template->assign( 'subject_id', $MySmartBB->_GET[ 'subject_id' ] );
+		
+		if ( !empty( $MySmartBB->_GET[ 'reply_id' ] ) )
+			$MySmartBB->template->assign( 'reply_id', $MySmartBB->_GET[ 'reply_id' ] );
 		
 		$MySmartBB->template->display( 'send_report' );
 	}
@@ -53,7 +56,10 @@ class MySmartReportMOD
 		
 		// ... //
 		
-		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&show=1&id=' . $MySmartBB->_GET[ 'id' ];
+		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&show=1&id=' . $MySmartBB->_GET[ 'subject_id' ];
+		
+		if ( !empty( $MySmartBB->_GET[ 'reply_id' ] ) )
+			$MySmartBB->_POST[ 'text' ] .= "#" . $MySmartBB->_GET[ 'reply_id' ];
 		
 		// ... //
 		
@@ -86,9 +92,9 @@ class MySmartReportMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	}
 }
