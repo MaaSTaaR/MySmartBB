@@ -136,7 +136,7 @@ class MySmartUserCPAvatarMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			//$MySmartBB->func->move( 'index.php?page=usercp_control_avatar&main=1' );
+			$MySmartBB->func->move( 'index.php?page=usercp_control_avatar&main=1' );
 		}
 	}
 	
