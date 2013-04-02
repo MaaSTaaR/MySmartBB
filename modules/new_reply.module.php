@@ -167,15 +167,18 @@ class MySmartReplyAddMOD
 		{
 			// ... //
 			
-			if ( $MySmartBB->_POST[ 'stick' ] == 'on' )
+			if ( isset( $MySmartBB->_POST[ 'stick' ] ) )
 			{
-				if ( !$this->SubjectInfo[ 'stick' ] )
-					$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo[ 'id' ] );
-			}
-			else
-			{
-				if ( $this->SubjectInfo[ 'stick' ] )
-					$update = $MySmartBB->subject->unStickSubject( $this->SubjectInfo[ 'id' ] );
+				if ( $MySmartBB->_POST[ 'stick' ] == 'on' )
+				{
+					if ( !$this->SubjectInfo[ 'stick' ] )
+						$update = $MySmartBB->subject->stickSubject( $this->SubjectInfo[ 'id' ] );
+				}
+				else
+				{
+					if ( $this->SubjectInfo[ 'stick' ] )
+						$update = $MySmartBB->subject->unStickSubject( $this->SubjectInfo[ 'id' ] );
+				}
 			}
 			
 			// ... //
