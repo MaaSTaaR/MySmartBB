@@ -53,6 +53,11 @@ class MySmartLatestMOD
 		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['latest_res'];
 				
 		$MySmartBB->rec->getList();
+				
+		$number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['latest_res'] );
+		
+		if ( $number <= 0 )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_new_topics' ] );
 		
 		// ... //
 		

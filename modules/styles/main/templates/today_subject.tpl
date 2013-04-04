@@ -1,5 +1,8 @@
 {hook}before_today_subject_table{/hook}
 
+{if {$NO_TOPICS}}
+{$lang['no_new_topics']}
+{else}
 <table id="today_subject_table" border="1" class="t_style_b" width="98%" align="center">
 	<tr>
 		<td width="30%" class="main1 rows_space small_text" align="center" colspan="2">
@@ -54,6 +57,7 @@
 	</tr>	
 {/DB::getInfo}
 </table>
+{/if}
 
 <br />
 

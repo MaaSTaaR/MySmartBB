@@ -8,4 +8,6 @@ $lang[ 'template' ][ 'last_post' ] = 'Last Reply';
 $lang[ 'template' ][ 'closed' ] = '(Closed)';
 $lang[ 'template' ][ 'no_replies' ] = 'No Replies';
 
+$lang[ 'no_new_topics' ] = 'There is no new topics';
+
 ?>

@@ -8,4 +8,6 @@ $lang[ 'template' ][ 'last_post' ] = 'آخر رد';
 $lang[ 'template' ][ 'closed' ] = '(مغلق)';
 $lang[ 'template' ][ 'no_replies' ] = 'لا يوجد ردود';
 
+$lang[ 'no_new_topics' ] = 'لا يوجد مواضيع جديدة';
+
 ?>
