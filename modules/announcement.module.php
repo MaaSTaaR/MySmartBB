@@ -2,30 +2,25 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartAnnouncementMOD' );
 
 class MySmartAnnouncementMOD
 {
-	public function run()
+	private $id;
+	
+	public function run( $id )
 	{
 		global $MySmartBB;
+		
+		$this->id = $id;
 		
 		$MySmartBB->loadLanguage( 'announcement' );
 		
 		$MySmartBB->load( 'icon,toolbox' );
 		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
-			$this->_showAnnouncement();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_showAnnouncement();
 			
 		$MySmartBB->func->getFooter();
 	}
@@ -36,15 +31,13 @@ class MySmartAnnouncementMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'announcement' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$MySmartBB->_CONF[ 'template' ][ 'AnnInfo' ] = $MySmartBB->rec->getInfo();
 		

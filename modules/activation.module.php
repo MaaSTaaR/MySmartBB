@@ -2,30 +2,25 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartActiveMOD' );
 
 class MySmartActiveMOD
 {
-	public function run()
+	private $code;
+	
+	public function run( $code )
 	{
 		global $MySmartBB;
+		
+		$this->code = $code;
 		
 		$MySmartBB->loadLanguage( 'activate_member' );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'activate_membership' ] );
 		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_index();
 			
 		$MySmartBB->func->getFooter();
 	}
@@ -40,7 +35,7 @@ class MySmartActiveMOD
 		
 		// ... //
 		
-		if ( empty( $MySmartBB->_GET[ 'code' ] ) )
+		if ( empty( $this->code ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
@@ -49,7 +44,7 @@ class MySmartActiveMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET[ 'code' ] . "' AND request_type='3' AND username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
+		$MySmartBB->rec->filter = "random_url='" . $this->code . "' AND request_type='3' AND username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		

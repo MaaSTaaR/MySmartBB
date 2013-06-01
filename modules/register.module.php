@@ -280,7 +280,7 @@ class MySmartRegisterMOD
       	$adress	= 	$MySmartBB->func->getForumAdress();
 		$code	=	$MySmartBB->func->randomCode();
 		
-		$ActiveAdress = $adress . 'index.php?page=active_member&index=1&code=' . $code;
+		$ActiveAdress = $adress . 'index.php/activation/' . $code;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 		$MySmartBB->rec->fields = array(	'random_url'	=>	$code,

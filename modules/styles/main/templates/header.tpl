@@ -117,7 +117,7 @@
 		
 		{if {$_CONF['temp']['ads_show']}}	
 		<div class="box" align="center">
-			<a href="index.php?page=ads&amp;goto=1&amp;id={$_CONF['rows']['AdsInfo']['id']}" target="_blank">
+			<a href="{$init_path}ads/{$_CONF['rows']['AdsInfo']['id']}" target="_blank">
 				<img src="{$_CONF['rows']['AdsInfo']['picture']}" 
 					{if {$_CONF['AdsInfo']['width']} != 0 and {$_CONF['AdsInfo']['width']} != ''}
 					width="{$_CONF['rows']['AdsInfo']['width']}"
