@@ -41,36 +41,36 @@
 			
 			<div class="left_side">
 				<div class="menu_box main2">
-					<a href="index.php">{$lang['common']['home']}</a>
+					<a href="{$init_path}">{$lang['common']['home']}</a>
 				</div>
 				
 				{hook}menu_after_home{/hook}
 				
 				<div class="menu_box main2">
 					{if {$_CONF['member_permission']}}
-						<a href="index.php?page=usercp&amp;index=1">{$lang['common']['conrol_panel']}</a>
+						<a href="{$init_path}usercp">{$lang['common']['conrol_panel']}</a>
 					{else}
-						<a href="index.php?page=register&amp;index=1">{$lang['common']['register']}</a>
+						<a href="{$init_path}register">{$lang['common']['register']}</a>
 					{/if}
 				</div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=static&amp;index=1">{$lang['common']['statistics']}</a>
+					<a href="{$init_path}static">{$lang['common']['statistics']}</a>
 				</div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=member_list&amp;index=1">{$lang['common']['memberlist']}</a>
+					<a href="{$init_path}member_list">{$lang['common']['memberlist']}</a>
 				</div>
 				
 				<div class="menu_box main2">
-					<a href="index.php?page=search&amp;index=1">{$lang['common']['search']}</a>
+					<a href="{$init_path}search">{$lang['common']['search']}</a>
 				</div>
 				
 				{hook}menu_befor_logout{/hook}
 				
 				{if {$_CONF['member_permission']}}
 					<div class="menu_box main2">
-						<a href="index.php?page=logout&amp;index=1">{$lang['common']['logout']}</a>
+						<a href="{$init_path}logout">{$lang['common']['logout']}</a>
 					</div>
 				{/if}
 			</div>
@@ -81,7 +81,7 @@
 		<div id="info_bar" align="center">
 			{if !{$_CONF['member_permission']}}
 			{hook}before_login_box{/hook}
-			<form method="post" action="index.php?page=login&amp;login=1">
+			<form method="post" action="{$init_path}login">
 		    {$lang['common']['username']} 
 			<input type="text" name="username" />
           	{$lang['common']['password']}
@@ -92,18 +92,21 @@
           			
           		<input type="submit" value="{$lang['common']['submit']}" />
           		،
-          		<a href="index.php?page=forget&amp;index=1">{$lang['common']['forgot_password']}</a>
+          		<a href="{$init_path}forget">{$lang['common']['forgot_password']}</a>
           	</form>
           	{hook}after_login_box{/hook}
           	{else}
-          		{$lang['common']['hello_member']} <a href="index.php?page=usercp&amp;index=1">{$_CONF['member_row']['username']}</a> | {$lang['common']['your_last_visit']}  {$_COOKIE['MySmartBB_lastvisit']} 
+          		{$lang['common']['hello_member']} 
+          		<a href="{$init_path}usercp">
+          		{$_CONF['member_row']['username']}
+          		</a> | {$lang['common']['your_last_visit']}  {$_COOKIE['MySmartBB_lastvisit']} 
           		{if {$_CONF['info_row']['pm_feature']}}
           		|
           		{if {$_CONF['member_row']['unread_pm']} == 0}
-         			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['no_new_pm']}</a>
+         			<a href="{$init_path}pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['no_new_pm']}</a>
          		{/if}
          		{if {$_CONF['member_row']['unread_pm']} > 0}
-         			<a class="unreadpm" href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
+         			<a class="unreadpm" href="{$init_path}pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
          		{/if}
          		{/if}
          		{hook}inside_user_info_box{/hook}

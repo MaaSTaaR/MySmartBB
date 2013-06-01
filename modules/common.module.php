@@ -273,7 +273,10 @@ class MySmartCommon
 		// After using user friendly urls we need to specify the initial of the links.
 		// {$init_path} will do the job. We should attach this variable in the begin of
 		// every link.
-		$MySmartBB->template->assign( 'init_path', '/' . $MySmartBB->func->getDirPath() . 'index.php/' );
+		$bb_path = '/' . $MySmartBB->func->getDirPath();
+		
+		$MySmartBB->template->assign( 'init_path', $bb_path . 'index.php/' );
+		$MySmartBB->template->assign( 'bb_path', $bb_path );
 	}
 }
 

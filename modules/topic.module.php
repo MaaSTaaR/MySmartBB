@@ -4,9 +4,7 @@
 
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartTopicMOD' );
 
@@ -19,15 +17,18 @@ class MySmartTopicMOD
 	private $moderator = false;
 	private $subject_id;
 	private $subject_title;
+	private $id; // Topic's ID from GET request
 	
-	public function run()
+	public function run( $id )
 	{
 		global $MySmartBB;
 		
+		$this->id = (int) $id;
+		
 		$MySmartBB->loadLanguage( 'topic' );
 		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
+		/*if ( $MySmartBB->_GET[ 'show' ] )
+		{*/
 			$MySmartBB->load( 'moderator,reply,subject,icon,toolbox,section' );
 			
 			$this->_getSubject();
@@ -45,25 +46,26 @@ class MySmartTopicMOD
 			
 			$MySmartBB->plugin->runHooks( 'topic_main' );
 			
-			if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-			{
+			//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+			//{
 				if ( $MySmartBB->_CONF[ 'info_row' ][ 'samesubject_show' ] )
 				{
 					$this->_similarTopics();
 				}
-			
+				
 				$this->_pageEnd();
-			}
-		}
-		else
+			//}
+		//}
+		/*else
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		}*/
 		
-		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-		{
+		// TODO
+		/*if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		{*/
 			$MySmartBB->func->getFooter();
-		}
+		/*}*/
 	}
 	
 	private function _getSubject()
@@ -71,16 +73,14 @@ class MySmartTopicMOD
 		global $MySmartBB;
 		
 		// ... //
-		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		// Get the subject and the writer's information
-		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $MySmartBB->_GET[ 'id' ] );
+		$this->Info = $MySmartBB->subject->getSubjectWriterInfo( $this->id );
 		
 		if ( !$this->Info )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_doesnt_exist' ] );
@@ -97,7 +97,7 @@ class MySmartTopicMOD
 		
 		// ... //
 				
-		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
 		
 		// ... //
@@ -258,10 +258,10 @@ class MySmartTopicMOD
 		
 		$this->_baseEnd();
 		
-		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+// 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->template->display( 'show_subject' );
-		else
-			$MySmartBB->template->display( 'print_subject' );
+// 		else
+// 			$MySmartBB->template->display( 'print_subject' );
 	}
 	
 	private function _getReply()
@@ -349,10 +349,10 @@ class MySmartTopicMOD
 		
 		$this->_baseEnd();
 		
-		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->template->display( 'show_reply' );
-		else
-			$MySmartBB->template->display( 'print_reply' );
+		//else
+		//	$MySmartBB->template->display( 'print_reply' );
 	}
 	
 	// ... //
