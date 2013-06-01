@@ -1,12 +1,14 @@
-<?php
-
-// ... //
+<?php 
 
 define( 'IN_MYSMARTBB', true );
 
 // ... //
 
-// $_GET['page']		=>	file name
+include( 'common.php' );
+include( 'includes/systems/router.class.php' );
+
+// ... //
+
 $modules 								    = 	array();
 $modules[ 'index' ] 						= 	'main.module.php';
 $modules[ 'forum' ] 						= 	'forum.module.php';
@@ -54,37 +56,18 @@ $modules[ 'plugin' ] 		                =  	'plugin.module.php';
 
 // ... //
 
-$page = empty($_GET['page']) ? 'index' : $_GET['page'];
+$router = new MySmartRouter( $modules, 'index', 'modules/' );
 
-$req_file = false;
+$state = $router->run( $MySmartBB->_SERVER[ 'REQUEST_URI' ], $MySmartBB->_SERVER[ 'SCRIPT_NAME' ] );
 
-if (array_key_exists($page,$modules))
-	$req_file = $modules[$page];
-
-if ($req_file != false)
+if ( $state !== true )
 {
-	// ... //
-	
-	if (!file_exists('./modules/' . $req_file))
-		die( 'Wrong path' );
-	
-	// ... //
-	
-	require_once('./modules/' . $req_file);
-	
-	// ... //
-	
-	$class_name = CLASS_NAME;
-	
-	$class_name = new $class_name;
-	
-	$class_name->run();
-	
-	// ... //	
-}
-else
-{
-	die( 'Wrong path' );
+	switch ( $state )
+	{
+		case MySmartRouter::FEW_ARGS:
+			echo 'Wrong Path!';
+			break;
+	}
 }
 
 ?>

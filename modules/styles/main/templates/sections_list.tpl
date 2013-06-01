@@ -2,7 +2,7 @@
 {hook}before_subforums_table{/hook}
 
 {if {$SHOW_SUB_SECTIONS}}
-	<table id="subforums_table" width="98%" border="1" width="98%" class="t_style_b" align="center">
+	<table id="subforums_table" width="98%" border="1" class="t_style_b" align="center">
 		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$lang['common']['subforums']}
@@ -26,7 +26,7 @@
 		</table>
 		<br />
 		{/if}
-		<table id="forums_table" width="98%" border="1" width="98%" class="t_style_b" align="center">
+		<table id="forums_table" width="98%" border="1" class="t_style_b" align="center">
 		<tr>
 			<td class="main1 rows_space" colspan="3" align="center">
 				{$forum['title']}
@@ -56,7 +56,7 @@
 				{/if}
 			</td>
 			<td class="row2 rows_space" width="50%">
-					<a href="index.php?page=forum&amp;show=1&amp;id={$forum['id']}">{$forum['title']}</a>
+					<a href="{$init_path}forum/{$forum['id']}/{$forum['title']}">{$forum['title']}</a>
 					<br />
 					{if {$forum['use_section_picture']} == 1}
 						{if {$forum['sectionpicture_type']} == 2}
@@ -77,10 +77,10 @@
 					
 					{if {$forum['last_subject']} != ''}
 					{$lang['common']['last_post']}							
-					<a href="index.php?page=topic&amp;show=1&amp;id={$forum['last_subjectid']}">{$forum['last_subject']}</a> 
+					<a href="{$init_path}topic/{$forum['last_subjectid']}/{$forum['last_subject']}">{$forum['last_subject']}</a> 
 												
 					{$lang['common']['written_by']}
-					<a href="index.php?page=profile&amp;show=1&amp;username={$forum['last_writer']}">{$forum['last_writer']}</a> 
+					<a href="{$init_path}profile/{$forum['last_writer']}">{$forum['last_writer']}</a> 
 												
 					{$lang['common']['on_date']} 
 					{$forum['last_date']}
@@ -122,7 +122,7 @@
 				{/if}
 			</td>
 			<td width="40%" class="row1">
-				<a href="index.php?page=forum&amp;show=1&amp;id={$forum['id']}">{$forum['title']}</a>
+				<a href="{$init_path}/forum/{$forum['id']}/{$forum['title']}">{$forum['title']}</a>
 				<br />
 				{if {$forum['use_section_picture']} == 1}
 					{if {$forum['sectionpicture_type']} == 2}

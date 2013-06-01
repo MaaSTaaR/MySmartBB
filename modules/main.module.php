@@ -2,9 +2,7 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-require( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartIndexMOD' );
 

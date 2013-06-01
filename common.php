@@ -18,13 +18,6 @@ $MySmartBB = new MySmartBB;
 
 // ... //
 
-if (defined('COMMON_FILE_PATH'))
-	require_once(COMMON_FILE_PATH);
-else
-	die('ERROR::COMMON_FILE_PATH_HAS_NO_VALUE');
-
-// ... //
-
 class MySmartLocalCommon
 {
 	public function run()
@@ -114,11 +107,6 @@ class MySmartLocalCommon
 
 $local_common = new MySmartLocalCommon();
 $local_common->run();
-
-// ... //
-
-$common = new MySmartCommon();
-$common->run();
 
 // ... //
 

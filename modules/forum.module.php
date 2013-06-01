@@ -2,9 +2,7 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartForumMOD' );
 
@@ -16,7 +14,20 @@ class MySmartForumMOD
 	private $stick_subject_res;
 	private $id;
 	
-	public function run()
+	public function run( $id )
+	{
+		global $MySmartBB;
+		
+		$this->id = (int) $id;
+		
+		$this->_initForum();
+		
+		$this->_browseForum();
+		
+		$MySmartBB->func->getFooter();
+	}
+	
+	/*public function run()
 	{
 		global $MySmartBB;
 		
@@ -39,7 +50,7 @@ class MySmartForumMOD
 		}
 		
 		$MySmartBB->func->getFooter();
-	}
+	}*/
 	
 	private function _initForum()
 	{
@@ -50,7 +61,7 @@ class MySmartForumMOD
 		$MySmartBB->load( 'section,subject' );
 		
 		$MySmartBB->template->assign( 'SECTION_RSS', true );
-		$MySmartBB->template->assign( 'SECTION_ID', (int) $MySmartBB->_GET[ 'id' ] );
+		$MySmartBB->template->assign( 'SECTION_ID', $this->id );
 		
 		$this->_getSectionInfo();
 	}
@@ -81,15 +92,13 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$this->Section = $MySmartBB->rec->getInfo();
 		
