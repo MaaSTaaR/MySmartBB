@@ -5,9 +5,7 @@
 define('JAVASCRIPT_func',true);
 define('JAVASCRIPT_SMARTCODE',true);
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartUserCPMOD');
 
@@ -22,14 +20,7 @@ class MySmartUserCPMOD
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_index();
 		
 		$MySmartBB->func->getFooter();
 	}

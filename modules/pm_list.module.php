@@ -4,17 +4,21 @@
 
 define('JAVASCRIPT_SMARTCODE',true);
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartPrivateMassegeListMOD');
 
 class MySmartPrivateMassegeListMOD
 {
-	public function run()
+	private $folder;
+	
+	public function run( $folder )
 	{
 		global $MySmartBB;
+		
+		$this->folder = $folder;
+		
+		// ... //
 		
 		$MySmartBB->loadLanguage( 'pm_list' );
 		
@@ -33,10 +37,7 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->load( 'pm' );
 		
-		if ( $MySmartBB->_GET[ 'list' ] )
-		{
-			$this->_showList();
-		}
+		$this->_showList();
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -49,15 +50,15 @@ class MySmartPrivateMassegeListMOD
 		
 		// ... //
 		
-		if ( empty( $MySmartBB->_GET[ 'folder' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+// 		if ( empty( $this->folder ) )
+// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
 		
 		// ... //
 		
-		$field = ( $MySmartBB->_GET[ 'folder' ] == 'inbox' ) ? 'user_to' : 'user_from';
-		$folder = ( $MySmartBB->_GET[ 'folder' ] == 'inbox' ) ? 'inbox' : 'sent';
+		$field = ( $this->folder == 'inbox' ) ? 'user_to' : 'user_from';
+		$folder = ( $this->folder == 'inbox' ) ? 'inbox' : 'sent';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		$MySmartBB->rec->filter = $field . "='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "' AND folder='" . $folder . "'";
@@ -74,14 +75,14 @@ class MySmartPrivateMassegeListMOD
 		$MySmartBB->rec->pager['total']		= 	$number;
 		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'perpage' ];
 		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET[ 'count' ];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=pm_list&amp;list=1&amp;folder=' . $MySmartBB->_GET[ 'folder' ];
+		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=pm_list&amp;list=1&amp;folder=' . $this->folder;
 		$MySmartBB->rec->pager['var'] 		= 	'count';
 		
 		$MySmartBB->rec->order = "id DESC";
 		
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'pmlist_res' ];
 		
-		if ( $MySmartBB->_GET[ 'folder' ] == 'sent' )
+		if ( $this->folder == 'sent' )
 		{
 			$MySmartBB->template->assign( 'SENT_FOLDER', true );
 			

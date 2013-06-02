@@ -4,17 +4,21 @@
 
 define('JAVASCRIPT_SMARTCODE',true);
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartPrivateMassegeShowMOD');
 
 class MySmartPrivateMassegeShowMOD
 {
-	public function run()
+	private $id;
+	
+	public function run( $id )
 	{
 		global $MySmartBB;
+		
+		$this->id = (int) $id;
+		
+		// ... //
 		
 		$MySmartBB->loadLanguage( 'pm_show' );
 		
@@ -33,10 +37,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
 		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
-			$this->_showMassege();
-		}
+		$this->_showMassege();
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -50,15 +51,13 @@ class MySmartPrivateMassegeShowMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )		
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$MySmartBB->_CONF[ 'template' ][ 'MassegeRow' ] = $MySmartBB->rec->getInfo();
 
@@ -151,7 +150,7 @@ class MySmartPrivateMassegeShowMOD
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-		$MySmartBB->rec->filter = "pm_id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "pm_id='" . $this->id . "'";
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ];
 		
 		$MySmartBB->rec->getList();
@@ -168,7 +167,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		if ( !$MySmartBB->_CONF[ 'template' ][ 'MassegeRow' ][ 'user_read' ] )
 		{
-			$Read = $MySmartBB->pm->markMessageAsRead( $MySmartBB->_GET[ 'id' ] );
+			$Read = $MySmartBB->pm->markMessageAsRead( $this->id );
 			
 			if ( $Read )
 			{

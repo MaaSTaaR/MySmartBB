@@ -2,13 +2,11 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
+include( 'common.module.php' );
 
-include( 'common.php' );
+define( 'CLASS_NAME', 'MySmartStatisticsMOD' );
 
-define( 'CLASS_NAME', 'MySmartStaticMOD' );
-
-class MySmartStaticMOD
+class MySmartStatisticsMOD
 {
 	public function run()
 	{
@@ -16,14 +14,7 @@ class MySmartStaticMOD
 		
 		$MySmartBB->loadLanguage( 'static' );
 		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_showStatic();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_showStatic();
 		
 		$MySmartBB->func->getFooter(); 
 	}

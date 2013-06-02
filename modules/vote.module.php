@@ -2,17 +2,19 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartVoteMOD');
 
 class MySmartVoteMOD
 {
+	private $id;
+	
 	public function run()
 	{
 		global $MySmartBB;
+		
+		$this->id = (int) $id;
 		
 		$MySmartBB->loadLanguage( 'vote' );
 		
@@ -20,10 +22,7 @@ class MySmartVoteMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
-		if ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_start();
-		}
+		$this->_start();
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -32,11 +31,7 @@ class MySmartVoteMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		// ... //
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 			
 		if ( empty( $MySmartBB->_POST[ 'answer' ] ) )
@@ -45,7 +40,7 @@ class MySmartVoteMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'poll' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$Poll = $MySmartBB->rec->getInfo();
 		
@@ -78,7 +73,7 @@ class MySmartVoteMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "poll_id='" . $MySmartBB->_GET[ 'id' ] . "' AND member_id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] .  "'";
+		$MySmartBB->rec->filter = "poll_id='" . $this->id . "' AND member_id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] .  "'";
 		
 		$Vote = $MySmartBB->rec->getNumber();
 		
@@ -88,8 +83,8 @@ class MySmartVoteMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'vote' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
-		$MySmartBB->rec->fields = array(	'poll_id'	=>	$MySmartBB->_GET[ 'id' ],
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
+		$MySmartBB->rec->fields = array(	'poll_id'	=>	$this->id,
 											'member_id'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'id' ],
 											'username'	=>	$MySmartBB->_CONF[ 'member_row' ][ 'username' ]	);
 		
