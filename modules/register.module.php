@@ -162,7 +162,7 @@ class MySmartRegisterMOD
 			else
       		{
       			$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed' ] );
-      			$MySmartBB->func->move( 'index.php?page=login&amp;register_login=1&amp;username=' . $MySmartBB->_POST[ 'username' ] . '&amp;password=' . $MySmartBB->_POST[ 'password' ] );
+      			$MySmartBB->func->move( $this->engine->_CONF[ 'init_path' ] . 'login/register_login/' . $MySmartBB->_POST[ 'username' ] . '/' . $MySmartBB->_POST[ 'password' ] );
       		}
       	}
 	}

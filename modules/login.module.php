@@ -11,9 +11,15 @@ define('CLASS_NAME','MySmartLoginMOD');
 
 class MySmartLoginMOD
 {
+	private $username;
+	private $password;
+	
 	public function login()
 	{
 		global $MySmartBB;
+		
+		$this->username = $MySmartBB->_POST[ 'username' ];
+		$this->password = md5( $MySmartBB->_POST[ 'password' ] );
 		
 		$MySmartBB->loadLanguage( 'login' );
 		
@@ -23,9 +29,12 @@ class MySmartLoginMOD
 	}
 	
 	// Login after registeration
-	public function register_login()
+	public function register_login( $username, $password )
 	{
 		global $MySmartBB;
+		
+		$this->username = $MySmartBB->_GET[ 'username' ];
+		$this->password = $MySmartBB->_GET[ 'password' ];
 		
 		$MySmartBB->loadLanguage( 'login' );
 		
@@ -64,11 +73,8 @@ class MySmartLoginMOD
 		
 		// ... //
 		
-		$username = ( !$register_login ) ? $MySmartBB->_POST[ 'username' ] : $MySmartBB->_GET[ 'username' ];
-		$password = ( !$register_login ) ? md5( $MySmartBB->_POST[ 'password' ] ) : $MySmartBB->_GET[ 'password' ];
-		
-		$username = trim( $username );
-		$password = trim( $password );
+		$username = trim( $this->username );
+		$password = trim( $this->password );
 
 		// ... //
 		

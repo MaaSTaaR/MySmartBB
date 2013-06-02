@@ -45,10 +45,10 @@ $(document).ready(Ready);
 </script>
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=forum&amp;show=1&amp;id={$section_info['id']}{$password}">
+<a href="{$init_path}forum/{$section_info['id']}/{$section_info['title']}{$password}">
 {$section_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']}
-<a href="index.php?page=topic&amp;show=1&amp;id={$id}{$password}">
+<a href="{$init_path}topic/{$id}/{$subject_info['title']}{$password}">
 {$subject_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']}
 {$lang['add_new_reply']}
@@ -58,7 +58,7 @@ $(document).ready(Ready);
 
 {hook}after_adress_bar{/hook}
 
-<form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=new_reply&amp;start=1&amp;id={$id}{$password}">
+<form name="topic" method="post" enctype="multipart/form-data" action="{$init_path}new_reply/start/{$id}{$password}">
 
 {template}iconbox{/template}
 

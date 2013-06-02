@@ -274,9 +274,12 @@ class MySmartCommon
 		// {$init_path} will do the job. We should attach this variable in the begin of
 		// every link.
 		$bb_path = '/' . $MySmartBB->func->getDirPath();
+		$init_path = $bb_path . 'index.php/';
 		
-		$MySmartBB->template->assign( 'init_path', $bb_path . 'index.php/' );
+		$MySmartBB->template->assign( 'init_path', $init_path );
 		$MySmartBB->template->assign( 'bb_path', $bb_path );
+		
+		$MySmartBB->_CONF[ 'init_path' ] = $init_path;
 	}
 }
 

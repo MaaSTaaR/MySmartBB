@@ -7,7 +7,7 @@
 					</tr>
 					<tr>
 						<td class="main2 rows_space small_text">
-							<strong><a href="index.php?page=online&amp;show=1">{$lang['online']}</a> : </strong> ({$MemberNumber}) {$lang['common']['member']} {$lang['common']['and']} ({$GuestNumber}) {$lang['common']['visitor']}
+							<strong><a href="{$init_path}online">{$lang['online']}</a> : </strong> ({$MemberNumber}) {$lang['common']['member']} {$lang['common']['and']} ({$GuestNumber}) {$lang['common']['visitor']}
 						</td>
 					</tr>
 					<tr>

@@ -604,9 +604,10 @@ class MySmartFunctions
 			$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
 			$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
 			
+			// TODO : Test it after modified the code to meet SEO-friendly URLs requirements
 			if ( $X_url[ 0 ] == $Y_url[ 2 ] )
-				if ( ( strstr( $url, 'page=logout' ) == false ) 
-						and ( strstr( $url, 'page=login' ) == false )
+				if ( ( strstr( $url, 'logout' ) == false ) 
+						and ( strstr( $url, 'login' ) == false )
 						and !empty( $url ) )
 					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
 		}

@@ -150,7 +150,7 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		$MySmartBB->func->addressBar( '<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' <a href="index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SubjectInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
+		$MySmartBB->func->addressBar( '<a href="' . $this->engine->_CONF[ 'init_path' ] . 'forum/' . $this->SectionInfo[ 'id' ] . '/' . $this->SectionInfo[ 'title' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' <a href="' . $this->engine->_CONF[ 'init_path' ] . 'topic/' . $this->SubjectInfo[ 'id' ] . '/' . $this->SubjectInfo[ 'title' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SubjectInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . ' ' . $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
 		
 		// ... //
 		
@@ -247,7 +247,7 @@ class MySmartReplyAddMOD
 			$MySmartBB->plugin->runHooks( 'new_reply_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_published' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->SubjectInfo['id'] . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move( $this->engine->_CONF[ 'init_path' ] . 'topic/' . $this->SubjectInfo['id'] . '/' . $this->SubjectInfo[ 'title' ] . $MySmartBB->_CONF['template']['password']);
 		}
 	}
 	

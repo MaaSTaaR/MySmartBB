@@ -4,7 +4,7 @@
 
 {hook}before_quick_reply_table{/hook}
 
-<form name="topic" method="post" action="index.php?page=new_reply&amp;start=1&amp;id={$subject_id}{$password}">
+<form name="topic" method="post" action="{$init_path}new_reply/start/{$id}{$password}">
 
 {if {$_CONF['info_row']['icons_show']}}
 {template}iconbox{/template}
