@@ -10,33 +10,35 @@ define( 'CLASS_NAME', 'MySmartDownloadMOD' );
 
 class MySmartDownloadMOD
 {
-	public function run()
+	private $type;
+	private $id;
+	
+	public function run( $type, $id )
 	{
 		global $MySmartBB;
+		
+		$this->type = $type;
+		$this->id = (int) $id;
+		
+		// ... //
 		
 		$MySmartBB->loadLanguage( 'download' );
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
-		if ( $MySmartBB->_GET[ 'subject' ] )
-		{
+		if ( $type == 'subject' )
 			$this->_downloadSubject();
-		}
-		elseif ( $MySmartBB->_GET[ 'attach' ] )
-		{
+		elseif ( $type == 'attach' )
 			$this->_downloadAttach();
-		}
-		elseif ( $MySmartBB->_GET[ 'pm' ] )
-		{
+		elseif ( $type == 'pm' )
 			$this->_downloadPM();
-		}
+		else
+			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	}
 	
 	private function _downloadSubject()
@@ -44,7 +46,7 @@ class MySmartDownloadMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$SubjectInfo = $MySmartBB->rec->getInfo();
 		
@@ -92,7 +94,7 @@ class MySmartDownloadMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'attach' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$AttachInfo = $MySmartBB->rec->getInfo();
 		
@@ -168,7 +170,7 @@ class MySmartDownloadMOD
 		global $MySmartBB;
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "' AND user_to='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
 		
 		$info = $MySmartBB->rec->getInfo();
 		

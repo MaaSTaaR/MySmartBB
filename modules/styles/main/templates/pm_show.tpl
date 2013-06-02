@@ -44,7 +44,7 @@
         		{$lang['date']} {$lang['common']['colon']}{$MassegeRow['date']}
         	</td>
         	<td class="row1" width="50%">
-        		<a href="index.php?page=download&amp;pm=1&amp;id={$MassegeRow['id']}">{$lang['take_copy']}</a>
+        		<a href="{$init_path}download/pm/{$MassegeRow['id']}">{$lang['take_copy']}</a>
         	</td>
       	</tr>
 </table>

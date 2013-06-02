@@ -2,11 +2,9 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+include( 'common.module.php' );
 
-include('common.php');
-
-define('CLASS_NAME','MySmartForgetMOD');
+define( 'CLASS_NAME', 'MySmartForgetMOD' );
 
 class MySmartForgetMOD
 {
@@ -17,37 +15,27 @@ class MySmartForgetMOD
 		$MySmartBB->loadLanguage( 'forget' );
 		
 		$MySmartBB->load( 'massege' );
-		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_start();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _index()
-	{
-		global $MySmartBB;
-		
+
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'forget_password' ] );
 		
 		$MySmartBB->plugin->runHooks( 'forget_main_start' );
 		
 		$MySmartBB->template->display( 'forget_password_form' );
+		
+		$MySmartBB->func->getFooter();
 	}
-	
-	private function _start()
+		
+	public function start()
 	{
 		global $MySmartBB;
+		
+		// ... //
+		
+		$MySmartBB->loadLanguage( 'forget' );
+		
+		$MySmartBB->load( 'massege' );
+		
+		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'do_retrieve_password' ] );
 		$MySmartBB->func->addressBar( $MySmartBB->lang[ 'do_retrieve_password' ] );
@@ -97,8 +85,8 @@ class MySmartForgetMOD
 			
 			if ( $update )
 			{
-				$ChangeAdress = $Adress . 'index.php?page=new_password&index=1&code=' . $Code;
-				$CancelAdress = $Adress . 'index.php?page=cancel_requests&index=1&type=1&code=' . $Code;
+				$ChangeAdress = $Adress . 'index.php/new_password/' . $Code;
+				$CancelAdress = $Adress . 'index.php/cancel_requests/1/' . $Code;
 				
 				// ... //
 				
@@ -135,6 +123,8 @@ class MySmartForgetMOD
 				}
 			}
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 }
 

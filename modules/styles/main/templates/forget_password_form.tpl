@@ -6,7 +6,7 @@
 
 {hook}after_adress_bar{/hook}
 
-<form method="post" action="index.php?page=forget&amp;start=1">
+<form method="post" action="{$init_path}forget/start">
 <table id="forget_password_form_table" border="1" width="50%" align="center" class="t_style_b">
 	<tr align="center">
 		<td width="50%" class="main1 rows_space" colspan="2">

@@ -2,17 +2,21 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartPluginMOD');
 
 class MySmartPluginMOD
 {
-	public function run()
+	private $name;
+	private $action;
+	
+	public function run( $name, $action )
 	{
 		global $MySmartBB;
+		
+		$this->name = $name;
+		$this->action = $action;
 		
 		$MySmartBB->loadLanguage( 'plugin' );
 		
@@ -25,13 +29,13 @@ class MySmartPluginMOD
 	    
 	    // ... //
 	    
-	    if ( empty( $MySmartBB->_GET[ 'name' ] ) or empty( $MySmartBB->_GET[ 'action' ] ) )
+	    if ( empty( $this->name ) or empty( $this->action ) )
 	        $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	    
 	    // ... //
 	    
 	    $MySmartBB->rec->table = $MySmartBB->table[ 'plugin' ];
-	    $MySmartBB->rec->filter = "path='" . $MySmartBB->_GET[ 'name' ] . "'";
+	    $MySmartBB->rec->filter = "path='" . $this->name . "'";
 	    
 	    $plugin_info = $MySmartBB->rec->getInfo();
 	    
@@ -55,12 +59,12 @@ class MySmartPluginMOD
 	    if ( !is_array( $available_pages ) or sizeof( $available_pages ) <= 0 )
 	        $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	    
-	    if ( !array_key_exists( $MySmartBB->_GET[ 'action' ], $available_pages ) )
+	    if ( !array_key_exists( $this->action, $available_pages ) )
 	        $MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 	    
 	    // ... //
 	    
-	    include( 'plugins/' . $plugin_info[ 'path' ] . '/' . $available_pages[ $MySmartBB->_GET[ 'action' ] ] );
+	    include( 'plugins/' . $plugin_info[ 'path' ] . '/' . $available_pages[ $this->action ] );
 	    
 	    unset( $available_page, $plugin_info, $plugin_obj );
 	    

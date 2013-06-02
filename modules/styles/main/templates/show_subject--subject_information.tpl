@@ -58,12 +58,12 @@
 	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=download&amp;subject=1&amp;id={$Info['subject_id']}">{$lang['download_subject']}</a>
+			<a href="{$init_path}download/subject/{$Info['subject_id']}">{$lang['download_subject']}</a>
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="index.php?page=topic&amp;show=1&amp;id={$Info['subject_id']}&amp;print=1">{$lang['printable_version']}</a>
+			<a href="{$init_path}topic/{$Info['subject_id']}/print">{$lang['printable_version']}</a>
 		</td>
 	</tr>
 </table>

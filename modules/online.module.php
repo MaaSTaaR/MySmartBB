@@ -2,9 +2,7 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartOnlineMOD');
 
@@ -18,14 +16,7 @@ class MySmartOnlineMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'online' ] );
 		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
-			$this->_show();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_show();
 		
 		$MySmartBB->func->getFooter();
 	}

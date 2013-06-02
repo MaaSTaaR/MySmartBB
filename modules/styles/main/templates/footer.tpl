@@ -4,7 +4,7 @@
 		
 		<div id="info_bar">
 			<div class="right_side">
-				<select OnChange="window.location='index.php?page=change_style&amp;change=1&amp;id=' + this.value" size="1" name="style">
+				<select OnChange="window.location='{$init_path}change_style/' + this.value" size="1" name="style">
    				{DB::getInfo}{$style_res}{$style}
    					{if {$_CONF['style_info']['id']} == {$style['id']}}
    					<option selected="selected" value="{$style['id']}">{$style['style_title']}</option>
@@ -15,7 +15,7 @@
 				</select>
 			</div>
 			<div class="left_side">
-				<a href="index.php?page=latest&amp;today=1">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
+				<a href="{$init_path}latest/today">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
 			</div>
 		</div>
 		
@@ -30,6 +30,5 @@
 	
 	{hook}after_copyright{/hook}
 	
-	</div>
 	</body>
 </html>

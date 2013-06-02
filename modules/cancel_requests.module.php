@@ -2,28 +2,25 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
+include( 'common.module.php' );
 
-include('common.php');
-
-define('CLASS_NAME','MySmartCReqMOD');
+define( 'CLASS_NAME', 'MySmartCReqMOD' );
 
 class MySmartCReqMOD
 {
-	public function run()
+	private $type;
+	private $code;
+	
+	public function run( $type, $code )
 	{
 		global $MySmartBB;
 		
+		$this->type = (int) $type;
+		$this->code = trim( $code );
+		
 		$MySmartBB->loadLanguage( 'cancel_requests' );
 		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_index();
 			
 		$MySmartBB->func->getFooter();
 	}
@@ -41,18 +38,13 @@ class MySmartCReqMOD
 		
 		// ... //
 		
-		if ( empty( $MySmartBB->_GET[ 'type' ] ) or empty( $MySmartBB->_GET[ 'code' ] ) )
+		if ( empty( $this->type ) or empty( $this->code ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'type' ] = (int) $MySmartBB->_GET[ 'type' ];
-		$MySmartBB->_GET[ 'code' ] = trim( $MySmartBB->_GET[ 'code' ] );
-		
-		// ... //
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "request_type='" . $MySmartBB->_GET[ 'type' ] . "' AND random_url='" . $MySmartBB->_GET[ 'code' ] . "'";
+		$MySmartBB->rec->filter = "request_type='" . $this->type . "' AND random_url='" . $this->code . "'";
 		
 		$del = $MySmartBB->rec->delete();
 			

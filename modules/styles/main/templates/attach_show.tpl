@@ -14,7 +14,7 @@
 	{DB::getInfo}{$attach_res}{$AttachList}
 	<tr align="center">
 		<td width="30%" class="row1">
-			<a href="index.php?page=download&amp;attach=1&amp;id={$AttachList['id']}">{$AttachList['filename']}</a>
+			<a href="{$init_path}download/attach/{$AttachList['id']}">{$AttachList['filename']}</a>
 		</td>
 		<td width="20%" class="row2">
 			{$AttachList['visitor']}

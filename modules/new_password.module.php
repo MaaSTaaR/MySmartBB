@@ -2,30 +2,25 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartPasswordMOD' );
 
 class MySmartPasswordMOD
 {
-	public function run()
+	private $code;
+	
+	public function run( $code )
 	{
 		global $MySmartBB;
+		
+		$this->code = $code;
 		
 		$MySmartBB->loadLanguage( 'new_password' );
 		
 		$MySmartBB->load( 'massege' );
 		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_index();
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -39,13 +34,13 @@ class MySmartPasswordMOD
 		
 		// ... //
 		
-		if ( empty( $MySmartBB->_GET[ 'code' ] ) )
+		if ( empty( $this->code ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
-		$MySmartBB->rec->filter = "random_url='" . $MySmartBB->_GET[ 'code' ] . "' AND request_type='1'";
+		$MySmartBB->rec->filter = "random_url='" . $this->code . "' AND request_type='1'";
 		
 		$RequestInfo = $MySmartBB->rec->getInfo();
 		

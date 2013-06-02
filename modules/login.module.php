@@ -5,37 +5,58 @@
 define('STOP_STYLE',true);
 define('LOGIN',true);
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartLoginMOD');
 
 class MySmartLoginMOD
 {
-	public function run()
+	public function login()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->loadLanguage( 'login' );
 		
-		// Normal login
-		if ( $MySmartBB->_GET[ 'login' ] )
-		{
-			$this->_startLogin();
-		}
-		// Login after registeration
-		elseif ( $MySmartBB->_GET[ 'register_login' ] )
-		{
-			$this->_startLogin( true );
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_startLogin();
 		
 		$MySmartBB->func->getFooter();
 	}
+	
+	// Login after registeration
+	public function register_login()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'login' );
+		
+		$this->_startLogin( true );
+		
+		$MySmartBB->func->getFooter();
+	}
+	
+// 	public function run()
+// 	{
+// 		global $MySmartBB;
+		
+// 		$MySmartBB->loadLanguage( 'login' );
+		
+// 		// Normal login
+// 		if ( $MySmartBB->_GET[ 'login' ] )
+// 		{
+// 			$this->_startLogin();
+// 		}
+// 		// Login after registeration
+// 		elseif ( $MySmartBB->_GET[ 'register_login' ] )
+// 		{
+// 			$this->_startLogin( true );
+// 		}
+// 		else
+// 		{
+// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+// 		}
+		
+// 		$MySmartBB->func->getFooter();
+// 	}
 	
 	private function _startLogin( $register_login = false )
 	{

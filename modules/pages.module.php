@@ -2,28 +2,23 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include('common.module.php');
 
 define('CLASS_NAME','MySmartAdsPageMOD');
 
 class MySmartAdsPageMOD
 {
-	public function run()
+	private $id;
+	
+	public function run( $id )
 	{
 		global $MySmartBB;
 		
+		$this->id = (int) $id;
+		
 		$MySmartBB->loadLanguage( 'pages' );
 		
-		if ($MySmartBB->_GET['show'])
-		{
-			$this->_showPage();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+		$this->_showPage();
 		
 		$MySmartBB->func->getFooter();
 	}
@@ -34,15 +29,15 @@ class MySmartAdsPageMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+// 		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+// 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pages' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$MySmartBB->_CONF[ 'template' ][ 'GetPage' ] = $MySmartBB->rec->getInfo();
 		
