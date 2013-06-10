@@ -1,5 +1,5 @@
 <div align="center">
-<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$Info['display_username']}</a>
+<a href="{$init_path}profile/{$Info['username']}">{$Info['display_username']}</a>
 <br />
 {$Info['user_title']}
 <br />
@@ -20,7 +20,7 @@
 
 <fieldset>
 	<legend>
-	<a href="index.php?page=profile&amp;show=1&amp;username={$Info['username']}">{$lang['member_profile']}</a>
+	<a href="{$init_path}profile/{$Info['username']}">{$lang['member_profile']}</a>
 	</legend>
 
 	<table id="member_info_table" width="100%" align="center" cellspacing="0" cellpadding="0" border="0">

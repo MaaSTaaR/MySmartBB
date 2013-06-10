@@ -27,12 +27,12 @@
 {DB::getInfo}{$search_res}{$SearchResult}
 	<tr align="center">
 		<td width="20%" class="row1">
-			<a href="index.php?page=topic&amp;show=1&amp;id={$SearchResult['id']}&amp;highlight={$highlight}">
+			<a href="{$init_path}topic/{$SearchResult['id']}/{$highlight}">
 				{$SearchResult['title']}
 			</a>
 		</td>
 		<td width="20%" class="row1">
-			<a href="index.php?page=profile&amp;show=1&amp;username={$SearchResult['writer']}">{$SearchResult['writer']}</a>
+			<a href="{$init_path}profile/{$SearchResult['writer']}">{$SearchResult['writer']}</a>
 		</td>
 		<td width="10%" class="row1">
 		{$SearchResult['visitor']}

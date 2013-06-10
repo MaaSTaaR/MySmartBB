@@ -4,9 +4,9 @@
 
 {hook}after_adress_bar{/hook}
 
-<form method="post" action="index.php?page=report&amp;start=1&amp;subject_id={$subject_id}
+<form method="post" action="{$init_path}report/start/{$subject_id}
 {if {$reply_id} != ''}
-&amp;reply_id={$reply_id}
+/{$reply_id}
 {/if}">
 
 <br />

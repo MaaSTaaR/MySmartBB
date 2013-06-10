@@ -4,7 +4,7 @@
 
 {hook}after_adress_bar{/hook}
 
-<form method="post" action="index.php?page=send&amp;member=1&amp;start=1&amp;id={$MemberInfo['id']}">
+<form method="post" action="{$init_path}send/start/{$MemberInfo['id']}">
 
 <br />
 

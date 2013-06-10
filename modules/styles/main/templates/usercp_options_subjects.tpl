@@ -2,7 +2,7 @@
 
 <div class="usercp_context {$_CONF['opp_align']}_side">
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['subjects_list']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['subjects_list']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
@@ -33,7 +33,7 @@
 				<img src="{$subject['icon']}" alt="" />
 			</td>
 			<td width="30%" class="row2">
-				<a href="index.php?page=topic&show=1&id={$subject['id']}">
+				<a href="{$init_path}topic/{$subject['id']}/{$subject['title']}">
 					{$subject['title']}
 				</a> 
 				{if {$subject['close']}}
@@ -53,7 +53,7 @@
 			    {$lang['no_replies']}
 				{else}
 				{$subject['reply_date']} 
-				{$lang['written_by']} <a href="index.php?page=profile&show=1&username={$subject['last_replier']}">{$subject['last_replier']}</a>
+				{$lang['written_by']} <a href="{$init_path}profile/{$subject['last_replier']}">{$subject['last_replier']}</a>
 				{/if}
 			</td>
 		</tr>

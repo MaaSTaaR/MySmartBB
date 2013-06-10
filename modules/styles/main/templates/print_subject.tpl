@@ -17,14 +17,14 @@
 	<br />
 	
 	{template}address_bar_part1{/template}
-	<a href="index.php?page=forum&amp;show=1&amp;id={$section_info['id']}{$password}">
+	<a href="{$init_path}forum/{$section_info['id']}/{$section_info['title']}{$password}">
 	{$section_info['title']}
 	</a> {$_CONF['info_row']['adress_bar_separate']} <a href="{$Info['reply_id']}">{$Info['title']}</a>
 	{template}address_bar_part2{/template}
 	
 	{hook}after_adress_bar{/hook}
 	
-	<a href="index.php?page=topic&show=1&id={$Info['subject_id']}">{$lang['original_view']}</a>
+	<a href="{$init_path}topic/{$Info['subject_id']}/{$Info['title']}">{$lang['original_view']}</a>
 	
 	<div align="center">
 		<table id="topic_view_table" border="0" cellpadding="0" class="print-table" width="95%">

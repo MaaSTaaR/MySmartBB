@@ -26,7 +26,7 @@
 	{DB::getInfo}{$Subject}
 	<tr align="center">
 		<td width="80%" class="row1 rows_space" colspan="2">
-			<a href="index.php?page=topic&amp;show=1&amp;id={$Subject['subject_id']}">{$Subject['subject_title']}</a>
+			<a href="{$init_path}topic/{$Subject['subject_id']}/{$Subject['subject_title']}">{$Subject['subject_title']}</a>
 		</td>
 	</tr>
 	{/DB::getInfo}

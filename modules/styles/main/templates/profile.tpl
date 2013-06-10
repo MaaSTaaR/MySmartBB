@@ -186,16 +186,16 @@
 	</tr>
 	<tr align="center">
 		<td width="20%" class="row1">
-		<a href="index.php?page=topic&amp;show=1&amp;id={$LastSubject['id']}">{$LastSubject['title']}</a>
+		<a href="{$init_path}topic/{$LastSubject['id']}/{$LastSubject['title']}">{$LastSubject['title']}</a>
 		</td>
 		<td width="20%" class="row1">
-		<a href="index.php?page=topic&amp;show=1&amp;id={$LastReply['id']}">{$LastReply['title']}</a>
+		<a href="{$init_path}topic/{$LastReply['id']}/{$LastReply['title']}">{$LastReply['title']}</a>
 		</td>
 		<td width="20%" class="row1">
-		<a href="index.php?page=pm_send&amp;send=1&amp;index=1&amp;username={$MemberInfo['username']}">{$lang['send_pm']}</a>
+		<a href="{$init_path}pm_send/{$MemberInfo['username']}">{$lang['send_pm']}</a>
 		</td>
 		<td width="20%" class="row1">
-		<a href="index.php?page=send&amp;member=1&amp;index=1&amp;id={$MemberInfo['id']}">{$lang['send_email']}</a> 
+		<a href="{$init_path}send/id={$MemberInfo['id']}">{$lang['send_email']}</a> 
 		</td>
 	</tr>
 </table>

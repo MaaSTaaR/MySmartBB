@@ -11,7 +11,7 @@
 	<tr>
 		<td width="98%" class="row2 rows_space">
 		{DB::getInfo}{$online_res}{$SectionVisitor}
-		<a href="index.php?page=profile&amp;show=1&amp;username={$SectionVisitor['username']}">{$SectionVisitor['username']}</a>،
+		<a href="{$init_path}profile/{$SectionVisitor['username']}">{$SectionVisitor['username']}</a>،
 		{/DB::getInfo}
 
 		{if {$_CONF['info_row']['show_onlineguest']} != 1}

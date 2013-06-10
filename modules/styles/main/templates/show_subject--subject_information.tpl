@@ -50,7 +50,7 @@
 			<strong>
 			{$lang['subject_tags']} {$lang['common']['colon']}
 			{DB::getInfo}{$tags_res}{$tags}
-			<a href="index.php?page=tags&amp;show=1&amp;id={$tags['tag_id']}">{$tags['tag']}</a>،
+			<a href="{$init_path}tags/{$tags['tag_id']}/{$tags['tag']}">{$tags['tag']}</a>،
 			{/DB::getInfo}
 			</strong>
 		</td>

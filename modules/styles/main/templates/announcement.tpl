@@ -28,7 +28,7 @@
 			{$lang['announcement_writer']}
 		</td>
 		<td width="20%" class="row1">
-			<a href="index.php?page=profile&amp;show=1&amp;username={$AnnInfo['writer']}">{$AnnInfo['writer']}</a>
+			<a href="{$init_path}profile/{$AnnInfo['writer']}">{$AnnInfo['writer']}</a>
 		</td>
 	</tr>
 </table>

@@ -3,7 +3,7 @@
 <div class="usercp_context {$_CONF['opp_align']}_side">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['pm']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['pm']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
@@ -35,7 +35,7 @@
 			<input type="checkbox" name="delete_list[]" value="{$MassegeList['id']}" />
 		</td>
 		<td class="row1" width="20%">
-			<a href="index.php?page=pm_show&amp;show=1&amp;id={$MassegeList['id']}">{$MassegeList['title']}</a>
+			<a href="{$init_path}pm_show/{$MassegeList['id']}">{$MassegeList['title']}</a>
 			<br />
 			{if {$INBOX_FOLDER}}
 			{if {$MassegeList['user_read']} == 1}
@@ -46,7 +46,7 @@
 			{/if}
 		</td>
 		<td class="row1" width="20%">
-			<a href="index.php?page=profile&amp;show=1&amp;username={$MassegeList['user_from']}">{$MassegeList['user_from']}</a>
+			<a href="{$init_path}profile/{$MassegeList['user_from']}">{$MassegeList['user_from']}</a>
 		</td>
 		<td class="row1" width="20%">
 			{$MassegeList['date']}

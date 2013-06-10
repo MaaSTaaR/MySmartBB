@@ -9,7 +9,7 @@
 	{DB::getInfo}{$online_res}{$Online}
 	<tr align="center">
 		<td class="row1" width="40%">
-		<a href="index.php?page=profile&amp;show=1&amp;id={$Online['user_id']}">{$Online['username_style']}</a>
+		<a href="{$init_path}profile/{$Online['user_id']}">{$Online['username_style']}</a>
 		</td>
 		<td class="row2" width="40%">
 		{$Online['user_location']}

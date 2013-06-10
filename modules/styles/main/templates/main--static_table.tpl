@@ -20,7 +20,7 @@
 					<tr>
 						<td class="row2">
 						{DB::getInfo}{$online_res}{$online}
-							<a href="index.php?page=profile&show=1&id={$online['user_id']}">{$online['username_style']}</a>{$lang['common']['comma']}
+							<a href="{$init_path}profile/{$online['user_id']}">{$online['username_style']}</a>{$lang['common']['comma']}
 						{/DB::getInfo}
 			
 						{if {$_CONF['info_row']['show_onlineguest']} == 1}
@@ -43,7 +43,7 @@
 						<td class="row1">
 						{if {$TodayNumber} > 0}
 							{DB::getInfo}{$today_res}{$today}
-							<a href="index.php?page=profile&amp;show=1&amp;id={$today['user_id']}">{$today['username_style']}</a>{$lang['common']['comma']}
+							<a href="{$init_path}profile/{$today['user_id']}">{$today['username_style']}</a>{$lang['common']['comma']}
 							{/DB::getInfo}
 						{elseif {$TodayNumber} <= 0}
 						{$lang['no_today']}

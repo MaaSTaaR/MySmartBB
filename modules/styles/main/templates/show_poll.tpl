@@ -1,6 +1,6 @@
 {hook}before_poll_table{/hook}
 
-<form method="post" action="index.php?page=vote&amp;start=1&amp;id={$Poll['id']}">
+<form method="post" action="{$init_path}vote/start/{$Poll['id']}">
 
 <table id="poll_table" align="center" border="1" class="t_style_b" width="60%">
 	<tr align="center">

@@ -27,7 +27,7 @@
 			<img src="{$subject_list['icon']}" alt="" />
 		</td>
 		<td width="30%" class="row2">
-			<a href="index.php?page=topic&show=1&id={$subject_list['id']}{$password}">
+			<a href="{$init_path}topic/{$subject_list['id']}/{$subject_list['title']}{$password}">
 				{$subject_list['title']}
 			</a>
 			{if {$subject_list['close']}}
@@ -37,7 +37,7 @@
 			<font class="small">{$subject_list['subject_describe']}</font>
 		</td>
 		<td width="20%" class="row1" align="center">
-			<a href="index.php?page=profile&show=1&username={$subject_list['writer']}">{$subject_list['writer']}</a><br />
+			<a href="{$init_path}profile/{$subject_list['writer']}">{$subject_list['writer']}</a><br />
 			{$subject_list['write_date']}
 		</td>
 		<td width="8%" class="row2" align="center">
@@ -50,7 +50,7 @@
 			{if {$subject_list['reply_number']} <= 0}
 			{$lang['no_replies']}
 			{else}
-			<a href="index.php?page=profile&show=1&username={$subject_list['last_replier']}">{$subject_list['last_replier']}</a><br />
+			<a href="{$init_path}profile/{$subject_list['last_replier']}">{$subject_list['last_replier']}</a><br />
 			{$subject_list['reply_date']}
 			{/if}
 		</td>
