@@ -4,15 +4,15 @@
 
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartPrivateMassegeSendMOD' );
 
 class MySmartPrivateMassegeSendMOD
 {
-	public function run()
+	private $username;
+	
+	private function commonProcesses()
 	{
 		global $MySmartBB;
 		
@@ -32,33 +32,21 @@ class MySmartPrivateMassegeSendMOD
 		// ... //
 		
 		$MySmartBB->load( 'pm,icon,toolbox,attach' );
-		
-		if ( $MySmartBB->_GET[ 'send' ] )
-		{
-			if ( $MySmartBB->_GET[ 'index' ] )
-			{
-				$this->_sendForm();
-			}
-			elseif ( $MySmartBB->_GET[ 'start' ] )
-			{
-				$this->_startSend();
-			}
-		}
-
-		$MySmartBB->func->getFooter();
 	}
 	
-	private function _sendForm()
+	public function run( $username = null )
 	{
 		global $MySmartBB;
 		
+		$this->commonProcesses();
+		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_pm' ] );
 		
-		if ( isset( $MySmartBB->_GET[ 'username' ] ) )
+		if ( !is_null( $username ) )
 		{
 			$MySmartBB->rec->select = 'username,pm_senders,away,pm_senders_msg,away_msg';
 			$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET[ 'username' ] . "'";
+			$MySmartBB->rec->filter = "username='" . $username . "'";
 			
 			$info = $MySmartBB->rec->getInfo();
 															
@@ -74,11 +62,15 @@ class MySmartPrivateMassegeSendMOD
 		$MySmartBB->plugin->runHooks( 'pm_send_main' );
 		
 		$MySmartBB->template->display( 'pm_send' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _startSend()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		// ... //
 		
@@ -285,7 +277,8 @@ class MySmartPrivateMassegeSendMOD
      		$MySmartBB->func->msg( $MySmartBB->lang[ 'sent_for_some' ] );
      	}
      	
-     	$MySmartBB->func->move('index.php?page=pm_list&amp;list=1&amp;folder=inbox');
+     	$MySmartBB->func->move( 'pm_list/inbox' );
+     	$MySmartBB->func->getFooter();
 	}
 }
 

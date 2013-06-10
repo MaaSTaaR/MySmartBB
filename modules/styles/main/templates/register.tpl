@@ -6,7 +6,7 @@
 
 {hook}after_adress_bar{/hook}
 
-<form name="register" method="post" action="index.php?page=register&amp;start=1">
+<form name="register" method="post" action="{$init_path}register/start">
 <table id="register_form_table" border="1" class="t_style_b" width="60%" align="center">
 	<tr align="center">
 		<td width="80%" class="main1 rows_space" colspan="2">

@@ -64,7 +64,8 @@
 	<tr align="center">
 		<td class="row2" width="15%">
 			{$Info['native_write_time']}
-			<a title="{$lang['report_abuse']}" href="{$init_path}report/{$Info['subject_id']}">
+			<a title="{$lang['report_abuse']}" href="{$init_path}report/
+			{$Info['subject_id']}">
 			    <img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.gif">
 			</a>
 		</td>

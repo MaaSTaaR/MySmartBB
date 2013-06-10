@@ -2,64 +2,43 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartReportMOD' );
 
 class MySmartReportMOD
 {
-	public function run()
+	public function run( $subject_id, $reply_id = null )
 	{
 		global $MySmartBB;
 		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_visitors' ] );
+		$this->commonProcesses();
 		
-		$MySmartBB->loadLanguage( 'report' );
+		$MySmartBB->template->assign( 'subject_id', $subject_id );
 		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_report' ] );
+		if ( !is_null( $reply_id ) )
+			$MySmartBB->template->assign( 'reply_id', $reply_id );
 		
-		$this->_commonCode();
-		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_memberReportIndex();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_memberReportStart();
-		}
+		$MySmartBB->template->display( 'send_report' );
 		
 		$MySmartBB->func->getFooter();
 	}
 	
-	private function _memberReportIndex()
+	public function start( $subject_id, $reply_id = null )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->template->assign( 'subject_id', $MySmartBB->_GET[ 'subject_id' ] );
-		
-		if ( !empty( $MySmartBB->_GET[ 'reply_id' ] ) )
-			$MySmartBB->template->assign( 'reply_id', $MySmartBB->_GET[ 'reply_id' ] );
-		
-		$MySmartBB->template->display( 'send_report' );
-	}
-	
-	private function _memberReportStart()
-	{
-		global $MySmartBB;
+		$this->commonProcesses();
 		
 		if ( empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
 		
 		// ... //
 		
-		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&show=1&id=' . $MySmartBB->_GET[ 'subject_id' ];
+		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'topic/' . $subject_id;
 		
-		if ( !empty( $MySmartBB->_GET[ 'reply_id' ] ) )
-			$MySmartBB->_POST[ 'text' ] .= "#" . $MySmartBB->_GET[ 'reply_id' ];
+		if ( !is_null( $reply_id ) )
+			$MySmartBB->_POST[ 'text' ] .= "#" . $reply_id;
 		
 		// ... //
 		
@@ -86,16 +65,20 @@ class MySmartReportMOD
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _commonCode()
+	private function commonProcesses()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
+		$MySmartBB->loadLanguage( 'report' );
 		
-		if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_visitors' ] );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_report' ] );
 	}
 }
 

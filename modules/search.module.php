@@ -2,39 +2,24 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartSearchEngineMOD');
 
 class MySmartSearchEngineMOD
 {
-	public function run()
+	private function commonProcesses()
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->loadLanguage( 'search' );
-		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_searchForm();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_startSearch();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
 	}
 	
-	private function _searchForm()
+	public function run()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		$MySmartBB->load( 'section' );
 		
@@ -45,19 +30,24 @@ class MySmartSearchEngineMOD
 		$MySmartBB->plugin->runHooks( 'search_main' );
 		
 		$MySmartBB->template->display( 'search' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _startSearch()
+	private function _startSearch( $keyword, $username = null, $section = null )
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'search_result' ] );
 		
 		// ... //
 		
-		$keyword 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'keyword' ], 'html' );
-		$username 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'username' ], 'html' );
-		$section 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_GET[ 'section' ], 'html' );
+		// TODO : I don't think we still need these lines
+		$keyword 	= 	$MySmartBB->func->cleanVariable( $keyword, 'html' );
+		$username 	= 	$MySmartBB->func->cleanVariable( $username, 'html' );
+		$section 	= 	$MySmartBB->func->cleanVariable( $section, 'html' );
 		
 		// ... //
 		
@@ -99,6 +89,8 @@ class MySmartSearchEngineMOD
 		$MySmartBB->template->display( 'search_results' );
 		
 		$MySmartBB->rec->removeInfoCallback();
+		
+		$MySmartBB->func->getFooter();
 	}
 	
 	public function rowsProcessCB( $row )

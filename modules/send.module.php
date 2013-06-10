@@ -2,9 +2,7 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartSendMOD' );
 
@@ -12,50 +10,24 @@ class MySmartSendMOD
 {
 	private $memberInfo;
 	
-	public function run()
+	public function run( $id )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'send' );
-		
-		// ... //
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-     		$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_for_visitors' ] );
-     	
-		// ... //
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'send_email' ] );
-		
-		if ( $MySmartBB->_GET[ 'member' ] )
-		{
-			$this->_commonCode();
+		$this->commonProcesses( $id );
 			
-			if ( $MySmartBB->_GET[ 'index' ] )
-			{
-				$this->_memberSendIndex();
-			}
-			elseif ( $MySmartBB->_GET[ 'start' ] )
-			{
-				$this->_memberSendStart();
-			}
-		}
+		$MySmartBB->_CONF[ 'template' ][ 'MemberInfo' ] = $this->memberInfo;
+		
+		$MySmartBB->template->display( 'send_email' );
 		
 		$MySmartBB->func->getFooter();
 	}
 	
-	private function _memberSendIndex()
+	private function start( $id )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_CONF[ 'template' ][ 'MemberInfo' ] = $this->memberInfo;
-		
-		$MySmartBB->template->display( 'send_email' );
-	}
-	
-	private function _memberSendStart()
-	{
-		global $MySmartBB;
+		$this->commonProcesses( $id );
 		
 		if ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'text' ] ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
@@ -68,28 +40,43 @@ class MySmartSendMOD
 		if ( $sent )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_succeed' ] );
-			$MySmartBB->func->move( 'index.php' );
+			$MySmartBB->func->move( '' );
 		}
 		else
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _commonCode()
+	private function commonProcesses( $id )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		$MySmartBB->loadLanguage( 'send' );
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		// ... //
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission_for_visitors' ] );
+		
+		// ... //
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'send_email' ] );
+		
+		// ... //
+		
+		$id = (int) $id;
+		
+		if ( empty( $id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->select = 'id,username,email';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $id . "'";
 		
 		$this->memberInfo = $MySmartBB->rec->getInfo();
 		

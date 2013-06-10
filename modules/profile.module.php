@@ -2,35 +2,22 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartProfileMOD' );
 
 class MySmartProfileMOD
 {
-	public function run()
+	public function id( $member_id )
+	{
+		$this->run( $member_id, true );
+	}
+	
+	public function run( $member_id, $get_by_id = false )
 	{
 		global $MySmartBB;
 		
 		$MySmartBB->loadLanguage( 'profile' );
-		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
-			$this->_showProfile();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-					
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _showProfile()
-	{
-		global $MySmartBB;
 		
 		// ... //
 
@@ -49,25 +36,23 @@ class MySmartProfileMOD
 		// of the member stored in $MySmartBB->_CONF['member_row']
 		$do_query = true;
 		
-		if ( !empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( $get_by_id )
 		{
-			$id = (int) $MySmartBB->_GET[ 'id' ];
+			$id = (int) $member_id;
 			
 			$MySmartBB->rec->filter = "id='" . $id . "'";
 			
 			if ( $MySmartBB->_CONF[ 'member_permission' ] )
-				$do_query = ( $MySmartBB->_CONF[ 'member_row' ][ 'id' ] == $MySmartBB->_GET[ 'id' ] ) ? false : true;
-		}
-		elseif ( !empty( $MySmartBB->_GET[ 'username' ] ) )
-		{
-			$MySmartBB->rec->filter = "username='" . $MySmartBB->_GET[ 'username' ] . "'";
+				$do_query = ( $MySmartBB->_CONF[ 'member_row' ][ 'id' ] == $id ) ? false : true;
 			
-			if ( $MySmartBB->_CONF[ 'member_permission' ] )
-				$do_query = ( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] == $MySmartBB->_GET[ 'username' ] ) ? false : true;
+			$numeric_param = true;
 		}
 		else
 		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->rec->filter = "username='" . $member_id . "'";
+			
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
+				$do_query = ( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] == $member_id ) ? false : true;
 		}
 		
 		// ... //
@@ -152,6 +137,8 @@ class MySmartProfileMOD
 		$MySmartBB->plugin->runHooks( 'show_profile_end' );
 		
 		$MySmartBB->template->display( 'profile' );
+		
+		$MySmartBB->func->getFooter();
 	}
 }
 	

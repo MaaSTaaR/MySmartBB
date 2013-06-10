@@ -118,9 +118,15 @@ class MySmartFunctions
  	/**
  	 * go to $site , abuamal hates this function :D don't ask me why , ask him ;)
  	 */
-	public function move( $site, $m = 2 )
+	public function move( $site, $outside = false, $m = 2 )
  	{
-  		echo "<META HTTP-EQUIV=\"refresh\" CONTENT=\"$m; URL=$site\">\n";
+ 		global $MySmartBB;
+ 		
+ 		// The link will be inside the forum, so add the initial path in the begin of the link
+ 		if ( !$outside )
+  			$site = $MySmartBB->_CONF[ 'init_path' ] . $site;
+ 		
+ 		echo "<META HTTP-EQUIV=\"refresh\" CONTENT=\"$m; URL=$site\">\n";
  	}
 
 	/**

@@ -14,7 +14,7 @@ class MySmartLoginMOD
 	private $username;
 	private $password;
 	
-	public function login()
+	public function run()
 	{
 		global $MySmartBB;
 		
@@ -42,30 +42,6 @@ class MySmartLoginMOD
 		
 		$MySmartBB->func->getFooter();
 	}
-	
-// 	public function run()
-// 	{
-// 		global $MySmartBB;
-		
-// 		$MySmartBB->loadLanguage( 'login' );
-		
-// 		// Normal login
-// 		if ( $MySmartBB->_GET[ 'login' ] )
-// 		{
-// 			$this->_startLogin();
-// 		}
-// 		// Login after registeration
-// 		elseif ( $MySmartBB->_GET[ 'register_login' ] )
-// 		{
-// 			$this->_startLogin( true );
-// 		}
-// 		else
-// 		{
-// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-// 		}
-		
-// 		$MySmartBB->func->getFooter();
-// 	}
 	
 	private function _startLogin( $register_login = false )
 	{

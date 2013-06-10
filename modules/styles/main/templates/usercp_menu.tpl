@@ -2,7 +2,7 @@
 	<table id="usercp_menu_table" border="1" class="t_style_b">
 		<tr align="center">
      		<td class="main1 rows_space">
-     			<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a>
+     			<a href="{$init_path}usercp">{$lang['usercp']}</a>
      		</td>
      	</tr>
      	{if {$_CONF['info_row']['pm_feature']}}
@@ -14,24 +14,24 @@
      	
      	<tr align="center">
      		<td class="row1">
-     			<a href="index.php?page=pm_send&amp;send=1&amp;index=1">{$lang['send_pm']}</a>
+     			<a href="{$init_path}pm_send">{$lang['send_pm']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['inbox']}</a>
+     			<a href="{$init_path}pm_list/inbox">{$lang['inbox']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm_list&amp;list=1&amp;folder=sent">{$lang['sent_pms']}</a>
+     			<a href="{$init_path}pm_list/sent">{$lang['sent_pms']}</a>
      		</td>
      	</tr>
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=pm_setting&amp;setting=1&amp;index=1">{$lang['pm_setting']}</a>
+     			<a href="{$init_path}pm_setting">{$lang['pm_setting']}</a>
      		</td>
      	</tr>
      	{hook}end_of_pm_options{/hook}

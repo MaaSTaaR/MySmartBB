@@ -4,15 +4,13 @@
 
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartPrivateMassegeMOD' );
 
 class MySmartPrivateMassegeMOD
 {
-	public function run()
+	private function commonProcesses()
 	{
 		global $MySmartBB;
 		
@@ -30,40 +28,28 @@ class MySmartPrivateMassegeMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_pm' ] );
 		
 		// ... //
-				
-		if ( $MySmartBB->_GET[ 'setting' ] )
-		{
-			$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );
-			
-			if ( $MySmartBB->_GET[ 'index' ] )
-			{
-				$this->_settingIndex();
-			}
-			elseif ( $MySmartBB->_GET[ 'start' ] )
-			{
-				$this->_settingStart();
-			}
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-					
-		$MySmartBB->func->getFooter();
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'pm_setting' ] );		
 	}
 			
-	private function _settingIndex()
+	public function run()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		$MySmartBB->plugin->runHooks( 'pm_setting_main' );
 		
 		$MySmartBB->template->display( 'pm_setting' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _settingStart()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		if ( $MySmartBB->_POST[ 'autoreply' ] and ( empty( $MySmartBB->_POST[ 'title' ] ) or empty( $MySmartBB->_POST[ 'msg' ] ) ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'please_fill_information' ] );
@@ -88,8 +74,10 @@ class MySmartPrivateMassegeMOD
 		    $MySmartBB->plugin->runHooks( 'pm_setting_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=pm_setting&amp;setting=1&amp;index=1' );
+			$MySmartBB->func->move( 'pm_setting' );
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 }
 

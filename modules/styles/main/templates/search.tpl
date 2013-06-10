@@ -4,7 +4,7 @@
 
 {hook}after_adress_bar{/hook}
 
-<form name="search" method="get">
+<form name="search" method="get" action="{$init_path}/search">
 
 <input type="hidden" name="page" value="search">
 <input type="hidden" name="start" value="1">

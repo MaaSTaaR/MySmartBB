@@ -34,7 +34,10 @@
 			<img src="{$stick_subject_list['icon']}" alt="" />
 		</td>
 		<td width="30%" class="row2">
-			<a href="{$init_path}topic/{$stick_subject_list['id']}/{$stick_subject_list['title']}{$password}">
+			<a href="{$init_path}topic/
+			{$stick_subject_list['id']}/
+			{$stick_subject_list['title']}
+			{$password}">
 				{$stick_subject_list['title']}
 			</a> 
 			{if {$stick_subject_list['close']}}
@@ -75,7 +78,10 @@
 			<img src="{$subject_list['icon']}" alt="" />
 		</td>
 		<td width="30%" class="row2">
-			<a href="{$init_path}topic/{$subject_list['id']}/{$subject_list['title']}{$password}">
+			<a href="{$init_path}topic/
+			{$subject_list['id']}/
+			{$subject_list['title']}
+			{$password}">
 				{$subject_list['title']}
 			</a>
 			{if {$subject_list['close']}}

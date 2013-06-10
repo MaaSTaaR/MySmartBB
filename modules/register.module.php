@@ -2,15 +2,13 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartRegisterMOD');
 
 class MySmartRegisterMOD
 {
-	public function run()
+	private function commonProcesses()
 	{
 		global $MySmartBB;
 		
@@ -22,34 +20,21 @@ class MySmartRegisterMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'register_closed' ] );
 		
 		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'reg_' . $MySmartBB->_CONF[ 'day' ] ] )
-   			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_today' ] );
-   		
-   		// ... //
-   		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			if ( $MySmartBB->_CONF[ 'info_row' ][ 'reg_o' ] 
-				and ( !isset( $MySmartBB->_GET[ 'agree' ] ) or !$MySmartBB->_GET[ 'agree' ] ) )
-			{
-				$this->_registerRules();
-			}
-			else
-			{
-				$this->_registerForm();
-			}
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$MySmartBB->load( 'banned,cache,group,massege' );
-			
-			$this->_registerStart();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_register_today' ] );
+		 
+		// ... //
+	}
+	
+	public function run( $agree = null )
+	{
+		global $MySmartBB;
 		
-	    $MySmartBB->func->getFooter();
+		$this->commonProcesses();
+   		
+		if ( $MySmartBB->_CONF[ 'info_row' ][ 'reg_o' ] and is_null( $agree ) )
+			$this->_registerRules();
+		else
+			$this->_registerForm();
 	}
 	
 	/**
@@ -66,6 +51,8 @@ class MySmartRegisterMOD
 		$MySmartBB->plugin->runHooks( 'register_rules_main' );
 		
 		$MySmartBB->template->display( 'register_rules' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
 	/**
@@ -80,14 +67,20 @@ class MySmartRegisterMOD
 		$MySmartBB->plugin->runHooks( 'register_main' );
 		
 		$MySmartBB->template->display( 'register' );
+		
+		$MySmartBB->func->getFooter();
 	}
 		
 	/**
 	 * Some checks then add the member to database
 	 */
-	private function _registerStart()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
+		
+		$MySmartBB->load( 'banned,cache,group,massege' );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'registering' ] );
 		
@@ -162,9 +155,11 @@ class MySmartRegisterMOD
 			else
       		{
       			$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed' ] );
-      			$MySmartBB->func->move( $this->engine->_CONF[ 'init_path' ] . 'login/register_login/' . $MySmartBB->_POST[ 'username' ] . '/' . $MySmartBB->_POST[ 'password' ] );
+      			$MySmartBB->func->move( 'login/register_login/' . $MySmartBB->_POST[ 'username' ] . '/' . $MySmartBB->_POST[ 'password' ] );
       		}
       	}
+      	
+      	$MySmartBB->func->getFooter();
 	}
 	
 	private function __checkFieldsValidity()
@@ -310,7 +305,7 @@ class MySmartRegisterMOD
 			if ( $send )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed_email' ] );
-				$MySmartBB->func->move( 'index.php' );
+				$MySmartBB->func->move( '' );
 			}
 			else
 			{

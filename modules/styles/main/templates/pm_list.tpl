@@ -8,7 +8,7 @@
 
 {hook}after_adress_bar{/hook}
 
-<form method="post" action="index.php?page=pm_cp&amp;cp=1&amp;del=1">
+<form method="post" action="{$init_path}pm_cp/delete">
 <table id="pm_list_table" border="1" class="t_style_b" width="%85" align="center">
 	<tr align="center">
 		<td width="95%" class="main1 rows_space" colspan="4">

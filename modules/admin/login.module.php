@@ -38,7 +38,7 @@ class MySmartLoginMOD
 		$IsMember = $MySmartBB->member->loginAdmin( $username, $password );
 		
 		if ( $IsMember )
-			$MySmartBB->func->move( 'admin.php', 0 );
+			$MySmartBB->func->move( 'admin.php', false, 0 );
 		else
 			$MySmartBB->func->error( $MySmartBB->lang[ 'wrong_information' ] );
 	}

@@ -17,7 +17,7 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="35%">
-			<a href="index.php?page=register&amp;index=1&amp;agree=1">{$lang['agree']}</a>
+			<a href="{$init_path}register/agree">{$lang['agree']}</a>
 		</td>
 		<td class="row1" width="35%">
 			<a href="index.php">{$lang['not_agree']}</a>

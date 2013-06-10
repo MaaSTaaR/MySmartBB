@@ -247,7 +247,7 @@ class MySmartReplyAddMOD
 			$MySmartBB->plugin->runHooks( 'new_reply_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_published' ] );
-			$MySmartBB->func->move( $this->engine->_CONF[ 'init_path' ] . 'topic/' . $this->SubjectInfo['id'] . '/' . $this->SubjectInfo[ 'title' ] . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move( 'topic/' . $this->SubjectInfo['id'] . '/' . $this->SubjectInfo[ 'title' ] . $MySmartBB->_CONF['template']['password']);
 		}
 	}
 	

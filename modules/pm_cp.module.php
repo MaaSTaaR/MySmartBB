@@ -10,7 +10,7 @@ define('CLASS_NAME','MySmartPrivateMassegeCPMOD');
 
 class MySmartPrivateMassegeCPMOD
 {
-	function run()
+	public function run( $action )
 	{
 		global $MySmartBB;
 		
@@ -31,12 +31,9 @@ class MySmartPrivateMassegeCPMOD
 		
 		$MySmartBB->load( 'pm' );
 		
-		if ( $MySmartBB->_GET[ 'cp' ] )
+		if ( $action == 'delete' )
 		{
-			if ( $MySmartBB->_GET[ 'del' ] )
-			{
-				$this->_deletePrivateMassege();
-			}
+			$this->_deletePrivateMassege();
 		}
 		
 		$MySmartBB->func->getFooter();

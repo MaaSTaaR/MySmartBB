@@ -9,10 +9,10 @@
 
 	<link rel="stylesheet" href="{$style_path}" type="text/css" />
 	
-	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['latest_topics_rss']}" href="index.php?page=rss&amp;subject=1" />
+	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['latest_topics_rss']}" href="{$init_path}rss/subject" />
 	
 	{if {$SECTION_RSS}}
-	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['forum_rss']}" href="index.php?page=rss&amp;section=1&amp;id={$SECTION_ID}" />
+	<link rel="alternate" type="application/rss+xml" title="{$lang['common']['forum_rss']}" href="{$init_path}rss/section/{$SECTION_ID}" />
 	{/if}
 	
 	<title>{$title} - (Powered By MySmartBB)</title>

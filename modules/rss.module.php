@@ -2,15 +2,13 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartRSSMOD' );
 
 class MySmartRSSMOD
 {
-	public function run()
+	public function run( $type, $section_id = null )
 	{
 		global $MySmartBB;
 		
@@ -23,14 +21,10 @@ class MySmartRSSMOD
 		echo '<link>' . $MySmartBB->func->getForumAdress() . '</link>';
 		echo '<description>' . $MySmartBB->lang[ 'latest_subjects_rss' ] . ' ' . $MySmartBB->_CONF[ 'info_row' ][ 'title' ] . '</description>';
 		
-		if ( $MySmartBB->_GET[ 'subject' ] )
-		{
+		if ( $type == 'subject' )
 			$this->_subjectRSS();
-		}
-		elseif ( $MySmartBB->_GET[ 'section' ] )
-		{
-			$this->_sectionRSS();
-		}
+		elseif ( $type == 'section' )
+			$this->_sectionRSS( $section_id );
 		
 		echo '</channel>';
 		echo '</rss>';
@@ -57,13 +51,11 @@ class MySmartRSSMOD
 		}
 	}
 	
-	private function _sectionRSS()
+	private function _sectionRSS( $section_id )
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		if ( is_null( $section_id ) )
 		{
 			echo '<item>';
 			echo '<title>' . $MySmartBB->lang_common[ 'wrong_path' ] . '</title>';
@@ -73,7 +65,7 @@ class MySmartRSSMOD
 		}
 
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET['id'] . "'";
+		$MySmartBB->rec->filter = "id='" . $section_id . "'";
 		
 		$Section = $MySmartBB->rec->getInfo();
 		
@@ -119,7 +111,7 @@ class MySmartRSSMOD
 		}
 
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "section='" . $MySmartBB->_GET[ 'id' ] . "' AND delete_topic<>'1'";
+		$MySmartBB->rec->filter = "section='" . $section_id . "' AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "write_time DESC";
 		$MySmartBB->rec->limit = '10';
 		

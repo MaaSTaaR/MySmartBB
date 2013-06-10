@@ -2,12 +2,12 @@
 
 <div class="usercp_context {$_CONF['opp_align']}_side">
 {template}address_bar_part1{/template}
-<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['pm_setting']}
+<a href="{$init_path}pm_list/inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['pm_setting']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
 
-<form name="info" method="post" action="index.php?page=pm_setting&amp;setting=1&amp;start=1">
+<form name="info" method="post" action="{$init_path}pm_setting/start">
 
 	<table id="pm_setting_table" align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">

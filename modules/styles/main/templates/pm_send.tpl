@@ -70,7 +70,7 @@ $(document).ready(Ready);
 
 {hook}after_address_bar{/hook}
 
-<form name="topic" method="post" enctype="multipart/form-data" action="index.php?page=pm_send&amp;send=1&amp;start=1">
+<form name="topic" method="post" enctype="multipart/form-data" action="{$init_path}pm_send/start">
 
 {template}iconbox{/template}
 

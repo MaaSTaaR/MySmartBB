@@ -42,7 +42,7 @@ class MySmartForumMOD
 			$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], base64_encode( $MySmartBB->_POST[ 'password' ] ) );
 			
 			if ( $check )
-				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ], 0 );
+				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ], false, 0 );
 		}
 		else
 		{
@@ -183,7 +183,7 @@ class MySmartForumMOD
 		// ... //
 		
 		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section[ 'linksite' ] );
-		$MySmartBB->func->move( $this->Section[ 'linksite' ], 2 );
+		$MySmartBB->func->move( $this->Section[ 'linksite' ], true );
 		$MySmartBB->func->stop();
 	}
 	

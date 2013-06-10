@@ -107,7 +107,7 @@ class MySmartBB
   		
   		if ( !is_bool( $e ) and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED' and !defined( 'INSTALL' ) )
   		{
-  			$this->func->move( './setup/install/', 0 );
+  			$this->func->move( './setup/install/', true, 0 );
   			$this->func->stop( true );
   		}
   		
