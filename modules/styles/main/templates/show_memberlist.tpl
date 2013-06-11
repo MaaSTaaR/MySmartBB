@@ -28,7 +28,8 @@
 	{DB::getInfo}{$member_res}{$MemberList}
 	<tr align="center">
 		<td class="row1" width="20%">
-		<a href="{$init_path}profile/{$MemberList['username']}">{$MemberList['username']}</a>
+		<a href="{$init_path}profile/
+		{$MemberList['username']}">{$MemberList['username']}</a>
 		</td>
 		<td class="row1" width="20%">
 		{$MemberList['user_title']}

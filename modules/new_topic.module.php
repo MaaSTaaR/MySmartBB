@@ -2,46 +2,17 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'JAVASCRIPT_SMARTCODE', true );
-
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartTopicAddMOD' );
 
 class MySmartTopicAddMOD
 {
+	private $id;
 	private $SectionInfo;
 	private $SectionGroup;
 	private $moderator;
 	private $subject_id;
-	
-	public function run()
-	{
-		global $MySmartBB;
-		
-		$MySmartBB->loadLanguage( 'new_topic' );
-		
-		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach,usertitle,moderator' );
-		
-		$this->_commonCode();
-		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_start();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
 	
 	private function _commonCode()
 	{
@@ -49,15 +20,19 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		$MySmartBB->loadLanguage( 'new_topic' );
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		$MySmartBB->load( 'cache,moderator,section,subject,icon,toolbox,poll,tag,attach,usertitle,moderator' );
+		
+		// ... //
+		
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$this->SectionInfo = $MySmartBB->rec->getInfo();
 		
@@ -93,6 +68,9 @@ class MySmartTopicAddMOD
 		
 		// ... //
 		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
+		$MySmartBB->template->assign( 'JQUERY', true );
+		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_topic' ] );
 		
 		// ... //
@@ -109,10 +87,16 @@ class MySmartTopicAddMOD
 		
 		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo[ 'id' ] );
 	}
-		
-	private function _index()
+	
+	public function run( $id )
 	{
 		global $MySmartBB;
+		
+		$this->id = $id;
+		
+		$this->_commonCode();
+		
+		// ... //
 		
 		$MySmartBB->func->getEditorTools();
 		
@@ -129,11 +113,19 @@ class MySmartTopicAddMOD
 		$MySmartBB->plugin->runHooks( 'new_topic_main' );
 		
 		$MySmartBB->template->display( 'new_topic' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _start()
+	public function start( $id )
 	{
 		global $MySmartBB;
+		
+		$this->id = $id;
+		
+		$this->_commonCode();
+		
+		// ... //
 		
 		$MySmartBB->_POST[ 'title' ] 	= 	trim( $MySmartBB->_POST[ 'title' ] );
 		$MySmartBB->_POST[ 'text' ] 	= 	trim( $MySmartBB->_POST[ 'text' ] );
@@ -219,6 +211,8 @@ class MySmartTopicAddMOD
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
 			$MySmartBB->func->move( 'topic/' . $this->subject_id . '/' . $MySmartBB->_POST[ 'title' ] . $MySmartBB->_CONF['template']['password']);
+			
+			$MySmartBB->func->getFooter();
 			
 			// ... //
 		}

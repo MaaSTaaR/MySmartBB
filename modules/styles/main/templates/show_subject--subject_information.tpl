@@ -50,7 +50,9 @@
 			<strong>
 			{$lang['subject_tags']} {$lang['common']['colon']}
 			{DB::getInfo}{$tags_res}{$tags}
-			<a href="{$init_path}tags/{$tags['tag_id']}/{$tags['tag']}">{$tags['tag']}</a>،
+			<a href="{$init_path}tags/
+			{$tags['tag_id']}/
+			{$tags['tag']}">{$tags['tag']}</a>،
 			{/DB::getInfo}
 			</strong>
 		</td>
@@ -58,12 +60,14 @@
 	{/if}
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="{$init_path}download/subject/{$Info['subject_id']}">{$lang['download_subject']}</a>
+			<a href="{$init_path}download/subject/
+			{$Info['subject_id']}">{$lang['download_subject']}</a>
 		</td>
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="{$init_path}topic/{$Info['subject_id']}/print">{$lang['printable_version']}</a>
+			<a href="{$init_path}topic/
+			{$Info['subject_id']}/print">{$lang['printable_version']}</a>
 		</td>
 	</tr>
 </table>

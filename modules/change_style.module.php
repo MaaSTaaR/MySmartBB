@@ -46,7 +46,7 @@ class MySmartChangeStyleMOD
 			    $MySmartBB->plugin->runHooks( 'change_style_success' );
 			    
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'style_changed' ] );
-				$MySmartBB->func->move( 'index.php' );
+				$MySmartBB->func->move( '' );
 			}
 		}
 		else

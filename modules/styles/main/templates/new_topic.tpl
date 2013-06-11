@@ -1,4 +1,4 @@
-<script src="includes/js/jquery.js"></script>
+
 
 <script language="javascript">                
 function ShowPollTable()
@@ -89,7 +89,9 @@ $(document).ready(Ready);
 </script>
 
 {template}address_bar_part1{/template}
-<a href="{$init_path}forum/{$id}/{$section_info['title']}{$password}">
+<a href="{$init_path}forum/
+{$id}/
+{$section_info['title']}{$password}">
 	{$section_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']} {$lang['add_new_topic']}
 {template}address_bar_part2{/template}

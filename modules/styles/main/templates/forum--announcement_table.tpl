@@ -8,11 +8,14 @@
 	</tr>
 	<tr>
 		<td width="98%" class="row1 rows_space">
-			<a href="{$init_path}announcement/{$announcement['id']}/{$announcement['title']}">
+			<a href="{$init_path}announcement/
+			{$announcement['id']}/
+			{$announcement['title']}">
 			{$announcement['title']}
 			</a> 
 		    {$lang['common']['written_by']}
-			<a href="{$init_path}/profile/{$announcement['writer']}">
+			<a href="{$init_path}profile/
+			{$announcement['writer']}">
 			{$announcement['writer']}
 			</a> 
 			

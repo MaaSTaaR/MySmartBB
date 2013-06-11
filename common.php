@@ -4,12 +4,6 @@ define( 'DIR', dirname( __FILE__ ) . '/' );
 
 // ... //
 
-// TODO : Check if we _still_ need this?
-if ( !defined( 'JAVASCRIPT_SMARTCODE' ) )
-	define( 'JAVASCRIPT_SMARTCODE', false );
-
-// ... //
-
 // Can't live without this file :)
 include( 'MySmartBB.class.php' );
 

@@ -2,8 +2,6 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'JAVASCRIPT_SMARTCODE', true );
-
 include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartPrivateMassegeMOD' );

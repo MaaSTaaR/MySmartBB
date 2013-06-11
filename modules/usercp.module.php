@@ -2,9 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
-
 include('common.module.php');
 
 define('CLASS_NAME','MySmartUserCPMOD');

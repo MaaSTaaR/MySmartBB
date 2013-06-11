@@ -2,9 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_func',true);
-define('JAVASCRIPT_SMARTCODE',true);
-
 include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartUserCPSignatureMOD');
@@ -16,6 +13,8 @@ class MySmartUserCPSignatureMOD
 		global $MySmartBB;
 		
 		$this->commonProcess();
+		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'compose_signature' ] );
 		

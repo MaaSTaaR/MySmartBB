@@ -2,8 +2,6 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'JAVASCRIPT_SMARTCODE', true );
-
 include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartTopicMOD' );
@@ -96,7 +94,9 @@ class MySmartTopicMOD
 		$this->subject_title = $this->Info[ 'title' ];
 		
 		// ... //
-				
+		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
+		
 		//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
 		

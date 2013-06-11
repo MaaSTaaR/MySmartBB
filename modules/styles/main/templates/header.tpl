@@ -23,7 +23,7 @@
 
 <body>
 
-	{if JAVASCRIPT_SMARTCODE}
+	{if {$SMARTCODE}}
 	<script src="{$bb_path}includes/js/SmartCode.js"></script>
 	{/if}
 	{if {$JQUERY}}

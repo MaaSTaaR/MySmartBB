@@ -2,8 +2,6 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'JAVASCRIPT_SMARTCODE', true );
-
 include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartPrivateMassegeSendMOD' );
@@ -39,6 +37,9 @@ class MySmartPrivateMassegeSendMOD
 		global $MySmartBB;
 		
 		$this->commonProcesses();
+		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
+		$MySmartBB->template->assign( 'JQUERY', true );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'send_pm' ] );
 		

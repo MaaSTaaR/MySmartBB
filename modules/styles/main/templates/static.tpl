@@ -72,13 +72,16 @@
 	</tr>
 	<tr align="center">
 		<td class="row1">
-		<a href="{$init_path}profile/{$StaticInfo['OldestSubjectWriter']}">{$StaticInfo['OldestSubjectWriter']}</a>
+		<a href="{$init_path}profile/
+{$StaticInfo['OldestSubjectWriter']}">{$StaticInfo['OldestSubjectWriter']}</a>
 		</td>
 		<td class="row1">
-		<a href="{$init_path}profile/{$StaticInfo['NewerSubjectWriter']}">{$StaticInfo['NewerSubjectWriter']}</a>
+		<a href="{$init_path}profile/
+{$StaticInfo['NewerSubjectWriter']}">{$StaticInfo['NewerSubjectWriter']}</a>
 		</td>
 		<td class="row1">
-		<a href="{$init_path}profile/{$StaticInfo['MostSubjectWriter']}">{$StaticInfo['MostSubjectWriter']}</a>
+		<a href="{$init_path}profile/
+{$StaticInfo['MostSubjectWriter']}">{$StaticInfo['MostSubjectWriter']}</a>
 		</td>
 	</tr>
 </table>
@@ -96,7 +99,8 @@
 	{DB::getInfo}{$topten_res}{$TopTenList}
 	<tr align="center">
 		<td width="30%" class="row1">
-		<a href="{$init_path}profile/{$TopTenList['username']}">{$TopTenList['username']}</a>
+		<a href="{$init_path}profile/
+{$TopTenList['username']}">{$TopTenList['username']}</a>
 		</td>
 		<td width="20%" class="row1">
 		{$TopTenList['posts']}
@@ -126,7 +130,9 @@
 	{DB::getInfo}{$topsubject_res}{$TopSubject}
 	<tr align="center">
 		<td width="30%" class="row1">
-		<a href="{$init_path}topic/{$TopSubject['id']}/{$TopSubject['title']}">{$TopSubject['title']}</a>
+		<a href="{$init_path}topic/
+{$TopSubject['id']}/
+{$TopSubject['title']}">{$TopSubject['title']}</a>
 		</td>
 		<td width="20%" class="row1">
 		{$TopSubject['reply_number']}
@@ -156,7 +162,9 @@
 	{DB::getInfo}{$topvisit_res}{$TopSubjectVisitor}
 	<tr align="center">
 		<td width="30%" class="row1">
-		<a href="{$init_path}topic/{$TopSubjectVisitor['id']}/{$TopSubjectVisitor['title']}">{$TopSubjectVisitor['title']}</a>
+		<a href="{$init_path}topic/
+{$TopSubjectVisitor['id']}/
+{$TopSubjectVisitor['title']}">{$TopSubjectVisitor['title']}</a>
 		</td>
 		<td width="20%" class="row1">
 		{$TopSubjectVisitor['visitor']}

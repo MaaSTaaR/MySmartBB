@@ -1,5 +1,3 @@
-<script src="includes/js/jquery.js"></script>
-
 <script language="javascript">
 function AddMoreAttach(x)
 {
@@ -45,10 +43,14 @@ $(document).ready(Ready);
 </script>
 
 {template}address_bar_part1{/template}
-<a href="{$init_path}forum/{$section_info['id']}/{$section_info['title']}{$password}">
+<a href="{$init_path}forum/
+{$section_info['id']}/
+{$section_info['title']}{$password}">
 {$section_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']}
-<a href="{$init_path}topic/{$id}/{$subject_info['title']}{$password}">
+<a href="{$init_path}topic/
+{$id}/
+{$subject_info['title']}{$password}">
 {$subject_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']}
 {$lang['add_new_reply']}

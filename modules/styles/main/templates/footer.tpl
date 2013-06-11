@@ -15,7 +15,11 @@
 				</select>
 			</div>
 			<div class="left_side">
-				<a href="{$init_path}latest/today">{$lang['common']['todays_topics']}</a> {if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} <a href="admin.php">{$lang['common']['control_panel']}</a>{/if}
+				<a href="{$init_path}latest/today">{$lang['common']['todays_topics']}</a> 
+				
+				{if {$_CONF['group_info']['admincp_allow']}} {$lang['common']['comma']} 
+				<a href="{$bb_path}admin.php">{$lang['common']['control_panel']}</a>
+				{/if}
 			</div>
 		</div>
 		

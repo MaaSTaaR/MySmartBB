@@ -2,8 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
-
 include('common.module.php');
 
 define('CLASS_NAME','MySmartPrivateMassegeListMOD');
@@ -49,9 +47,6 @@ class MySmartPrivateMassegeListMOD
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_list' ] );
 		
 		// ... //
-		
-// 		if ( empty( $this->folder ) )
-// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
 		

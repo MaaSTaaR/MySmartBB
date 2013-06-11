@@ -2,8 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
-
 include('common.module.php');
 
 define('CLASS_NAME','MySmartPrivateMassegeCPMOD');
@@ -46,7 +44,7 @@ class MySmartPrivateMassegeCPMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'delete_process' ] );
-		$MySmartBB->func->addressBar('<a href="' . $MySmartBB->_CONF[ 'init_path' ] . 'pm/inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'delete_process' ] );
+		$MySmartBB->func->addressBar('<a href="' . $MySmartBB->_CONF[ 'init_path' ] . 'pm_list/inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'delete_process' ] );
 		
 		// ... //
 		

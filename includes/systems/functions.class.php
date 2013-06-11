@@ -605,6 +605,7 @@ class MySmartFunctions
 		if ( !empty( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] ) )
 		{
 			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
+			
 			$url = $url[ 'query' ];
 			$url = explode( '&', $url );
 			$url = $url[ 0 ];

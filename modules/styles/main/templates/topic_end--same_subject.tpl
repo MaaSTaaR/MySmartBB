@@ -9,7 +9,9 @@
 	{DB::getInfo}{$similar_subjects_res}{$SameSubject}
 	<tr align="center">
 		<td width="40%" class="row1">
-			<a href="{$init_path}topic/{$SameSubject['id']}/{$SameSubject['title']}">{$SameSubject['title']}</a>
+			<a href="{$init_path}topic/
+{$SameSubject['id']}/
+{$SameSubject['title']}">{$SameSubject['title']}</a>
 		</td>
 	</tr>
 	{/DB::getInfo}

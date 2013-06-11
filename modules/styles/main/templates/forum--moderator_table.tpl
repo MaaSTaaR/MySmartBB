@@ -9,7 +9,9 @@
 	<tr>
 		<td width="98%" class="row1">
 		{DB::getInfo}{$moderator_res}{$ModeratorsList}
-		<a href="{$init_path}profile/id/{$ModeratorsList['member_id']}">{$ModeratorsList['username']}</a> ،
+		<a href="{$init_path}
+		profile/id/
+		{$ModeratorsList['member_id']}">{$ModeratorsList['username']}</a> ،
 		{/DB::getInfo}
 		</td>
 	</tr>

@@ -2,47 +2,18 @@
 
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define( 'JAVASCRIPT_SMARTCODE', true );
-
 include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartReplyAddMOD' );
 
 class MySmartReplyAddMOD
 {
+	private $id;
 	private $SectionInfo;
 	private $SectionGroup;
 	private $SubjectInfo;
 	private $moderator = false;
 	private $reply_id;
-	
-	public function run()
-	{
-		global $MySmartBB;
-		
-		$MySmartBB->loadLanguage( 'new_reply' );
-		
-		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach,usertitle' );
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
-		
-		$this->_commonCode();
-		
-		if ( $MySmartBB->_GET[ 'index' ] )
-		{
-			$this->_index();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_start();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
 	
 	private function _commonCode()
 	{
@@ -50,15 +21,26 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
+		$MySmartBB->loadLanguage( 'new_reply' );
 		
-		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
+		$MySmartBB->load( 'cache,moderator,reply,section,subject,icon,toolbox,attach,usertitle' );
+		
+		// ... //
+		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
+		$MySmartBB->template->assign( 'JQUERY', true );
+		
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'add_new_reply' ] );
+		
+		// ... //
+		
+		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'id' ] . "'";
+		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
 		$this->SubjectInfo = $MySmartBB->rec->getInfo();
 
@@ -120,13 +102,17 @@ class MySmartReplyAddMOD
 		$MySmartBB->template->assign( 'subject_info', $this->SubjectInfo );
 	}
 	
-	private function _index()
+	public function run( $id )
 	{
 		global $MySmartBB;
 		
+		$this->id = (int) $id;
+		
+		$this->_commonCode();
+		
 		$MySmartBB->func->getEditorTools();
 		
-		$MySmartBB->template->assign( 'id', $MySmartBB->_GET[ 'id' ] );
+		$MySmartBB->template->assign( 'id', $this->id );
 				
 		// Instead of send a whole version of $this->SectionGroup to template engine
 		// We just send options which we really need, we use this way to save memory
@@ -137,11 +123,17 @@ class MySmartReplyAddMOD
 		$MySmartBB->plugin->runHooks( 'new_reply_main' );
 		
 		$MySmartBB->template->display( 'new_reply' );
+		
+		$MySmartBB->func->getFooter();
 	}
 		
-	private function _start()
+	public function start( $id )
 	{
 		global $MySmartBB;
+		
+		$this->id = $id;
+		
+		$this->_commonCode();
 		
 		// ... //
 		
@@ -248,6 +240,8 @@ class MySmartReplyAddMOD
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_published' ] );
 			$MySmartBB->func->move( 'topic/' . $this->SubjectInfo['id'] . '/' . $this->SubjectInfo[ 'title' ] . $MySmartBB->_CONF['template']['password']);
+			
+			$MySmartBB->func->getFooter();
 		}
 	}
 	

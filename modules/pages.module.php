@@ -29,10 +29,8 @@ class MySmartAdsPageMOD
 		
 		// ... //
 		
-// 		$MySmartBB->_GET[ 'id' ] = (int) $MySmartBB->_GET[ 'id' ];
-		
-// 		if ( empty( $MySmartBB->_GET[ 'id' ] ) )
-// 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+ 		if ( empty( $this->id ) )
+ 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
 		
 		// ... //
 		

@@ -30,7 +30,8 @@
     {DB::getInfo}{$subject_res}{$subject}
 		<tr>
 			<td width="3%" class="row1" align="center">
-				<img src="{$subject['icon']}" alt="" />
+				<img src="{$bb_path}
+{$subject['icon']}" alt="" />
 			</td>
 			<td width="30%" class="row2">
 				<a href="{$init_path}

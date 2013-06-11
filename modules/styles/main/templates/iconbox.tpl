@@ -15,7 +15,9 @@
 				<input type="radio" value="{$icon['smile_path']}" name="icon" id="fp{$icon['id']}" />
 
 				<label for="fp{$icon['id']}">
-					<img src="{$icon['smile_path']}" alt="{$icon['smile_path']}" border="0" />
+					<img src="{$bb_path}
+					{$icon['smile_path']}" alt="{$bb_path}
+					{$icon['smile_path']}" border="0" />
 				</label>
 			{/DB::getInfo}
 		</td>

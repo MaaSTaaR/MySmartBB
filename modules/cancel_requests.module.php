@@ -53,7 +53,7 @@ class MySmartCReqMOD
 		    $MySmartBB->plugin->runHooks( 'cancel_request_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'request_canceled' ] );
-			$MySmartBB->func->move( 'index.php' );
+			$MySmartBB->func->move( '' );
 		}
 		
 		// ... //

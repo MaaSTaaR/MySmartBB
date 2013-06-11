@@ -35,7 +35,8 @@
 			<input type="checkbox" name="delete_list[]" value="{$MassegeList['id']}" />
 		</td>
 		<td class="row1" width="20%">
-			<a href="{$init_path}pm_show/{$MassegeList['id']}">{$MassegeList['title']}</a>
+			<a href="{$init_path}pm_show/
+			{$MassegeList['id']}">{$MassegeList['title']}</a>
 			<br />
 			{if {$INBOX_FOLDER}}
 			{if {$MassegeList['user_read']} == 1}
@@ -46,7 +47,8 @@
 			{/if}
 		</td>
 		<td class="row1" width="20%">
-			<a href="{$init_path}profile/{$MassegeList['user_from']}">{$MassegeList['user_from']}</a>
+			<a href="{$init_path}profile/
+			{$MassegeList['user_from']}">{$MassegeList['user_from']}</a>
 		</td>
 		<td class="row1" width="20%">
 			{$MassegeList['date']}

@@ -2,7 +2,7 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartTagsMOD' );
 

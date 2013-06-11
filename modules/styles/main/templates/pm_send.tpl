@@ -1,5 +1,3 @@
-<script src="includes/js/jquery.js"></script>
-
 <script language="javascript">
 function AddMoreResiver(x)
 {

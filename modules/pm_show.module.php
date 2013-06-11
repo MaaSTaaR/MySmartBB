@@ -2,8 +2,6 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('JAVASCRIPT_SMARTCODE',true);
-
 include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartPrivateMassegeShowMOD');
@@ -67,6 +65,8 @@ class MySmartPrivateMassegeShowMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'pm_doesnt_exist' ] );
 		
 		// ... //
+		
+		$MySmartBB->template->assign( 'SMARTCODE', true );
 		
 		$MySmartBB->func->showHeader( $MySmartBB->_CONF[ 'template' ][ 'MassegeRow' ][ 'title' ] );
 		

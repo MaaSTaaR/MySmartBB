@@ -95,7 +95,7 @@ class MySmartLoginMOD
 		
        	// ... //
       	
-      	$move_to = ( !$register_login ) ? $MySmartBB->func->getLastLocation() : 'index.php';
+      	$move_to = ( !$register_login ) ? $MySmartBB->func->getLastLocation() : '';
       	
       	$MySmartBB->func->move( $move_to );
 	}

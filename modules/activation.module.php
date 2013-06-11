@@ -89,7 +89,7 @@ class MySmartActiveMOD
 			    $MySmartBB->plugin->runHooks( 'active_member_success' );
 			    
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
-				$MySmartBB->func->move( 'index.php' );
+				$MySmartBB->func->move( '' );
 			}
 		}
 	}
