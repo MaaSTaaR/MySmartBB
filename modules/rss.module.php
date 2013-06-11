@@ -45,7 +45,7 @@ class MySmartRSSMOD
 		{
 			echo '<item>';
 			echo '<title>' . $row[ 'title' ] . '</title>';
-			echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $row[ 'id' ] . '</link>';
+			echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php/topic/' . $row[ 'id' ] . '/' . $row[ 'title' ] . '</link>';
 			echo '<description>' . $row[ 'text' ] . '</description>';
 			echo '</item>';
 		}
@@ -121,7 +121,7 @@ class MySmartRSSMOD
 		{
 			echo '<item>';
 			echo '<title>' . $row[ 'title' ] . '</title>';
-			echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php?page=topic&amp;show=1&amp;id=' . $row[ 'id' ] . '</link>';
+			echo '<link>' . $MySmartBB->func->getForumAdress() . 'index.php/topic/' . $row[ 'id' ] . '/' . $row[ 'title' ] . '</link>';
 			echo '<description>' . $row[ 'text' ] . '</description>';
 			echo '</item>';			
 		}

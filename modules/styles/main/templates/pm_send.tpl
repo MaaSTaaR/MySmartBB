@@ -64,7 +64,7 @@ $(document).ready(Ready);
 <div class="usercp_context {$_CONF['opp_align']}_side">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=pm_list&amp;list=1&amp;folder=inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['send_pm']}
+<a href="{$init_path}pm_list/inbox">{$lang['pm']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['send_pm']}
 {template}address_bar_part2{/template}
 {/if}
 

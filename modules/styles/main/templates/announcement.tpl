@@ -1,5 +1,5 @@
 {template}address_bar_part1{/template}
-<a href="index.php?page=annoncement&amp;list=1&amp;main=1">{$lang['announcements']}</a> {$_CONF['info_row']['adress_bar_separate']} {$AnnInfo['title']}
+<a href="{$init_path}annoncement">{$lang['announcements']}</a> {$_CONF['info_row']['adress_bar_separate']} {$AnnInfo['title']}
 {template}address_bar_part2{/template}
 
 <br />

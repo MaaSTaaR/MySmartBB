@@ -75,7 +75,7 @@ class MySmartPrivateMassegeSendMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_send_process' ] );
-		$MySmartBB->func->addressBar( '<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'pm_send_process' ] );
+		$MySmartBB->func->addressBar( '<a href="' . $MySmartBB->_CONF[ 'init_path' ] . 'pm_list/inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'pm_send_process' ] );
 		
 		// ... //
 		

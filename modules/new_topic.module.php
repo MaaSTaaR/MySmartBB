@@ -138,7 +138,7 @@ class MySmartTopicAddMOD
 		$MySmartBB->_POST[ 'title' ] 	= 	trim( $MySmartBB->_POST[ 'title' ] );
 		$MySmartBB->_POST[ 'text' ] 	= 	trim( $MySmartBB->_POST[ 'text' ] );
 		
-		$MySmartBB->func->addressBar( '<a href="index.php?page=forum&amp;show=1&amp;id=' . $this->SectionInfo[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . $MySmartBB->lang[ 'do_write_topic' ] );
+		$MySmartBB->func->addressBar( '<a href="' . $MySmartBB->_CONF[ 'init_path' ] . 'forum/' . $this->SectionInfo[ 'id' ] . '/' . $this->SectionInfo[ 'title' ] .  $MySmartBB->_CONF[ 'template' ][ 'password' ] . '">' . $this->SectionInfo[ 'title' ] . '</a> ' . $MySmartBB->_CONF[ 'info_row' ][ 'adress_bar_separate' ] . $MySmartBB->lang[ 'do_write_topic' ] );
 		
 		// ... //
 		
@@ -218,7 +218,7 @@ class MySmartTopicAddMOD
 			$MySmartBB->plugin->runHooks( 'new_topic_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'topic_published' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id . $MySmartBB->_CONF['template']['password']);
+			$MySmartBB->func->move( 'topic/' . $this->subject_id . '/' . $MySmartBB->_POST[ 'title' ] . $MySmartBB->_CONF['template']['password']);
 			
 			// ... //
 		}

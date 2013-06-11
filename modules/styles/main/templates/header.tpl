@@ -103,10 +103,10 @@
           		{if {$_CONF['info_row']['pm_feature']}}
           		|
           		{if {$_CONF['member_row']['unread_pm']} == 0}
-         			<a href="{$init_path}pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['no_new_pm']}</a>
+         			<a href="{$init_path}pm_list/inbox">{$lang['common']['no_new_pm']}</a>
          		{/if}
          		{if {$_CONF['member_row']['unread_pm']} > 0}
-         			<a class="unreadpm" href="{$init_path}pm_list&amp;list=1&amp;folder=inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
+         			<a class="unreadpm" href="{$init_path}pm_list/inbox">{$lang['common']['you_have']} {$_CONF['member_row']['unread_pm']} {$lang['common']['new_pm']}</a>
          		{/if}
          		{/if}
          		{hook}inside_user_info_box{/hook}

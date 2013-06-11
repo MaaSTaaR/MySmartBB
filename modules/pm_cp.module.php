@@ -46,7 +46,7 @@ class MySmartPrivateMassegeCPMOD
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'delete_process' ] );
-		$MySmartBB->func->addressBar('<a href="index.php?page=pm&amp;list=1&amp;folder=inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'delete_process' ] );
+		$MySmartBB->func->addressBar('<a href="' . $MySmartBB->_CONF[ 'init_path' ] . 'pm/inbox">' . $MySmartBB->lang[ 'template' ][ 'pm' ] . '</a> ' . $MySmartBB->_CONF['info_row']['adress_bar_separate'] . ' ' . $MySmartBB->lang[ 'delete_process' ] );
 		
 		// ... //
 		
@@ -105,7 +105,7 @@ class MySmartPrivateMassegeCPMOD
 			$MySmartBB->plugin->runHooks( 'pm_delete_success' );
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'delete_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=pm_list&list=1&folder=inbox' );
+			$MySmartBB->func->move( 'pm_list/inbox' );
 		}
 	}
 }

@@ -184,7 +184,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_sticked' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 	
@@ -197,7 +197,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_unsticked' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 	
@@ -220,7 +220,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_opened' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 	
@@ -259,7 +259,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_moved' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 	
@@ -272,7 +272,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_closed' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 	
@@ -321,7 +321,7 @@ class MySmartManagementMOD
 			}
 			
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_deleted' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&show=1&id=' . $this->subject_info[ 'id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
 		}
 	}
 
@@ -373,7 +373,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+			$MySmartBB->func->move('topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ]);
 		}
 	}
 	
@@ -407,7 +407,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'reply_deleted' ] );
-			$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->reply_info[ 'subject_id' ] );
+			$MySmartBB->func->move( 'topic/' . $this->reply_info[ 'subject_id' ] );
 		}
 	}
 	
@@ -453,7 +453,7 @@ class MySmartManagementMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->reply_info[ 'subject_id' ]);
+			$MySmartBB->func->move('topic/' . $this->reply_info[ 'subject_id' ]);
 		}
 	}
 	
@@ -520,7 +520,7 @@ class MySmartManagementMOD
      			// ... //
      			     			
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-				$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ] );
+				$MySmartBB->func->move( 'topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ] );
      		}
 		}
 	}
@@ -539,7 +539,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_raised' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+			$MySmartBB->func->move('topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ]);
 		}
 	}
 	
@@ -557,7 +557,7 @@ class MySmartManagementMOD
 		if ($update)
 		{
 	    	$MySmartBB->func->msg( $MySmartBB->lang[ 'subject_downed' ] );
-			$MySmartBB->func->move('index.php?page=topic&amp;show=1&amp;id=' . $this->subject_info[ 'id' ]);
+			$MySmartBB->func->move('topic/' . $this->subject_info[ 'id' ] . '/' . $this->subject_info[ 'title' ]);
 		}
 	}
 }

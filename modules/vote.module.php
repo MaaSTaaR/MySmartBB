@@ -99,7 +99,7 @@ class MySmartVoteMOD
 			if ( $update )
 			{
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'vote_succeed' ] );
-				$MySmartBB->func->move( 'index.php?page=topic&amp;show=1&amp;id=' . $Poll['subject_id'] );
+				$MySmartBB->func->move( 'topic/' . $Poll['subject_id'] );
 			}
 		}
 	}
