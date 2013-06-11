@@ -1,8 +1,11 @@
 <?php
 
+define( 'IN_MYSMARTBB', true );
+define( 'IN_ADMIN', true );
+
 // ... //
 
-define('IN_MYSMARTBB',true);
+include( 'common.php' );
 
 // ... //
 
@@ -53,7 +56,7 @@ $modules['member_search'] 	= 	'member_search.module.php';
 
 // ... //
 
-$page = empty($_GET['page']) ? 'index' : $_GET['page'];
+$page = empty( $MySmartBB->_GET[ 'page' ] ) ? 'index' : $MySmartBB->_GET[ 'page' ];
 
 // ... //
 
@@ -67,7 +70,7 @@ if (array_key_exists($page,$modules))
 if ($req_file != false)
 {
 	// ... //
-	
+
 	if (!file_exists('./modules/admin/' . $req_file))
 		die( 'Wrong path' );
 	

@@ -1,14 +1,8 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
-
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
-	
-define('CLASS_NAME','MySmartSectionGroupsMOD');
+include( 'common.module.php' );
 	
 class MySmartSectionGroupsMOD
 {

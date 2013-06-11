@@ -55,7 +55,7 @@
 				</div>
 				
 				<div class="menu_box main2">
-					<a href="{$init_path}static">{$lang['common']['statistics']}</a>
+					<a href="{$init_path}statistics">{$lang['common']['statistics']}</a>
 				</div>
 				
 				<div class="menu_box main2">

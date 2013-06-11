@@ -58,5 +58,8 @@ class MySmartCommon
 		die();
 	}
 }
-	
+
+$common = new MySmartCommon();
+$common->run();
+
 ?>

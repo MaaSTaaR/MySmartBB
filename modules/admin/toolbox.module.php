@@ -1,13 +1,9 @@
 <?php
 
-(!defined('IN_MYSMARTBB')) ? die() : '';
+( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
-define('IN_ADMIN',true);
+include( 'common.module.php' );
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
-	
 define('CLASS_NAME','MySmartToolboxMOD');
 	
 class MySmartToolboxMOD
