@@ -12,7 +12,8 @@
 	</tr>
 	{DB::getInfo}{$MembersList}
 	<tr align="center">
-		<td class="row1"><a href="index.php?page=profile&amp;show=1&amp;id={$MembersList['id']}" target="_blank">{$MembersList['username']}</a></td>
+		<td class="row1"><a href="{$init_path}profile/
+		{$MembersList['username']}" target="_blank">{$MembersList['username']}</a></td>
 		<td class="row1"><a href="admin.php?page=member_edit&amp;main=1&amp;id={$MembersList['id']}">{$lang['common']['edit']}</a></td>
 		<td class="row1"><a href="admin.php?page=member_del&amp;main=1&amp;id={$MembersList['id']}">{$lang['common']['delete']}</a></td>
 	</tr>

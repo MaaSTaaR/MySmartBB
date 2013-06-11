@@ -122,8 +122,10 @@ class MySmartFunctions
  	{
  		global $MySmartBB;
  		
- 		// The link will be inside the forum, so add the initial path in the begin of the link
- 		if ( !$outside )
+ 		// The link will be inside the forum, so add the initial path in the begin of the link.
+ 		// If the move inside the admin control panel don't add the initial path. We don't use
+ 		// SEO-friendly URLs inside the control panel.
+ 		if ( !$outside and !defined( 'IN_ADMIN' ) )
   			$site = $MySmartBB->_CONF[ 'init_path' ] . $site;
  		
  		echo "<META HTTP-EQUIV=\"refresh\" CONTENT=\"$m; URL=$site\">\n";

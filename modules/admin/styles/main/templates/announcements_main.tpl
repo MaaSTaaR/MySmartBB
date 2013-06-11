@@ -25,10 +25,12 @@
 	{DB::getInfo}{$AnnList}
 	<tr align="center">
 		<td class="row1">
-			<a href="index.php?page=announcement&amp;show=1&amp;id={$AnnList['id']}" target="_blank">{$AnnList['title']}</a>
+			<a href="{$init_path}announcement/
+			{$AnnList['id']}" target="_blank">{$AnnList['title']}</a>
 		</td>
 		<td class="row1">
-			<a href="index.php?page=profile&amp;show=1&amp;username={$AnnList['writer']}" target="_blank">{$AnnList['writer']}</a>
+			<a href="{$init_path}profile/
+			{$AnnList['writer']}" target="_blank">{$AnnList['writer']}</a>
 		</td>
 		<td class="row1">
 			{$AnnList['date']}

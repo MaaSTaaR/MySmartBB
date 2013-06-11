@@ -11,8 +11,11 @@
 </tr>
 {DB::getInfo}{$AttachList}
 <tr valign="top" align="center">
-	<td class="row1"><a href="index.php?page=topic&amp;show=1&amp;id={$AttachList['id']}" target="_blank">{$AttachList['title']}</a></td>
-	<td class="row1"><a href="index.php?page=profile&amp;show=1&amp;username={$AttachList['writer']}" target="_blank">{$AttachList['writer']}</a></td>
+	<td class="row1"><a href="{$init_path}topic/
+	{$AttachList['id']}/
+	{$AttachList['title']}" target="_blank">{$AttachList['title']}</a></td>
+	<td class="row1"><a href="{$init_path}profile/
+	{$AttachList['writer']}" target="_blank">{$AttachList['writer']}</a></td>
 </tr>
 {/DB::getInfo}
 </table>

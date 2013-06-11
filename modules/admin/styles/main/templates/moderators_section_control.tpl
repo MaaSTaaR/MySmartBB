@@ -19,7 +19,8 @@
 	{DB::getInfo}{$ModeratorsList}
 	<tr align="center">
 		<td class="row1" width="40%">
-			<a href="index.php?page=profile&show=1&id={$ModeratorsList['member_id']}" target="_blank">{$ModeratorsList['username']}</a>
+			<a href="{$init_path}profile/
+		{$ModeratorsList['username']}" target="_blank">{$ModeratorsList['username']}</a>
 		</td>
 		<td class="row1" width="20%">
 			<a href="admin.php?page=member_edit&amp;main=1&amp;id={$ModeratorsList['member_id']}">{$lang['edit_member']}</a>

@@ -22,19 +22,11 @@ class MySmartLocalCommon
 {
 	public function run()
 	{
-		// ... //
-		
 		@header('Content-Type: text/html; charset=utf-8'); // Viva utf ;)
 		
-		// ... //
-		
 		$this->_setConfigArray();
-		
-		// ... //
-		
 		$this->_protectionFunctions();
-		
-		// ... //
+		$this->_setInitPath();
 	}
 	
 	private function _setConfigArray()
@@ -100,6 +92,22 @@ class MySmartLocalCommon
  		}
  		
  		// ... //
+	}
+	
+	private function _setInitPath()
+	{
+		global $MySmartBB;
+		
+		// After using user friendly urls we need to specify the initial of the links.
+		// {$init_path} will do the job. We should attach this variable in the begin of
+		// every link.
+		$bb_path = '/' . $MySmartBB->func->getDirPath();
+		$init_path = $bb_path . 'index.php/';
+		
+		$MySmartBB->template->assign( 'init_path', $init_path );
+		$MySmartBB->template->assign( 'bb_path', $bb_path );
+		
+		$MySmartBB->_CONF[ 'init_path' ] = $init_path;
 	}
 }
 

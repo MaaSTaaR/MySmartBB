@@ -268,18 +268,7 @@ class MySmartCommon
 	{
 		global $MySmartBB;
 				
-		$MySmartBB->template->assign('_COOKIE',$MySmartBB->_COOKIE);
-		
-		// After using user friendly urls we need to specify the initial of the links.
-		// {$init_path} will do the job. We should attach this variable in the begin of
-		// every link.
-		$bb_path = '/' . $MySmartBB->func->getDirPath();
-		$init_path = $bb_path . 'index.php/';
-		
-		$MySmartBB->template->assign( 'init_path', $init_path );
-		$MySmartBB->template->assign( 'bb_path', $bb_path );
-		
-		$MySmartBB->_CONF[ 'init_path' ] = $init_path;
+		$MySmartBB->template->assign( '_COOKIE', $MySmartBB->_COOKIE );
 	}
 }
 

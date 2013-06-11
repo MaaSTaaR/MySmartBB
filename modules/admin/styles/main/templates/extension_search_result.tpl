@@ -22,7 +22,9 @@
 		</tr>
 		<tr align="center">
 			<td class="row1">
-				<a href="./index.php?page=download&amp;attach=1&amp;id={$Inf['id']}">{$Inf['filename']}</a>
+				<a href="{$init_path}download/attach/
+				{$Inf['id']}">
+				{$Inf['filename']}</a>
 			</td>
 			<td class="row1">
 				{$Inf['visitor']}
@@ -31,7 +33,8 @@
 				{$Inf['filesize']}
 			</td>
 			<td class="row1">
-				<a href="./index.php?page=topic&amp;show=1&amp;id={$Inf['subject_id']}" target="_blank">[{$lang['see_topic']}‎]‏</a>
+				<a href="{$init_path}topic/
+				{$Inf['subject_id']}" target="_blank">[{$lang['see_topic']}‎]‏</a>
 			</td>
 		</tr>
 	</table>

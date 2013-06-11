@@ -70,7 +70,7 @@ if (array_key_exists($page,$modules))
 if ($req_file != false)
 {
 	// ... //
-
+	
 	if (!file_exists('./modules/admin/' . $req_file))
 		die( 'Wrong path' );
 	
