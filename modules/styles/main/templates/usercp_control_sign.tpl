@@ -2,7 +2,7 @@
 
 <div class="usercp_context {$_CONF['opp_align']}_side">
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['your_sign']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['your_sign']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
@@ -26,7 +26,7 @@
 
 {hook}after_current_signature_table{/hook}
 
-<form method="post" name="topic" action="index.php?page=usercp_control_signature&amp;start=1">
+<form method="post" name="topic" action="{$init_path}usercp_control_signature/start">
 
 {template}toolbox{/template}
 

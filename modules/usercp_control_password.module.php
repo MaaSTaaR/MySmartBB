@@ -5,49 +5,32 @@
 define( 'JAVASCRIPT_func', true );
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartUserCPPasswordMOD' );
 
 class MySmartUserCPPasswordMOD
-{
+{	
 	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'usercp_control_password' );
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		
-		if ( $MySmartBB->_GET[ 'main' ] )				
-		{
-			$this->_passwordMain();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_passwordChange();
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _passwordMain()
-	{
-		global $MySmartBB;
+		$this->commonProcesses();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_password' ] );
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_password_main' );
 		
 		$MySmartBB->template->display( 'usercp_control_password' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _passwordChange()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		// ... //
 		
@@ -87,7 +70,19 @@ class MySmartUserCPPasswordMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_password_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp_control_password&amp;main=1' );
+			$MySmartBB->func->move( 'usercp_control_password' );
 		}
+		
+		$MySmartBB->func->getFooter();
+	}
+	
+	private function commonProcesses()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'usercp_control_password' );
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 	}
 }

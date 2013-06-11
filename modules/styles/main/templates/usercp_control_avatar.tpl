@@ -44,7 +44,7 @@ $(document).ready(Ready);
 <div class="usercp_context {$_CONF['opp_align']}_side">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['avatar']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['avatar']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
@@ -67,7 +67,7 @@ $(document).ready(Ready);
 
 {hook}after_current_avatar_table{/hook}
 
-<form enctype="multipart/form-data" name="avatar" method="post" action="index.php?page=usercp_control_avatar&amp;start=1">
+<form enctype="multipart/form-data" name="avatar" method="post" action="{$init_path}usercp_control_avatar/start">
 	<table id="avatar_options_table" align="center" border="1" width="80%" class="t_style_b">
 		<tr align="center">
 			<td width="80%" class="main1 rows_space">

@@ -33,7 +33,9 @@
 				<img src="{$subject['icon']}" alt="" />
 			</td>
 			<td width="30%" class="row2">
-				<a href="{$init_path}topic/{$subject['id']}/{$subject['title']}">
+				<a href="{$init_path}
+				topic/{$subject['id']}/
+				{$subject['title']}">
 					{$subject['title']}
 				</a> 
 				{if {$subject['close']}}

@@ -45,37 +45,37 @@
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_info&amp;main=1">{$lang['personal_info']}</a>
+     			<a href="{$init_path}usercp_control_info">{$lang['personal_info']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_setting&amp;main=1">{$lang['settings']}</a>
+     			<a href="{$init_path}usercp_control_setting">{$lang['settings']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_signature&amp;main=1">{$lang['change_sign']}</a>
+     			<a href="{$init_path}usercp_control_signature">{$lang['change_sign']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_password&amp;main=1">{$lang['change_password']}</a>
+     			<a href="{$init_path}usercp_control_password">{$lang['change_password']}</a>
      		</td>
      	</tr>
      	
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_email&amp;main=1">{$lang['change_email']}</a>
+     			<a href="{$init_path}usercp_control_email">{$lang['change_email']}</a>
      		</td>
      	</tr>
      	{if {$_CONF['info_row']['allow_avatar']}}
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_control_avatar&amp;main=1">{$lang['change_avatar']}</a>
+     			<a href="{$init_path}usercp_control_avatar">{$lang['change_avatar']}</a>
      		</td>
      	</tr>
      	{/if}
@@ -87,7 +87,7 @@
      	</tr>
      	<tr>
      		<td class="row1" align="center">
-     			<a href="index.php?page=usercp_option_subject&amp;main=1">{$lang['own_topics']}</a>
+     			<a href="{$init_path}usercp_option_subject">{$lang['own_topics']}</a>
      		</td>
      	</tr>
      	{hook}end_of_member_options{/hook}

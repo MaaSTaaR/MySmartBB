@@ -5,9 +5,7 @@
 define( 'JAVASCRIPT_func', true );
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartUserCPEmailMOD' );
 
@@ -17,37 +15,22 @@ class MySmartUserCPEmailMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'usercp_control_email' ) ;
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		
-		if ( $MySmartBB->_GET[ 'main' ] )				
-		{
-			$this->_emailMain();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_emailChange();
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _emailMain()
-	{
-		global $MySmartBB;
+		$this->commonProcesses();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'change_email' ] );
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_email_main' );
 		
 		$MySmartBB->template->display( 'usercp_control_email' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _emailChange()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		// ... //
 		
@@ -102,7 +85,19 @@ class MySmartUserCPEmailMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_email_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp_control_email&amp;main=1' );
+			$MySmartBB->func->move( 'usercp_control_email' );
 		}
+		
+		$MySmartBB->func->getFooter();
+	}
+	
+	private function commonProcesses()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'usercp_control_email' ) ;
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 	}
 }

@@ -3,12 +3,12 @@
 <div class="usercp_context {$_CONF['opp_align']}_side">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['personal_info']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['personal_info']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
 
-<form name="info" method="post" action="index.php?page=usercp_control_info&amp;start=1">
+<form name="info" method="post" action="{$init_path}usercp_control_info/start">
 	<table id="info_table" align="center" border="1" width="60%" class="t_style_b">
 		<tr align="center">
 			<td class="main1 rows_space" width="60%" colspan="2">

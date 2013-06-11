@@ -5,9 +5,7 @@
 define( 'JAVASCRIPT_func', true );
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname( __FILE__ ) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartUserCPSettingMOD' );
 
@@ -17,30 +15,7 @@ class MySmartUserCPSettingMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'usercp_control_setting' );
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		
-		if ( $MySmartBB->_GET[ 'main' ] )				
-		{
-			$this->_settingMain();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_settingChange();
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _settingMain()
-	{
-		global $MySmartBB;
+		$this->commonProcesses();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'edit_options' ] );
 		
@@ -53,11 +28,15 @@ class MySmartUserCPSettingMOD
 		$MySmartBB->rec->getList();
 		
 		$MySmartBB->template->display( 'usercp_control_setting' );
+		
+		$MySmartBB->func->getFooter();
 	}
 		
-	private function _settingChange()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		// ... //
 		
@@ -79,7 +58,19 @@ class MySmartUserCPSettingMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp_control_setting&amp;main=1' );
+			$MySmartBB->func->move( 'usercp_control_setting' );
 		}
+		
+		$MySmartBB->func->getFooter();
+	}
+	
+	private function commonProcesses()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'usercp_control_setting' );
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 	}
 }

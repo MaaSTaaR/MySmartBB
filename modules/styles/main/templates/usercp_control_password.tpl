@@ -3,12 +3,12 @@
 <div class="usercp_context {$_CONF['opp_align']}_side">
 
 {template}address_bar_part1{/template}
-<a href="index.php?page=usercp&amp;index=1">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['change_password']}
+<a href="{$init_path}usercp">{$lang['usercp']}</a> {$_CONF['info_row']['adress_bar_separate']} {$lang['change_password']}
 {template}address_bar_part2{/template}
 
 {hook}after_adress_bar{/hook}
 
-<form method="post" action="index.php?page=usercp_control_password&amp;start=1">
+<form method="post" action="{$init_path}usercp_control_password/start">
 
 <table id="change_password_table" align="center" border="1" width="60%" class="t_style_b">
 	<tr align="center">

@@ -24,10 +24,10 @@
 <body>
 
 	{if JAVASCRIPT_SMARTCODE}
-	<script src="includes/js/SmartCode.js"></script>
+	<script src="{$bb_path}includes/js/SmartCode.js"></script>
 	{/if}
 	{if {$JQUERY}}
-	<script src="includes/js/jquery.js"></script>
+	<script src="{$bb_path}includes/js/jquery.js"></script>
 	{/if}
 
 	<div id="main">

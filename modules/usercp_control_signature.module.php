@@ -5,43 +5,17 @@
 define('JAVASCRIPT_func',true);
 define('JAVASCRIPT_SMARTCODE',true);
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartUserCPSignatureMOD');
 
 class MySmartUserCPSignatureMOD
-{
+{	
 	public function run()
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'usercp_control_signature' );
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-		
-		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'sig_allow' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
-		
-		$MySmartBB->load( 'icon,toolbox' );
-		
-		if ( $MySmartBB->_GET[ 'main' ] )
-		{
-			$this->_signMain();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_signChange();
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _signMain()
-	{
-		global $MySmartBB;
+		$this->commonProcess();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'compose_signature' ] );
 		
@@ -52,11 +26,15 @@ class MySmartUserCPSignatureMOD
 		$MySmartBB->smartparse->replace_smiles( $MySmartBB->_CONF[ 'template' ][ 'Sign' ] );
 		
 		$MySmartBB->template->display( 'usercp_control_sign' );
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _signChange()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcess();
 		
 		// ... //
 		
@@ -78,10 +56,26 @@ class MySmartUserCPSignatureMOD
 		if ( $update )
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move('index.php?page=usercp_control_signature&amp;main=1');
+			$MySmartBB->func->move('usercp_control_signature');
 		}
+		
+		$MySmartBB->func->getFooter();
 		
 		// ... //
 	}
-
+	
+	private function commonProcess()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->loadLanguage( 'usercp_control_signature' );
+		
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
+		
+		if ( !$MySmartBB->_CONF[ 'group_info' ][ 'sig_allow' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
+		
+		$MySmartBB->load( 'icon,toolbox' );
+	}
 }

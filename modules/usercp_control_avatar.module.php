@@ -5,9 +5,7 @@
 define( 'JAVASCRIPT_func', true );
 define( 'JAVASCRIPT_SMARTCODE', true );
 
-define( 'COMMON_FILE_PATH', dirname(__FILE__) . '/common.module.php' );
-
-include( 'common.php' );
+include( 'common.module.php' );
 
 define( 'CLASS_NAME', 'MySmartUserCPAvatarMOD' );
 
@@ -19,33 +17,7 @@ class MySmartUserCPAvatarMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->loadLanguage( 'usercp_control_avatar' );
-		
-		// ... //
-		
-		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
-			
-		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'allow_avatar' ] )
-			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
-		
-		// ... //
-		
-		if ( $MySmartBB->_GET[ 'main' ] )				
-		{
-			$this->_avatarMain();
-		}
-		elseif ( $MySmartBB->_GET[ 'start' ] )
-		{
-			$this->_avatarChange();
-		}
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _avatarMain()
-	{
-		global $MySmartBB;
+		$this->commonProcesses();
 		
 		// This line will include jQuery (Javascript library)
 		$MySmartBB->template->assign( 'JQUERY', true );
@@ -90,11 +62,15 @@ class MySmartUserCPAvatarMOD
 		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_main' );
 		
 		$MySmartBB->template->display('usercp_control_avatar');
+		
+		$MySmartBB->func->getFooter();
 	}
 	
-	private function _avatarChange()
+	public function start()
 	{
 		global $MySmartBB;
+		
+		$this->commonProcesses();
 		
 		$MySmartBB->load( 'attach' );
 		
@@ -136,8 +112,10 @@ class MySmartUserCPAvatarMOD
 		    $MySmartBB->plugin->runHooks( 'usercp_control_avatar_action_success' );
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-			$MySmartBB->func->move( 'index.php?page=usercp_control_avatar&main=1' );
+			$MySmartBB->func->move( 'usercp_control_avatar' );
 		}
+		
+		$MySmartBB->func->getFooter();
 	}
 	
 	private function _fromList()
@@ -214,6 +192,23 @@ class MySmartUserCPAvatarMOD
 
 		if ( $size[ 1 ] > $MySmartBB->_CONF[ 'info_row' ][ 'max_avatar_height' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forbidden_height' ] );
+	}
+	
+	private function commonProcesses()
+	{
+		global $MySmartBB;
+	
+		$MySmartBB->loadLanguage( 'usercp_control_avatar' );
+	
+		// ... //
+	
+		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
+			
+		if ( !$MySmartBB->_CONF[ 'info_row' ][ 'allow_avatar' ] )
+			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_use_this_feature' ] );
+	
+		// ... //
 	}
 }
 

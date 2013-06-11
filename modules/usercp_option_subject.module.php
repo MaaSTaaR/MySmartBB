@@ -2,9 +2,7 @@
 
 (!defined('IN_MYSMARTBB')) ? die() : '';
 
-define('COMMON_FILE_PATH',dirname(__FILE__) . '/common.module.php');
-
-include('common.php');
+include( 'common.module.php' );
 
 define('CLASS_NAME','MySmartUserCPSubjectMOD');
 
@@ -19,10 +17,7 @@ class MySmartUserCPSubjectMOD
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
-		if ( $MySmartBB->_GET[ 'main' ] )
-		{
-			$this->_subjectListMain();
-		}
+		$this->_subjectListMain();
 		
 		$MySmartBB->func->getFooter();
 	}
