@@ -81,7 +81,7 @@ class MySmartTopicAddMOD
 		// ... //
 		
 		// Check if the section has been protected with a password
-		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
+		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ] );
 		
 		// ... //
 		

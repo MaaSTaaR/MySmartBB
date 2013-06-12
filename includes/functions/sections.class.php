@@ -668,18 +668,28 @@ class MySmartSection
 	 * @param $section_id The id of the forum to be checked.
 	 * @param $section_password The password of the forum.
 	 * @param $password The password that the member provided. Should be provided encrypted using base64.
+	 * 						It can be null and in this case the function checks the cookie forum_password_id.
 	 * 
 	 * @return true for if the password correct, otherwise false. If the member
 	 * 			didn't provide password ask the member for password.
 	 * 
 	 * @see MySmartSection::checkPassword()
 	 */
-	public function forumPassword( $section_id, $section_password, $password )
+	public function forumPassword( $section_id, $section_password, $password = null )
 	{
+		$cookie_name = $this->engine->_CONF[ 'forum_password_cookie' ];
+		
+		if ( is_null( $password ) )
+		{
+			$passwords = unserialize( stripslashes( $this->engine->_COOKIE[ $cookie_name ] ) );
+
+			$password = $passwords[ $section_id ];
+		}
+		
 		if ( !empty( $section_password ) and !$this->engine->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 		{
 			if ( empty( $password ) )
-	   		{
+	   		{	
 	   			$this->engine->template->assign( 'section_id', $section_id );
 	   			
 	 			$this->engine->template->display( 'forum_password' );
@@ -695,9 +705,20 @@ class MySmartSection
 				}
 				else
 				{
-					$this->engine->_CONF[ 'template' ][ 'password' ] = '&amp;password=' . base64_encode( $password );
+					$passwords = array();
 					
-					return true;
+					if ( $this->engine->func->isCookie( $cookie_name ) )
+					{
+						$passwords = unserialize( stripslashes( $this->engine->_COOKIE[ $cookie_name ] ) );
+						
+						if ( $passwords === false )
+							$passwords = array();
+					}
+					$passwords[ $section_id ] = base64_encode( $password );
+					
+					$set = setcookie( $cookie_name, serialize( $passwords ), 0, $this->engine->_CONF[ 'bb_path' ] );
+					
+					return ( $set ) ? true : false;
 				}
 			}
 		}

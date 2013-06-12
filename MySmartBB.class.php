@@ -194,19 +194,20 @@ class MySmartBB
   	
   	private function initVariables()
   	{
-    	$this->_CONF['temp']					=	array();
-    	$this->_CONF['now']						=	time();
- 		$this->_CONF['timeout']					=	time()-300;
- 		$this->_CONF['date']					=	date('j/n/Y');
- 		$this->_CONF['day']						=	date('D');
- 		$this->_CONF['temp']['query_num']		=	0;
- 		$this->_CONF['username_cookie']			=	'MySmartBB_username';
- 		$this->_CONF['password_cookie']			=	'MySmartBB_password';
- 		$this->_CONF['lastvisit_cookie']		=	'MySmartBB_lastvisit';
- 		$this->_CONF['admin_username_cookie']	=	'MySmartBB_admin_username';
- 		$this->_CONF['admin_password_cookie']	=	'MySmartBB_admin_password';
- 		$this->_CONF['style_cookie']			=	'MySmartBB_style';
- 		$this->_CONF['ip'] 						= 	$this->_SERVER['REMOTE_ADDR'];
+    	$this->_CONF[ 'temp' ]						=	array();
+    	$this->_CONF[ 'now' ]						=	time();
+ 		$this->_CONF[ 'timeout' ]					=	time()-300;
+ 		$this->_CONF[ 'date' ]						=	date('j/n/Y');
+ 		$this->_CONF[ 'day' ]						=	date('D');
+ 		$this->_CONF[ 'temp' ][ 'query_num' ]		=	0;
+ 		$this->_CONF[ 'username_cookie' ]			=	'MySmartBB_username';
+ 		$this->_CONF[ 'password_cookie' ]			=	'MySmartBB_password';
+ 		$this->_CONF[ 'lastvisit_cookie' ]			=	'MySmartBB_lastvisit';
+ 		$this->_CONF[ 'admin_username_cookie' ]		=	'MySmartBB_admin_username';
+ 		$this->_CONF[ 'admin_password_cookie' ]		=	'MySmartBB_admin_password';
+ 		$this->_CONF[ 'style_cookie' ]				=	'MySmartBB_style';
+ 		$this->_CONF[  'forum_password_cookie' ] 	=	'MySmartBB_forum_password';
+ 		$this->_CONF[ 'ip' ] 						= 	$this->_SERVER['REMOTE_ADDR'];
   	}
   	
   	// ... //

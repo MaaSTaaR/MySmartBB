@@ -154,7 +154,7 @@ class MySmartForumMOD
 		// ... //
 		
 		// Check if the section has been protected with a password
-		$MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
+		$MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ] );
      	
      	// ... //
      	

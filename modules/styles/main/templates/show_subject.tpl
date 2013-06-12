@@ -1,8 +1,7 @@
 {template}address_bar_part1{/template}
 <a href="{$init_path}forum/
 {$section_info['id']}/
-{$section_info['title']}
-{$password}">
+{$section_info['title']}">
 {$section_info['title']}
 </a> 
 {$_CONF['info_row']['adress_bar_separate']} <img src="{$bb_path}

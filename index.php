@@ -53,6 +53,7 @@ $modules[ 'usercp_control_email' ] 		    =  	'usercp_control_email.module.php';
 $modules[ 'usercp_control_avatar' ] 		=  	'usercp_control_avatar.module.php';
 $modules[ 'usercp_option_subject' ] 		=  	'usercp_option_subject.module.php';
 $modules[ 'plugin' ] 		                =  	'plugin.module.php';
+$modules[ 'check_forum_password' ] 		    =  	'check_forum_password.module.php';
 
 // ... //
 

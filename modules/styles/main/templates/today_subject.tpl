@@ -29,7 +29,7 @@
 		<td width="30%" class="row2">
 			<a href="{$init_path}topic/
 			{$subject_list['id']}/
-			{$subject_list['title']}{$password}">
+			{$subject_list['title']}">
 				{$subject_list['title']}
 			</a>
 			{if {$subject_list['close']}}

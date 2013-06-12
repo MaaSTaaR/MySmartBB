@@ -9,7 +9,7 @@
 	</tr>
 	<tr align="center">
 		<td class="row1" width="50%">
-			<form method="post" action="index.php?page=forum&amp;password_check=1&amp;id={$section_id}">
+			<form method="post" action="{$init_path}check_forum_password/{$section_id}">
 				<input name="password" type="password" />
 				<input name="button" type="submit" value="{$lang['common']['submit']}" />
 			</form>

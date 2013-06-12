@@ -17,7 +17,7 @@
 	<br />
 	
 	{template}address_bar_part1{/template}
-	<a href="{$init_path}forum/{$section_info['id']}/{$section_info['title']}{$password}">
+	<a href="{$init_path}forum/{$section_info['id']}/{$section_info['title']}">
 	{$section_info['title']}
 	</a> {$_CONF['info_row']['adress_bar_separate']} <a href="{$Info['reply_id']}">{$Info['title']}</a>
 	{template}address_bar_part2{/template}

@@ -91,7 +91,7 @@ $(document).ready(Ready);
 {template}address_bar_part1{/template}
 <a href="{$init_path}forum/
 {$id}/
-{$section_info['title']}{$password}">
+{$section_info['title']}">
 	{$section_info['title']}
 </a> {$_CONF['info_row']['adress_bar_separate']} {$lang['add_new_topic']}
 {template}address_bar_part2{/template}
@@ -100,7 +100,7 @@ $(document).ready(Ready);
 
 <br />
 
-<form name="topic" method="post" enctype="multipart/form-data" action="{$init_path}new_topic/start/{$id}{$password}">
+<form name="topic" method="post" enctype="multipart/form-data" action="{$init_path}new_topic/start/{$id}">
 
 {template}iconbox{/template}
 

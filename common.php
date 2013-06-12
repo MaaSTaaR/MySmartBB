@@ -102,6 +102,7 @@ class MySmartLocalCommon
 		$MySmartBB->template->assign( 'bb_path', $bb_path );
 		
 		$MySmartBB->_CONF[ 'init_path' ] = $init_path;
+		$MySmartBB->_CONF[ 'bb_path' ] = $bb_path;
 	}
 }
 

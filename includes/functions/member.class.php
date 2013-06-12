@@ -90,8 +90,9 @@ class MySmartMember
 
 		$del[ 1 ] = setcookie( $this->engine->_CONF[ 'username_cookie' ], '' );
      	$del[ 2 ] = setcookie( $this->engine->_CONF[ 'password_cookie' ], '' );
+     	$del[ 3 ] = setcookie( $this->engine->_CONF[ 'forum_password_cookie' ], '', 0, $this->engine->_CONF[ 'bb_path' ] );
      	
-     	return ( $del[ 1 ] and $del[ 2 ] ) ? true : false;
+     	return ( $del[ 1 ] and $del[ 2 ] and $del[ 3 ] ) ? true : false;
 	}
 	
 	// ... //

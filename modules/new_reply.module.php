@@ -89,7 +89,7 @@ class MySmartReplyAddMOD
 		
 		// ... //
 		
-		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ], $MySmartBB->_GET[ 'password' ] );
+		$MySmartBB->section->forumPassword( $this->SectionInfo[ 'id' ], $this->SectionInfo[ 'section_password' ] );
 		
 		// ... //
 		
