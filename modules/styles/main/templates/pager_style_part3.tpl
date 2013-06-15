@@ -1,1 +1,1 @@
-	<a href="[l]&amp;[v]=[c]">[p]</a>
+	<a href="[prefix][p][suffix]">[p]</a>

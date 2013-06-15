@@ -9,12 +9,14 @@ define('CLASS_NAME','MySmartPrivateMassegeListMOD');
 class MySmartPrivateMassegeListMOD
 {
 	private $folder;
+	private $curr_page;
 	
-	public function run( $folder )
+	public function run( $folder, $curr_page = 1 )
 	{
 		global $MySmartBB;
 		
 		$this->folder = $folder;
+		$this->curr_page = (int) $curr_page;
 		
 		// ... //
 		
@@ -47,11 +49,7 @@ class MySmartPrivateMassegeListMOD
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'pm_list' ] );
 		
 		// ... //
-		
-		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
-		
-		// ... //
-		
+				
 		$field = ( $this->folder == 'inbox' ) ? 'user_to' : 'user_from';
 		$folder = ( $this->folder == 'inbox' ) ? 'inbox' : 'sent';
 		
@@ -66,12 +64,11 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'pm' ];
 		
-		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$number;
-		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'perpage' ];
-		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET[ 'count' ];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=pm_list&amp;list=1&amp;folder=' . $this->folder;
-		$MySmartBB->rec->pager['var'] 		= 	'count';
+		$MySmartBB->rec->pager 					= 	array();
+		$MySmartBB->rec->pager[ 'total' ]		= 	$number;
+		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'perpage' ];
+		$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
+		$MySmartBB->rec->pager[ 'prefix' ] 		= 	$MySmartBB->_CONF[ 'init_path' ] . 'pm_list/' . $this->folder . '/';
 		
 		$MySmartBB->rec->order = "id DESC";
 		

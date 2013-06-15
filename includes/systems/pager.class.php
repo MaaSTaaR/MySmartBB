@@ -12,15 +12,16 @@ class MySmartPager
 	private $total;					// The total number of rows
 	private $rows_perpage;			// How many rows per page
 	private $count;					// Variable which help us to do pagers
-	private $location;				// The web page location
+	private $prefix;				// The prefix of web page location
+	private $suffix;				// The suffix of web page location
 	private $location_ext;
 	private $pages_number;			// The number of pages
-	private $var_name;				// The count's variable name
 	private $print_style = array();	// The style of print
 	private $limit;					// How many of pages will be printed?
 	private $i;						// Will use it in loop
 	private $page = 1;				// The current page (Inside the loop)
 	private $p;
+	private $curr_page;
 	
 	public function setOutput( $style )
 	{
@@ -33,29 +34,17 @@ class MySmartPager
 	/**
 	 * This function setup important variables and count the pages number
 	 */
-	public function start( $total, $rows_perpage, $count, $location, $var )
+	public function start( $total, $rows_perpage, $curr_page, $prefix = null, $suffix = null )
 	{
-		$this->total 		= 	($total < 0) ? 0 : $total;
-		$this->rows_perpage = 	($rows_perpage < 0) ? 10 : $rows_perpage;
-		$this->count 		= 	($count < 0) ? 0 : $count;
-		$this->location		=	$location;
-		$this->var_name		=	$var;
+		$this->total 		= 	( $total < 0 ) ? 0 : $total;
+		$this->rows_perpage = 	( $rows_perpage < 0 ) ? 10 : $rows_perpage;
+		$this->curr_page 	= 	( $curr_page < 1 ) ? 1 : $curr_page;
+		$this->prefix		=	$prefix;
+		$this->suffix		=	$suffix;
 		$this->limit		=	3; // TODO : I'll be glad if we use a dynamic value ;-)
 		
 		// We want integer only in pages number, so we use ceil();
 		$this->pages_number = 	ceil( $this->total / $this->rows_perpage );
-		
-		if ( strstr( $this->location, '#' ) != false )
-		{
-			$loc = explode( '#', $this->location );
-			
-			$this->location = $loc[ 0 ];
-			$this->location_ext = '#' . $loc[ 1 ];
-		}
-		else
-		{
-			$this->location_ext = '';
-		}
 	}
 	
 	/**
@@ -67,15 +56,11 @@ class MySmartPager
 		
 		// ... //
 		
-		$current_page = ( ( $this->count / $this->rows_perpage ) + 1 );
-		
-		// ... //
-		
 		// We should always print the First Page
 		
-		if ( $current_page != 1 )
+		if ( $this->curr_page != 1 )
 		{
-			$this->i = 0;
+			//$this->i = 0;
 			$this->page = 1;
 			
 			$output .= $this->_proc( $this->print_style[ 2 ] );
@@ -84,17 +69,10 @@ class MySmartPager
 		// ... //
 		
 		// Shows the previous page if the current page is the 3rd or less
-		if ( $current_page <= 3 )
-		{
-			$this->page = ( $current_page > 2 ) ? $current_page - 1 : $current_page;
-			$this->i = ( $current_page > 2 ) ? $this->count - $this->rows_perpage : $this->count;
-		}
-		// Shows the _two_ previous pages if the current page is the 4th or greater
-		else
-		{
-			$this->page = $current_page - 2;
-			$this->i = $this->count - ( $this->rows_perpage * 2 );
-		}
+		if ( $this->curr_page <= 3 )
+			$this->page = ( $this->curr_page > 2 ) ? $this->curr_page - 1 : $this->curr_page;
+		else // Shows the _two_ previous pages if the current page is the 4th or greater
+			$this->page = $this->curr_page - 2;
 		
 		// ... //
 		
@@ -110,13 +88,11 @@ class MySmartPager
 				{
 					if ( $this->page < $this->pages_number )
 					{
-						if ( $current_page == $this->page )
+						if ( $this->curr_page == $this->page )
 							$output .= $this->_proc( $this->print_style[ 1 ] );
 						else
 							$output .= $this->_proc( $this->print_style[ 2 ] );
-					
-				
-						$this->i += $this->rows_perpage;
+						
 						$this->page++;
 					}
 					else
@@ -126,10 +102,9 @@ class MySmartPager
 				}
 				
 				// ~ The last page ~ //
-				$this->i = ( $this->pages_number * $this->rows_perpage ) - $this->rows_perpage;
 				$this->page = $this->pages_number;
 				
-				if ( $current_page == $this->page )
+				if ( $this->curr_page == $this->page )
 					$output .= $this->_proc( $this->print_style[ 1 ] );
 				else
 					$output .= $this->_proc( $this->print_style[ 2 ] );
@@ -138,7 +113,7 @@ class MySmartPager
 			{
 				while ( $this->page <= $this->pages_number )
 				{
-					if ( $current_page == $this->page )
+					if ( $this->curr_page == $this->page )
 						$output .= $this->_proc( $this->print_style[ 1 ] );
 					else
 						$output .= $this->_proc( $this->print_style[ 2 ] );
@@ -154,19 +129,11 @@ class MySmartPager
 		return $output;
 	}
 	
-	function _proc($string)
+	private function _proc( $string )
 	{
-		/**
-		 * [l] = location
-		 * [v] = var_name
-		 * [c] = i
-		 * [p] = page
-		 */
-		 
-		$string = str_replace('[l]',$this->location,$string);
-		$string = str_replace('[v]',$this->var_name,$string);
-		$string = str_replace('[c]',$this->i . $this->location_ext,$string);
-		$string = str_replace('[p]',$this->page,$string);
+		$string = str_replace( '[p]', $this->page, $string );
+		$string = str_replace( '[prefix]', $this->prefix, $string );
+		$string = str_replace( '[suffix]', $this->suffix, $string );
 		
 		return $string;
 	}

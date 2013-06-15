@@ -13,12 +13,14 @@ class MySmartForumMOD
 	private $subject_res;
 	private $stick_subject_res;
 	private $id;
+	private $curr_page;
 	
-	public function run( $id )
+	public function run( $id, $title = null, $curr_page = 1 )
 	{
 		global $MySmartBB;
 		
 		$this->id = (int) $id;
+		$this->curr_page = (int) $curr_page;
 		
 		$this->_initForum();
 		
@@ -328,18 +330,16 @@ class MySmartForumMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->filter = $filter;
 		$MySmartBB->rec->order = $order;
 		
 		$MySmartBB->rec->pager 					= 	array();
 		$MySmartBB->rec->pager[ 'total' ]		= 	$subject_total;
+		$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
 		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'subject_perpage' ];
-		$MySmartBB->rec->pager[ 'count' ] 		= 	$MySmartBB->_GET[ 'count' ];
-		$MySmartBB->rec->pager[ 'location' ] 	= 	$this->engine->_CONF[ 'init_path' ] . 'forum/' . $this->Section[ 'id' ] . '/' . $this->Section[ 'title' ] . '#subject_table';
-		$MySmartBB->rec->pager[ 'var' ] 		= 	'count';
+		$MySmartBB->rec->pager[ 'prefix' ]		=	$MySmartBB->_CONF[ 'init_path' ] . 'forum/' . $this->Section[ 'id' ] . '/' . $this->Section[ 'title' ] . '/';
+		$MySmartBB->rec->pager[ 'suffix' ]		=	'#subject_table';
 		
 		$this->subject_res = &$MySmartBB->func->setResource();
 		

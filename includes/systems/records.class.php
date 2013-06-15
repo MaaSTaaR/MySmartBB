@@ -134,22 +134,22 @@ class MySmartRecords
 	private function initPager( $statement )
 	{
 	    if (!isset( $this->pager[ 'total' ] ) or !isset( $this->pager[ 'perpage' ] ) 
-	        or !isset( $this->pager[ 'count' ] ) or empty( $this->pager[ 'location' ] )
-	        or empty( $this->pager[ 'var' ] ) )
+	        or !isset( $this->pager[ 'curr_page' ] ) )
 	    {
 	        trigger_error( 'ERROR::NEED_PARAMETER -- FROM initPager() -- PAGER', E_USER_ERROR );
 	    }
 	    
 	    $this->pager[ 'perpage' ] 	= ( $this->pager[ 'perpage' ] < 0 ) ? 10 : $this->pager[ 'perpage' ];
-	    $this->pager[ 'count' ] 	= ( $this->pager[ 'count' ] < 0 ) ? 0 : $this->pager[ 'count' ];
-	    
+	    	    
 	    $this->pager_obj->start(    $this->pager[ 'total' ], 
 	                                $this->pager[ 'perpage' ], 
-	                                $this->pager[ 'count' ], 
-	                                $this->pager[ 'location' ], 
-	                                $this->pager[ 'var' ] );
+	                                $this->pager[ 'curr_page' ], 
+	                                $this->pager[ 'prefix' ], 
+	                                $this->pager[ 'suffix' ] );
 	    
-	    $statement .= ' LIMIT ' . $this->pager['count'] . ',' . $this->pager['perpage'];
+	    $begin = ( $this->pager[ 'curr_page' ] - 1 ) * $this->pager[ 'perpage' ];
+	    
+	    $statement .= ' LIMIT ' . $begin . ',' . $this->pager['perpage'];
 	    
 	    return $statement;
 	}

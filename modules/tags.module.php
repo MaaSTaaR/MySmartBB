@@ -9,12 +9,14 @@ define( 'CLASS_NAME', 'MySmartTagsMOD' );
 class MySmartTagsMOD
 {
 	private $id;
+	private $curr_page;
 	
-	public function run( $id )
+	public function run( $id, $title = null, $curr_page = 1 )
 	{
 		global $MySmartBB;
 		
 		$this->id = (int) $id;
+		$this->curr_page = (int) $curr_page;
 		
 		$MySmartBB->loadLanguage( 'tags' );
 		
@@ -46,8 +48,6 @@ class MySmartTagsMOD
 		
 		// ... //
 		
-		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
-		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		$MySmartBB->rec->filter = "tag_id='" . $this->id . "'";
 		
@@ -61,12 +61,11 @@ class MySmartTagsMOD
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'tag_subject' ];
 		
-		$MySmartBB->rec->pager 				= 	array();
-		$MySmartBB->rec->pager['total']		= 	$number;
-		$MySmartBB->rec->pager['perpage'] 	= 	$MySmartBB->_CONF['info_row']['subject_perpage']; // TODO
-		$MySmartBB->rec->pager['count'] 	= 	$MySmartBB->_GET['count'];
-		$MySmartBB->rec->pager['location'] 	= 	'index.php?page=tags&amp;show=1&amp;id=' . $this->id;
-		$MySmartBB->rec->pager['var'] 		= 	'count';
+		$MySmartBB->rec->pager 					= 	array();
+		$MySmartBB->rec->pager[ 'total' ]		= 	$number;
+		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'subject_perpage' ];
+		$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
+		$MySmartBB->rec->pager[ 'prefix' ] 		= 	$MySmartBB->_CONF[ 'init_path' ] . 'tags/' . $this->id . '/' . $tag_info[ 'tag' ] . '/';
 		
 		$MySmartBB->rec->filter = "tag_id='" . $this->id . "'";
 		

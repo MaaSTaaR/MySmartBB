@@ -16,12 +16,14 @@ class MySmartTopicMOD
 	private $subject_id;
 	private $subject_title;
 	private $id; // Topic's ID from GET request
+	private $curr_page;
 	
-	public function run( $id )
+	public function run( $id, $title = null, $curr_page = 1 )
 	{
 		global $MySmartBB;
 		
 		$this->id = (int) $id;
+		$this->curr_page = (int) $curr_page;
 		
 		$MySmartBB->loadLanguage( 'topic' );
 		
@@ -268,8 +270,6 @@ class MySmartTopicMOD
 	{
 		global $MySmartBB;
 		
-		$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
-		
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
@@ -284,9 +284,8 @@ class MySmartTopicMOD
 		$MySmartBB->rec->pager 					= 	array();
 		$MySmartBB->rec->pager[ 'total' ]		= 	$reply_number;
 		$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'perpage' ];
-		$MySmartBB->rec->pager[ 'count' ] 		= 	$MySmartBB->_GET[ 'count' ];
-		$MySmartBB->rec->pager[ 'location' ] 	= 	'index.php?page=topic&amp;show=1&amp;id=' . $this->subject_id;
-		$MySmartBB->rec->pager[ 'var' ] 		= 	'count';
+		$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
+		$MySmartBB->rec->pager[ 'prefix' ] 		= 	$MySmartBB->_CONF[ 'init_path' ] . 'topic/' . $this->id . '/' . $this->subject_title . '/';
 		
 		$MySmartBB->rec->result = &$reply_res;
 		

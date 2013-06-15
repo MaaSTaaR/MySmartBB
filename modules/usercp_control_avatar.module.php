@@ -9,10 +9,13 @@ define( 'CLASS_NAME', 'MySmartUserCPAvatarMOD' );
 class MySmartUserCPAvatarMOD
 {
 	private $allowed = array( '.jpg', '.gif', '.png' );
+	private $curr_page;
 	
-	public function run()
+	public function run( $curr_page = 1 )
 	{
 		global $MySmartBB;
+		
+		$this->curr_page = (int) $curr_page;
 		
 		$this->commonProcesses();
 		
@@ -35,16 +38,13 @@ class MySmartUserCPAvatarMOD
 		{
 			$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'avatar_res' ] = '';
 			
-			$MySmartBB->_GET[ 'count' ] = ( !isset( $MySmartBB->_GET[ 'count' ] ) ) ? 0 : $MySmartBB->_GET[ 'count' ];
-			
 			$MySmartBB->rec->table = $MySmartBB->table[ 'avatar' ];
 			
-			$MySmartBB->rec->pager 				= 	array();
+			$MySmartBB->rec->pager 					= 	array();
 			$MySmartBB->rec->pager[ 'total' ]		= 	$avatar_num;
 			$MySmartBB->rec->pager[ 'perpage' ] 	= 	$MySmartBB->_CONF[ 'info_row' ][ 'avatar_perpage' ];
-			$MySmartBB->rec->pager[ 'count' ] 		= 	$MySmartBB->_GET[ 'count' ];
-			$MySmartBB->rec->pager[ 'location' ] 	= 	'index.php?page=usercp&amp;control=1&amp;avatar=1&amp;main=1';
-			$MySmartBB->rec->pager[ 'var' ] 		= 	'count';
+			$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
+			$MySmartBB->rec->pager[ 'prefix' ] 		= 	$MySmartBB->_CONF[ 'init_path' ] . 'usercp_control_avatar/';
 			
 			$MySmartBB->rec->order = 'id DESC';
 			

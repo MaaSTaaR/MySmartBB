@@ -118,10 +118,19 @@ class MySmartRouter
 			return $this::FEW_ARGS;
 		
 		$parameters = array();
+				
+		$k = $args_start_point;
+		$i = 1;
 		
-		for ( $i = $args_start_point, $k = 1; $k <= $args_num; $i++, $k++ )
+		foreach ( $method->getParameters() as $param )
 		{
-			$parameters[] = $path[ $i ];
+			if ( $i <= $recv_num )
+				$parameters[] = $path[ $k ];
+			else
+				$parameters[] = $param->getDefaultValue();
+
+			$k++;
+			$i++;
 		}
 		
 		unset( $path );
