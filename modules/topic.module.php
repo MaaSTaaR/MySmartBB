@@ -17,55 +17,49 @@ class MySmartTopicMOD
 	private $subject_title;
 	private $id; // Topic's ID from GET request
 	private $curr_page;
+	private $printable;
 	
-	public function run( $id, $title = null, $curr_page = 1 )
+	public function printable( $id, $title = null, $curr_page = 1 )
+	{
+		$this->run( $id, $title, $curr_page, true );
+	}
+	
+	public function run( $id, $title = null, $curr_page = 1, $printable = false )
 	{
 		global $MySmartBB;
 		
 		$this->id = (int) $id;
 		$this->curr_page = (int) $curr_page;
+		$this->printable = $printable;
 		
 		$MySmartBB->loadLanguage( 'topic' );
 		
-		/*if ( $MySmartBB->_GET[ 'show' ] )
-		{*/
-			$MySmartBB->load( 'moderator,reply,subject,icon,toolbox,section' );
-			
-			$this->_getSubject();
-			$this->_getSection();
-			$this->_moderatorCheck();
-			$this->_getGroup();
-			$this->_checkSystem();
-			$this->_getWriterInfo();
-			$this->_checkTags();
-			$this->_checkPoll();
-			$this->_subjectTextFormat();
-			$this->_getAttachments();
-			$this->_subjectEnd();
-			$this->_getReply();
-			
-			$MySmartBB->plugin->runHooks( 'topic_main' );
-			
-			//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-			//{
-				if ( $MySmartBB->_CONF[ 'info_row' ][ 'samesubject_show' ] )
-				{
-					$this->_similarTopics();
-				}
-				
-				$this->_pageEnd();
-			//}
-		//}
-		/*else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}*/
+		$MySmartBB->load( 'moderator,reply,subject,icon,toolbox,section' );
 		
-		// TODO
-		/*if ( empty( $MySmartBB->_GET[ 'print' ] ) )
-		{*/
+		$this->_getSubject();
+		$this->_getSection();
+		$this->_moderatorCheck();
+		$this->_getGroup();
+		$this->_checkSystem();
+		$this->_getWriterInfo();
+		$this->_checkTags();
+		$this->_checkPoll();
+		$this->_subjectTextFormat();
+		$this->_getAttachments();
+		$this->_subjectEnd();
+		$this->_getReply();
+		
+		$MySmartBB->plugin->runHooks( 'topic_main' );
+		
+		if ( !$this->printable )
+		{
+			if ( $MySmartBB->_CONF[ 'info_row' ][ 'samesubject_show' ] )
+				$this->_similarTopics();
+				
+			$this->_pageEnd();
+			
 			$MySmartBB->func->getFooter();
-		/*}*/
+		}
 	}
 	
 	private function _getSubject()
@@ -99,7 +93,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->template->assign( 'SMARTCODE', true );
 		
-		//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		if ( !$this->printable )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
 		
 		// ... //
@@ -260,10 +254,10 @@ class MySmartTopicMOD
 		
 		$this->_baseEnd();
 		
-// 		if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+ 		if ( !$this->printable )
 			$MySmartBB->template->display( 'show_subject' );
-// 		else
-// 			$MySmartBB->template->display( 'print_subject' );
+ 		else
+ 			$MySmartBB->template->display( 'print_subject' );
 	}
 	
 	private function _getReply()
@@ -348,10 +342,10 @@ class MySmartTopicMOD
 		
 		$this->_baseEnd();
 		
-		//if ( empty( $MySmartBB->_GET[ 'print' ] ) )
+		if ( !$this->printable )
 			$MySmartBB->template->display( 'show_reply' );
-		//else
-		//	$MySmartBB->template->display( 'print_reply' );
+		else
+			$MySmartBB->template->display( 'print_reply' );
 	}
 	
 	// ... //

@@ -66,8 +66,8 @@
 	</tr>
 	<tr align="center">
 		<td class="row1 rows_space" width="50%" colspan="2">
-			<a href="{$init_path}topic/
-			{$Info['subject_id']}/print">{$lang['printable_version']}</a>
+			<a href="{$init_path}topic/printable/
+			{$Info['subject_id']}">{$lang['printable_version']}</a>
 		</td>
 	</tr>
 </table>
