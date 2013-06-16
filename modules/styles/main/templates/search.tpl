@@ -4,10 +4,12 @@
 
 {hook}after_adress_bar{/hook}
 
-<form name="search" method="get" action="{$init_path}/search">
+<form name="search" method="post" action="{$init_path}search/start">
 
+<!-- 
 <input type="hidden" name="page" value="search">
 <input type="hidden" name="start" value="1">
+-->
 
 <table id="search_table" border="1" width="60%" class="t_style_b" align="center">
 	<tr align="center">

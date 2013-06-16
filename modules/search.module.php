@@ -34,7 +34,7 @@ class MySmartSearchEngineMOD
 		$MySmartBB->func->getFooter();
 	}
 	
-	private function _startSearch( $keyword, $username = null, $section = null )
+	public function start()
 	{
 		global $MySmartBB;
 		
@@ -45,9 +45,9 @@ class MySmartSearchEngineMOD
 		// ... //
 		
 		// TODO : I don't think we still need these lines
-		$keyword 	= 	$MySmartBB->func->cleanVariable( $keyword, 'html' );
-		$username 	= 	$MySmartBB->func->cleanVariable( $username, 'html' );
-		$section 	= 	$MySmartBB->func->cleanVariable( $section, 'html' );
+		$keyword 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'keyword' ], 'html' );
+		$username 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'username' ], 'html' );
+		$section 	= 	$MySmartBB->func->cleanVariable( $MySmartBB->_POST[ 'section' ], 'html' );
 		
 		// ... //
 		
@@ -84,7 +84,7 @@ class MySmartSearchEngineMOD
 		
 		// ... //
 		
-		$MySmartBB->template->assign( 'highlight', $keyword );
+		//$MySmartBB->template->assign( 'highlight', $keyword );
 		
 		$MySmartBB->template->display( 'search_results' );
 		
