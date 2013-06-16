@@ -20,9 +20,7 @@ class MySmartAnnouncementMOD
 		
 		$MySmartBB->load( 'icon,toolbox' );
 		
-		$this->_showAnnouncement();
-			
-		$MySmartBB->func->getFooter();
+		$this->_showAnnouncement();			
 	}
 	
 	private function _showAnnouncement()		

@@ -18,9 +18,7 @@ class MySmartUserCPInfoMOD
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_info_main' );
 		
-		$MySmartBB->template->display( 'usercp_control_info' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'usercp_control_info' );		
 	}
 	
 	public function start()
@@ -55,9 +53,7 @@ class MySmartUserCPInfoMOD
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'usercp_control_info' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses()

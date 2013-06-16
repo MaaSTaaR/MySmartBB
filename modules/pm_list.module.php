@@ -37,9 +37,7 @@ class MySmartPrivateMassegeListMOD
 		
 		$MySmartBB->load( 'pm' );
 		
-		$this->_showList();
-		
-		$MySmartBB->func->getFooter();
+		$this->_showList();		
 	}
 	
 	private function _showList()

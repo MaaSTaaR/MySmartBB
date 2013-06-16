@@ -19,9 +19,7 @@ class MySmartMemberlistMOD
 		
 		$MySmartBB->loadLanguage( 'memberlist' );
 		
-		$this->_getMemberList();
-		
-		$MySmartBB->func->getFooter();
+		$this->_getMemberList();		
 	}
 		
 	private function _getMemberList()

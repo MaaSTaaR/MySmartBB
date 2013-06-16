@@ -20,9 +20,7 @@ class MySmartForgetMOD
 		
 		$MySmartBB->plugin->runHooks( 'forget_main_start' );
 		
-		$MySmartBB->template->display( 'forget_password_form' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'forget_password_form' );		
 	}
 		
 	public function start()
@@ -113,7 +111,7 @@ class MySmartForgetMOD
 				    $MySmartBB->plugin->runHooks( 'forget_action_success' );
 				    
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'email_sent' ] );
-					$MySmartBB->func->move( 'index.php' );
+					$MySmartBB->func->move( '' );
 				}
 				else
 				{
@@ -122,9 +120,7 @@ class MySmartForgetMOD
 					$MySmartBB->func->error( $MySmartBB->lang[ 'email_didnt_send' ] );
 				}
 			}
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 }
 

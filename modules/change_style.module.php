@@ -52,9 +52,7 @@ class MySmartChangeStyleMOD
 		else
 		{
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 }
 

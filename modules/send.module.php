@@ -18,9 +18,7 @@ class MySmartSendMOD
 			
 		$MySmartBB->_CONF[ 'template' ][ 'MemberInfo' ] = $this->memberInfo;
 		
-		$MySmartBB->template->display( 'send_email' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'send_email' );		
 	}
 	
 	private function start( $id )
@@ -45,9 +43,7 @@ class MySmartSendMOD
 		else
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses( $id )

@@ -24,35 +24,8 @@ class MySmartForumMOD
 		
 		$this->_initForum();
 		
-		$this->_browseForum();
-		
-		$MySmartBB->func->getFooter();
+		$this->_browseForum();		
 	}
-	
-	/*public function run()
-	{
-		global $MySmartBB;
-		
-		$this->_initForum();
-		
-		if ( $MySmartBB->_GET[ 'show' ] )
-		{
-			$this->_browseForum();
-		}
-		elseif ( $MySmartBB->_GET[ 'password_check' ] )
-		{
-			$check = $MySmartBB->section->forumPassword( $this->Section[ 'id' ], $this->Section[ 'section_password' ], base64_encode( $MySmartBB->_POST[ 'password' ] ) );
-			
-			if ( $check )
-				$MySmartBB->func->move( 'index.php?page=forum&amp;show=1&amp;id=' . $this->Section[ 'id' ] . $MySmartBB->_CONF[ 'template' ][ 'password' ], false, 0 );
-		}
-		else
-		{
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
-	}*/
 	
 	private function _initForum()
 	{

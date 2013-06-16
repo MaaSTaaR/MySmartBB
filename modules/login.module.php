@@ -23,9 +23,7 @@ class MySmartLoginMOD
 		
 		$MySmartBB->loadLanguage( 'login' );
 		
-		$this->_startLogin();
-		
-		$MySmartBB->func->getFooter();
+		$this->_startLogin();		
 	}
 	
 	// Login after registeration
@@ -38,9 +36,7 @@ class MySmartLoginMOD
 		
 		$MySmartBB->loadLanguage( 'login' );
 		
-		$this->_startLogin( true );
-		
-		$MySmartBB->func->getFooter();
+		$this->_startLogin( true );		
 	}
 	
 	private function _startLogin( $register_login = false )

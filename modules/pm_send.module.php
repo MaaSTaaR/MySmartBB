@@ -62,9 +62,7 @@ class MySmartPrivateMassegeSendMOD
 		
 		$MySmartBB->plugin->runHooks( 'pm_send_main' );
 		
-		$MySmartBB->template->display( 'pm_send' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'pm_send' );		
 	}
 	
 	public function start()
@@ -279,7 +277,6 @@ class MySmartPrivateMassegeSendMOD
      	}
      	
      	$MySmartBB->func->move( 'pm_list/inbox' );
-     	$MySmartBB->func->getFooter();
 	}
 }
 

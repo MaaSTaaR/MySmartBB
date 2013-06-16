@@ -18,9 +18,7 @@ class MySmartAdsPageMOD
 		
 		$MySmartBB->loadLanguage( 'ads' );
 		
-		$this->_goToSite();
-		
-		$MySmartBB->func->getFooter();
+		$this->_goToSite();		
 	}
 	
 	private function _goToSite()

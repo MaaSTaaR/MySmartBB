@@ -20,9 +20,7 @@ class MySmartPasswordMOD
 		
 		$MySmartBB->load( 'massege' );
 		
-		$this->_index();
-		
-		$MySmartBB->func->getFooter();
+		$this->_index();		
 	}
 	
 	private function _index()

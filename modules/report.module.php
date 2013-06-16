@@ -19,9 +19,7 @@ class MySmartReportMOD
 		if ( !is_null( $reply_id ) )
 			$MySmartBB->template->assign( 'reply_id', $reply_id );
 		
-		$MySmartBB->template->display( 'send_report' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'send_report' );		
 	}
 	
 	public function start( $subject_id, $reply_id = null )
@@ -64,9 +62,7 @@ class MySmartReportMOD
 		else
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'send_failed' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses()

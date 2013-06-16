@@ -71,4 +71,7 @@ if ( $state !== true )
 	}
 }
 
+if ( !defined( 'STOP_FOOTER' ) )
+	$MySmartBB->func->getFooter();
+
 ?>

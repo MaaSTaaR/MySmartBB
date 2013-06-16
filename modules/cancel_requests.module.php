@@ -20,9 +20,7 @@ class MySmartCReqMOD
 		
 		$MySmartBB->loadLanguage( 'cancel_requests' );
 		
-		$this->_index();
-			
-		$MySmartBB->func->getFooter();
+		$this->_index();			
 	}
 	
 	private function _index()

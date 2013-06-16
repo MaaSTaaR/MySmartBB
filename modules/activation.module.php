@@ -20,9 +20,7 @@ class MySmartActiveMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'activate_membership' ] );
 		
-		$this->_index();
-			
-		$MySmartBB->func->getFooter();
+		$this->_index();			
 	}
 		
 	private function _index()

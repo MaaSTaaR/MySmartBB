@@ -136,9 +136,7 @@ class MySmartProfileMOD
 		
 		$MySmartBB->plugin->runHooks( 'show_profile_end' );
 		
-		$MySmartBB->template->display( 'profile' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'profile' );		
 	}
 }
 	

@@ -18,9 +18,7 @@ class MySmartUserCPPasswordMOD
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_password_main' );
 		
-		$MySmartBB->template->display( 'usercp_control_password' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'usercp_control_password' );		
 	}
 	
 	public function start()
@@ -68,9 +66,7 @@ class MySmartUserCPPasswordMOD
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'usercp_control_password' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses()

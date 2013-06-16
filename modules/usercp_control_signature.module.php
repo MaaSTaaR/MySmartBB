@@ -24,9 +24,7 @@ class MySmartUserCPSignatureMOD
 		
 		$MySmartBB->smartparse->replace_smiles( $MySmartBB->_CONF[ 'template' ][ 'Sign' ] );
 		
-		$MySmartBB->template->display( 'usercp_control_sign' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'usercp_control_sign' );		
 	}
 	
 	public function start()
@@ -57,9 +55,7 @@ class MySmartUserCPSignatureMOD
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move('usercp_control_signature');
 		}
-		
-		$MySmartBB->func->getFooter();
-		
+				
 		// ... //
 	}
 	

@@ -35,9 +35,7 @@ class MySmartPrivateMassegeShowMOD
 		
 		$MySmartBB->load( 'pm,icon,toolbox' );
 		
-		$this->_showMassege();
-		
-		$MySmartBB->func->getFooter();
+		$this->_showMassege();		
 	}
 	
 	/**

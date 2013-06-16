@@ -18,9 +18,7 @@ class MySmartAdsPageMOD
 		
 		$MySmartBB->loadLanguage( 'pages' );
 		
-		$this->_showPage();
-		
-		$MySmartBB->func->getFooter();
+		$this->_showPage();		
 	}
 	
 	private function _showPage()

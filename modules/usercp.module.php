@@ -17,14 +17,7 @@ class MySmartUserCPMOD
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
-		$this->_index();
-		
-		$MySmartBB->func->getFooter();
-	}
-	
-	private function _index()
-	{
-		global $MySmartBB;
+		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'usercp' ] );
 		
@@ -46,7 +39,7 @@ class MySmartUserCPMOD
 		
 		// ... //
 		
-      	$MySmartBB->template->display( 'usercp_index' );
+      	$MySmartBB->template->display( 'usercp_index' );	
 	}
 }
 

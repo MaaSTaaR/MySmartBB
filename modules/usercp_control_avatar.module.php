@@ -58,9 +58,7 @@ class MySmartUserCPAvatarMOD
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_main' );
 		
-		$MySmartBB->template->display('usercp_control_avatar');
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display('usercp_control_avatar');		
 	}
 	
 	public function start()
@@ -110,9 +108,7 @@ class MySmartUserCPAvatarMOD
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'usercp_control_avatar' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function _fromList()

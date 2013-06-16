@@ -20,9 +20,7 @@ class MySmartTagsMOD
 		
 		$MySmartBB->loadLanguage( 'tags' );
 		
-		$this->_show();
-		
-		$MySmartBB->func->getFooter();
+		$this->_show();		
 	}
 	
 	private function _show()

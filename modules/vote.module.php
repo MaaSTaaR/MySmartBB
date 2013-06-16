@@ -22,9 +22,7 @@ class MySmartVoteMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
-		$this->_start();
-		
-		$MySmartBB->func->getFooter();
+		$this->_start();		
 	}
 	
 	private function _start()

@@ -17,9 +17,7 @@ class MySmartUserCPSubjectMOD
 		if ( !$MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'member_zone' ] );
 		
-		$this->_subjectListMain();
-		
-		$MySmartBB->func->getFooter();
+		$this->_subjectListMain();		
 	}
 	
 	private function _subjectListMain()

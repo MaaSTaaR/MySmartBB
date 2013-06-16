@@ -50,9 +50,7 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->plugin->runHooks( 'register_rules_main' );
 		
-		$MySmartBB->template->display( 'register_rules' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'register_rules' );		
 	}
 	
 	/**
@@ -66,9 +64,7 @@ class MySmartRegisterMOD
 		
 		$MySmartBB->plugin->runHooks( 'register_main' );
 		
-		$MySmartBB->template->display( 'register' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'register' );		
 	}
 		
 	/**
@@ -157,9 +153,7 @@ class MySmartRegisterMOD
       			$MySmartBB->func->msg( $MySmartBB->lang[ 'register_succeed' ] );
       			$MySmartBB->func->move( 'login/register_login/' . $MySmartBB->_POST[ 'username' ] . '/' . $MySmartBB->_POST[ 'password' ] );
       		}
-      	}
-      	
-      	$MySmartBB->func->getFooter();
+      	}      	
 	}
 	
 	private function __checkFieldsValidity()

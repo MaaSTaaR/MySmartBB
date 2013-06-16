@@ -29,9 +29,7 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->plugin->runHooks( 'search_main' );
 		
-		$MySmartBB->template->display( 'search' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'search' );		
 	}
 	
 	public function start()
@@ -88,9 +86,7 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->template->display( 'search_results' );
 		
-		$MySmartBB->rec->removeInfoCallback();
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->rec->removeInfoCallback();		
 	}
 	
 	public function rowsProcessCB( $row )

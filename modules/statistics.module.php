@@ -14,9 +14,7 @@ class MySmartStatisticsMOD
 		
 		$MySmartBB->loadLanguage( 'static' );
 		
-		$this->_showStatic();
-		
-		$MySmartBB->func->getFooter(); 
+		$this->_showStatic();		
 	}
 	
 	private function _showStatic()

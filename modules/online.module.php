@@ -16,9 +16,7 @@ class MySmartOnlineMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'online' ] );
 		
-		$this->_show();
-		
-		$MySmartBB->func->getFooter();
+		$this->_show();		
 	}
 	
 	private function _show()

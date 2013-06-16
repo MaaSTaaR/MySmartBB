@@ -30,11 +30,7 @@ class MySmartPrivateMassegeCPMOD
 		$MySmartBB->load( 'pm' );
 		
 		if ( $action == 'delete' )
-		{
 			$this->_deletePrivateMassege();
-		}
-		
-		$MySmartBB->func->getFooter();
 	}
 	
 	private function _deletePrivateMassege()

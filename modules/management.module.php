@@ -110,9 +110,7 @@ class MySmartManagementMOD
 		else
 		{
 			$MySmartBB->func->error( $MySmartBB->lang[ 'no_permission' ] );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 		
 	private function _subject()

@@ -18,9 +18,7 @@ class MySmartUserCPEmailMOD
 		
 		$MySmartBB->plugin->runHooks( 'usercp_control_email_main' );
 		
-		$MySmartBB->template->display( 'usercp_control_email' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'usercp_control_email' );		
 	}
 	
 	public function start()
@@ -83,9 +81,7 @@ class MySmartUserCPEmailMOD
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'usercp_control_email' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses()

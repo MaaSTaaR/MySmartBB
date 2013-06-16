@@ -38,9 +38,7 @@ class MySmartPrivateMassegeMOD
 		
 		$MySmartBB->plugin->runHooks( 'pm_setting_main' );
 		
-		$MySmartBB->template->display( 'pm_setting' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'pm_setting' );		
 	}
 	
 	public function start()
@@ -73,9 +71,7 @@ class MySmartPrivateMassegeMOD
 		    
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'pm_setting' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 }
 

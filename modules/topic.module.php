@@ -56,9 +56,11 @@ class MySmartTopicMOD
 			if ( $MySmartBB->_CONF[ 'info_row' ][ 'samesubject_show' ] )
 				$this->_similarTopics();
 				
-			$this->_pageEnd();
-			
-			$MySmartBB->func->getFooter();
+			$this->_pageEnd();			
+		}
+		else
+		{
+			define( 'STOP_FOOTER', true );
 		}
 	}
 	

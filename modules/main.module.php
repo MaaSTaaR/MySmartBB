@@ -29,8 +29,6 @@ class MySmartIndexMOD
 		$this->_callTemplate();
 		
 		$MySmartBB->plugin->runHooks( 'main_before_footer' );
-		
-		$MySmartBB->func->getFooter();
 	}
 	
 	private function _getSections()

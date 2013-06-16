@@ -24,9 +24,7 @@ class MySmartUserCPSettingMOD
 		
 		$MySmartBB->rec->getList();
 		
-		$MySmartBB->template->display( 'usercp_control_setting' );
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'usercp_control_setting' );		
 	}
 		
 	public function start()
@@ -56,9 +54,7 @@ class MySmartUserCPSettingMOD
 		{
 			$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
 			$MySmartBB->func->move( 'usercp_control_setting' );
-		}
-		
-		$MySmartBB->func->getFooter();
+		}		
 	}
 	
 	private function commonProcesses()

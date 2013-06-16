@@ -47,9 +47,7 @@ class MySmartLatestMOD
 		
 		$MySmartBB->plugin->runHooks( 'today_topic_start' );
 		
-		$MySmartBB->template->display('today_subject');
-		
-		$MySmartBB->func->getFooter();
+		$MySmartBB->template->display( 'today_subject' );		
 	}
 }
 
