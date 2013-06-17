@@ -611,19 +611,12 @@ class MySmartFunctions
 			if ( ( strstr( $path, 'logout' ) == false ) and ( strstr( $path, 'login' ) == false ) )
 					$move_to = $path;
 			
-			/*$url = $url[ 'query' ];
-			$url = explode( '&', $url );
-			$url = $url[ 0 ];
-			
+			/*
 			$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
 			$X_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_HOST' ] );
 			
 			// TODO : Test it after modified the code to meet SEO-friendly URLs requirements
-			if ( $X_url[ 0 ] == $Y_url[ 2 ] )
-				if ( ( strstr( $url, 'logout' ) == false ) 
-						and ( strstr( $url, 'login' ) == false )
-						and !empty( $url ) )
-					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];*/
+			if ( $X_url[ 0 ] == $Y_url[ 2 ] )*/
 		}
 		
 		return $move_to;

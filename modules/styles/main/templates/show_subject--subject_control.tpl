@@ -1,3 +1,5 @@
+<div id="topic_management_dialog" style="width:500px;display: none;">
+
 <form method="get" action="index.php">
 
 <input type="hidden" name="page" value="management" />
@@ -40,4 +42,4 @@
 
 </form>
 
-<br />
+</div>

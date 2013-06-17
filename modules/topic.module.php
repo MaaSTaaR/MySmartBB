@@ -94,6 +94,8 @@ class MySmartTopicMOD
 		// ... //
 		
 		$MySmartBB->template->assign( 'SMARTCODE', true );
+		$MySmartBB->template->assign( 'JQUERY', true );
+		$MySmartBB->template->assign( 'BOX_JS', true );
 		
 		if ( !$this->printable )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );

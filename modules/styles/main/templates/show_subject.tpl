@@ -69,7 +69,9 @@
 			</a>
 		</td>
 		<td class="row2" width="80%">
-			
+			{if {$Mod}}
+			<strong><a class="box_link" href="#topic_management_dialog">{$lang['subject_control']}</a></strong>
+			{/if}
 		</td>
 	</tr>
 </table>
@@ -77,3 +79,7 @@
 <br />
 
 {hook}after_topic_context_table{/hook}
+
+<script type="text/javascript">
+$('.box_link').fancybox();
+</script>

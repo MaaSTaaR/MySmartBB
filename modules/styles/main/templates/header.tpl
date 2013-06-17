@@ -17,19 +17,22 @@
 	
 	<title>{$title} - (Powered By MySmartBB)</title>
 	
-	{hook}inside_header{/hook}
-	
-</head>
-
-<body>
-
 	{if {$SMARTCODE}}
 	<script src="{$bb_path}includes/js/SmartCode.js"></script>
 	{/if}
 	{if {$JQUERY}}
 	<script src="{$bb_path}includes/js/jquery.js"></script>
 	{/if}
+	{if {$BOX_JS}}
+	<script src="{$bb_path}includes/js/3rdparty/fancybox/jquery.fancybox.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="{$bb_path}includes/js/3rdparty/fancybox/jquery.fancybox.css" media="screen" />
+	{/if}
+	
+	{hook}inside_header{/hook}
+	
+</head>
 
+<body>
 	<div id="main">
 		
 		<!-- -->
