@@ -42,8 +42,8 @@ class MySmartMember
 		if ( !$checkMember )
 			return false;
 		
-		setcookie( $this->engine->_CONF[ 'username_cookie' ], $username, $expire );
-		setcookie( $this->engine->_CONF[ 'password_cookie' ], $password, $expire );
+		setcookie( $this->engine->_CONF[ 'username_cookie' ], $username, $expire, $this->engine->_CONF[ 'bb_path' ] );
+		setcookie( $this->engine->_CONF[ 'password_cookie' ], $password, $expire, $this->engine->_CONF[ 'bb_path' ] );
 		
 		return $checkMember;
 	}
@@ -88,8 +88,8 @@ class MySmartMember
 		
 		$del = array();
 
-		$del[ 1 ] = setcookie( $this->engine->_CONF[ 'username_cookie' ], '' );
-     	$del[ 2 ] = setcookie( $this->engine->_CONF[ 'password_cookie' ], '' );
+		$del[ 1 ] = setcookie( $this->engine->_CONF[ 'username_cookie' ], '', 0, $this->engine->_CONF[ 'bb_path' ] );
+     	$del[ 2 ] = setcookie( $this->engine->_CONF[ 'password_cookie' ], '', 0, $this->engine->_CONF[ 'bb_path' ] );
      	$del[ 3 ] = setcookie( $this->engine->_CONF[ 'forum_password_cookie' ], '', 0, $this->engine->_CONF[ 'bb_path' ] );
      	
      	return ( $del[ 1 ] and $del[ 2 ] and $del[ 3 ] ) ? true : false;

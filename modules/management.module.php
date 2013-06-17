@@ -13,8 +13,9 @@ define( 'CLASS_NAME', 'MySmartManagementMOD' );
 class MySmartManagementMOD
 {
 	private $subject_info;
+	private $section_id;
 	private $reply_info;
-	
+		
 	public function run()
 	{
 		global $MySmartBB;

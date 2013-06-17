@@ -27,7 +27,7 @@ class MySmartLogoutMOD
 			$MySmartBB->template->display( 'logout_msg' );
 			
       		$MySmartBB->func->move( $MySmartBB->func->getLastLocation() );
-		}		
+		}
 	}
 }
 	

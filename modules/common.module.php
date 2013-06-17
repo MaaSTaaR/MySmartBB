@@ -9,7 +9,7 @@ class MySmartCommon
 	public function run()
 	{
 	    global $MySmartBB;
-	     
+	    
 		$this->_generalProc();
 		$this->_checkMember();
 		$this->_showAds();

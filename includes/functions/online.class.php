@@ -136,7 +136,7 @@ class MySmartOnline
 		$this->engine->rec->fields = array(	'username'			=>	$username,
 											'username_style'	=>	$username_style,
 											'logged'			=>	$this->engine->_CONF[ 'now' ],
-											'path'				=>	$this->engine->_SERVER[ 'QUERY_STRING' ],
+											'path'				=>	$this->engine->_SERVER[ 'REQUEST_URI' ],
 											'user_ip'			=>	$this->engine->_CONF[ 'ip' ],
 											'hide_browse'		=>	$this->engine->_CONF[ 'member_row' ][ 'hide_online' ],
 											'user_id'			=>	$this->engine->_CONF[ 'member_row' ][ 'id' ]	);
@@ -152,7 +152,7 @@ class MySmartOnline
 		else
 		{
 			if ( $IsOnline[ 'logged' ] < $this->engine->_CONF[ 'timeout' ] 
-				or $IsOnline[ 'path' ] != $this->engine->_SERVER[ 'QUERY_STRING' ] 
+				or $IsOnline[ 'path' ] != $this->engine->_SERVER[ 'REQUEST_URI' ] 
 				or $IsOnline[ 'username_style' ] != $username_style
 				or $IsOnline[ 'hide_browse' ] != $this->engine->_CONF[ 'member_row' ][ 'hide_online' ] )
 			{
@@ -248,7 +248,7 @@ class MySmartOnline
 		$this->engine->rec->fields = array(	'username'			=>	'Guest',
 											'username_style'	=>	'Guest',
 											'logged'			=>	$this->engine->_CONF['now'],
-											'path'				=>	$this->engine->_SERVER['QUERY_STRING'],
+											'path'				=>	$this->engine->_SERVER['REQUEST_URI'],
 											'user_ip'			=>	$this->engine->_CONF['ip'],
 											'user_id'			=>	-1	);
 		

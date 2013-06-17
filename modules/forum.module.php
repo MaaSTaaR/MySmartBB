@@ -170,7 +170,7 @@ class MySmartForumMOD
 		
 		// Get the list of people who are reading this section
 		
-		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
+		$MySmartBB->rec->filter = "path='" . $MySmartBB->_SERVER[ 'REQUEST_URI' ] . "'";
 		
 		// ... //
 		
@@ -194,7 +194,7 @@ class MySmartForumMOD
 		
 		// Get the number of guests who are viewing this forum
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
+		$MySmartBB->rec->filter = "username='Guest' AND path='" . $MySmartBB->_SERVER[ 'REQUEST_URI' ] . "'";
 		
 		$MySmartBB->_CONF[ 'template' ][ 'GuestNumber' ] = $MySmartBB->rec->getNumber();
 		
@@ -202,7 +202,7 @@ class MySmartForumMOD
 		
 		// Get the number of members who are viewing this forum
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER[ 'QUERY_STRING' ] . "'";
+		$MySmartBB->rec->filter = "username<>'Guest' AND path='" . $MySmartBB->_SERVER[ 'REQUEST_URI' ] . "'";
 		
 		$MySmartBB->_CONF[ 'template' ][ 'MemberNumber' ] = $MySmartBB->rec->getNumber();
 		

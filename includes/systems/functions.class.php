@@ -600,13 +600,18 @@ class MySmartFunctions
 	{
 		global $MySmartBB;
 		
-		$move_to = 'index.php';
+		$move_to = '';
 		
 		if ( !empty( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] ) )
 		{
 			$url = parse_url( $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
 			
-			$url = $url[ 'query' ];
+			$path = str_replace( $MySmartBB->_CONF[ 'init_path' ], '', $url[ 'path' ] );
+			
+			if ( ( strstr( $path, 'logout' ) == false ) and ( strstr( $path, 'login' ) == false ) )
+					$move_to = $path;
+			
+			/*$url = $url[ 'query' ];
 			$url = explode( '&', $url );
 			$url = $url[ 0 ];
 			
@@ -618,7 +623,7 @@ class MySmartFunctions
 				if ( ( strstr( $url, 'logout' ) == false ) 
 						and ( strstr( $url, 'login' ) == false )
 						and !empty( $url ) )
-					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];
+					$move_to = $MySmartBB->_SERVER[ 'HTTP_REFERER' ];*/
 		}
 		
 		return $move_to;
