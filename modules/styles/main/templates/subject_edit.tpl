@@ -1,12 +1,8 @@
 <br />
 
+<!--
 <form name="topic" method="post" action="{$edit_page}">
-
-{template}iconbox{/template}
-
-<br />
-
-{template}toolbox{/template}
+-->
 
 <br />
 
@@ -27,17 +23,20 @@
 	<tr align="center">
 		<td class="row1 rows_space" colspan="2">
 			<textarea rows="12" name="text" cols="69">{$SubjectInfo['text']}</textarea>
+			<!-- 
 			<br />
 			<br />
 			<input name="insert" type="submit" value="{$lang['common']['submit']}" />
+			-->
 		</td>
 	</tr>
 </table>
 
 <br />
 
-{template}smilebox{/template}
+<!--
 
 </form>
-
+ -->
+ 
 <br />

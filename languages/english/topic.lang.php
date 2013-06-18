@@ -5,6 +5,7 @@
 // ~ Templates ~ //
 
 $lang[ 'template' ][ 'subject_control' ] = 'Topic Management';
+$lang[ 'template' ][ 'basic_operations' ] = 'Basic Operations';
 $lang[ 'template' ][ 'stick_subject' ] = 'Mark as Important';
 $lang[ 'template' ][ 'unstick_subject' ] = 'Mark as Normal';
 $lang[ 'template' ][ 'close_subject' ] = 'Close the Topic';
@@ -15,6 +16,11 @@ $lang[ 'template' ][ 'edit_subject' ] = 'Edit the Topic';
 $lang[ 'template' ][ 'repeated_subject' ] = 'Mark as Repeated';
 $lang[ 'template' ][ 'raise_subject' ] = 'Raise the Topic';
 $lang[ 'template' ][ 'down_subject' ] = 'Down the Topic';
+$lang[ 'template' ][ 'delete_subject_reason' ] = 'Reason (Can Be Blank)';
+$lang[ 'template' ][ 'move_subject_to' ] = 'Move The Topic To';
+$lang[ 'template' ][ 'subject_title' ] = 'Title';
+$lang[ 'template' ][ 'subject_description' ] = 'Description';
+$lang[ 'template' ][ 'optional' ] = '(Optional)';
 
 $lang[ 'template' ][ 'subject_information' ] = 'Topic\'s Information';
 $lang[ 'template' ][ 'subject_state' ] = 'Status';

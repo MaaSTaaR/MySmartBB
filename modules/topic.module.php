@@ -38,7 +38,6 @@ class MySmartTopicMOD
 		
 		$this->_getSubject();
 		$this->_getSection();
-		$this->_moderatorCheck();
 		$this->_getGroup();
 		$this->_checkSystem();
 		$this->_getWriterInfo();
@@ -93,9 +92,39 @@ class MySmartTopicMOD
 		
 		// ... //
 		
+		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->Info[ 'section' ] );
+		
+		$MySmartBB->template->assign( 'Mod', $this->moderator );
+		
+		// ... //
+		
 		$MySmartBB->template->assign( 'SMARTCODE', true );
-		$MySmartBB->template->assign( 'JQUERY', true );
-		$MySmartBB->template->assign( 'BOX_JS', true );
+		
+		if ( $this->moderator )
+		{
+			// Requests Javascript libraries for our fancy moderator's interface
+			$MySmartBB->template->assign( 'JQUERY', true );
+			$MySmartBB->template->assign( 'BOX_JS', true );
+			$MySmartBB->template->assign( 'TABS_JS', true );
+			
+			// ... //
+			
+			// Gets the list of forums for "Topic's moving" feature
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'forums_list' ] = $MySmartBB->section->getForumsList();
+			
+			// ... //
+			
+			// Initilize needed information to edit the topic content
+			$SubjectInfo = array();
+			$SubjectInfo[ 'id' ] 		= 	$this->Info[ 'subject_id' ];
+			$SubjectInfo[ 'title' ] 	= 	$this->Info[ 'title' ];
+			$SubjectInfo[ 'describe' ] 	= 	$this->Info[ 'describe' ];
+			$SubjectInfo[ 'text' ] 		= 	$this->Info[ 'text' ];
+			
+			$MySmartBB->template->assign( "SubjectInfo", $SubjectInfo );
+			
+			unset( $SubjectInfo );
+		}
 		
 		if ( !$this->printable )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
@@ -123,16 +152,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->template->assign( 'section_info', $this->SectionInfo );
 	}
-	
-	private function _moderatorCheck()
-	{
-		global $MySmartBB;
 		
-		$this->moderator = $MySmartBB->moderator->moderatorCheck( $this->SectionInfo['id'] );
-		
-		$MySmartBB->template->assign( 'Mod', $this->moderator );
-	}
-	
 	private function _getGroup()
 	{
 		global $MySmartBB;
@@ -258,8 +278,8 @@ class MySmartTopicMOD
 		
 		$this->_baseEnd();
 		
- 		if ( !$this->printable )
-			$MySmartBB->template->display( 'show_subject' );
+ 		if ( !$this->printable ) 			
+ 			$MySmartBB->template->display( 'show_subject' );
  		else
  			$MySmartBB->template->display( 'print_subject' );
 	}
@@ -382,12 +402,12 @@ class MySmartTopicMOD
 		
 		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
 		
-		$MySmartBB->func->getEditorTools();
-		
      	$MySmartBB->template->assign( 'id', $this->Info[ 'subject_id' ] );
      	
      	$MySmartBB->template->assign( 'stick', $this->Info[ 'stick' ] );
      	$MySmartBB->template->assign( 'close', $this->Info[ 'close' ] );
+     	
+     	$MySmartBB->func->getEditorTools();
      	
      	$MySmartBB->template->display( 'topic_end' );
 	}

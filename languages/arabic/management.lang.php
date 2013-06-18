@@ -8,19 +8,6 @@
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
 $lang[ 'template' ][ 'close_subject_reason' ] = 'سبب إغلاق الموضوع (يمكن تركه فارغاً)';
 
-// Delete subject
-$lang[ 'template' ][ 'delete_subject' ] = 'حذف الموضوع';
-$lang[ 'template' ][ 'delete_subject_reason' ] = 'سبب حذف الموضوع (يمكن تركه فارغاً)';
-
-// Move subject
-$lang[ 'template' ][ 'move_subject_to' ] = 'نقل الموضوع إلى';
-
-// Edit subject
-$lang[ 'template' ][ 'subject_context' ] = 'محتوى الموضوع';
-$lang[ 'template' ][ 'subject_title' ] = 'عنوان الموضوع';
-$lang[ 'template' ][ 'subject_description' ] = 'وصف الموضوع';
-$lang[ 'template' ][ 'optional' ] = '(اختياري)';
-
 // Edit reply
 $lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
 $lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';

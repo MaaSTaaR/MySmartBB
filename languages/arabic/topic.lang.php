@@ -5,6 +5,7 @@
 // ~ Templates ~ //
 
 $lang[ 'template' ][ 'subject_control' ] = 'التحكم في الموضوع';
+$lang[ 'template' ][ 'basic_operations' ] = 'العمليات الأساسية';
 $lang[ 'template' ][ 'stick_subject' ] = 'تثبيت الموضوع';
 $lang[ 'template' ][ 'unstick_subject' ] = 'إلغاء تثبيت الموضوع';
 $lang[ 'template' ][ 'close_subject' ] = 'إغلاق الموضوع';
@@ -13,8 +14,12 @@ $lang[ 'template' ][ 'delete_subject' ] = 'حذف الموضوع';
 $lang[ 'template' ][ 'move_subject' ] = 'نقل الموضوع';
 $lang[ 'template' ][ 'edit_subject' ] = 'تحرير الموضوع';
 $lang[ 'template' ][ 'repeated_subject' ] = 'موضوع مكرر';
-$lang[ 'template' ][ 'raise_subject' ] = 'رفع الموضوع';
-$lang[ 'template' ][ 'down_subject' ] = 'تنزيل الموضوع';
+$lang[ 'template' ][ 'delete_subject_reason' ] = 'سبب حذف الموضوع (يمكن تركه فارغاً)';
+$lang[ 'template' ][ 'move_subject_to' ] = 'نقل الموضوع إلى';
+$lang[ 'template' ][ 'subject_title' ] = 'عنوان الموضوع';
+$lang[ 'template' ][ 'subject_description' ] = 'وصف الموضوع';
+$lang[ 'template' ][ 'optional' ] = '(اختياري)';
+
 
 $lang[ 'template' ][ 'subject_information' ] = 'معلومات عن الموضوع';
 $lang[ 'template' ][ 'subject_state' ] = 'حالة الموضوع';

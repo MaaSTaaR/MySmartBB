@@ -27,6 +27,9 @@
 	<script src="{$bb_path}includes/js/3rdparty/fancybox/jquery.fancybox.pack.js"></script>
 	<link rel="stylesheet" type="text/css" href="{$bb_path}includes/js/3rdparty/fancybox/jquery.fancybox.css" media="screen" />
 	{/if}
+	{if {$TABS_JS}}
+	<script src="{$bb_path}includes/js/3rdparty/easytabs/jquery.easytabs.min.js"></script>
+	{/if}
 	
 	{hook}inside_header{/hook}
 	

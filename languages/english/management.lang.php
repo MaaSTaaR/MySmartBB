@@ -8,19 +8,6 @@
 $lang[ 'template' ][ 'close_subject' ] = 'Close The Topic';
 $lang[ 'template' ][ 'close_subject_reason' ] = 'Reason (Can Be Blank)';
 
-// Delete subject
-$lang[ 'template' ][ 'delete_subject' ] = 'Delete The Topic';
-$lang[ 'template' ][ 'delete_subject_reason' ] = 'Reason (Can Be Blank)';
-
-// Move subject
-$lang[ 'template' ][ 'move_subject_to' ] = 'Move The Topic To';
-
-// Edit subject
-$lang[ 'template' ][ 'subject_context' ] = 'Context';
-$lang[ 'template' ][ 'subject_title' ] = 'Title';
-$lang[ 'template' ][ 'subject_description' ] = 'Description';
-$lang[ 'template' ][ 'optional' ] = '(Optional)';
-
 // Edit reply
 $lang[ 'template' ][ 'reply_context' ] = 'Context';
 $lang[ 'template' ][ 'reply_title' ] = 'Title';
