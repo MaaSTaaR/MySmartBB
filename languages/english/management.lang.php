@@ -12,10 +12,6 @@ $lang[ 'template' ][ 'close_subject_reason' ] = 'Reason (Can Be Blank)';
 $lang[ 'template' ][ 'reply_context' ] = 'Context';
 $lang[ 'template' ][ 'reply_title' ] = 'Title';
 
-// Repeated subject
-$lang[ 'template' ][ 'repeated_subject' ] = 'Repeated Topic';
-$lang[ 'template' ][ 'repeated_subject_link' ] = 'The link of the original topic';
-
 // ... //
 
 $lang[ 'subjects_management' ] = 'Topic Management';
@@ -35,5 +31,6 @@ $lang[ 'repeated_subject' ] = 'Repeated Topic';
 $lang[ 'repeated_subject_see_original' ] = 'This topic is a repeated topic';
 $lang[ 'subject_raised' ] = 'The topic has been raised';
 $lang[ 'subject_downed' ] = 'The topic has been downed';
+$lang[ 'operation_failed' ] = 'The operation failed';
 
 ?>

@@ -12,3 +12,7 @@
 {template}topic_end--fast_reply{/template}
 {/if}
 {/if}
+
+<script type="text/javascript">
+$('.tab-container').easytabs( { "animate" : false } );
+</script>

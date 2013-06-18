@@ -160,7 +160,7 @@ class MySmartFunctions
     	
     	if ( !$no_header or !$this->header_showed )
     	{
-    		$this->ShowHeader('خطأ');
+    		$this->showHeader('خطأ');
     	}
     	
   		$this->msg($msg,$no_style);

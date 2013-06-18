@@ -5,6 +5,7 @@
 // ~ Templates ~ //
 
 $lang[ 'template' ][ 'subject_control' ] = 'Topic Management';
+$lang[ 'template' ][ 'reply_control' ] = 'Reply Management';
 $lang[ 'template' ][ 'basic_operations' ] = 'Basic Operations';
 $lang[ 'template' ][ 'stick_subject' ] = 'Mark as Important';
 $lang[ 'template' ][ 'unstick_subject' ] = 'Mark as Normal';
@@ -21,6 +22,7 @@ $lang[ 'template' ][ 'move_subject_to' ] = 'Move The Topic To';
 $lang[ 'template' ][ 'subject_title' ] = 'Title';
 $lang[ 'template' ][ 'subject_description' ] = 'Description';
 $lang[ 'template' ][ 'optional' ] = '(Optional)';
+$lang[ 'template' ][ 'repeated_subject_link' ] = 'The link of the original topic';
 
 $lang[ 'template' ][ 'subject_information' ] = 'Topic\'s Information';
 $lang[ 'template' ][ 'subject_state' ] = 'Status';

@@ -12,10 +12,6 @@ $lang[ 'template' ][ 'close_subject_reason' ] = 'سبب إغلاق الموضو�
 $lang[ 'template' ][ 'reply_context' ] = 'محتوى الرد';
 $lang[ 'template' ][ 'reply_title' ] = 'عنوان الرد';
 
-// Repeated subject
-$lang[ 'template' ][ 'repeated_subject' ] = 'موضوع مكرر';
-$lang[ 'template' ][ 'repeated_subject_link' ] = 'وصلة الموضوع الاصلي';
-
 // ... //
 
 $lang[ 'subjects_management' ] = 'ادارة المواضيع';
@@ -35,5 +31,6 @@ $lang[ 'repeated_subject' ] = 'موضوع مُكرر';
 $lang[ 'repeated_subject_see_original' ] = 'هذا الموضوع مكرر، راجع الاصل';
 $lang[ 'subject_raised' ] = 'تم رفع الموضوع بنجاح';
 $lang[ 'subject_downed' ] = 'تم إنزال الموضوع';
+$lang[ 'operation_failed' ] = 'فشلت العملية';
 
 ?>

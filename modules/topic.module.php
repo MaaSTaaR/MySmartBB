@@ -100,7 +100,7 @@ class MySmartTopicMOD
 		
 		$MySmartBB->template->assign( 'SMARTCODE', true );
 		
-		if ( $this->moderator )
+		if ( $this->moderator and !$this->printable )
 		{
 			// Requests Javascript libraries for our fancy moderator's interface
 			$MySmartBB->template->assign( 'JQUERY', true );
@@ -311,6 +311,19 @@ class MySmartTopicMOD
 		
 		while ( $this->Info = $MySmartBB->rec->getInfo( $reply_res ) )
 		{
+			if ( $this->moderator and !$this->printable )
+			{
+				// Initilize needed information to edit the topic content
+				$ReplyInfo = array();
+				$ReplyInfo[ 'id' ] 		= 	$this->Info[ 'reply_id' ];
+				$ReplyInfo[ 'title' ] 	= 	$this->Info[ 'title' ];
+				$ReplyInfo[ 'text' ] 	= 	$this->Info[ 'text' ];
+					
+				$MySmartBB->template->assign( "ReplyInfo", $ReplyInfo );
+					
+				unset( $SubjectInfo );
+			}
+			
 			$this->__getReplierInfo();
 			$this->__replyFormat();
 			$this->__getReplyAttachments();

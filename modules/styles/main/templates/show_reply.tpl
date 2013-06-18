@@ -38,7 +38,7 @@
 		</td>
 		<td  colspan="2" class="row2" width="80%">
 		{if {$Mod}}
-		<form method="get" action="index.php">
+		<!-- <form method="get" action="index.php">
 		<input type="hidden" name="page" value="management" />
 		<input type="hidden" name="reply" value="1" />
 		<input type="hidden" name="section" value="{$section}" />
@@ -51,7 +51,9 @@
 		</select>
 		<input type="submit" value="{$lang['common']['submit']}" />
 		
-		</form>
+		</form> -->
+		{template}show_reply--reply_control{/template}
+		<strong><a class="box_link" href="#reply_management_dialog_{$Info['reply_id']}">{$lang['reply_control']}</a></strong>
 		{/if}
 		</td>
 	</tr>
