@@ -19,56 +19,7 @@ class MySmartManagementMOD
 	public function run()
 	{
 		global $MySmartBB;
-		
-		$MySmartBB->loadLanguage( 'management' );
-		
-		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'subjects_management' ] );
-		
-		$MySmartBB->load( 'section,moderator,icon,toolbox' );
-		
-		// ... //
-		
-		if ( ( empty( $MySmartBB->_GET[ 'reply' ] ) and empty( $MySmartBB->_GET[ 'reply_edit' ] ) ) )
-		{
-			$MySmartBB->_GET[ 'subject_id' ] = (int) $MySmartBB->_GET[ 'subject_id' ];
-		
-			if ( empty( $MySmartBB->_GET[ 'subject_id' ] ) )
-				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-			
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'subject_id' ] . "'";
-			
-			$this->subject_info = $MySmartBB->rec->getInfo();
-			
-			if ( !$this->subject_info )
-				$MySmartBB->func->error( $MySmartBB->lang[ 'subject_doesnt_exist' ] );
-			
-			// ... //
-			
-			$section_id = $this->subject_info[ 'section' ];
-		}
-		else
-		{
-			$MySmartBB->_GET[ 'reply_id' ] = (int) $MySmartBB->_GET[ 'reply_id' ];
-		
-			if ( empty( $MySmartBB->_GET[ 'reply_id' ] ) )
-				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-			
-			// ... //
-			
-			$MySmartBB->rec->table = $MySmartBB->table[ 'reply' ];
-			$MySmartBB->rec->filter = "id='" . $MySmartBB->_GET[ 'reply_id' ] . "'";
-			
-			$this->reply_info = $MySmartBB->rec->getInfo();
-			
-			if ( !$this->reply_info )
-				$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
-			
-			$section_id = $this->reply_info[ 'section' ];
-		}
-		
+				
 		// ... //
 		
 		if ( $MySmartBB->moderator->moderatorCheck( $section_id ) )
