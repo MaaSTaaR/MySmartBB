@@ -91,6 +91,30 @@ class MySmartForumMOD
 		
 		// ... //
 		
+		if ( $this->Section[ 'linksection' ] )
+		{
+			$cookie_name = 'MySmartBB_forum_' . $this->id;
+			
+			if ( !$MySmartBB->func->isCookie( $cookie_name ) )
+			{
+				// Update the number of visitors
+				$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
+				$MySmartBB->rec->fields = array( 'linkvisitor' => $this->Section[ 'linkvisitor' ] + 1 );
+				$MySmartBB->rec->filter = "id='" . $this->Section[ 'id' ] . "'";
+				
+				$update = $MySmartBB->rec->update();
+				
+				// Update the cache to show the number of visitors in the main page
+				if ( $update )
+					$MySmartBB->section->updateForumCache( $this->Section[ 'parent' ], $this->Section[ 'id' ] );
+				
+				// Register the cookie so we won't count a new visitor again for this user.
+				setcookie( $cookie_name, $this->id, time() + 31536000, $this->engine->_CONF[ 'bb_path' ] );
+			}
+		}
+		
+		// ... //
+		
 		$MySmartBB->func->showHeader( $this->Section[ 'title' ] );
 		
 		// .. //
@@ -124,7 +148,11 @@ class MySmartForumMOD
 		
 		// This section is a link , so we should go to another location
 		if ( $this->Section[ 'linksection' ] )
-			$this->_goToLink();
+		{
+			$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section[ 'linksite' ] );
+			$MySmartBB->func->move( $this->Section[ 'linksite' ], true );
+			$MySmartBB->func->stop();
+		}
 		
 		// ... //
 		
@@ -136,30 +164,6 @@ class MySmartForumMOD
 		// Where is the member now?
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 			$MySmartBB->online->updateMemberLocation( $MySmartBB->lang[ 'viewing' ] . ' ' . $MySmartBB->lang_common[ 'colon' ] . ' ' . $this->Section[ 'title' ] );
-	}
-	
-	private function _goToLink()
-	{
-		global $MySmartBB;
-		
-		// ... //
-		
-		// Update the number of visitors
-		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ];
-		$MySmartBB->rec->fields = array( 'linkvisitor' => $this->Section[ 'linkvisitor' ] + 1 );
-		$MySmartBB->rec->filter = "id='" . $this->Section[ 'id' ] . "'";
-		
-		$update = $MySmartBB->rec->update();
-		
-		// Update the cache to show the number of visitors in the main page
-		if ( $update )
-			$MySmartBB->section->updateForumCache( $this->Section[ 'parent' ], $this->Section[ 'id' ] );
-		
-		// ... //
-		
-		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait_to_move' ] . ' ' . $this->Section[ 'linksite' ] );
-		$MySmartBB->func->move( $this->Section[ 'linksite' ], true );
-		$MySmartBB->func->stop();
 	}
 	
 	private function _sectionOnline()

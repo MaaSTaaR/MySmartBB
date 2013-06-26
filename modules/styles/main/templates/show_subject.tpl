@@ -65,7 +65,7 @@
 			{$Info['native_write_time']}
 			<a title="{$lang['report_abuse']}" href="{$init_path}report/
 			{$Info['subject_id']}">
-			    <img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.gif">
+			    <img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.png">
 			</a>
 		</td>
 		<td class="row2" width="80%">

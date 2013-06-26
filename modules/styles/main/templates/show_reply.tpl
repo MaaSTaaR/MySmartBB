@@ -33,7 +33,7 @@
 			{$Info['write_time']}
 			<a title="{$lang['report_abuse']}" href="{$init_path}report/
 			{$Info['subject_id']}/{$Info['reply_id']}">
-			<img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.gif">
+			<img alt="{$lang['report_abuse']}" border="0" src="{$image_path}/report.png">
 			</a>
 		</td>
 		<td  colspan="2" class="row2" width="80%">

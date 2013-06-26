@@ -210,13 +210,25 @@ class MySmartSubject
 		if ( !isset( $visits ) or empty( $id ) )
 			trigger_error( 'ERROR::NEED_PARAMETER -- FROM updateSubjectVisits()' );
 		
- 		$this->engine->rec->table = $this->table;
- 		$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
- 		$this->engine->rec->filter = "id='" . $id . "'";
+		$cookie_name = 'MySmartBB_topic_' . $id;
+		
+		// If MySmartBB_topic_[id] doesn't exist count a new visit and register this cookie.
+		// Otherwise don't count a new visit. By this way we can ensure that the visitors number
+		// will not raise with every refresh for the page.
+		if ( !$this->engine->func->isCookie( $cookie_name ) )
+		{
+ 			$this->engine->rec->table = $this->table;
+ 			$this->engine->rec->fields = array(	'visitor'	=>	$visits + 1	);
+ 			$this->engine->rec->filter = "id='" . $id . "'";
  		
-		$query = $this->engine->rec->update();
-		           
-		return ( $query ) ? true : false;
+			$query = $this->engine->rec->update();
+			
+			setcookie( $cookie_name, $id, time() + 31536000, $this->engine->_CONF[ 'bb_path' ] );
+			
+			return ( $query ) ? true : false;
+		}
+		
+		return true;
 	}
 	
 	// ... //

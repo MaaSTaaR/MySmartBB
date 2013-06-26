@@ -127,6 +127,14 @@ class MySmartTopicMOD
 			unset( $SubjectInfo );
 		}
 		
+		// ... //
+		
+		// updateSubjectVisits() should be called before showing header because of cookie stuff.
+		if ( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] != $this->Info[ 'writer' ] )
+			$MySmartBB->subject->updateSubjectVisits( $this->Info[ 'subject_visitor' ], $this->Info[ 'subject_id' ] );
+		
+		// ... //
+		
 		if ( !$this->printable )
 			$MySmartBB->func->showHeader( $this->Info[ 'title' ] );
 		
@@ -184,9 +192,6 @@ class MySmartTopicMOD
 		
 		if ( !$this->SectionGroup[ 'view_section' ] or $parent_per[ 'view_section' ] != 1 )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'cant_view_topic' ] );
-		
-		if ( $MySmartBB->_CONF[ 'member_row' ][ 'username' ] != $this->Info[ 'writer' ] )
-			$MySmartBB->subject->updateSubjectVisits( $this->Info[ 'subject_visitor' ], $this->Info[ 'subject_id' ] );
 		
 		// ... //
 		

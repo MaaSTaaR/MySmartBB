@@ -122,7 +122,7 @@
 				{/if}
 			</td>
 			<td width="40%" class="row1">
-				<a href="{$init_path}/forum/{$forum['id']}/{$forum['title']}">{$forum['title']}</a>
+				<a href="{$init_path}forum/{$forum['id']}/{$forum['title']}">{$forum['title']}</a>
 				<br />
 				{if {$forum['use_section_picture']} == 1}
 					{if {$forum['sectionpicture_type']} == 2}
