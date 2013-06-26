@@ -79,7 +79,3 @@
 <br />
 
 {hook}after_topic_context_table{/hook}
-
-<script type="text/javascript">
-$('.box_link').fancybox();
-</script>

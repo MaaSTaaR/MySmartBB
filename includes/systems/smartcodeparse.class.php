@@ -32,28 +32,16 @@ class MySmartCodeParse
  			$first_replace[] = '\'[code]\' . base64_encode(\'\\1\') . \'[/code]\'';
  			$first_replace[] = '\'[php]\' . base64_encode(\'\\1\') . \'[/php]\'';
  			
- 			if ($MySmartBB->_CONF['info_row']['resize_imagesAllow'])
- 			{
- 				$first_search[] = '~\[img](.*?)\[/img]~ise';
- 				$first_search[] = '~\[IMG](.*?)\[/IMG]~ise';
- 				
- 				$first_replace[] = '$this->ResizeImage(\'\\1\')';
- 				$first_replace[] = '$this->ResizeImage(\'\\1\')';
- 			}
- 									
  			$string = preg_replace($first_search,$first_replace,$string);
  			 									
  			$search_array = array();
  			$replace_array = array();
  			
- 			if (!$MySmartBB->_CONF['info_row']['resize_imagesAllow'])
- 			{
- 				$search_array[] = '~\[img](.*?)\[/img]~';
- 				$replace_array[] = '<img src="\\1" border="0" />';
+ 			$search_array[] = '~\[img](.*?)\[/img]~';
+ 			$replace_array[] = '<a href="\\1" class="box_link"><img class="ext_img" src="\\1" border="0" /></a>';
  			
- 				$search_array[] = '~\[IMG](.*?)\[/IMG]~';
- 				$replace_array[] = '<img src="\\1" border="0" />';
- 			}
+ 			$search_array[] = '~\[IMG](.*?)\[/IMG]~';
+ 			$replace_array[] = '<a href="\\1" class="box_link"><img class="ext_img" src="\\1" border="0" /></a>';
  			
  			$search_array[] = '~\[b](.*?)\[/b]~';
  			$replace_array[] = '<b>\\1</b>';
@@ -238,14 +226,7 @@ class MySmartCodeParse
 		}
 		
 		return $text;
-    }
-    
-    function ResizeImage($path)
-    {
-    	global $MySmartBB;
-    	
-    	return '<a target="_blank" href="' . $path . '"><img src="' . $path . '" border="0" alt="' . $path . '" width="' . $MySmartBB->_CONF['info_row']['default_imagesW'] . '" height="' . $MySmartBB->_CONF['info_row']['default_imagesH'] . '" /></a>';
-    }
+    }    
 }
 
 ?>

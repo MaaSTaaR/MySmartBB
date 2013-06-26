@@ -14,5 +14,11 @@
 {/if}
 
 <script type="text/javascript">
+$('.box_link').fancybox();
 $('.tab-container').easytabs( { "animate" : false } );
+$('.ext_img').each( function () 
+{
+	if ( $(this).width() > 700 )
+		$(this).width( 700 );
+} );
 </script>
