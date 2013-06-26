@@ -134,67 +134,12 @@ class MySmartCodeParse
  	 {
  	    global $MySmartBB;
  	    
- 	 	$input = stripslashes(base64_decode($code));
- 	 	
-		if (substr($input, 0, 1) != "\r") 
-		{
-			$input = "\r\n" . $input;
-		}
-		
-		if (substr($input, -1) != "\n") 
-		{
-			$input .= "\r\n";
-		}
- 	 	
-		if ($is_php) 
-		{
-			
-			if (!strstr('<?',$input)) 
-			{
-				$input  = '<' . "?php $input ?" . '>';
-				$tagged = true;
-			}
-			
-			ob_start();
-
-			highlight_string($input);
-			$input = ob_get_contents();
-
-			ob_end_clean();
-		} 
-		else 
-		{
-			$input = str_replace('\'', '&#039;', $input);
-			$input = nl2br($input);
-		}
-
-
-		if (isset($tagged)) 
-		{
-			$input = str_replace(array('&lt;?php', '?&gt;'), '', $input);
-			$input = str_replace(array('<?php', '?>'), '', $input);
-		}
-		
-		$lines = explode('<br />', $input);
-		$count = count($lines) - 1;
-		
-		$col1 = '';
-		$col2 = '';
-		
-		$start = 1;
-		
-		for ($i = 1; $i < $count; $i++)
-		{
-			$col1 .= $start . '<br />';
-			$col2 .= rtrim($lines[$i]);
-			$start += 1;
-		}
-		
-		$return = "<table align='center' border='1' width='90%' cellpadding='0' cellspacing='0' class='t_style_a' dir='ltr'>";
-		$return .= "<tr><td width='89%' colspan='2' dir='rtl'><b>" . $MySmartBB->lang_common[ 'code' ] . "</b></td></tr>";
-		$return .= "<tr><td width='1%'><br />$col1</td>";
-		$return .= "<td>" . $this->strip_smiles($col2) . "</td></tr></table>";
-
+ 	    $input = base64_decode($code);
+ 	    
+ 	    $input = str_replace('\"','"',$input);
+ 	    
+ 	    return '<div align="left"><pre class="prettyprint linenums">' . $this->strip_smiles( $input ) . '</pre></div>';
+ 	    
 		return $return;		
  	 }
  	

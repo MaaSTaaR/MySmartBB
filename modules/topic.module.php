@@ -99,12 +99,13 @@ class MySmartTopicMOD
 		// ... //
 		
 		$MySmartBB->template->assign( 'SMARTCODE', true );
+		$MySmartBB->template->assign( 'JQUERY', true );
+		$MySmartBB->template->assign( 'BOX_JS', true );
+		$MySmartBB->template->assign( 'CODE_HIGHLIGHTER_JS', true );
 		
 		if ( $this->moderator and !$this->printable )
 		{
 			// Requests Javascript libraries for our fancy moderator's interface
-			$MySmartBB->template->assign( 'JQUERY', true );
-			$MySmartBB->template->assign( 'BOX_JS', true );
 			$MySmartBB->template->assign( 'TABS_JS', true );
 			
 			// ... //

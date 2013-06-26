@@ -30,6 +30,10 @@
 	{if {$TABS_JS}}
 	<script src="{$bb_path}includes/js/3rdparty/easytabs/jquery.easytabs.min.js"></script>
 	{/if}
+	{if {$CODE_HIGHLIGHTER_JS}}
+	<script src="{$bb_path}includes/js/3rdparty/prettify/run_prettify.js"></script>
+	<link href="{$bb_path}includes/js/3rdparty/prettify/prettify.css" type="text/css" rel="stylesheet" />
+	{/if}
 	
 	{hook}inside_header{/hook}
 	
