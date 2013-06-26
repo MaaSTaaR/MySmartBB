@@ -56,10 +56,7 @@ class MySmartCodeParse
  			$replace_array[] = '<div style="color:\\1">\\2</div>';
  			
  			$search_array[] = '~\[quote](.*?)\[/quote]~';
- 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>' . $MySmartBB->lang_common[ 'quote' ] . '</td></tr><tr><td align="right">\\1</tr></td></table>';
- 			
- 			$search_array[] = '~\[qu](.*?)\[/qu]~';
- 			$replace_array[] = '<table border="1" cellspacing="0" cellpadding="0" class="t_style_a" width="95%" align="center"><tr><td>' . $MySmartBB->lang_common[ 'quote' ] . '</td></tr><tr><td align="right">\\1</tr></td></table>';
+ 			$replace_array[] = '<blockquote>\\1</blockquote>';
  			
  			$search_array[] = '~\[code](.*?)\[/code]~ise';
  			$replace_array[] = '$this->code_tag(\'\\1\',0)';
