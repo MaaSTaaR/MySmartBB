@@ -621,6 +621,36 @@ class MySmartFunctions
 		
 		return $move_to;
 	}
+	
+	public function splitText( &$text, $max_words = 220 )
+	{
+		$text = trim( $text );
+	
+		$words = explode( ' ', $text );
+	
+		if ( sizeof( $words ) > $max_words )
+		{
+			$text = '';
+	
+			$k = 1;
+	
+			foreach ( $words as $word )
+			{
+				if ( $k >= $max_words )
+					break;
+	
+				$text .= $word . ' ';
+	
+				$k++;
+			}
+				
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 ?>
