@@ -217,6 +217,7 @@ class MySmartModerators
 				$this->engine->rec->fields['usergroup'] = $group;
 				$this->engine->rec->fields['user_title'] = $usertitle;
 				$this->engine->rec->fields[ 'username_style_cache' ] = $username_style;
+				$this->engine->rec->fields[ 'need_update_forbidden_forums' ] = '1';
 				
 				$this->engine->rec->filter = "id='" . $member_info[ 'id' ] . "'";
 				
@@ -291,6 +292,7 @@ class MySmartModerators
 					$this->engine->rec->fields[ 'usergroup' ] = '4';
 					$this->engine->rec->fields[ 'user_title' ] = $member_group[ 'user_title' ];
 					$this->engine->rec->fields[ 'username_style_cache' ] = $username_style;
+					$this->engine->rec->fields[ 'need_update_forbidden_forums' ] = '1';
 										
 					$this->engine->rec->filter = "id='" . $member_info[ 'id' ] . "'";
 					

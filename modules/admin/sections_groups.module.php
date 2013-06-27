@@ -51,9 +51,9 @@ class MySmartSectionGroupsMOD
 	{
 		global $MySmartBB;
 		
-		$this->checkID( $Inf );
+		$Inf = null;
 		
-		$MySmartBB->_GET[ 'group_id' ] = (int) $MySmartBB->_GET[ 'group_id' ];
+		$this->checkID( $Inf );
 		
 		$state = array();
 		
@@ -76,6 +76,11 @@ class MySmartSectionGroupsMOD
 			
 			if ( $cache )
 			{
+				// Indicates that all members' forbidden forums list need to be updated after this modification
+				$MySmartBB->member->needUpdatesForbiddenForums();
+				
+				// ... //
+				
 				$MySmartBB->func->msg( $MySmartBB->lang[ 'cache_updated' ] );
 				$MySmartBB->func->move( 'admin.php?page=sections_groups&amp;index=1&amp;id=' . $Inf[ 'id' ] );
 			}

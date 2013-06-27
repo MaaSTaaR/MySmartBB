@@ -15,6 +15,8 @@ class MySmartTopicsOfMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'subject' );
+		
 		$this->username = $username;
 		$this->curr_page = (int) $curr_page;
 		
@@ -31,19 +33,12 @@ class MySmartTopicsOfMOD
 		
 		// ... //
 		
-		// TODO : Should be replaced with getPublicTopicsList().
-		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "writer='" . $member[ 'username' ] . "'";
-		
-		$topics_num = $MySmartBB->rec->getNumber();
+		$topics_num = $MySmartBB->subject->getPublicTopicList( "writer='" . $member[ 'username' ] . "'", true );
 		
 		// ... //
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topics_res' ] = '';
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "writer='" . $member[ 'username' ] . "'";
 		$MySmartBB->rec->order = "id DESC";
 		
 		$MySmartBB->rec->result = 	&$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'topics_res' ];
@@ -54,7 +49,7 @@ class MySmartTopicsOfMOD
 		$MySmartBB->rec->pager[ 'curr_page' ] 	= 	$this->curr_page;
 		$MySmartBB->rec->pager[ 'prefix' ]		=	$MySmartBB->_CONF[ 'init_path' ] . 'topics_of/' . $member[ 'username' ] . '/';
 		
-		$MySmartBB->rec->getList();
+		$MySmartBB->subject->getPublicTopicList( "writer='" . $member[ 'username' ] . "'" );
 		
 		$MySmartBB->rec->setInfoCallback( array( 'MySmartTopicsOfMOD', 'rowsProcessCB' ) );
 		

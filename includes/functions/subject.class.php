@@ -624,6 +624,39 @@ class MySmartSubject
 	}
 	
 	// ... //
+	
+	/**
+	 * Gets topics list to be shown for public. This function eliminates the topics
+	 * that forbidden to be shown for the current member. For instance deleted topics, topics which
+	 * belong to a forum which the current member has no permission to access it. It's a really important
+	 * function for any page that needs to show topics list such as (latest topics, search results etc...)
+	 * 
+	 * @param $filter The SQL filter
+	 * @param $get_number (Default value : false) if it's true the function will return the number of rows
+	 */
+	public function getPublicTopicList( $filter = null, $get_number = false )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'subject' ];
+		$this->engine->rec->filter = $filter;
+		
+		if ( !is_null( $filter ) )
+			$this->engine->rec->filter .= ' AND ';
+		
+		$this->engine->rec->filter .= "(delete_topic<>'1'";
+		
+		if ( is_array( $this->engine->_CONF[ 'forbidden_forums' ] ) and sizeof( $this->engine->_CONF[ 'forbidden_forums' ] ) > 0 )
+			foreach ( $this->engine->_CONF[ 'forbidden_forums' ] as $forum_id )
+				$this->engine->rec->filter .= " AND section<>'" . (int) $forum_id . "'";
+		
+		$this->engine->rec->filter .= ')';
+		
+		if ( !$get_number )
+			$this->engine->rec->getList();
+		else
+			return $this->engine->rec->getNumber();
+		
+		// That was a black magic :-/
+	}
 }
  
 ?>

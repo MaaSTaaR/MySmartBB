@@ -20,6 +20,16 @@ class MySmartRepliesOfMOD
 		
 		// ... //
 		
+		$filter = " AND (topics.delete_topic<>'1'";
+		
+		if ( is_array( $MySmartBB->_CONF[ 'forbidden_forums' ] ) and sizeof( $MySmartBB->_CONF[ 'forbidden_forums' ] ) > 0 )
+			foreach ( $MySmartBB->_CONF[ 'forbidden_forums' ] as $forum_id )
+				$filter .= " AND topics.section<>'" . (int) $forum_id . "'";
+		
+		$filter .= ')';
+		
+		// ... //
+		
 		$MySmartBB->rec->select = 'id,username';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		$MySmartBB->rec->filter = "username='" . $this->username . "'";
@@ -34,7 +44,7 @@ class MySmartRepliesOfMOD
 		// TODO : Should be replaced with getPublicRepliesList().
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ] . ' AS topics,' . $MySmartBB->table[ 'reply' ] . ' AS replies';
-		$MySmartBB->rec->filter = "replies.writer='" . $member[ 'username' ] . "' AND replies.subject_id=topics.id";
+		$MySmartBB->rec->filter = "replies.writer='" . $member[ 'username' ] . "' AND replies.subject_id=topics.id" . $filter;
 		
 		$replies_num = $MySmartBB->rec->getNumber();
 		
@@ -44,7 +54,7 @@ class MySmartRepliesOfMOD
 		
 		$MySmartBB->rec->select = 'topics.title AS topic_title, topics.id AS topic_id, topics.writer AS topic_writer, topics.section AS section, replies.id AS reply_id, replies.write_time AS reply_time, replies.text AS reply_text';
 		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ] . ' AS topics,' . $MySmartBB->table[ 'reply' ] . ' AS replies';
-		$MySmartBB->rec->filter = "replies.writer='" . $member[ 'username' ] . "' AND replies.subject_id=topics.id";
+		$MySmartBB->rec->filter = "replies.writer='" . $member[ 'username' ] . "' AND replies.subject_id=topics.id" . $filter;
 		$MySmartBB->rec->order = "replies.id DESC";
 		
 		$MySmartBB->rec->result = 	&$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'replies_res' ];

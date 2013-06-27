@@ -36,6 +36,8 @@ class MySmartSearchEngineMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->load( 'subject' );
+		
 		$this->commonProcesses();
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'template' ][ 'search_result' ] );
@@ -66,11 +68,9 @@ class MySmartSearchEngineMOD
 		
 		$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'search_res' ] = '';
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
 		$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'search_res' ];
-		$MySmartBB->rec->filter = $filter;
 		
-		$MySmartBB->rec->getList();
+		$MySmartBB->subject->getPublicTopicList( $filter );
 		
 		// ... //
 		

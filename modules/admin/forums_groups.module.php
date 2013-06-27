@@ -97,6 +97,8 @@ class MySmartForumsGroupsMOD
 				
 				if ( $cache )
 				{
+					$MySmartBB->member->needUpdatesForbiddenForums();
+					
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'final_step_succeed' ] );
 					$MySmartBB->func->move('admin.php?page=forums_groups&amp;index=1&amp;id=' . $info[ 'id' ]);
 				}

@@ -651,6 +651,24 @@ class MySmartFunctions
 			return false;
 		}
 	}
+	
+	public function getForbiddenForumsList()
+	{
+		global $MySmartBB;
+		
+		$MySmartBB->rec->select = "forums.id AS forum_id";
+		$MySmartBB->rec->table = $MySmartBB->table[ 'section' ] . ' AS forums,' . $MySmartBB->table[ 'section_group' ] . ' AS permissions';
+		$MySmartBB->rec->filter = "permissions.group_id='" . $MySmartBB->_CONF[ 'group_info' ][ 'id' ] . "' AND permissions.view_section<>'1' AND forums.id=permissions.section_id";
+	
+		$MySmartBB->rec->getList();
+		
+		$forums = array();
+		
+		while ( $r = $MySmartBB->rec->getInfo() )
+			$forums[] = $r[ 'forum_id' ];
+		
+		return $forums;
+	}
 }
 
 ?>

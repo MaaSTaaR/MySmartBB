@@ -14,6 +14,8 @@ class MySmartLatestMOD
 		
 		$MySmartBB->loadLanguage( 'latest' );
 		
+		$MySmartBB->load( 'subject' );
+		
 		// ... //
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang_common[ 'todays_topics' ] );
@@ -31,12 +33,10 @@ class MySmartLatestMOD
 		
 		$MySmartBB->_CONF['template']['res']['latest_res'] = '';
 		
-		$MySmartBB->rec->table = $MySmartBB->table[ 'subject' ];
-		$MySmartBB->rec->filter = "native_write_time BETWEEN " . $from . " AND " . $to . " AND delete_topic<>'1'";
 		$MySmartBB->rec->order = "id DESC";
 		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['latest_res'];
 				
-		$MySmartBB->rec->getList();
+		$MySmartBB->subject->getPublicTopicList( "native_write_time BETWEEN " . $from . " AND " . $to );
 				
 		$number = $MySmartBB->rec->getNumber( $MySmartBB->_CONF['template']['res']['latest_res'] );
 		

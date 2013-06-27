@@ -5,6 +5,7 @@
 class MySmartCommon
 {
 	private $CheckMember;
+	private $need_update_forbidden_forums = false;
 			
 	public function run()
 	{
@@ -66,6 +67,27 @@ class MySmartCommon
 		else
 		{
 			$this->__visitorProcesses();
+		}
+		
+		if ( $this->need_update_forbidden_forums or !$MySmartBB->_CONF[ 'forbidden_forums' ] )
+		{
+			$MySmartBB->_CONF[ 'forbidden_forums' ] = $MySmartBB->func->getForbiddenForumsList();
+				
+			$serialized_data = base64_encode( serialize( $MySmartBB->_CONF[ 'forbidden_forums' ] ) );
+			
+			if ( $MySmartBB->_CONF[ 'member_permission' ] )
+			{
+				$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
+				$MySmartBB->rec->fields = array( 'need_update_forbidden_forums' => '0', 'forbidden_forums' => $serialized_data );
+				$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
+					
+				$MySmartBB->rec->update();
+			}
+			else
+			{
+				$MySmartBB->info->updateInfo( 'need_update_global_forbidden_forums', '0' );
+				$MySmartBB->info->updateInfo( 'global_forbidden_forums', $serialized_data );
+			}
 		}
 	}
 	
@@ -130,6 +152,11 @@ class MySmartCommon
 			
 			$MySmartBB->rec->update();
 		}
+		
+		// ... //
+		
+		$MySmartBB->_CONF[ 'forbidden_forums' ] = unserialize( base64_decode( $MySmartBB->_CONF[ 'member_row' ][ 'forbidden_forums' ] ) );
+		$this->need_update_forbidden_forums = $MySmartBB->_CONF[ 'member_row' ][ 'need_update_forbidden_forums' ];
 	}
 		
 	/**
@@ -177,6 +204,11 @@ class MySmartCommon
 		// ... //
 		
 		$this->_setStyleInformation();
+		
+		// ... //
+		
+		$MySmartBB->_CONF[ 'forbidden_forums' ] = unserialize( base64_decode( $MySmartBB->_CONF[ 'info_row' ][ 'global_forbidden_forums' ] ) );
+		$this->need_update_forbidden_forums = $MySmartBB->_CONF[ 'info_row' ][ 'need_update_global_forbidden_forums' ];
 		
 		// ... //
 		

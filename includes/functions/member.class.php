@@ -411,6 +411,37 @@ class MySmartMember
 		
 		// ... //
 	}
+	
+	/**
+	 * Indicates that members' forbidden forums list need to be updated after the modifying of
+	 * forums' permissions. If the parameters are null (which is the default value) the update
+	 * will affect all members.
+	 * 
+	 * @param $member_id Can be null, or the id of the member to be updated.
+	 * @param $group_id Can be null, or the id of the group which the members who belong to should be updated
+	 * 
+	 * @return true/false
+	 */
+	public function needUpdatesForbiddenForums( $member_id = null, $group_id = null )
+	{
+		$this->engine->rec->table = $this->engine->table[ 'member' ];
+		$this->engine->rec->fields = array( 'need_update_forbidden_forums' => '1' );
+		
+		$this->engine->rec->filter = null;
+		
+		if ( !is_null( $member_id ) )
+			$this->engine->rec->filter .= "id='" . $member_id . "'";
+		
+		if ( !is_null( $group_id ) )
+			$this->engine->rec->filter .= "usergroup='" . $group_id . "'";
+		
+		$update = $this->engine->rec->update();
+		
+		if ( $update and is_null( $member_id ) )
+			$update = $this->engine->info->updateInfo( 'need_update_global_forbidden_forums', '1' );
+		
+		return ( $update ) ? true : false;
+	}
 }
 
 ?>

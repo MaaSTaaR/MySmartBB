@@ -130,6 +130,12 @@ class MySmartMemberMOD
 		
 		// ... //
 		
+		// The admin changed the group of this member. So we need to update "need_update_forbidden_forums"
+		if ( $MySmartBB->_POST[ 'usergroup' ] != $MemInfo[ 'usergroup' ] )
+			$MySmartBB->member->needUpdatesForbiddenForums( $MemInfo[ 'id' ] );
+		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
 		
 		$MySmartBB->rec->fields 	= 	array();
