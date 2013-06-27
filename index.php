@@ -60,6 +60,7 @@ $modules[ 'topic_management_edit' ] 		=  	'topic_management_edit.module.php';
 $modules[ 'topic_management_repeated' ] 	=  	'topic_management_repeated.module.php';
 $modules[ 'reply_management_basics' ] 		=  	'reply_management_basics.module.php';
 $modules[ 'reply_management_edit' ] 		=  	'reply_management_edit.module.php';
+$modules[ 'topics_of' ] 					=  	'topics_of.module.php';
 
 // ... //
 

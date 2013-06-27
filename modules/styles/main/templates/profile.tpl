@@ -116,10 +116,18 @@
 		</td>
 	</tr>
 	{/if}
-
-
-
-
+	<tr align="center">
+		<td class="row1" width="20%">
+		{$lang['member_posts']}
+		</td>
+		<td class="row1" width="30%">
+			<strong><a href="{$init_path}topics_of/
+{$MemberInfo['username']}">{$lang['topics_list']}</a>
+			{$lang['common']['comma']}
+			<a href="{$init_path}replies_of/
+{$MemberInfo['username']}">{$lang['replies_list']}</a></strong>
+		</td>
+	</tr>
 </table>
 <br />
 

@@ -28,5 +28,8 @@ $lang[ 'template' ][ 'last_topic' ] = 'آخر موضوع ';
 $lang[ 'template' ][ 'last_reply' ] = 'آخر رد في';
 $lang[ 'template' ][ 'send_pm' ] = 'رساله خاصه ';
 $lang[ 'template' ][ 'send_email' ] = 'رساله بريديه ';
+$lang[ 'template' ][ 'member_posts' ] = 'مُشاركات العضو';
+$lang[ 'template' ][ 'topics_list' ] = 'قائمة المواضيع';
+$lang[ 'template' ][ 'replies_list' ] = 'قائمة الردود';
 
 ?>

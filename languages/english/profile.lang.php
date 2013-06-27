@@ -28,5 +28,8 @@ $lang[ 'template' ][ 'last_topic' ] = 'Last Topic';
 $lang[ 'template' ][ 'last_reply' ] = 'Last Reply In';
 $lang[ 'template' ][ 'send_pm' ] = 'Send Private Message';
 $lang[ 'template' ][ 'send_email' ] = 'Send Email';
+$lang[ 'template' ][ 'member_posts' ] = "Member's Posts";
+$lang[ 'template' ][ 'topics_list' ] = 'Topics List';
+$lang[ 'template' ][ 'replies_list' ] = 'Replies List';
 
 ?>
