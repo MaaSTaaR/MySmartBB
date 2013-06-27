@@ -44,6 +44,11 @@ class MySmartForumsGroupsMOD
 		
 		$MySmartBB->rec->getList();
 		
+		$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'groups' ] = array();
+		
+		while ( $r = $MySmartBB->rec->getInfo() )
+			$MySmartBB->_CONF[ 'template' ][ 'foreach' ][ 'groups' ][] = $r;
+		
 		$MySmartBB->template->display( 'forums_groups_control_main' );
 	}
 		
