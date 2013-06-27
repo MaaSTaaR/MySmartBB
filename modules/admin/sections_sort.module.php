@@ -3,7 +3,9 @@
 ( !defined( 'IN_MYSMARTBB' ) ) ? die() : '';
 
 include( 'common.module.php' );
-	
+
+define( 'CLASS_NAME', 'MySmartSectionSortMOD' );
+
 class MySmartSectionSortMOD
 {
 	public function run()

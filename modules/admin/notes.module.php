@@ -4,6 +4,8 @@
 
 include( 'common.module.php' );
 
+define( 'CLASS_NAME', 'MySmartNotesMOD' );
+
 class MySmartNotesMOD
 {
 	public function run()
