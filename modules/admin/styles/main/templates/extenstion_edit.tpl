@@ -21,10 +21,14 @@
 		</tr>
 		<tr>
 			<td class="row2">
-			{$lang['max_size']} ({$lang['kilobyte']})
+			{$lang['max_size']}
 			</td>
 			<td class="row2">
 				<input type="text" name="max_size" value="{$Inf['max_size']}" />
+				<select name="size_unit">
+					<option value="kb" selected="selected">KB</option>
+					<option value="mb">MB</option>
+				</select>
 			</td>
 		</tr>
 		<tr>

@@ -100,6 +100,11 @@ class MySmartExtensionMOD
 		
 		// ... //
 		
+		if ( $MySmartBB->_POST[ 'size_unit' ] == 'mb' )
+			$MySmartBB->_POST['max_size'] *= 1024;
+		
+		// ... //
+		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'extension' ];
 		
 		$MySmartBB->rec->fields	= array();
@@ -151,6 +156,11 @@ class MySmartExtensionMOD
 		$info = null;
 		
 		$this->__checkID( $info );
+		
+		// ... //
+		
+		if ( $MySmartBB->_POST[ 'size_unit' ] == 'mb' )
+			$MySmartBB->_POST['max_size'] *= 1024;
 		
 		// ... //
 		
