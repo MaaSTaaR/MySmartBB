@@ -14,7 +14,7 @@ class MySmartAttachStatisticsMOD
 
 		if ( $MySmartBB->_CONF[ 'member_permission' ] )
 		{
-			//$MySmartBB->loadLanguage( 'admin_announcement' );
+			$MySmartBB->loadLanguage( 'admin_attachments_statistics' );
 
 			$MySmartBB->template->display( 'header' );
 				

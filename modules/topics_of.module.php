@@ -17,6 +17,10 @@ class MySmartTopicsOfMOD
 		
 		$MySmartBB->load( 'subject' );
 		
+		$MySmartBB->loadLanguage( 'topics_of' );
+		
+		// ... //
+		
 		$this->username = $username;
 		$this->curr_page = (int) $curr_page;
 		
@@ -29,7 +33,7 @@ class MySmartTopicsOfMOD
 		$member = $MySmartBB->rec->getInfo();
 		
 		if ( !$member )
-			$MySmartBB->func->error( 'المعذرة، العضو المطلوب غير موجود' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exit' ] );
 		
 		// ... //
 		
@@ -58,7 +62,7 @@ class MySmartTopicsOfMOD
 		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
 		$MySmartBB->template->assign( 'username', $member[ 'username' ] );
 		
-		$MySmartBB->func->showHeader( 'مواضيع العضو ' . $member[ 'username' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'topics_of' ] . ' ' . $member[ 'username' ] );
 		
 		$MySmartBB->template->display( 'topics_of' );
 	}

@@ -1,8 +1,8 @@
 {template}address_bar_part1{/template}
 <a href="{$init_path}profile/
-{$username}">الملف الشخصي لـ {$username}</a>
+{$username}">{$lang['profile_of']} {$username}</a>
  {$_CONF['info_row']['adress_bar_separate']}
- قائمة مواضيع {$username}
+ {$lang['topics_of']} {$username}
 {template}address_bar_part2{/template}
 
 <br />
@@ -12,19 +12,19 @@
 <table id="topics_list_table" border="1" width="80%" class="t_style_b" align="center">
 	<tr align="center">
 		<td width="20%" class="main1 rows_space">
-		عنوان الموضوع
+		{$lang['topic_title']}
 		</td>
 		<td width="20%" class="main1 rows_space">
-		الكاتب
+		{$lang['topic_author']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد الزوار
+		{$lang['topic_visitor']}
 		</td>
 		<td width="10%" class="main1 rows_space">
-		عدد الردود
+		{$lang['replies_number']}
 		</td>
 		<td width="20%" class="main1 rows_space">
-		تاريخ الكتابة
+		{$lang['write_date']}
 		</td>
 	</tr>
 {DB::getInfo}{$topics_res}{$topic}

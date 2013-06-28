@@ -15,6 +15,10 @@ class MySmartRepliesOfMOD
 	{
 		global $MySmartBB;
 		
+		$MySmartBB->loadLanguage( 'replies_of' );
+		
+		// ... //
+		
 		$this->username = $username;
 		$this->curr_page = (int) $curr_page;
 		
@@ -37,7 +41,7 @@ class MySmartRepliesOfMOD
 		$member = $MySmartBB->rec->getInfo();
 		
 		if ( !$member )
-			$MySmartBB->func->error( 'المعذرة، العضو المطلوب غير موجود' );
+			$MySmartBB->func->error( $MySmartBB->lang[ 'member_doesnt_exit' ] );
 		
 		// ... //
 		
@@ -74,7 +78,7 @@ class MySmartRepliesOfMOD
 		$MySmartBB->template->assign( 'pager', $MySmartBB->pager->show() );
 		$MySmartBB->template->assign( 'username', $member[ 'username' ] );
 		
-		$MySmartBB->func->showHeader( 'ردود العضو ' . $member[ 'username' ] );
+		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'replies_of' ] . ' ' . $member[ 'username' ] );
 		
 		$MySmartBB->template->display( 'replies_of' );
 	}
