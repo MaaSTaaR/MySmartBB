@@ -198,6 +198,9 @@
 <tr align="center">
 	<td class="row1" colspan="2"><a href="admin.php?page=extension&amp;search=1&amp;main=1" target="main">{$lang['search']}</a></td>
 </tr>
+<tr align="center">
+	<td class="row1" colspan="2"><a href="admin.php?page=attachments_statistics&amp;main=1" target="main">{$lang['statistics']}</a></td>
+</tr>
 </table><br />
 <table width="90%" class="t_style_b" border="1" align="center">
 <tr align="center">

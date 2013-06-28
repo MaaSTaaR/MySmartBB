@@ -20,7 +20,7 @@ class MySmartRepliesOfMOD
 		
 		// ... //
 		
-		$filter = " AND (topics.delete_topic<>'1'";
+		$filter = " AND (replies.delete_topic<>'1'";
 		
 		if ( is_array( $MySmartBB->_CONF[ 'forbidden_forums' ] ) and sizeof( $MySmartBB->_CONF[ 'forbidden_forums' ] ) > 0 )
 			foreach ( $MySmartBB->_CONF[ 'forbidden_forums' ] as $forum_id )

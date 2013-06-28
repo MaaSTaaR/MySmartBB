@@ -53,6 +53,7 @@ $modules['member_merge'] 	= 	'member_merge.module.php';
 $modules['member_edit'] 	= 	'member_edit.module.php';
 $modules['member_del'] 		= 	'member_del.module.php';
 $modules['member_search'] 	= 	'member_search.module.php';
+$modules['attachments_statistics'] 	= 	'attachments_statistics.module.php';
 
 // ... //
 

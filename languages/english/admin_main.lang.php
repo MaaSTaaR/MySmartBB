@@ -52,6 +52,7 @@ $lang[ 'template' ][ 'mass_move' ] = 'Mass Move';
 $lang[ 'template' ][ 'attachments' ] = 'Attachments';
 $lang[ 'template' ][ 'add_extension' ] = 'Add new Extension';
 $lang[ 'template' ][ 'control_extension' ] = 'Control Extensions';
+$lang[ 'template' ][ 'statistics' ] = 'Statistics';
 $lang[ 'template' ][ 'toolbox' ] = 'Toolbox';
 $lang[ 'template' ][ 'fonts' ] = 'Fonts : ';
 $lang[ 'template' ][ 'colors' ] = 'Colors : ';

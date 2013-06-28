@@ -17,7 +17,7 @@
 	</ul>
 	<div class='panel-container' id="management_panal">
 		{Des::foreach}{groups}{group}
-		<div id="{$group['id']}">			
+		<div id="{$group['id']}">
 		<table width="60%" class="t_style_b" border="1" align="center">
 		<tr>
 			<td class="row1">
