@@ -149,7 +149,7 @@ class MySmartCodeParse
 		
 		foreach ($smiles as $smile)
 		{
-			$text = str_replace($smile['smile_short'],'<img src="' . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$text);
+			$text = str_replace($smile['smile_short'],'<img src="' . $MySmartBB->_CONF[ 'bb_path' ] . $smile['smile_path'] . '" border="0" alt="' . $smile['smile_short'] . '" />',$text);
 		}
 	}
 	

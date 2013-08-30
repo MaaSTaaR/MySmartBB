@@ -81,7 +81,7 @@ class MySmartLoginMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'online' ];
-		$MySmartBB->rec->filter = "user_ip='" . $MySmartBB->_CONF[' ip' ] . "'";
+		$MySmartBB->rec->filter = "user_ip='" . $MySmartBB->_CONF[ 'ip' ] . "'";
 		
 		$MySmartBB->rec->delete();
 		

@@ -76,10 +76,15 @@ if ( $state !== true )
 		case MySmartRouter::FEW_ARGS:
 			echo 'Wrong Path!';
 			break;
+		case MySmartRouter::FILE_DOESNT_EXIST:
+			echo 'The File Doesn\'t Exist!';
+			break;
 	}
 }
-
-if ( !defined( 'STOP_FOOTER' ) )
-	$MySmartBB->func->getFooter();
+else 
+{
+	if ( !defined( 'STOP_FOOTER' ) )
+		$MySmartBB->func->getFooter();
+}
 
 ?>
