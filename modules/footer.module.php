@@ -20,7 +20,7 @@ class MySmartFooterMOD
 		$MySmartBB->rec->getList();
 		
 		// ... //
-		
+
 		$MySmartBB->template->display( 'footer' );
 	}
 }

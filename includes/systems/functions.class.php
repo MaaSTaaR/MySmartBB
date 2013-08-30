@@ -608,8 +608,8 @@ class MySmartFunctions
 			
 			$path = str_replace( $MySmartBB->_CONF[ 'init_path' ], '', $url[ 'path' ] );
 			
-			if ( ( strstr( $path, 'logout' ) == false ) and ( strstr( $path, 'login' ) == false ) )
-					$move_to = $path;
+			if ( ( strstr( $path, 'logout' ) == false ) and ( strstr( $path, 'login' ) == false ) and $path != $MySmartBB->_CONF[ 'bb_path' ] )
+				$move_to = $path;
 			
 			/*
 			$Y_url = explode( '/', $MySmartBB->_SERVER[ 'HTTP_REFERER' ] );
