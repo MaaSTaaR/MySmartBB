@@ -123,7 +123,7 @@ class MySmartFunctions
  		global $MySmartBB;
  		
  		// The link will be inside the forum, so add the initial path in the begin of the link.
- 		// If the move inside the admin control panel don't add the initial path. We don't use
+ 		// If the move is inside the admin control panel don't add the initial path. We don't use
  		// SEO-friendly URLs inside the control panel.
  		if ( !$outside and !defined( 'IN_ADMIN' ) )
   			$site = $MySmartBB->_CONF[ 'init_path' ] . $site;

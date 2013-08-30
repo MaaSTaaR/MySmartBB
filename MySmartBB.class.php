@@ -1,5 +1,7 @@
 <?php
 
+// TODO : God Object?
+
 // ... //
 
 // General systems
@@ -102,12 +104,14 @@ class MySmartBB
   		$this->initTableList(); 		
  		
  		// ... //
- 		
+  		
  		$e = $this->initDB();
   		
   		if ( !is_bool( $e ) and $e == 'ERROR::THE_TABLES_ARE_NOT_INSTALLED' and !defined( 'INSTALL' ) )
   		{
-  			$this->func->move( './setup/install/', true, 0 );
+  			$dir = str_replace( 'index.php', '', $_SERVER[ 'SCRIPT_NAME' ] ); // Quick and Dirty
+  			
+  			$this->func->move( $dir . 'setup/install/', true, 0 );
   			$this->func->stop( true );
   		}
   		
@@ -115,7 +119,7 @@ class MySmartBB
   		
   		$this->initClasses();  		
   		$this->initInfo(); 		
-		$this->initPredefinedVars();
+  		$this->initPredefinedVars();
 		$this->initVariables();
 		$this->initPageAlign();
   	}
