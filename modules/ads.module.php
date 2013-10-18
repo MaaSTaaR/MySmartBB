@@ -38,11 +38,11 @@ class MySmartAdsPageMOD
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
 		$MySmartBB->rec->filter = "id='" . $this->id . "'";
 		
-		$AdsRows = $MySmartBB->rec->getInfo();
+		$row = $MySmartBB->rec->getInfo();
 		
 		// ... //
 		
-		if ( !$AdsRows )
+		if ( !$row )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'ads_doesnt_exist' ] );
 		
 		// ... //
@@ -52,15 +52,15 @@ class MySmartAdsPageMOD
 		// ... //
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'ads' ];
-		$MySmartBB->rec->fields = array(	'clicks'	=> $AdsRows['clicks'] + 1	);
-		$MySmartBB->rec->filter = "id='" . $AdsRows['id'] . "'";
+		$MySmartBB->rec->fields = array(	'clicks'	=> $row['clicks'] + 1	);
+		$MySmartBB->rec->filter = "id='" . $row['id'] . "'";
 		
 		$query = $MySmartBB->rec->update();
 		
 		// ... //
 		
-		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $AdsRows[ 'sitename' ] );
-		$MySmartBB->func->move( $AdsRows[ 'site' ] );
+		$MySmartBB->func->msg( $MySmartBB->lang[ 'please_wait' ] . $row[ 'sitename' ] );
+		$MySmartBB->func->move( $row[ 'site' ], true );
 		
 		// ... //
 	}

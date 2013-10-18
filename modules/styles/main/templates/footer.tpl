@@ -4,7 +4,7 @@
 		
 		<div id="info_bar">
 			<div class="right_side">
-				<select OnChange="window.location='{$init_path}change_style/' + this.value" size="1" name="style">
+				<select onchange="window.location='{$init_path}change_style/' + this.value" size="1" name="style">
    				{DB::getInfo}{$style_res}{$style}
    					{if {$_CONF['style_info']['id']} == {$style['id']}}
    					<option selected="selected" value="{$style['id']}">{$style['style_title']}</option>

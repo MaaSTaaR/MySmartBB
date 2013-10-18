@@ -51,7 +51,7 @@ class MySmartActiveMOD
 		
       	// ... //
       	
-      	// Get the information of default group to set username style cache
+      	// Get the information of the default group (after the activation) to set username style cache
       	
       	$MySmartBB->rec->table = $MySmartBB->table[ 'group' ];
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'info_row' ][ 'adef_group' ] . "'";
@@ -71,11 +71,11 @@ class MySmartActiveMOD
 		
 		$MySmartBB->rec->filter = "id='" . $MySmartBB->_CONF[ 'member_row' ][ 'id' ] . "'";
 		
-		$UpdateGroup = $MySmartBB->rec->update();
+		$update = $MySmartBB->rec->update();
 		
 		// ... //
 		
-		if ( $UpdateGroup )
+		if ( $update )
 		{
 			$MySmartBB->rec->table = $MySmartBB->table[ 'requests' ];
 			$MySmartBB->rec->filter = "id='" . $RequestInfo[ 'id' ] . "'";
@@ -84,10 +84,21 @@ class MySmartActiveMOD
 			
 			if ( $del )
 			{
-			    $MySmartBB->plugin->runHooks( 'active_member_success' );
-			    
-				$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
-				$MySmartBB->func->move( '' );
+				// Delete the member from today's attendance list to show the correct username style
+				// after the activation
+				
+				$MySmartBB->rec->table = $MySmartBB->table[ 'today' ];
+				$MySmartBB->rec->filter = "username='" . $MySmartBB->_CONF[ 'member_row' ][ 'username' ] . "'";
+				
+				$del = $MySmartBB->rec->delete();
+				
+				if ( $del )
+				{
+				    $MySmartBB->plugin->runHooks( 'active_member_success' );
+				    
+					$MySmartBB->func->msg( $MySmartBB->lang[ 'membership_activated' ] );
+					$MySmartBB->func->move( '' );
+				}
 			}
 		}
 	}
