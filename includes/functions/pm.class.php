@@ -35,7 +35,7 @@ class MySmartPM
  		$this->engine->rec->table = $this->table;
  		$this->engine->rec->fields = array(	'user_read'	=>	'1'	);
  		
- 		$MySmartBB->rec->filter = "id='" . $id . "'";
+ 		$this->engine->rec->filter = "id='" . $id . "'";
  		
 		$query = $this->engine->rec->update();
 		           

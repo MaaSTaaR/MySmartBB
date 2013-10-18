@@ -39,7 +39,7 @@ class MySmartMemberlistMOD
 		$MySmartBB->_CONF['template']['res']['member_res'] = '';
 		
 		$MySmartBB->rec->table = $MySmartBB->table[ 'member' ];
-		$MySmartBB->rec->result = 	&$MySmartBB->_CONF['template']['res']['member_res'];
+		$MySmartBB->rec->result = &$MySmartBB->_CONF['template']['res']['member_res'];
 		
 		$MySmartBB->rec->pager 					= 	array();
 		$MySmartBB->rec->pager[ 'total' ]		= 	$members_num;

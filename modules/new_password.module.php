@@ -103,7 +103,7 @@ class MySmartPasswordMOD
 			    	$MySmartBB->plugin->runHooks( 'new_password_success' );
 			    
 					$MySmartBB->func->msg( $MySmartBB->lang[ 'update_succeed' ] );
-					$MySmartBB->func->move( 'index.php' );
+					$MySmartBB->func->move( '' );
 				}
 			}
 		}

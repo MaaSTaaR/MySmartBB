@@ -32,7 +32,7 @@ class MySmartForumPasswordMOD
 			$MySmartBB->func->error( $MySmartBB->lang[ 'forum_doesnt_exist' ] );
 		
 		if ( empty( $section_info[ 'section_password' ] ) )
-			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );
+			$MySmartBB->func->move( 'forum/' . $section_info[ 'id' ], false, 0 );
 		
 		// ... //
 		

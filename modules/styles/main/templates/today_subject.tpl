@@ -24,7 +24,8 @@
 	{DB::getInfo}{$latest_res}{$subject_list}
 	<tr>
 		<td width="3%" class="row1" align="center">
-			<img src="{$subject_list['icon']}" alt="" />
+			<img src="{$bb_path}
+			{$subject_list['icon']}" alt="" />
 		</td>
 		<td width="30%" class="row2">
 			<a href="{$init_path}topic/

@@ -30,10 +30,13 @@
     	{DB::getInfo}{$last_subjects_res}{$subject}
 		<tr>
 			<td width="3%" class="row1" align="center">
-				<img src="{$subject['icon']}" alt="" />
+				<img src="{$bb_path}
+				{$subject['icon']}" alt="" />
 			</td>
 			<td width="30%" class="row2">
-				<a href="{$init_path}topic/{$subject['id']}/{$subject['title']}">
+				<a href="{$init_path}topic/
+				{$subject['id']}/
+				{$subject['title']}">
 					{$subject['title']}
 				</a> 
 				{if {$subject['close']}}
@@ -53,7 +56,8 @@
 			    {$lang['no_replies']}
 				{else}
 				{$subject['reply_date']} 
-				{$lang['written_by']} <a href="{$init_path}profile/{$subject['last_replier']}">{$subject['last_replier']}</a>
+				{$lang['written_by']} <a href="{$init_path}profile/
+				{$subject['last_replier']}">{$subject['last_replier']}</a>
 				{/if}
 			</td>
 		</tr>
