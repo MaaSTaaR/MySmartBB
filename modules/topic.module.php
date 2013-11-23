@@ -18,6 +18,7 @@ class MySmartTopicMOD
 	private $id; // Topic's ID from GET request
 	private $curr_page;
 	private $printable;
+	private $topic_deleted = false;
 	
 	public function printable( $id, $title = null, $curr_page = 1 )
 	{
@@ -82,7 +83,9 @@ class MySmartTopicMOD
 		
 		// ... //
 		
-		if ( $this->Info[ 'delete_topic' ] and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+		$this->topic_deleted = ( $this->Info[ 'delete_topic' ] ) ? true : false;
+		
+		if ( $this->topic_deleted and !$MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
 			$MySmartBB->func->error( $MySmartBB->lang[ 'topic_trashed' ] );
 		
 		// ... //
@@ -313,7 +316,12 @@ class MySmartTopicMOD
 		
 		$MySmartBB->rec->result = &$reply_res;
 		
-		$MySmartBB->reply->getReplyWriterInfo( $this->subject_id );
+		$hide_deleted_replies = true;
+		
+		if ( $this->topic_deleted and $MySmartBB->_CONF[ 'group_info' ][ 'admincp_allow' ] )
+			$hide_deleted_replies = false;
+				
+		$MySmartBB->reply->getReplyWriterInfo( $this->subject_id, $hide_deleted_replies );
 		
 		while ( $this->Info = $MySmartBB->rec->getInfo( $reply_res ) )
 		{
@@ -366,11 +374,6 @@ class MySmartTopicMOD
 			$MySmartBB->rec->result = &$MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ];
 			
 			$MySmartBB->rec->getList();
-			
-			$attach_num = $MySmartBB->rec->getNumber( $MySmartBB->_CONF[ 'template' ][ 'res' ][ 'attach_res' ] );
-			
-			if ( $attach_num > 0 )
-				$MySmartBB->template->assign( 'SHOW_REPLY_ATTACH', true );
 		}
 	}
 	

@@ -226,6 +226,7 @@ class MySmartFunctions
  	/**
  	 * Get the forum's url address
  	 */
+ 	// TODO : rewrite this function
  	public function getForumAdress()
  	{
  		global $MySmartBB;
@@ -239,20 +240,20 @@ class MySmartFunctions
  		// The programme is under main folder (/var/www)
  		if (sizeof($filename) == 2)
  		{
- 			$last_part = '/';
+ 			$last_part = '';
  		}
  		// The programme is under something like this (/public_html/MySmartBB)
  		elseif (sizeof($filename) == 3)
  		{
- 			$last_part = '/' . $filename[1];
+ 			$last_part = '' . $filename[1];
  		}
  		// The programme is under something like this (/public_html/MySmartBB/MySmartBB-Again)
  		elseif (sizeof($filename) == 4)
  		{
- 			$last_part = '/' . $filename[1] . '/' . $filename[2];
+ 			$last_part = '' . $filename[1] . '/' . $filename[2];
  		}
  		
- 		$url = 'http://' . $domain_address . $last_part . '/';
+ 		$url = 'http://' . $domain_address . '/' . $this->getDirPath() . $last_part;
  		
  		return $url;
  	}

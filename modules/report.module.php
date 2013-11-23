@@ -33,7 +33,7 @@ class MySmartReportMOD
 		
 		// ... //
 		
-		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'topic/' . $subject_id;
+		$MySmartBB->_POST[ 'text' ] .= "\n" . $MySmartBB->func->getForumAdress() . 'index.php/topic/' . $subject_id;
 		
 		if ( !is_null( $reply_id ) )
 			$MySmartBB->_POST[ 'text' ] .= "#" . $reply_id;

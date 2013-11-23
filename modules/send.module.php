@@ -21,7 +21,7 @@ class MySmartSendMOD
 		$MySmartBB->template->display( 'send_email' );		
 	}
 	
-	private function start( $id )
+	public function start( $id )
 	{
 		global $MySmartBB;
 		

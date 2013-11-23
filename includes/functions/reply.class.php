@@ -28,7 +28,7 @@ class MySmartReply
 	 * 
 	 * @return An array contains rows of replies and writers or false when not match. The id of reply will be stored as "reply_id"
 	 */
-	public function getReplyWriterInfo( $subject_id )
+	public function getReplyWriterInfo( $subject_id, $hide_deleted_replies = true )
 	{
 		// ... //
 		
@@ -53,7 +53,12 @@ class MySmartReply
 		$this->engine->rec->table = $this->table . ' AS reply,' . $this->engine->table[ 'member' ] . ' AS member';
 		$this->engine->rec->select = $select;
 		
-		$this->engine->rec->filter = "delete_topic<>'1' AND reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
+		$this->engine->rec->filter = '';
+		
+		if ( $hide_deleted_replies )
+			$this->engine->rec->filter .= "delete_topic<>'1' AND ";
+		
+		$this->engine->rec->filter .= "reply.subject_id='" . $subject_id . "' AND reply.writer=member.username";
 		
 		$this->engine->rec->order = 'reply_id ASC';
 		

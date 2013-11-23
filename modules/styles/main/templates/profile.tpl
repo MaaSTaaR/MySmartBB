@@ -132,26 +132,11 @@
 <br />
 
 {hook}after_main_table{/hook}
-<table id="plugin_mysmartmicroblog_last_post_table" align="center" class="t_style_b" border="1" width="60%">
-<tr align="center">
-<td class="main1 rows_space" width="60%">
-التدوينة الأخيره
-</td>
-</tr>
-<tr align="center">
-<td class="row1" width="30%">
-{if {$mysmartmicroblog_no_posts} == 'true'}
-لا توجد تدوينات
-{else}
-{$mysmartmicroblog_post['context']}
-{/if}
-</td>
-</tr>
-</table><br id="plugin_mysmartmicroblog_last_post_br"></br>
-<tr id="plugin_mysmartmicroblog_link_row" align="center">
-<td class="row1" width="20%">المدوّنة المُصغرة</td>
-<td class="row1" width="30%"><a href="index.php?page=plugin&amp;name=MySmartMicroblog&amp;action=show&amp;id={$MemberInfo['id']}">هنا</a></td>
-</tr>
+
+
+
+
+
 
 
 
