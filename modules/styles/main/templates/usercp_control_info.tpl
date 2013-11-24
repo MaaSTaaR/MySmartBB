@@ -28,7 +28,7 @@
 			{$lang['website']}
 			</td>
 			<td class="row2" width="30%">
-				<input name="website" type="text" value="{$_CONF['member_row']['user_website']}" />
+				<input name="website" dir="ltr" type="text" value="{$_CONF['member_row']['user_website']}" />
 			</td>
 		</tr>
 		<tr align="center">

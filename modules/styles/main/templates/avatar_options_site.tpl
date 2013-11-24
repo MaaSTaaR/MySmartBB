@@ -9,7 +9,7 @@
 				{$lang['image_url']}
 			</td>
 			<td width="40%" class="row1">
-				<input name="avatar" value="http://" />
+				<input name="avatar" dir="ltr" value="http://" />
 			</td>
 		</tr>
 		<tr align="center">

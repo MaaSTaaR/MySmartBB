@@ -9,10 +9,12 @@ define('CLASS_NAME','MySmartVoteMOD');
 class MySmartVoteMOD
 {
 	private $id;
-	
-	public function run()
+
+	public function start( $id )
 	{
 		global $MySmartBB;
+		
+		// ... //
 		
 		$this->id = (int) $id;
 		
@@ -22,12 +24,7 @@ class MySmartVoteMOD
 		
 		$MySmartBB->func->showHeader( $MySmartBB->lang[ 'vote' ] );
 		
-		$this->_start();		
-	}
-	
-	private function _start()
-	{
-		global $MySmartBB;
+		// ... //
 		
 		if ( empty( $this->id ) )
 			$MySmartBB->func->error( $MySmartBB->lang_common[ 'wrong_path' ] );

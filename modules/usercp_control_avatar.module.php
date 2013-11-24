@@ -56,6 +56,15 @@ class MySmartUserCPAvatarMOD
 			$MySmartBB->template->assign( 'SHOW_AVATAR_LIST', true );
 		}
 		
+		// ... //
+		
+		// If the avatar is uploaded to the server we should initialize the path correctly to show the image on the page.
+		if ( !empty( $MySmartBB->_CONF[ 'member_row' ][ 'avater_path' ] ) )
+			if ( strstr( $MySmartBB->_CONF[ 'member_row' ][ 'avater_path' ], 'http' ) === false )
+				$MySmartBB->_CONF[ 'member_row' ][ 'avater_path' ] = '/' . $MySmartBB->func->getDirPath() . $MySmartBB->_CONF[ 'member_row' ][ 'avater_path' ];
+		
+		// ... //
+		
 		$MySmartBB->plugin->runHooks( 'usercp_control_avatar_main' );
 		
 		$MySmartBB->template->display('usercp_control_avatar');		
